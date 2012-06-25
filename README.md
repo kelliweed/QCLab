@@ -1,7 +1,10 @@
-Bika LIMS
-=========
+Bika Health
+===========
 
 Bika Laboratory Information Management System.
+
+This version is customised for use in health-care laboratories.  See
+docs/CHANGELOG.txt for details.
 
 If you have questions, please post to one of our mailing lists:
 

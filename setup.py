@@ -5,7 +5,7 @@ version = '3.0a3'
 
 setup(name='bika.lims',
       version=version,
-      description="Bika LIMS",
+      description="Bika Health",
       long_description=open("README.md").read() + "\n" +
                        open(os.path.join("docs", "installation.txt")).read() + "\n" +
                        open(os.path.join("docs", "CHANGELOG.txt")).read(),
