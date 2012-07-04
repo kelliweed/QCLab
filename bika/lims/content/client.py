@@ -156,6 +156,37 @@ class Client(Organisation):
                                           y['title'].lower()))
         return contact_data
 
+    security.declarePublic('getProvidersDisplayList')
+    def getProvidersDisplayList(self):
+        wf = getToolByName(self, 'portal_workflow')
+        pairs = []
+        for provider in self.objectValues('Provider'):
+            if wf.getInfoFor(provider, 'inactive_state', '') == 'active':
+                pairs.append((provider.UID(), provider.Title()))
+        # sort the list by the second item
+        pairs.sort(lambda x, y:cmp(x[1], y[1]))
+        return DisplayList(pairs)
+
+    security.declarePublic('getProviderFromUsername')
+    def getProviderFromUsername(self, username):
+        for provider in self.objectValues('Provider'):
+            if provider.getUsername() == username:
+                return provider.UID()
+
+    security.declarePublic('getProviderUIDForUser')
+    def getProviderUIDForUser(self):
+        """ get the UID of the user associated with the authenticated user
+        """
+        membership_tool = getToolByName(instance, 'portal_membership')
+        member = membership_tool.getAuthenticatedMember()
+        username = mtool.getAuthenticatedMember().getUserName()
+        r = self.portal_catalog(
+            portal_type = 'Provider',
+            getUsername = username
+        )
+        if len(r) == 1:
+            return r[0].UID
+
     security.declarePublic('getARImportOptions')
     def getARImportOptions(self):
         return ARIMPORT_OPTIONS

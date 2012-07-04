@@ -1,5 +1,10 @@
-3.0 dev
-=======
+Bika 3 Health
+=============
+
+- Add Providers (Doctor and Nurse roles)
+
+Bika 3
+======
 
 2012-06-21
 ----------

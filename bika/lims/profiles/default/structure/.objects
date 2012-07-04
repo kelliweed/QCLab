@@ -1,6 +1,7 @@
 front-page,Document
 setup-data-in-this-installation,Document
 clients,ClientFolder
+providers,Providers
 samples,SamplesFolder
 analysisrequests,AnalysisRequestsFolder
 worksheets,WorksheetFolder

@@ -133,6 +133,10 @@ class ISampleTypes(Interface):
     ""
 class IPreservations(Interface):
     ""
+class IProviders(Interface):
+    ""
+class IProvider(Interface):
+    ""
 class IReferenceManufacturers(Interface):
     ""
 class IReferenceDefinitions(Interface):

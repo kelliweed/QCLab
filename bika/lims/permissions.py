@@ -19,10 +19,12 @@ AddAnalysisSpec = 'BIKA: Add AnalysisSpec'
 AddClient = 'BIKA: Add Client'
 AddClientFolder = 'BIKA: Add ClientFolder'
 AddMethod = 'BIKA: Add Method'
+AddProvider = 'BIKA: Add Provider'
 AddSample = 'BIKA: Add Sample'
 AddSampleMatrix = 'BIKA: Add SampleMatrix'
 AddSamplePartition = 'BIKA: Add SamplePartition'
 AddSamplingDeviation = 'BIKA: Add SamplingDeviation'
+AddProvider = 'BIKA: Add Provider'
 
 # Default Archetypes Add Permission
 ADD_CONTENT_PERMISSION = AddPortalContent
@@ -35,25 +37,28 @@ ADD_CONTENT_PERMISSIONS = {
     'AnalysisRequest': AddAnalysisRequest,
     'Client': AddClient,
     'Method': AddMethod,
+    'Provider': AddProvider,
     'Sample': AddSample,
     'SampleMatrix': AddSampleMatrix,
     'SamplePartition': AddSamplePartition,
     'SamplingDeviation': AddSamplingDeviation,
+    'Provider': AddProvider,
 }
 
 # Very Old permissions:
 # ---------------------
+DispatchOrder = 'BIKA: Dispatch Order'
+ManageARImport = 'BIKA: Manage ARImport'
+ManageAnalysisRequests = 'BIKA: Manage Analysis Requests'
 ManageBika = 'BIKA: Manage Bika'
 ManageClients = 'BIKA: Manage Clients'
 ManageOrders = 'BIKA: Manage Orders'
-DispatchOrder = 'BIKA: Dispatch Order'
-ManageAnalysisRequests = 'BIKA: Manage Analysis Requests'
-ManageARImport = 'BIKA: Manage ARImport'
-ManageSamples = 'BIKA: Manage Samples'
-ManageReferenceSuppliers = 'BIKA: Manage Reference Suppliers'
-ManageReference = 'BIKA: Manage Reference'
-PostInvoiceBatch = 'BIKA: Post Invoice batch'
 ManagePricelists = 'BIKA: Manage Pricelists'
+ManageProviders = 'BIKA: Manage Providers'
+ManageReference = 'BIKA: Manage Reference'
+ManageReferenceSuppliers = 'BIKA: Manage Reference Suppliers'
+ManageSamples = 'BIKA: Manage Samples'
+PostInvoiceBatch = 'BIKA: Post Invoice batch'
 
 # this is for creating and transitioning worksheets
 ManageWorksheets = 'BIKA: Manage Worksheets'

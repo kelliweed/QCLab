@@ -41,6 +41,7 @@ class BikaGenerator:
                        'pricelists',
                        'bika_setup',
                        'methods',
+                       'providers',
                        'analysisrequests',
                        'referencesamples',
                        'samples',
@@ -98,6 +99,8 @@ class BikaGenerator:
                      'Preserver',
                      'Publisher',
                      'Member',
+                     'Doctor',
+                     'Nurse',
                      'Reviewer'):
             if role not in portal.acl_users.portal_role_manager.listRoleIds():
                 portal.acl_users.portal_role_manager.addRole(role)
@@ -110,10 +113,10 @@ class BikaGenerator:
         if 'LabManagers' not in portal_groups.listGroupIds():
             try:
                 portal_groups.addGroup('LabManagers', title = "Lab Managers",
-                       roles = ['Member', 'LabManager', 'Site Administrator'])
+                       roles = ['Member', 'LabManager', 'Site Administrator', 'Doctor', 'Nurse'])
             except KeyError:
                 portal_groups.addGroup('LabManagers', title = "Lab Managers",
-                       roles = ['Member', 'LabManager', 'Manager'])# Plone < 4.1
+                       roles = ['Member', 'LabManager', 'Manager', 'Doctor', 'Nurse'])# Plone < 4.1
 
         if 'LabClerks' not in portal_groups.listGroupIds():
             portal_groups.addGroup('LabClerks', title = "Lab Clerks",
@@ -143,6 +146,14 @@ class BikaGenerator:
             portal_groups.addGroup('Clients', title = "Clients",
                 roles = ['Member', ])
 
+        if 'Doctors' not in portal_groups.listGroupIds():
+            portal_groups.addGroup('Doctors', title = "Doctors",
+                roles = ['Member', 'Doctor'])
+
+        if 'Nurses' not in portal_groups.listGroupIds():
+            portal_groups.addGroup('Nurses', title = "Nurses",
+                roles = ['Member', 'Nurse'])
+
         if 'ReferenceSuppliers' not in portal_groups.listGroupIds():
             portal_groups.addGroup('ReferenceSuppliers', title = "",
                 roles = ['Member', ])
@@ -156,12 +167,13 @@ class BikaGenerator:
         mp(AddAnalysisProfile, ['Manager', 'Owner', 'LabManager', 'LabClerk'], 1)
         mp(AddARTemplate, ['Manager', 'Owner', 'LabManager', 'LabClerk'], 1)
         mp(AddAnalysis, ['Manager', 'Owner', 'LabManager', 'LabClerk', 'Sampler'], 1)
-        mp(AddAnalysisRequest, ['Manager', 'Owner', 'LabManager', 'LabClerk', 'Sampler'], 1)
+        mp(AddAnalysisRequest, ['Manager', 'Owner', 'LabManager', 'LabClerk', 'Doctor', 'Nurse', 'Sampler'], 1)
         mp(AddClient, ['Manager', 'Owner', 'LabManager'], 1)
         mp(AddClientFolder, ['Manager'], 1)
         mp(AddMethod, ['Manager', 'LabManager'], 1)
-        mp(AddSample, ['Manager', 'Owner', 'LabManager', 'LabClerk', 'Sampler'], 1)
-        mp(AddSamplePartition, ['Manager', 'Owner', 'LabManager', 'LabClerk', 'Sampler'], 1)
+        mp(AddSample, ['Manager', 'Owner', 'LabManager', 'LabClerk', 'Doctor', 'Nurse', 'Sampler'], 1)
+        mp(AddSamplePartition, ['Manager', 'Owner', 'LabManager', 'LabClerk', 'Doctor', 'Nurse', 'Sampler'], 1)
+        mp(AddProvider, ['Manager', 'Owner', 'LabManager', 'LabClerk'], 1)
 
         mp(permissions.AddPortalContent, ['Manager', 'Owner', 'LabManager'], 1)
         mp(permissions.ListFolderContents, ['Manager', 'Owner'], 1)
@@ -170,21 +182,22 @@ class BikaGenerator:
         mp(permissions.ModifyPortalContent, ['Manager', 'LabManager', 'LabClerk', 'Analyst', 'Owner'], 1)
         mp(permissions.ManageUsers, ['Manager', 'LabManager', ], 1)
 
-        mp(ApplyVersionControl, ['Manager', 'LabManager', 'LabClerk', 'Analyst', 'Owner'], 1)
-        mp(SaveNewVersion, ['Manager', 'LabManager', 'LabClerk', 'Analyst', 'Owner'], 1)
-        mp(AccessPreviousVersions, ['Manager', 'LabManager', 'LabClerk', 'Analyst', 'Owner'], 1)
+        mp(ApplyVersionControl, ['Manager', 'LabManager', 'LabClerk', 'Doctor', 'Nurse', 'Analyst', 'Owner'], 1)
+        mp(SaveNewVersion, ['Manager', 'LabManager', 'LabClerk', 'Doctor', 'Nurse', 'Analyst', 'Owner'], 1)
+        mp(AccessPreviousVersions, ['Manager', 'LabManager', 'LabClerk', 'Doctor', 'Nurse', 'Analyst', 'Owner'], 1)
 
+        mp(DispatchOrder, ['Manager', 'LabManager', 'LabClerk'], 1)
+        mp(ManageARImport, ['Manager', 'LabManager', 'LabClerk'], 1)
+        mp(ManageAnalysisRequests, ['Manager', 'LabManager', 'LabClerk', 'Doctor', 'Nurse', 'Analyst', 'Sampler', 'Preserver', 'Owner'], 1)
         mp(ManageBika, ['Manager', 'LabManager'], 1)
         mp(ManageClients, ['Manager', 'LabManager', 'LabClerk'], 1)
-        mp(ManageWorksheets, ['Manager', 'LabManager', 'LabClerk', 'Analyst'], 1)
         mp(ManageOrders, ['Manager', 'LabManager', 'LabClerk'], 1)
-        mp(ManageAnalysisRequests, ['Manager', 'LabManager', 'LabClerk', 'Analyst', 'Sampler', 'Preserver', 'Owner'], 1)
-        mp(ManageSamples, ['Manager', 'LabManager', 'LabClerk', 'Analyst', 'Sampler', 'Preserver', 'Owner'], 1)
-        mp(ManageReferenceSuppliers, ['Manager', 'LabManager', 'LabClerk', 'Analyst'], 1)
-        mp(ManageReference, ['Manager', 'LabManager', 'LabClerk', 'Analyst'], 1)
         mp(ManagePricelists, ['Manager', 'LabManager', 'Owner'], 1)
-        mp(ManageARImport, ['Manager', 'LabManager', 'LabClerk'], 1)
-        mp(DispatchOrder, ['Manager', 'LabManager', 'LabClerk'], 1)
+        mp(ManageProviders, ['Manager', 'LabManager', 'Owner', 'LabClerk'], 1)
+        mp(ManageReference, ['Manager', 'LabManager', 'LabClerk', 'Analyst'], 1)
+        mp(ManageReferenceSuppliers, ['Manager', 'LabManager', 'LabClerk', 'Analyst'], 1)
+        mp(ManageSamples, ['Manager', 'LabManager', 'LabClerk', 'Doctor', 'Nurse', 'Analyst', 'Sampler', 'Preserver', 'Owner'], 1)
+        mp(ManageWorksheets, ['Manager', 'LabManager', 'LabClerk', 'Analyst'], 1)
         mp(PostInvoiceBatch, ['Manager', 'LabManager', 'Owner'], 1)
 
         mp(CancelAndReinstate, ['Manager', 'LabManager'], 0)
@@ -213,13 +226,20 @@ class BikaGenerator:
 
         # /clients folder permissions
         mp = portal.clients.manage_permission
-        mp(permissions.ListFolderContents, ['Manager', 'LabManager', 'Member', 'LabClerk', 'Analyst', 'Sampler', 'Preserver'], 0)
-        mp(permissions.View, ['Manager', 'LabManager', 'LabClerk', 'Member', 'Analyst', 'Sampler', 'Preserver'], 0)
-        mp('Access contents information', ['Manager', 'LabManager', 'Member', 'LabClerk', 'Analyst', 'Sampler', 'Preserver', 'Owner'], 0)
+        mp(permissions.ListFolderContents, ['Manager', 'LabManager', 'Member', 'LabClerk', 'Doctor', 'Nurse', 'Analyst', 'Sampler', 'Preserver'], 0)
+        mp(permissions.View, ['Manager', 'LabManager', 'LabClerk', 'Doctor', 'Nurse', 'Member', 'Analyst', 'Sampler', 'Preserver'], 0)
+        mp('Access contents information', ['Manager', 'LabManager', 'Member', 'LabClerk', 'Doctor', 'Nurse', 'Analyst', 'Sampler', 'Preserver', 'Owner'], 0)
         mp(ManageClients, ['Manager', 'LabManager', 'LabClerk', 'Owner'], 0)
         mp(permissions.AddPortalContent, ['Manager', 'LabManager', 'LabClerk', 'Owner'], 0)
         mp(AddAnalysisSpec, ['Manager', 'LabManager', 'Owner'], 0)
         portal.clients.reindexObject()
+
+        # /providers
+        mp = portal.providers.manage_permission
+        mp(CancelAndReinstate, ['Manager', 'LabManager', 'Doctor', 'Nurse'], 0)
+        mp(permissions.ListFolderContents, ['Manager', 'LabManager', 'LabClerk', 'LabTechnician', 'Doctor', 'Nurse', 'Owner', 'Sampler', 'Preserver'], 0)
+        mp(permissions.View, ['Manager', 'LabManager', 'LabClerk', 'LabTechnician', 'Doctor', 'Nurse', 'Owner', 'Sampler', 'Preserver'], 0)
+        portal.providers.reindexObject()
 
         # /worksheets folder permissions
         mp = portal.worksheets.manage_permission
@@ -263,13 +283,13 @@ class BikaGenerator:
 
         # /reports folder permissions
         mp = portal.reports.manage_permission
-        mp(permissions.ListFolderContents, ['Manager', 'LabManager', 'Member', 'LabClerk' ], 0)
-        mp(permissions.View, ['Manager', 'LabManager', 'LabClerk', 'Member'], 0)
-        mp('Access contents information', ['Manager', 'LabManager', 'Member', 'LabClerk', 'Owner'], 0)
-        mp(permissions.AddPortalContent, ['Manager', 'LabManager', 'LabClerk', 'Owner', 'Member'], 0)
+        mp(permissions.ListFolderContents, ['Manager', 'LabManager', 'Member', 'LabClerk', 'Doctor', 'Nurse', ], 0)
+        mp(permissions.View, ['Manager', 'LabManager', 'LabClerk', 'Doctor', 'Nurse', 'Member'], 0)
+        mp('Access contents information', ['Manager', 'LabManager', 'Member', 'LabClerk', 'Doctor', 'Nurse', 'Owner'], 0)
+        mp(permissions.AddPortalContent, ['Manager', 'LabManager', 'LabClerk', 'Doctor', 'Nurse', 'Owner', 'Member'], 0)
 
-        mp('ATContentTypes: Add Image', ['Manager', 'Labmanager', 'LabClerk', 'Member',], 0)
-        mp('ATContentTypes: Add File', ['Manager', 'Labmanager', 'LabClerk', 'Member',], 0)
+        mp('ATContentTypes: Add Image', ['Manager', 'Labmanager', 'LabClerk', 'Doctor', 'Nurse', 'Member',], 0)
+        mp('ATContentTypes: Add File', ['Manager', 'Labmanager', 'LabClerk', 'Doctor', 'Nurse', 'Member',], 0)
         portal.reports.reindexObject()
 
         # /invoices folder permissions

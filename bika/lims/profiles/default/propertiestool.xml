@@ -69,6 +69,7 @@
     <element value="RejectAnalysis"/>
     <element value="Report"/>
     <element value="ReportFolder"/>
+    <element value="Provider"/>
     <element value="Sample"/>
     <element value="SamplePartition"/>
     <element value="SamplePoint"/>
