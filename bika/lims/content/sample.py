@@ -54,6 +54,7 @@ schema = BikaSchema.copy() + Schema((
         multiValued = 0,
         allowed_types = ('Patient',),
         referenceClass = HoldingReference,
+        relationship = "SamplePatient",
         widget = StringWidget(
             label = _('Patient'),
         ),

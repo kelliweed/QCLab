@@ -63,6 +63,8 @@ def initialize(context):
     from content.logentry import LogEntry
     from content.method import Method
     from content.methods import Methods
+    from content.patient import Patient
+    from content.patients import Patients
     from content.provider import Provider
     from content.providers import Providers
     from content.organisation import Organisation

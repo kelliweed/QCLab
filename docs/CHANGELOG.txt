@@ -2,6 +2,7 @@ Bika 3 Health
 =============
 
 - Add Providers (Doctor and Nurse roles)
+- Add Patients
 
 Bika 3
 ======

@@ -19,12 +19,12 @@ AddAnalysisSpec = 'BIKA: Add AnalysisSpec'
 AddClient = 'BIKA: Add Client'
 AddClientFolder = 'BIKA: Add ClientFolder'
 AddMethod = 'BIKA: Add Method'
+AddPatient = 'BIKA: Add Patient'
 AddProvider = 'BIKA: Add Provider'
 AddSample = 'BIKA: Add Sample'
 AddSampleMatrix = 'BIKA: Add SampleMatrix'
 AddSamplePartition = 'BIKA: Add SamplePartition'
 AddSamplingDeviation = 'BIKA: Add SamplingDeviation'
-AddProvider = 'BIKA: Add Provider'
 
 # Default Archetypes Add Permission
 ADD_CONTENT_PERMISSION = AddPortalContent
@@ -38,11 +38,11 @@ ADD_CONTENT_PERMISSIONS = {
     'Client': AddClient,
     'Method': AddMethod,
     'Provider': AddProvider,
+    'Patient': AddPatient,
     'Sample': AddSample,
     'SampleMatrix': AddSampleMatrix,
     'SamplePartition': AddSamplePartition,
     'SamplingDeviation': AddSamplingDeviation,
-    'Provider': AddProvider,
 }
 
 # Very Old permissions:
@@ -54,6 +54,7 @@ ManageBika = 'BIKA: Manage Bika'
 ManageClients = 'BIKA: Manage Clients'
 ManageOrders = 'BIKA: Manage Orders'
 ManagePricelists = 'BIKA: Manage Pricelists'
+ManagePatients = 'BIKA: Manage Patients'
 ManageProviders = 'BIKA: Manage Providers'
 ManageReference = 'BIKA: Manage Reference'
 ManageReferenceSuppliers = 'BIKA: Manage Reference Suppliers'

@@ -15,6 +15,14 @@
     />
 
     <browser:page
+      for="bika.lims.interfaces.IPatients"
+      name="folder_view"
+      class=".patients.PatientsView"
+      permission="zope2.View"
+      layer="bika.lims.interfaces.IBikaLIMS"
+    />
+
+    <browser:page
       for="bika.lims.interfaces.IProviders"
       name="folder_view"
       class=".providers.ProvidersView"

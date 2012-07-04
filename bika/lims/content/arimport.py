@@ -109,6 +109,12 @@ schema = BikaSchema.copy() + Schema((
             label = _("QuoteID"),
         ),
     ),
+    StringField('Patient',
+        searchable = True,
+        widget = StringWidget(
+            label = _("Patient"),
+        ),
+    ),
     StringField('SamplePoint',
         searchable = True,
         widget = StringWidget(

@@ -1,0 +1,94 @@
+from AccessControl import ClassSecurityInfo
+from Products.ATContentTypes.content import schemata
+from Products.Archetypes import atapi
+from Products.Archetypes.ArchetypeTool import registerType
+from Products.CMFCore import permissions
+from Products.CMFCore.utils import getToolByName
+from Products.Five.browser import BrowserView
+from bika.lims.browser.bika_listing import BikaListingView
+from bika.lims.config import PROJECTNAME
+from bika.lims.interfaces import IPatients
+from plone.app.layout.globals.interfaces import IViewView
+from bika.lims import bikaMessageFactory as _
+from bika.lims.content.bikaschema import BikaFolderSchema
+from bika.lims.permissions import *
+from plone.app.content.browser.interfaces import IFolderContentsView
+from plone.app.folder.folder import ATFolder, ATFolderSchema
+from zope.interface.declarations import implements
+
+class PatientsView(BikaListingView):
+    implements(IFolderContentsView, IViewView)
+
+    def __init__(self, context, request):
+        super(PatientsView, self).__init__(context, request)
+        self.catalog = 'bika_setup_catalog'
+        self.contentFilter = {'portal_type': 'Patient',
+                              'sort_on': 'sortable_title'}
+        self.context_actions = {}
+        self.title = _("Patients")
+        self.icon = "++resource++bika.lims.images/patient_big.png"
+        self.description = ""
+        self.show_sort_column = False
+        self.show_select_row = False
+        self.show_select_column = False
+        self.pagesize = 25
+
+        self.columns = {
+            'Title': {'title': _('Patient'),
+                      'index': 'sortable_title'},
+            'Description': {'title': _('Description'),
+                            'index': 'description',
+                            'toggle': True},
+        }
+
+        self.review_states = [
+            {'id':'default',
+             'title': _('All'),
+             'contentFilter':{},
+             'transitions':[{'id':'empty'},],
+             'columns': ['Title', 'Description']},
+        ]
+
+    def __call__(self):
+        mtool = getToolByName(self.context, 'portal_membership')
+        if mtool.checkPermission(AddPatient, self.context):
+            self.context_actions[_('Add')] = {
+                'url': 'createObject?type_name=Patient',
+                'icon': '++resource++bika.lims.images/add.png'
+            }
+        return super(PatientsView, self).__call__()
+
+    def folderitems(self):
+        mtool = getToolByName(self.context, 'portal_membership')
+        if mtool.checkPermission(ManagePatients, self.context):
+            del self.review_states[0]['transitions']
+            self.show_select_column = True
+            self.review_states.append(
+                {'id':'active',
+                 'title': _('Active'),
+                 'contentFilter': {'inactive_state': 'active'},
+                 'transitions': [{'id':'deactivate'}, ],
+                 'columns': ['Title', 'Description']})
+            self.review_states.append(
+                {'id':'inactive',
+                 'title': _('Dormant'),
+                 'contentFilter': {'inactive_state': 'inactive'},
+                 'transitions': [{'id':'activate'}, ],
+                 'columns': ['Title', 'Description']})
+
+        items = BikaListingView.folderitems(self)
+        for x in range(len(items)):
+            if not items[x].has_key('obj'): continue
+            items[x]['replace']['Title'] = "<a href='%s'>%s</a>" % \
+                 (items[x]['url'], items[x]['Title'])
+
+        return items
+
+schema = ATFolderSchema.copy()
+class Patients(ATFolder):
+    implements(IPatients)
+    displayContentsTab = False
+    schema = schema
+
+schemata.finalizeATCTSchema(schema, folderish = True, moveDiscussion = False)
+atapi.registerType(Patients, PROJECTNAME)

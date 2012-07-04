@@ -42,6 +42,7 @@ class BikaGenerator:
                        'bika_setup',
                        'methods',
                        'providers',
+                       'patients',
                        'analysisrequests',
                        'referencesamples',
                        'samples',
@@ -174,6 +175,7 @@ class BikaGenerator:
         mp(AddSample, ['Manager', 'Owner', 'LabManager', 'LabClerk', 'Doctor', 'Nurse', 'Sampler'], 1)
         mp(AddSamplePartition, ['Manager', 'Owner', 'LabManager', 'LabClerk', 'Doctor', 'Nurse', 'Sampler'], 1)
         mp(AddProvider, ['Manager', 'Owner', 'LabManager', 'LabClerk'], 1)
+        mp(AddPatient, ['Manager', 'Owner', 'LabManager', 'LabClerk'], 1)
 
         mp(permissions.AddPortalContent, ['Manager', 'Owner', 'LabManager'], 1)
         mp(permissions.ListFolderContents, ['Manager', 'Owner'], 1)
@@ -192,6 +194,7 @@ class BikaGenerator:
         mp(ManageBika, ['Manager', 'LabManager'], 1)
         mp(ManageClients, ['Manager', 'LabManager', 'LabClerk'], 1)
         mp(ManageOrders, ['Manager', 'LabManager', 'LabClerk'], 1)
+        mp(ManagePatients, ['Manager', 'LabManager', 'Owner', 'LabClerk', 'Doctor', 'Nurse'], 1)
         mp(ManagePricelists, ['Manager', 'LabManager', 'Owner'], 1)
         mp(ManageProviders, ['Manager', 'LabManager', 'Owner', 'LabClerk'], 1)
         mp(ManageReference, ['Manager', 'LabManager', 'LabClerk', 'Analyst'], 1)
@@ -240,6 +243,13 @@ class BikaGenerator:
         mp(permissions.ListFolderContents, ['Manager', 'LabManager', 'LabClerk', 'LabTechnician', 'Doctor', 'Nurse', 'Owner', 'Sampler', 'Preserver'], 0)
         mp(permissions.View, ['Manager', 'LabManager', 'LabClerk', 'LabTechnician', 'Doctor', 'Nurse', 'Owner', 'Sampler', 'Preserver'], 0)
         portal.providers.reindexObject()
+
+        # /patients
+        mp = portal.patients.manage_permission
+        mp(CancelAndReinstate, ['Manager', 'LabManager', 'Doctor', 'Nurse'], 0)
+        mp(permissions.ListFolderContents, ['Manager', 'LabManager', 'LabClerk', 'LabTechnician', 'Doctor', 'Nurse', 'Owner', 'Sampler', 'Preserver'], 0)
+        mp(permissions.View, ['Manager', 'LabManager', 'LabClerk', 'LabTechnician', 'Doctor', 'Nurse', 'Owner', 'Sampler', 'Preserver'], 0)
+        portal.patients.reindexObject()
 
         # /worksheets folder permissions
         mp = portal.worksheets.manage_permission
