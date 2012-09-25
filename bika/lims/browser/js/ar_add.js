@@ -71,9 +71,8 @@ function deleteSampleButton(){
 	$("#ar_"+column+"_SampleID_button").val($("#ar_"+column+"_SampleID_default").val());
 	$("#ar_"+column+"_SampleID").val('');
 	$("#ar_"+column+"_ClientReference").val('').removeAttr("readonly");
-	// XXX Datepicker format is not i18n aware (dd Oct 2011)
 	$("#ar_"+column+"_SamplingDate")
-		.datepicker({'dateFormat': 'dd M yy', showAnim: ''})
+		.datepicker({'dateFormat': window.jsi18n_plonelocales('date_format_short_datepicker'), showAnim: ''})
 		.click(function(){$(this).attr('value', '');})
 		.attr('value', '');
 	$("#ar_"+column+"_ClientSampleID").val('').removeAttr("readonly");
@@ -126,6 +125,13 @@ function copyButton(){
 			$("#ar_"+col+"_AnalysisProfile").val(first_val);
 		}
 		$("[id*=_AnalysisProfile]").change();
+	}
+	else if ($(this).hasClass('SampleTypeCopyButton')){ // SampleType - Must set partitions on copy
+		first_val = $('#ar_0_SampleType').val();
+		for (col=1; col<parseInt($("#col_count").val()); col++) {
+			$("#ar_"+col+"_SampleType").val(first_val);
+			$("#ar_"+col+"_SampleType").change();
+		}
 	}
 	else if ($(this).hasClass('SamplingDeviationCopyButton')){ // Sampling Deviation
 		first_val = $('#ar_0_SamplingDeviation').val();
@@ -569,17 +575,18 @@ function setARTemplate(){
 	// Apply Template analyses/parts
 	parts = []; // #parts[column] will contain this dictionary
 	for(pi=0;pi<template_data['Partitions'].length;pi++){
-		parts.push({});
-	}
-	for(pi=0;pi<template_data['Partitions'].length;pi++){
 		P = template_data['Partitions'][pi];
 		partnr = parseInt(P['part_id'].split("-")[1], 10);
 		cu = P['container_uid'];
 		if(cu.length > 1 && cu[0] != ""){ cu = [cu]; }
 		else { cu = []; }
 		pu = P['preservation_uid'];
-		if(pu.length > 1 && pu[0] != ""){ pu = [pu]; }
-		else { pu = []; }
+		if(pu != null && pu != undefined && pu.length > 1 && pu[0] != ""){
+			pu = [pu];
+		}
+		else {
+			pu = [];
+		}
 		parts[partnr-1] = {'container':cu,
 							'preservation':pu,
 							'services':[]}
@@ -740,7 +747,9 @@ function setupAutoCompleters(){
 					$("#ar_"+col+"_SamplePoint").val(st['samplepoints'][0]);
 				}
 				ct = st['containertype'];
-				if (ct != undefined && ct != null && !$(e).hasAttr('disabled')) {
+				disabled = $(e).attr('disabled');
+				if (ct != undefined && ct != null
+				    && (disabled == null || disabled == undefined)) {
 					$("#ar_"+col+"_DefaultContainerType").val(ct);
 				}
 				match = true;
@@ -836,14 +845,13 @@ $(document).ready(function(){
 	// clear date widget values if the page is reloaded.
 	e = $('input[id$="_SamplingDate"]');
 	if(e.length > 0){
-		// XXX Datepicker format is not i18n aware (dd Oct 2011)
 		if($($(e).parents('form').children('[name=came_from]')).val() == 'add'){
 			$(e)
-			.datepicker({'dateFormat': 'dd M yy', showAnim: ''})
+			.datepicker({'dateFormat': window.jsi18n_plonelocales('date_format_short_datepicker'), showAnim: ''})
 			.click(function(){$(this).attr('value', '');})
 		} else {
 			$(e)
-			.datepicker({'dateFormat': 'dd M yy', showAnim: ''})
+			.datepicker({'dateFormat': window.jsi18n_plonelocales('date_format_short_datepicker'), showAnim: ''})
 		}
 	}
 

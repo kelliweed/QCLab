@@ -73,6 +73,9 @@ class IReferenceSupplier(Interface):
 class IReferenceSuppliers(Interface):
     """Reference Suppliers """
 
+class IReportsFolder(Interface):
+    """Reports Folder"""
+
 class IInvoice(Interface):
     """Invoice"""
 
@@ -107,6 +110,10 @@ class ICalculation(Interface):
     ""
 class ICalculations(Interface):
     ""
+class IContacts(Interface):
+    ""
+class IContact(Interface):
+    ""
 class IDepartments(Interface):
     ""
 class IContainers(Interface):
@@ -122,6 +129,8 @@ class IAnalysisProfiles(Interface):
 class IARTemplates(Interface):
     ""
 class ILabContacts(Interface):
+    ""
+class ILabContact(Interface):
     ""
 class IMethods(Interface):
     ""

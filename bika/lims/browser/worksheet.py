@@ -6,7 +6,7 @@ from Products.Archetypes.config import REFERENCE_CATALOG
 from Products.Archetypes.public import DisplayList
 from Products.CMFCore.WorkflowCore import WorkflowException
 from Products.CMFCore.utils import getToolByName
-from Products.Five.browser import BrowserView
+from bika.lims.browser import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from bika.lims import EditResults, EditWorksheet, ManageWorksheets
 from bika.lims import PMF, logger
@@ -18,7 +18,7 @@ from bika.lims.browser.referencesample import ReferenceSamplesView
 from bika.lims.exportimport import instruments
 from bika.lims.subscribers import skip
 from bika.lims.subscribers import doActionFor
-from bika.lims.utils import getUsers, isActive, TimeOrDate
+from bika.lims.utils import getUsers, isActive
 from operator import itemgetter
 from plone.app.content.browser.interfaces import IFolderContentsView
 from plone.app.layout.globals.interfaces import IViewView
@@ -154,7 +154,12 @@ class WorksheetWorkflowAction(WorkflowAction):
             selected_analysis_uids = selected_analyses.keys()
 
             for analysis_uid in selected_analysis_uids:
-                analysis = bac(UID=analysis_uid)[0].getObject()
+                try:
+                    analysis = bac(UID=analysis_uid)[0].getObject()
+                except IndexError:
+                    # Duplicate analyses are removed when their analyses
+                    # get removed, so indexerror is expected.
+                    continue
                 if skip(analysis, action, peek=True):
                     continue
                 self.context.removeAnalysis(analysis)
@@ -193,7 +198,6 @@ class WorksheetAnalysesView(AnalysesView):
                               'worksheetanalysis_review_state':'unassigned'}
         self.icon = "++resource++bika.lims.images/worksheet_big.png"
         self.contentFilter = {}
-        self.setoddeven = False
         self.show_select_row = False
         self.show_sort_column = False
         self.allow_edit = True
@@ -256,8 +260,8 @@ class WorksheetAnalysesView(AnalysesView):
             if obj.portal_type == "ReferenceAnalysis":
                 items[x]['DueDate'] = ''
             else:
-                items[x]['DueDate'] = \
-                    TimeOrDate(self.context, obj.getDueDate(), long_format = 0)
+                items[x]['DueDate'] = self.ulocalized_time(obj.getDueDate())
+
             items[x]['Order'] = ''
 
         # insert placeholder row items in the gaps
@@ -316,18 +320,8 @@ class WorksheetAnalysesView(AnalysesView):
             if pos in empties:
                 continue
 
-            # first set Pos column for this row, to have a rowspan
+            # set Pos column for this row, to have a rowspan
             items[x]['rowspan'] = {'Pos': len(pos_items)}
-            for y in pos_items:
-                # then set our slot's odd/even css
-                for k in self.columns.keys():
-                    cl = (actual_table_position % 2 == 0) and "even" or "odd"
-                    if k in items[y]['class']:
-                        items[y]['class'][k] += " %s" % cl
-                    else:
-                        items[y]['class'][k] = cl
-                    items[y]['class']['select_column'] = cl
-                items[y]['table_row_class'] = cl
 
             # fill the rowspan with a little table
             obj = items[x]['obj']
@@ -380,6 +374,14 @@ class WorksheetAnalysesView(AnalysesView):
             elif obj.portal_type == 'DuplicateAnalysis':
                 pos_text += obj.getAnalysis().aq_parent.getSample().getSampleType().Title()
             pos_text += "</td></tr>"
+
+            # samplingdeviation
+            if obj.portal_type == 'Analysis':
+                deviation = obj.aq_parent.getSample().getSamplingDeviation()
+                if deviation:
+                    pos_text += "<tr><td>"
+                    pos_text += deviation.Title()
+                    pos_text += "</td></tr>"
 
 ##            # barcode
 ##            barcode = parent.id.replace("-", "")
@@ -601,11 +603,10 @@ class AddAnalysesView(BikaListingView):
             service = obj.getService()
             client = obj.aq_parent.aq_parent
             items[x]['getClientOrderNumber'] = obj.getClientOrderNumber()
-            items[x]['getDateReceived'] = \
-                TimeOrDate(self.context, obj.getDateReceived())
+            items[x]['getDateReceived'] = self.ulocalized_time(obj.getDateReceived())
+
             DueDate = obj.getDueDate()
-            items[x]['getDueDate'] = \
-                TimeOrDate(self.context, DueDate)
+            items[x]['getDueDate'] = self.ulocalized_time(DueDate)
             if DueDate < DateTime():
                 items[x]['after']['DueDate'] = '<img width="16" height="16" src="%s/++resource++bika.lims.images/late.png" title="%s"/>' % \
                     (self.context.absolute_url(),
@@ -841,7 +842,7 @@ class WorksheetARsView(BikaListingView):
                 'Position': pos,
                 'RequestID': ar.id,
                 'Client': ar.aq_parent.Title(),
-                'created': TimeOrDate(ar, ar.created()),
+                'created': self.ulocalized_time(ar.created()),
                 'replace': {},
                 'before': {},
                 'after': {},
@@ -852,9 +853,6 @@ class WorksheetARsView(BikaListingView):
             }
             items.append(item)
         items = sorted(items, key = itemgetter('Position'))
-        for i in range(len(items)):
-            items[i]['table_row_class'] = ((i + 1) % 2 == 0) and \
-                 "even" or "odd"
 
         return items
 
@@ -935,9 +933,6 @@ class WorksheetServicesView(BikaListingView):
 
         items = sorted(items, key = itemgetter('Service'))
         self.categories.sort()
-        for i in range(len(items)):
-            items[i]['table_row_class'] = ((i + 1) % 2 == 0) and \
-                 "even" or "odd"
 
         return items
 

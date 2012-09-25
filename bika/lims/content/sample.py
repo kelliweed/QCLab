@@ -17,7 +17,7 @@ from Products.CMFCore.WorkflowCore import WorkflowException
 from Products.CMFCore.utils import getToolByName
 from bika.lims.config import ManageBika, PROJECTNAME
 from bika.lims.content.bikaschema import BikaSchema
-from bika.lims.utils import sortable_title, pretty_user_name_or_id
+from bika.lims.utils import sortable_title
 import sys
 import time
 from zope.interface import implements
@@ -239,7 +239,7 @@ class Sample(BaseFolder, HistoryAwareMixin):
         """ convert SampleType title to UID
         """
         bsc = getToolByName(self, 'bika_setup_catalog')
-        sampletype = bsc(portal_type = 'SampleType', Title = value)
+        sampletype = bsc(portal_type = 'SampleType', title = value)
         value = sampletype[0].UID
         return self.Schema()['SampleType'].set(self, value)
 
@@ -251,7 +251,7 @@ class Sample(BaseFolder, HistoryAwareMixin):
         sp_uid = None
         if value:
             bsc = getToolByName(self, 'bika_setup_catalog')
-            samplepoints = bsc(portal_type = 'SamplePoint', Title = value)
+            samplepoints = bsc(portal_type = 'SamplePoint', title = value)
             if samplepoints:
                 sp_uid = samplepoints[0].UID
         return self.Schema()['SamplePoint'].set(self, sp_uid)

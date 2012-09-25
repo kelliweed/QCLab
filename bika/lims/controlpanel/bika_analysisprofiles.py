@@ -18,6 +18,14 @@ class ProfilesView(BikaListingView):
 
     def __init__(self, context, request):
         super(ProfilesView, self).__init__(context, request)
+        self.catalog = "bika_setup_catalog"
+        self.contentFilter = {
+            'portal_type': 'AnalysisProfile',
+            'path': {
+                "query": "/".join(self.context.getPhysicalPath()),
+                "level" : 0 },
+        }
+        self.catalog = "bika_setup_catalog"
         self.show_sort_column = False
         self.show_select_row = False
         self.show_select_column = True
@@ -31,20 +39,20 @@ class ProfilesView(BikaListingView):
             'Title': {'title': _('Profile'),
                       'index': 'sortable_title'},
             'Description': {'title': _('Description'),
-                            'index': 'description'},
+                            'index': 'Description'},
             'ProfileKey': {'title': _('Profile Key')},
         }
 
         self.review_states = [
             {'id':'default',
              'title': _('Active'),
-             'contentFilter': {'inactive_review_state':'active'},
+             'contentFilter': {'inactive_state':'active'},
              'columns': ['Title',
                          'Description',
                          'ProfileKey']},
             {'id':'inactive',
              'title': _('Inactive'),
-             'contentFilter': {'inactive_review_state':'inactive'},
+             'contentFilter': {'inactive_state':'inactive'},
              'columns': ['Title',
                          'Description',
                          'ProfileKey']},
@@ -56,28 +64,14 @@ class ProfilesView(BikaListingView):
                          'ProfileKey']},
         ]
 
-    def getAnalysisProfiles(self, contentFilter={}):
-        istate = contentFilter.get("inactive_state", None)
-        if istate == 'active':
-            profiles = [p for p in self.context.objectValues("AnalysisProfile")
-                        if isActive(p)]
-        elif istate == 'inactive':
-            profiles = [p for p in self.context.objectValues("AnalysisProfile")
-                        if not isActive(p)]
-        else:
-            profiles = [p for p in self.context.objectValues("AnalysisProfile")]
-        profiles.sort(lambda a,b:cmp(a.Title().lower(), b.Title().lower()))
-        return profiles
-
     def folderitems(self):
-        self.contentsMethod = self.getAnalysisProfiles
         items = BikaListingView.folderitems(self)
         for x in range(len(items)):
             if not items[x].has_key('obj'): continue
             obj = items[x]['obj']
             items[x]['Title'] = obj.Title()
             items[x]['replace']['Title'] = "<a href='%s'>%s</a>" % \
-                 (items[x]['url'], items[x]['title'])
+                                           (items[x]['url'], items[x]['title'])
             items[x]['ProfileKey'] = obj.getProfileKey()
         return items
 

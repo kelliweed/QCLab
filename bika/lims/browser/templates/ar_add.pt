@@ -63,7 +63,7 @@
 <!-- The system configured 'Dry Matter Service' -->
 <tal:i define="dms python:context.bika_setup.getDryMatterService()">
     <input type="hidden" id="getDryMatterService" name="getDryMatterService"
-        tal:condition="dms"
+        tal:condition="nocall:dms"
         tal:attributes="
             poc python: dms.getPointOfCapture();
             cat python: dms.getCategoryUID();
@@ -340,7 +340,7 @@
             <span class="fieldRequired">&nbsp;</span>
         </th>
         <td>
-            <img class="copyButton"
+            <img class="copyButton SampleTypeCopyButton"
                 tal:attributes="name field_name;src string:${portal/absolute_url}/++resource++bika.lims.images/copy.png"/>
         </td>
         <tal:block repeat="column python:range(view.col_count)">

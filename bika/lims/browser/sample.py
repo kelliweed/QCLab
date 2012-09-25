@@ -3,20 +3,19 @@ from DateTime import DateTime
 from Products.Archetypes.config import REFERENCE_CATALOG
 from Products.Archetypes.public import DisplayList
 from Products.CMFCore.utils import getToolByName
-from Products.Five.browser import BrowserView
+from bika.lims.browser import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from bika.lims import EditSample
 from bika.lims import PMF
 from bika.lims import bikaMessageFactory as _
+from Products.CMFPlone import PloneLocalesMessageFactory as _plonelocales
 from bika.lims.browser.analyses import AnalysesView
 from bika.lims.browser.bika_listing import BikaListingView
 from bika.lims.config import POINTS_OF_CAPTURE
 from bika.lims.permissions import *
-from bika.lims.utils import TimeOrDate
 from bika.lims.utils import changeWorkflowState
 from bika.lims.utils import getUsers
 from bika.lims.utils import isActive
-from bika.lims.utils import pretty_user_name_or_id
 from plone.app.layout.globals.interfaces import IViewView
 from zope.interface import implements
 import json
@@ -40,7 +39,6 @@ class SamplePartitionsView(BikaListingView):
         self.show_sort_column = False
         self.show_column_toggles = False
         self.show_select_row = False
-        self.setoddeven = False
         self.show_select_column = True
         self.pagesize = 1000
         self.form_id = "partitions"
@@ -112,9 +110,6 @@ class SamplePartitionsView(BikaListingView):
     def folderitems(self, full_objects = False):
         items = BikaListingView.folderitems(self)
 
-        props = getToolByName(self.context, 'portal_properties').bika_properties
-        datepicker_format = props.getProperty('datepicker_format')
-
         bsc = getToolByName(self.context, 'bika_setup_catalog')
 
         containers = [({'ResultValue':o.UID,
@@ -146,21 +141,21 @@ class SamplePartitionsView(BikaListingView):
 
 ##            sampler = obj.getSampler().strip()
 ##            items[x]['getSampler'] = \
-##                sampler and pretty_user_name_or_id(self.context, sampler) or ''
+##                sampler and self.user_fullname(sampler) or ''
 ##            datesampled = obj.getDateSampled()
 ##            items[x]['getDateSampled'] = \
-##                datesampled and TimeOrDate(self.context, datesampled) or ''
+##                datesampled and self.ulocalized_time(datesampled) or ''
 
             preserver = obj.getPreserver().strip()
             items[x]['getPreserver'] = \
-                preserver and pretty_user_name_or_id(self.context, preserver) or ''
+                preserver and self.user_fullname(preserver) or ''
             datepreserved = obj.getDatePreserved()
             items[x]['getDatePreserved'] = \
-                datepreserved and TimeOrDate(self.context, datepreserved) or ''
+                datepreserved and self.ulocalized_time(datepreserved) or ''
 
             disposaldate = obj.getDisposalDate()
             items[x]['getDisposalDate'] = \
-                disposaldate and TimeOrDate(self.context, disposaldate) or ''
+                disposaldate and self.ulocalized_time(disposaldate) or ''
 
             samplingdate = obj.getSamplingDate()
 
@@ -184,7 +179,7 @@ class SamplePartitionsView(BikaListingView):
 ##                items[x]['getSampler'] = sampler and sampler or \
 ##                    (username in samplers.keys() and username) or ''
 ##                items[x]['getDateSampled'] = items[x]['getDateSampled'] \
-##                    or DateTime().strftime(datepicker_format)
+##                    or DateTime().strftime(_plonelocales('date_format_short'))
 ##                items[x]['class']['getSampler'] = 'provisional'
 ##                items[x]['class']['getDateSampled'] = 'provisional'
 
@@ -202,7 +197,7 @@ class SamplePartitionsView(BikaListingView):
                 items[x]['getPreserver'] = preserver and preserver or \
                     (username in preservers.keys() and username) or ''
                 items[x]['getDatePreserved'] = items[x]['getDatePreserved'] \
-                    or DateTime().strftime(datepicker_format)
+                    or DateTime().strftime(_plonelocales('date_format_short'))
                 items[x]['class']['getPreserver'] = 'provisional'
                 items[x]['class']['getDatePreserved'] = 'provisional'
 
@@ -264,7 +259,6 @@ class SampleEdit(BrowserView):
     def __init__(self, context, request):
         BrowserView.__init__(self, context, request)
         self.icon = "++resource++bika.lims.images/sample_big.png"
-        self.TimeOrDate = TimeOrDate
         self.allow_edit = True
 
     def now(self):
@@ -290,8 +284,6 @@ class SampleEdit(BrowserView):
         getAuthenticatedMember = self.context.portal_membership.getAuthenticatedMember
         workflow = getToolByName(self.context, 'portal_workflow')
         ars = self.context.getAnalysisRequests()
-        props = getToolByName(self.context, 'portal_properties').bika_properties
-        datepicker_format = props.getProperty('datepicker_format')
         sample = self.context
 
         ## Create header_table data rows
@@ -314,7 +306,7 @@ class SampleEdit(BrowserView):
         samplingdeviations = DisplayList(
             [(sd.UID, sd.title) for sd \
              in bsc(portal_type = 'SamplingDeviation',
-                    inactive_review_state = 'active')])
+                    inactive_state = 'active')])
 
         self.header_columns = 3
         self.header_rows = [
@@ -358,7 +350,7 @@ class SampleEdit(BrowserView):
             {'id': 'Creator',
              'title': PMF('Creator'),
              'allow_edit': False,
-             'value': pretty_user_name_or_id(self.context, self.context.Creator()),
+             'value': self.user_fullname(self.context.Creator()),
              'condition':True,
              'type': 'text'},
             {'id': 'Composite',
@@ -377,22 +369,23 @@ class SampleEdit(BrowserView):
              'title': PMF('Date Created'),
              'allow_edit': False,
              'value': self.context.created(),
-             'formatted_value': TimeOrDate(self.context, self.context.created()),
+             'formatted_value': self.ulocalized_time(self.context.created()),
              'condition':True,
              'type': 'text'},
             {'id': 'SamplingDate',
              'title': _('Sampling Date'),
              'allow_edit': self.allow_edit and allow_sample_edit,
-             'value': self.context.getSamplingDate().strftime(datepicker_format),
-             'formatted_value': TimeOrDate(self.context, self.context.getSamplingDate()),
+             'value': self.context.getSamplingDate().strftime(_('date_format_short_datepicker')),
+             'formatted_value': self.ulocalized_time(self.context.getSamplingDate()),
              'condition':True,
              'class': 'datepicker',
              'type': 'text'},
             {'id': 'DateSampled',
              'title': _('Date Sampled'),
              'allow_edit': self.allow_edit and allow_sample_edit,
-             'value': sample.getDateSampled() and sample.getDateSampled().strftime(datepicker_format) or '',
-             'formatted_value': sample.getDateSampled() and TimeOrDate(self.context, sample.getDateSampled()) or '',
+             'value': sample.getDateSampled() and sample.getDateSampled().strftime(_('date_format_short_datepicker')) or '',
+             'formatted_value': sample.getDateSampled() \
+                 and self.ulocalized_time(sample.getDateSampled()) or '',
              'condition':SamplingWorkflowEnabled,
              'class': 'datepicker',
              'type': 'text',
@@ -418,28 +411,28 @@ class SampleEdit(BrowserView):
              'title': _('Date Received'),
              'allow_edit': False,
              'value': self.context.getDateReceived(),
-             'formatted_value': TimeOrDate(self.context, self.context.getDateReceived()),
+             'formatted_value': self.ulocalized_time(self.context.getDateReceived()),
              'condition':True,
              'type': 'text'},
             {'id': 'DateExpired',
              'title': _('Date Expired'),
              'allow_edit': False,
              'value': self.context.getDateExpired(),
-             'formatted_value': TimeOrDate(self.context, self.context.getDateExpired()),
+             'formatted_value': self.ulocalized_time(self.context.getDateExpired()),
              'condition':True,
              'type': 'text'},
             {'id': 'DisposalDate',
              'title': _('Disposal Date'),
              'allow_edit': False,
              'value': self.context.getDisposalDate(),
-             'formatted_value': TimeOrDate(self.context, self.context.getDisposalDate()),
+             'formatted_value': self.ulocalized_time(self.context.getDisposalDate()),
              'condition':True,
              'type': 'text'},
             {'id': 'DateDisposed',
              'title': _('Date Disposed'),
              'allow_edit': False,
              'value': self.context.getDateDisposed(),
-             'formatted_value': TimeOrDate(self.context, self.context.getDateDisposed()),
+             'formatted_value': self.ulocalized_time(self.context.getDateDisposed()),
              'condition':True,
              'type': 'text'},
         ]
@@ -486,8 +479,13 @@ class SampleEdit(BrowserView):
                 self.context.edit(**values)
                 self.context.reindexObject()
                 ars = self.context.getAnalysisRequests()
+                # Analyses and AnalysisRequets have calculated fields
+                # that are indexed; re-index all these objects.
                 for ar in ars:
                     ar.reindexObject()
+                    analyses = self.context.getAnalyses({'review_state':'to_be_sampled'})
+                    for a in analyses:
+                        a.getObject().reindexObject()
                 message = PMF("Changes saved.")
 
             # If this sample was "To Be Sampled", and the
@@ -496,6 +494,8 @@ class SampleEdit(BrowserView):
             if workflow.getInfoFor(sample, "review_state") == "to_be_sampled" \
                and form.get("Sampler", None) \
                and form.get("DateSampled", None):
+                # This transition does not invoke the regular WorkflowAction
+                # in analysisrequest.py
                 workflow.doActionFor(sample, "sample")
                 sample.reindexObject()
 
@@ -797,11 +797,9 @@ class SamplesView(BikaListingView):
             items[x]['replace']['Client'] = "<a href='%s'>%s</a>" % \
                 (obj.aq_parent.absolute_url(), obj.aq_parent.Title())
 
-            items[x]['Creator'] = pretty_user_name_or_id(self.context,
-                                                         obj.Creator())
+            items[x]['Creator'] = self.user_fullname(obj.Creator())
 
-            items[x]['DateReceived'] = TimeOrDate(self.context,
-                                                  obj.getDateReceived())
+            items[x]['DateReceived'] = self.ulocalized_time(obj.getDateReceived())
 
             deviation = obj.getSamplingDeviation()
             items[x]['SamplingDeviation'] = deviation and deviation.Title() or ''
@@ -811,15 +809,13 @@ class SamplesView(BikaListingView):
             samplingdate = obj.getSamplingDate()
 
             if not samplingdate > DateTime():
-                datesampled = TimeOrDate(self.context, obj.getDateSampled())
+                datesampled = self.ulocalized_time(obj.getDateSampled())
                 if not datesampled:
-                    datesampled = TimeOrDate(self.context, DateTime(),
-                                             long_format=1, with_time = False)
+                    datesampled = self.ulocalized_time(DateTime())
                     items[x]['class']['getDateSampled'] = 'provisional'
                 sampler = obj.getSampler().strip()
                 if sampler:
-                    items[x]['replace']['getSampler'] = pretty_user_name_or_id(
-                        self.context, sampler)
+                    items[x]['replace']['getSampler'] = self.user_fullname(sampler)
                 if 'Sampler' in member.getRoles() and not sampler:
                     sampler = member.id
                     items[x]['class']['getSampler'] = 'provisional'
@@ -829,10 +825,10 @@ class SamplesView(BikaListingView):
             items[x]['getDateSampled'] = datesampled
             items[x]['getSampler'] = sampler
 
-            items[x]['Created'] = TimeOrDate(self.context, obj.created())
+            items[x]['Created'] = self.ulocalized_time(obj.created())
 
             samplingdate = obj.getSamplingDate()
-            items[x]['getSamplingDate'] = TimeOrDate(self.context, samplingdate)
+            items[x]['getSamplingDate'] = self.ulocalized_time(samplingdate)
 
             after_icons = ''
             if obj.getSampleType().getHazardous():
@@ -883,8 +879,7 @@ class SamplesView(BikaListingView):
                 items[x]['choices'] = {'getPreserver': users}
                 preserver = username in preservers.keys() and username or ''
                 items[x]['getPreserver'] = preserver
-                items[x]['getDatePreserved'] = TimeOrDate(
-                    self.context, DateTime(), long_format=1, with_time=False)
+                items[x]['getDatePreserved'] = self.ulocalized_time(DateTime())
                 items[x]['class']['getPreserver'] = 'provisional'
                 items[x]['class']['getDatePreserved'] = 'provisional'
 

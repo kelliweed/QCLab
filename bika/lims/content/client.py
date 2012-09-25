@@ -20,9 +20,18 @@ import sys
 
 schema = Organisation.schema.copy() + atapi.Schema((
     atapi.StringField('ClientID',
+        required = 1,
         searchable = True,
+        validators = ('uniquefieldvalidator', 'standard_id_validator'),
         widget = atapi.StringWidget(
             label = _("Client ID"),
+        ),
+    ),
+    atapi.BooleanField('BulkDiscount',
+        default = False,
+        write_permission = ManageClients,
+        widget = atapi.BooleanWidget(
+            label = _("Bulk discount applies"),
         ),
     ),
     atapi.BooleanField('MemberDiscountApplies',
@@ -30,15 +39,6 @@ schema = Organisation.schema.copy() + atapi.Schema((
         write_permission = ManageClients,
         widget = atapi.BooleanWidget(
             label = _("Member discount applies"),
-        ),
-    ),
-    atapi.StringField('ClientType',
-        required = 1,
-        default = 'noncorporate',
-        write_permission = ManageClients,
-        vocabulary = CLIENT_TYPES,
-        widget = atapi.SelectionWidget(
-            label = _("Client Type"),
         ),
     ),
     atapi.LinesField('EmailSubject',
@@ -84,6 +84,8 @@ schema = Organisation.schema.copy() + atapi.Schema((
 schema['AccountNumber'].write_permission = ManageClients
 schema['title'].widget.visible = False
 schema['description'].widget.visible = False
+
+schema.moveField('ClientID', after='Name')
 
 class Client(Organisation):
     implements(IClient)

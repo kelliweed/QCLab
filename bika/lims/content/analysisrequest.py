@@ -358,7 +358,7 @@ class AnalysisRequest(BaseFolder):
             review_state = workflow.getInfoFor(analysis, 'review_state', '')
             if review_state == 'published':
                 continue
-            if analysis.getDueDate() < now:
+            if analysis.getDueDate() < analysis.getResultCaptureDate():
                 return True
         return False
 

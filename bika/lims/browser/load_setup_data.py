@@ -1,7 +1,7 @@
 from App.Common import package_home
 from Products.Archetypes.config import REFERENCE_CATALOG
 from Products.CMFCore.utils import getToolByName
-from Products.Five.browser import BrowserView
+from bika.lims.browser import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from bika.lims import bikaMessageFactory as _
 from bika.lims import PMF
@@ -163,8 +163,8 @@ class LoadSetupData(BrowserView):
             VAT = str(float(values['VAT'])),
             MinimumResults = int(values['MinimumResults']),
             BatchEmail = int(values['BatchEmail']),
-            BatchFax = int(values['BatchFax']),
-            SMSGatewayAddress = values['SMSGatewayAddress'],
+##            BatchFax = int(values['BatchFax']),
+##            SMSGatewayAddress = values['SMSGatewayAddress'],
             SamplingWorkflowEnabled = values['SamplingWorkflowEnabled'],
             CategoriseAnalysisServices = values['CategoriseAnalysisServices'],
             DryMatterService = self.services[values['DryMatterService']],
@@ -525,9 +525,20 @@ class LoadSetupData(BrowserView):
 ##        self.request.response.flush()
         rows = [[sheet.cell(row=row_nr, column=col_nr).value for col_nr in range(nr_cols)] for row_nr in range(nr_rows)]
         fields = rows[1]
-        folder = self.context.bika_setup.bika_samplepoints
+        setup_folder = self.context.bika_setup.bika_samplepoints
         for row in rows[3:]:
             row = dict(zip(fields, row))
+
+            if row['_Client_Name']:
+                client_name = unicode(row['_Client_Name'])
+                client = self.portal_catalog(portal_type = "Client",
+                                             Title = client_name)
+                if len(client) == 0:
+                    raise IndexError("Client invalid: '%s'" % client_name)
+                folder = client[0].getObject()
+            else:
+                folder = setup_folder
+
             _id = folder.invokeFactory('SamplePoint', id = 'tmp')
             obj = folder[_id]
             latitude = {'degrees': row['lat deg'],
@@ -684,7 +695,7 @@ class LoadSetupData(BrowserView):
                 Unit = row['Unit'] and unicode(row['Unit']) or None,
                 Category = self.cats[unicode(row['Category'])].UID(),
                 Price = "%02f" % float(row['Price']),
-                CorporatePrice = "%02f" % float(row['BulkPrice']),
+                BulkPrice = "%02f" % float(row['BulkPrice']),
                 VAT = "%02f" % float(row['VAT']),
                 Precision = unicode(row['Precision']),
                 Accredited = row['Accredited'] and True or False,
