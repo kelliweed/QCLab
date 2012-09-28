@@ -72,7 +72,7 @@
     <element value="Report"/>
     <element value="ReportFolder"/>
     <element value="Patient"/>
-    <element value="Provider"/>
+    <element value="Doctor"/>
     <element value="Sample"/>
     <element value="SamplePartition"/>
     <element value="SamplePoint"/>

@@ -20,7 +20,7 @@ AddClient = 'BIKA: Add Client'
 AddClientFolder = 'BIKA: Add ClientFolder'
 AddMethod = 'BIKA: Add Method'
 AddPatient = 'BIKA: Add Patient'
-AddProvider = 'BIKA: Add Provider'
+AddDoctor = 'BIKA: Add Doctor'
 AddSample = 'BIKA: Add Sample'
 AddSamplePoint = 'BIKA: Add SamplePoint'
 AddSampleMatrix = 'BIKA: Add SampleMatrix'
@@ -38,7 +38,7 @@ ADD_CONTENT_PERMISSIONS = {
     'AnalysisRequest': AddAnalysisRequest,
     'Client': AddClient,
     'Method': AddMethod,
-    'Provider': AddProvider,
+    'Doctor': AddDoctor,
     'Patient': AddPatient,
     'Sample': AddSample,
     'SampleMatrix': AddSampleMatrix,
@@ -56,7 +56,7 @@ ManageClients = 'BIKA: Manage Clients'
 ManageOrders = 'BIKA: Manage Orders'
 ManagePricelists = 'BIKA: Manage Pricelists'
 ManagePatients = 'BIKA: Manage Patients'
-ManageProviders = 'BIKA: Manage Providers'
+ManageDoctors = 'BIKA: Manage Doctors'
 ManageReference = 'BIKA: Manage Reference'
 ManageReferenceSuppliers = 'BIKA: Manage Reference Suppliers'
 ManageSamples = 'BIKA: Manage Samples'

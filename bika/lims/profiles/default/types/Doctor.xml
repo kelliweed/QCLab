@@ -1,14 +1,14 @@
 <?xml version="1.0"?>
-<object name="Provider"
+<object name="Doctor"
         meta_type="Factory-based Type Information with dynamic views"
         xmlns:i18n="http://xml.zope.org/namespaces/i18n"
         i18n:domain="plone">
- <property name="title" i18n:translate="">Provider</property>
+ <property name="title" i18n:translate="">Doctor</property>
  <property name="description"></property>
  <property name="content_icon">++resource++bika.lims.images/provider.png</property>
- <property name="content_meta_type">Provider</property>
+ <property name="content_meta_type">Doctor</property>
  <property name="product">bika.lims</property>
- <property name="factory">addProvider</property>
+ <property name="factory">addDoctor</property>
  <property name="add_view_expr"></property>
  <property name="link_target"></property>
  <property name="global_allow">False</property>

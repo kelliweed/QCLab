@@ -7,7 +7,7 @@ from Products.CMFCore.utils import getToolByName
 from Products.Five.browser import BrowserView
 from bika.lims.browser.bika_listing import BikaListingView
 from bika.lims.config import PROJECTNAME
-from bika.lims.interfaces import IProviders
+from bika.lims.interfaces import IDoctors
 from plone.app.layout.globals.interfaces import IViewView
 from bika.lims import bikaMessageFactory as _
 from bika.lims.content.bikaschema import BikaFolderSchema
@@ -18,14 +18,14 @@ from plone.app.content.browser.interfaces import IFolderContentsView
 from plone.app.folder.folder import ATFolder, ATFolderSchema
 from zope.interface.declarations import implements
 
-class ProvidersView(ClientContactsView):
+class DoctorsView(ClientContactsView):
 
     def __init__(self, context, request):
-        super(ProvidersView, self).__init__(context, request)
-        self.contentFilter = {'portal_type': 'Provider',
+        super(DoctorsView, self).__init__(context, request)
+        self.contentFilter = {'portal_type': 'Doctor',
                               'sort_on': 'sortable_title'}
         self.context_actions = {}
-        self.title = _("Providers")
+        self.title = _("Doctors")
         self.icon = "++resource++bika.lims.images/provider_big.png"
         self.description = ""
         self.show_sort_column = False
@@ -34,12 +34,12 @@ class ProvidersView(ClientContactsView):
         self.pagesize = 50
 
         self.columns = {
-            'getProviderID': {'title': _('Provider ID'),
-                              'index': 'getProviderID', },
+            'getDoctorID': {'title': _('Doctor ID'),
+                              'index': 'getDoctorID', },
             'getFullname': {'title': _('Full Name'),
                             'index': 'getFullname'},
-            'getProviderRole': {'title': _('Provider Role'),
-                                'index': 'getProviderRole',
+            'getDoctorRole': {'title': _('Doctor Role'),
+                                'index': 'getDoctorRole',
                                 'toggle': True, },
             'getEmailAddress': {'title': _('Email Address')},
             'getBusinessPhone': {'title': _('Business Phone')},
@@ -51,9 +51,9 @@ class ProvidersView(ClientContactsView):
              'title': _('All'),
              'contentFilter':{},
              'transitions':[{'id':'empty'},],
-             'columns': ['getProviderID',
+             'columns': ['getDoctorID',
                          'getFullname',
-                         'getProviderRole',
+                         'getDoctorRole',
                          'getEmailAddress',
                          'getBusinessPhone',
                          'getMobilePhone']},
@@ -61,21 +61,21 @@ class ProvidersView(ClientContactsView):
 
     def __call__(self):
         mtool = getToolByName(self.context, 'portal_membership')
-        if mtool.checkPermission(AddProvider, self.context):
+        if mtool.checkPermission(AddDoctor, self.context):
             self.context_actions[_('Add')] = {
-                'url': 'createObject?type_name=Provider',
+                'url': 'createObject?type_name=Doctor',
                 'icon': '++resource++bika.lims.images/add.png'
             }
-        if mtool.checkPermission(ManageProviders, self.context):
+        if mtool.checkPermission(ManageDoctors, self.context):
             self.show_select_column = True
             self.review_states = [
                 {'id':'default',
                  'title': _('All'),
                  'contentFilter':{},
                  'transitions':[{'id':'empty'},],
-                 'columns': ['getProviderID',
+                 'columns': ['getDoctorID',
                              'getFullname',
-                             'getProviderRole',
+                             'getDoctorRole',
                              'getEmailAddress',
                              'getBusinessPhone',
                              'getMobilePhone']},
@@ -83,9 +83,9 @@ class ProvidersView(ClientContactsView):
                  'title': _('Active'),
                  'contentFilter': {'inactive_state': 'active'},
                  'transitions': [{'id':'deactivate'}, ],
-                 'columns': ['getProviderID',
+                 'columns': ['getDoctorID',
                              'getFullname',
-                             'getProviderRole',
+                             'getDoctorRole',
                              'getEmailAddress',
                              'getBusinessPhone',
                              'getMobilePhone']},
@@ -93,38 +93,38 @@ class ProvidersView(ClientContactsView):
                  'title': _('Dormant'),
                  'contentFilter': {'inactive_state': 'inactive'},
                  'transitions': [{'id':'activate'}, ],
-                 'columns': ['getProviderID',
+                 'columns': ['getDoctorID',
                              'getFullname',
-                             'getProviderRole',
+                             'getDoctorRole',
                              'getEmailAddress',
                              'getBusinessPhone',
                              'getMobilePhone']},
                 ]
-        return super(ProvidersView, self).__call__()
+        return super(DoctorsView, self).__call__()
 
     def folderitems(self):
-        items = super(ProvidersView, self).folderitems()
+        items = super(DoctorsView, self).folderitems()
         for x in range(len(items)):
             if not items[x].has_key('obj'): continue
             obj = items[x]['obj']
             del items[x]['replace']['getFullname']
-            items[x]['getProviderID'] = obj.getProviderID()
-            items[x]['replace']['getProviderID'] = "<a href='%s'>%s</a>" % \
-                 (items[x]['url'], items[x]['getProviderID'])
-            items[x]['getProviderRole'] = obj.getProviderRole()
+            items[x]['getDoctorID'] = obj.getDoctorID()
+            items[x]['replace']['getDoctorID'] = "<a href='%s'>%s</a>" % \
+                 (items[x]['url'], items[x]['getDoctorID'])
+            items[x]['getDoctorRole'] = obj.getDoctorRole()
 
         return items
 
-class ProviderAnalysisRequestsView(AnalysisRequestsView):
+class DoctorAnalysisRequestsView(AnalysisRequestsView):
     def __init__(self, context, request):
-        super(ProviderAnalysisRequestsView, self).__init__(context, request)
-        self.contentFilter['getProviderUID'] = self.context.getProviderUID()
+        super(DoctorAnalysisRequestsView, self).__init__(context, request)
+        self.contentFilter['getDoctorUID'] = self.context.getDoctorUID()
 
 schema = ATFolderSchema.copy()
-class Providers(ATFolder):
-    implements(IProviders)
+class Doctors(ATFolder):
+    implements(IDoctors)
     displayContentsTab = False
     schema = schema
 
 schemata.finalizeATCTSchema(schema, folderish = True, moveDiscussion = False)
-atapi.registerType(Providers, PROJECTNAME)
+atapi.registerType(Doctors, PROJECTNAME)

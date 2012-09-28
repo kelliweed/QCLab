@@ -158,32 +158,32 @@ class Client(Organisation):
                                           y['title'].lower()))
         return contact_data
 
-    security.declarePublic('getProvidersDisplayList')
-    def getProvidersDisplayList(self):
+    security.declarePublic('getDoctorsDisplayList')
+    def getDoctorsDisplayList(self):
         wf = getToolByName(self, 'portal_workflow')
         pairs = []
-        for provider in self.objectValues('Provider'):
+        for provider in self.objectValues('Doctor'):
             if wf.getInfoFor(provider, 'inactive_state', '') == 'active':
                 pairs.append((provider.UID(), provider.Title()))
         # sort the list by the second item
         pairs.sort(lambda x, y:cmp(x[1], y[1]))
         return DisplayList(pairs)
 
-    security.declarePublic('getProviderFromUsername')
-    def getProviderFromUsername(self, username):
-        for provider in self.objectValues('Provider'):
+    security.declarePublic('getDoctorFromUsername')
+    def getDoctorFromUsername(self, username):
+        for provider in self.objectValues('Doctor'):
             if provider.getUsername() == username:
                 return provider.UID()
 
-    security.declarePublic('getProviderUIDForUser')
-    def getProviderUIDForUser(self):
+    security.declarePublic('getDoctorUIDForUser')
+    def getDoctorUIDForUser(self):
         """ get the UID of the user associated with the authenticated user
         """
         membership_tool = getToolByName(instance, 'portal_membership')
         member = membership_tool.getAuthenticatedMember()
         username = mtool.getAuthenticatedMember().getUserName()
         r = self.portal_catalog(
-            portal_type = 'Provider',
+            portal_type = 'Doctor',
             getUsername = username
         )
         if len(r) == 1:

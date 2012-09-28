@@ -8,38 +8,38 @@ from Products.Archetypes.public import *
 from Products.CMFCore import permissions
 from Products.CMFCore.utils import getToolByName
 from bika.lims.config import *
-from bika.lims.interfaces import IProvider
+from bika.lims.interfaces import IDoctor
 from bika.lims.permissions import *
 from bika.lims.content.contact import Contact
 from bika.lims import PMF, bikaMessageFactory as _
 from zope.interface import implements
 
 schema = Schema((
-   StringField('ProviderID',
+   StringField('DoctorID',
         searchable=True,
         write_permission=ManageBika,
         widget=StringWidget(
-            label=_('Provider ID'),
+            label=_('Doctor ID'),
         ),
     ),
 )) + Contact.schema.copy() + Schema((
-    StringField('ProviderRole',
+    StringField('DoctorRole',
         required=1,
         default='Doctor',
         vocabulary=PROVIDER_ROLES,
-        write_permission=ManageProviders,
+        write_permission=ManageDoctors,
         widget=SelectionWidget(
-            label=_('Provider Role'),
+            label=_('Doctor Role'),
         ),
     ),
 ))
 
-schema['ProviderID'].validators = ('uniquefieldvalidator',)
+schema['DoctorID'].validators = ('uniquefieldvalidator',)
 # Update the validation layer after change the validator in runtime
-schema['ProviderID']._validationLayer()
+schema['DoctorID']._validationLayer()
 
-class Provider(Contact):
-    implements(IProvider)
+class Doctor(Contact):
+    implements(IDoctor)
     security = ClassSecurityInfo()
     displayContentsTab = False
     schema = schema
@@ -68,4 +68,4 @@ class Provider(Contact):
                 pairs.append((item[0], item[1]))
         return DisplayList(pairs)
 
-atapi.registerType(Provider, PROJECTNAME)
+atapi.registerType(Doctor, PROJECTNAME)

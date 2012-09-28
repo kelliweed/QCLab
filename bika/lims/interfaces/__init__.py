@@ -144,9 +144,9 @@ class IPatients(Interface):
     ""
 class IPreservations(Interface):
     ""
-class IProviders(Interface):
+class IDoctors(Interface):
     ""
-class IProvider(Interface):
+class IDoctor(Interface):
     ""
 class IReferenceManufacturers(Interface):
     ""

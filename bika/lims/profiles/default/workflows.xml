@@ -202,8 +202,8 @@
   </type>
   <type type_id="PricelistLineItem"/>
 
-  <type type_id="Providers"/>
-  <type type_id="Provider">
+  <type type_id="Doctors"/>
+  <type type_id="Doctor">
    <bound-workflow workflow_id="bika_one_state_workflow"/>
    <bound-workflow workflow_id="bika_inactive_workflow"/>
   </type>

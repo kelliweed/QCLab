@@ -175,7 +175,7 @@ class BikaGenerator:
         mp(AddMethod, ['Manager', 'LabManager'], 1)
         mp(AddSample, ['Manager', 'Owner', 'LabManager', 'LabClerk', 'Doctor', 'Nurse', 'Sampler'], 1)
         mp(AddSamplePartition, ['Manager', 'Owner', 'LabManager', 'LabClerk', 'Doctor', 'Nurse', 'Sampler'], 1)
-        mp(AddProvider, ['Manager', 'Owner', 'LabManager', 'LabClerk'], 1)
+        mp(AddDoctor, ['Manager', 'Owner', 'LabManager', 'LabClerk'], 1)
         mp(AddPatient, ['Manager', 'Owner', 'LabManager', 'LabClerk'], 1)
 
         mp(permissions.AddPortalContent, ['Manager', 'Owner', 'LabManager'], 1)
@@ -197,7 +197,7 @@ class BikaGenerator:
         mp(ManageOrders, ['Manager', 'LabManager', 'LabClerk'], 1)
         mp(ManagePatients, ['Manager', 'LabManager', 'Owner', 'LabClerk', 'Doctor', 'Nurse'], 1)
         mp(ManagePricelists, ['Manager', 'LabManager', 'Owner'], 1)
-        mp(ManageProviders, ['Manager', 'LabManager', 'Owner', 'LabClerk'], 1)
+        mp(ManageDoctors, ['Manager', 'LabManager', 'Owner', 'LabClerk'], 1)
         mp(ManageReference, ['Manager', 'LabManager', 'LabClerk', 'Analyst'], 1)
         mp(ManageReferenceSuppliers, ['Manager', 'LabManager', 'LabClerk', 'Analyst'], 1)
         mp(ManageSamples, ['Manager', 'LabManager', 'LabClerk', 'Doctor', 'Nurse', 'Analyst', 'Sampler', 'Preserver', 'Owner'], 1)

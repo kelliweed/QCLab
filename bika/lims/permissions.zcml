@@ -23,7 +23,7 @@
 <permission id="bika.lims.permissions.AddClientFolder" title="BIKA: Add ClientFolder"/>
 <permission id="bika.lims.permissions.AddMethod" title="BIKA: Add Method"/>
 <permission id="bika.lims.permissions.Addatient" title="BIKA: Add Patient"/>
-<permission id="bika.lims.permissions.AddProvider" title="BIKA: Add Provider"/>
+<permission id="bika.lims.permissions.AddDoctor" title="BIKA: Add Doctor"/>
 <permission id="bika.lims.permissions.AddSample" title="BIKA: Add Sample"/>
 <permission id="bika.lims.permissions.AddSamplePoint" title="BIKA: Add SamplePoint"/>
 <permission id="bika.lims.permissions.AddSampleMatrix" title="BIKA: Add SampleMatrix"/>
@@ -40,7 +40,7 @@
 <permission id="bika.lims.ManageOrders" title="BIKA: Manage Orders"/>
 <permission id="bika.lims.ManagePatients" title="BIKA: Manage Patients"/>
 <permission id="bika.lims.ManagePricelists" title="BIKA: Manage Pricelists"/>
-<permission id="bika.lims.ManageProviders" title="BIKA: Manage Providers"/>
+<permission id="bika.lims.ManageDoctors" title="BIKA: Manage Doctors"/>
 <permission id="bika.lims.ManageReference" title="BIKA: Manage Reference"/>
 <permission id="bika.lims.ManageReferenceSuppliers" title="BIKA: Manage Reference Suppliers"/>
 <permission id="bika.lims.ManageSamples" title="BIKA: Manage Samples"/>
