@@ -14,29 +14,7 @@ from bika.lims.content.contact import Contact
 from bika.lims import PMF, bikaMessageFactory as _
 from zope.interface import implements
 
-schema = Schema((
-   StringField('DoctorID',
-        searchable=True,
-        write_permission=ManageBika,
-        widget=StringWidget(
-            label=_('Doctor ID'),
-        ),
-    ),
-)) + Contact.schema.copy() + Schema((
-    StringField('DoctorRole',
-        required=1,
-        default='Doctor',
-        vocabulary=PROVIDER_ROLES,
-        write_permission=ManageDoctors,
-        widget=SelectionWidget(
-            label=_('Doctor Role'),
-        ),
-    ),
-))
-
-schema['DoctorID'].validators = ('uniquefieldvalidator',)
-# Update the validation layer after change the validator in runtime
-schema['DoctorID']._validationLayer()
+schema = Contact.schema.copy()
 
 class Doctor(Contact):
     implements(IDoctor)

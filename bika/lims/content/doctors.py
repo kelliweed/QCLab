@@ -34,13 +34,8 @@ class DoctorsView(ClientContactsView):
         self.pagesize = 50
 
         self.columns = {
-            'getDoctorID': {'title': _('Doctor ID'),
-                              'index': 'getDoctorID', },
             'getFullname': {'title': _('Full Name'),
                             'index': 'getFullname'},
-            'getDoctorRole': {'title': _('Doctor Role'),
-                                'index': 'getDoctorRole',
-                                'toggle': True, },
             'getEmailAddress': {'title': _('Email Address')},
             'getBusinessPhone': {'title': _('Business Phone')},
             'getMobilePhone': {'title': _('Mobile Phone')},
@@ -51,9 +46,7 @@ class DoctorsView(ClientContactsView):
              'title': _('All'),
              'contentFilter':{},
              'transitions':[{'id':'empty'},],
-             'columns': ['getDoctorID',
-                         'getFullname',
-                         'getDoctorRole',
+             'columns': ['getFullname',
                          'getEmailAddress',
                          'getBusinessPhone',
                          'getMobilePhone']},
@@ -73,9 +66,7 @@ class DoctorsView(ClientContactsView):
                  'title': _('All'),
                  'contentFilter':{},
                  'transitions':[{'id':'empty'},],
-                 'columns': ['getDoctorID',
-                             'getFullname',
-                             'getDoctorRole',
+                 'columns': ['getFullname',
                              'getEmailAddress',
                              'getBusinessPhone',
                              'getMobilePhone']},
@@ -83,9 +74,7 @@ class DoctorsView(ClientContactsView):
                  'title': _('Active'),
                  'contentFilter': {'inactive_state': 'active'},
                  'transitions': [{'id':'deactivate'}, ],
-                 'columns': ['getDoctorID',
-                             'getFullname',
-                             'getDoctorRole',
+                 'columns': ['getFullname',
                              'getEmailAddress',
                              'getBusinessPhone',
                              'getMobilePhone']},
@@ -93,9 +82,7 @@ class DoctorsView(ClientContactsView):
                  'title': _('Dormant'),
                  'contentFilter': {'inactive_state': 'inactive'},
                  'transitions': [{'id':'activate'}, ],
-                 'columns': ['getDoctorID',
-                             'getFullname',
-                             'getDoctorRole',
+                 'columns': ['getFullname',
                              'getEmailAddress',
                              'getBusinessPhone',
                              'getMobilePhone']},
@@ -107,18 +94,10 @@ class DoctorsView(ClientContactsView):
         for x in range(len(items)):
             if not items[x].has_key('obj'): continue
             obj = items[x]['obj']
-            del items[x]['replace']['getFullname']
-            items[x]['getDoctorID'] = obj.getDoctorID()
-            items[x]['replace']['getDoctorID'] = "<a href='%s'>%s</a>" % \
-                 (items[x]['url'], items[x]['getDoctorID'])
-            items[x]['getDoctorRole'] = obj.getDoctorRole()
+            items[x]['replace']['getFullname'] = "<a href='%s'>%s</a>" % \
+                 (items[x]['url'], items[x]['getFullname'])
 
         return items
-
-class DoctorAnalysisRequestsView(AnalysisRequestsView):
-    def __init__(self, context, request):
-        super(DoctorAnalysisRequestsView, self).__init__(context, request)
-        self.contentFilter['getDoctorUID'] = self.context.getDoctorUID()
 
 schema = ATFolderSchema.copy()
 class Doctors(ATFolder):
