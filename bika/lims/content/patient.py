@@ -3,27 +3,27 @@
 from AccessControl import ClassSecurityInfo
 from AccessControl.Permissions import manage_users
 from Products.ATExtensions.at_extensions import RecordWidget
+from bika.lims.browser.widgets.datetimewidget import DateTimeWidget
 from Products.Archetypes import atapi
 from Products.Archetypes.public import *
 from Products.Archetypes.references import HoldingReference
 from Products.CMFCore import permissions
 from Products.CMFDynamicViewFTI.browserdefault import BrowserDefaultMixin
-from bika.lims import bikaMessageFactory as _
-from bika.lims import logger
+from bika.lims import bikaMessageFactory as _, logger
 from bika.lims.config import *
 from bika.lims.content.contact import Contact
 
 # Some pain here, to re-organise the Contact schematas for easier data input
 
 schema = Schema((
-    StringField('PatientID', schemata='Default',
+    StringField('PatientID',
         searchable=1,
         required=1,
         widget=StringWidget(
             label=('Patient ID'),
         ),
     ),
-    ReferenceField('PrimaryReferrer', schemata='Default',
+    ReferenceField('PrimaryReferrer',
         allowed_types=('Client',),
         relationship='PatientClient',
         required=1,
@@ -39,31 +39,31 @@ schema = Schema((
         ),
     ),
 )) + Contact.schema.copy() + Schema((
-    StringField('Gender', schemata='Default',
+    StringField('Gender',
         vocabulary=GENDERS,
         index = 'FieldIndex',
         widget=SelectionWidget(
             label=_('Gender'),
         ),
     ),
-    IntegerField('Age', schemata='Default',
-        widget=SelectionWidget(
+    IntegerField('Age',
+        widget=StringWidget(
             label=_('Age'),
         ),
     ),
-    DateTimeField('BirthDate', schemata='Default',
+    DateTimeField('BirthDate',
         required = 1,
-        widget = StringWidget(
+        widget = DateTimeWidget(
             label=_('Birth date'),
         ),
     ),
-    BooleanField('DOBEstimated', schemata='Default',
+    BooleanField('DOBEstimated',
         default=False,
         widget=BooleanWidget(
             label=_("Birth date estimated")
         ),
     ),
-    TextField('Remarks', schemata='Default',
+    TextField('Remarks',
         searchable = True,
         default_content_type = 'text/x-web-intelligent',
         allowable_content_types = ('text/x-web-intelligent',),
@@ -121,7 +121,7 @@ for field_id in ('title', 'BusinessFax', 'JobTitle'):
     schema[field_id].required = 0
     schema[field_id].widget.visible = False
 
-class Patient(BrowserDefaultMixin, BaseFolder):
+class Patient(Contact):
     security = ClassSecurityInfo()
     schema = schema
     displayContentsTab = False
@@ -131,13 +131,27 @@ class Patient(BrowserDefaultMixin, BaseFolder):
         from bika.lims.idserver import renameAfterCreation
         renameAfterCreation(self)
 
+    # This is copied from Contact (In contact, it is acquired from Client)
+    security.declarePublic('getCCContactsDisplayList')
+    def getCCContactsDisplayList(self):
+        pairs = []
+        all_contacts = self.getContactsDisplayList().items()
+        # remove myself
+        for item in all_contacts:
+            if item[0] != self.UID():
+                pairs.append((item[0], item[1]))
+        return DisplayList(pairs)
+
     def getPossibleAddresses(self):
         return ['PhysicalAddress', 'PostalAddress']
 
-
     security.declarePublic('getContactsDisplayList')
     def getContactsDisplayList(self):
-        return self.getPrimaryReferrer().getContactsDisplayList()
+        referrer = self.getPrimaryReferrer()
+        if referrer:
+            return referrer.getContactsDisplayList()
+        else:
+            return {}
 
     security.declarePublic('getContactUIDForUser')
     def getContactUIDForUser(self):
