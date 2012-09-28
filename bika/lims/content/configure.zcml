@@ -25,14 +25,14 @@
     <browser:page
       for="bika.lims.interfaces.IDoctors"
       name="folder_view"
-      class=".providers.DoctorsView"
+      class=".doctors.DoctorsView"
       permission="zope2.View"
       layer="bika.lims.interfaces.IBikaLIMS"
     />
     <browser:page
       for="bika.lims.interfaces.IDoctor"
       name="analysisrequests"
-      class=".providers.DoctorAnalysisRequestsView"
+      class=".doctors.DoctorAnalysisRequestsView"
       permission="bika.lims.ManageAnalysisRequests"
       layer="bika.lims.interfaces.IBikaLIMS"
     />

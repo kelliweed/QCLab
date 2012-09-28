@@ -3,7 +3,7 @@
 	name="portal_actions"
 	meta_type="Plone Actions Tool">
 
-	<action-provider name="portal_actions"/>
+	<action-doctor name="portal_actions"/>
 
 	<!-- hide the "sharing" tab on a list of types.
              This is here to avoid hiding the sharing tab globally -->

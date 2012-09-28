@@ -41,7 +41,7 @@ class BikaGenerator:
                        'pricelists',
                        'bika_setup',
                        'methods',
-                       'providers',
+                       'doctors',
                        'patients',
                        'analysisrequests',
                        'referencesamples',
@@ -248,12 +248,12 @@ class BikaGenerator:
         mp(AddAnalysisSpec, ['Manager', 'LabManager', 'Owner'], 0)
         portal.clients.reindexObject()
 
-        # /providers
-        mp = portal.providers.manage_permission
+        # /doctors
+        mp = portal.doctors.manage_permission
         mp(CancelAndReinstate, ['Manager', 'LabManager', 'Doctor', 'Nurse'], 0)
         mp(permissions.ListFolderContents, ['Manager', 'LabManager', 'LabClerk', 'LabTechnician', 'Doctor', 'Nurse', 'Owner', 'Sampler', 'Preserver'], 0)
         mp(permissions.View, ['Manager', 'LabManager', 'LabClerk', 'LabTechnician', 'Doctor', 'Nurse', 'Owner', 'Sampler', 'Preserver'], 0)
-        portal.providers.reindexObject()
+        portal.doctors.reindexObject()
 
         # /patients
         mp = portal.patients.manage_permission

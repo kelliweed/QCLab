@@ -26,7 +26,7 @@ class DoctorsView(ClientContactsView):
                               'sort_on': 'sortable_title'}
         self.context_actions = {}
         self.title = _("Doctors")
-        self.icon = "++resource++bika.lims.images/provider_big.png"
+        self.icon = "++resource++bika.lims.images/doctor_big.png"
         self.description = ""
         self.show_sort_column = False
         self.show_select_row = False

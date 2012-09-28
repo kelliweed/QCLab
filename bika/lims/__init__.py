@@ -65,8 +65,8 @@ def initialize(context):
     from content.methods import Methods
     from content.patient import Patient
     from content.patients import Patients
-    from content.provider import Doctor
-    from content.providers import Doctors
+    from content.doctor import Doctor
+    from content.doctors import Doctors
     from content.organisation import Organisation
     from content.person import Person
     from content.preservation import Preservation
