@@ -29,11 +29,6 @@ POINTS_OF_CAPTURE = DisplayList((
     ('lab', _('Lab Analyses')),
 ))
 
-PROVIDER_ROLES = DisplayList((
-    ('Doctor', 'Doctor'),
-    ('Nurse', 'Nurse'),
-))
-
 SERVICE_POINT_OF_CAPTURE = DisplayList((
     ('field', _('Field')),
     ('lab', _('Lab')),

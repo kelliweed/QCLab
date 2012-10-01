@@ -40,9 +40,9 @@
     </metal:baseslot>
 
     <tal:notajax tal:condition="not:ajax_load">
-        <div tal:replace="structure doctor:plone.htmlhead" />
+        <div tal:replace="structure provider:plone.htmlhead" />
 
-        <link tal:replace="structure doctor:plone.htmlhead.links" />
+        <link tal:replace="structure provider:plone.htmlhead.links" />
 
         <!-- Disable IE6 image toolbar -->
         <meta http-equiv="imagetoolbar" content="no" />
@@ -98,7 +98,7 @@
                       <metal:bodytext define-slot="main">
 
                         <metal:main define-macro="main">
-                            <div tal:replace="structure doctor:plone.abovecontenttitle" />
+                            <div tal:replace="structure provider:plone.abovecontenttitle" />
 								  <h1 class="documentFirstHeading">
 								  <img tal:attributes="src view/icon"/>
 								  <span tal:content="view/title"/>
@@ -121,7 +121,7 @@
                 </div>
               </metal:block>
 
-              <div id="viewlet-below-content" tal:content="structure doctor:plone.belowcontent" />
+              <div id="viewlet-below-content" tal:content="structure provider:plone.belowcontent" />
 
             </td>
             <tal:comment replace="nothing"> End of main content block </tal:comment>
@@ -135,7 +135,7 @@
 
       <metal:block i18n:domain="plone" tal:condition="not:ajax_load">
 
-        <div tal:replace="structure doctor:plone.portalfooter" />
+        <div tal:replace="structure provider:plone.portalfooter" />
 
       </metal:block>
 

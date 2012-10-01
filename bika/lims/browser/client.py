@@ -8,6 +8,7 @@ from bika.lims.browser import BrowserView
 from bika.lims.browser.analysisrequest import AnalysisRequestWorkflowAction, \
     AnalysisRequestsView
 from bika.lims.browser.bika_listing import BikaListingView
+from bika.lims.content.patients import PatientsView
 from bika.lims.browser.publish import Publish
 from bika.lims.browser.sample import SamplesView
 from bika.lims.interfaces import IContacts
@@ -232,6 +233,12 @@ class ClientWorkflowAction(AnalysisRequestWorkflowAction):
             self.request.response.redirect(self.destination_url)
         else:
             AnalysisRequestWorkflowAction.__call__(self)
+
+class ClientPatientsView(PatientsView):
+    def __init__(self, context, request):
+        super(ClientPatientsView, self).__init__(context, request)
+        self.contentFilter['path'] = {"query": "/".join(context.getPhysicalPath()),
+                                      "level" : 0 }
 
 class ClientAnalysisRequestsView(AnalysisRequestsView):
     def __init__(self, context, request):

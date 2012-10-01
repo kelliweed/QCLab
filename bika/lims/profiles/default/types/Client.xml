@@ -64,6 +64,18 @@
   <permission value="BIKA: Manage Samples"/>
  </action>
 
+ <action title="Patients"
+         action_id="patients"
+         category="object"
+         condition_expr=""
+         icon_expr="string:${portal_url}/images/patient.png"
+         link_target=""
+         url_expr="string:${object_url}/patients"
+         i18n:attributes="title"
+         visible="True">
+  <permission value="BIKA: Manage Patients"/>
+ </action>
+
  <action title="SamplePoints"
          action_id="samplepoints"
          category="object"

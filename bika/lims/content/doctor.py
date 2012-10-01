@@ -46,4 +46,15 @@ class Doctor(Contact):
                 pairs.append((item[0], item[1]))
         return DisplayList(pairs)
 
+    security.declarePublic('getSamples')
+    def getSamples(self):
+        """ get all samples taken from this Patient """
+        bc = getToolByName(self, 'bika_catalog')
+        return [p.getObject() for p in bc(portal_type='Sample', getDoctorUID=self.UID())]
+
+    security.declarePublic('getARs')
+    def getARs(self, analysis_state):
+        bc = getToolByName(self, 'bika_catalog')
+        return [p.getObject() for p in bc(portal_type='AnalysisRequest', getDoctorUID=self.UID())]
+
 atapi.registerType(Doctor, PROJECTNAME)

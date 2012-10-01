@@ -24,7 +24,7 @@
     <browser:page
       for="bika.lims.interfaces.IDoctor"
       name="samples"
-      class="bika.lims.browser.doctor.ClientSamplesView"
+      class="bika.lims.browser.doctor.DoctorSamplesView"
       permission="zope2.View"
       layer="bika.lims.interfaces.IBikaLIMS"
     />

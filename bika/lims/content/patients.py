@@ -5,15 +5,15 @@ from Products.Archetypes.ArchetypeTool import registerType
 from Products.CMFCore import permissions
 from Products.CMFCore.utils import getToolByName
 from Products.Five.browser import BrowserView
+from bika.lims import bikaMessageFactory as _
 from bika.lims.browser.bika_listing import BikaListingView
 from bika.lims.config import PROJECTNAME
-from bika.lims.interfaces import IPatients
-from plone.app.layout.globals.interfaces import IViewView
-from bika.lims import bikaMessageFactory as _
 from bika.lims.content.bikaschema import BikaFolderSchema
+from bika.lims.interfaces import IPatients
 from bika.lims.permissions import *
 from plone.app.content.browser.interfaces import IFolderContentsView
 from plone.app.folder.folder import ATFolder, ATFolderSchema
+from plone.app.layout.globals.interfaces import IViewView
 from zope.interface.declarations import implements
 
 class PatientsView(BikaListingView):
@@ -21,7 +21,7 @@ class PatientsView(BikaListingView):
 
     def __init__(self, context, request):
         super(PatientsView, self).__init__(context, request)
-        self.catalog = 'bika_setup_catalog'
+
         self.contentFilter = {'portal_type': 'Patient',
                               'sort_on': 'sortable_title'}
         self.context_actions = {}

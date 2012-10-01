@@ -1,21 +1,20 @@
-"""The patient
+"""
 """
 from AccessControl import ClassSecurityInfo
 from AccessControl.Permissions import manage_users
-from Products.ATExtensions.at_extensions import RecordWidget
-from bika.lims.browser.widgets.datetimewidget import DateTimeWidget
+from Products.ATContentTypes.content import schemata
 from Products.Archetypes import atapi
 from Products.Archetypes.public import *
-from Products.Archetypes.references import HoldingReference
 from Products.CMFCore import permissions
-from Products.CMFDynamicViewFTI.browserdefault import BrowserDefaultMixin
-from bika.lims import bikaMessageFactory as _, logger
-from bika.lims.config import *
-from bika.lims.content.contact import Contact
+from Products.CMFCore.utils import getToolByName
+from bika.lims import PMF, bikaMessageFactory as _
+from bika.lims.browser.widgets import DateTimeWidget
+from bika.lims.config import ManageClients, PUBLICATION_PREFS, PROJECTNAME
+from bika.lims.content.person import Person
+from bika.lims.interfaces import IPatient
+from zope.interface import implements
 
-# Some pain here, to re-organise the Contact schematas for easier data input
-
-schema = Schema((
+schema = Person.schema.copy() + Schema((
     StringField('PatientID',
         searchable=1,
         required=1,
@@ -38,9 +37,9 @@ schema = Schema((
             visible=False,
         ),
     ),
-)) + Contact.schema.copy() + Schema((
     StringField('Gender',
-        vocabulary=GENDERS,
+        vocabulary=DisplayList((['m',_('Male')],
+                                ['f',_('Female')])),
         index = 'FieldIndex',
         widget=SelectionWidget(
             label=_('Gender'),
@@ -55,12 +54,6 @@ schema = Schema((
         required = 1,
         widget = DateTimeWidget(
             label=_('Birth date'),
-        ),
-    ),
-    BooleanField('DOBEstimated',
-        default=False,
-        widget=BooleanWidget(
-            label=_("Birth date estimated")
         ),
     ),
     TextField('Remarks',
@@ -114,92 +107,42 @@ schema = Schema((
     ),
 ))
 
-
+schema['JobTitle'].widget.visible = False
+schema['Department'].widget.visible = False
+schema['BusinessPhone'].widget.visible = False
+schema['BusinessFax'].widget.visible = False
 # Don't make title required - it will be computed from the Person's Fullname
 schema['title'].required = 0
-for field_id in ('title', 'BusinessFax', 'JobTitle'):
-    schema[field_id].required = 0
-    schema[field_id].widget.visible = False
+schema['title'].widget.visible = False
 
-class Patient(Contact):
+schema.moveField('PatientID', pos='top')
+schema.moveField('PrimaryReferrer', after='Surname')
+schema.moveField('Gender', after='PrimaryReferrer')
+
+class Patient(Person):
+    implements(IPatient)
     security = ClassSecurityInfo()
-    schema = schema
     displayContentsTab = False
+    schema = schema
 
     _at_rename_after_creation = True
     def _renameAfterCreation(self, check_auto_id=False):
         from bika.lims.idserver import renameAfterCreation
         renameAfterCreation(self)
 
-    # This is copied from Contact (In contact, it is acquired from Client)
-    security.declarePublic('getCCContactsDisplayList')
-    def getCCContactsDisplayList(self):
-        pairs = []
-        all_contacts = self.getContactsDisplayList().items()
-        # remove myself
-        for item in all_contacts:
-            if item[0] != self.UID():
-                pairs.append((item[0], item[1]))
-        return DisplayList(pairs)
-
-    def getPossibleAddresses(self):
-        return ['PhysicalAddress', 'PostalAddress']
-
-    security.declarePublic('getContactsDisplayList')
-    def getContactsDisplayList(self):
-        referrer = self.getPrimaryReferrer()
-        if referrer:
-            return referrer.getContactsDisplayList()
-        else:
-            return {}
-
-    security.declarePublic('getContactUIDForUser')
-    def getContactUIDForUser(self):
-        """ Allows analysisrequest_add_form to support this context, not used yet (because patients arent users yet) """
-        member = self.portal_membership.getAuthenticatedMember()
-        user_id = member.getUserName()
-        r = self.portal_catalog(portal_type='Contact', getUsername=user_id)
-        if r:
-            return r[0].UID
-
-    security.declarePublic('getCCContacts')
-    def getCCContacts(self):
-        return self.getPrimaryReferrer().getCCContacts()
-
-    security.declarePublic('getServices')
-    def getServices(self):
-        """ get all services in all ARs for this Patient """
-        s_p = self.portal_catalog(portal_type='Sample',
-                                 getPatientUID=self.UID())
-        samples = []
-        for sample in s_p:
-            samples.append(sample.UID)
-
-        ars = []
-        ar_p = self.portal_catalog(portal_type='AnalysisRequest', getSampleUID=samples)
-        these_services = {}
-        for a in ar_p:
-            ar = a.getObject()
-            analyses = ar.getAnalyses()
-            for analysis in analyses:
-                if not these_services.has_key(analysis.Title()):
-                    these_services[analysis.Title()] = analysis.getService()
-
-        service_keys = these_services.keys()
-        service_keys.sort()
-        services = []
-        for key in service_keys:
-            services.append(these_services[key])
-        return services
+    def Title(self):
+        """ Return the Fullname as title """
+        return self.getFullname()
 
     security.declarePublic('getSamples')
     def getSamples(self):
         """ get all samples taken from this Patient """
-        return [p.getObject() for p in self.portal_catalog(portal_type='Sample', getPatient=self.UID())]
+        bc = getToolByName(self, 'bika_catalog')
+        return [p.getObject() for p in bc(portal_type='Sample', getPatientUID=self.UID())]
 
     security.declarePublic('getARs')
     def getARs(self, analysis_state):
-        ars = [ar for ar in self.objectValues('AnalysisRequest') if ar.getPatient().UID() == self.UID()]
-        return ars
+        bc = getToolByName(self, 'bika_catalog')
+        return [p.getObject() for p in bc(portal_type='AnalysisRequest', getPatientUID=self.UID())]
 
 atapi.registerType(Patient, PROJECTNAME)

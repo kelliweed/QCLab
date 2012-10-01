@@ -15,6 +15,14 @@
 
     <browser:page
       for="bika.lims.interfaces.IClient"
+      name="patients"
+      class="bika.lims.browser.client.ClientPatientsView"
+      permission="bika.lims.ManagePatients"
+      layer="bika.lims.interfaces.IBikaLIMS"
+    />
+
+    <browser:page
+      for="bika.lims.interfaces.IClient"
       name="analysisrequests"
       class="bika.lims.browser.client.ClientAnalysisRequestsView"
       permission="bika.lims.ManageClients"

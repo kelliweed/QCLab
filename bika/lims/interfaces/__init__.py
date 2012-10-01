@@ -142,6 +142,8 @@ class ISampleTypes(Interface):
     ""
 class IPatients(Interface):
     ""
+class IPatient(Interface):
+    ""
 class IPreservations(Interface):
     ""
 class IDoctors(Interface):

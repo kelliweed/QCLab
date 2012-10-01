@@ -13,7 +13,7 @@
                   plone_view context/@@plone;">
 
 <head>
-    <div tal:replace="structure doctor:plone.resourceregistries.scripts" />
+    <div tal:replace="structure provider:plone.resourceregistries.scripts" />
     <style type="text/css">
         table {
             border-collapse:collapse;
