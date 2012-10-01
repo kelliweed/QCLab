@@ -67,6 +67,7 @@ def initialize(context):
     from content.patients import Patients
     from content.doctor import Doctor
     from content.doctors import Doctors
+    from content.drug import Drug
     from content.organisation import Organisation
     from content.person import Person
     from content.preservation import Preservation
@@ -105,6 +106,7 @@ def initialize(context):
     from controlpanel.bika_containers import Containers
     from controlpanel.bika_containertypes import ContainerTypes
     from controlpanel.bika_departments import Departments
+    from controlpanel.bika_drugs import Drugs
     from controlpanel.bika_instruments import Instruments
     from controlpanel.bika_labcontacts import LabContacts
     from controlpanel.bika_labproducts import LabProducts
