@@ -143,6 +143,7 @@ class BikaSetupCatalog(CatalogTool):
                                                  'ContainerType',
                                                  'Preservation',
                                                  'Department',
+                                                 'Drug',
                                                  'AnalysisCategory',
                                                  'AnalysisService',
                                                  'AnalysisSpec',

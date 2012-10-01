@@ -31,6 +31,8 @@
  <object name="ContainerTypes" meta_type="Factory-based Type Information with dynamic views"/>
  <object name="Department" meta_type="Factory-based Type Information with dynamic views"/>
  <object name="Departments" meta_type="Factory-based Type Information with dynamic views"/>
+ <object name="Drug" meta_type="Factory-based Type Information with dynamic views"/>
+ <object name="Drugs" meta_type="Factory-based Type Information with dynamic views"/>
  <object name="DuplicateAnalysis" meta_type="Factory-based Type Information with dynamic views"/>
  <object name="Instrument" meta_type="Factory-based Type Information with dynamic views"/>
  <object name="Instruments" meta_type="Factory-based Type Information with dynamic views"/>

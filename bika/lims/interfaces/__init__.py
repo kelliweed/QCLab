@@ -148,6 +148,8 @@ class IDoctors(Interface):
     ""
 class IDoctor(Interface):
     ""
+class IDrugs(Interface):
+    ""
 class IReferenceManufacturers(Interface):
     ""
 class IReferenceDefinitions(Interface):

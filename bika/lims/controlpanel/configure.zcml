@@ -179,6 +179,14 @@
       permission="bika.lims.ManageBika"
       layer="bika.lims.interfaces.IBikaLIMS"
     />
+    
+    <browser:page
+      for="bika.lims.interfaces.IDrugs"
+      name="folder_view"
+      class=".bika_drugs.DrugsView"
+      permission="bika.lims.ManageBika"
+      layer="bika.lims.interfaces.IBikaLIMS"
+    />
 
     <browser:page
       for="bika.lims.interfaces.IWorksheetTemplates"
