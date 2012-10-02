@@ -441,6 +441,7 @@ class AnalysisRequestViewView(BrowserView):
                     inactive_state = 'active')])
 
         patient = self.context.getPatient()
+        doctor = self.context.getDoctor()
 
         self.header_columns = 3
         self.header_rows = [
@@ -473,6 +474,12 @@ class AnalysisRequestViewView(BrowserView):
              'title': _('Patient'),
              'allow_edit': False,
              'value': patient and "%s %s" % (patient.getPatientID(),patient.Title()) or '',
+             'condition':True,
+             'type': 'text'},
+            {'id': 'Doctor',
+             'title': _('Doctor'),
+             'allow_edit': False,
+             'value': doctor and doctor.Title() or '',
              'condition':True,
              'type': 'text'},
             {'id': 'ClientReference',
@@ -1487,7 +1494,7 @@ class ajaxAnalysisRequestSubmit():
 
         # Now some basic validation
         required_fields = ['SampleType', 'SamplingDate']
-        validated_fields = ('SampleID', 'SampleType', 'SamplePoint', 'PatientID')
+        validated_fields = ('SampleID', 'SampleType', 'SamplePoint', 'PatientID', 'Doctor')
 
         for column in columns:
             formkey = "ar.%s" % column
@@ -1543,6 +1550,13 @@ class ajaxAnalysisRequestSubmit():
                                 mapping={'value':ar[field]})
                         error(field, column, self.context.translate(msg))
 
+                elif field == "Doctor":
+                    if not bc(portal_type='Doctor',
+                              title = ar[field]):
+                        msg = _("${value} is not a valid doctor",
+                                mapping={'value':ar[field]})
+                        error(field, column, self.context.translate(msg))
+
         if errors:
             return json.dumps({'errors':errors})
 
@@ -1578,6 +1592,10 @@ class ajaxAnalysisRequestSubmit():
             patient = None
             if values.has_key('PatientID'):
                 patient = bpc(getPatientID=values['PatientID'])[0].getObject()
+            doctor = None
+            if values.has_key('Doctor'):
+                doctor = bc(portal_type = 'Doctor',
+                            Title=values['Doctor'])[0].getObject()
             if values.has_key('SampleID'):
                 # Secondary AR
                 sample = bc(portal_type = 'Sample',
@@ -1601,6 +1619,7 @@ class ajaxAnalysisRequestSubmit():
                     AdHoc = values.get('AdHoc', False),
                     SamplingWorkflowEnabled = SamplingWorkflowEnabled,
                     Patient = patient,
+                    Doctor = doctor,
                 )
                 sample.processForm()
                 if SamplingWorkflowEnabled:
@@ -1694,6 +1713,7 @@ class ajaxAnalysisRequestSubmit():
                 Sample = sample_uid,
                 Profile = profile,
                 Patient = patient,
+                Doctor = doctor,
                 **dict(values)
             )
             ar.processForm()
@@ -1826,6 +1846,7 @@ class AnalysisRequestsView(BikaListingView):
             'getRequestID': {'title': _('Request ID'),
                              'index': 'getRequestID'},
             'getPatient': {'title': _('Patient')},
+            'getDoctor': {'title': _('Doctor')},
             'getClientOrderNumber': {'title': _('Client Order'),
                                      'index': 'getClientOrderNumber',
                                      'toggle': False},
@@ -1899,6 +1920,7 @@ class AnalysisRequestsView(BikaListingView):
                              {'id':'reinstate'}],
              'columns':['getRequestID',
                         'getPatient',
+                        'getDoctor',
                         'getSample',
                         'Client',
                         'Creator',
@@ -1931,6 +1953,7 @@ class AnalysisRequestsView(BikaListingView):
                              {'id':'reinstate'}],
              'columns':['getRequestID',
                         'getPatient',
+                        'getDoctor',
                         'getSample',
                         'Client',
                         'Creator',
@@ -1957,6 +1980,7 @@ class AnalysisRequestsView(BikaListingView):
                              {'id':'reinstate'}],
              'columns':['getRequestID',
                         'getPatient',
+                        'getDoctor',
                         'getSample',
                         'Client',
                         'Creator',
@@ -1985,6 +2009,7 @@ class AnalysisRequestsView(BikaListingView):
                              {'id':'reinstate'}],
              'columns':['getRequestID',
                         'getPatient',
+                        'getDoctor',
                         'getSample',
                         'Client',
                         'Creator',
@@ -2009,6 +2034,7 @@ class AnalysisRequestsView(BikaListingView):
              'transitions': [{'id':'publish'}],
              'columns':['getRequestID',
                         'getPatient',
+                        'getDoctor',
                         'getSample',
                         'Client',
                         'Creator',
@@ -2032,6 +2058,7 @@ class AnalysisRequestsView(BikaListingView):
                                'sort_order': 'reverse'},
              'columns':['getRequestID',
                         'getPatient',
+                        'getDoctor',
                         'getSample',
                         'Client',
                         'Creator',
@@ -2061,6 +2088,7 @@ class AnalysisRequestsView(BikaListingView):
              'transitions': [{'id':'reinstate'}],
              'columns':['getRequestID',
                         'getPatient',
+                        'getDoctor',
                         'getSample',
                         'Client',
                         'Creator',
@@ -2098,6 +2126,7 @@ class AnalysisRequestsView(BikaListingView):
                              {'id':'reinstate'}],
              'columns':['getRequestID',
                         'getPatient',
+                        'getDoctor',
                         'getSample',
                         'Client',
                         'Creator',
@@ -2135,6 +2164,7 @@ class AnalysisRequestsView(BikaListingView):
                              {'id':'reinstate'}],
              'columns':['getRequestID',
                         'getPatient',
+                        'getDoctor',
                         'getSample',
                         'Client',
                         'Creator',
@@ -2188,6 +2218,14 @@ class AnalysisRequestsView(BikaListingView):
                      (patient.absolute_url(), patient.getPatientID())
             else:
                 items[x]['getPatient'] = ''
+
+            doctor = obj.getDoctor()
+            if doctor:
+                items[x]['getDoctor'] = doctor and doctor.getTitle() or ''
+                items[x]['replace']['getDoctor'] = "<a href='%s'>%s</a>" % \
+                     (doctor.absolute_url(), doctor.getTitle())
+            else:
+                items[x]['getDoctor'] = ''
 
             samplingdate = obj.getSample().getSamplingDate()
             items[x]['SamplingDate'] = self.ulocalized_time(samplingdate)

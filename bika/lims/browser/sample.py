@@ -308,6 +308,7 @@ class SampleEdit(BrowserView):
                     inactive_state = 'active')])
 
         patient = self.context.getPatient()
+        doctor = self.context.getDoctor()
 
         self.header_columns = 3
         self.header_rows = [
@@ -327,6 +328,12 @@ class SampleEdit(BrowserView):
              'title': _('Patient'),
              'allow_edit': False,
              'value': patient and "%s %s" % (patient.getPatientID(),patient.Title()) or '',
+             'condition':True,
+             'type': 'text'},
+            {'id': 'Doctor',
+             'title': _('Doctor'),
+             'allow_edit': False,
+             'value': doctor and doctor.Title() or '',
              'condition':True,
              'type': 'text'},
             {'id': 'Requests',
@@ -596,6 +603,7 @@ class SamplesView(BikaListingView):
             'getSampleID': {'title': _('Sample ID'),
                             'index':'getSampleID'},
             'getPatient': {'title': _('Patient')},
+            'getDoctor': {'title': _('Doctor')},
             'Client': {'title': _("Client"),
                        'toggle': True,},
             'Creator': {'title': PMF('Creator'),
@@ -651,6 +659,7 @@ class SamplesView(BikaListingView):
                                'sort_on':'created'},
              'columns': ['getSampleID',
                          'getPatient',
+                         'getDoctor',
                          'Client',
                          'Creator',
                          'Created',
@@ -677,6 +686,7 @@ class SamplesView(BikaListingView):
                                'sort_order': 'reverse'},
              'columns': ['getSampleID',
                          'getPatient',
+                         'getDoctor',
                          'Client',
                          'Creator',
                          'Created',
@@ -700,6 +710,7 @@ class SamplesView(BikaListingView):
                               'sort_on':'created'},
              'columns': ['getSampleID',
                          'getPatient',
+                         'getDoctor',
                          'Client',
                          'Creator',
                          'Created',
@@ -723,6 +734,7 @@ class SamplesView(BikaListingView):
                               'sort_on':'created'},
              'columns': ['getSampleID',
                          'getPatient',
+                         'getDoctor',
                          'Client',
                          'Creator',
                          'Created',
@@ -746,6 +758,7 @@ class SamplesView(BikaListingView):
                               'sort_on':'created'},
              'columns': ['getSampleID',
                          'getPatient',
+                         'getDoctor',
                          'Client',
                          'Creator',
                          'Created',
@@ -770,6 +783,7 @@ class SamplesView(BikaListingView):
              'transitions': [{'id':'reinstate'}, ],
              'columns': ['getSampleID',
                          'getPatient',
+                         'getDoctor',
                          'Client',
                          'Creator',
                          'Created',
