@@ -237,8 +237,20 @@ class ClientWorkflowAction(AnalysisRequestWorkflowAction):
 class ClientPatientsView(PatientsView):
     def __init__(self, context, request):
         super(ClientPatientsView, self).__init__(context, request)
-        self.contentFilter['path'] = {"query": "/".join(context.getPhysicalPath()),
-                                      "level" : 0 }
+        self.catalog = 'bika_patient_catalog'
+        self.contentFilter['getPrimaryReferrerUID'] = self.context.UID()
+
+    def __call__(self):
+        mtool = getToolByName(self.context, 'portal_membership')
+        addPortalMessage = self.context.plone_utils.addPortalMessage
+        patients = self.context.aq_parent.patients
+        if mtool.checkPermission(AddPatient, patients):
+            self.context_actions[_('Add')] = {
+                'url': patients.absolute_url() + '/createObject?type_name=Patient',
+                'icon': '++resource++bika.lims.images/add.png'
+            }
+        # not super.  We don't care for the PateintsView version.
+        return BikaListingView.__call__(self)
 
 class ClientAnalysisRequestsView(AnalysisRequestsView):
     def __init__(self, context, request):

@@ -700,6 +700,39 @@ class BikaGenerator:
         addColumn(bsc, 'getVATAmount')
         addColumn(bsc, 'getVolume')
 
+        bpc = getToolByName(portal, 'bika_patient_catalog', None)
+        bpc.manage_addProduct['ZCTextIndex'].manage_addLexicon('Lexicon', 'Lexicon', elem)
+        at = getToolByName(portal, 'archetype_tool')
+        at.setCatalogsByType('Patient', ['bika_patient_catalog', ])
+
+        addIndex(bpc, 'path', 'ExtendedPathIndex', ('getPhysicalPath'))
+        addIndex(bpc, 'allowedRolesAndUsers', 'KeywordIndex')
+        addIndex(bpc, 'UID', 'FieldIndex')
+        addIndex(bpc, 'Title', 'ZCTextIndex')
+        addIndex(bpc, 'Description', 'ZCTextIndex')
+        addIndex(bpc, 'id', 'FieldIndex')
+        addIndex(bpc, 'getId', 'FieldIndex')
+        addIndex(bpc, 'Type', 'FieldIndex')
+        addIndex(bpc, 'portal_type', 'FieldIndex')
+        addIndex(bpc, 'created', 'DateIndex')
+        addIndex(bpc, 'Creator', 'FieldIndex')
+        addIndex(bpc, 'getObjPositionInParent', 'GopipIndex')
+        addIndex(bpc, 'sortable_title', 'FieldIndex')
+        addIndex(bpc, 'review_state', 'FieldIndex')
+        addIndex(bpc, 'getPatientID', 'ZCTextIndex')
+        addIndex(bpc, 'getPrimaryReferrerUID', 'FieldIndex')
+
+        addColumn(bpc, 'id')
+        addColumn(bpc, 'UID')
+        addColumn(bpc, 'Title')
+        addColumn(bpc, 'Type')
+        addColumn(bpc, 'portal_type')
+        addColumn(bpc, 'sortable_title')
+        addColumn(bpc, 'Description')
+        addColumn(bpc, 'getPatientID')
+        addColumn(bpc, 'getPrimaryReferrerUID')
+        addColumn(bpc, 'review_state')
+
 def setupVarious(context):
     """
     Final Bika import steps.

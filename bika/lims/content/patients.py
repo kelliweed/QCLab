@@ -22,6 +22,8 @@ class PatientsView(BikaListingView):
     def __init__(self, context, request):
         super(PatientsView, self).__init__(context, request)
 
+        self.catalog = 'bika_patient_catalog'
+
         self.contentFilter = {'portal_type': 'Patient',
                               'sort_on': 'sortable_title'}
         self.context_actions = {}
@@ -34,10 +36,12 @@ class PatientsView(BikaListingView):
         self.pagesize = 25
 
         self.columns = {
+            'getPatientID': {'title': _('Patient ID'),
+                             'index': 'getPatientID'},
             'Title': {'title': _('Patient'),
                       'index': 'sortable_title'},
             'Description': {'title': _('Description'),
-                            'index': 'description',
+                            'index': 'Description',
                             'toggle': True},
         }
 
@@ -46,7 +50,7 @@ class PatientsView(BikaListingView):
              'title': _('All'),
              'contentFilter':{},
              'transitions':[{'id':'empty'},],
-             'columns': ['Title', 'Description']},
+             'columns': ['getPatientID', 'Title', 'Description']},
         ]
 
     def __call__(self):
@@ -74,13 +78,13 @@ class PatientsView(BikaListingView):
                  'title': _('Active'),
                  'contentFilter': {'inactive_state': 'active'},
                  'transitions': [{'id':'deactivate'}, ],
-                 'columns': ['Title', 'Description']})
+                 'columns': ['Title', 'Description', 'getPatientID']})
             self.review_states.append(
                 {'id':'inactive',
                  'title': _('Dormant'),
                  'contentFilter': {'inactive_state': 'inactive'},
                  'transitions': [{'id':'activate'}, ],
-                 'columns': ['Title', 'Description']})
+                 'columns': ['Title', 'Description', 'getPatientID']})
 
         items = BikaListingView.folderitems(self)
         for x in range(len(items)):

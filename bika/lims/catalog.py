@@ -28,6 +28,7 @@ def getCatalog(instance, field = 'UID'):
         plone = instance.portal_url.getPortalObject()
         catalog_name = instance.portal_type in at.catalog_map \
             and at.catalog_map[instance.portal_type][0] or 'portal_catalog'
+
         catalog = getToolByName(plone, catalog_name)
         return catalog
 
@@ -158,4 +159,35 @@ class BikaSetupCatalog(CatalogTool):
                                 search_sub = True,
                                 apply_func = indexObject)
 
-InitializeClass(BikaSetupCatalog)
+InitializeClass(BikaCatalog)
+
+class BikaPatientCatalog(CatalogTool):
+    """ Catalog for patients
+    """
+    security = ClassSecurityInfo()
+    _properties = ({'id':'title', 'type': 'string', 'mode':'w'},)
+
+    title = 'Bika Patient Catalog'
+    id = 'bika_patient_catalog'
+    portal_type = meta_type = 'BikaPatientCatalog'
+    plone_tool = 1
+
+    def __init__(self):
+        ZCatalog.__init__(self, self.id)
+
+    security.declareProtected(ManagePortal, 'clearFindAndRebuild')
+    def clearFindAndRebuild(self):
+        """
+        """
+
+        def indexObject(obj, path):
+            self.reindexObject(obj)
+
+        self.manage_catalogClear()
+        portal = getToolByName(self, 'portal_url').getPortalObject()
+        portal.ZopeFindAndApply(portal,
+                                obj_metatypes = ('Patient',),
+                                search_sub = True,
+                                apply_func = indexObject)
+
+InitializeClass(BikaPatientCatalog)
