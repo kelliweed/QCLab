@@ -20,4 +20,12 @@
       layer="bika.lims.interfaces.IBikaLIMS"
     />
 
+    <browser:page
+      for="bika.lims.interfaces.IClient"
+      name="getPatients"
+      class="bika.lims.browser.patient.ajaxGetPatients"
+      permission="zope.Public"
+      layer="bika.lims.interfaces.IBikaLIMS"
+    />
+
 </configure>

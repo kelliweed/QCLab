@@ -1442,6 +1442,7 @@ class ajaxAnalysisRequestSubmit():
         wftool = getToolByName(self.context, 'portal_workflow')
         bc = getToolByName(self.context, 'bika_catalog')
         bsc = getToolByName(self.context, 'bika_setup_catalog')
+        bpc = getToolByName(self.context, 'bika_patient_catalog')
 
         SamplingWorkflowEnabled =\
             self.context.bika_setup.getSamplingWorkflowEnabled()
@@ -1477,8 +1478,10 @@ class ajaxAnalysisRequestSubmit():
             return json.dumps({'errors':errors})
 
         # Now some basic validation
-        required_fields = ['SampleType', 'SamplingDate']
-        validated_fields = ('SampleID', 'SampleType', 'SamplePoint')
+        required_fields = ['SampleType', 'SamplingDate', 'PatientID']
+        validated_fields = ('SampleID', 'SampleType', 'SamplePoint', 'PatientID')
+
+        patient = None
 
         for column in columns:
             formkey = "ar.%s" % column
@@ -1526,6 +1529,13 @@ class ajaxAnalysisRequestSubmit():
                     if not bsc(portal_type = 'SamplePoint', title = sp_str):
                         msg = _("${samplepoint} is not a valid sample point",
                                 mapping={'samplepoint':ar[field]})
+                        error(field, column, self.context.translate(msg))
+
+                elif field == "PatientID":
+                    patient = bpc(PatientID = ar[field])
+                    if not patient:
+                        msg = _("${value} is not a valid patient ID",
+                                mapping={'value':ar[field]})
                         error(field, column, self.context.translate(msg))
 
         if errors:
@@ -1583,6 +1593,7 @@ class ajaxAnalysisRequestSubmit():
                     Composite = values.get('Composite', False),
                     AdHoc = values.get('AdHoc', False),
                     SamplingWorkflowEnabled = SamplingWorkflowEnabled,
+                    Patient = patient,
                 )
                 sample.processForm()
                 if SamplingWorkflowEnabled:
@@ -1675,6 +1686,7 @@ class ajaxAnalysisRequestSubmit():
                 CCEmails = form['CCEmails'],
                 Sample = sample_uid,
                 Profile = profile,
+                Patient = patient,
                 **dict(values)
             )
             ar.processForm()
@@ -1806,6 +1818,7 @@ class AnalysisRequestsView(BikaListingView):
         self.columns = {
             'getRequestID': {'title': _('Request ID'),
                              'index': 'getRequestID'},
+            'getPatient': {'title': _('Patient')},
             'getClientOrderNumber': {'title': _('Client Order'),
                                      'index': 'getClientOrderNumber',
                                      'toggle': False},

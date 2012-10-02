@@ -881,6 +881,22 @@ $(document).ready(function(){
 
 	$(".ReportDryMatter").change(changeReportDryMatter);
 
+	// Dropdown grid of Patient Search Results AR Add form
+	for (col=1; col<parseInt($("#col_count").val()); col++) {
+		$("[id*=PatientID]").combogrid({
+			colModel: [{'columnName':'PatientUID','hidden':true},
+			           {'columnName':'PatientID','width':'25','label':window.jsi18n_bika('Patient ID')},
+			           {'columnName':'Title','width':'35','label':window.jsi18n_bika('Full Name')},
+			           {'columnName':'PrimaryReferrer','width':'35','label':window.jsi18n_bika('Primary Referrer')}],
+			url: window.location.href.replace("/ar_add","") + "/getPatients?_authenticator=" + $('input[name="_authenticator"]').val(),
+			select: function( event, ui ) {
+				$(this).val(ui.item.PatientID);
+				$(this).change();
+				return false;
+			}
+		});
+	}
+
 	// AR Add/Edit ajax form submits
 	ar_edit_form = $('#analysisrequest_edit_form');
 	if (ar_edit_form.ajaxForm != undefined){
@@ -936,6 +952,7 @@ $(document).ready(function(){
 	window.recalc_prices = recalc_prices;
 	window.calculate_parts = calculate_parts;
 	window.toggleCat = toggleCat;
+
 
 });
 }(jQuery));
