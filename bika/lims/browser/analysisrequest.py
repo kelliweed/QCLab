@@ -451,6 +451,18 @@ class AnalysisRequestViewView(BrowserView):
              'value': "<a href='%s'>%s</a>"%(sample.absolute_url(), sample.id),
              'condition':True,
              'type': 'text'},
+            {'id': 'Patient',
+             'title': _('Patient'),
+             'allow_edit': False,
+             'value': patient and "%s %s" % (patient.getPatientID(),patient.Title()) or '',
+             'condition':True,
+             'type': 'text'},
+            {'id': 'Doctor',
+             'title': _('Doctor'),
+             'allow_edit': False,
+             'value': doctor and "<a href='%s'>%s</a>"%(doctor.absolute_url(), doctor.Title()) or '',
+             'condition':True,
+             'type': 'text'},
             {'id': 'ClientSampleID',
              'title': _('Client SID'),
              'allow_edit': True,
@@ -468,18 +480,6 @@ class AnalysisRequestViewView(BrowserView):
                        %(",".join(cc_uids),
                          contact.UID(), contact.Title(), "; ".join(cc_titles),"; ".join(cc_titles),
                          "; ".join(cc_emails),"; ".join(cc_hrefs)),
-             'condition':True,
-             'type': 'text'},
-            {'id': 'Patient',
-             'title': _('Patient'),
-             'allow_edit': False,
-             'value': patient and "%s %s" % (patient.getPatientID(),patient.Title()) or '',
-             'condition':True,
-             'type': 'text'},
-            {'id': 'Doctor',
-             'title': _('Doctor'),
-             'allow_edit': False,
-             'value': doctor and doctor.Title() or '',
              'condition':True,
              'type': 'text'},
             {'id': 'ClientReference',
@@ -1455,6 +1455,7 @@ class ajaxAnalysisRequestSubmit():
         plone.protect.PostOnly(self.request.form)
         came_from = form.has_key('came_from') and form['came_from'] or 'add'
         wftool = getToolByName(self.context, 'portal_workflow')
+        pc = getToolByName(self.context, 'portal_catalog')
         bc = getToolByName(self.context, 'bika_catalog')
         bsc = getToolByName(self.context, 'bika_setup_catalog')
         bpc = getToolByName(self.context, 'bika_patient_catalog')
@@ -1551,7 +1552,7 @@ class ajaxAnalysisRequestSubmit():
                         error(field, column, self.context.translate(msg))
 
                 elif field == "Doctor":
-                    if not bc(portal_type='Doctor',
+                    if not pc(portal_type='Doctor',
                               title = ar[field]):
                         msg = _("${value} is not a valid doctor",
                                 mapping={'value':ar[field]})
@@ -1592,10 +1593,11 @@ class ajaxAnalysisRequestSubmit():
             patient = None
             if values.has_key('PatientID'):
                 patient = bpc(getPatientID=values['PatientID'])[0].getObject()
-            doctor = None
+
             if values.has_key('Doctor'):
-                doctor = bc(portal_type = 'Doctor',
-                            Title=values['Doctor'])[0].getObject()
+                values['Doctor'] = pc(portal_type = 'Doctor',
+                                      title=values['Doctor'])[0].getObject()
+
             if values.has_key('SampleID'):
                 # Secondary AR
                 sample = bc(portal_type = 'Sample',
@@ -1619,7 +1621,7 @@ class ajaxAnalysisRequestSubmit():
                     AdHoc = values.get('AdHoc', False),
                     SamplingWorkflowEnabled = SamplingWorkflowEnabled,
                     Patient = patient,
-                    Doctor = doctor,
+                    Doctor = values['Doctor'],
                 )
                 sample.processForm()
                 if SamplingWorkflowEnabled:
@@ -1713,7 +1715,6 @@ class ajaxAnalysisRequestSubmit():
                 Sample = sample_uid,
                 Profile = profile,
                 Patient = patient,
-                Doctor = doctor,
                 **dict(values)
             )
             ar.processForm()
@@ -2221,9 +2222,9 @@ class AnalysisRequestsView(BikaListingView):
 
             doctor = obj.getDoctor()
             if doctor:
-                items[x]['getDoctor'] = doctor and doctor.getTitle() or ''
+                items[x]['getDoctor'] = doctor and doctor.Title() or ''
                 items[x]['replace']['getDoctor'] = "<a href='%s'>%s</a>" % \
-                     (doctor.absolute_url(), doctor.getTitle())
+                     (doctor.absolute_url(), doctor.Title())
             else:
                 items[x]['getDoctor'] = ''
 

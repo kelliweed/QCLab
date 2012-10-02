@@ -897,6 +897,20 @@ $(document).ready(function(){
 		});
 	}
 
+	// Dropdown grid of Doctors for AR Add form
+	for (col=1; col<parseInt($("#col_count").val()); col++) {
+		$("[id*=Doctor]").combogrid({
+			colModel: [{'columnName':'DoctorUID','hidden':true},
+			           {'columnName':'Title','width':'35','label':window.jsi18n_bika('Full Name')}],
+			url: window.location.href.replace("/ar_add","") + "/getDoctors?_authenticator=" + $('input[name="_authenticator"]').val(),
+			select: function( event, ui ) {
+				$(this).val(ui.item.Title);
+				$(this).change();
+				return false;
+			}
+		});
+	}
+
 	// AR Add/Edit ajax form submits
 	ar_edit_form = $('#analysisrequest_edit_form');
 	if (ar_edit_form.ajaxForm != undefined){
