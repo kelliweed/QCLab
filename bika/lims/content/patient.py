@@ -9,7 +9,8 @@ from Products.CMFCore import permissions
 from Products.CMFCore.utils import getToolByName
 from bika.lims import PMF, bikaMessageFactory as _
 from bika.lims.browser.widgets import DateTimeWidget
-from bika.lims.config import ManageClients, PUBLICATION_PREFS, PROJECTNAME
+from bika.lims.config import ManageClients, PUBLICATION_PREFS, PROJECTNAME, \
+    GENDERS
 from bika.lims.content.person import Person
 from bika.lims.interfaces import IPatient
 from zope.interface import implements
@@ -38,8 +39,7 @@ schema = Person.schema.copy() + Schema((
         ),
     ),
     StringField('Gender',
-        vocabulary=DisplayList((['m',_('Male')],
-                                ['f',_('Female')])),
+        vocabulary=GENDERS,
         index = 'FieldIndex',
         widget=SelectionWidget(
             label=_('Gender'),

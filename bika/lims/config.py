@@ -74,6 +74,7 @@ EMAIL_SUBJECT_OPTIONS = DisplayList((
 GENDERS = DisplayList((
     ('male', _('Male')),
     ('female', _('Female')),
+    ('dk', _("Don't Know")),
     ))
 
 ADDRESS_TYPES = DisplayList((
