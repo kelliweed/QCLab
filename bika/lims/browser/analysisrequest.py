@@ -440,6 +440,8 @@ class AnalysisRequestViewView(BrowserView):
              in bsc(portal_type = 'SamplingDeviation',
                     inactive_state = 'active')])
 
+        patient = self.context.getPatient()
+
         self.header_columns = 3
         self.header_rows = [
             {'id': 'SampleID',
@@ -465,6 +467,12 @@ class AnalysisRequestViewView(BrowserView):
                        %(",".join(cc_uids),
                          contact.UID(), contact.Title(), "; ".join(cc_titles),"; ".join(cc_titles),
                          "; ".join(cc_emails),"; ".join(cc_hrefs)),
+             'condition':True,
+             'type': 'text'},
+            {'id': 'Patient',
+             'title': _('Patient'),
+             'allow_edit': False,
+             'value': patient and "%s %s" % (patient.getPatientID(),patient.Title()) or '',
              'condition':True,
              'type': 'text'},
             {'id': 'ClientReference',
@@ -1478,10 +1486,8 @@ class ajaxAnalysisRequestSubmit():
             return json.dumps({'errors':errors})
 
         # Now some basic validation
-        required_fields = ['SampleType', 'SamplingDate', 'PatientID']
+        required_fields = ['SampleType', 'SamplingDate']
         validated_fields = ('SampleID', 'SampleType', 'SamplePoint', 'PatientID')
-
-        patient = None
 
         for column in columns:
             formkey = "ar.%s" % column
@@ -1532,8 +1538,7 @@ class ajaxAnalysisRequestSubmit():
                         error(field, column, self.context.translate(msg))
 
                 elif field == "PatientID":
-                    patient = bpc(PatientID = ar[field])
-                    if not patient:
+                    if not bpc(PatientID = ar[field]):
                         msg = _("${value} is not a valid patient ID",
                                 mapping={'value':ar[field]})
                         error(field, column, self.context.translate(msg))
@@ -1570,7 +1575,9 @@ class ajaxAnalysisRequestSubmit():
                                  inactive_state = 'active',
                                  UID = templateUID):
                     template = proxy.getObject()
-
+            patient = None
+            if values.has_key('PatientID'):
+                patient = bpc(getPatientID=values['PatientID'])[0].getObject()
             if values.has_key('SampleID'):
                 # Secondary AR
                 sample = bc(portal_type = 'Sample',
@@ -1891,6 +1898,7 @@ class AnalysisRequestsView(BikaListingView):
                              {'id':'cancel'},
                              {'id':'reinstate'}],
              'columns':['getRequestID',
+                        'getPatient',
                         'getSample',
                         'Client',
                         'Creator',
@@ -1922,6 +1930,7 @@ class AnalysisRequestsView(BikaListingView):
                              {'id':'cancel'},
                              {'id':'reinstate'}],
              'columns':['getRequestID',
+                        'getPatient',
                         'getSample',
                         'Client',
                         'Creator',
@@ -1947,6 +1956,7 @@ class AnalysisRequestsView(BikaListingView):
                              {'id':'cancel'},
                              {'id':'reinstate'}],
              'columns':['getRequestID',
+                        'getPatient',
                         'getSample',
                         'Client',
                         'Creator',
@@ -1974,6 +1984,7 @@ class AnalysisRequestsView(BikaListingView):
                              {'id':'cancel'},
                              {'id':'reinstate'}],
              'columns':['getRequestID',
+                        'getPatient',
                         'getSample',
                         'Client',
                         'Creator',
@@ -1997,6 +2008,7 @@ class AnalysisRequestsView(BikaListingView):
                                'sort_order': 'reverse'},
              'transitions': [{'id':'publish'}],
              'columns':['getRequestID',
+                        'getPatient',
                         'getSample',
                         'Client',
                         'Creator',
@@ -2019,6 +2031,7 @@ class AnalysisRequestsView(BikaListingView):
                                'sort_on':'created',
                                'sort_order': 'reverse'},
              'columns':['getRequestID',
+                        'getPatient',
                         'getSample',
                         'Client',
                         'Creator',
@@ -2047,6 +2060,7 @@ class AnalysisRequestsView(BikaListingView):
                                'sort_order': 'reverse'},
              'transitions': [{'id':'reinstate'}],
              'columns':['getRequestID',
+                        'getPatient',
                         'getSample',
                         'Client',
                         'Creator',
@@ -2083,6 +2097,7 @@ class AnalysisRequestsView(BikaListingView):
                              {'id':'cancel'},
                              {'id':'reinstate'}],
              'columns':['getRequestID',
+                        'getPatient',
                         'getSample',
                         'Client',
                         'Creator',
@@ -2119,6 +2134,7 @@ class AnalysisRequestsView(BikaListingView):
                              {'id':'cancel'},
                              {'id':'reinstate'}],
              'columns':['getRequestID',
+                        'getPatient',
                         'getSample',
                         'Client',
                         'Creator',
@@ -2164,6 +2180,14 @@ class AnalysisRequestsView(BikaListingView):
                  (obj.aq_parent.absolute_url(), obj.aq_parent.Title())
 
             items[x]['Creator'] = self.user_fullname(obj.Creator())
+
+            patient = obj.getPatient()
+            if patient:
+                items[x]['getPatient'] = patient and patient.getPatientID() or ''
+                items[x]['replace']['getPatient'] = "<a href='%s'>%s</a>" % \
+                     (patient.absolute_url(), patient.getPatientID())
+            else:
+                items[x]['getPatient'] = ''
 
             samplingdate = obj.getSample().getSamplingDate()
             items[x]['SamplingDate'] = self.ulocalized_time(samplingdate)

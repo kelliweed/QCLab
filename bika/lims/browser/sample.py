@@ -307,6 +307,8 @@ class SampleEdit(BrowserView):
              in bsc(portal_type = 'SamplingDeviation',
                     inactive_state = 'active')])
 
+        patient = self.context.getPatient()
+
         self.header_columns = 3
         self.header_rows = [
             {'id': 'ClientReference',
@@ -319,6 +321,12 @@ class SampleEdit(BrowserView):
              'title': _('Client SID'),
              'allow_edit': self.allow_edit,
              'value': self.context.getClientSampleID(),
+             'condition':True,
+             'type': 'text'},
+            {'id': 'Patient',
+             'title': _('Patient'),
+             'allow_edit': False,
+             'value': patient and "%s %s" % (patient.getPatientID(),patient.Title()) or '',
              'condition':True,
              'type': 'text'},
             {'id': 'Requests',
@@ -587,6 +595,7 @@ class SamplesView(BikaListingView):
         self.columns = {
             'getSampleID': {'title': _('Sample ID'),
                             'index':'getSampleID'},
+            'getPatient': {'title': _('Patient')},
             'Client': {'title': _("Client"),
                        'toggle': True,},
             'Creator': {'title': PMF('Creator'),
@@ -641,6 +650,7 @@ class SamplesView(BikaListingView):
              'contentFilter':{'cancellation_state':'active',
                                'sort_on':'created'},
              'columns': ['getSampleID',
+                         'getPatient',
                          'Client',
                          'Creator',
                          'Created',
@@ -666,6 +676,7 @@ class SamplesView(BikaListingView):
                                'sort_on':'created',
                                'sort_order': 'reverse'},
              'columns': ['getSampleID',
+                         'getPatient',
                          'Client',
                          'Creator',
                          'Created',
@@ -688,6 +699,7 @@ class SamplesView(BikaListingView):
                               'sort_order': 'reverse',
                               'sort_on':'created'},
              'columns': ['getSampleID',
+                         'getPatient',
                          'Client',
                          'Creator',
                          'Created',
@@ -710,6 +722,7 @@ class SamplesView(BikaListingView):
                               'sort_order': 'reverse',
                               'sort_on':'created'},
              'columns': ['getSampleID',
+                         'getPatient',
                          'Client',
                          'Creator',
                          'Created',
@@ -732,6 +745,7 @@ class SamplesView(BikaListingView):
                               'sort_order': 'reverse',
                               'sort_on':'created'},
              'columns': ['getSampleID',
+                         'getPatient',
                          'Client',
                          'Creator',
                          'Created',
@@ -755,6 +769,7 @@ class SamplesView(BikaListingView):
                                'sort_on':'created'},
              'transitions': [{'id':'reinstate'}, ],
              'columns': ['getSampleID',
+                         'getPatient',
                          'Client',
                          'Creator',
                          'Created',
@@ -796,6 +811,14 @@ class SamplesView(BikaListingView):
                 (obj.aq_parent.absolute_url(), obj.aq_parent.Title())
 
             items[x]['Creator'] = self.user_fullname(obj.Creator())
+
+            patient = obj.getPatient()
+            if patient:
+                items[x]['getPatient'] = patient and patient.getPatientID() or ''
+                items[x]['replace']['getPatient'] = "<a href='%s'>%s</a>" % \
+                     (patient.absolute_url(), patient.getPatientID())
+            else:
+                items[x]['getPatient'] = ''
 
             items[x]['DateReceived'] = self.ulocalized_time(obj.getDateReceived())
 
