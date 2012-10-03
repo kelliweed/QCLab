@@ -7,6 +7,7 @@ from Products.Archetypes import atapi
 from Products.Archetypes.public import *
 from Products.CMFCore import permissions
 from Products.CMFCore.utils import getToolByName
+from bika.lims.permissions import *
 from bika.lims import PMF, bikaMessageFactory as _
 from bika.lims.browser.widgets import DateTimeWidget
 from bika.lims.config import ManageClients, PUBLICATION_PREFS, PROJECTNAME, \
@@ -20,16 +21,16 @@ schema = Person.schema.copy() + Schema((
         searchable=1,
         required=1,
         widget=StringWidget(
-            label=('Patient ID'),
+            label=_('Patient ID'),
         ),
     ),
     ReferenceField('PrimaryReferrer',
+        vocabulary='get_clients',
         allowed_types=('Client',),
         relationship='PatientClient',
         required=1,
-        widget=ReferenceWidget(
-            checkbox_bound=1,
-            label='Primary Referrer',
+        widget=SelectionWidget(
+            label=_('Primary Referrer'),
         ),
     ),
     ComputedField('PrimaryReferrerUID',
@@ -40,7 +41,7 @@ schema = Person.schema.copy() + Schema((
     ),
     StringField('Gender',
         vocabulary=GENDERS,
-        index = 'FieldIndex',
+        index='FieldIndex',
         widget=SelectionWidget(
             label=_('Gender'),
         ),
@@ -51,20 +52,20 @@ schema = Person.schema.copy() + Schema((
         ),
     ),
     DateTimeField('BirthDate',
-        required = 1,
-        widget = DateTimeWidget(
+        required=1,
+        widget=DateTimeWidget(
             label=_('Birth date'),
         ),
     ),
     TextField('Remarks',
-        searchable = True,
-        default_content_type = 'text/x-web-intelligent',
-        allowable_content_types = ('text/x-web-intelligent',),
+        searchable=True,
+        default_content_type='text/x-web-intelligent',
+        allowable_content_types=('text/x-web-intelligent',),
         default_output_type="text/html",
-        widget = TextAreaWidget(
-            macro = "bika_widgets/remarks",
-            label = _('Remarks'),
-            append_only = True,
+        widget=TextAreaWidget(
+            macro="bika_widgets/remarks",
+            label=_('Remarks'),
+            append_only=True,
         ),
     ),
     StringField('BirthPlace', schemata='Personal',
@@ -73,7 +74,7 @@ schema = Person.schema.copy() + Schema((
         ),
     ),
     StringField('Ethnicity', schemata='Personal',
-        index = 'FieldIndex',
+        index='FieldIndex',
         widget=StringWidget(
             label=_('Ethnicity'),
             description=_("Ethnicity eg. Asian, African, etc."),
@@ -144,5 +145,16 @@ class Patient(Person):
     def getARs(self, analysis_state):
         bc = getToolByName(self, 'bika_catalog')
         return [p.getObject() for p in bc(portal_type='AnalysisRequest', getPatientUID=self.UID())]
+
+    def get_clients(self):
+        ## Only show clients to which we have Manage AR rights.
+        mtool = getToolByName(self, 'portal_membership')
+        clientfolder = self.clients
+        clients = []
+        for client in clientfolder.objectValues("Client"):
+            if not mtool.checkPermission(ManageAnalysisRequests, client):
+                continue
+            clients.append([client.UID(), client.Title()])
+        return DisplayList(clients)
 
 atapi.registerType(Patient, PROJECTNAME)

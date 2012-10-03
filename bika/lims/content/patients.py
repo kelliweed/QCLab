@@ -89,8 +89,10 @@ class PatientsView(BikaListingView):
         items = BikaListingView.folderitems(self)
         for x in range(len(items)):
             if not items[x].has_key('obj'): continue
-            items[x]['replace']['Title'] = "<a href='%s'>%s</a>" % \
-                 (items[x]['url'], items[x]['Title'])
+            obj = items[x]['obj']
+            items[x]['getPatientID'] = obj.getPatientID()
+            items[x]['replace']['getPatientID'] = "<a href='%s'>%s</a>" % \
+                 (items[x]['url'], items[x]['getPatientID'])
 
         return items
 
