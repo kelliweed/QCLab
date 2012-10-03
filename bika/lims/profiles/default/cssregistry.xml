@@ -3,7 +3,7 @@
 
 <stylesheet
     id="++resource++bika.lims.css/hide_contentmenu.css"
-    expression="python:here.portal_type in ['Client', 'Doctor', 'Patient', 'AnalysisRequest', 'Worksheet', 'Sample', 'AnalysisCategory', 'AnalysisProfile', 'ARTemplate', 'AnalysisService', 'AnalysisSpec', 'Attachment', 'Calculation', 'Instrument', 'LabContact', 'Laboratory', 'Method', 'Department', 'ReferenceDefinition', 'ReferenceManufacturer', 'ReportFolder', 'SampleType', 'SamplePoint', 'WorksheetTemplate', 'LabProduct', 'ReferenceSupplier', 'ReferenceSample', 'Preservation','Drug']"
+    expression="python:here.portal_type in ['Client', 'Doctor', 'Patient', 'AnalysisRequest', 'Worksheet', 'Sample', 'AnalysisCategory', 'AnalysisProfile', 'ARTemplate', 'AnalysisService', 'AnalysisSpec', 'Attachment', 'Calculation', 'Instrument', 'LabContact', 'Laboratory', 'Method', 'Department', 'ReferenceDefinition', 'ReferenceManufacturer', 'ReportFolder', 'SampleType', 'SamplePoint', 'WorksheetTemplate', 'LabProduct', 'ReferenceSupplier', 'ReferenceSample', 'Preservation','Drug', 'Treatment']"
     media="screen"
     rel="stylesheet"
     rendering="link"
@@ -11,7 +11,7 @@
 
 <stylesheet
     id="++resource++bika.lims.css/hide_editable_border.css"
-    expression="python:here.portal_type in ['Doctors', 'Patients', 'AnalysisCategories', 'AnalysisCategory', 'AnalysisServices', 'AnalysisSpecs', 'AnalysisProfile', 'AnalysisProfiles', 'ARTemplate', 'ARTemplates', 'AttachmentType', 'AttachmentTypes', 'BikaSetup', 'Calculations', 'ClientFolder', 'Container', 'Containers', 'ContainerType', 'ContainerTypes', 'Department', 'Departments', 'Instruments', 'LabContacts', 'Laboratory', 'LabProduct', 'LabProducts', 'Methods', 'Preservation', 'Preservations', 'ReferenceDefinition', 'ReferenceDefinitions', 'ReferenceManufacturer', 'ReferenceManufacturers', 'ReferenceSuppliers', 'SamplePoints', 'SampleTypes', 'WorksheetTemplates', 'SamplingDeviations', 'SamplingDeviation', 'SampleMatrices', 'SampleMatrix', 'Drugs']"
+    expression="python:here.portal_type in ['Doctors', 'Patients', 'AnalysisCategories', 'AnalysisCategory', 'AnalysisServices', 'AnalysisSpecs', 'AnalysisProfile', 'AnalysisProfiles', 'ARTemplate', 'ARTemplates', 'AttachmentType', 'AttachmentTypes', 'BikaSetup', 'Calculations', 'ClientFolder', 'Container', 'Containers', 'ContainerType', 'ContainerTypes', 'Department', 'Departments', 'Instruments', 'LabContacts', 'Laboratory', 'LabProduct', 'LabProducts', 'Methods', 'Preservation', 'Preservations', 'ReferenceDefinition', 'ReferenceDefinitions', 'ReferenceManufacturer', 'ReferenceManufacturers', 'ReferenceSuppliers', 'SamplePoints', 'SampleTypes', 'WorksheetTemplates', 'SamplingDeviations', 'SamplingDeviation', 'SampleMatrices', 'SampleMatrix', 'Drugs', 'Treatments']"
     media="screen"
     rel="stylesheet"
     rendering="link"

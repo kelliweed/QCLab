@@ -21,4 +21,5 @@ bika_samplepoints,SamplePoints
 bika_sampletypes,SampleTypes
 bika_samplingdeviations,SamplingDeviations
 bika_drugs,Drugs
+bika_treatments,Treatments
 bika_worksheettemplates,WorksheetTemplates
