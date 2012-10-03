@@ -73,6 +73,7 @@ class BikaGenerator:
                        'bika_samplingdeviations',
                        'bika_samplepoints',
                        'bika_sampletypes',
+                       'bika_treatments',
                        'bika_referencedefinitions',
                        'bika_referencemanufacturers',
                        'bika_referencesuppliers',
@@ -572,6 +573,7 @@ class BikaGenerator:
         at.setCatalogsByType('Unit', ['bika_setup_catalog', ])
         at.setCatalogsByType('WorksheetTemplate', ['bika_setup_catalog', ])
         at.setCatalogsByType('Drug', ['bika_setup_catalog', ])
+        at.setCatalogsByType('Treatment', ['bika_setup_catalog'])
 
         # create lexicon
         wordSplitter = Empty()

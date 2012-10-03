@@ -20,6 +20,7 @@
   <type portal_type="ContainerType"/>
   <type portal_type="Department"/>
   <type portal_type="Doctor"/>
+  <type portal_type="Drug"/>
   <type portal_type="Instrument"/>
   <type portal_type="LabContact"/>
   <type portal_type="LabProduct"/>
@@ -37,7 +38,7 @@
   <type portal_type="SamplePoint"/>
   <type portal_type="SampleType"/>
   <type portal_type="SamplingDeviation"/>
-  <type portal_type="Drug"/>
+  <type portal_type="Treatment"/>
   <type portal_type="WorksheetTemplate"/>
  </factorytypes>
 </object>

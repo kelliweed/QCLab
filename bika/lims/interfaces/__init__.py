@@ -156,6 +156,8 @@ class IReferenceManufacturers(Interface):
     ""
 class IReferenceDefinitions(Interface):
     ""
+class ITreatments(Interface):
+    ""
 class IWorksheetTemplates(Interface):
     ""
 

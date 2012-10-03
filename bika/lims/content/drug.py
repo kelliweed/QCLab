@@ -40,7 +40,7 @@ schema = BikaSchema.copy() + Schema((
         ),
     ),
                                      
-    TextField('Side effects',
+    TextField('SideEffects',
         default_content_type = 'text/x-web-intelligent',
         allowable_content_types = ('text/x-web-intelligent',),
         default_output_type="text/html",
