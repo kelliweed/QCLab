@@ -57,6 +57,12 @@ schema = Person.schema.copy() + Schema((
             label=_('Birth date'),
         ),
     ),
+    BooleanField('BirthDateEstimated',
+        default=False,
+        widget=BooleanWidget(
+            label=_('Birth date is estimated'),
+        ),
+    ),
     TextField('Remarks',
         searchable=True,
         default_content_type='text/x-web-intelligent',

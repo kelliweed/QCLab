@@ -210,4 +210,15 @@
               inline="False"
               insert-after="*"/>
 
+  <javascript authenticated="True"
+              cacheable="True"
+              compression="safe"
+              conditionalcomment=""
+              cookable="True"
+              enabled="on"
+              expression="python:here.portal_type in ['Patient',]"
+              id="++resource++bika.lims.js/patient.js"
+              inline="False"
+              insert-after="*"/>
+
 </object>
