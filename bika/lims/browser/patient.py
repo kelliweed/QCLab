@@ -35,6 +35,98 @@ class PatientSamplesView(SamplesView):
         super(PatientSamplesView, self).__init__(context, request)
         self.contentFilter['getPatientUID'] = self.context.UID()
 
+class TreatmentHistoryView(BikaListingView):
+    """ bika listing to display Treatment History for a
+        TreatmentHistory field.
+    """
+
+    def __init__(self, context, request, fieldvalue=[], allow_edit=True):
+        BikaListingView.__init__(self, context, request)
+        self.context_actions = {}
+        self.contentFilter = {'review_state': 'impossible_state'}
+        self.base_url = self.context.absolute_url()
+        self.view_url = self.base_url
+        self.show_sort_column = False
+        self.show_select_row = False
+        self.show_select_all_checkbox = False
+        self.show_select_column = False
+        self.pagesize = 1000
+        self.allow_edit = allow_edit
+
+        self.fieldvalue = fieldvalue
+
+        self.columns = {
+            'Treatment': {'title': _('Treatment')},
+            'Drug': {'title': _('Drug')},
+            'Start': {'title': _('Start')},
+            'End': {'title': _('End')},
+            'Remarks': {'title': _('Remarks')},
+
+        }
+        self.review_states = [
+            {'id':'default',
+             'title': _('All'),
+             'contentFilter':{},
+             'transitions': [],
+             'columns':['Treatment', 'Drug', 'Start', 'End'],
+            },
+        ]
+
+    def folderitems(self):
+        items = []
+        row_id = 0
+        for value in self.fieldvalue:
+            # this folderitems doesn't subclass from the bika_listing.py
+            # so we create items from scratch
+            row_id += 1
+            item = {
+                'obj': self.context,
+                'id': row_id,
+                'uid': row_id,
+                'type_class': 'treatmenthistory',
+                'url': self.context.absolute_url(),
+                'relative_url': self.context.absolute_url(),
+                'view_url': self.context.absolute_url(),
+                'Treatment': value['Treatment'],
+                'Drug': value['Drug'],
+                'Start': value['Start'],
+                'End': value['End'],
+                'Remarks': value['Remarks'],
+                'replace': {},
+                'before': {},
+                'after': {},
+                'choices':{},
+                'class': "state-active",
+                'state_class': 'state-active',
+                'allow_edit': [],
+            }
+            items.append(item)
+        row_id += 1
+        item = {
+            'obj': self.context,
+            'id': row_id,
+            'uid': row_id,
+            'type_class': 'treatmenthistory',
+            'url': self.context.absolute_url(),
+            'relative_url': self.context.absolute_url(),
+            'view_url': self.context.absolute_url(),
+            'Treatment': '',
+            'Drug': '',
+            'Start': '',
+            'End': '',
+            'Remarks': '',
+            'replace': {},
+            'before': {},
+            'after': {},
+            'choices':{},
+            'class': "state-active",
+            'state_class': 'state-active',
+            'allow_edit': ['Treatment', 'Drug', 'Start', 'End', 'Remarks'],
+        }
+        items.append(item)
+
+        return items
+
 class ajaxGetPatients(BrowserView):
     """ Patient vocabulary source for jquery combo dropdown box
     """

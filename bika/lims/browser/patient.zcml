@@ -21,6 +21,14 @@
     />
 
     <browser:page
+      for="bika.lims.interfaces.IPatient"
+      name="treatmenthistory"
+      class="bika.lims.browser.patient.TreatmentHistoryView"
+      permission="zope2.View"
+      layer="bika.lims.interfaces.IBikaLIMS"
+    />
+
+    <browser:page
       for="bika.lims.interfaces.IClient"
       name="getPatients"
       class="bika.lims.browser.patient.ajaxGetPatients"

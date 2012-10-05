@@ -3,17 +3,18 @@
 from AccessControl import ClassSecurityInfo
 from AccessControl.Permissions import manage_users
 from Products.ATContentTypes.content import schemata
+from Products.ATExtensions.ateapi import RecordsField
 from Products.Archetypes import atapi
 from Products.Archetypes.public import *
 from Products.CMFCore import permissions
 from Products.CMFCore.utils import getToolByName
-from bika.lims.permissions import *
 from bika.lims import PMF, bikaMessageFactory as _
-from bika.lims.browser.widgets import DateTimeWidget
+from bika.lims.browser.widgets import DateTimeWidget, RecordsWidget
 from bika.lims.config import ManageClients, PUBLICATION_PREFS, PROJECTNAME, \
     GENDERS
 from bika.lims.content.person import Person
 from bika.lims.interfaces import IPatient
+from bika.lims.permissions import *
 from zope.interface import implements
 
 schema = Person.schema.copy() + Schema((
@@ -74,6 +75,19 @@ schema = Person.schema.copy() + Schema((
             append_only=True,
         ),
     ),
+    RecordsField('TreatmentHistory',
+        type='treatmenthistory',
+        subfields=('Treatment', 'Drug', 'Start', 'End', 'Remarks'),
+        required_subfields=('Treatment', 'Drug', 'Start', 'End'),
+        subfield_labels={'Treatment':_('Treatment'), 'Drug': _('Drug'), 'Start':_('Start'),
+                         'End': _('End'), 'Remarks': _('Remarks')},
+        subfield_sizes={'Treatment':20, 'Drug':20, 'Start':10, 'End':10, 'Remarks':25},
+        widget=RecordsWidget(
+            label='Treatment History',
+            description=_("A list of patient treatments and drugs administered."),
+            visible = False, # uses view from browser/patient.py
+        ),
+    ),
     StringField('BirthPlace', schemata='Personal',
         widget=StringWidget(
             label=_('Birth place'),
@@ -121,7 +135,9 @@ schema['BusinessFax'].widget.visible = False
 # Don't make title required - it will be computed from the Person's Fullname
 schema['title'].required = 0
 schema['title'].widget.visible = False
-
+schema['EmailAddress'].schemata = 'Personal'
+schema['HomePhone'].schemata = 'Personal'
+schema['MobilePhone'].schemata = 'Personal'
 schema.moveField('PatientID', pos='top')
 schema.moveField('PrimaryReferrer', after='Surname')
 schema.moveField('Gender', after='PrimaryReferrer')
