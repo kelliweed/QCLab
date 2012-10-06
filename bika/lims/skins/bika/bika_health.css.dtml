@@ -2,7 +2,21 @@
 <dtml-call "REQUEST.set('portal_url', portal_url())">
 */
 
-.template-treatmenthistory portaltype-patient site-Plone section-patients icons-on kssActive
+.template-treatmenthistory #foldercontents-Treatment-column {
+  width:45%;
+}
+.template-treatmenthistory #foldercontents-Drug-column {
+  width:35%;
+}
+.template-treatmenthistory #foldercontents-Start-column {
+  width:10%;
+}
+.template-treatmenthistory #foldercontents-End-column {
+  width:10%;
+}
+.template-treatmenthistory .listing_string_entry {
+  width:90%;
+}
 
 /* </dtml-with> */
 

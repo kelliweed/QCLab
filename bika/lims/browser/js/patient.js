@@ -32,7 +32,18 @@ $(document).ready(function(){
 			$("#Age").val("");
 		}
 		$("#BirthDateEstimated").attr('checked', false);
-	})
+	});
+
+	// Treatment History Drug search popup
+	$("[field='Drug']").combogrid({
+		colModel: [{'columnName':'Title', 'width':'50', 'label':window.jsi18n_bika('Title')}],
+		url: window.location.href.replace("/treatmenthistory","") + "/getDrugs?_authenticator=" + $('input[name="_authenticator"]').val(),
+		select: function( event, ui ) {
+			$(this).val(ui.item.Title);
+			$(this).change();
+			return false;
+		}
+	});
 
 });
 }(jQuery));

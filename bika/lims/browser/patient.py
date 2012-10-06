@@ -40,6 +40,8 @@ class TreatmentHistoryView(BikaListingView):
         TreatmentHistory field.
     """
 
+    template = ViewPageTemplateFile("templates/treatmenthistory.pt")
+
     def __init__(self, context, request, fieldvalue=[], allow_edit=True):
         BikaListingView.__init__(self, context, request)
         self.context_actions = {}
@@ -56,11 +58,11 @@ class TreatmentHistoryView(BikaListingView):
         self.fieldvalue = fieldvalue
 
         self.columns = {
-            'Treatment': {'title': _('Treatment')},
-            'Drug': {'title': _('Drug')},
-            'Start': {'title': _('Start')},
-            'End': {'title': _('End')},
-            'Remarks': {'title': _('Remarks')},
+            'Treatment': {'title': _('Treatment'), 'input_class':'string'},
+            'Drug': {'title': _('Drug'), 'input_class':'string'},
+            'Start': {'title': _('Start'), 'input_class':'datepicker'},
+            'End': {'title': _('End'), 'input_class':'datepicker'},
+            'Remarks': {'title': _('Remarks'), 'inputclass':'string'},
 
         }
         self.review_states = [
@@ -144,9 +146,9 @@ class ajaxGetPatients(BrowserView):
             return json.dumps(rows)
 
         # lookup patient objects from ZODB
-        aq = MatchRegexp('Title', "%s"%searchTerm) | \
-             MatchRegexp('Description', "%s"%searchTerm) | \
-             MatchRegexp('getPatientID', "%s"%searchTerm)
+        aq = MatchRegexp('Title', "%s" % searchTerm) | \
+             MatchRegexp('Description', "%s" % searchTerm) | \
+             MatchRegexp('getPatientID', "%s" % searchTerm)
         brains = self.bika_patient_catalog.evalAdvancedQuery(aq)
 
         for patient in (o.getObject() for o in brains):
@@ -155,7 +157,7 @@ class ajaxGetPatients(BrowserView):
                          'PrimaryReferrer': patient.getPrimaryReferrer().Title(),
                          'PatientUID': patient.UID()})
 
-        rows = sorted(rows, key = itemgetter(sidx and sidx or 'Title'))
+        rows = sorted(rows, key=itemgetter(sidx and sidx or 'Title'))
         if sord == 'desc':
             rows.reverse()
         pages = len(rows) / int(nr_rows)
@@ -163,6 +165,39 @@ class ajaxGetPatients(BrowserView):
         ret = {'page':page,
                'total':pages,
                'records':len(rows),
-               'rows':rows[ (int(page)-1)*int(nr_rows) : int(page)*int(nr_rows) ]}
+               'rows':rows[ (int(page) - 1) * int(nr_rows) : int(page) * int(nr_rows) ]}
 
         return json.dumps(ret)
+
+class ajaxGetDrugs(BrowserView):
+    """ Drug vocabulary source for jquery combo dropdown box
+    """
+    def __call__(self):
+        plone.protect.CheckAuthenticator(self.request)
+        searchTerm = self.request['searchTerm']
+        page = self.request['page']
+        nr_rows = self.request['rows']
+        sord = self.request['sord']
+        sidx = self.request['sidx']
+        rows = []
+
+        # lookup objects from ZODB
+        brains = self.bika_setup_catalog(portal_type = 'Drug')
+        if brains and searchTerm:
+            brains = [p for p in brains if p.Title.lower().find(searchTerm) > -1]
+
+        for p in brains:
+            rows.append({'Title': p.Title})
+
+        rows = sorted(rows, key=itemgetter(sidx and sidx or 'Title'))
+        if sord == 'desc':
+            rows.reverse()
+        pages = len(rows) / int(nr_rows)
+        pages += divmod(len(rows), int(nr_rows))[1] and 1 or 0
+        ret = {'page':page,
+               'total':pages,
+               'records':len(rows),
+               'rows':rows[ (int(page) - 1) * int(nr_rows) : int(page) * int(nr_rows) ]}
+
+        return json.dumps(ret)
+

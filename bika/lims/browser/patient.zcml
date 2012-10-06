@@ -36,4 +36,12 @@
       layer="bika.lims.interfaces.IBikaLIMS"
     />
 
+    <browser:page
+      for="bika.lims.interfaces.IPatient"
+      name="getDrugs"
+      class="bika.lims.browser.patient.ajaxGetDrugs"
+      permission="zope.Public"
+      layer="bika.lims.interfaces.IBikaLIMS"
+    />
+
 </configure>
