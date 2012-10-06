@@ -1,0 +1,8 @@
+/* <dtml-with bika_health>
+<dtml-call "REQUEST.set('portal_url', portal_url())">
+*/
+
+.template-treatmenthistory portaltype-patient site-Plone section-patients icons-on kssActive
+
+/* </dtml-with> */
+
