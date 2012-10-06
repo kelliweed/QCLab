@@ -3,19 +3,19 @@
 */
 
 .template-treatmenthistory #foldercontents-Treatment-column {
-  width:45%;
+  width:40%;
 }
 .template-treatmenthistory #foldercontents-Drug-column {
-  width:35%;
+  width:30%;
 }
 .template-treatmenthistory #foldercontents-Start-column {
-  width:10%;
+  width:15%;
 }
 .template-treatmenthistory #foldercontents-End-column {
-  width:10%;
+  width:15%;
 }
-.template-treatmenthistory .listing_string_entry {
-  width:90%;
+.template-treatmenthistory .wide {
+  width:95%;
 }
 
 /* </dtml-with> */

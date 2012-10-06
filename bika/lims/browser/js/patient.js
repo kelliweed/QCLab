@@ -34,16 +34,67 @@ $(document).ready(function(){
 		$("#BirthDateEstimated").attr('checked', false);
 	});
 
-	// Treatment History Drug search popup
-	$("[field='Drug']").combogrid({
-		colModel: [{'columnName':'Title', 'width':'50', 'label':window.jsi18n_bika('Title')}],
-		url: window.location.href.replace("/treatmenthistory","") + "/getDrugs?_authenticator=" + $('input[name="_authenticator"]').val(),
-		select: function( event, ui ) {
-			$(this).val(ui.item.Title);
-			$(this).change();
-			return false;
+	function lookups(){
+		// Treatment History Treatment search popup
+		$(".template-treatmenthistory #Treatment").combogrid({
+			colModel: [{'columnName':'Type', 'width':'50', 'label':window.jsi18n_bika('Type')},
+			           {'columnName':'Title', 'width':'50', 'label':window.jsi18n_bika('Title')}],
+			url: window.location.href.replace("/treatmenthistory","") + "/getTreatments?_authenticator=" + $('input[name="_authenticator"]').val(),
+			select: function( event, ui ) {
+				event.preventDefault();
+				$(this).val(ui.item.Title);
+				$(this).change();
+				return false;
+			}
+		});
+
+		// Treatment History Drug search popup
+		$(".template-treatmenthistory #Drug").combogrid({
+			colModel: [{'columnName':'Title', 'width':'50', 'label':window.jsi18n_bika('Title')}],
+			url: window.location.href.replace("/treatmenthistory","") + "/getDrugs?_authenticator=" + $('input[name="_authenticator"]').val(),
+			select: function( event, ui ) {
+				event.preventDefault();
+				$(this).val(ui.item.Title);
+				$(this).change();
+				return false;
+			}
+		});
+	}
+	lookups();
+
+	$(".template-treatmenthistory .add_row").click(function(){
+		event.preventDefault();
+		T = $("#Treatment").val();
+		D = $("#Drug").val();
+		S = $("#Start").val();
+		E = $("#End").val();
+		if (T == '' || D == ''){
+	        return false;
 		}
-	});
+		newrow = $("tr#new").clone();
+        $("tr#new").removeAttr('id');
+		$("#Treatment").parent().append("<span>"+T+"</span>");
+		$("#Treatment").parent().append("<input type='hidden' name='Treatment:list' value='"+T+"'/>");
+		$("#Treatment").remove();
+		$("#Drug").parent().append("<span>"+D+"</span>");
+		$("#Drug").parent().append("<input type='hidden' name='Drug:list' value='"+D+"'/>");
+		$("#Drug").remove();
+		$("#Start").parent().append("<span>"+S+"</span>");
+		$("#Start").parent().append("<input type='hidden' name='Start:list' value='"+S+"'/>");
+		$("#Start").remove();
+		$("#End").parent().append("<span>"+E+"</span>");
+		$("#End").parent().append("<input type='hidden' name='End:list' value='"+E+"'/>");
+		$("#End").remove();
+		for(i=0; i<$(newrow).children().length; i++){
+            td = $(newrow).children()[i];
+            input = $(td).children()[0];
+            $(input).val('');
+        }
+        $(newrow).appendTo($(".bika-listing-table"));
+        lookups();
+        return false;
+	})
+
 
 });
 }(jQuery));

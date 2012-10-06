@@ -44,4 +44,12 @@
       layer="bika.lims.interfaces.IBikaLIMS"
     />
 
+    <browser:page
+      for="bika.lims.interfaces.IPatient"
+      name="getTreatments"
+      class="bika.lims.browser.patient.ajaxGetTreatments"
+      permission="zope.Public"
+      layer="bika.lims.interfaces.IBikaLIMS"
+    />
+
 </configure>

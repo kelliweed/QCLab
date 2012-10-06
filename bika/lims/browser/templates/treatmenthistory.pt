@@ -2,56 +2,92 @@
 	xmlns:tal="http://xml.zope.org/namespaces/tal"
 	xmlns:metal="http://xml.zope.org/namespaces/metal"
 	xmlns:i18n="http://xml.zope.org/namespaces/i18n"
-	metal:use-macro="here/main_template/macros/master"
-	i18n:domain="bika">
-<body
-	tal:define="
-		form_id view/form_id;
-		table_only python:hasattr(view, 'table_only') and view.table_only or view.request.get('table_only','') == form_id;"
-	tal:omit-tag="python:table_only">
+	metal:use-macro="here/main_template/macros/master" i18n:domain="bika">
+<body class="template-treatmenthistory">
 
-<metal:content-title fill-slot="content-title"
-	tal:define="
-		form_id view/form_id;
-		table_only python:hasattr(view, 'table_only') and view.table_only or view.request.get('table_only','') == form_id;"
-	tal:condition="python:not table_only">
-</metal:content-title>
+	<metal:content-core fill-slot="content-core">
+    <form name="treatmenthistory" method="POST">
+		<div id="folderlisting-main-table">
+            <input tal:replace="structure context/@@authenticator/authenticator" />
+            <input type="hidden" name="submitted" value="1"/>
+			<div class="bika-listing-table-container">
+				<table summary="Content listing" style="margin-bottom: 0px;"
+					class="bika-listing-table">
+					<thead>
+						<tr>
+							<th class="sortable column"
+							    id="foldercontents-Treatment-column">
+                                <span i18n:translate="">Treatment</span>
+                                <span class="fieldRequired">&nbsp;</span>
+							</th>
+							<th class="sortable column"
+							    id="foldercontents-Drug-column">
+                                <span i18n:translate="">Drug</span>
+                                <span class="fieldRequired">&nbsp;</span>
+                            </th>
+							<th class="sortable column" i18n:translate=""
+							    id="foldercontents-Start-column">
+								Start</th>
+							<th class="sortable column" i18n:translate=""
+							    id="foldercontents-End-column">
+								End</th>
+						</tr>
+					</thead>
 
-<metal:content-description fill-slot="content-description"
-	tal:define="
-		form_id view/form_id;
-		table_only python:hasattr(view, 'table_only') and view.table_only or view.request.get('table_only','') == form_id;"
-	tal:condition="python:not table_only">
-	<div class="documentDescription"
-		tal:content="structure view/description"
-		tal:condition="view/description"/>
-</metal:content-description>
+					<tbody class="item-listing-tbody">
+                        <tr tal:repeat="row context/getTreatmentHistory">
+                            <td colspan="1" rowspan="1" class="state-active Treatment">
+                                 <span tal:content="row/Treatment"/>
+                            </td>
+                            <td colspan="1" rowspan="1" class="state-active Drug">
+                                 <span tal:content="row/Drug"/>
+                            </td>
+                            <td colspan="1" rowspan="1" class="state-active Start">
+                                 <span tal:content="row/Start"/>
+                            </td>
+                            <td colspan="1" rowspan="1" class="state-active End">
+                                 <span tal:content="row/End"/>
+                            </td>
+                        </tr>
+                        <tr id="new">
+                            <td colspan="1" rowspan="1" class="state-active Treatment">
+                                 <input class="wide" id="Treatment" type="text" value="" autocomplete="off"/>
+                            </td>
+                            <td colspan="1" rowspan="1" class="state-active Drug">
+                                 <input class="wide" id="Drug" type="text" value="" autocomplete="off"/>
+                            </td>
+                            <td colspan="1" rowspan="1" class="state-active Start">
+                                 <input class="wide datepicker" id="Start" type="text" value="" autocomplete="off"/>
+                            </td>
+                            <td colspan="1" rowspan="1" class="state-active End">
+                                 <input class="wide datepicker" id="End" type="text" value="" autocomplete="off"/>
+                            </td>
+					</tbody>
+				</table>
+			</div>
+		</div>
 
-<metal:content-core fill-slot="content-core">
-	<div id="folderlisting-main-table"
-		tal:content="structure view/contents_table"/>
+		<input class="workflow_action_button action_button add_row allowMultiSubmit"
+		       type="submit"
+			   i18n:attributes="value"
+			   value="Add" />
+		<br />
+		<br />
+		<input class="workflow_action_button action_button" type="submit"
+			i18n:attributes="value" value="Save treatment history" />
 
-    <input class="workflow_action_button action_button"
-           type="submit"
-           i18n:attributes="value"
-           value="Add"/>
-    <br/>
-    <br/>
-    <input class="workflow_action_button action_button"
-           type="submit"
-           i18n:attributes="value"
-           value="Save treatment history"/>
-
-	<tal:hasremarks tal:condition="python:hasattr(context, 'Remarks')">
-		<tal:remarks define="
+		<tal:hasremarks tal:condition="python:hasattr(context, 'Remarks')">
+			<tal:remarks
+				define="
 			field python:context.Schema()['Remarks'];
 			errors python:{};">
-			<p style="margin-top:2em;"/>
-			 <metal:widget use-macro="python:context.widget('Remarks', mode='edit')" />
-		</tal:remarks>
-	</tal:hasremarks>
-
-</metal:content-core>
+				<p style="margin-top: 2em;" />
+				<metal:widget
+					use-macro="python:context.widget('Remarks', mode='edit')" />
+			</tal:remarks>
+		</tal:hasremarks>
+    </form>
+	</metal:content-core>
 
 </body>
 </html>
