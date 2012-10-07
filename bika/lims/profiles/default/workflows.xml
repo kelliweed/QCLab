@@ -122,7 +122,7 @@
 
   <type type_id="ContainerType">
    <bound-workflow workflow_id="bika_one_state_workflow"/>
-   <bound-workflow workflow_id="bika_inactive_workflow"/>  
+   <bound-workflow workflow_id="bika_inactive_workflow"/>
   </type>
   <type type_id="ContainerTypes"/>
 
@@ -131,9 +131,9 @@
    <bound-workflow workflow_id="bika_inactive_workflow"/>
   </type>
   <type type_id="Departments"/>
-  
+
   <type type_id="Discussion Item"/>
-  
+
   <type type_id="Drug">
    <bound-workflow workflow_id="bika_one_state_workflow"/>
    <bound-workflow workflow_id="bika_inactive_workflow"/>
@@ -190,7 +190,7 @@
 
   <type type_id="Patients"/>
   <type type_id="Patient">
-   <bound-workflow workflow_id="bika_one_state_workflow"/>
+   <bound-workflow workflow_id="bika_patient_workflow"/>
    <bound-workflow workflow_id="bika_inactive_workflow"/>
   </type>
 
@@ -210,7 +210,7 @@
 
   <type type_id="Doctors"/>
   <type type_id="Doctor">
-   <bound-workflow workflow_id="bika_one_state_workflow"/>
+   <bound-workflow workflow_id="bika_doctor_workflow"/>
    <bound-workflow workflow_id="bika_inactive_workflow"/>
   </type>
 
@@ -286,7 +286,7 @@
    <bound-workflow workflow_id="bika_one_state_workflow"/>
    <bound-workflow workflow_id="bika_inactive_workflow"/>
   </type>
-  
+
   <type type_id="Treatment">
    <bound-workflow workflow_id="bika_one_state_workflow"/>
    <bound-workflow workflow_id="bika_inactive_workflow"/>
