@@ -13,6 +13,7 @@ from bika.lims.browser.client import ClientAnalysisRequestsView, \
     ClientSamplesView
 from bika.lims.browser.publish import Publish
 from bika.lims.browser.sample import SamplesView
+from bika.lims.idserver import renameAfterCreation
 from bika.lims.interfaces import IContacts
 from bika.lims.permissions import *
 from bika.lims.subscribers import doActionFor, skip
@@ -44,6 +45,7 @@ class TreatmentHistoryView(BrowserView):
 
     def __call__(self):
         if 'submitted' in self.request:
+            bsc = self.bika_setup_catalog
             new = []
             for t in range(len(self.request.form['Treatment'])):
                 T = self.request.form['Treatment'][t]
@@ -51,7 +53,23 @@ class TreatmentHistoryView(BrowserView):
                 S = self.request.form['Start'][t]
                 E = self.request.form['End'][t]
                 # Create new Treatment entry if none exists
+                Tlist = bsc(portal_type='Treatment', Title=T)
+                if not Tlist:
+                    folder = self.context.bika_setup.bika_treatments
+                    _id = folder.invokeFactory('Treatment', id = 'tmp')
+                    obj = folder[_id]
+                    obj.edit(title = T)
+                    obj.unmarkCreationFlag()
+                    renameAfterCreation(obj)
                 # Create new Drug entry if none exists
+                Dlist = bsc(portal_type='Drug', Title=D)
+                if not Dlist:
+                    folder = self.context.bika_setup.bika_drugs
+                    _id = folder.invokeFactory('Drug', id = 'tmp')
+                    obj = folder[_id]
+                    obj.edit(title = D)
+                    obj.unmarkCreationFlag()
+                    renameAfterCreation(obj)
                 new.append({'Treatment':T, 'Drug':D, 'Start':S, 'End':E})
             self.context.setTreatmentHistory(new)
             self.context.plone_utils.addPortalMessage(PMF("Changes saved"))
