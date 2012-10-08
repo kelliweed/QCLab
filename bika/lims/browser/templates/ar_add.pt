@@ -142,7 +142,15 @@
 
     <!-- Patient selector -->
     <tr tal:define="field_name string:PatientID">
-        <th colspan="2" style="white-space:nowrap" i18n:translate="">Patient ID</th>
+        <th colspan="2" style="white-space:nowrap">
+            <span i18n:translate="">Patient</span>
+            <a style="border-bottom:none !important;margin-left:1em;"
+               class='add_patient'
+               tal:attributes="href string:${portal/absolute_url}/patients/portal_factory/Patient/new?PrimaryReferrer=${context/UID}"
+               rel="#overlay">
+               <img style="padding-bottom:2px;" tal:attributes="src string:${portal/absolute_url}/++resource++bika.lims.images/add.png"/>
+            </a>
+        </th>
         <td>&nbsp;
            <!--   <img class="copyButton PatientIDCopyButton"
                 tal:attributes="name field_name;src string:${portal/absolute_url}/++resource++bika.lims.images/copy.png"/>

@@ -216,7 +216,7 @@
               conditionalcomment=""
               cookable="True"
               enabled="on"
-              expression="python:here.portal_type in ['Patient',]"
+              expression="python:here.portal_type in ['Patient','Client',]"
               id="++resource++bika.lims.js/patient.js"
               inline="False"
               insert-after="*"/>

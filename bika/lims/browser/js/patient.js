@@ -5,7 +5,7 @@ $(document).ready(function(){
 	PMF = window.jsi18n_plone;
 
 	// Estimate DOB if an age is typed
-	$("#Age").change(function(){
+	$("#Age").live('change', function(){
 		if (parseInt($(this).val()) > 0){
 			var d = new Date();
 			year = d.getFullYear() - $(this).val();
@@ -20,13 +20,17 @@ $(document).ready(function(){
 	})
 
 	// Mod the Age if DOB is selected
-	$("#BirthDate").change(function(){
+	$("#BirthDate").live('change', function(){
 		var dob = new Date($(this).val());
 		if (dob!= undefined && dob != null){
 			var now = new Date();
 			var one_year = 86400 * 365 * 1000
 			var age = ((now.getTime()-dob.getTime())/one_year).toString().split(".")[0];
-			$("#Age").val(age);
+			if (age == undefined || age == 'NaN') {
+				$("#Age").val("");
+			} else {
+				$("#Age").val(age);
+			}
 		}
 		else {
 			$("#Age").val("");

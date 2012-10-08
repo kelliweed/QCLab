@@ -31,19 +31,20 @@ schema = Person.schema.copy() + Schema((
         relationship='PatientClient',
         required=1,
         widget=SelectionWidget(
+            format='select',
             label=_('Primary Referrer'),
         ),
     ),
     ComputedField('PrimaryReferrerUID',
         expression='here.getPrimaryReferrer() and here.getPrimaryReferrer().UID() or None',
         widget=ComputedWidget(
-            visible=False,
         ),
     ),
     StringField('Gender',
         vocabulary=GENDERS,
         index='FieldIndex',
         widget=SelectionWidget(
+            format='select',
             label=_('Gender'),
         ),
     ),
