@@ -27,6 +27,14 @@
       permission="zope2.View"
       layer="bika.lims.interfaces.IBikaLIMS"
     />
+    
+    <browser:page
+      for="bika.lims.interfaces.IPatient"
+      name="allergies"
+      class="bika.lims.browser.patient.AllergiesView"
+      permission="zope2.View"
+      layer="bika.lims.interfaces.IBikaLIMS"
+    />
 
     <browser:page
       for="bika.lims.interfaces.IClient"
@@ -48,6 +56,14 @@
       for="bika.lims.interfaces.IPatient"
       name="getTreatments"
       class="bika.lims.browser.patient.ajaxGetTreatments"
+      permission="zope.Public"
+      layer="bika.lims.interfaces.IBikaLIMS"
+    />
+    
+    <browser:page
+      for="bika.lims.interfaces.IPatient"
+      name="getDrugProhibitions"
+      class="bika.lims.browser.patient.ajaxGetDrugProhibitions"
       permission="zope.Public"
       layer="bika.lims.interfaces.IBikaLIMS"
     />

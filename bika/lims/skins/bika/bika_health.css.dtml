@@ -2,10 +2,12 @@
 <dtml-call "REQUEST.set('portal_url', portal_url())">
 */
 
-.template-treatmenthistory #foldercontents-Treatment-column {
+.template-treatmenthistory #foldercontents-Treatment-column,
+.template-allergies #foldercontents-DrugProhibition-column {
   width:40%;
 }
-.template-treatmenthistory #foldercontents-Drug-column {
+.template-treatmenthistory #foldercontents-Drug-column,
+.template-allergies #foldercontents-Drug-column {
   width:30%;
 }
 .template-treatmenthistory #foldercontents-Start-column {
@@ -14,7 +16,8 @@
 .template-treatmenthistory #foldercontents-End-column {
   width:15%;
 }
-.template-treatmenthistory .wide {
+.template-treatmenthistory .wide,
+.template-allergies .wide {
   width:95%;
 }
 

@@ -74,6 +74,43 @@ class TreatmentHistoryView(BrowserView):
             self.context.setTreatmentHistory(new)
             self.context.plone_utils.addPortalMessage(PMF("Changes saved"))
         return self.template()
+    
+class AllergiesView(BrowserView):
+    """ bika listing to display Allergies for Drug Prohibitions
+    """
+
+    template = ViewPageTemplateFile("templates/allergies.pt")
+
+    def __call__(self):
+        if 'submitted' in self.request:
+            bsc = self.bika_setup_catalog
+            new = []
+            for p in range(len(self.request.form['DrugProhibition'])):
+                P = self.request.form['DrugProhibition'][p]
+                D = self.request.form['Drug'][p]
+                
+                # Create new Allergy entry if none exists
+                Plist = bsc(portal_type='DrugProhibition', Title=P)
+                if not Plist:
+                    folder = self.context.bika_setup.bika_drugprohibitions
+                    _id = folder.invokeFactory('DrugProhibition', id = 'tmp')
+                    obj = folder[_id]
+                    obj.edit(title = P)
+                    obj.unmarkCreationFlag()
+                    renameAfterCreation(obj)
+                # Create new Drug entry if none exists
+                Dlist = bsc(portal_type='Drug', Title=D)
+                if not Dlist:
+                    folder = self.context.bika_setup.bika_drugs
+                    _id = folder.invokeFactory('Drug', id = 'tmp')
+                    obj = folder[_id]
+                    obj.edit(title = D)
+                    obj.unmarkCreationFlag()
+                    renameAfterCreation(obj)
+                new.append({'DrugProhibition':P, 'Drug':D})
+            self.context.setAllergies(new)
+            self.context.plone_utils.addPortalMessage(PMF("Changes saved"))
+        return self.template()
 
 class ajaxGetPatients(BrowserView):
     """ Patient vocabulary source for jquery combo dropdown box
@@ -179,3 +216,36 @@ class ajaxGetTreatments(BrowserView):
 
         return json.dumps(ret)
 
+class ajaxGetDrugProhibitions(BrowserView):
+    """ Drug Prohibition Explanations vocabulary source for jquery combo dropdown box
+    """
+    def __call__(self):
+        plone.protect.CheckAuthenticator(self.request)
+        searchTerm = self.request['searchTerm']
+        page = self.request['page']
+        nr_rows = self.request['rows']
+        sord = self.request['sord']
+        sidx = self.request['sidx']
+        rows = []
+
+        # lookup objects from ZODB
+        brains = self.bika_setup_catalog(portal_type = 'DrugProhibition')
+        if brains and searchTerm:
+            brains = [p for p in brains if p.Title.lower().find(searchTerm) > -1]
+
+        for p in brains:
+            rows.append({'Title': p.Title})
+
+        rows = sorted(rows, key=itemgetter(sidx and sidx or 'Title'))
+        if sord == 'desc':
+            rows.reverse()
+        pages = len(rows) / int(nr_rows)
+        pages += divmod(len(rows), int(nr_rows))[1] and 1 or 0
+        ret = {'page':page,
+               'total':pages,
+               'records':len(rows),
+               'rows':rows[ (int(page) - 1) * int(nr_rows) : int(page) * int(nr_rows) ]}
+
+        return json.dumps(ret)
+    
+    
