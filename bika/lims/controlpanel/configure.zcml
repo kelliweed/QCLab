@@ -189,6 +189,14 @@
     />
     
     <browser:page
+      for="bika.lims.interfaces.IDrugProhibitions"
+      name="folder_view"
+      class=".bika_drugprohibitions.DrugProhibitionsView"
+      permission="bika.lims.ManageBika"
+      layer="bika.lims.interfaces.IBikaLIMS"
+    />
+    
+    <browser:page
       for="bika.lims.interfaces.ITreatments"
       name="folder_view"
       class=".bika_treatments.TreatmentsView"

@@ -139,6 +139,12 @@
    <bound-workflow workflow_id="bika_inactive_workflow"/>
   </type>
   <type type_id="Drugs"/>
+  
+  <type type_id="DrugProhibition">
+   <bound-workflow workflow_id="bika_one_state_workflow"/>
+   <bound-workflow workflow_id="bika_inactive_workflow"/>
+  </type>
+  <type type_id="DrugProhibitions"/>
 
   <type type_id="DuplicateAnalysis">
    <bound-workflow workflow_id="bika_duplicateanalysis_workflow"/>

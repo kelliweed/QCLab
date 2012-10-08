@@ -88,6 +88,19 @@ schema = Person.schema.copy() + Schema((
             visible = False, # uses view from browser/patient.py
         ),
     ),
+    RecordsField('Allergies',
+        type='allergies',
+        subfields=('DrugProhibition', 'Drug', 'Remarks'),
+        required_subfields=('DrugProhibition', 'Drug'),
+        subfield_labels={'DrugProhibition':_('Drug Prohibition Explanation'), 'Drug': _('Drug'), 
+                         'Remarks': _('Remarks')},
+        subfield_sizes={'DrugProhibition':20, 'Drug':20, 'Remarks':25},
+        widget=RecordsWidget(
+            label='Allergies',
+            description=_("Known Patient allergies to keep information that can aid drug reaction interpretation"),
+            visible = False, # uses view from browser/patient.py
+        ),
+    ),
     StringField('BirthPlace', schemata='Personal',
         widget=StringWidget(
             label=_('Birth place'),

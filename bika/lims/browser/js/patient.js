@@ -59,6 +59,30 @@ $(document).ready(function(){
 				return false;
 			}
 		});
+		
+		// Allergies > Prohibited Drug Explanations search popup
+		$(".template-allergies #DrugProhibition").combogrid({
+			colModel: [{'columnName':'Title', 'width':'50', 'label':window.jsi18n_bika('Title')}],
+			url: window.location.href.replace("/allergies","") + "/getDrugProhibitions?_authenticator=" + $('input[name="_authenticator"]').val(),
+			select: function( event, ui ) {
+				event.preventDefault();
+				$(this).val(ui.item.Title);
+				$(this).change();
+				return false;
+			}
+		});
+
+		// Allergies > Drug search popup
+		$(".template-allergies #Drug").combogrid({
+			colModel: [{'columnName':'Title', 'width':'50', 'label':window.jsi18n_bika('Title')}],
+			url: window.location.href.replace("/allergies","") + "/getDrugs?_authenticator=" + $('input[name="_authenticator"]').val(),
+			select: function( event, ui ) {
+				event.preventDefault();
+				$(this).val(ui.item.Title);
+				$(this).change();
+				return false;
+			}
+		});
 	}
 	lookups();
 
@@ -85,6 +109,31 @@ $(document).ready(function(){
 		$("#End").parent().append("<span>"+E+"</span>");
 		$("#End").parent().append("<input type='hidden' name='End:list' value='"+E+"'/>");
 		$("#End").remove();
+		for(i=0; i<$(newrow).children().length; i++){
+            td = $(newrow).children()[i];
+            input = $(td).children()[0];
+            $(input).val('');
+        }
+        $(newrow).appendTo($(".bika-listing-table"));
+        lookups();
+        return false;
+	})
+	
+	$(".template-allergies .add_row").click(function(){
+		event.preventDefault();
+		P = $("#DrugProhibition").val();
+		D = $("#Drug").val();
+		if (P == '' || D == ''){
+	        return false;
+		}
+		newrow = $("tr#new").clone();
+        $("tr#new").removeAttr('id');
+		$("#DrugProhibition").parent().append("<span>"+P+"</span>");
+		$("#DrugProhibition").parent().append("<input type='hidden' name='DrugProhibition:list' value='"+P+"'/>");
+		$("#DrugProhibition").remove();
+		$("#Drug").parent().append("<span>"+D+"</span>");
+		$("#Drug").parent().append("<input type='hidden' name='Drug:list' value='"+D+"'/>");
+		$("#Drug").remove();
 		for(i=0; i<$(newrow).children().length; i++){
             td = $(newrow).children()[i];
             input = $(td).children()[0];

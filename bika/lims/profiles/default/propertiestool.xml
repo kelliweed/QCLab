@@ -78,6 +78,7 @@
     <element value="SamplePoint"/>
     <element value="SampleType"/>
     <element value="Drug"/>
+    <element value="DrugProhibition"/>
     <element value="Treatment"/>
     <element value="Worksheet"/>
     <element value="WorksheetTemplate"/>

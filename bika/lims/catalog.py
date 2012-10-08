@@ -137,6 +137,7 @@ class BikaSetupCatalog(CatalogTool):
                                                  'Preservation',
                                                  'Department',
                                                  'Drug',
+                                                 'DrugProhibition',
                                                  'AnalysisCategory',
                                                  'AnalysisService',
                                                  'AnalysisSpec',

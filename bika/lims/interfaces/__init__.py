@@ -152,6 +152,8 @@ class IDoctor(Interface):
     ""
 class IDrugs(Interface):
     ""
+class IDrugProhibitions(Interface):
+    ""
 class IReferenceManufacturers(Interface):
     ""
 class IReferenceDefinitions(Interface):
