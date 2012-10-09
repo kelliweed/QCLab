@@ -30,6 +30,18 @@ class PatientAnalysisRequestsView(AnalysisRequestsView):
     def __init__(self, context, request):
         super(PatientAnalysisRequestsView, self).__init__(context, request)
         self.contentFilter['getPatientUID'] = self.context.UID()
+    def __call__(self):
+        self.context_actions = {}
+        wf = getToolByName(self.context, 'portal_workflow')
+        mtool = getToolByName(self.context, 'portal_membership')
+        addPortalMessage = self.context.plone_utils.addPortalMessage
+        PR = self.context.getPrimaryReferrer()
+        if isActive(self.context):
+            if mtool.checkPermission(AddAnalysisRequest, PR):
+                self.context_actions[self.context.translate(_('Add'))] = {
+                    'url':PR.absolute_url()+'/ar_add',
+                    'icon': '++resource++bika.lims.images/add.png'}
+        return super(PatientAnalysisRequestsView, self).__call__()
 
 class PatientSamplesView(SamplesView):
     def __init__(self, context, request):
@@ -74,7 +86,7 @@ class TreatmentHistoryView(BrowserView):
             self.context.setTreatmentHistory(new)
             self.context.plone_utils.addPortalMessage(PMF("Changes saved"))
         return self.template()
-    
+
 class AllergiesView(BrowserView):
     """ bika listing to display Allergies for Drug Prohibitions
     """
@@ -88,7 +100,7 @@ class AllergiesView(BrowserView):
             for p in range(len(self.request.form['DrugProhibition'])):
                 P = self.request.form['DrugProhibition'][p]
                 D = self.request.form['Drug'][p]
-                
+
                 # Create new Allergy entry if none exists
                 Plist = bsc(portal_type='DrugProhibition', Title=P)
                 if not Plist:
@@ -247,5 +259,4 @@ class ajaxGetDrugProhibitions(BrowserView):
                'rows':rows[ (int(page) - 1) * int(nr_rows) : int(page) * int(nr_rows) ]}
 
         return json.dumps(ret)
-    
-    
+
