@@ -182,7 +182,15 @@
 
     <!-- Doctor -->
     <tr tal:define="field_name string:Doctor">
-        <th colspan="2" style="white-space:nowrap" i18n:translate="">Doctor</th>
+        <th colspan="2" style="white-space:nowrap">
+            <span i18n:translate="">Doctor</span>
+            <a style="border-bottom:none !important;margin-left:1em;"
+               class='add_doctor'
+               tal:attributes="href string:${portal/absolute_url}/doctors/portal_factory/Doctor/new"
+               rel="#overlay">
+               <img style="padding-bottom:2px;" tal:attributes="src string:${portal/absolute_url}/++resource++bika.lims.images/add.png"/>
+            </a>
+        </th>
         <td>&nbsp;
            <!--   <img class="copyButton DoctorCopyButton"
                 tal:attributes="name field_name;src string:${portal/absolute_url}/++resource++bika.lims.images/copy.png"/>
