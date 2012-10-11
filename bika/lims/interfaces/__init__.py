@@ -160,6 +160,10 @@ class IReferenceDefinitions(Interface):
     ""
 class ITreatments(Interface):
     ""
+class IVaccinationCenter(Interface):
+    ""
+class IVaccinationCenters(Interface):
+    ""
 class IWorksheetTemplates(Interface):
     ""
 

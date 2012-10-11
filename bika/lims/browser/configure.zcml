@@ -21,6 +21,7 @@
   <include file="remarks.zcml"/>
   <include file="sample.zcml"/>
   <include file="stickers.zcml"/>
+  <include file="vaccinationcenter.zcml"/>
   <include file="viewlets.zcml"/>
   <include file="worksheet.zcml"/>
   <include file="worksheetfolder.zcml"/>

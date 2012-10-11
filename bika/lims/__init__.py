@@ -91,9 +91,11 @@ def initialize(context):
     from content.sampletype import SampleType
     from content.samplingdeviation import SamplingDeviation
     from content.suppliercontact import SupplierContact
+    from content.vaccinationcentercontact import VaccinationCenterContact
     from content.supplyorder import SupplyOrder
     from content.supplyorderitem import SupplyOrderItem
     from content.treatment import Treatment
+    from content.vaccinationcenter import VaccinationCenter
     from content.worksheet import Worksheet
     from content.worksheetfolder import WorksheetFolder
     from content.worksheettemplate import WorksheetTemplate
@@ -122,6 +124,7 @@ def initialize(context):
     from controlpanel.bika_sampletypes import SampleTypes
     from controlpanel.bika_samplingdeviations import SamplingDeviations
     from controlpanel.bika_treatments import Treatments
+    from controlpanel.bika_vaccinationcenters import VaccinationCenters
     from controlpanel.bika_worksheettemplates import WorksheetTemplates
 
     content_types, constructors, ftis = process_types(

@@ -78,6 +78,7 @@ class BikaGenerator:
                        'bika_referencedefinitions',
                        'bika_referencemanufacturers',
                        'bika_referencesuppliers',
+                       'bika_vaccinationcenters',
                        'bika_worksheettemplates'):
             obj = bika_setup._getOb(obj_id)
             obj.unmarkCreationFlag()
@@ -155,6 +156,10 @@ class BikaGenerator:
 
         if 'ReferenceSuppliers' not in portal_groups.listGroupIds():
             portal_groups.addGroup('ReferenceSuppliers', title = "",
+                roles = ['Member', ])
+        
+        if 'VaccinationCenters' not in portal_groups.listGroupIds():
+            portal_groups.addGroup('VaccinationCenters', title="",
                 roles = ['Member', ])
 
     def setupPermissions(self, portal):
@@ -576,6 +581,7 @@ class BikaGenerator:
         at.setCatalogsByType('Drug', ['bika_setup_catalog', ])
         at.setCatalogsByType('Treatment', ['bika_setup_catalog'])
         at.setCatalogsByType('DrugProhibition', ['bika_setup_catalog'])
+        at.setCatalogsByType('VaccinationCenter', ['bika_setup_catalog', ])
 
         # create lexicon
         wordSplitter = Empty()

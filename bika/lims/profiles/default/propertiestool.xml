@@ -69,6 +69,8 @@
     <element value="ReferenceManufacturer"/>
     <element value="ReferenceSample"/>
     <element value="ReferenceSupplier"/>
+    <element value="VaccinationCenter"/>
+    <element value="VaccinationCenterContact"/>
     <element value="Report"/>
     <element value="ReportFolder"/>
     <element value="Patient"/>

@@ -157,6 +157,7 @@ class BikaSetupCatalog(CatalogTool):
                                                  'ReferenceSupplier',
                                                  'ReferenceDefinition',
                                                  'Treatment',
+                                                 'VaccinationCenter',
                                                  'WorksheetTemplate'),
                                 search_sub = True,
                                 apply_func = indexObject)

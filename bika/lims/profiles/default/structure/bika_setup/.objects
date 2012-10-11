@@ -23,4 +23,5 @@ bika_samplingdeviations,SamplingDeviations
 bika_drugs,Drugs
 bika_drugprohibitions,DrugProhibitions
 bika_treatments,Treatments
+bika_vaccinationcenters,VaccinationCenters
 bika_worksheettemplates,WorksheetTemplates
