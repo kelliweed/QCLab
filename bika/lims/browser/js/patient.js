@@ -87,6 +87,30 @@ $(document).ready(function(){
 				return false;
 			}
 		});
+		
+		// Immunization History > Immunization search popup
+		$(".template-immunizationhistory #Immunization").combogrid({
+			colModel: [{'columnName':'Title', 'width':'50', 'label':window.jsi18n_bika('Title')}],
+			url: window.location.href.replace("/immunizationhistory","") + "/getImmunizations?_authenticator=" + $('input[name="_authenticator"]').val(),
+			select: function( event, ui ) {
+				event.preventDefault();
+				$(this).val(ui.item.Title);
+				$(this).change();
+				return false;
+			}
+		});
+		
+		// Immunization History > VaccionationCenter search popup
+		$(".template-immunizationhistory #VaccinationCenter").combogrid({
+			colModel: [{'columnName':'Title', 'width':'50', 'label':window.jsi18n_bika('Title')}],
+			url: window.location.href.replace("/immunizationhistory","") + "/getVaccinationCenters?_authenticator=" + $('input[name="_authenticator"]').val(),
+			select: function( event, ui ) {
+				event.preventDefault();
+				$(this).val(ui.item.Title);
+				$(this).change();
+				return false;
+			}
+		});
 	}
 	lookups();
 
@@ -138,6 +162,35 @@ $(document).ready(function(){
 		$("#Drug").parent().append("<span>"+D+"</span>");
 		$("#Drug").parent().append("<input type='hidden' name='Drug:list' value='"+D+"'/>");
 		$("#Drug").remove();
+		for(i=0; i<$(newrow).children().length; i++){
+            td = $(newrow).children()[i];
+            input = $(td).children()[0];
+            $(input).val('');
+        }
+        $(newrow).appendTo($(".bika-listing-table"));
+        lookups();
+        return false;
+	})
+	
+	$(".template-immunizationhistory .add_row").click(function(){
+		event.preventDefault();
+		I = $("#Immunization").val();
+		V = $("#VaccinationCenter").val();
+		D = $("#Date").val();
+		if (I == '' || V == ''){
+	        return false;
+		}
+		newrow = $("tr#new").clone();
+        $("tr#new").removeAttr('id');
+		$("#Immunization").parent().append("<span>"+I+"</span>");
+		$("#Immunization").parent().append("<input type='hidden' name='Immunization:list' value='"+I+"'/>");
+		$("#Immunization").remove();
+		$("#VaccinationCenter").parent().append("<span>"+V+"</span>");
+		$("#VaccinationCenter").parent().append("<input type='hidden' name='VaccinationCenter:list' value='"+V+"'/>");
+		$("#VaccinationCenter").remove();
+		$("#Date").parent().append("<span>"+D+"</span>");
+		$("#Date").parent().append("<input type='hidden' name='Date:list' value='"+D+"'/>");
+		$("#Date").remove();
 		for(i=0; i<$(newrow).children().length; i++){
             td = $(newrow).children()[i];
             input = $(td).children()[0];
