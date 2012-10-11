@@ -75,6 +75,7 @@ class BikaGenerator:
                        'bika_samplepoints',
                        'bika_sampletypes',
                        'bika_treatments',
+                       'bika_immunizations',
                        'bika_referencedefinitions',
                        'bika_referencemanufacturers',
                        'bika_referencesuppliers',
@@ -582,6 +583,7 @@ class BikaGenerator:
         at.setCatalogsByType('Treatment', ['bika_setup_catalog'])
         at.setCatalogsByType('DrugProhibition', ['bika_setup_catalog'])
         at.setCatalogsByType('VaccinationCenter', ['bika_setup_catalog', ])
+        at.setCatalogsByType('Immunization', ['bika_setup_catalog', ])
 
         # create lexicon
         wordSplitter = Empty()

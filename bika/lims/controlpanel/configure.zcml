@@ -205,6 +205,14 @@
     />
     
     <browser:page
+      for="bika.lims.interfaces.IImmunizations"
+      name="folder_view"
+      class=".bika_immunizations.ImmunizationsView"
+      permission="bika.lims.ManageBika"
+      layer="bika.lims.interfaces.IBikaLIMS"
+    />
+    
+    <browser:page
       for="bika.lims.interfaces.IVaccinationCenters"
       name="folder_view"
       class=".bika_vaccinationcenters.VaccinationCentersView"

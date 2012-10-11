@@ -87,6 +87,8 @@
  <object name="Worksheet" meta_type="Factory-based Type Information with dynamic views"/>
  <object name="Treatment" meta_type="Factory-based Type Information with dynamic views"/>
  <object name="Treatments" meta_type="Factory-based Type Information with dynamic views"/>
+ <object name="Immunization" meta_type="Factory-based Type Information with dynamic views"/>
+ <object name="Immunizations" meta_type="Factory-based Type Information with dynamic views"/>
  <object name="VaccinationCenter" meta_type="Factory-based Type Information with dynamic views"/>
  <object name="VaccinationCenters" meta_type="Factory-based Type Information with dynamic views"/>
  <object name="VaccinationCenterContact" meta_type="Factory-based Type Information with dynamic views"/>

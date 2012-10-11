@@ -154,6 +154,8 @@ class IDrugs(Interface):
     ""
 class IDrugProhibitions(Interface):
     ""
+class IImmunizations(Interface):
+    ""
 class IReferenceManufacturers(Interface):
     ""
 class IReferenceDefinitions(Interface):

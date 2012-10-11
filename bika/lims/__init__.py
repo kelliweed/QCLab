@@ -52,6 +52,7 @@ def initialize(context):
     from content.containertype import ContainerType
     from content.department import Department
     from content.duplicateanalysis import DuplicateAnalysis
+    from content.immunization import Immunization
     from content.instrument import Instrument
     from content.invoice import Invoice
     from content.invoicebatch import InvoiceBatch
@@ -112,6 +113,7 @@ def initialize(context):
     from controlpanel.bika_departments import Departments
     from controlpanel.bika_drugs import Drugs
     from controlpanel.bika_drugprohibitions import DrugProhibitions
+    from controlpanel.bika_immunizations import Immunizations
     from controlpanel.bika_instruments import Instruments
     from controlpanel.bika_labcontacts import LabContacts
     from controlpanel.bika_labproducts import LabProducts
