@@ -124,6 +124,40 @@ class AllergiesView(BrowserView):
             self.context.plone_utils.addPortalMessage(PMF("Changes saved"))
         return self.template()
 
+class ImmunizationHistoryView(BrowserView):
+    """ bika listing to display Immunization history
+    """
+
+    template = ViewPageTemplateFile("templates/immunizationhistory.pt")
+
+    def __call__(self):
+        if 'submitted' in self.request:
+            bsc = self.bika_setup_catalog
+            new = []
+            for i in range(len(self.request.form['Immunization'])):
+                I = self.request.form['Immunization'][i]
+                V = self.request.form['VaccinationCenter'][i]
+                D = self.request.form['Date'][i]
+                                    
+                # Create new VaccinationCenter entry if none exists
+                Vlist = bsc(portal_type='VaccinationCenter', Title=V)
+                if not Vlist:
+                    folder = self.context.bika_setup.bika_vaccinationcenters
+                    _id = folder.invokeFactory('VaccinationCenter', id='tmp')
+                    obj = folder[_id]
+                    obj.edit(title = V)
+                    obj.unmarkCreationFlag()
+                    renameAfterCreation(obj)
+                
+                new.append({'Immunization':I, 'VaccinationCenter':V, 'Date':D})
+                
+            self.context.setImmunizationHistory(new)
+            self.context.plone_utils.addPortalMessage(PMF("Changes saved"))
+        return self.template()
+    
+    def getEPINumber(self):
+        return "cac";
+
 class ajaxGetPatients(BrowserView):
     """ Patient vocabulary source for jquery combo dropdown box
     """
@@ -163,7 +197,7 @@ class ajaxGetPatients(BrowserView):
                'rows':rows[ (int(page) - 1) * int(nr_rows) : int(page) * int(nr_rows) ]}
 
         return json.dumps(ret)
-
+        
 class ajaxGetDrugs(BrowserView):
     """ Drug vocabulary source for jquery combo dropdown box
     """
@@ -259,4 +293,67 @@ class ajaxGetDrugProhibitions(BrowserView):
                'rows':rows[ (int(page) - 1) * int(nr_rows) : int(page) * int(nr_rows) ]}
 
         return json.dumps(ret)
+    
+class ajaxGetImmunizations(BrowserView):
+    """ Immunizations vocabulary source for jquery combo dropdown box
+    """
+    def __call__(self):
+        plone.protect.CheckAuthenticator(self.request)
+        searchTerm = self.request['searchTerm']
+        page = self.request['page']
+        nr_rows = self.request['rows']
+        sord = self.request['sord']
+        sidx = self.request['sidx']
+        rows = []
 
+        # lookup objects from ZODB
+        brains = self.bika_setup_catalog(portal_type = 'Immunization')
+        if brains and searchTerm:
+            brains = [p for p in brains if p.Title.lower().find(searchTerm) > -1]
+
+        for p in brains:
+            rows.append({'Title': p.Title})
+
+        rows = sorted(rows, key=itemgetter(sidx and sidx or 'Title'))
+        if sord == 'desc':
+            rows.reverse()
+        pages = len(rows) / int(nr_rows)
+        pages += divmod(len(rows), int(nr_rows))[1] and 1 or 0
+        ret = {'page':page,
+               'total':pages,
+               'records':len(rows),
+               'rows':rows[ (int(page) - 1) * int(nr_rows) : int(page) * int(nr_rows) ]}
+
+        return json.dumps(ret)
+
+class ajaxGetVaccinationCenters(BrowserView):
+    """ Vaccination Centers vocabulary source for jquery combo dropdown box
+    """
+    def __call__(self):
+        plone.protect.CheckAuthenticator(self.request)
+        searchTerm = self.request['searchTerm']
+        page = self.request['page']
+        nr_rows = self.request['rows']
+        sord = self.request['sord']
+        sidx = self.request['sidx']
+        rows = []
+
+        # lookup objects from ZODB
+        brains = self.bika_setup_catalog(portal_type = 'VaccinationCenter')
+        if brains and searchTerm:
+            brains = [p for p in brains if p.Title.lower().find(searchTerm) > -1]
+
+        for p in brains:
+            rows.append({'Title': p.Title})
+
+        rows = sorted(rows, key=itemgetter(sidx and sidx or 'Title'))
+        if sord == 'desc':
+            rows.reverse()
+        pages = len(rows) / int(nr_rows)
+        pages += divmod(len(rows), int(nr_rows))[1] and 1 or 0
+        ret = {'page':page,
+               'total':pages,
+               'records':len(rows),
+               'rows':rows[ (int(page) - 1) * int(nr_rows) : int(page) * int(nr_rows) ]}
+
+        return json.dumps(ret)

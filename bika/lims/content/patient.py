@@ -102,6 +102,20 @@ schema = Person.schema.copy() + Schema((
             visible = False, # uses view from browser/patient.py
         ),
     ),
+    RecordsField('ImmunizationHistory',
+        type='immunizationhistory',
+        subfields=('EPINumber', 'Immunization', 'VaccinationCenter', 'Date', 'Remarks'),
+        required_subfields=('EPINumber', 'Immunization', 'Date'),
+        subfield_labels={'EPINumber':_('EPI Number'), 'Immunization': _('Immunization'), 
+                         'VaccinationCenter':_('Vaccination Center'), 'Date': _('Date'),
+                         'Remarks': _('Remarks')},
+        subfield_sizes={'EPINumber':12, 'Immunization':20, 'VaccinationCenter':10, 'Date':10, 'Remarks':25},
+        widget=RecordsWidget(
+            label='Immunization History',
+            description=_("A list of immunizations administered to the patient."),
+            visible = False, # uses view from browser/patient.py
+        ),
+    ),
     StringField('BirthPlace', schemata='Personal',
         widget=StringWidget(
             label=_('Birth place'),

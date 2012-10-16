@@ -16,8 +16,17 @@
 .template-treatmenthistory #foldercontents-End-column {
   width:15%;
 }
+.template-immunizationhistory #foldercontents-Immunization-column,
+.template-immunizationhistory #foldercontents-VaccinationCenter-column {
+  width: 42%;
+}
+.template-immunizationhistory #foldercontents-Date-column {
+  width:15%;
+}
+
 .template-treatmenthistory .wide,
-.template-allergies .wide {
+.template-allergies .wide,
+.template-immunizationhistory .wide {
   width:95%;
 }
 
