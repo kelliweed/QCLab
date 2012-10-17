@@ -7,6 +7,6 @@ def categories(self):
     """
     return [
         {'id': 'Plone', 'title': PMF(u'Plone Configuration')},
-        {'id': 'bika', 'title': _(u'Bika Health Configuration')},
+        {'id': 'bika', 'title': _(u'Bika Epidemiology Configuration')},
         {'id': 'Products', 'title': PMF(u'Add-on Configuration')},
     ]

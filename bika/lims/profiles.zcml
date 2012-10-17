@@ -5,9 +5,9 @@
 
   <genericsetup:registerProfile
       name="default"
-      title="Bika Health"
+      title="Bika Epidemiology"
       directory="profiles/default"
-      description='Extension profile for the Bika LIMS Health branch'
+      description='Extension profile for the Bika LIMS Epidemiology branch'
       provides="Products.GenericSetup.interfaces.EXTENSION"/>
 
   <genericsetup:importStep

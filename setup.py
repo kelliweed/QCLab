@@ -5,7 +5,7 @@ version = '3.0rc1.1'
 
 setup(name='bika.lims',
       version=version,
-      description="Bika Health",
+      description="Bika Epidemiology",
       long_description=open("README.md").read() + "\n" +
                        open(os.path.join("docs", "linux.md")).read() + "\n" +
                        open(os.path.join("docs", "windows.md")).read() + "\n" +
