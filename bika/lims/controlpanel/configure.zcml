@@ -179,7 +179,7 @@
       permission="bika.lims.ManageBika"
       layer="bika.lims.interfaces.IBikaLIMS"
     />
-    
+
     <browser:page
       for="bika.lims.interfaces.IDrugs"
       name="folder_view"
@@ -187,7 +187,7 @@
       permission="bika.lims.ManageBika"
       layer="bika.lims.interfaces.IBikaLIMS"
     />
-    
+
     <browser:page
       for="bika.lims.interfaces.IDrugProhibitions"
       name="folder_view"
@@ -195,7 +195,7 @@
       permission="bika.lims.ManageBika"
       layer="bika.lims.interfaces.IBikaLIMS"
     />
-    
+
     <browser:page
       for="bika.lims.interfaces.ITreatments"
       name="folder_view"
@@ -203,7 +203,15 @@
       permission="bika.lims.ManageBika"
       layer="bika.lims.interfaces.IBikaLIMS"
     />
-    
+
+    <browser:page
+      for="bika.lims.interfaces.ISymptoms"
+      name="folder_view"
+      class=".bika_symptoms.SymptomsView"
+      permission="bika.lims.ManageBika"
+      layer="bika.lims.interfaces.IBikaLIMS"
+    />
+
     <browser:page
       for="bika.lims.interfaces.IImmunizations"
       name="folder_view"
@@ -211,7 +219,7 @@
       permission="bika.lims.ManageBika"
       layer="bika.lims.interfaces.IBikaLIMS"
     />
-    
+
     <browser:page
       for="bika.lims.interfaces.IVaccinationCenters"
       name="folder_view"
@@ -219,7 +227,7 @@
       permission="bika.lims.ManageBika"
       layer="bika.lims.interfaces.IBikaLIMS"
     />
-    
+
     <browser:page
       for="bika.lims.interfaces.IWorksheetTemplates"
       name="folder_view"

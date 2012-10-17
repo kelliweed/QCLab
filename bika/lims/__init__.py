@@ -72,6 +72,7 @@ def initialize(context):
     from content.drugprohibition import DrugProhibition
     from content.organisation import Organisation
     from content.person import Person
+    from content.person import Person
     from content.preservation import Preservation
     from content.pricelist import Pricelist
     from content.pricelistfolder import PricelistFolder
@@ -92,6 +93,7 @@ def initialize(context):
     from content.sampletype import SampleType
     from content.samplingdeviation import SamplingDeviation
     from content.suppliercontact import SupplierContact
+    from content.symptom import Symptom
     from content.vaccinationcentercontact import VaccinationCenterContact
     from content.supplyorder import SupplyOrder
     from content.supplyorderitem import SupplyOrderItem
@@ -125,6 +127,7 @@ def initialize(context):
     from controlpanel.bika_samplepoints import SamplePoints
     from controlpanel.bika_sampletypes import SampleTypes
     from controlpanel.bika_samplingdeviations import SamplingDeviations
+    from controlpanel.bika_symptoms import Symptoms
     from controlpanel.bika_treatments import Treatments
     from controlpanel.bika_vaccinationcenters import VaccinationCenters
     from controlpanel.bika_worksheettemplates import WorksheetTemplates

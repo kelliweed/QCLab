@@ -120,6 +120,15 @@
   <permission>BIKA: Manage Bika</permission>
  </configlet>
 
+ <configlet title="Patient Symptoms and Conditions" action_id="bika_symptoms"
+    appId="bika.lims" category="bika" condition_expr=""
+    icon_expr="string:++resource++bika.lims.images/symptom.png"
+    url_expr="string:$portal_url/bika_setup/bika_symptoms"
+    visible="True"
+  i18n:attributes="title">
+  <permission>BIKA: Manage Bika</permission>
+ </configlet>
+
  <configlet title="Preservations" action_id="bika_preservations"
     appId="bika.lims" category="bika" condition_expr=""
     icon_expr="string:++resource++bika.lims.images/preservation.png"
@@ -220,7 +229,7 @@
 	i18n:attributes="title">
   <permission>BIKA: Manage Bika</permission>
  </configlet>
- 
+
   <configlet title="Drugs" action_id="bika_drugs"
     appId="bika.lims" category="bika" condition_expr=""
     icon_expr="string:++resource++bika.lims.images/drug.png"
@@ -229,7 +238,7 @@
 	i18n:attributes="title">
   <permission>BIKA: Manage Bika</permission>
  </configlet>
- 
+
  <configlet title="Drug Prohibition Explanations" action_id="bika_drugprohibitions"
     appId="bika.lims" category="bika" condition_expr=""
     icon_expr="string:++resource++bika.lims.images/drugprohibition.png"
@@ -238,7 +247,7 @@
 	i18n:attributes="title">
   <permission>BIKA: Manage Bika</permission>
  </configlet>
- 
+
  <configlet title="Treatments" action_id="bika_treatments"
     appId="bika.lims" category="bika" condition_expr=""
     icon_expr="string:++resource++bika.lims.images/treatment.png"
@@ -247,7 +256,7 @@
 	i18n:attributes="title">
   <permission>BIKA: Manage Bika</permission>
  </configlet>
- 
+
  <configlet title="Immunizations" action_id="bika_immunizations"
     appId="bika.lims" category="bika" condition_expr=""
     icon_expr="string:++resource++bika.lims.images/immunization.png"
@@ -256,7 +265,7 @@
 	i18n:attributes="title">
   <permission>BIKA: Manage Bika</permission>
  </configlet>
- 
+
   <configlet title="Vaccination Centers" action_id="bika_vaccinationcenters"
     appId="bika.lims" category="bika" condition_expr=""
     icon_expr="string:++resource++bika.lims.images/vaccinationcenter.png"

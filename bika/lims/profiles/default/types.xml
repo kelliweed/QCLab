@@ -84,6 +84,8 @@
  <object name="SupplierContact" meta_type="Factory-based Type Information with dynamic views"/>
  <object name="SupplyOrder" meta_type="Factory-based Type Information with dynamic views"/>
  <object name="SupplyOrderItem" meta_type="Factory-based Type Information with dynamic views"/>
+ <object name="Symptoms" meta_type="Factory-based Type Information with dynamic views"/>
+ <object name="Symptom" meta_type="Factory-based Type Information with dynamic views"/>
  <object name="Worksheet" meta_type="Factory-based Type Information with dynamic views"/>
  <object name="Treatment" meta_type="Factory-based Type Information with dynamic views"/>
  <object name="Treatments" meta_type="Factory-based Type Information with dynamic views"/>

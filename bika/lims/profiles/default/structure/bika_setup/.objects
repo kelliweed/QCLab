@@ -22,6 +22,7 @@ bika_sampletypes,SampleTypes
 bika_samplingdeviations,SamplingDeviations
 bika_drugs,Drugs
 bika_drugprohibitions,DrugProhibitions
+bika_symptoms,Symptoms
 bika_treatments,Treatments
 bika_immunizations,Immunizations
 bika_vaccinationcenters,VaccinationCenters

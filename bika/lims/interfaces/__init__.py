@@ -160,6 +160,8 @@ class IReferenceManufacturers(Interface):
     ""
 class IReferenceDefinitions(Interface):
     ""
+class ISymptoms(Interface):
+    ""
 class ITreatments(Interface):
     ""
 class IVaccinationCenter(Interface):
