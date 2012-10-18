@@ -24,11 +24,21 @@
   width:15%;
 }
 
-.template-treatmenthistory .wide,
-.template-allergies .wide,
-.template-immunizationhistory .wide {
+.wide {
   width:95%;
 }
 
-/* </dtml-with> */
+.template-chronicconditions #foldercontents-Code-column {
+  width:10%;
+}
+.template-chronicconditions #foldercontents-Title-column {
+  width:29%;
+}
+.template-chronicconditions #foldercontents-Description-column {
+  width:48%;
+}
+.template-chronicconditions #foldercontents-Onset-column {
+  width:10%;
+}
 
+/* </dtml-with> */

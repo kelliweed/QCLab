@@ -158,7 +158,7 @@ class BikaGenerator:
         if 'ReferenceSuppliers' not in portal_groups.listGroupIds():
             portal_groups.addGroup('ReferenceSuppliers', title = "",
                 roles = ['Member', ])
-        
+
         if 'VaccinationCenters' not in portal_groups.listGroupIds():
             portal_groups.addGroup('VaccinationCenters', title="",
                 roles = ['Member', ])
@@ -581,6 +581,7 @@ class BikaGenerator:
         at.setCatalogsByType('WorksheetTemplate', ['bika_setup_catalog', ])
         at.setCatalogsByType('Drug', ['bika_setup_catalog', ])
         at.setCatalogsByType('Treatment', ['bika_setup_catalog'])
+        at.setCatalogsByType('Symptom', ['bika_setup_catalog'])
         at.setCatalogsByType('DrugProhibition', ['bika_setup_catalog'])
         at.setCatalogsByType('VaccinationCenter', ['bika_setup_catalog', ])
         at.setCatalogsByType('Immunization', ['bika_setup_catalog', ])

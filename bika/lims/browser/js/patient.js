@@ -63,7 +63,7 @@ $(document).ready(function(){
 				return false;
 			}
 		});
-		
+
 		// Allergies > Prohibited Drug Explanations search popup
 		$(".template-allergies #DrugProhibition").combogrid({
 			colModel: [{'columnName':'Title', 'width':'50', 'label':window.jsi18n_bika('Title')}],
@@ -87,7 +87,7 @@ $(document).ready(function(){
 				return false;
 			}
 		});
-		
+
 		// Immunization History > Immunization search popup
 		$(".template-immunizationhistory #Immunization").combogrid({
 			colModel: [{'columnName':'Title', 'width':'50', 'label':window.jsi18n_bika('Title')}],
@@ -99,7 +99,7 @@ $(document).ready(function(){
 				return false;
 			}
 		});
-		
+
 		// Immunization History > VaccionationCenter search popup
 		$(".template-immunizationhistory #VaccinationCenter").combogrid({
 			colModel: [{'columnName':'Title', 'width':'50', 'label':window.jsi18n_bika('Title')}],
@@ -111,10 +111,26 @@ $(document).ready(function(){
 				return false;
 			}
 		});
-	}
+
+		// Chronic Conditions -> combined ICD9(R)/bika_symptoms lookup
+		$(".template-chronicconditions #Title").combogrid({
+			colModel: [{'columnName':'Code', 'width':'10', 'label':window.jsi18n_bika('Code')},
+			           {'columnName':'Title', 'width':'25', 'label':window.jsi18n_bika('Title')},
+			           {'columnName':'Description', 'width':'65', 'label':window.jsi18n_bika('Description')}],
+			url: window.location.href.replace("/chronicconditions","") + "/getSymptoms?_authenticator=" + $('input[name="_authenticator"]').val(),
+			select: function( event, ui ) {
+				event.preventDefault();
+				$(this).val(ui.item.Title);
+				$(this).parents('tr').find('input[id=Code]').val(ui.item.Code);
+				$(this).parents('tr').find('input[id=Description]').val(ui.item.Description);
+				$(this).change();
+				return false;
+			}
+		});
+    }
 	lookups();
 
-	$(".template-treatmenthistory .add_row").click(function(){
+	$(".template-treatmenthistory .add_row").click(function(event){
 		event.preventDefault();
 		T = $("#Treatment").val();
 		D = $("#Drug").val();
@@ -146,8 +162,8 @@ $(document).ready(function(){
         lookups();
         return false;
 	})
-	
-	$(".template-allergies .add_row").click(function(){
+
+	$(".template-allergies .add_row").click(function(event){
 		event.preventDefault();
 		P = $("#DrugProhibition").val();
 		D = $("#Drug").val();
@@ -171,8 +187,8 @@ $(document).ready(function(){
         lookups();
         return false;
 	})
-	
-	$(".template-immunizationhistory .add_row").click(function(){
+
+	$(".template-immunizationhistory .add_row").click(function(event){
 		event.preventDefault();
 		I = $("#Immunization").val();
 		V = $("#VaccinationCenter").val();
@@ -201,6 +217,39 @@ $(document).ready(function(){
         return false;
 	})
 
+	$(".template-chronicconditions .add_row").click(function(event){
+		event.preventDefault();
+		C = $("#Code").val();
+		T = $("#Title").val();
+		D = $("#Description").val();
+		O = $("#Onset").val();
+		R = $("#Remarks").val();
+		if (T == ''){
+	        return false;
+		}
+		newrow = $("tr#new").clone();
+        $("tr#new").removeAttr('id');
+		$("#Code").parent().append("<span>"+C+"</span>");
+		$("#Code").parent().append("<input type='hidden' name='Code:list' value='"+C+"'/>");
+		$("#Code").remove();
+		$("#Title").parent().append("<span>"+T+"</span>");
+		$("#Title").parent().append("<input type='hidden' name='Title:list' value='"+T+"'/>");
+		$("#Title").remove();
+		$("#Description").parent().append("<span>"+D+"</span>");
+		$("#Description").parent().append("<input type='hidden' name='Description:list' value='"+D+"'/>");
+		$("#Description").remove();
+		$("#Onset").parent().append("<span>"+O+"</span>");
+		$("#Onset").parent().append("<input type='hidden' name='Onset:list' value='"+O+"'/>");
+		$("#Onset").remove();
+		for(i=0; i<$(newrow).children().length; i++){
+            td = $(newrow).children()[i];
+            input = $(td).children()[0];
+            $(input).val('');
+        }
+        $(newrow).appendTo($(".bika-listing-table"));
+        lookups();
+        return false;
+	})
 
 });
 }(jQuery));
