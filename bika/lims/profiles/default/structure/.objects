@@ -5,6 +5,7 @@ doctors,Doctors
 patients,Patients
 samples,SamplesFolder
 analysisrequests,AnalysisRequestsFolder
+batches,BatchFolder
 worksheets,WorksheetFolder
 referencesamples,ReferenceSamplesFolder
 invoices,InvoiceFolder
