@@ -57,7 +57,13 @@ class TreatmentHistoryView(BrowserView):
     template = ViewPageTemplateFile("templates/treatmenthistory.pt")
 
     def __call__(self):
-        if 'submitted' in self.request:
+        
+        if self.request.form.has_key('clear'):
+            # Clear treatment history
+            self.context.setTreatmentHistory([])
+            self.context.plone_utils.addPortalMessage(PMF("Treatment history cleared"))
+            
+        elif 'submitted' in self.request:
             bsc = self.bika_setup_catalog
             new = []
             for t in range(len(self.request.form['Treatment'])):
@@ -87,6 +93,9 @@ class TreatmentHistoryView(BrowserView):
             self.context.setTreatmentHistory(new)
             self.context.plone_utils.addPortalMessage(PMF("Changes saved"))
         return self.template()
+    
+    def hasTreatmentHistory(self):
+        return len(self.context.getTreatmentHistory())>0
 
 class AllergiesView(BrowserView):
     """ bika listing to display Allergies for Drug Prohibitions
@@ -95,7 +104,13 @@ class AllergiesView(BrowserView):
     template = ViewPageTemplateFile("templates/allergies.pt")
 
     def __call__(self):
-        if 'submitted' in self.request:
+        
+        if self.request.form.has_key('clear'):
+            # Clear allergies
+            self.context.setAllergies([])
+            self.context.plone_utils.addPortalMessage(PMF("Allergies cleared"))
+        
+        elif 'submitted' in self.request:
             bsc = self.bika_setup_catalog
             new = []
             for p in range(len(self.request.form['DrugProhibition'])):
@@ -124,6 +139,9 @@ class AllergiesView(BrowserView):
             self.context.setAllergies(new)
             self.context.plone_utils.addPortalMessage(PMF("Changes saved"))
         return self.template()
+    
+    def hasAllergies(self):
+        return len(self.context.getAllergies())>0
 
 class ImmunizationHistoryView(BrowserView):
     """ bika listing to display Immunization history
@@ -132,9 +150,15 @@ class ImmunizationHistoryView(BrowserView):
     template = ViewPageTemplateFile("templates/immunizationhistory.pt")
 
     def __call__(self):
-        if 'submitted' in self.request:
+        
+        if self.request.form.has_key('clear'):
+            # Clear immunization history
+            self.context.setImmunizationHistory([])
+            self.context.plone_utils.addPortalMessage(PMF("Immunization history cleared"))
+        
+        elif 'submitted' in self.request:
             bsc = self.bika_setup_catalog
-            new = self.context.getImmunizationHistory()
+            new = []
             E = self.request.form['EPINumber']
             for i in range(len(self.request.form['Immunization'])):
                 I = self.request.form['Immunization'][i]
@@ -160,6 +184,9 @@ class ImmunizationHistoryView(BrowserView):
     def getEPINumber(self):
         ih = self.context.getImmunizationHistory()
         return len(ih) > 0 and ih[0]['EPINumber'] or ''
+    
+    def hasImmunizationHistory(self):
+        return len(self.context.getImmunizationHistory())>0
 
 class ChronicConditionsView(BrowserView):
     """ bika listing to display Chronic Conditions

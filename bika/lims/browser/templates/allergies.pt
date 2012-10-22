@@ -56,7 +56,15 @@
 		<br />
 		<br />
 		<input class="workflow_action_button action_button" type="submit"
-			i18n:attributes="value" value="Save allergy" />
+			i18n:attributes="value" value="Save allergies" />
+		
+		<tal:hasallergies tal:condition="python:hasattr(view, 'hasAllergies') and view.hasAllergies()">
+			&nbsp;&nbsp;
+			<input class="workflow_action_button action_button" type="submit"
+				name="clear"
+				onclick=""
+				i18n:attributes="value" value="Clear allergies" />
+		</tal:hasallergies>
 
 		<tal:hasremarks tal:condition="python:hasattr(context, 'Remarks')">
 			<tal:remarks

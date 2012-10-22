@@ -75,6 +75,14 @@
 		<br />
 		<input class="workflow_action_button action_button" type="submit"
 			i18n:attributes="value" value="Save treatment history" />
+		
+		<tal:hasallergies tal:condition="python:hasattr(view, 'hasTreatmentHistory') and view.hasTreatmentHistory()">
+			&nbsp;&nbsp;
+			<input class="workflow_action_button action_button" type="submit"
+				name="clear"
+				onclick=""
+				i18n:attributes="value" value="Clear treatment history" />
+		</tal:hasallergies>
 
 		<tal:hasremarks tal:condition="python:hasattr(context, 'Remarks')">
 			<tal:remarks

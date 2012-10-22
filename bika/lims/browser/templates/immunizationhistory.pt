@@ -77,6 +77,14 @@
 		<br />
 		<input class="workflow_action_button action_button" type="submit"
 			i18n:attributes="value" value="Save immunization history" />
+			
+		<tal:hashistory tal:condition="python:hasattr(view, 'hasImmunizationHistory') and view.hasImmunizationHistory()">
+			&nbsp;&nbsp;
+			<input class="workflow_action_button action_button" type="submit"
+				name="clear"
+				onclick=""
+				i18n:attributes="value" value="Clear immunization history" />
+		</tal:hashistory>
 
 		<tal:hasremarks tal:condition="python:hasattr(context, 'Remarks')">
 			<tal:remarks
