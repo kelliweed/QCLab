@@ -14,50 +14,73 @@
 				<table summary="Content listing" style="margin-bottom: 0px;"
 					class="bika-listing-table">
 					<thead>
-						<tr>
+						<tr>						
+                            <th>&nbsp;</th>
 							<th class="sortable column"
-							    id="foldercontents-DrugProhibition-column">
+							    id="foldercontents-DrugProhibition-column" style="width:48%">
                                 <span i18n:translate="">Drug Prohibition Explanation</span>
                                 <span class="fieldRequired">&nbsp;</span>
 							</th>
 							<th class="sortable column"
-							    id="foldercontents-Drug-column">
+							    id="foldercontents-Drug-column" style="width:48%">
                                 <span i18n:translate="">Drug</span>
                                 <span class="fieldRequired">&nbsp;</span>
                             </th>
 						</tr>
 					</thead>
 
-					<tbody class="item-listing-tbody">
+					<tbody class="item-listing-tbody" 
+                        	tal:define="global index python:-1;">
                         <tr tal:repeat="row context/getAllergies">
-                            <td colspan="1" rowspan="1" class="state-active DrugProhibition">
+                        	<td>
+                            	<input class="noborder" type="checkbox" 
+                            		name="SelectItem" id="SelectItem"
+                            		tal:define="global index python:index+1;"
+                            		tal:attributes="
+                            			id python:'SelectItem-%s'%(index);
+                            			name python:'SelectItem-%s'%(index);"/>
+                            </td>
+                            <td colspan="1" rowspan="1" class="state-active DrugProhibition" style="width:48%">
                                  <span tal:content="row/DrugProhibition"/>
                             </td>
-                            <td colspan="1" rowspan="1" class="state-active Drug">
+                            <td colspan="1" rowspan="1" class="state-active Drug" style="width:48%">
                                  <span tal:content="row/Drug"/>
-                            </td>
+                            </td>                           
                         </tr>
                         <tr id="new">
+                        	<td style="padding-bottom:15px;">&nbsp;</td>
                             <td colspan="1" rowspan="1" class="state-active DrugProhibition">
                                  <input class="wide" id="DrugProhibition" type="text" value="" autocomplete="off"/>
                             </td>
                             <td colspan="1" rowspan="1" class="state-active Drug">
                                  <input class="wide" id="Drug" type="text" value="" autocomplete="off"/>
                             </td>
+                        </tr>
 					</tbody>
+					<tfoot>
+						<tr>
+							<td class="noborder workflow_actions" colspan="5"  style="padding:5px;">
+								<input class="workflow_action_button action_button add_row allowMultiSubmit"
+							       type="submit"
+								   i18n:attributes="value"
+								   value="Add" />								
+								<tal:hasallergies tal:condition="python:hasattr(view, 'hasAllergies') and view.hasAllergies()">
+									<input class="workflow_action_button action_button" type="submit"
+										name="delete"
+										i18n:attributes="value" value="Delete selected" />
+									<input class="workflow_action_button action_button" type="submit"
+										name="clear"
+										i18n:attributes="value" value="Delete all" />
+								</tal:hasallergies>
+						   </td>
+						</tr>
+					</tfoot>
 				</table>
 			</div>
-		</div>
-
-		<input class="workflow_action_button action_button add_row allowMultiSubmit"
-		       type="submit"
-			   i18n:attributes="value"
-			   value="Add" />
-		<br />
-		<br />
+		</div>	
 		<input class="workflow_action_button action_button" type="submit"
-			i18n:attributes="value" value="Save allergy" />
-
+			i18n:attributes="value" value="Save allergies" />
+		
 		<tal:hasremarks tal:condition="python:hasattr(context, 'Remarks')">
 			<tal:remarks
 				define="
