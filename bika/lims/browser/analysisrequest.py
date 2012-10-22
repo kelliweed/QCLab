@@ -457,8 +457,6 @@ class AnalysisRequestViewView(BrowserView):
              'value': doctor and "<a href='%s'>%s</a>"%(doctor.absolute_url(), doctor.Title()) or '',
              'condition':True,
              'type': 'text'},
-             'condition':True,
-             'type': 'text'},
             {'id': 'Contact',
              'title': "<a href='#' id='open_cc_browser'>%s</a>" % \
                       (self.context.translate(_('Contact Person'))),
