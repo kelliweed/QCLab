@@ -75,7 +75,7 @@ class TreatmentHistoryView(BrowserView):
             
         elif 'submitted' in self.request:
             bsc = self.bika_setup_catalog
-            new = []
+            new = len(self.context.getTreatmentHistory())>0 and self.context.getTreatmentHistory() or []
             for t in range(len(self.request.form['Treatment'])):
                 T = self.request.form['Treatment'][t]
                 D = self.request.form['Drug'][t]
@@ -188,7 +188,7 @@ class ImmunizationHistoryView(BrowserView):
         
         elif 'submitted' in self.request:
             bsc = self.bika_setup_catalog
-            new = []
+            new = len(self.context.getImmunizationHistory())>0 and self.context.getImmunizationHistory() or []
             E = self.request.form['EPINumber']
             for i in range(len(self.request.form['Immunization'])):
                 I = self.request.form['Immunization'][i]

@@ -68,7 +68,7 @@
                             </td>
                         </tr>
                         <tr id="new">
-                        	<td>&nbsp;</td>
+                        	<td style="padding-bottom:15px;">&nbsp;</td>
                             <td colspan="1" rowspan="1" class="state-active Immunization">
                                  <input class="wide" id="Immunization" type="text" value="" autocomplete="off"/>
                             </td>
@@ -79,31 +79,30 @@
                                  <input class="wide datepicker" id="Date" type="text" value="" autocomplete="off"/>
                             </td>
 					</tbody>
+					<tfoot>
+						<tr>
+							<td class="noborder workflow_actions" colspan="5"  style="padding:5px;">
+								<input class="workflow_action_button action_button add_row allowMultiSubmit"
+							       type="submit"
+								   i18n:attributes="value"
+								   value="Add" />								
+								<tal:hashistory tal:condition="python:hasattr(view, 'hasImmunizationHistory') and view.hasImmunizationHistory()">
+									<input class="workflow_action_button action_button" type="submit"
+										name="delete"
+										i18n:attributes="value" value="Delete selected" />
+									<input class="workflow_action_button action_button" type="submit"
+										name="clear"
+										i18n:attributes="value" value="Delete all" />
+								</tal:hashistory>
+						   </td>
+						</tr>
+					</tfoot>
 				</table>
 			</div>
 		</div>
-
-		<input class="workflow_action_button action_button add_row allowMultiSubmit"
-		       type="submit"
-			   i18n:attributes="value"
-			   value="Add immunization" />
-		<br />
-		<br />
 		<input class="workflow_action_button action_button" type="submit"
 			i18n:attributes="value" value="Save immunization history" />
 			
-		<tal:hashistory tal:condition="python:hasattr(view, 'hasImmunizationHistory') and view.hasImmunizationHistory()">
-			&nbsp;&nbsp;
-			<input class="workflow_action_button action_button" type="submit"
-				name="delete"
-				onclick=""
-				i18n:attributes="value" value="Delete selected immunizations" />
-			&nbsp;&nbsp;
-			<input class="workflow_action_button action_button" type="submit"
-				name="clear"
-				i18n:attributes="value" value="Clear immunization history" />
-		</tal:hashistory>
-
 		<tal:hasremarks tal:condition="python:hasattr(context, 'Remarks')">
 			<tal:remarks
 				define="

@@ -48,7 +48,7 @@
                             </td>                           
                         </tr>
                         <tr id="new">
-                        	<td colspan="1" rowspan="1">&nbsp;</td>
+                        	<td style="padding-bottom:15px;">&nbsp;</td>
                             <td colspan="1" rowspan="1" class="state-active DrugProhibition">
                                  <input class="wide" id="DrugProhibition" type="text" value="" autocomplete="off"/>
                             </td>
@@ -57,32 +57,30 @@
                             </td>
                         </tr>
 					</tbody>
+					<tfoot>
+						<tr>
+							<td class="noborder workflow_actions" colspan="5"  style="padding:5px;">
+								<input class="workflow_action_button action_button add_row allowMultiSubmit"
+							       type="submit"
+								   i18n:attributes="value"
+								   value="Add" />								
+								<tal:hasallergies tal:condition="python:hasattr(view, 'hasAllergies') and view.hasAllergies()">
+									<input class="workflow_action_button action_button" type="submit"
+										name="delete"
+										i18n:attributes="value" value="Delete selected" />
+									<input class="workflow_action_button action_button" type="submit"
+										name="clear"
+										i18n:attributes="value" value="Delete all" />
+								</tal:hasallergies>
+						   </td>
+						</tr>
+					</tfoot>
 				</table>
 			</div>
-		</div>
-
-		<input class="workflow_action_button action_button add_row allowMultiSubmit"
-		       type="submit"
-			   i18n:attributes="value"
-			   value="Add" />
-		<br />
-		<br />
+		</div>	
 		<input class="workflow_action_button action_button" type="submit"
 			i18n:attributes="value" value="Save allergies" />
 		
-		<tal:hasallergies tal:condition="python:hasattr(view, 'hasAllergies') and view.hasAllergies()">
-			&nbsp;&nbsp;
-			<input class="workflow_action_button action_button" type="submit"
-				name="delete"
-				onclick=""
-				i18n:attributes="value" value="Delete selected allergies" />
-			&nbsp;&nbsp;
-			<input class="workflow_action_button action_button" type="submit"
-				name="clear"
-				onclick=""
-				i18n:attributes="value" value="Clear allergies" />
-		</tal:hasallergies>
-
 		<tal:hasremarks tal:condition="python:hasattr(context, 'Remarks')">
 			<tal:remarks
 				define="

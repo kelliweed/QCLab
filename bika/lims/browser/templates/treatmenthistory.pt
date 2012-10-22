@@ -60,7 +60,7 @@
                             </td>
                         </tr>
                         <tr id="new">
-                        	<td>&nbsp;</td>
+                        	<td style="padding-bottom:15px;">&nbsp;</td>
                             <td colspan="1" rowspan="1" class="state-active Treatment">
                                  <input class="wide" id="Treatment" type="text" value="" autocomplete="off"/>
                             </td>
@@ -74,30 +74,29 @@
                                  <input class="wide datepicker" id="End" type="text" value="" autocomplete="off"/>
                             </td>
 					</tbody>
+					<tfoot>
+						<tr>
+							<td class="noborder workflow_actions" colspan="5"  style="padding:5px;">
+								<input class="workflow_action_button action_button add_row allowMultiSubmit"
+								       type="submit"
+									   i18n:attributes="value"
+									   value="Add" />								
+								<tal:hastreatments tal:condition="python:hasattr(view, 'hasTreatmentHistory') and view.hasTreatmentHistory()">
+									<input class="workflow_action_button action_button" type="submit"
+										name="delete"
+										i18n:attributes="value" value="Delete selected" />
+									<input class="workflow_action_button action_button" type="submit"
+										name="clear"
+										i18n:attributes="value" value="Delete all" />
+								</tal:hastreatments>
+						   </td>
+						</tr>
+					</tfoot>
 				</table>
 			</div>
 		</div>
-
-		<input class="workflow_action_button action_button add_row allowMultiSubmit"
-		       type="submit"
-			   i18n:attributes="value"
-			   value="Add" />
-		<br />
-		<br />
 		<input class="workflow_action_button action_button" type="submit"
 			i18n:attributes="value" value="Save treatment history" />
-		
-		<tal:hasallergies tal:condition="python:hasattr(view, 'hasTreatmentHistory') and view.hasTreatmentHistory()">
-			&nbsp;&nbsp;
-			<input class="workflow_action_button action_button" type="submit"
-				name="delete"
-				onclick=""
-				i18n:attributes="value" value="Delete selected treatments" />
-			&nbsp;&nbsp;
-			<input class="workflow_action_button action_button" type="submit"
-				name="clear"
-				i18n:attributes="value" value="Clear treatment history" />
-		</tal:hasallergies>
 
 		<tal:hasremarks tal:condition="python:hasattr(context, 'Remarks')">
 			<tal:remarks
