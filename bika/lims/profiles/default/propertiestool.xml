@@ -81,6 +81,7 @@
     <element value="SampleType"/>
     <element value="Drug"/>
     <element value="DrugProhibition"/>
+    <element value="Disease"/>
     <element value="Treatment"/>
     <element value="Immunization"/>
     <element value="Worksheet"/>

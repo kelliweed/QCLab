@@ -53,6 +53,7 @@ def initialize(context):
     from content.container import Container
     from content.containertype import ContainerType
     from content.department import Department
+    from content.disease import Disease
     from content.duplicateanalysis import DuplicateAnalysis
     from content.immunization import Immunization
     from content.instrument import Instrument
@@ -115,6 +116,7 @@ def initialize(context):
     from controlpanel.bika_containers import Containers
     from controlpanel.bika_containertypes import ContainerTypes
     from controlpanel.bika_departments import Departments
+    from controlpanel.bika_diseases import Diseases
     from controlpanel.bika_drugs import Drugs
     from controlpanel.bika_drugprohibitions import DrugProhibitions
     from controlpanel.bika_immunizations import Immunizations

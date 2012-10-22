@@ -19,7 +19,8 @@
   <type portal_type="Contact"/>
   <type portal_type="Container"/>
   <type portal_type="ContainerType"/>
-  <type portal_type="Department"/>
+  <type portal_type="Department"/>  
+  <type portal_type="Disease"/>
   <type portal_type="Doctor"/>
   <type portal_type="Drug"/>
   <type portal_type="DrugProhibition"/>

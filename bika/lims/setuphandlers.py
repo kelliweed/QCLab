@@ -75,6 +75,7 @@ class BikaGenerator:
                        'bika_samplingdeviations',
                        'bika_samplepoints',
                        'bika_sampletypes',
+                       'bika_diseases',
                        'bika_treatments',
                        'bika_immunizations',
                        'bika_referencedefinitions',
@@ -583,6 +584,7 @@ class BikaGenerator:
         at.setCatalogsByType('Unit', ['bika_setup_catalog', ])
         at.setCatalogsByType('WorksheetTemplate', ['bika_setup_catalog', ])
         at.setCatalogsByType('Drug', ['bika_setup_catalog', ])
+        at.setCatalogsByType('Disease', ['bika_setup_catalog', ])
         at.setCatalogsByType('Treatment', ['bika_setup_catalog'])
         at.setCatalogsByType('Symptom', ['bika_setup_catalog'])
         at.setCatalogsByType('DrugProhibition', ['bika_setup_catalog'])

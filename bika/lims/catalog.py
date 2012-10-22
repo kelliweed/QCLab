@@ -159,6 +159,7 @@ class BikaSetupCatalog(CatalogTool):
                                                  'ReferenceDefinition',
                                                  'Treatment',
                                                  'Symptom',
+                                                 'Disease',
                                                  'Immunization',
                                                  'VaccinationCenter',
                                                  'WorksheetTemplate'),

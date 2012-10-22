@@ -141,6 +141,12 @@
   <type type_id="Departments"/>
 
   <type type_id="Discussion Item"/>
+  
+  <type type_id="Disease">
+   <bound-workflow workflow_id="bika_one_state_workflow"/>
+   <bound-workflow workflow_id="bika_inactive_workflow"/>
+  </type>
+  <type type_id="Diseases"/>
 
   <type type_id="Drug">
    <bound-workflow workflow_id="bika_one_state_workflow"/>

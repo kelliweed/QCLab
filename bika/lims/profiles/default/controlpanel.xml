@@ -247,6 +247,15 @@
 	i18n:attributes="title">
   <permission>BIKA: Manage Bika</permission>
  </configlet>
+ 
+ <configlet title="Diseases" action_id="bika_diseases"
+    appId="bika.lims" category="bika" condition_expr=""
+    icon_expr="string:++resource++bika.lims.images/disease.png"
+    url_expr="string:$portal_url/bika_setup/bika_diseases"
+    visible="True"
+	i18n:attributes="title">
+  <permission>BIKA: Manage Bika</permission>
+ </configlet>
 
  <configlet title="Treatments" action_id="bika_treatments"
     appId="bika.lims" category="bika" condition_expr=""

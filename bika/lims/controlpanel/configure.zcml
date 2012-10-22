@@ -195,6 +195,14 @@
       permission="bika.lims.ManageBika"
       layer="bika.lims.interfaces.IBikaLIMS"
     />
+    
+    <browser:page
+      for="bika.lims.interfaces.IDiseases"
+      name="folder_view"
+      class=".bika_diseases.DiseasesView"
+      permission="bika.lims.ManageBika"
+      layer="bika.lims.interfaces.IBikaLIMS"
+    />
 
     <browser:page
       for="bika.lims.interfaces.ITreatments"
