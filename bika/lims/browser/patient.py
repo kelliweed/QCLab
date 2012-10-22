@@ -63,6 +63,16 @@ class TreatmentHistoryView(BrowserView):
             self.context.setTreatmentHistory([])
             self.context.plone_utils.addPortalMessage(PMF("Treatment history cleared"))
             
+        elif self.request.form.has_key('delete'):
+            # Delete selected treatments
+            tre = self.context.getTreatmentHistory() 
+            new = []
+            for i in range(len(tre)):        
+                if (not self.request.form.has_key('SelectItem-%s'%i)):
+                    new.append(tre[i])                    
+            self.context.setTreatmentHistory(new)
+            self.context.plone_utils.addPortalMessage(PMF("Selected treatments deleted"))
+            
         elif 'submitted' in self.request:
             bsc = self.bika_setup_catalog
             new = []
@@ -110,9 +120,19 @@ class AllergiesView(BrowserView):
             self.context.setAllergies([])
             self.context.plone_utils.addPortalMessage(PMF("Allergies cleared"))
         
+        elif self.request.form.has_key('delete'):
+            # Delete selected allergies
+            als = self.context.getAllergies() 
+            new = []
+            for i in range(len(als)):        
+                if (not self.request.form.has_key('SelectItem-%s'%i)):
+                    new.append(als[i])                    
+            self.context.setAllergies(new)
+            self.context.plone_utils.addPortalMessage(PMF("Selected allergies deleted"))
+        
         elif 'submitted' in self.request:
             bsc = self.bika_setup_catalog
-            new = []
+            new = len(self.context.getAllergies())>0 and self.context.getAllergies() or []
             for p in range(len(self.request.form['DrugProhibition'])):
                 P = self.request.form['DrugProhibition'][p]
                 D = self.request.form['Drug'][p]
@@ -155,6 +175,16 @@ class ImmunizationHistoryView(BrowserView):
             # Clear immunization history
             self.context.setImmunizationHistory([])
             self.context.plone_utils.addPortalMessage(PMF("Immunization history cleared"))
+            
+        elif self.request.form.has_key('delete'):
+            # Delete selected allergies
+            imh = self.context.getImmunizationHistory() 
+            new = []
+            for i in range(len(imh)):        
+                if (not self.request.form.has_key('SelectItem-%s'%i)):
+                    new.append(imh[i])                    
+            self.context.setImmunizationHistory(new)
+            self.context.plone_utils.addPortalMessage(PMF("Selected immunizations deleted"))
         
         elif 'submitted' in self.request:
             bsc = self.bika_setup_catalog

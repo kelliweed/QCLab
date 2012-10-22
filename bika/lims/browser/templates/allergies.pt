@@ -14,36 +14,48 @@
 				<table summary="Content listing" style="margin-bottom: 0px;"
 					class="bika-listing-table">
 					<thead>
-						<tr>
+						<tr>						
+                            <th>&nbsp;</th>
 							<th class="sortable column"
-							    id="foldercontents-DrugProhibition-column">
+							    id="foldercontents-DrugProhibition-column" style="width:48%">
                                 <span i18n:translate="">Drug Prohibition Explanation</span>
                                 <span class="fieldRequired">&nbsp;</span>
 							</th>
 							<th class="sortable column"
-							    id="foldercontents-Drug-column">
+							    id="foldercontents-Drug-column" style="width:48%">
                                 <span i18n:translate="">Drug</span>
                                 <span class="fieldRequired">&nbsp;</span>
                             </th>
 						</tr>
 					</thead>
 
-					<tbody class="item-listing-tbody">
+					<tbody class="item-listing-tbody" 
+                        	tal:define="global index python:-1;">
                         <tr tal:repeat="row context/getAllergies">
-                            <td colspan="1" rowspan="1" class="state-active DrugProhibition">
+                        	<td>
+                            	<input class="noborder" type="checkbox" 
+                            		name="SelectItem" id="SelectItem"
+                            		tal:define="global index python:index+1;"
+                            		tal:attributes="
+                            			id python:'SelectItem-%s'%(index);
+                            			name python:'SelectItem-%s'%(index);"/>
+                            </td>
+                            <td colspan="1" rowspan="1" class="state-active DrugProhibition" style="width:48%">
                                  <span tal:content="row/DrugProhibition"/>
                             </td>
-                            <td colspan="1" rowspan="1" class="state-active Drug">
+                            <td colspan="1" rowspan="1" class="state-active Drug" style="width:48%">
                                  <span tal:content="row/Drug"/>
-                            </td>
+                            </td>                           
                         </tr>
                         <tr id="new">
+                        	<td colspan="1" rowspan="1">&nbsp;</td>
                             <td colspan="1" rowspan="1" class="state-active DrugProhibition">
                                  <input class="wide" id="DrugProhibition" type="text" value="" autocomplete="off"/>
                             </td>
                             <td colspan="1" rowspan="1" class="state-active Drug">
                                  <input class="wide" id="Drug" type="text" value="" autocomplete="off"/>
                             </td>
+                        </tr>
 					</tbody>
 				</table>
 			</div>
@@ -59,6 +71,11 @@
 			i18n:attributes="value" value="Save allergies" />
 		
 		<tal:hasallergies tal:condition="python:hasattr(view, 'hasAllergies') and view.hasAllergies()">
+			&nbsp;&nbsp;
+			<input class="workflow_action_button action_button" type="submit"
+				name="delete"
+				onclick=""
+				i18n:attributes="value" value="Delete selected allergies" />
 			&nbsp;&nbsp;
 			<input class="workflow_action_button action_button" type="submit"
 				name="clear"
