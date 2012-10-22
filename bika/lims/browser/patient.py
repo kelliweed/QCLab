@@ -134,12 +134,13 @@ class ImmunizationHistoryView(BrowserView):
     def __call__(self):
         if 'submitted' in self.request:
             bsc = self.bika_setup_catalog
-            new = []
+            new = self.context.getImmunizationHistory()
+            E = self.request.form['EPINumber']
             for i in range(len(self.request.form['Immunization'])):
                 I = self.request.form['Immunization'][i]
                 V = self.request.form['VaccinationCenter'][i]
                 D = self.request.form['Date'][i]
-
+                
                 # Create new VaccinationCenter entry if none exists
                 Vlist = bsc(portal_type='VaccinationCenter', Title=V)
                 if not Vlist:
@@ -150,14 +151,15 @@ class ImmunizationHistoryView(BrowserView):
                     obj.unmarkCreationFlag()
                     renameAfterCreation(obj)
 
-                new.append({'Immunization':I, 'VaccinationCenter':V, 'Date':D})
+                new.append({'EPINumber':E, 'Immunization':I, 'VaccinationCenter':V, 'Date':D})
 
             self.context.setImmunizationHistory(new)
             self.context.plone_utils.addPortalMessage(PMF("Changes saved"))
         return self.template()
 
     def getEPINumber(self):
-        return "cac";
+        ih = self.context.getImmunizationHistory()
+        return len(ih) > 0 and ih[0]['EPINumber'] or ''
 
 class ChronicConditionsView(BrowserView):
     """ bika listing to display Chronic Conditions
