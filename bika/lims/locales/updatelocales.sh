@@ -9,16 +9,18 @@ find . -name "*.mo" -delete
 ### bika domain
 ### ===========
 $I18NDUDE rebuild-pot --pot i18ndude.pot --exclude "build" --create bika ..
-msgcat --strict --use-first bika-manual.pot i18ndude.pot > bika.pot
+$I18NDUDE filter i18ndude.pot bika-health.pot > bika-tmp.pot
+msgcat --strict --use-first bika-health.pot bika-manual.pot bika-tmp.pot > bika.pot
 $I18NDUDE sync --pot bika.pot */LC_MESSAGES/bika.po
-rm i18ndude.pot
+rm i18ndude.pot bika-tmp.pot
 
 ### plone domain
 ### ============
 PLONE_POT=~/Plone/zinstance/parts/omelette/plone/app/locales/locales/plone.pot
 $I18NDUDE rebuild-pot --pot i18ndude.pot --create plone ../profiles/
-$I18NDUDE filter i18ndude.pot $PLONE_POT > plone-tmp.pot
-msgcat --strict --use-first plone-manual.pot plone-tmp.pot > plone.pot
+$I18NDUDE filter i18ndude.pot bika-health.pot > plone-tmp.pot
+$I18NDUDE filter plone-tmp.pot $PLONE_POT > i18ndude.pot
+msgcat --strict --use-first bika-health.pot plone-manual.pot i18ndude.pot > plone.pot
 $I18NDUDE sync --pot plone.pot */LC_MESSAGES/plone.po
 rm i18ndude.pot plone-tmp.pot
 
