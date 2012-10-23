@@ -5,7 +5,7 @@
         i18n:domain="plone">
  <property name="title" i18n:translate="">Vaccination centers</property>
  <property name="description"></property>
- <property name="content_icon">++resource++bika.lims.images/supplier.png</property>
+ <property name="content_icon">++resource++bika.lims.images/vaccinationcenter.png</property>
  <property name="content_meta_type">VaccinationCenters</property>
  <property name="product">bika.lims</property>
  <property name="factory">addVaccinationCenters</property>
