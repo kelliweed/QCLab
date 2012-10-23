@@ -58,6 +58,7 @@ class BikaGenerator:
         for obj_id in ('bika_analysiscategories',
                        'bika_analysisservices',
                        'bika_attachmenttypes',
+                       'bika_batchlabels',
                        'bika_calculations',
                        'bika_departments',
                        'bika_drugs',
@@ -586,6 +587,7 @@ class BikaGenerator:
         at.setCatalogsByType('Unit', ['bika_setup_catalog', ])
         at.setCatalogsByType('WorksheetTemplate', ['bika_setup_catalog', ])
         at.setCatalogsByType('Drug', ['bika_setup_catalog', ])
+        at.setCatalogsByType('BatchLabel', ['bika_setup_catalog', ])
         at.setCatalogsByType('Disease', ['bika_setup_catalog', ])
         at.setCatalogsByType('Treatment', ['bika_setup_catalog'])
         at.setCatalogsByType('Symptom', ['bika_setup_catalog'])

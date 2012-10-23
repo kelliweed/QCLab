@@ -44,6 +44,7 @@ def initialize(context):
     from content.attachmenttype import AttachmentType
     from content.batch import Batch
     from content.batchfolder import BatchFolder
+    from content.batchlabel import BatchLabel
     from content.bikaschema import BikaSchema
     from content.bikasetup import BikaSetup
     from content.calculation import Calculation
@@ -114,6 +115,7 @@ def initialize(context):
     from controlpanel.bika_analysisprofiles import AnalysisProfiles
     from controlpanel.bika_artemplates import ARTemplates
     from controlpanel.bika_attachmenttypes import AttachmentTypes
+    from controlpanel.bika_batchlabels import BatchLabels
     from controlpanel.bika_calculations import Calculations
     from controlpanel.bika_caseoutcomes import CaseOutcomes
     from controlpanel.bika_casestatuses import CaseStatuses

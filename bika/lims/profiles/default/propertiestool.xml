@@ -80,6 +80,7 @@
     <element value="SamplePoint"/>
     <element value="SampleType"/>
     <element value="CaseOutcome"/>
+    <element value="BatchLabel"/>
     <element value="CaseStatus"/>
     <element value="Drug"/>
     <element value="DrugProhibition"/>

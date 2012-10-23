@@ -158,6 +158,7 @@ class BikaSetupCatalog(CatalogTool):
                                                  'ReferenceSupplier',
                                                  'ReferenceDefinition',
                                                  'Treatment',
+                                                 'BatchLabel',
                                                  'Symptom',
                                                  'Disease',
                                                  'Immunization',
