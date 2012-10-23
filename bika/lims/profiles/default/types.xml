@@ -19,9 +19,17 @@
  <object name="Attachment" meta_type="Factory-based Type Information with dynamic views"/>
  <object name="AttachmentType" meta_type="Factory-based Type Information with dynamic views"/>
  <object name="AttachmentTypes" meta_type="Factory-based Type Information with dynamic views"/>
+ <object name="Batch" meta_type="Factory-based Type Information with dynamic views"/>
+ <object name="BatchFolder" meta_type="Factory-based Type Information with dynamic views"/>
+ <object name="BatchLabel" meta_type="Factory-based Type Information with dynamic views"/>
+ <object name="BatchLabels" meta_type="Factory-based Type Information with dynamic views"/>
  <object name="BikaSetup" meta_type="Factory-based Type Information with dynamic views"/>
  <object name="Calculation" meta_type="Factory-based Type Information with dynamic views"/>
  <object name="Calculations" meta_type="Factory-based Type Information with dynamic views"/>
+ <object name="CaseOutcome" meta_type="Factory-based Type Information with dynamic views"/>
+ <object name="CaseOutcomes" meta_type="Factory-based Type Information with dynamic views"/>
+ <object name="CaseStatus" meta_type="Factory-based Type Information with dynamic views"/>
+ <object name="CaseStatuses" meta_type="Factory-based Type Information with dynamic views"/>
  <object name="Client" meta_type="Factory-based Type Information with dynamic views"/>
  <object name="ClientFolder" meta_type="Factory-based Type Information with dynamic views"/>
  <object name="Contact" meta_type="Factory-based Type Information with dynamic views"/>
@@ -31,6 +39,8 @@
  <object name="ContainerTypes" meta_type="Factory-based Type Information with dynamic views"/>
  <object name="Department" meta_type="Factory-based Type Information with dynamic views"/>
  <object name="Departments" meta_type="Factory-based Type Information with dynamic views"/>
+ <object name="Disease" meta_type="Factory-based Type Information with dynamic views"/>
+ <object name="Diseases" meta_type="Factory-based Type Information with dynamic views"/>
  <object name="Drug" meta_type="Factory-based Type Information with dynamic views"/>
  <object name="Drugs" meta_type="Factory-based Type Information with dynamic views"/>
  <object name="DrugProhibition" meta_type="Factory-based Type Information with dynamic views"/>
@@ -84,6 +94,8 @@
  <object name="SupplierContact" meta_type="Factory-based Type Information with dynamic views"/>
  <object name="SupplyOrder" meta_type="Factory-based Type Information with dynamic views"/>
  <object name="SupplyOrderItem" meta_type="Factory-based Type Information with dynamic views"/>
+ <object name="Symptoms" meta_type="Factory-based Type Information with dynamic views"/>
+ <object name="Symptom" meta_type="Factory-based Type Information with dynamic views"/>
  <object name="Worksheet" meta_type="Factory-based Type Information with dynamic views"/>
  <object name="Treatment" meta_type="Factory-based Type Information with dynamic views"/>
  <object name="Treatments" meta_type="Factory-based Type Information with dynamic views"/>

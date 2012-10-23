@@ -3,7 +3,7 @@
 
 <stylesheet
     id="++resource++bika.lims.css/hide_contentmenu.css"
-    expression="python:here.portal_type in ['Client', 'Doctor', 'Patient', 'AnalysisRequest', 'Worksheet', 'Sample', 'AnalysisCategory', 'AnalysisProfile', 'ARTemplate', 'AnalysisService', 'AnalysisSpec', 'Attachment', 'Calculation', 'Instrument', 'LabContact', 'Laboratory', 'Method', 'Department', 'ReferenceDefinition', 'ReferenceManufacturer', 'ReportFolder', 'SampleType', 'SamplePoint', 'WorksheetTemplate', 'LabProduct', 'ReferenceSupplier', 'ReferenceSample', 'Preservation','Drug', 'Treatment', 'DrugProhibition', 'VaccinationCenter', 'VaccinationCenters', 'Immunization', 'Immunizations']"
+    expression="python:here.portal_type in ['Client', 'Batch', 'Doctor', 'Patient', 'AnalysisRequest', 'Worksheet', 'Sample', 'AnalysisCategory', 'AnalysisProfile', 'ARTemplate', 'AnalysisService', 'AnalysisSpec', 'Attachment', 'Calculation', 'Instrument', 'LabContact', 'Laboratory', 'Method', 'Department', 'ReferenceDefinition', 'ReferenceManufacturer', 'ReportFolder', 'SampleType', 'SamplePoint', 'WorksheetTemplate', 'LabProduct', 'ReferenceSupplier', 'ReferenceSample', 'Preservation','Drug', 'Treatment', 'DrugProhibition', 'VaccinationCenter', 'VaccinationCenters', 'Immunization', 'Immunizations', 'Disease', 'Diseases', 'CaseStatus', 'CaseStatuses', 'CaseOutcome', 'CaseOutcomes']"
     media="screen"
     rel="stylesheet"
     rendering="link"
@@ -11,7 +11,7 @@
 
 <stylesheet
     id="++resource++bika.lims.css/hide_editable_border.css"
-    expression="python:here.portal_type in ['Doctors', 'Patients', 'AnalysisCategories', 'AnalysisCategory', 'AnalysisServices', 'AnalysisSpecs', 'AnalysisProfile', 'AnalysisProfiles', 'ARTemplate', 'ARTemplates', 'AttachmentType', 'AttachmentTypes', 'BikaSetup', 'Calculations', 'ClientFolder', 'Container', 'Containers', 'ContainerType', 'ContainerTypes', 'Department', 'Departments', 'Instruments', 'LabContacts', 'Laboratory', 'LabProduct', 'LabProducts', 'Methods', 'Preservation', 'Preservations', 'ReferenceDefinition', 'ReferenceDefinitions', 'ReferenceManufacturer', 'ReferenceManufacturers', 'ReferenceSuppliers', 'SamplePoints', 'SampleTypes', 'WorksheetTemplates', 'SamplingDeviations', 'SamplingDeviation', 'SampleMatrices', 'SampleMatrix', 'Drug', 'Drugs', 'Treatment', 'Treatments', 'DrugProhibitions', 'VaccinationCenter', 'VaccinationCenters', 'Immunization', 'Immunizations']"
+    expression="python:here.portal_type in ['BatchFolder', 'Doctors', 'Patients', 'AnalysisCategories', 'AnalysisCategory', 'AnalysisServices', 'AnalysisSpecs', 'AnalysisProfile', 'AnalysisProfiles', 'ARTemplate', 'ARTemplates', 'AttachmentType', 'AttachmentTypes', 'BikaSetup', 'Calculations', 'ClientFolder', 'Container', 'Containers', 'ContainerType', 'ContainerTypes', 'Department', 'Departments', 'Instruments', 'LabContacts', 'Laboratory', 'LabProduct', 'LabProducts', 'Methods', 'Preservation', 'Preservations', 'ReferenceDefinition', 'ReferenceDefinitions', 'ReferenceManufacturer', 'ReferenceManufacturers', 'ReferenceSuppliers', 'SamplePoints', 'SampleTypes', 'WorksheetTemplates', 'SamplingDeviations', 'SamplingDeviation', 'SampleMatrices', 'SampleMatrix', 'Drug', 'Drugs', 'Treatment', 'Treatments', 'Symptom', 'Symptoms', 'DrugProhibitions', 'VaccinationCenter', 'VaccinationCenters', 'Immunization', 'Immunizations', 'Disease', 'Diseases', 'CaseStatus', 'CaseStatuses', 'CaseOutcome', 'CaseOutcomes', 'BatchLabel', 'BatchLabels']"
     media="screen"
     rel="stylesheet"
     rendering="link"

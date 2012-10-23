@@ -834,6 +834,14 @@ class SamplesView(BikaListingView):
             else:
                 items[x]['getPatient'] = ''
 
+            doctor = obj.getDoctor()
+            if doctor:
+                items[x]['getDoctor'] = doctor.Title()
+                items[x]['replace']['getDoctor'] = "<a href='%s'>%s</a>" % \
+                     (doctor.absolute_url(), doctor.Title())
+            else:
+                items[x]['getDoctor'] = ''
+
             items[x]['DateReceived'] = self.ulocalized_time(obj.getDateReceived())
 
             deviation = obj.getSamplingDeviation()

@@ -62,6 +62,7 @@ class BikaCatalog(CatalogTool):
         portal = getToolByName(self, 'portal_url').getPortalObject()
         portal.ZopeFindAndApply(portal,
                                 obj_metatypes = ('AnalysisRequest',
+                                                 'Batch',
                                                  'Sample',
                                                  'SamplePartition',
                                                  'ReferenceSample',
@@ -157,8 +158,13 @@ class BikaSetupCatalog(CatalogTool):
                                                  'ReferenceSupplier',
                                                  'ReferenceDefinition',
                                                  'Treatment',
+                                                 'BatchLabel',
+                                                 'Symptom',
+                                                 'Disease',
                                                  'Immunization',
                                                  'VaccinationCenter',
+                                                 'CaseStatus',
+                                                 'CaseOutcome',
                                                  'WorksheetTemplate'),
                                 search_sub = True,
                                 apply_func = indexObject)

@@ -13,6 +13,15 @@ class IClientFolder(Interface):
 class IClient(Interface):
     """Client"""
 
+class IBatchFolder(Interface):
+    """Batch folder"""
+
+class IBatch(Interface):
+    """Batch"""
+    
+class IBatchLabels(Interface):
+    """Batch label"""
+
 class IAnalysisRequest(Interface):
     """Analysis Request"""
 
@@ -160,16 +169,24 @@ class IReferenceManufacturers(Interface):
     ""
 class IReferenceDefinitions(Interface):
     ""
+class ISymptoms(Interface):
+    ""
+class IDiseases(Interface):
+    ""
 class ITreatments(Interface):
     ""
 class IVaccinationCenter(Interface):
     ""
 class IVaccinationCenters(Interface):
     ""
+class ICaseStatuses(Interface):
+    ""
+class ICaseOutcomes(Interface):
+    ""
 class IWorksheetTemplates(Interface):
     ""
 
 class IBikaCatalog(Interface):
-   ""
+    ""
 class IBikaSetupCatalog(Interface):
-   ""
+    ""

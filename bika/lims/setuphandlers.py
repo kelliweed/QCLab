@@ -37,6 +37,7 @@ class BikaGenerator:
 
         # index objects - importing through GenericSetup doesn't
         for obj_id in ('clients',
+                       'batches',
                        'invoices',
                        'pricelists',
                        'bika_setup',
@@ -57,6 +58,7 @@ class BikaGenerator:
         for obj_id in ('bika_analysiscategories',
                        'bika_analysisservices',
                        'bika_attachmenttypes',
+                       'bika_batchlabels',
                        'bika_calculations',
                        'bika_departments',
                        'bika_drugs',
@@ -74,12 +76,15 @@ class BikaGenerator:
                        'bika_samplingdeviations',
                        'bika_samplepoints',
                        'bika_sampletypes',
+                       'bika_diseases',
                        'bika_treatments',
                        'bika_immunizations',
                        'bika_referencedefinitions',
                        'bika_referencemanufacturers',
                        'bika_referencesuppliers',
                        'bika_vaccinationcenters',
+                       'bika_casestatuses',
+                       'bika_caseoutcomes',
                        'bika_worksheettemplates'):
             obj = bika_setup._getOb(obj_id)
             obj.unmarkCreationFlag()
@@ -158,7 +163,7 @@ class BikaGenerator:
         if 'ReferenceSuppliers' not in portal_groups.listGroupIds():
             portal_groups.addGroup('ReferenceSuppliers', title = "",
                 roles = ['Member', ])
-        
+
         if 'VaccinationCenters' not in portal_groups.listGroupIds():
             portal_groups.addGroup('VaccinationCenters', title="",
                 roles = ['Member', ])
@@ -465,6 +470,7 @@ class BikaGenerator:
             return
 
         at = getToolByName(portal, 'archetype_tool')
+        at.setCatalogsByType('Batch', ['bika_catalog', ])
         at.setCatalogsByType('AnalysisRequest', ['bika_catalog', ])
         at.setCatalogsByType('Sample', ['bika_catalog', ])
         at.setCatalogsByType('SamplePartition', ['bika_catalog', ])
@@ -510,6 +516,7 @@ class BikaGenerator:
         addIndex(bc, 'worksheetanalysis_review_state', 'FieldIndex')
         addIndex(bc, 'cancellation_state', 'FieldIndex')
 
+        addIndex(bc, 'getBatchUID', 'FieldIndex')
         addIndex(bc, 'getSampleID', 'FieldIndex')
         addIndex(bc, 'getSampleUID', 'FieldIndex')
         addIndex(bc, 'getRequestID', 'FieldIndex')
@@ -580,10 +587,15 @@ class BikaGenerator:
         at.setCatalogsByType('Unit', ['bika_setup_catalog', ])
         at.setCatalogsByType('WorksheetTemplate', ['bika_setup_catalog', ])
         at.setCatalogsByType('Drug', ['bika_setup_catalog', ])
+        at.setCatalogsByType('BatchLabel', ['bika_setup_catalog', ])
+        at.setCatalogsByType('Disease', ['bika_setup_catalog', ])
         at.setCatalogsByType('Treatment', ['bika_setup_catalog'])
+        at.setCatalogsByType('Symptom', ['bika_setup_catalog'])
         at.setCatalogsByType('DrugProhibition', ['bika_setup_catalog'])
         at.setCatalogsByType('VaccinationCenter', ['bika_setup_catalog', ])
         at.setCatalogsByType('Immunization', ['bika_setup_catalog', ])
+        at.setCatalogsByType('CaseStatus', ['bika_setup_catalog', ])
+        at.setCatalogsByType('CaseOutcome', ['bika_setup_catalog', ])
 
         # create lexicon
         wordSplitter = Empty()

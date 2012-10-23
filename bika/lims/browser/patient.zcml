@@ -27,7 +27,7 @@
       permission="zope2.View"
       layer="bika.lims.interfaces.IBikaLIMS"
     />
-    
+
     <browser:page
       for="bika.lims.interfaces.IPatient"
       name="allergies"
@@ -35,11 +35,19 @@
       permission="zope2.View"
       layer="bika.lims.interfaces.IBikaLIMS"
     />
-    
+
     <browser:page
       for="bika.lims.interfaces.IPatient"
       name="immunizationhistory"
       class="bika.lims.browser.patient.ImmunizationHistoryView"
+      permission="zope2.View"
+      layer="bika.lims.interfaces.IBikaLIMS"
+    />
+
+    <browser:page
+      for="bika.lims.interfaces.IPatient"
+      name="chronicconditions"
+      class="bika.lims.browser.patient.ChronicConditionsView"
       permission="zope2.View"
       layer="bika.lims.interfaces.IBikaLIMS"
     />
@@ -67,7 +75,7 @@
       permission="zope.Public"
       layer="bika.lims.interfaces.IBikaLIMS"
     />
-    
+
     <browser:page
       for="bika.lims.interfaces.IPatient"
       name="getDrugProhibitions"
@@ -75,7 +83,7 @@
       permission="zope.Public"
       layer="bika.lims.interfaces.IBikaLIMS"
     />
-    
+
     <browser:page
       for="bika.lims.interfaces.IPatient"
       name="getImmunizations"
@@ -83,11 +91,19 @@
       permission="zope.Public"
       layer="bika.lims.interfaces.IBikaLIMS"
     />
-    
+
     <browser:page
       for="bika.lims.interfaces.IPatient"
       name="getVaccinationCenters"
       class="bika.lims.browser.patient.ajaxGetVaccinationCenters"
+      permission="zope.Public"
+      layer="bika.lims.interfaces.IBikaLIMS"
+    />
+
+    <browser:page
+      for="bika.lims.interfaces.IPatient"
+      name="getSymptoms"
+      class="bika.lims.browser.patient.ajaxGetSymptoms"
       permission="zope.Public"
       layer="bika.lims.interfaces.IBikaLIMS"
     />

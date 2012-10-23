@@ -12,13 +12,18 @@
   <type portal_type="AnalysisSpec"/>
   <type portal_type="Attachment"/>
   <type portal_type="AttachmentType"/>
+  <type portal_type="Batch"/>
+  <type portal_type="BatchLabel"/>
   <type portal_type="BikaSetup"/>
   <type portal_type="Calculation"/>
+  <type portal_type="CaseOutcome"/>
+  <type portal_type="CaseStatus"/>
   <type portal_type="Client"/>
   <type portal_type="Contact"/>
   <type portal_type="Container"/>
   <type portal_type="ContainerType"/>
-  <type portal_type="Department"/>
+  <type portal_type="Department"/>  
+  <type portal_type="Disease"/>
   <type portal_type="Doctor"/>
   <type portal_type="Drug"/>
   <type portal_type="DrugProhibition"/>
@@ -40,6 +45,7 @@
   <type portal_type="SamplePoint"/>
   <type portal_type="SampleType"/>
   <type portal_type="SamplingDeviation"/>
+  <type portal_type="Symptom"/>
   <type portal_type="Treatment"/>
   <type portal_type="VaccinationCenter" />
   <type portal_type="WorksheetTemplate"/>

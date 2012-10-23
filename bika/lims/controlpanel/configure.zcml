@@ -179,7 +179,7 @@
       permission="bika.lims.ManageBika"
       layer="bika.lims.interfaces.IBikaLIMS"
     />
-    
+
     <browser:page
       for="bika.lims.interfaces.IDrugs"
       name="folder_view"
@@ -187,7 +187,7 @@
       permission="bika.lims.ManageBika"
       layer="bika.lims.interfaces.IBikaLIMS"
     />
-    
+
     <browser:page
       for="bika.lims.interfaces.IDrugProhibitions"
       name="folder_view"
@@ -197,13 +197,45 @@
     />
     
     <browser:page
+      for="bika.lims.interfaces.IDiseases"
+      name="folder_view"
+      class=".bika_diseases.DiseasesView"
+      permission="bika.lims.ManageBika"
+      layer="bika.lims.interfaces.IBikaLIMS"
+    />
+
+    <browser:page
       for="bika.lims.interfaces.ITreatments"
       name="folder_view"
       class=".bika_treatments.TreatmentsView"
       permission="bika.lims.ManageBika"
       layer="bika.lims.interfaces.IBikaLIMS"
     />
+
+    <browser:page
+      for="bika.lims.interfaces.ISymptoms"
+      name="folder_view"
+      class=".bika_symptoms.SymptomsView"
+      permission="bika.lims.ManageBika"
+      layer="bika.lims.interfaces.IBikaLIMS"
+    />
     
+    <browser:page
+      for="bika.lims.interfaces.ICaseStatuses"
+      name="folder_view"
+      class=".bika_casestatuses.CaseStatusesView"
+      permission="bika.lims.ManageBika"
+      layer="bika.lims.interfaces.IBikaLIMS"
+    />
+    
+    <browser:page
+      for="bika.lims.interfaces.ICaseOutcomes"
+      name="folder_view"
+      class=".bika_caseoutcomes.CaseOutcomesView"
+      permission="bika.lims.ManageBika"
+      layer="bika.lims.interfaces.IBikaLIMS"
+    />
+
     <browser:page
       for="bika.lims.interfaces.IImmunizations"
       name="folder_view"
@@ -211,7 +243,7 @@
       permission="bika.lims.ManageBika"
       layer="bika.lims.interfaces.IBikaLIMS"
     />
-    
+
     <browser:page
       for="bika.lims.interfaces.IVaccinationCenters"
       name="folder_view"
@@ -219,11 +251,19 @@
       permission="bika.lims.ManageBika"
       layer="bika.lims.interfaces.IBikaLIMS"
     />
-    
+
     <browser:page
       for="bika.lims.interfaces.IWorksheetTemplates"
       name="folder_view"
       class=".bika_worksheettemplates.WorksheetTemplatesView"
+      permission="bika.lims.ManageBika"
+      layer="bika.lims.interfaces.IBikaLIMS"
+    />
+    
+    <browser:page
+      for="bika.lims.interfaces.IBatchLabels"
+      name="folder_view"
+      class=".bika_batchlabels.BatchLabelsView"
       permission="bika.lims.ManageBika"
       layer="bika.lims.interfaces.IBikaLIMS"
     />

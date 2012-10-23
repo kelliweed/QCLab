@@ -93,7 +93,7 @@ schema = Person.schema.copy() + Schema((
         type='allergies',
         subfields=('DrugProhibition', 'Drug', 'Remarks'),
         required_subfields=('DrugProhibition', 'Drug'),
-        subfield_labels={'DrugProhibition':_('Drug Prohibition Explanation'), 'Drug': _('Drug'), 
+        subfield_labels={'DrugProhibition':_('Drug Prohibition Explanation'), 'Drug': _('Drug'),
                          'Remarks': _('Remarks')},
         subfield_sizes={'DrugProhibition':20, 'Drug':20, 'Remarks':25},
         widget=RecordsWidget(
@@ -106,13 +106,24 @@ schema = Person.schema.copy() + Schema((
         type='immunizationhistory',
         subfields=('EPINumber', 'Immunization', 'VaccinationCenter', 'Date', 'Remarks'),
         required_subfields=('EPINumber', 'Immunization', 'Date'),
-        subfield_labels={'EPINumber':_('EPI Number'), 'Immunization': _('Immunization'), 
+        subfield_labels={'EPINumber':_('EPI Number'), 'Immunization': _('Immunization'),
                          'VaccinationCenter':_('Vaccination Center'), 'Date': _('Date'),
                          'Remarks': _('Remarks')},
         subfield_sizes={'EPINumber':12, 'Immunization':20, 'VaccinationCenter':10, 'Date':10, 'Remarks':25},
         widget=RecordsWidget(
             label='Immunization History',
             description=_("A list of immunizations administered to the patient."),
+            visible = False, # uses view from browser/patient.py
+        ),
+    ),
+    RecordsField('ChronicConditions',
+        type='chronicconditions',
+        subfields=('Code', 'Title', 'Description', 'Onset', 'Remarks'),
+        required_subfields=('title'),
+        subfield_sizes={'Code':7, 'Title':15, 'Description':25, 'Onset':10, 'Remarks':25},
+        widget=RecordsWidget(
+            label='Chronic Conditions',
+            description=_("A list of this patient's chronic conditions."),
             visible = False, # uses view from browser/patient.py
         ),
     ),

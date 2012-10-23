@@ -4,7 +4,10 @@ bika_artemplates,ARTemplates
 bika_analysisservices,AnalysisServices
 bika_analysisspecs,AnalysisSpecs
 bika_attachmenttypes,AttachmentTypes
+bika_batchlabels,BatchLabels
 bika_calculations,Calculations
+bika_caseoutcomes,CaseOutcomes
+bika_casestatuses,CaseStatuses
 bika_instruments,Instruments
 bika_labcontacts,LabContacts
 bika_containers,Containers
@@ -22,6 +25,8 @@ bika_sampletypes,SampleTypes
 bika_samplingdeviations,SamplingDeviations
 bika_drugs,Drugs
 bika_drugprohibitions,DrugProhibitions
+bika_symptoms,Symptoms
+bika_diseases,Diseases
 bika_treatments,Treatments
 bika_immunizations,Immunizations
 bika_vaccinationcenters,VaccinationCenters

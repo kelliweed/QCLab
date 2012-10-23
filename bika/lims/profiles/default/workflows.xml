@@ -5,6 +5,8 @@
  <object name="bika_analysis_workflow" meta_type="Workflow"/>
  <object name="bika_ar_workflow" meta_type="Workflow"/>
  <object name="bika_arimport_workflow" meta_type="Workflow"/>
+ <object name="bika_analysis_workflow" meta_type="Workflow"/>
+ <object name="bika_batch_workflow" meta_type="Workflow"/>
  <object name="bika_order_workflow" meta_type="Workflow"/>
  <object name="bika_duplicateanalysis_workflow" meta_type="Workflow"/>
  <object name="bika_referenceanalysis_workflow" meta_type="Workflow"/>
@@ -94,6 +96,19 @@
   </type>
 
   <type type_id="AttachmentTypes"/>
+
+  <type type_id="BatchFolder"/>
+  <type type_id="Batch">
+   <bound-workflow workflow_id="bika_batch_workflow"/>
+   <bound-workflow workflow_id="bika_cancellation_workflow"/>
+  </type>
+  
+  <type type_id="BatchLabels"/>
+  <type type_id="BatchLabel">
+   <bound-workflow workflow_id="bika_one_state_workflow"/>
+   <bound-workflow workflow_id="bika_inactive_workflow"/>
+  </type>
+
   <type type_id="BikaSetup"/>
 
   <type type_id="Calculations"/>
@@ -101,6 +116,18 @@
    <bound-workflow workflow_id="bika_one_state_workflow"/>
    <bound-workflow workflow_id="bika_inactive_workflow"/>
   </type>
+
+  <type type_id="CaseOutcome">
+   <bound-workflow workflow_id="bika_one_state_workflow"/>
+   <bound-workflow workflow_id="bika_inactive_workflow"/>
+  </type>
+  <type type_id="CaseOutcomes"/>
+
+  <type type_id="CaseStatus">
+   <bound-workflow workflow_id="bika_one_state_workflow"/>
+   <bound-workflow workflow_id="bika_inactive_workflow"/>
+  </type>
+  <type type_id="CaseStatuses"/>
 
   <type type_id="Client">
    <bound-workflow workflow_id="bika_one_state_workflow"/>
@@ -133,6 +160,12 @@
   <type type_id="Departments"/>
 
   <type type_id="Discussion Item"/>
+  
+  <type type_id="Disease">
+   <bound-workflow workflow_id="bika_one_state_workflow"/>
+   <bound-workflow workflow_id="bika_inactive_workflow"/>
+  </type>
+  <type type_id="Diseases"/>
 
   <type type_id="Drug">
    <bound-workflow workflow_id="bika_one_state_workflow"/>

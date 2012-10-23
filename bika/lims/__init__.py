@@ -42,15 +42,21 @@ def initialize(context):
     from content.artemplate import ARTemplate
     from content.attachment import Attachment
     from content.attachmenttype import AttachmentType
+    from content.batch import Batch
+    from content.batchfolder import BatchFolder
+    from content.batchlabel import BatchLabel
     from content.bikaschema import BikaSchema
     from content.bikasetup import BikaSetup
     from content.calculation import Calculation
+    from content.caseoutcome import CaseOutcome
+    from content.casestatus import CaseStatus
     from content.client import Client
     from content.clientfolder import ClientFolder
     from content.contact import Contact
     from content.container import Container
     from content.containertype import ContainerType
     from content.department import Department
+    from content.disease import Disease
     from content.duplicateanalysis import DuplicateAnalysis
     from content.immunization import Immunization
     from content.instrument import Instrument
@@ -72,6 +78,7 @@ def initialize(context):
     from content.drugprohibition import DrugProhibition
     from content.organisation import Organisation
     from content.person import Person
+    from content.person import Person
     from content.preservation import Preservation
     from content.pricelist import Pricelist
     from content.pricelistfolder import PricelistFolder
@@ -92,6 +99,7 @@ def initialize(context):
     from content.sampletype import SampleType
     from content.samplingdeviation import SamplingDeviation
     from content.suppliercontact import SupplierContact
+    from content.symptom import Symptom
     from content.vaccinationcentercontact import VaccinationCenterContact
     from content.supplyorder import SupplyOrder
     from content.supplyorderitem import SupplyOrderItem
@@ -107,10 +115,14 @@ def initialize(context):
     from controlpanel.bika_analysisprofiles import AnalysisProfiles
     from controlpanel.bika_artemplates import ARTemplates
     from controlpanel.bika_attachmenttypes import AttachmentTypes
+    from controlpanel.bika_batchlabels import BatchLabels
     from controlpanel.bika_calculations import Calculations
+    from controlpanel.bika_caseoutcomes import CaseOutcomes
+    from controlpanel.bika_casestatuses import CaseStatuses
     from controlpanel.bika_containers import Containers
     from controlpanel.bika_containertypes import ContainerTypes
     from controlpanel.bika_departments import Departments
+    from controlpanel.bika_diseases import Diseases
     from controlpanel.bika_drugs import Drugs
     from controlpanel.bika_drugprohibitions import DrugProhibitions
     from controlpanel.bika_immunizations import Immunizations
@@ -125,6 +137,7 @@ def initialize(context):
     from controlpanel.bika_samplepoints import SamplePoints
     from controlpanel.bika_sampletypes import SampleTypes
     from controlpanel.bika_samplingdeviations import SamplingDeviations
+    from controlpanel.bika_symptoms import Symptoms
     from controlpanel.bika_treatments import Treatments
     from controlpanel.bika_vaccinationcenters import VaccinationCenters
     from controlpanel.bika_worksheettemplates import WorksheetTemplates

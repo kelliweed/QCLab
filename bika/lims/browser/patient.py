@@ -18,6 +18,7 @@ from bika.lims.interfaces import IContacts
 from bika.lims.permissions import *
 from bika.lims.subscribers import doActionFor, skip
 from bika.lims.utils import isActive
+from bika.lims.icd9cm import icd9_codes
 from operator import itemgetter
 from plone.app.content.browser.interfaces import IFolderContentsView
 from plone.app.layout.globals.interfaces import IViewView
@@ -56,9 +57,25 @@ class TreatmentHistoryView(BrowserView):
     template = ViewPageTemplateFile("templates/treatmenthistory.pt")
 
     def __call__(self):
-        if 'submitted' in self.request:
-            bsc = self.bika_setup_catalog
+        
+        if self.request.form.has_key('clear'):
+            # Clear treatment history
+            self.context.setTreatmentHistory([])
+            self.context.plone_utils.addPortalMessage(PMF("Treatment history cleared"))
+            
+        elif self.request.form.has_key('delete'):
+            # Delete selected treatments
+            tre = self.context.getTreatmentHistory() 
             new = []
+            for i in range(len(tre)):        
+                if (not self.request.form.has_key('SelectItem-%s'%i)):
+                    new.append(tre[i])                    
+            self.context.setTreatmentHistory(new)
+            self.context.plone_utils.addPortalMessage(PMF("Selected treatments deleted"))
+            
+        elif 'submitted' in self.request:
+            bsc = self.bika_setup_catalog
+            new = len(self.context.getTreatmentHistory())>0 and self.context.getTreatmentHistory() or []
             for t in range(len(self.request.form['Treatment'])):
                 T = self.request.form['Treatment'][t]
                 D = self.request.form['Drug'][t]
@@ -86,6 +103,9 @@ class TreatmentHistoryView(BrowserView):
             self.context.setTreatmentHistory(new)
             self.context.plone_utils.addPortalMessage(PMF("Changes saved"))
         return self.template()
+    
+    def hasTreatmentHistory(self):
+        return len(self.context.getTreatmentHistory())>0
 
 class AllergiesView(BrowserView):
     """ bika listing to display Allergies for Drug Prohibitions
@@ -94,9 +114,25 @@ class AllergiesView(BrowserView):
     template = ViewPageTemplateFile("templates/allergies.pt")
 
     def __call__(self):
-        if 'submitted' in self.request:
-            bsc = self.bika_setup_catalog
+        
+        if self.request.form.has_key('clear'):
+            # Clear allergies
+            self.context.setAllergies([])
+            self.context.plone_utils.addPortalMessage(PMF("Allergies cleared"))
+        
+        elif self.request.form.has_key('delete'):
+            # Delete selected allergies
+            als = self.context.getAllergies() 
             new = []
+            for i in range(len(als)):        
+                if (not self.request.form.has_key('SelectItem-%s'%i)):
+                    new.append(als[i])                    
+            self.context.setAllergies(new)
+            self.context.plone_utils.addPortalMessage(PMF("Selected allergies deleted"))
+        
+        elif 'submitted' in self.request:
+            bsc = self.bika_setup_catalog
+            new = len(self.context.getAllergies())>0 and self.context.getAllergies() or []
             for p in range(len(self.request.form['DrugProhibition'])):
                 P = self.request.form['DrugProhibition'][p]
                 D = self.request.form['Drug'][p]
@@ -123,6 +159,9 @@ class AllergiesView(BrowserView):
             self.context.setAllergies(new)
             self.context.plone_utils.addPortalMessage(PMF("Changes saved"))
         return self.template()
+    
+    def hasAllergies(self):
+        return len(self.context.getAllergies())>0
 
 class ImmunizationHistoryView(BrowserView):
     """ bika listing to display Immunization history
@@ -131,14 +170,31 @@ class ImmunizationHistoryView(BrowserView):
     template = ViewPageTemplateFile("templates/immunizationhistory.pt")
 
     def __call__(self):
-        if 'submitted' in self.request:
-            bsc = self.bika_setup_catalog
+        
+        if self.request.form.has_key('clear'):
+            # Clear immunization history
+            self.context.setImmunizationHistory([])
+            self.context.plone_utils.addPortalMessage(PMF("Immunization history cleared"))
+            
+        elif self.request.form.has_key('delete'):
+            # Delete selected allergies
+            imh = self.context.getImmunizationHistory() 
             new = []
+            for i in range(len(imh)):        
+                if (not self.request.form.has_key('SelectItem-%s'%i)):
+                    new.append(imh[i])                    
+            self.context.setImmunizationHistory(new)
+            self.context.plone_utils.addPortalMessage(PMF("Selected immunizations deleted"))
+        
+        elif 'submitted' in self.request:
+            bsc = self.bika_setup_catalog
+            new = len(self.context.getImmunizationHistory())>0 and self.context.getImmunizationHistory() or []
+            E = self.request.form['EPINumber']
             for i in range(len(self.request.form['Immunization'])):
                 I = self.request.form['Immunization'][i]
                 V = self.request.form['VaccinationCenter'][i]
                 D = self.request.form['Date'][i]
-                                    
+                
                 # Create new VaccinationCenter entry if none exists
                 Vlist = bsc(portal_type='VaccinationCenter', Title=V)
                 if not Vlist:
@@ -148,15 +204,53 @@ class ImmunizationHistoryView(BrowserView):
                     obj.edit(title = V)
                     obj.unmarkCreationFlag()
                     renameAfterCreation(obj)
-                
-                new.append({'Immunization':I, 'VaccinationCenter':V, 'Date':D})
-                
+
+                new.append({'EPINumber':E, 'Immunization':I, 'VaccinationCenter':V, 'Date':D})
+
             self.context.setImmunizationHistory(new)
             self.context.plone_utils.addPortalMessage(PMF("Changes saved"))
         return self.template()
-    
+
     def getEPINumber(self):
-        return "cac";
+        ih = self.context.getImmunizationHistory()
+        return len(ih) > 0 and ih[0]['EPINumber'] or ''
+    
+    def hasImmunizationHistory(self):
+        return len(self.context.getImmunizationHistory())>0
+
+class ChronicConditionsView(BrowserView):
+    """ bika listing to display Chronic Conditions
+    """
+
+    template = ViewPageTemplateFile("templates/patient_chronicconditions.pt")
+
+    def __call__(self):
+        if 'submitted' in self.request:
+            bsc = self.bika_setup_catalog
+            new = []
+            for i in range(len(self.request.form['Title'])):
+                C = self.request.form['Code'][i]
+                S = self.request.form['Title'][i]
+                D = self.request.form['Description'][i]
+                O = self.request.form['Onset'][i]
+
+                # Create new Symptom entry if none exists
+                Slist = bsc(portal_type='Symptom', title=S)
+                if not Slist:
+                    folder = self.context.bika_setup.bika_symptoms
+                    _id = folder.invokeFactory('Symptom', id='tmp')
+                    obj = folder[_id]
+                    obj.edit(title = S,
+                             description = D,
+                             Code = C)
+                    obj.unmarkCreationFlag()
+                    renameAfterCreation(obj)
+
+                new.append({'Code':C, 'Title':S, 'Description':D, 'Onset': O})
+
+            self.context.setChronicConditions(self.context.getChronicConditions() + new)
+            self.context.plone_utils.addPortalMessage(PMF("Changes saved"))
+        return self.template()
 
 class ajaxGetPatients(BrowserView):
     """ Patient vocabulary source for jquery combo dropdown box
@@ -197,7 +291,7 @@ class ajaxGetPatients(BrowserView):
                'rows':rows[ (int(page) - 1) * int(nr_rows) : int(page) * int(nr_rows) ]}
 
         return json.dumps(ret)
-        
+
 class ajaxGetDrugs(BrowserView):
     """ Drug vocabulary source for jquery combo dropdown box
     """
@@ -293,7 +387,7 @@ class ajaxGetDrugProhibitions(BrowserView):
                'rows':rows[ (int(page) - 1) * int(nr_rows) : int(page) * int(nr_rows) ]}
 
         return json.dumps(ret)
-    
+
 class ajaxGetImmunizations(BrowserView):
     """ Immunizations vocabulary source for jquery combo dropdown box
     """
@@ -345,6 +439,48 @@ class ajaxGetVaccinationCenters(BrowserView):
 
         for p in brains:
             rows.append({'Title': p.Title})
+
+        rows = sorted(rows, key=itemgetter(sidx and sidx or 'Title'))
+        if sord == 'desc':
+            rows.reverse()
+        pages = len(rows) / int(nr_rows)
+        pages += divmod(len(rows), int(nr_rows))[1] and 1 or 0
+        ret = {'page':page,
+               'total':pages,
+               'records':len(rows),
+               'rows':rows[ (int(page) - 1) * int(nr_rows) : int(page) * int(nr_rows) ]}
+
+        return json.dumps(ret)
+
+class ajaxGetSymptoms(BrowserView):
+    """ Symptoms from ICD and Site Setup
+    """
+    def __call__(self):
+        plone.protect.CheckAuthenticator(self.request)
+        searchTerm = self.request['searchTerm']
+        page = self.request['page']
+        nr_rows = self.request['rows']
+        sord = self.request['sord']
+        sidx = self.request['sidx']
+        rows = []
+
+        # lookup objects from ZODB
+        brains = self.bika_setup_catalog(portal_type = 'Symptom')
+        if brains and searchTerm:
+            brains = [p for p in brains if p.Title.lower().find(searchTerm) > -1
+                                        or p.Description.lower().find(searchTerm) > -1]
+        for p in brains:
+            p = p.getObject()
+            rows.append({'Code': p.getCode(), 'Title': p.Title(), 'Description': p.Description()})
+
+        # lookup objects from ICD code list
+        for icd9 in icd9_codes['R']:
+            if icd9['code'].find(searchTerm) > -1 \
+               or icd9['short'].find(searchTerm) > -1 \
+               or icd9['long'].find(searchTerm) > -1:
+                rows.append({'Code': icd9['code'],
+                             'Title': icd9['short'],
+                             'Description': icd9['long']})
 
         rows = sorted(rows, key=itemgetter(sidx and sidx or 'Title'))
         if sord == 'desc':
