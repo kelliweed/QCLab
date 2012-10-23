@@ -82,6 +82,7 @@ class BikaGenerator:
                        'bika_referencemanufacturers',
                        'bika_referencesuppliers',
                        'bika_vaccinationcenters',
+                       'bika_casestatuses',
                        'bika_worksheettemplates'):
             obj = bika_setup._getOb(obj_id)
             obj.unmarkCreationFlag()
@@ -590,6 +591,7 @@ class BikaGenerator:
         at.setCatalogsByType('DrugProhibition', ['bika_setup_catalog'])
         at.setCatalogsByType('VaccinationCenter', ['bika_setup_catalog', ])
         at.setCatalogsByType('Immunization', ['bika_setup_catalog', ])
+        at.setCatalogsByType('CaseStatus', ['bika_setup_catalog', ])
 
         # create lexicon
         wordSplitter = Empty()

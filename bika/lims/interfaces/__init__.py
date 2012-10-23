@@ -176,6 +176,8 @@ class IVaccinationCenter(Interface):
     ""
 class IVaccinationCenters(Interface):
     ""
+class ICaseStatuses(Interface):
+    ""
 class IWorksheetTemplates(Interface):
     ""
 
