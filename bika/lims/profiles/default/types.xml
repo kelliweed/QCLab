@@ -24,6 +24,10 @@
  <object name="BikaSetup" meta_type="Factory-based Type Information with dynamic views"/>
  <object name="Calculation" meta_type="Factory-based Type Information with dynamic views"/>
  <object name="Calculations" meta_type="Factory-based Type Information with dynamic views"/>
+ <object name="CaseOutcome" meta_type="Factory-based Type Information with dynamic views"/>
+ <object name="CaseOutcomes" meta_type="Factory-based Type Information with dynamic views"/>
+ <object name="CaseStatus" meta_type="Factory-based Type Information with dynamic views"/>
+ <object name="CaseStatuses" meta_type="Factory-based Type Information with dynamic views"/>
  <object name="Client" meta_type="Factory-based Type Information with dynamic views"/>
  <object name="ClientFolder" meta_type="Factory-based Type Information with dynamic views"/>
  <object name="Contact" meta_type="Factory-based Type Information with dynamic views"/>
@@ -33,6 +37,8 @@
  <object name="ContainerTypes" meta_type="Factory-based Type Information with dynamic views"/>
  <object name="Department" meta_type="Factory-based Type Information with dynamic views"/>
  <object name="Departments" meta_type="Factory-based Type Information with dynamic views"/>
+ <object name="Disease" meta_type="Factory-based Type Information with dynamic views"/>
+ <object name="Diseases" meta_type="Factory-based Type Information with dynamic views"/>
  <object name="Drug" meta_type="Factory-based Type Information with dynamic views"/>
  <object name="Drugs" meta_type="Factory-based Type Information with dynamic views"/>
  <object name="DrugProhibition" meta_type="Factory-based Type Information with dynamic views"/>

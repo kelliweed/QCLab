@@ -168,11 +168,17 @@ class IReferenceDefinitions(Interface):
     ""
 class ISymptoms(Interface):
     ""
+class IDiseases(Interface):
+    ""
 class ITreatments(Interface):
     ""
 class IVaccinationCenter(Interface):
     ""
 class IVaccinationCenters(Interface):
+    ""
+class ICaseStatuses(Interface):
+    ""
+class ICaseOutcomes(Interface):
     ""
 class IWorksheetTemplates(Interface):
     ""

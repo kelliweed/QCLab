@@ -1,20 +1,20 @@
 <?xml version="1.0"?>
-<object name="VaccinationCenters"
+<object name="CaseOutcomes"
         meta_type="Factory-based Type Information with dynamic views"
         xmlns:i18n="http://xml.zope.org/namespaces/i18n"
         i18n:domain="plone">
- <property name="title" i18n:translate="">Vaccination centers</property>
+ <property name="title" i18n:translate="">Case Outcomes</property>
  <property name="description"></property>
- <property name="content_icon">++resource++bika.lims.images/vaccinationcenter.png</property>
- <property name="content_meta_type">VaccinationCenters</property>
+ <property name="content_icon">++resource++bika.lims.images/caseoutcome.png</property>
+ <property name="content_meta_type">CaseOutcomes</property>
  <property name="product">bika.lims</property>
- <property name="factory">addVaccinationCenters</property>
+ <property name="factory">addCaseOutcomes</property>
  <property name="add_view_expr"></property>
  <property name="link_target"></property>
  <property name="global_allow">False</property>
  <property name="filter_content_types">True</property>
  <property name="allowed_content_types">
-  <element value="VaccinationCenter"/>
+  <element value="CaseOutcome"/>
  </property>
  <property name="allow_discussion">False</property>
  <property name="default_view_fallback">False</property>

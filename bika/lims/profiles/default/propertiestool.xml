@@ -79,8 +79,11 @@
     <element value="SamplePartition"/>
     <element value="SamplePoint"/>
     <element value="SampleType"/>
+    <element value="CaseOutcome"/>
+    <element value="CaseStatus"/>
     <element value="Drug"/>
     <element value="DrugProhibition"/>
+    <element value="Disease"/>
     <element value="Treatment"/>
     <element value="Immunization"/>
     <element value="Worksheet"/>

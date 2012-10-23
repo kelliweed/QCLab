@@ -247,6 +247,15 @@
 	i18n:attributes="title">
   <permission>BIKA: Manage Bika</permission>
  </configlet>
+ 
+ <configlet title="Diseases" action_id="bika_diseases"
+    appId="bika.lims" category="bika" condition_expr=""
+    icon_expr="string:++resource++bika.lims.images/disease.png"
+    url_expr="string:$portal_url/bika_setup/bika_diseases"
+    visible="True"
+	i18n:attributes="title">
+  <permission>BIKA: Manage Bika</permission>
+ </configlet>
 
  <configlet title="Treatments" action_id="bika_treatments"
     appId="bika.lims" category="bika" condition_expr=""
@@ -270,6 +279,24 @@
     appId="bika.lims" category="bika" condition_expr=""
     icon_expr="string:++resource++bika.lims.images/vaccinationcenter.png"
     url_expr="string:$portal_url/bika_setup/bika_vaccinationcenters"
+    visible="True"
+	i18n:attributes="title">
+  <permission>BIKA: Manage Bika</permission>
+ </configlet>
+ 
+  <configlet title="Case Statuses" action_id="bika_casestatuses"
+    appId="bika.lims" category="bika" condition_expr=""
+    icon_expr="string:++resource++bika.lims.images/casestatus.png"
+    url_expr="string:$portal_url/bika_setup/bika_casestatuses"
+    visible="True"
+	i18n:attributes="title">
+  <permission>BIKA: Manage Bika</permission>
+ </configlet>
+
+  <configlet title="Case Outcomes" action_id="bika_caseoutcomes"
+    appId="bika.lims" category="bika" condition_expr=""
+    icon_expr="string:++resource++bika.lims.images/caseoutcome.png"
+    url_expr="string:$portal_url/bika_setup/bika_caseoutcomes"
     visible="True"
 	i18n:attributes="title">
   <permission>BIKA: Manage Bika</permission>

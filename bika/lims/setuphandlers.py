@@ -75,12 +75,15 @@ class BikaGenerator:
                        'bika_samplingdeviations',
                        'bika_samplepoints',
                        'bika_sampletypes',
+                       'bika_diseases',
                        'bika_treatments',
                        'bika_immunizations',
                        'bika_referencedefinitions',
                        'bika_referencemanufacturers',
                        'bika_referencesuppliers',
                        'bika_vaccinationcenters',
+                       'bika_casestatuses',
+                       'bika_caseoutcomes',
                        'bika_worksheettemplates'):
             obj = bika_setup._getOb(obj_id)
             obj.unmarkCreationFlag()
@@ -583,11 +586,14 @@ class BikaGenerator:
         at.setCatalogsByType('Unit', ['bika_setup_catalog', ])
         at.setCatalogsByType('WorksheetTemplate', ['bika_setup_catalog', ])
         at.setCatalogsByType('Drug', ['bika_setup_catalog', ])
+        at.setCatalogsByType('Disease', ['bika_setup_catalog', ])
         at.setCatalogsByType('Treatment', ['bika_setup_catalog'])
         at.setCatalogsByType('Symptom', ['bika_setup_catalog'])
         at.setCatalogsByType('DrugProhibition', ['bika_setup_catalog'])
         at.setCatalogsByType('VaccinationCenter', ['bika_setup_catalog', ])
         at.setCatalogsByType('Immunization', ['bika_setup_catalog', ])
+        at.setCatalogsByType('CaseStatus', ['bika_setup_catalog', ])
+        at.setCatalogsByType('CaseOutcome', ['bika_setup_catalog', ])
 
         # create lexicon
         wordSplitter = Empty()
