@@ -30,7 +30,7 @@
     />
 
     <browser:page
-      for="bika.lims.interfaces.IClient"
+      for="*"
       name="getDoctors"
       class="bika.lims.browser.doctor.ajaxGetDoctors"
       permission="zope.Public"

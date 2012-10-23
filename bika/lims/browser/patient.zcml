@@ -53,7 +53,7 @@
     />
 
     <browser:page
-      for="bika.lims.interfaces.IClient"
+      for="*"
       name="getPatients"
       class="bika.lims.browser.patient.ajaxGetPatients"
       permission="zope.Public"
