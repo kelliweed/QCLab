@@ -21,6 +21,37 @@ schema = BikaSchema.copy() + Schema((
             label=_("Batch ID"),
         )
     ),
+    ReferenceField('Doctor',
+        required = 1,
+        allowed_types = ('Doctor',),
+        referenceClass = HoldingReference,
+        relationship = 'BatchDoctor',
+        widget=StringWidget(
+            label=_("Doctor"),
+        )
+    ),
+    ComputedField('DoctorUID',
+        expression='context.getDoctor() and context.getDoctor().UID() or None',
+        widget=ComputedWidget(
+            visible=False,
+        ),
+    ),
+    ReferenceField('Patient',
+        required=0,
+        multiValued=0,
+        allowed_types = ('Patient',),
+        referenceClass = HoldingReference,
+        relationship = 'BatchPatient',
+        widget=StringWidget(
+            label=_('Patient'),
+        ),
+    ),
+    ComputedField('PatientUID',
+        expression='context.getPatient() and context.getPatient().UID() or None',
+        widget=ComputedWidget(
+            visible=False,
+        ),
+    ),
     ReferenceField('AnalysisRequests',
         allowed_types=('AnalysisRequest',),
         relationship='BatchAnalysisRequests',
@@ -46,6 +77,7 @@ schema['description'].widget.visible = True
 schema['AnalysisRequests'].widget.visible = False
 
 schema.moveField('BatchID', before='description')
+schema.moveField('description', after='Patient')
 
 class Batch(BaseContent):
     implements(IBatch)
