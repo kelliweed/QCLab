@@ -158,17 +158,6 @@ class Client(Organisation):
                                           y['title'].lower()))
         return contact_data
 
-    security.declarePublic('getDoctorsDisplayList')
-    def getDoctorsDisplayList(self):
-        wf = getToolByName(self, 'portal_workflow')
-        pairs = []
-        for doctor in self.objectValues('Doctor'):
-            if wf.getInfoFor(doctor, 'inactive_state', '') == 'active':
-                pairs.append((doctor.UID(), doctor.Title()))
-        # sort the list by the second item
-        pairs.sort(lambda x, y:cmp(x[1], y[1]))
-        return DisplayList(pairs)
-
     security.declarePublic('getDoctorFromUsername')
     def getDoctorFromUsername(self, username):
         for doctor in self.objectValues('Doctor'):
