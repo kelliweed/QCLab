@@ -61,6 +61,16 @@ msgstr ""
 msgid "${sampletype} is not a valid sample type"
 msgstr ""
 
+# 
+# File: ../browser/analysisrequest.py, line: 1563
+msgid "${value} is not a valid doctor"
+msgstr ""
+
+# 
+# File: ../browser/analysisrequest.py, line: 1556
+msgid "${value} is not a valid patient ID"
+msgstr ""
+
 msgid "% Error"
 msgstr "% Błąd"
 
@@ -91,6 +101,21 @@ msgstr ""
 
 # 
 msgid "<p>The following services depend on ${service}, and will be unselected if you continue:</p><br/><p>${deps}</p><br/><p>Do you want to remove these selections now?</p>"
+msgstr ""
+
+# 
+# File: ../content/patient.py, line: 115
+msgid "A list of immunizations administered to the patient."
+msgstr ""
+
+# 
+# File: ../content/patient.py, line: 88
+msgid "A list of patient treatments and drugs administered."
+msgstr ""
+
+# 
+# File: ../content/patient.py, line: 126
+msgid "A list of this patient's chronic conditions."
 msgstr ""
 
 msgid "AR"
@@ -147,6 +172,16 @@ msgstr "Działanie"
 msgid "Active"
 msgstr "Aktywne"
 
+# 
+# File: ../content/immunization.py, line: 110
+msgid "Active immunization"
+msgstr ""
+
+# 
+# File: ../content/treatment.py, line: 78
+msgid "Active treatment"
+msgstr ""
+
 msgid "Ad-Hoc"
 msgstr ""
 
@@ -171,6 +206,11 @@ msgstr "Dodaj profil"
 msgid "Add Template"
 msgstr "Dodaj szablon"
 
+# 
+# File: ../controlpanel/bika_symptoms.py, line: 30
+msgid "Additional Symptoms and chronic conditions not covered by ICD codes, can be entered here."
+msgstr ""
+
 msgid "Address"
 msgstr ""
 
@@ -178,6 +218,11 @@ msgid "Adds a two-digit year after the ID prefix"
 msgstr ""
 
 msgid "Administrative Reports"
+msgstr ""
+
+# 
+# File: ../content/patient.py, line: 53
+msgid "Age"
 msgstr ""
 
 msgid "All"
@@ -360,6 +405,11 @@ msgstr "Zastosowane"
 msgid "Apply template"
 msgstr "Zastosuj szablon"
 
+# 
+# File: ../content/drug.py, line: 39
+msgid "Appropriate doses and dosage"
+msgstr ""
+
 msgid "Assigned"
 msgstr "Przydzielony"
 
@@ -444,11 +494,28 @@ msgstr ""
 msgid "Bearing"
 msgstr "Azymut"
 
-msgid "Bika LIMS Configuration"
-msgstr "Konfiguracja Bika LIMS"
+# 
+# File: ../controlpanel/overview.py, line: 10
+msgid "Bika Health Configuration"
+msgstr ""
 
 msgid "Billing address"
 msgstr "Adres fakturowania"
+
+# 
+# File: ../content/patient.py, line: 59
+msgid "Birth date"
+msgstr ""
+
+# 
+# File: ../content/patient.py, line: 65
+msgid "Birth date is estimated"
+msgstr ""
+
+# 
+# File: ../content/patient.py, line: 132
+msgid "Birth place"
+msgstr ""
 
 msgid "Blank"
 msgstr "Ślepa"
@@ -510,6 +577,11 @@ msgstr "Anulowane"
 msgid "Cannot activate calculation, because the following service dependencies are inactive: ${inactive_services}"
 msgstr ""
 
+# 
+# File: ../content/patients.py, line: 67
+msgid "Cannot create patients without any system clients configured."
+msgstr ""
+
 msgid "Cannot deactivate calculation, because it is in use by the following services: ${calc_services}"
 msgstr ""
 
@@ -531,6 +603,11 @@ msgstr "Kategoria"
 msgid "Category cannot be deactivated because it contains Analysis Services"
 msgstr "Kategoria nie może być wyłączona, ponieważ zawiera Usługi Badawcze"
 
+# 
+# File: ../content/treatment.py, line: 79
+msgid "Causal treatment"
+msgstr ""
+
 msgid "Check this box if the analysis service is included in the laboratory's schedule of accredited analyses"
 msgstr "Zaznacz to pole wyboru, jeśli usługa badawcza jest objęta zakresem akredytacji laboratorium"
 
@@ -549,8 +626,18 @@ msgstr "Zaznacz to pole jeżeli dla tej analizy wymagane jest pobranie próbki d
 msgid "Check this if you want to use a separate ID server. Prefixes are configurable separately in each Bika site"
 msgstr ""
 
+# 
+# File: ../content/patient.py, line: 144
+msgid "Citizenship"
+msgstr ""
+
 msgid "City"
 msgstr "Miasto"
+
+# 
+# File: ../content/patient.py, line: 154
+msgid "Civil status"
+msgstr ""
 
 msgid "Classic"
 msgstr "Klasyczny"
@@ -627,6 +714,16 @@ msgstr "Klienci"
 msgid "Closed"
 msgstr ""
 
+# 
+# File: ../browser/templates/patient_chronicconditions.pt, line: 20
+msgid "Code"
+msgstr ""
+
+# 
+# File: ../content/immunization.py, line: 73
+msgid "Collectives at risk"
+msgstr ""
+
 msgid "Composite"
 msgstr "Kompozytowy"
 
@@ -638,6 +735,11 @@ msgstr ""
 
 msgid "Confirm password"
 msgstr "Potwierdź hasło"
+
+# 
+# File: ../content/treatment.py, line: 80
+msgid "Conservative treatment"
+msgstr ""
 
 msgid "Contact"
 msgstr "Kontakt"
@@ -787,8 +889,22 @@ msgstr ""
 msgid "Degrees"
 msgstr "Stopnie"
 
+# 
+# File: ../browser/templates/allergies.pt, line: 71
+# File: ../browser/templates/immunizationhistory.pt, line: 93
+# File: ../browser/templates/treatmenthistory.pt, line: 88
+msgid "Delete all"
+msgstr ""
+
 msgid "Delete attachment"
 msgstr "Usuń załącznik"
+
+# 
+# File: ../browser/templates/allergies.pt, line: 68
+# File: ../browser/templates/immunizationhistory.pt, line: 90
+# File: ../browser/templates/treatmenthistory.pt, line: 85
+msgid "Delete selected"
+msgstr ""
 
 msgid "Department"
 msgstr "Dział"
@@ -826,8 +942,77 @@ msgstr "Usunięte"
 msgid "District"
 msgstr ""
 
+# 
+# File: ../browser/analysisrequest.py, line: 455
+# File: ../browser/sample.py, line: 328
+# File: ../browser/templates/ar_add.pt, line: 186
+msgid "Doctor"
+msgstr ""
+
+# 
+# File: ../content/doctors.py, line: 28
+msgid "Doctors"
+msgstr ""
+
+# 
+# File: ../config.py, line: 77
+msgid "Don't Know"
+msgstr ""
+
 msgid "Dormant"
 msgstr "Nieaktywny"
+
+# 
+# File: ../browser/templates/allergies.pt, line: 26
+# File: ../browser/templates/treatmenthistory.pt, line: 26
+# File: ../content/patient.py, line: 83
+msgid "Drug"
+msgstr ""
+
+# 
+# File: ../controlpanel/bika_drugprohibitions.py, line: 37
+msgid "Drug Prohibition"
+msgstr ""
+
+# 
+# File: ../browser/templates/allergies.pt, line: 21
+# File: ../content/patient.py, line: 96
+msgid "Drug Prohibition Explanation"
+msgstr ""
+
+# 
+# File: ../controlpanel/bika_drugprohibitions.py, line: 28
+msgid "Drug Prohibition Explanations"
+msgstr ""
+
+# 
+# File: ../content/drug.py, line: 26
+#. Default: "Indications"
+msgid "Drug indications"
+msgstr ""
+
+# 
+# File: ../content/drug.py, line: 37
+#. Default: "Posology"
+msgid "Drug posology"
+msgstr ""
+
+# 
+# File: ../content/drug.py, line: 59
+#. Default: "Preservation"
+msgid "Drug preservation"
+msgstr ""
+
+# 
+# File: ../content/drug.py, line: 48
+#. Default: "Side effects"
+msgid "Drug side effects"
+msgstr ""
+
+# 
+# File: ../controlpanel/bika_drugs.py, line: 28
+msgid "Drugs"
+msgstr ""
 
 msgid "Dry"
 msgstr "Suchy"
@@ -874,6 +1059,12 @@ msgstr "Czas trwania"
 msgid "E.g. SANAS, APLAC, etc."
 msgstr "Np. PCA itp."
 
+# 
+# File: ../browser/templates/immunizationhistory.pt, line: 13
+# File: ../content/patient.py, line: 109
+msgid "EPI Number"
+msgstr ""
+
 msgid "Earliness"
 msgstr "Earliness"
 
@@ -892,8 +1083,19 @@ msgstr "Adres E-mail"
 msgid "Email subject line"
 msgstr "Wiersz tematu wiadomości e-mail"
 
+# 
+# File: ../content/treatment.py, line: 81
+msgid "Empirical treatment"
+msgstr ""
+
 msgid "Enable the Sampling workflow"
 msgstr "Włącz workflow dla próbek"
+
+# 
+# File: ../browser/templates/treatmenthistory.pt, line: 32
+# File: ../content/patient.py, line: 84
+msgid "End"
+msgstr ""
 
 msgid "Enter a user name, usually something like 'jsmith'. No spaces or special characters. Usernames and passwords are case sensitive, make sure the caps lock key is not enabled. This is the name used to log in."
 msgstr "Wprowadź nazwę użytkownika, np.: 'jkowalski'. Nazwa nie może zawierać spacji oraz znaków specjalnych. W nazwie użytkownika i w haśle ważna jest wielkość liter, upewnij się, że klawisz Caps Lock nie jest włączony. Jest to nazwa używana do logowania."
@@ -919,8 +1121,23 @@ msgstr "Wprowadź szerokość geograficzną punktu poboru próbki wyrażoną w s
 msgid "Enter the Sample Point's longitude in degrees 0-180, minutes 0-59, seconds 0-59 and E/W indicator"
 msgstr "Wprowadź długość geograficzną punktu poboru próbki wyrażoną w stopniach 0-90, minutach 0-59, sekundach 0-59 oraz E/W  "
 
+# 
+# File: ../content/patient.py, line: 138
+msgid "Ethnicity"
+msgstr ""
+
+# 
+# File: ../content/patient.py, line: 139
+msgid "Ethnicity eg. Asian, African, etc."
+msgstr ""
+
 msgid "Exclude from invoice"
 msgstr "Wyłączenie z faktury"
+
+# 
+# File: ../content/treatment.py, line: 82
+msgid "Expectant/Symptomatic treatment"
+msgstr ""
 
 msgid "Expected Result"
 msgstr "Oczekiwany wynik"
@@ -947,6 +1164,11 @@ msgstr "Faks"
 
 msgid "Fax (business)"
 msgstr "Faks (praca)"
+
+# 
+# File: ../content/patient.py, line: 165
+msgid "Feature"
+msgstr ""
 
 msgid "Female"
 msgstr "Żeński"
@@ -984,6 +1206,21 @@ msgstr "Imię i nazwisko"
 msgid "Future dated sample"
 msgstr ""
 
+# 
+# File: ../content/patient.py, line: 48
+msgid "Gender"
+msgstr ""
+
+# 
+# File: ../content/immunization.py, line: 45
+msgid "Geographical areas can be characterized as having high, intermediate or low levels of infection."
+msgstr ""
+
+# 
+# File: ../content/immunization.py, line: 44
+msgid "Geographical distribution"
+msgstr ""
+
 msgid "Greeting title eg. Mr, Mrs, Dr"
 msgstr "Tytuł np. Pan, Pani, Dr"
 
@@ -1016,6 +1253,24 @@ msgstr ""
 
 msgid "If this container is pre-preserved, then the preservation method could be selected here."
 msgstr "Jeśli ten pojemnik jest wstępnie przygotowany dla utrwalenia próbek, wówczas metoda utrwalania może być zaznaczona tutaj."
+
+# 
+# File: ../browser/templates/immunizationhistory.pt, line: 34
+# File: ../content/patient.py, line: 109
+# File: ../controlpanel/bika_immunizations.py, line: 37
+msgid "Immunization"
+msgstr ""
+
+# 
+# File: ../content/immunization.py, line: 17
+#. Default: "Type"
+msgid "Immunization form"
+msgstr ""
+
+# 
+# File: ../controlpanel/bika_immunizations.py, line: 28
+msgid "Immunizations"
+msgstr ""
 
 msgid "Import"
 msgstr "Import"
@@ -1097,6 +1352,16 @@ msgstr "Słowo kluczowe"
 
 msgid "Keywords"
 msgstr "Słowa kluczowe"
+
+# 
+# File: ../content/patient.py, line: 101
+msgid "Known Patient allergies to keep information that can aid drug reaction interpretation"
+msgstr ""
+
+# 
+# File: ../content/drug.py, line: 50
+msgid "Known undesirable effects of the drug"
+msgstr ""
 
 msgid "Lab"
 msgstr "Lab"
@@ -1267,6 +1532,11 @@ msgstr "Model"
 msgid "More"
 msgstr "Więcej"
 
+# 
+# File: ../content/patient.py, line: 149
+msgid "Mothers name"
+msgstr ""
+
 msgid "Name"
 msgstr "Nazwa"
 
@@ -1360,7 +1630,17 @@ msgstr ""
 msgid "Number of samples"
 msgstr "Liczba próbek"
 
+# 
+# File: ../content/treatment.py, line: 58
+msgid "Objective clinical findings"
+msgstr ""
+
 msgid "Once preserved, the sample must be disposed of within this time period.  If not specified, the sample type retention period will be used."
+msgstr ""
+
+# 
+# File: ../browser/templates/patient_chronicconditions.pt, line: 33
+msgid "Onset"
 msgstr ""
 
 msgid "Open"
@@ -1384,6 +1664,11 @@ msgstr "Zamówienia"
 msgid "PDF"
 msgstr "PDF"
 
+# 
+# File: ../content/treatment.py, line: 83
+msgid "Palliative treatment"
+msgstr ""
+
 msgid "Parameters not defined"
 msgstr ""
 
@@ -1403,11 +1688,34 @@ msgstr "Ustawienia próbek złożonych"
 msgid "Partitions"
 msgstr "Części próbki"
 
+# 
+# File: ../content/immunization.py, line: 111
+msgid "Passive immunization"
+msgstr ""
+
 msgid "Password"
 msgstr "Hasło"
 
 msgid "Password lifetime"
 msgstr "Czas trwania hasła"
+
+# 
+# File: ../browser/analysisrequest.py, line: 449
+# File: ../browser/sample.py, line: 322
+# File: ../browser/templates/ar_add.pt, line: 146
+msgid "Patient"
+msgstr ""
+
+# 
+# File: ../content/patient.py, line: 25
+# File: ../content/patients.py, line: 39
+msgid "Patient ID"
+msgstr ""
+
+# 
+# File: ../content/patients.py, line: 30
+msgid "Patients"
+msgstr ""
 
 msgid "Pending"
 msgstr "Oczekiwane"
@@ -1435,6 +1743,11 @@ msgstr "Telefon (dom)"
 
 msgid "Phone (mobile)"
 msgstr "Telefon (komórkowy)"
+
+# 
+# File: ../content/patient.py, line: 159
+msgid "Photo"
+msgstr ""
 
 msgid "Physical address"
 msgstr "Adres"
@@ -1487,6 +1800,16 @@ msgstr "Utrwalanie"
 msgid "Preserver"
 msgstr "Utrwalający"
 
+# 
+# File: ../content/immunization.py, line: 91
+msgid "Prevention"
+msgstr ""
+
+# 
+# File: ../content/treatment.py, line: 84
+msgid "Preventive/Prophylactic treatment"
+msgstr ""
+
 msgid "Price"
 msgstr "Cena"
 
@@ -1498,6 +1821,11 @@ msgstr "Cena bez VAT"
 
 msgid "Pricelist for"
 msgstr "Cennik dla"
+
+# 
+# File: ../content/patient.py, line: 35
+msgid "Primary Referrer"
+msgstr ""
 
 msgid "Print"
 msgstr "Drukuj"
@@ -1574,6 +1902,11 @@ msgstr "Zakres min"
 msgid "Range spec"
 msgstr ""
 
+# 
+# File: ../content/treatment.py, line: 85
+msgid "Rational treatment"
+msgstr ""
+
 msgid "Re-enter the password. Make sure the passwords are identical."
 msgstr "Wprowadź ponownie hasło. Upewnij się, że hasła są identyczne."
 
@@ -1636,6 +1969,11 @@ msgstr ""
 
 msgid "Register"
 msgstr "Rejestr"
+
+# 
+# File: ../content/immunization.py, line: 35
+msgid "Relevant Facts"
+msgstr ""
 
 msgid "Remarks"
 msgstr "Uwagi"
@@ -1803,8 +2141,28 @@ msgstr "Częstotliwość pobierania próbek"
 msgid "Save"
 msgstr "Zapisz"
 
+# 
+# File: ../browser/templates/allergies.pt, line: 81
+msgid "Save allergies"
+msgstr ""
+
+# 
+# File: ../browser/templates/patient_chronicconditions.pt, line: 77
+msgid "Save chronic conditions"
+msgstr ""
+
+# 
+# File: ../browser/templates/immunizationhistory.pt, line: 103
+msgid "Save immunization history"
+msgstr ""
+
 msgid "Save remarks"
 msgstr "Zapisz uwagi"
+
+# 
+# File: ../browser/templates/treatmenthistory.pt, line: 98
+msgid "Save treatment history"
+msgstr ""
 
 msgid "Search"
 msgstr "Wyszukiwanie"
@@ -1835,6 +2193,16 @@ msgstr "Wybierz pozycję docelową i AR do zduplikowania."
 
 msgid "Select a manager from the available personnel configured under the 'lab contacts' setup item. Departmental managers are referenced on analysis results reports containing analyses by their department."
 msgstr "Wybierz kierownika z dostępnego personelu, który skonfigurowany jest pod 'kontakty laboratorium'. Kierownicy działów autoryzują wyniki analiz realizowanych w ich dziale."
+
+# 
+# File: ../content/immunization.py, line: 19
+msgid "Select a type of immunization. <br/>Active immunization entails the introduction of a foreign molecule into the body, which causes the body itself to generate immunity against the target. Vaccination is an active form of immunization<br/>Passive immunization is where pre-synthesized elements of the immune system are transferred to a person so that the body does not need to produce these elements itself. Currently, antibodies can be used for passive immunization"
+msgstr ""
+
+# 
+# File: ../content/treatment.py, line: 21
+msgid "Select a type of treatment."
+msgstr ""
 
 msgid "Select all items"
 msgstr "Zaznacz wszystkie pozycje"
@@ -1934,6 +2302,11 @@ msgstr ""
 msgid "Shipping address"
 msgstr "Adres dostawy"
 
+# 
+# File: ../content/treatment.py, line: 86
+msgid "Shock treatment"
+msgstr ""
+
 msgid "Show only selected categories in client views"
 msgstr "Pokaż tylko wybrane kategorie w widokach klienta"
 
@@ -1954,6 +2327,11 @@ msgstr "Mały"
 msgid "Special"
 msgstr "Specjalny"
 
+# 
+# File: ../content/treatment.py, line: 87
+msgid "Specific treatment"
+msgstr ""
+
 msgid "Specification"
 msgstr ""
 
@@ -1966,11 +2344,22 @@ msgstr ""
 msgid "Specify the uncertainty value for a given range, e.g. for results in a range with minimum of 0 and maximum of 10, the uncertainty value is 0.5 - a result of 6.67 will be reported as 6.67 +- 0.5. Please ensure successive ranges are continuous, e.g. 0.00 - 10.00 is followed by 10.01 - 20.00, 20.01 - 30 .00 etc."
 msgstr "Określ wartość niepewności dla danego zakresu, np. dla wyników w przedziale od 0 a do 10, wartość niepewności wynosi 0,5 - wynik 6,67 będzie wyświetlany jako 6,67 ± 0,5. Prosimy upewnić się kolejne zakresy są ciągłe, np. 0,00 - 10,00 następnie 10.01 - 20.00, 20.01 - 30 .00 itd."
 
+# 
+# File: ../browser/templates/treatmenthistory.pt, line: 29
+# File: ../content/patient.py, line: 83
+msgid "Start"
+msgstr ""
+
 msgid "State"
 msgstr "Status"
 
 msgid "Status"
 msgstr "Status"
+
+# 
+# File: ../content/treatment.py, line: 49
+msgid "Subjective clinical findings"
+msgstr ""
 
 msgid "Submit"
 msgstr "Prześlij"
@@ -1981,8 +2370,30 @@ msgstr "Suma częściowa"
 msgid "Supplier"
 msgstr "Dostawca"
 
+# 
+# File: ../content/treatment.py, line: 88
+msgid "Supporting treatment"
+msgstr ""
+
 msgid "Surname"
 msgstr "Nazwisko"
+
+# 
+# File: ../browser/templates/patient_chronicconditions.pt, line: 24
+# File: ../controlpanel/bika_symptoms.py, line: 37
+msgid "Symptom"
+msgstr ""
+
+# 
+# File: ../content/immunization.py, line: 64
+# File: ../controlpanel/bika_symptoms.py, line: 28
+msgid "Symptoms"
+msgstr ""
+
+# 
+# File: ../content/drug.py, line: 28
+msgid "Symptoms or the like for which the drug is suitable"
+msgstr ""
 
 msgid "Technical description and instructions intended for analysts"
 msgstr "Opis techniczny i instrukcje przeznaczone dla analityków"
@@ -2187,6 +2598,45 @@ msgstr ""
 msgid "Total price"
 msgstr "Cena całkowita"
 
+# 
+# File: ../content/immunization.py, line: 55
+msgid "Transmission"
+msgstr ""
+
+# 
+# File: ../browser/templates/treatmenthistory.pt, line: 21
+# File: ../content/immunization.py, line: 82
+# File: ../content/patient.py, line: 83
+msgid "Treatment"
+msgstr ""
+
+# 
+# File: ../content/treatment.py, line: 64
+msgid "Treatment Document"
+msgstr ""
+
+# 
+# File: ../content/treatment.py, line: 40
+msgid "Treatment care"
+msgstr ""
+
+# 
+# File: ../content/treatment.py, line: 30
+#. Default: "Procedure"
+msgid "Treatment procedure"
+msgstr ""
+
+# 
+# File: ../content/treatment.py, line: 19
+#. Default: "Type"
+msgid "Treatment type"
+msgstr ""
+
+# 
+# File: ../controlpanel/bika_treatments.py, line: 28
+msgid "Treatments"
+msgstr ""
+
 msgid "Turnaround time (h)"
 msgstr "Czas realizacji (h)"
 
@@ -2240,6 +2690,21 @@ msgstr "Kwota podatku VAT"
 
 msgid "VAT number"
 msgstr "NIP"
+
+# 
+# File: ../content/patient.py, line: 110
+msgid "Vaccination Center"
+msgstr ""
+
+# 
+# File: ../controlpanel/bika_vaccinationcenters.py, line: 31
+msgid "Vaccination Centers"
+msgstr ""
+
+# 
+# File: ../browser/templates/immunizationhistory.pt, line: 40
+msgid "VaccinationCenter"
+msgstr ""
 
 msgid "Valid from"
 msgstr "Ważne od"
@@ -2465,6 +2930,11 @@ msgstr "max"
 
 msgid "min"
 msgstr "min"
+
+# 
+# File: ../content/drug.py, line: 61
+msgid "preservation"
+msgstr ""
 
 msgid "range"
 msgstr "zakres"

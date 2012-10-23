@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Bika-LIMS\n"
-"POT-Creation-Date: 2012-10-20 09:21+0000\n"
+"POT-Creation-Date: 2012-01-01 23:11+0000\n"
 "PO-Revision-Date: 2012-10-19 10:26+0000\n"
 "Last-Translator: campbell_bika <campbell@bikalabs.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -42,6 +42,11 @@ msgid "Add Duplicate"
 msgstr ""
 
 msgid "Administration"
+msgstr ""
+
+# 
+# File: ../profiles/default/types/Patient.xml, line: -1
+msgid "Allergies"
 msgstr ""
 
 msgid "Analyses"
@@ -116,6 +121,11 @@ msgstr ""
 msgid "Cancelled"
 msgstr ""
 
+# 
+# File: ../profiles/default/types/Patient.xml, line: -1
+msgid "Chronic Conditions"
+msgstr ""
+
 msgid "Client"
 msgstr ""
 
@@ -158,6 +168,38 @@ msgstr ""
 msgid "Disposed"
 msgstr ""
 
+# 
+# File: ../profiles/default/types/Doctor.xml, line: -1
+msgid "Doctor"
+msgstr ""
+
+# 
+# File: ../profiles/default/types/Doctors.xml, line: -1
+msgid "Doctors"
+msgstr ""
+
+# 
+# File: ../profiles/default/types/Drug.xml, line: -1
+msgid "Drug"
+msgstr ""
+
+# 
+# File: ../profiles/default/types/DrugProhibition.xml, line: -1
+msgid "Drug Prohibition Explanation"
+msgstr ""
+
+# 
+# File: ../profiles/default/controlpanel.xml, line: -1
+# File: ../profiles/default/types/DrugProhibitions.xml, line: -1
+msgid "Drug Prohibition Explanations"
+msgstr ""
+
+# 
+# File: ../profiles/default/controlpanel.xml, line: -1
+# File: ../profiles/default/types/Drugs.xml, line: -1
+msgid "Drugs"
+msgstr ""
+
 msgid "Duplicate Analysis"
 msgstr ""
 
@@ -174,6 +216,22 @@ msgid "Export batch"
 msgstr ""
 
 msgid "Extracts"
+msgstr ""
+
+# 
+# File: ../profiles/default/types/Immunization.xml, line: -1
+msgid "Immunization"
+msgstr ""
+
+# 
+# File: ../profiles/default/types/Patient.xml, line: -1
+msgid "Immunization History"
+msgstr ""
+
+# 
+# File: ../profiles/default/controlpanel.xml, line: -1
+# File: ../profiles/default/types/Immunizations.xml, line: -1
+msgid "Immunizations"
 msgstr ""
 
 msgid "Imported"
@@ -255,6 +313,22 @@ msgid "Order pending"
 msgstr ""
 
 msgid "Orders"
+msgstr ""
+
+# 
+# File: ../profiles/default/types/Patient.xml, line: -1
+msgid "Patient"
+msgstr ""
+
+# 
+# File: ../profiles/default/controlpanel.xml, line: -1
+msgid "Patient Symptoms and Conditions"
+msgstr ""
+
+# 
+# File: ../profiles/default/types/Client.xml, line: -1
+# File: ../profiles/default/types/Patients.xml, line: -1
+msgid "Patients"
 msgstr ""
 
 msgid "Preservation"
@@ -407,6 +481,16 @@ msgstr ""
 msgid "Supply Order"
 msgstr ""
 
+# 
+# File: ../profiles/default/types/Symptom.xml, line: -1
+msgid "Symptom"
+msgstr ""
+
+# 
+# File: ../profiles/default/types/Symptoms.xml, line: -1
+msgid "Symptoms"
+msgstr ""
+
 msgid "The last transition"
 msgstr ""
 
@@ -422,7 +506,38 @@ msgstr ""
 msgid "To be verified"
 msgstr ""
 
+# 
+# File: ../profiles/default/types/Treatment.xml, line: -1
+msgid "Treatment"
+msgstr ""
+
+# 
+# File: ../profiles/default/types/Patient.xml, line: -1
+msgid "Treatment History"
+msgstr ""
+
+# 
+# File: ../profiles/default/controlpanel.xml, line: -1
+# File: ../profiles/default/types/Treatments.xml, line: -1
+msgid "Treatments"
+msgstr ""
+
 msgid "Unassigned"
+msgstr ""
+
+# 
+# File: ../profiles/default/controlpanel.xml, line: -1
+msgid "Vaccination Centers"
+msgstr ""
+
+# 
+# File: ../profiles/default/types/VaccinationCenter.xml, line: -1
+msgid "Vaccination center"
+msgstr ""
+
+# 
+# File: ../profiles/default/types/VaccinationCenters.xml, line: -1
+msgid "Vaccination centers"
 msgstr ""
 
 msgid "Verified"
