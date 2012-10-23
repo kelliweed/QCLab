@@ -47,6 +47,7 @@ def initialize(context):
     from content.bikaschema import BikaSchema
     from content.bikasetup import BikaSetup
     from content.calculation import Calculation
+    from content.caseoutcome import CaseOutcome
     from content.casestatus import CaseStatus
     from content.client import Client
     from content.clientfolder import ClientFolder
@@ -114,6 +115,7 @@ def initialize(context):
     from controlpanel.bika_artemplates import ARTemplates
     from controlpanel.bika_attachmenttypes import AttachmentTypes
     from controlpanel.bika_calculations import Calculations
+    from controlpanel.bika_caseoutcomes import CaseOutcomes
     from controlpanel.bika_casestatuses import CaseStatuses
     from controlpanel.bika_containers import Containers
     from controlpanel.bika_containertypes import ContainerTypes

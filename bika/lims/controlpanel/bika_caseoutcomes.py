@@ -1,32 +1,27 @@
-from AccessControl.SecurityInfo import ClassSecurityInfo
 from Products.ATContentTypes.content import schemata
 from Products.Archetypes import atapi
-from Products.Archetypes.ArchetypeTool import registerType
-from Products.CMFCore.utils import getToolByName
 from bika.lims.browser.bika_listing import BikaListingView
 from bika.lims.config import PROJECTNAME
 from bika.lims import bikaMessageFactory as _
-from bika.lims.content.bikaschema import BikaFolderSchema
-from bika.lims.interfaces import ICaseStatuses
+from bika.lims.interfaces import ICaseOutcomes
 from plone.app.layout.globals.interfaces import IViewView
 from plone.app.content.browser.interfaces import IFolderContentsView
 from plone.app.folder.folder import ATFolder, ATFolderSchema
 from zope.interface.declarations import implements
-from operator import itemgetter
 
-class CaseStatusesView(BikaListingView):
+class CaseOutcomesView(BikaListingView):
     implements(IFolderContentsView, IViewView)
 
     def __init__(self, context, request):
-        super(CaseStatusesView, self).__init__(context, request)
+        super(CaseOutcomesView, self).__init__(context, request)
         self.catalog = 'bika_setup_catalog'
-        self.contentFilter = {'portal_type': 'CaseStatus',
+        self.contentFilter = {'portal_type': 'CaseOutcome',
                               'sort_on': 'sortable_title'}
         self.context_actions = {_('Add'):
-                                {'url': 'createObject?type_name=CaseStatus',
+                                {'url': 'createObject?type_name=CaseOutcome',
                                  'icon': '++resource++bika.lims.images/add.png'}}
-        self.title = _("Case Statuses")
-        self.icon = "++resource++bika.lims.images/casestatus_big.png"
+        self.title = _("Case Outcomes")
+        self.icon = "++resource++bika.lims.images/caseoutcome_big.png"
         self.description = ""
         self.show_sort_column = False
         self.show_select_row = False
@@ -73,10 +68,10 @@ class CaseStatusesView(BikaListingView):
         return items
 
 schema = ATFolderSchema.copy()
-class CaseStatuses(ATFolder):
-    implements(ICaseStatuses)
+class CaseOutcomes(ATFolder):
+    implements(ICaseOutcomes)
     displayContentsTab = False
     schema = schema
 
 schemata.finalizeATCTSchema(schema, folderish = True, moveDiscussion = False)
-atapi.registerType(CaseStatuses, PROJECTNAME)
+atapi.registerType(CaseOutcomes, PROJECTNAME)

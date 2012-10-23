@@ -163,6 +163,7 @@ class BikaSetupCatalog(CatalogTool):
                                                  'Immunization',
                                                  'VaccinationCenter',
                                                  'CaseStatus',
+                                                 'CaseOutcome',
                                                  'WorksheetTemplate'),
                                 search_sub = True,
                                 apply_func = indexObject)

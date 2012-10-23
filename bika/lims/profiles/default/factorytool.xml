@@ -15,6 +15,7 @@
   <type portal_type="Batch"/>
   <type portal_type="BikaSetup"/>
   <type portal_type="Calculation"/>
+  <type portal_type="CaseOutcome"/>
   <type portal_type="CaseStatus"/>
   <type portal_type="Client"/>
   <type portal_type="Contact"/>
