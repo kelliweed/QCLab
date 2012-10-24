@@ -7,6 +7,8 @@ from Products.Archetypes.references import HoldingReference
 from Products.CMFCore.utils import getToolByName
 from bika.lims import bikaMessageFactory as _
 from bika.lims.browser.fields import DurationField
+from bika.lims.browser.fields import DateTimeField
+from bika.lims.browser.widgets import DateTimeWidget
 from bika.lims.config import PROJECTNAME
 from bika.lims.content.bikaschema import BikaSchema
 from bika.lims.interfaces import IBatch
@@ -56,6 +58,11 @@ schema = BikaSchema.copy() + Schema((
         allowed_types=('AnalysisRequest',),
         relationship='BatchAnalysisRequests',
         multiValued=1,
+    ),
+    DateTimeField('DateOfOnset',
+        widget=DateTimeWidget(
+            label=_('Date of onset of illness'),
+        ),
     ),
     TextField('Remarks',
         searchable=True,
