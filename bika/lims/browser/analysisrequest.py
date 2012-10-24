@@ -442,6 +442,8 @@ class AnalysisRequestViewView(BrowserView):
 
         patient = self.context.getPatient()
         doctor = self.context.getDoctor()
+        batch = self.context.getBatch()
+
 
         self.header_columns = 3
         self.header_rows = [
@@ -2231,9 +2233,12 @@ class AnalysisRequestsView(BikaListingView):
                  (url, items[x]['getRequestID'])
 
             batch = obj.getBatch()
-            items[x]['BatchID'] = batch.getBatchID()
-            items[x]['replace']['BatchID'] = "<a href='%s'>%s</a>" % \
-                 (batch.absolute_url(), items[x]['BatchID'])
+            if batch:
+                items[x]['BatchID'] = batch.getBatchID()
+                items[x]['replace']['BatchID'] = "<a href='%s'>%s</a>" % \
+                     (batch.absolute_url(), items[x]['BatchID'])
+            else:
+                items[x]['BatchID'] = ''
 
             items[x]['Client'] = obj.aq_parent.Title()
             items[x]['replace']['Client'] = "<a href='%s'>%s</a>" % \
