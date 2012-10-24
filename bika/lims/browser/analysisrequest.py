@@ -1708,9 +1708,13 @@ class ajaxAnalysisRequestSubmit():
                 parts_and_services[part.id] = p['services']
 
             # resolve BatchID
-            brains = bc(portal_type="Batch", Title=values['BatchID'])
-            if brains:
-                batch_uid = brains[0].UID
+            batch_id = values.get('BatchID', '')
+            if batch_id:
+                brains = bc(portal_type="Batch", Title=values['BatchID'])
+                if brains:
+                    batch_uid = brains[0].UID
+                else:
+                    batch_uid = None
             else:
                 batch_uid = None
 
