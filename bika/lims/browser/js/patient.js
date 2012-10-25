@@ -127,6 +127,21 @@ $(document).ready(function(){
 				return false;
 			}
 		});
+		
+		// Travel History > Countries search popup
+		$(".template-travelhistory #Country").combogrid({
+			colModel: [{'columnName':'Code', 'width':'10', 'label':window.jsi18n_bika('Code')},
+			           {'columnName':'Country', 'width':'25', 'label':window.jsi18n_bika('Country')}],
+			url: window.location.href.replace("/travelhistory","") + "/getCountries?_authenticator=" + $('input[name="_authenticator"]').val(),
+			select: function( event, ui ) {
+				event.preventDefault();
+				$(this).val(ui.item.Title);
+				$(this).parents('tr').find('input[id=Code]').val(ui.item.Code);
+				$(this).parents('tr').find('input[id=Country]').val(ui.item.Country);
+				$(this).change();
+				return false;
+			}
+		});
     }
 	lookups();
 
@@ -241,6 +256,31 @@ $(document).ready(function(){
 		$("#Onset").parent().append("<span>"+O+"</span>");
 		$("#Onset").parent().append("<input type='hidden' name='Onset:list' value='"+O+"'/>");
 		$("#Onset").remove();
+		for(i=0; i<$(newrow).children().length; i++){
+            td = $(newrow).children()[i];
+            input = $(td).children()[0];
+            $(input).val('');
+        }
+        $(newrow).appendTo($(".bika-listing-table"));
+        lookups();
+        return false;
+	})
+	
+	$(".template-travelhistory .add_row").click(function(event){
+		event.preventDefault();
+		C = $("#Code").val();
+		T = $("#Country").val();
+		if (T == ''){
+	        return false;
+		}
+		newrow = $("tr#new").clone();
+        $("tr#new").removeAttr('id');
+		$("#Code").parent().append("<span>"+C+"</span>");
+		$("#Code").parent().append("<input type='hidden' name='Code:list' value='"+C+"'/>");
+		$("#Code").remove();
+		$("#Country").parent().append("<span>"+T+"</span>");
+		$("#Country").parent().append("<input type='hidden' name='Country:list' value='"+T+"'/>");
+		$("#Country").remove();
 		for(i=0; i<$(newrow).children().length; i++){
             td = $(newrow).children()[i];
             input = $(td).children()[0];

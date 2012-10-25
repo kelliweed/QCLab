@@ -13,6 +13,7 @@ from bika.lims.browser.client import ClientAnalysisRequestsView, \
     ClientSamplesView
 from bika.lims.browser.publish import Publish
 from bika.lims.browser.sample import SamplesView
+from bika.lims.countries import countries
 from bika.lims.idserver import renameAfterCreation
 from bika.lims.interfaces import IContacts
 from bika.lims.permissions import *
@@ -251,6 +252,48 @@ class ChronicConditionsView(BrowserView):
             self.context.setChronicConditions(self.context.getChronicConditions() + new)
             self.context.plone_utils.addPortalMessage(PMF("Changes saved"))
         return self.template()
+    
+class TravelHistoryView(BrowserView):
+    """ bika listing to display Travel history
+    """
+
+    template = ViewPageTemplateFile("templates/travelhistory.pt")
+
+    def __call__(self):
+        
+        if self.request.form.has_key('clear'):
+            # Clear travel history
+            self.context.setTravelHistory([])
+            self.context.plone_utils.addPortalMessage(PMF("Travel history cleared"))
+            
+        elif self.request.form.has_key('delete'):
+            # Delete selected allergies
+            imh = self.context.getTravelHistory() 
+            new = []
+            for i in range(len(imh)):        
+                if (not self.request.form.has_key('SelectItem-%s'%i)):
+                    new.append(imh[i])                    
+            self.context.setTravelHistory(new)
+            self.context.plone_utils.addPortalMessage(PMF("Selected travels deleted"))
+            
+        elif 'submitted' in self.request:
+            bsc = self.bika_setup_catalog
+            new = len(self.context.getTravelHistory())>0 and self.context.getTravelHistory() or []
+            for i in range(len(self.request.form['TripStartDate'])):
+                C = self-request.form['Code'][i]
+                S = self.request.form['TripStartDate'][i]
+                E = self.request.form['TripEndDate'][i]
+                T = self.request.form['Country'][i]
+                L = self.request.form['Location'][i]
+
+                new.append({'Code':C, 'TripStartDate':S, 'TripEndDate':E, 'Country': T, 'Location': L})
+
+            self.context.setTravelHistory(new)
+            self.context.plone_utils.addPortalMessage(PMF("Changes saved"))
+        return self.template()
+    
+    def hasTravelHistory(self):
+        return len(self.context.getTravelHistory())>0
 
 class ajaxGetPatients(BrowserView):
     """ Patient vocabulary source for jquery combo dropdown box
@@ -483,6 +526,37 @@ class ajaxGetSymptoms(BrowserView):
                              'Description': icd9['long']})
 
         rows = sorted(rows, key=itemgetter(sidx and sidx or 'Title'))
+        if sord == 'desc':
+            rows.reverse()
+        pages = len(rows) / int(nr_rows)
+        pages += divmod(len(rows), int(nr_rows))[1] and 1 or 0
+        ret = {'page':page,
+               'total':pages,
+               'records':len(rows),
+               'rows':rows[ (int(page) - 1) * int(nr_rows) : int(page) * int(nr_rows) ]}
+
+        return json.dumps(ret)
+
+class ajaxGetCountries(BrowserView):
+    """ Countries from ISO
+    """
+    def __call__(self):
+        plone.protect.CheckAuthenticator(self.request)
+        searchTerm = self.request['searchTerm']
+        page = self.request['page']
+        nr_rows = self.request['rows']
+        sord = self.request['sord']
+        sidx = self.request['sidx']
+        rows = []
+
+        # lookup objects from ISO code list
+        for country in countries:
+            if country['code'].find(searchTerm) > -1 \
+                or country['name'].find(searchTerm) > -1:
+                rows.append({'Code': country['code'],
+                             'Country': country['name']})
+
+        rows = sorted(rows, key=itemgetter(sidx and sidx or 'Country'))
         if sord == 'desc':
             rows.reverse()
         pages = len(rows) / int(nr_rows)
