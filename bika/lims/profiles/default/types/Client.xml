@@ -29,7 +29,7 @@
  <property name="immediate_view">base_edit</property>
  <property name="default_view_fallback">False</property>
 
- <alias from="(Default)" to="analysisrequests"/>
+ <alias from="(Default)" to="cases"/>
  <alias from="edit" to="base_edit"/>
 
  <action title="Edit"
