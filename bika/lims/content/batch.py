@@ -4,10 +4,10 @@ from Products.ATContentTypes.lib.historyaware import HistoryAwareMixin
 from Products.ATContentTypes.utils import DT2dt, dt2DT
 from Products.Archetypes.public import *
 from Products.Archetypes.references import HoldingReference
+from Products.ATExtensions.ateapi import DateTimeField
 from Products.CMFCore.utils import getToolByName
 from bika.lims import bikaMessageFactory as _
 from bika.lims.browser.fields import DurationField
-from bika.lims.browser.fields import DateTimeField
 from bika.lims.browser.widgets import DateTimeWidget
 from bika.lims.config import PROJECTNAME
 from bika.lims.content.bikaschema import BikaSchema
