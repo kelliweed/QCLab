@@ -444,7 +444,6 @@ class AnalysisRequestViewView(BrowserView):
         doctor = self.context.getDoctor()
         batch = self.context.getBatch()
 
-
         self.header_columns = 3
         self.header_rows = [
             {'id': 'Patient',
@@ -475,7 +474,7 @@ class AnalysisRequestViewView(BrowserView):
             {'id': 'BatchID',
              'title': _('Batch ID'),
              'allow_edit': False,
-             'value': self.context.getBatch().getBatchID(),
+             'value': batch and batch.getBatchID() or '',
              'condition':True,
              'type': 'text'},
             {'id': 'SampleID',
