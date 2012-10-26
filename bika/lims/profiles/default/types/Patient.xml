@@ -113,6 +113,7 @@
          i18n:attributes="title"
          visible="True">
   <permission value="View"/>
+ </action>
   
   <action title="Travel History"
          action_id="travelhistory"
@@ -124,7 +125,6 @@
          i18n:attributes="title"
          visible="True">
   <permission value="View"/>
- </action>
  </action>
 
 </object>

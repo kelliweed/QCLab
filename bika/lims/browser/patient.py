@@ -277,16 +277,14 @@ class TravelHistoryView(BrowserView):
             self.context.plone_utils.addPortalMessage(PMF("Selected travels deleted"))
             
         elif 'submitted' in self.request:
-            bsc = self.bika_setup_catalog
             new = len(self.context.getTravelHistory())>0 and self.context.getTravelHistory() or []
             for i in range(len(self.request.form['TripStartDate'])):
-                C = self-request.form['Code'][i]
                 S = self.request.form['TripStartDate'][i]
                 E = self.request.form['TripEndDate'][i]
                 T = self.request.form['Country'][i]
                 L = self.request.form['Location'][i]
 
-                new.append({'Code':C, 'TripStartDate':S, 'TripEndDate':E, 'Country': T, 'Location': L})
+                new.append({'TripStartDate':S, 'TripEndDate':E, 'Country': T, 'Location': L})
 
             self.context.setTravelHistory(new)
             self.context.plone_utils.addPortalMessage(PMF("Changes saved"))
