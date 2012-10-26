@@ -54,11 +54,6 @@ schema = BikaSchema.copy() + Schema((
             visible=False,
         ),
     ),
-    ReferenceField('AnalysisRequests',
-        allowed_types=('AnalysisRequest',),
-        relationship='BatchAnalysisRequests',
-        multiValued=1,
-    ),
     DateTimeField('DateOfOnset',
         widget=DateTimeWidget(
             label=_('Date of onset of illness'),
@@ -81,7 +76,6 @@ schema = BikaSchema.copy() + Schema((
 schema['title'].required = False
 schema['title'].widget.visible = False
 schema['description'].widget.visible = True
-schema['AnalysisRequests'].widget.visible = False
 
 schema.moveField('BatchID', before='description')
 schema.moveField('description', after='Patient')

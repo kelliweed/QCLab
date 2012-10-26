@@ -51,6 +51,14 @@
       permission="zope2.View"
       layer="bika.lims.interfaces.IBikaLIMS"
     />
+    
+    <browser:page
+      for="bika.lims.interfaces.IPatient"
+      name="travelhistory"
+      class="bika.lims.browser.patient.TravelHistoryView"
+      permission="zope2.View"
+      layer="bika.lims.interfaces.IBikaLIMS"
+    />
 
     <browser:page
       for="*"
@@ -104,6 +112,14 @@
       for="bika.lims.interfaces.IPatient"
       name="getSymptoms"
       class="bika.lims.browser.patient.ajaxGetSymptoms"
+      permission="zope.Public"
+      layer="bika.lims.interfaces.IBikaLIMS"
+    />
+    
+    <browser:page
+      for="bika.lims.interfaces.IPatient"
+      name="getCountries"
+      class="bika.lims.browser.patient.ajaxGetCountries"
       permission="zope.Public"
       layer="bika.lims.interfaces.IBikaLIMS"
     />

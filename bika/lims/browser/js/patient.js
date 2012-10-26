@@ -127,6 +127,20 @@ $(document).ready(function(){
 				return false;
 			}
 		});
+		
+		// Travel History > Countries search popup
+		$(".template-travelhistory #Country").combogrid({
+			colModel: [{'columnName':'Code', 'width':'10', 'label':window.jsi18n_bika('Code')},
+			           {'columnName':'Country', 'width':'25', 'label':window.jsi18n_bika('Country')}],
+			url: window.location.href.replace("/travelhistory","") + "/getCountries?_authenticator=" + $('input[name="_authenticator"]').val(),
+			select: function( event, ui ) {
+				event.preventDefault();
+				$(this).val(ui.item.Title);
+				$(this).parents('tr').find('input[id=Country]').val(ui.item.Country);
+				$(this).change();
+				return false;
+			}
+		});
     }
 	lookups();
 
@@ -241,6 +255,39 @@ $(document).ready(function(){
 		$("#Onset").parent().append("<span>"+O+"</span>");
 		$("#Onset").parent().append("<input type='hidden' name='Onset:list' value='"+O+"'/>");
 		$("#Onset").remove();
+		for(i=0; i<$(newrow).children().length; i++){
+            td = $(newrow).children()[i];
+            input = $(td).children()[0];
+            $(input).val('');
+        }
+        $(newrow).appendTo($(".bika-listing-table"));
+        lookups();
+        return false;
+	})
+	
+	$(".template-travelhistory .add_row").click(function(event){
+		event.preventDefault();
+		S = $("#TripStartDate").val();
+		E = $("#TripEndDate").val();
+		T = $("#Country").val();
+		L = $("#Location").val();
+		if (T == ''){
+	        return false;
+		}
+		newrow = $("tr#new").clone();
+        $("tr#new").removeAttr('id');
+		$("#TripStartDate").parent().append("<span>"+S+"</span>");
+		$("#TripStartDate").parent().append("<input type='hidden' name='TripStartDate:list' value='"+S+"'/>");
+		$("#TripStartDate").remove();
+		$("#TripEndDate").parent().append("<span>"+E+"</span>");
+		$("#TripEndDate").parent().append("<input type='hidden' name='TripEndDate:list' value='"+E+"'/>");
+		$("#TripEndDate").remove();
+		$("#Country").parent().append("<span>"+T+"</span>");
+		$("#Country").parent().append("<input type='hidden' name='Country:list' value='"+T+"'/>");
+		$("#Country").remove();
+		$("#Location").parent().append("<span>"+L+"</span>");
+		$("#Location").parent().append("<input type='hidden' name='Location:list' value='"+L+"'/>");
+		$("#Location").remove();
 		for(i=0; i<$(newrow).children().length; i++){
             td = $(newrow).children()[i];
             input = $(td).children()[0];
