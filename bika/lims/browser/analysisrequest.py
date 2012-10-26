@@ -2231,9 +2231,30 @@ class AnalysisRequestsView(BikaListingView):
             else:
                 url = obj.absolute_url()
 
-            items[x]['getRequestID'] = obj.getRequestID()
-            items[x]['replace']['getRequestID'] = "<a href='%s'>%s</a>" % \
-                 (url, items[x]['getRequestID'])
+            # Sanitize the list: If the user does not have local Owner role on the object's
+            # parent, then some fields are not displayed
+            if member.id in obj.aq_parent.users_with_local_role('Owner'):
+                items[x]['Client'] = obj.aq_parent.Title()
+                items[x]['replace']['Client'] = "<a href='%s'>%s</a>" % \
+                    (obj.aq_parent.absolute_url(), obj.aq_parent.Title())
+                items[x]['Creator'] = self.user_fullname(obj.Creator())
+                items[x]['getRequestID'] = obj.getRequestID()
+                items[x]['replace']['getRequestID'] = "<a href='%s'>%s</a>" % \
+                     (url, items[x]['getRequestID'])
+                items[x]['getSample'] = sample
+                items[x]['replace']['getSample'] = \
+                    "<a href='%s'>%s</a>" % (sample.absolute_url(), sample.Title())
+            else:
+                items[x]['Client'] = ''
+                items[x]['Creator'] = ''
+                items[x]['getSample'] = sample.getSampleID()
+                items[x]['getRequestID'] = obj.getRequestID()
+                sp = sample.getSamplePoint()
+                if sp and sp.aq_parent != self.portal.bika_setup.bika_samplepoints:
+                    items[x]['replace']['getSamplePointTitle'] = ''
+                items[x]['getClientOrderNumber'] = ''
+                items[x]['getClientReference'] = ''
+                items[x]['getClientSampleID'] = ''
 
             batch = obj.getBatch()
             if batch:
@@ -2243,11 +2264,6 @@ class AnalysisRequestsView(BikaListingView):
             else:
                 items[x]['BatchID'] = ''
 
-            items[x]['Client'] = obj.aq_parent.Title()
-            items[x]['replace']['Client'] = "<a href='%s'>%s</a>" % \
-                 (obj.aq_parent.absolute_url(), obj.aq_parent.Title())
-
-            items[x]['Creator'] = self.user_fullname(obj.Creator())
 
             patient = obj.getPatient()
             if patient:
@@ -2264,7 +2280,6 @@ class AnalysisRequestsView(BikaListingView):
                      (doctor.absolute_url(), doctor.Title())
             else:
                 items[x]['getDoctor'] = ''
-
             samplingdate = obj.getSample().getSamplingDate()
             items[x]['SamplingDate'] = self.ulocalized_time(samplingdate)
             items[x]['getDateReceived'] = self.ulocalized_time(obj.getDateReceived())
@@ -2297,10 +2312,6 @@ class AnalysisRequestsView(BikaListingView):
 
             items[x]['Created'] = self.ulocalized_time(obj.created())
 
-            items[x]['getSample'] = sample
-            items[x]['replace']['getSample'] = \
-                "<a href='%s'>%s</a>" % (sample.absolute_url(), sample.Title())
-
             if not samplingdate > DateTime():
                 datesampled = self.ulocalized_time(sample.getDateSampled())
 
@@ -2320,7 +2331,6 @@ class AnalysisRequestsView(BikaListingView):
                 sampler = ''
             items[x]['getDateSampled'] = datesampled
             items[x]['getSampler'] = sampler
-
 
             # sampling workflow - inline edits for Sampler and Date Sampled
             checkPermission = self.context.portal_membership.checkPermission
