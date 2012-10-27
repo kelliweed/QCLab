@@ -23,6 +23,20 @@ schema = BikaSchema.copy() + Schema((
             label=_("Batch ID"),
         )
     ),
+    ReferenceField('Client',
+        allowed_types=('Client',),
+        relationship='BatchClient',
+        widget=ReferenceWidget(
+            label=_("Client"),
+            checkbox_bound = 1,
+        )
+    ),
+    ComputedField('ClientUID',
+        expression='context.getClient() and context.getClient().UID() or None',
+        widget=ComputedWidget(
+            visible=False,
+        ),
+    ),
     ReferenceField('Doctor',
         required = 1,
         allowed_types = ('Doctor',),
@@ -59,6 +73,15 @@ schema = BikaSchema.copy() + Schema((
             label=_('Date of onset of illness'),
         ),
     ),
+            label=_('Patient'),
+        ),
+    ),
+    ComputedField('PatientUID',
+        expression='context.getPatient() and context.getPatient().UID() or None',
+        widget=ComputedWidget(
+            visible=False,
+        ),
+    ),
     TextField('Remarks',
         searchable=True,
         default_content_type='text/x-web-intelligent',
@@ -77,7 +100,6 @@ schema['title'].required = False
 schema['title'].widget.visible = False
 schema['description'].widget.visible = True
 
-schema.moveField('BatchID', before='description')
 schema.moveField('description', after='Patient')
 
 class Batch(BaseContent):
