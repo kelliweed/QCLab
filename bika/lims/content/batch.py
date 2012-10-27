@@ -19,51 +19,38 @@ schema = BikaSchema.copy() + Schema((
     StringField('BatchID',
         searchable=True,
         required=1,
+        validators = ('uniquefieldvalidator',),
         widget=StringWidget(
             label=_("Batch ID"),
         )
     ),
-    ReferenceField('Client',
-        allowed_types=('Client',),
-        relationship='BatchClient',
+    StringField('ClientID',
         widget=StringWidget(
             label=_("Client"),
         )
     ),
     ComputedField('ClientUID',
-        expression='context.getClient() and context.getClient().UID() or None',
-        widget=ComputedWidget(
+        widget=StringWidget(
             visible=False,
         ),
     ),
-    ReferenceField('Doctor',
-        required = 0,
-        allowed_types = ('Doctor',),
-        referenceClass = HoldingReference,
-        relationship = 'BatchDoctor',
+    StringField('DoctorID',
         widget=StringWidget(
             label=_("Doctor"),
         )
     ),
-    ComputedField('DoctorUID',
-        expression='context.getDoctor() and context.getDoctor().UID() or None',
-        widget=ComputedWidget(
+    StringField('DoctorUID',
+        widget=StringWidget(
             visible=False,
         ),
     ),
-    ReferenceField('Patient',
-        required=0,
-        multiValued=0,
-        allowed_types = ('Patient',),
-        referenceClass = HoldingReference,
-        relationship = 'BatchPatient',
+    StringField('PatientID',
         widget=StringWidget(
             label=_('Patient'),
         ),
     ),
-    ComputedField('PatientUID',
-        expression='context.getPatient() and context.getPatient().UID() or None',
-        widget=ComputedWidget(
+    StringField('PatientUID',
+        widget=StringWidget(
             visible=False,
         ),
     ),
@@ -90,7 +77,7 @@ schema['title'].required = False
 schema['title'].widget.visible = False
 schema['description'].widget.visible = True
 
-schema.moveField('description', after='Patient')
+schema.moveField('description', after='PatientID')
 
 class Batch(BaseContent):
     implements(IBatch)
