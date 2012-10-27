@@ -21,6 +21,51 @@ schema = BikaSchema.copy() + Schema((
             label=_("Batch ID"),
         )
     ),
+    ReferenceField('Client',
+        allowed_types=('Client',),
+        relationship='BatchClient',
+        widget=ReferenceWidget(
+            label=_("Client"),
+            checkbox_bound = 1,
+        )
+    ),
+    ComputedField('ClientUID',
+        expression='context.getClient() and context.getClient().UID() or None',
+        widget=ComputedWidget(
+            visible=False,
+        ),
+    ),
+    ReferenceField('Doctor',
+        required = 1,
+        allowed_types = ('Doctor',),
+        referenceClass = HoldingReference,
+        relationship = 'BatchDoctor',
+        widget=StringWidget(
+            label=_("Doctor"),
+        )
+    ),
+    ComputedField('DoctorUID',
+        expression='context.getDoctor() and context.getDoctor().UID() or None',
+        widget=ComputedWidget(
+            visible=False,
+        ),
+    ),
+    ReferenceField('Patient',
+        required=0,
+        multiValued=0,
+        allowed_types = ('Patient',),
+        referenceClass = HoldingReference,
+        relationship = 'BatchPatient',
+        widget=StringWidget(
+            label=_('Patient'),
+        ),
+    ),
+    ComputedField('PatientUID',
+        expression='context.getPatient() and context.getPatient().UID() or None',
+        widget=ComputedWidget(
+            visible=False,
+        ),
+    ),
     TextField('Remarks',
         searchable=True,
         default_content_type='text/x-web-intelligent',
@@ -40,6 +85,7 @@ schema['title'].widget.visible = False
 schema['description'].widget.visible = True
 
 schema.moveField('BatchID', before='description')
+schema.moveField('Client', before='description')
 
 class Batch(BaseContent):
     implements(IBatch)
