@@ -13,11 +13,17 @@ msgstr ""
 msgid "Client"
 msgstr "Hospital"
 
+msgid "Client ID"
+msgstr "Hospital ID"
+
 msgid "Clients"
 msgstr "Hospitals"
 
 msgid "Batch"
 msgstr "Case"
+
+msgid "Batch ID"
+msgstr "Case ID"
 
 msgid "Batches"
 msgstr "Cases"
