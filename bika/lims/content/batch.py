@@ -26,9 +26,8 @@ schema = BikaSchema.copy() + Schema((
     ReferenceField('Client',
         allowed_types=('Client',),
         relationship='BatchClient',
-        widget=ReferenceWidget(
+        widget=StringWidget(
             label=_("Client"),
-            checkbox_bound = 1,
         )
     ),
     ComputedField('ClientUID',
@@ -38,7 +37,7 @@ schema = BikaSchema.copy() + Schema((
         ),
     ),
     ReferenceField('Doctor',
-        required = 1,
+        required = 0,
         allowed_types = ('Doctor',),
         referenceClass = HoldingReference,
         relationship = 'BatchDoctor',
