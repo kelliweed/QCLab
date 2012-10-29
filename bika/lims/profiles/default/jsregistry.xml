@@ -227,8 +227,19 @@
               conditionalcomment=""
               cookable="True"
               enabled="on"
-              expression="python:here.portal_type in ['Patient','Client',]"
+              expression="python:here.portal_type in ['Doctor', 'Patient','Client','AnalysisRequest', 'Batch']"
               id="++resource++bika.lims.js/patient.js"
+              inline="False"
+              insert-after="*"/>
+
+  <javascript authenticated="True"
+              cacheable="True"
+              compression="safe"
+              conditionalcomment=""
+              cookable="True"
+              enabled="on"
+              expression="python:here.portal_type in ['Doctor', 'Patient','Client','AnalysisRequest', 'Batch']"
+              id="++resource++bika.lims.js/doctor.js"
               inline="False"
               insert-after="*"/>
 
