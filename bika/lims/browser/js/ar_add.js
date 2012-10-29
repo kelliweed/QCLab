@@ -911,31 +911,7 @@ $(document).ready(function(){
 		});
 	}
 
-    // Add Doctor popup
-    $('a.add_doctor').prepOverlay(
-        {
-            subtype: 'ajax',
-            filter: 'head>*,#content>*:not(div.configlet),dl.portalMessage.error,dl.portalMessage.info',
-            formselector: '#doctor-base-edit',
-            closeselector: '[name="form.button.cancel"]',
-            width:'40%',
-            noform:'close',
-            config: {
-            	onLoad: function() {
-//            		// display only first tab's fields
-//            		$("ul.formTabs").remove();
-//            		$("#fieldset-personal").remove();
-//            		$("#fieldset-address").remove();
-//            		$("#fieldset-identification").remove();
-	            }
-            }
-	    }
-    );
-
-
-
-
-        // AR Add/Edit ajax form submits
+     // AR Add/Edit ajax form submits
 	ar_edit_form = $('#analysisrequest_edit_form');
 	if (ar_edit_form.ajaxForm != undefined){
 		var options = {

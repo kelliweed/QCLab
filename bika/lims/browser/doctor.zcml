@@ -29,12 +29,4 @@
       layer="bika.lims.interfaces.IBikaLIMS"
     />
 
-    <browser:page
-      for="*"
-      name="getDoctors"
-      class="bika.lims.browser.doctor.ajaxGetDoctors"
-      permission="zope.Public"
-      layer="bika.lims.interfaces.IBikaLIMS"
-    />
-
 </configure>
