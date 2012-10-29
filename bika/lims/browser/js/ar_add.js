@@ -897,43 +897,6 @@ $(document).ready(function(){
 		});
 	}
 
-    // Add Patient popup
-    $('a.add_patient').prepOverlay(
-        {
-            subtype: 'ajax',
-            filter: 'head>*,#content>*:not(div.configlet),dl.portalMessage.error,dl.portalMessage.info',
-            formselector: '#patient-base-edit',
-            closeselector: '[name="form.button.cancel"]',
-            width:'40%',
-            noform:'close',
-            config: {
-            	onLoad: function() {
-            		// manually remove remarks
-            		this.getOverlay().find("#archetypes-fieldname-Remarks").remove();
-//            		// display only first tab's fields
-//            		$("ul.formTabs").remove();
-//            		$("#fieldset-personal").remove();
-//            		$("#fieldset-address").remove();
-//            		$("#fieldset-identification").remove();
-            		//re-configure datepicker
-	            	dateFormat = _("date_format_short_datepicker");
-	            	$('#BirthDate').click(function() {
-	            		$(this).datepicker({
-	            			showOn:'focus',
-	            			showAnim:'',
-	            			changeMonth:true,
-	            			changeYear:true,
-	            			maxDate: '+0d',
-	            			dateFormat: dateFormat
-	            		})
-	            		.click(function(){$(this).attr('value', '');})
-	            		.focus();
-	            	});
-	            }
-            }
-	    }
-    );
-
     // Dropdown grid of Doctors for AR Add form
 	for (col=1; col<parseInt($("#col_count").val()); col++) {
 		$("[id*=Doctor]").combogrid({
@@ -970,32 +933,6 @@ $(document).ready(function(){
     );
 
 
-    // Dropdown grid of Batches is handled by batch.js
-
-
-    // Add Batch popup
-	$('a.add_batch').prepOverlay(
-        {
-            subtype: 'ajax',
-            filter: 'head>*,#content>*:not(div.configlet),dl.portalMessage.error,dl.portalMessage.info',
-            formselector: '#batch-base-edit[action*=new]',
-            closeselector: '[name="form.button.cancel"]',
-            width:'40%',
-            noform:'close',
-            config: {
-            	onLoad: function() {
-            		// manually remove remarks
-            		this.getOverlay().find("#archetypes-fieldname-Remarks").remove();
-//            		// display only first tab's fields
-//            		$("ul.formTabs").remove();
-//            		$("#fieldset-schemaname").remove();
-	            },
-	            onClose: function(){
-	            	// here is where we'd populate the form controls, if we cared to.
-	            }
-            }
-	    }
-    );
 
 
         // AR Add/Edit ajax form submits
