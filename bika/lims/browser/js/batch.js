@@ -48,7 +48,6 @@ $(document).ready(function(){
                 return false;
             }
         });
-    }
 
     $("input[id*=ClientID]").combogrid({
         colModel: [{'columnName':'ClientUID','hidden':true},
@@ -57,30 +56,6 @@ $(document).ready(function(){
         url: window.portal_url + "/getClients?_authenticator=" + $('input[name="_authenticator"]').val(),
         select: function( event, ui ) {
             $(this).val(ui.item.ClientID);
-            $(this).change();
-            return false;
-        }
-    });
-
-    $("input[id*=PatientID]").combogrid({
-        colModel: [{'columnName':'PatientUID','hidden':true},
-                   {'columnName':'PatientID','width':'25','label':window.jsi18n_bika('Patient ID')},
-                   {'columnName':'Title','width':'35','label':window.jsi18n_bika('Title')}],
-        url: window.portal_url + "/getPatients?_authenticator=" + $('input[name="_authenticator"]').val(),
-        select: function( event, ui ) {
-            $(this).val(ui.item.PatientID);
-            // ui.item.PrimaryReferrer (title)
-            $(this).change();
-            return false;
-        }
-    });
-
-    $("input[id*=Doctor]").combogrid({
-        colModel: [{'columnName':'DoctorUID','hidden':true},
-                   {'columnName':'Title','width':'35','label':window.jsi18n_bika('Title')}],
-        url: window.portal_url + "/getDoctors?_authenticator=" + $('input[name="_authenticator"]').val(),
-        select: function( event, ui ) {
-            $(this).val(ui.item.Doctor);
             $(this).change();
             return false;
         }
