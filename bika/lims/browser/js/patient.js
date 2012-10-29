@@ -4,6 +4,32 @@ $(document).ready(function(){
 	_ = window.jsi18n_bika;
 	PMF = window.jsi18n_plone;
 
+    // Add Patient popup
+    if(window.location.href.search('portal_factory/Patient') == -1){
+        $("input[id=PatientID]").after('<a style="border-bottom:none !important;margin-left:.5;"' +
+                    ' class="add_patient"' +
+                    ' href="'+window.portal_url+'/patients/portal_factory/Patient/new/edit"' +
+                    ' rel="#overlay">' +
+                    ' <img style="padding-bottom:1px;" src="'+window.portal_url+'/++resource++bika.lims.images/add.png"/>' +
+                ' </a>');
+    }
+    $('a.add_patient').prepOverlay(
+        {
+            subtype: 'ajax',
+            filter: 'head>*,#content>*:not(div.configlet),dl.portalMessage.error,dl.portalMessage.info',
+            formselector: '#patient-base-edit',
+            closeselector: '[name="form.button.cancel"]',
+            width:'40%',
+            noform:'close',
+            config: {
+            	onLoad: function() {
+            		// manually remove remarks
+            		this.getOverlay().find("#archetypes-fieldname-Remarks").remove();
+	            }
+            }
+	    }
+    );
+
 	// Estimate DOB if an age is typed
 	$("#Age").live('change', function(){
 		if (parseInt($(this).val()) > 0){
@@ -127,7 +153,7 @@ $(document).ready(function(){
 				return false;
 			}
 		});
-		
+
 		// Travel History > Countries search popup
 		$(".template-travelhistory #Country").combogrid({
 			colModel: [{'columnName':'Code', 'width':'10', 'label':window.jsi18n_bika('Code')},
@@ -264,7 +290,7 @@ $(document).ready(function(){
         lookups();
         return false;
 	})
-	
+
 	$(".template-travelhistory .add_row").click(function(event){
 		event.preventDefault();
 		S = $("#TripStartDate").val();
