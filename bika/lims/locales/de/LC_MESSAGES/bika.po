@@ -118,6 +118,11 @@ msgid "A list of patient treatments and drugs administered."
 msgstr ""
 
 # 
+# File: ../content/patient.py, line: 135
+msgid "A list of places visited by the patient."
+msgstr ""
+
+# 
 # File: ../content/patient.py, line: 126
 msgid "A list of this patient's chronic conditions."
 msgstr ""
@@ -486,6 +491,11 @@ msgstr ""
 msgid "Batch ID"
 msgstr ""
 
+# 
+# File: ../controlpanel/bika_batchlabels.py, line: 23
+msgid "Batch Labels"
+msgstr ""
+
 msgid "Batch end date"
 msgstr "Batch-Enddatum"
 
@@ -594,6 +604,26 @@ msgstr "Kapazität"
 
 msgid "Captured"
 msgstr "Erfasst"
+
+# 
+# File: ../controlpanel/bika_caseoutcomes.py, line: 23
+msgid "Case Outcomes"
+msgstr ""
+
+# 
+# File: ../controlpanel/bika_casestatuses.py, line: 23
+msgid "Case Statuses"
+msgstr ""
+
+# 
+# File: ../content/batch.py, line: 84
+msgid "Case outcome"
+msgstr ""
+
+# 
+# File: ../content/batch.py, line: 77
+msgid "Case status"
+msgstr ""
 
 msgid "Catalogue Number"
 msgstr "Katalognummer"
@@ -850,6 +880,11 @@ msgstr "Probenahmedatum"
 msgid "Date Submitted"
 msgstr ""
 
+# 
+# File: ../content/batch.py, line: 62
+msgid "Date of onset of illness"
+msgstr ""
+
 msgid "Days"
 msgstr "Tage"
 
@@ -931,6 +966,16 @@ msgstr "Rabatt"
 msgid "Discount %"
 msgstr "Rabatt %"
 
+# 
+# File: ../controlpanel/bika_diseases.py, line: 37
+msgid "Disease"
+msgstr ""
+
+# 
+# File: ../controlpanel/bika_diseases.py, line: 28
+msgid "Diseases"
+msgstr ""
+
 msgid "Dispatched"
 msgstr "Versendet"
 
@@ -951,6 +996,11 @@ msgstr ""
 # File: ../browser/sample.py, line: 328
 # File: ../browser/templates/ar_add.pt, line: 186
 msgid "Doctor"
+msgstr ""
+
+# 
+# File: ../content/doctor.py, line: 20
+msgid "Doctor ID"
 msgstr ""
 
 # 
@@ -1237,6 +1287,11 @@ msgstr "Gefährlich"
 msgid "Hours"
 msgstr "Stunden"
 
+# 
+# File: ../content/disease.py, line: 17
+msgid "ICD Code"
+msgstr ""
+
 msgid "ID"
 msgstr "ID"
 
@@ -1388,6 +1443,11 @@ msgstr "Labor-Produkte"
 msgid "Lab URL"
 msgstr "Labor-URL"
 
+# 
+# File: ../controlpanel/bika_batchlabels.py, line: 32
+msgid "Label"
+msgstr ""
+
 msgid "Label sizes"
 msgstr ""
 
@@ -1422,6 +1482,12 @@ msgid "Load documents describing the method here"
 msgstr "Hier können Sie die Dokumente laden, die die Methode beschreiben"
 
 msgid "Loaded"
+msgstr ""
+
+# 
+# File: ../browser/templates/travelhistory.pt, line: 39
+# File: ../content/patient.py, line: 126
+msgid "Location"
 msgstr ""
 
 msgid "Log"
@@ -1858,6 +1924,11 @@ msgstr "Profil-Schlüsselwort"
 msgid "Profiles"
 msgstr "Profile"
 
+# 
+# File: ../content/batch.py, line: 70
+msgid "Provisional Diagnosis and additional notes"
+msgstr ""
+
 msgid "Publication preference"
 msgstr "Veröffentlichungspräferenz"
 
@@ -2161,6 +2232,11 @@ msgid "Save immunization history"
 msgstr ""
 
 msgid "Save remarks"
+msgstr ""
+
+# 
+# File: ../browser/templates/travelhistory.pt, line: 104
+msgid "Save travel history"
 msgstr ""
 
 # 
@@ -2639,6 +2715,28 @@ msgstr ""
 # 
 # File: ../controlpanel/bika_treatments.py, line: 28
 msgid "Treatments"
+msgstr ""
+
+# 
+# File: ../content/patient.py, line: 124
+#. Default: "End date"
+msgid "Trip End Date"
+msgstr ""
+
+# 
+# File: ../content/patient.py, line: 123
+#. Default: "Start date"
+msgid "Trip Start Date"
+msgstr ""
+
+# 
+# File: ../browser/templates/travelhistory.pt, line: 29
+msgid "Trip end date"
+msgstr ""
+
+# 
+# File: ../browser/templates/travelhistory.pt, line: 23
+msgid "Trip start date"
 msgstr ""
 
 msgid "Turnaround time (h)"

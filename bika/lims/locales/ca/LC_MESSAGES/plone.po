@@ -108,6 +108,25 @@ msgstr ""
 msgid "Batch"
 msgstr ""
 
+# 
+msgid "Batch ID"
+msgstr "Case ID"
+
+# 
+# File: ../profiles/default/types/BatchLabel.xml, line: -1
+msgid "Batch Label"
+msgstr ""
+
+# 
+# File: ../profiles/default/types/BatchLabels.xml, line: -1
+msgid "Batch Labels"
+msgstr ""
+
+# 
+# File: ../profiles/default/controlpanel.xml, line: -1
+msgid "Batch labels"
+msgstr ""
+
 msgid "Batches"
 msgstr ""
 
@@ -124,12 +143,38 @@ msgid "Cancelled"
 msgstr ""
 
 # 
+# File: ../profiles/default/types/CaseOutcome.xml, line: -1
+msgid "Case Outcome"
+msgstr ""
+
+# 
+# File: ../profiles/default/controlpanel.xml, line: -1
+# File: ../profiles/default/types/CaseOutcomes.xml, line: -1
+msgid "Case Outcomes"
+msgstr ""
+
+# 
+# File: ../profiles/default/types/CaseStatus.xml, line: -1
+msgid "Case Status"
+msgstr ""
+
+# 
+# File: ../profiles/default/controlpanel.xml, line: -1
+# File: ../profiles/default/types/CaseStatuses.xml, line: -1
+msgid "Case Statuses"
+msgstr ""
+
+# 
 # File: ../profiles/default/types/Patient.xml, line: -1
 msgid "Chronic Conditions"
 msgstr ""
 
 msgid "Client"
 msgstr ""
+
+# 
+msgid "Client ID"
+msgstr "Hospital ID"
 
 msgid "Clients"
 msgstr ""
@@ -162,6 +207,17 @@ msgid "Department"
 msgstr ""
 
 msgid "Departments"
+msgstr ""
+
+# 
+# File: ../profiles/default/types/Disease.xml, line: -1
+msgid "Disease"
+msgstr ""
+
+# 
+# File: ../profiles/default/controlpanel.xml, line: -1
+# File: ../profiles/default/types/Diseases.xml, line: -1
+msgid "Diseases"
 msgstr ""
 
 msgid "Dispatched"
@@ -506,6 +562,11 @@ msgid "To Be Sampled"
 msgstr ""
 
 msgid "To be verified"
+msgstr ""
+
+# 
+# File: ../profiles/default/types/Patient.xml, line: -1
+msgid "Travel History"
 msgstr ""
 
 # 
