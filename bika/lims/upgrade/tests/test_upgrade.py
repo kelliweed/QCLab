@@ -54,7 +54,6 @@ class FunctionalUpgradeTestCase(ZopeTestCase.FunctionalTestCase,
         request.form['upgrades'] = upgrades
         stool.manage_doUpgrades(request)
 
-        from pdb import set_trace;set_trace()
         self.assertEqual(stool.getLastVersionForProfile(profile_id), ('1010'))
 
         newSecurityManager(None, UnrestrictedUser('admin', '', ['Manager'], ''))

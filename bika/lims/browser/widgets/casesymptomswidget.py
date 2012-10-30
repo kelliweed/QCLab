@@ -6,6 +6,7 @@ from bika.lims.browser.bika_listing import BikaListingView
 from bika.lims.idserver import renameAfterCreation
 from Products.Archetypes.Registry import registerWidget
 from bika.lims.permissions import *
+from bika.lims.icd9cm import icd9_codes
 import json
 from AccessControl import ClassSecurityInfo
 from Products.Archetypes.Widget import TypesWidget
@@ -48,9 +49,13 @@ class CaseSymptomsWidget(TypesWidget):
                 D = form['CSY_Description'][i]
                 O = form['CSY_Onset'][i]
 
-                # Create new Symptom entry if none exists
+                # Create new Symptom entry if none exists (check ICD9 and setup)
                 Slist = bsc(portal_type='Symptom', title=S)
-                if not Slist:
+                ISlist = [x for x in icd9_codes['R']
+                          if x['code'] == C
+                          and x['short'] == S
+                          and x['long'] == D]
+                if not Slist and not ISlist:
                     folder = instance.bika_setup.bika_symptoms
                     _id = folder.invokeFactory('Symptom', id='tmp')
                     obj = folder[_id]
