@@ -1,0 +1,72 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:tal="http://xml.zope.org/namespaces/tal"
+    xmlns:i18n="http://xml.zope.org/namespaces/i18n" i18n:domain="bika">
+<body>
+
+    <div id="folderlisting-main-table" class="template-symptoms">
+        <input tal:replace="structure context/@@authenticator/authenticator" />
+        <input type="hidden" name="submitted" value="1"/>
+        <div class="bika-listing-table-container">
+            <table summary="Content listing" style="margin-bottom: 0px;"
+                class="bika-listing-table">
+                <thead>
+                    <tr>
+                        <th class="column"
+                            id="foldercontents-Code-column">
+                            <span i18n:translate="">Code</span>
+                        </th>
+                        <th class="column"
+                            id="foldercontents-Title-column">
+                            <span i18n:translate="">Symptom</span>
+                            <span class="fieldRequired"> </span>
+                        </th>
+                        <th class="column"
+                            id="foldercontents-Description-column">
+                            <span i18n:translate="">Description</span>
+                        </th>
+                        <th class="column"
+                            id="foldercontents-Onset-column">
+                            <span i18n:translate="">Onset</span>
+                        </th>
+                    </tr>
+                </thead>
+
+                <tbody class="item-listing-tbody">
+                    <tr tal:repeat="row context/getSymptoms">
+                        <td colspan="1" rowspan="1" class="state-active Code">
+                             <span tal:content="row/Code"/>
+                        </td>
+                        <td colspan="1" rowspan="1" class="state-active Title">
+                             <span tal:content="row/Title"/>
+                        </td>
+                        <td colspan="1" rowspan="1" class="state-active Description">
+                             <span tal:content="row/Description"/>
+                        </td>
+                        <td colspan="1" rowspan="1" class="state-active Onset">
+                             <span tal:content="row/Onset"/>
+                        </td>
+                    </tr>
+                    <tr id="new">
+                        <td colspan="1" rowspan="1" class="state-active Code">
+                             <input class="wide" id="Code" type="text" value="" autocomplete="off"/>
+                        </td>
+                        <td colspan="1" rowspan="1" class="state-active Title">
+                             <input class="wide" id="Title" type="text" value="" autocomplete="off"/>
+                        </td>
+                        <td colspan="1" rowspan="1" class="state-active Description">
+                             <input class="wide" id="Description" type="text" value="" autocomplete="off"/>
+                        </td>
+                        <td colspan="1" rowspan="1" class="state-active Onset">
+                             <input class="datepicker_nofuture" id="Onset" type="text" value="" autocomplete="off"/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <input class="workflow_action_button action_button add_row allowMultiSubmit"
+               type="submit"
+               i18n:attributes="value"
+               value="Add" />
+    </div>
+</body>
+</html>
