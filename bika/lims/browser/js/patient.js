@@ -5,13 +5,25 @@ $(document).ready(function(){
 	PMF = window.jsi18n_plone;
 
     // Add Patient popup
-    if(window.location.href.search('portal_factory/Patient') == -1){
-        $("input[id=PatientID]").after('<a style="border-bottom:none !important;margin-left:.5;"' +
-                    ' class="add_patient"' +
-                    ' href="'+window.portal_url+'/patients/portal_factory/Patient/new/edit"' +
-                    ' rel="#overlay">' +
-                    ' <img style="padding-bottom:1px;" src="'+window.portal_url+'/++resource++bika.lims.images/add.png"/>' +
-                ' </a>');
+    if(window.location.href.search(window.bika_utils.data.prefixes['Patient']) == -1 &&
+       window.location.href.search('portal_factory/Patient') == -1){
+            $("input[id=PatientID]").after('<a style="border-bottom:none !important;margin-left:.5;"' +
+                        ' class="add_patient"' +
+                        ' href="'+window.portal_url+'/patients/portal_factory/Patient/new/edit"' +
+                        ' rel="#overlay">' +
+                        ' <img style="padding-bottom:1px;" src="'+window.portal_url+'/++resource++bika.lims.images/add.png"/>' +
+                    ' </a>');
+        $("input[id*=PatientID]").combogrid({
+            colModel: [{'columnName':'PatientUID','hidden':true},
+                       {'columnName':'PatientID','width':'25','label':window.jsi18n_bika('Patient ID')},
+                       {'columnName':'Title','width':'35','label':window.jsi18n_bika('Full name')}],
+            url: window.portal_url + "/getPatients?_authenticator=" + $('input[name="_authenticator"]').val(),
+            select: function( event, ui ) {
+                $(this).val(ui.item.PatientID);
+                $(this).change();
+                return false;
+            }
+        });
     }
     $('a.add_patient').prepOverlay(
         {

@@ -39,6 +39,17 @@ $(document).ready(function(){
                     ' rel="#overlay">' +
                     ' <img style="padding-bottom:1px;" src="'+window.portal_url+'/++resource++bika.lims.images/add.png"/>' +
                 ' </a>');
+        $("input[id*=ClientID]").combogrid({
+            colModel: [{'columnName':'ClientUID','hidden':true},
+                       {'columnName':'ClientID','width':'25','label':window.jsi18n_bika('Client ID')},
+                       {'columnName':'Title','width':'35','label':window.jsi18n_bika('Title')}],
+            url: window.location.href.replace("/ar_add","") + "/getClients?_authenticator=" + $('input[name="_authenticator"]').val(),
+            select: function( event, ui ) {
+                $(this).val(ui.item.ClientID);
+                $(this).change();
+                return false;
+            }
+        });
     }
 
     $('a.add_client').prepOverlay(
@@ -55,23 +66,11 @@ $(document).ready(function(){
                     this.getOverlay().find("#archetypes-fieldname-Remarks").remove();
                 },
                 onClose: function(){
-                    // here is where we'd populate the form controls, if we cared to.
                 }
             }
         }
     );
 
-    $("input[id*=ClientID]").combogrid({
-        colModel: [{'columnName':'ClientUID','hidden':true},
-                   {'columnName':'ClientID','width':'25','label':window.jsi18n_bika('Client ID')},
-                   {'columnName':'Title','width':'35','label':window.jsi18n_bika('Title')}],
-        url: window.location.href.replace("/ar_add","") + "/getClients?_authenticator=" + $('input[name="_authenticator"]').val(),
-        select: function( event, ui ) {
-            $(this).val(ui.item.ClientID);
-            $(this).change();
-            return false;
-        }
-    });
 
 });
 }(jQuery));

@@ -881,7 +881,7 @@ $(document).ready(function(){
 
 	$(".ReportDryMatter").change(changeReportDryMatter);
 
-    // AR Add/Edit ajax form submits
+        // AR Add/Edit ajax form submits
 	ar_edit_form = $('#analysisrequest_edit_form');
 	if (ar_edit_form.ajaxForm != undefined){
 		var options = {

@@ -14,7 +14,13 @@ from bika.lims.content.contact import Contact
 from bika.lims import PMF, bikaMessageFactory as _
 from zope.interface import implements
 
-schema = Contact.schema.copy()
+schema = Contact.schema.copy() + Schema((
+    StringField('DoctorID',
+        widget=StringWidget(
+            label=_('Doctor ID'),
+        ),
+    ),
+))
 
 class Doctor(Contact):
     implements(IDoctor)

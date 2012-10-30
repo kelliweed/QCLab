@@ -2,6 +2,10 @@
 <object name="portal_catalog" meta_type="Plone Catalog Tool">
  <index name="getUsername" meta_type="FieldIndex"> <indexed_attr value="getUsername"/> </index>
  <index name="getFullname" meta_type="FieldIndex"> <indexed_attr value="getFullname"/> </index>
+ <index name="getDoctorID" meta_type="FieldIndex"> <indexed_attr value="getDoctorID"/> </index>
+ <index name="getDoctorUID" meta_type="FieldIndex"> <indexed_attr value="getDoctorUID"/> </index>
+ <index name="getClientID" meta_type="FieldIndex"> <indexed_attr value="getClientID"/> </index>
+ <index name="getClientUID" meta_type="FieldIndex"> <indexed_attr value="getClientUID"/> </index>
  <index name="getName" meta_type="FieldIndex"> <indexed_attr value="getName"/> </index>
  <index name="review_state" meta_type="FieldIndex"> <indexed_attr value="review_state"/> </index>
  <index name="inactive_state" meta_type="FieldIndex"> <indexed_attr value="inactive_state"/> </index>
