@@ -13,7 +13,7 @@ $(document).ready(function(){
                         ' rel="#overlay">' +
                         ' <img style="padding-bottom:1px;" src="'+window.portal_url+'/++resource++bika.lims.images/add.png"/>' +
                     ' </a>');
-        $("input[id*=DoctorID]").combogrid({
+        $("input[id*=PatientID]").combogrid({
             colModel: [{'columnName':'PatientUID','hidden':true},
                        {'columnName':'PatientID','width':'25','label':window.jsi18n_bika('Patient ID')},
                        {'columnName':'Title','width':'35','label':window.jsi18n_bika('Full name')}],

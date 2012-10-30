@@ -866,7 +866,7 @@ $(document).ready(function(){
 		calculate_parts(column);
 	});
 
-	$(".copyButton").live('click', copyButton );
+	$(".copyButton").live('click',  copyButton );
 
 	$('th[class^="analysiscategory"]').click(clickAnalysisCategory);
 
@@ -880,36 +880,6 @@ $(document).ready(function(){
 	$(".deleteSampleButton").click(deleteSampleButton);
 
 	$(".ReportDryMatter").change(changeReportDryMatter);
-
-	// Dropdown grid of Patient Search Results AR Add form
-	for (col=1; col<parseInt($("#col_count").val()); col++) {
-		$("[id*=PatientID]").combogrid({
-			colModel: [{'columnName':'PatientUID','hidden':true},
-			           {'columnName':'PatientID','width':'25','label':window.jsi18n_bika('Patient ID')},
-			           {'columnName':'Title','width':'35','label':window.jsi18n_bika('Full Name')},
-			           {'columnName':'PrimaryReferrer','width':'35','label':window.jsi18n_bika('Primary Referrer')}],
-			url: window.location.href.replace("/ar_add","") + "/getPatients?_authenticator=" + $('input[name="_authenticator"]').val(),
-			select: function( event, ui ) {
-				$(this).val(ui.item.PatientID);
-				$(this).change();
-				return false;
-			}
-		});
-	}
-
-    // Dropdown grid of Doctors for AR Add form
-	for (col=1; col<parseInt($("#col_count").val()); col++) {
-		$("[id*=Doctor]").combogrid({
-			colModel: [{'columnName':'DoctorUID','hidden':true},
-			           {'columnName':'Title','width':'35','label':window.jsi18n_bika('Full Name')}],
-			url: window.location.href.replace("/ar_add","") + "/getDoctors?_authenticator=" + $('input[name="_authenticator"]').val(),
-			select: function( event, ui ) {
-				$(this).val(ui.item.Title);
-				$(this).change();
-				return false;
-			}
-		});
-	}
 
      // AR Add/Edit ajax form submits
 	ar_edit_form = $('#analysisrequest_edit_form');
@@ -966,7 +936,6 @@ $(document).ready(function(){
 	window.recalc_prices = recalc_prices;
 	window.calculate_parts = calculate_parts;
 	window.toggleCat = toggleCat;
-
 
 });
 }(jQuery));

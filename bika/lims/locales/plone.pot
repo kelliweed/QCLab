@@ -14,11 +14,17 @@ msgstr ""
 msgid "Client"
 msgstr "Hospital"
 #
+msgid "Client ID"
+msgstr "Hospital ID"
+#
 msgid "Clients"
 msgstr "Hospitals"
 #
 msgid "Batch"
 msgstr "Case"
+#
+msgid "Batch ID"
+msgstr "Case ID"
 #
 msgid "Batches"
 msgstr "Cases"
@@ -383,6 +389,18 @@ msgstr ""
 msgid "Attachments"
 msgstr ""
 #
+# File: ../profiles/default/types/BatchLabel.xml, line: -1
+msgid "Batch Label"
+msgstr ""
+#
+# File: ../profiles/default/types/BatchLabels.xml, line: -1
+msgid "Batch Labels"
+msgstr ""
+#
+# File: ../profiles/default/controlpanel.xml, line: -1
+msgid "Batch labels"
+msgstr ""
+#
 # File: ../profiles/default/types/BikaSetup.xml, line: -1
 msgid "Bika Setup"
 msgstr ""
@@ -398,6 +416,24 @@ msgstr ""
 #
 # File: ../profiles/default/workflows/bika_cancellation_workflow/definition.xml, line: -1
 msgid "Cancelled"
+msgstr ""
+#
+# File: ../profiles/default/types/CaseOutcome.xml, line: -1
+msgid "Case Outcome"
+msgstr ""
+#
+# File: ../profiles/default/controlpanel.xml, line: -1
+# File: ../profiles/default/types/CaseOutcomes.xml, line: -1
+msgid "Case Outcomes"
+msgstr ""
+#
+# File: ../profiles/default/types/CaseStatus.xml, line: -1
+msgid "Case Status"
+msgstr ""
+#
+# File: ../profiles/default/controlpanel.xml, line: -1
+# File: ../profiles/default/types/CaseStatuses.xml, line: -1
+msgid "Case Statuses"
 msgstr ""
 #
 # File: ../profiles/default/types/Patient.xml, line: -1
@@ -448,6 +484,15 @@ msgstr ""
 #
 # File: ../profiles/default/types/Departments.xml, line: -1
 msgid "Departments"
+msgstr ""
+#
+# File: ../profiles/default/types/Disease.xml, line: -1
+msgid "Disease"
+msgstr ""
+#
+# File: ../profiles/default/controlpanel.xml, line: -1
+# File: ../profiles/default/types/Diseases.xml, line: -1
+msgid "Diseases"
 msgstr ""
 #
 # File: ../profiles/default/workflows/bika_order_workflow/definition.xml, line: -1
@@ -916,6 +961,10 @@ msgstr ""
 # File: ../profiles/default/workflows/bika_duplicateanalysis_workflow/definition.xml, line: -1
 # File: ../profiles/default/workflows/bika_referenceanalysis_workflow/definition.xml, line: -1
 msgid "To be verified"
+msgstr ""
+#
+# File: ../profiles/default/types/Patient.xml, line: -1
+msgid "Travel History"
 msgstr ""
 #
 # File: ../profiles/default/types/Treatment.xml, line: -1
