@@ -81,7 +81,7 @@ $(document).ready(function(){
 		$(".template-treatmenthistory #Treatment").combogrid({
 			colModel: [{'columnName':'Type', 'width':'50', 'label':window.jsi18n_bika('Type')},
 			           {'columnName':'Title', 'width':'50', 'label':window.jsi18n_bika('Title')}],
-			url: window.location.href.replace("/treatmenthistory","") + "/getTreatments?_authenticator=" + $('input[name="_authenticator"]').val(),
+			url: window.portal_url + "/getTreatments?_authenticator=" + $('input[name="_authenticator"]').val(),
 			select: function( event, ui ) {
 				event.preventDefault();
 				$(this).val(ui.item.Title);
@@ -93,7 +93,7 @@ $(document).ready(function(){
 		// Treatment History Drug search popup
 		$(".template-treatmenthistory #Drug").combogrid({
 			colModel: [{'columnName':'Title', 'width':'50', 'label':window.jsi18n_bika('Title')}],
-			url: window.location.href.replace("/treatmenthistory","") + "/getDrugs?_authenticator=" + $('input[name="_authenticator"]').val(),
+			url: window.portal_url + "/getDrugs?_authenticator=" + $('input[name="_authenticator"]').val(),
 			select: function( event, ui ) {
 				event.preventDefault();
 				$(this).val(ui.item.Title);
@@ -155,7 +155,7 @@ $(document).ready(function(){
 			colModel: [{'columnName':'Code', 'width':'10', 'label':window.jsi18n_bika('Code')},
 			           {'columnName':'Title', 'width':'25', 'label':window.jsi18n_bika('Title')},
 			           {'columnName':'Description', 'width':'65', 'label':window.jsi18n_bika('Description')}],
-			url: window.location.href.replace("/chronicconditions","") + "/getSymptoms?_authenticator=" + $('input[name="_authenticator"]').val(),
+			url: window.portal_url + "/getSymptoms?_authenticator=" + $('input[name="_authenticator"]').val(),
 			select: function( event, ui ) {
 				event.preventDefault();
 				$(this).val(ui.item.Title);

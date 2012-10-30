@@ -41,6 +41,7 @@ schema = BikaSchema.copy() + Schema((
         ),
     ),
     StringField('PatientID',
+        required = 1,
         widget=StringWidget(
             label=_('Patient'),
         ),
@@ -149,7 +150,7 @@ class Batch(BaseContent):
         return DisplayList(ret)
 
     def setClientID(self, value):
-        ret = self.Schema()['ClientID'].set(self, value)
+        self.Schema()['ClientID'].set(self, value)
         bsc = getToolByName(self, 'bika_setup_catalog')
         if type(value) in (list, tuple):
             value = value[0]
@@ -159,7 +160,7 @@ class Batch(BaseContent):
             return self.setClientUID(value.UID())
 
     def setDoctorID(self, value):
-        ret = self.Schema()['DoctorID'].set(self, value)
+        self.Schema()['DoctorID'].set(self, value)
         bc = getToolByName(self, 'bika_catalog')
         if type(value) in (list, tuple):
             value = value[0]
@@ -169,7 +170,7 @@ class Batch(BaseContent):
             return self.setDoctorUID(value.UID())
 
     def setPatientID(self, value):
-        ret = self.Schema()['PatientID'].set(self, value)
+        self.Schema()['PatientID'].set(self, value)
         bpc = getToolByName(self, 'bika_patient_catalog')
         if type(value) in (list, tuple):
             value = value[0]
@@ -179,5 +180,60 @@ class Batch(BaseContent):
                 value = bpc(portal_type='Patient', title=value)[0].getObject()
             return self.setPatientUID(value.UID())
 
+    def setChronicConditions(self, value):
+        bpc = getToolByName(self, 'bika_patient_catalog')
+        patient = bpc(UID=self.getPatientUID())
+        if patient:
+            patient = patient[0].getObject()
+            return patient.setChronicConditions(value)
+
+    def getChronicConditions(self):
+        bpc = getToolByName(self, 'bika_patient_catalog')
+        patient = bpc(UID=self.getPatientUID())
+        if patient:
+            patient = patient[0].getObject()
+            return patient.getChronicConditions()
+
+    def setTreatmentHistory(self, value):
+        bpc = getToolByName(self, 'bika_patient_catalog')
+        patient = bpc(UID=self.getPatientUID())
+        if patient:
+            patient = patient[0].getObject()
+            return patient.setTreatmentHistory(value)
+
+    def getTreatmentHistory(self):
+        bpc = getToolByName(self, 'bika_patient_catalog')
+        patient = bpc(UID=self.getPatientUID())
+        if patient:
+            patient = patient[0].getObject()
+            return patient.getTreatmentHistory()
+
+    def setImmunizationHistory(self, value):
+        bpc = getToolByName(self, 'bika_patient_catalog')
+        patient = bpc(UID=self.getPatientUID())
+        if patient:
+            patient = patient[0].getObject()
+            return patient.setImmunizationHistory(value)
+
+    def getImmunizationHistory(self):
+        bpc = getToolByName(self, 'bika_patient_catalog')
+        patient = bpc(UID=self.getPatientUID())
+        if patient:
+            patient = patient[0].getObject()
+            return patient.getImmunizationHistory()
+
+    def setTravelHistory(self, value):
+        bpc = getToolByName(self, 'bika_patient_catalog')
+        patient = bpc(UID=self.getPatientUID())
+        if patient:
+            patient = patient[0].getObject()
+            return patient.setTravelHistory(value)
+
+    def getTravelHistory(self):
+        bpc = getToolByName(self, 'bika_patient_catalog')
+        patient = bpc(UID=self.getPatientUID())
+        if patient:
+            patient = patient[0].getObject()
+            return patient.getTravelHistory()
 
 registerType(Batch, PROJECTNAME)

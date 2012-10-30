@@ -27,6 +27,13 @@
       permission="zope2.View"
       layer="bika.lims.interfaces.IBikaLIMS"
     />
+    <browser:page
+      for="bika.lims.interfaces.IBatch"
+      name="treatmenthistory"
+      class="bika.lims.browser.patient.TreatmentHistoryView"
+      permission="zope2.View"
+      layer="bika.lims.interfaces.IBikaLIMS"
+    />
 
     <browser:page
       for="bika.lims.interfaces.IPatient"
@@ -43,6 +50,13 @@
       permission="zope2.View"
       layer="bika.lims.interfaces.IBikaLIMS"
     />
+    <browser:page
+      for="bika.lims.interfaces.IBatch"
+      name="immunizationhistory"
+      class="bika.lims.browser.patient.ImmunizationHistoryView"
+      permission="zope2.View"
+      layer="bika.lims.interfaces.IBikaLIMS"
+    />
 
     <browser:page
       for="bika.lims.interfaces.IPatient"
@@ -51,9 +65,23 @@
       permission="zope2.View"
       layer="bika.lims.interfaces.IBikaLIMS"
     />
+    <browser:page
+      for="bika.lims.interfaces.IBatch"
+      name="chronicconditions"
+      class="bika.lims.browser.patient.ChronicConditionsView"
+      permission="zope2.View"
+      layer="bika.lims.interfaces.IBikaLIMS"
+    />
 
     <browser:page
       for="bika.lims.interfaces.IPatient"
+      name="travelhistory"
+      class="bika.lims.browser.patient.TravelHistoryView"
+      permission="zope2.View"
+      layer="bika.lims.interfaces.IBikaLIMS"
+    />
+    <browser:page
+      for="bika.lims.interfaces.IBatch"
       name="travelhistory"
       class="bika.lims.browser.patient.TravelHistoryView"
       permission="zope2.View"
@@ -69,7 +97,7 @@
     />
 
     <browser:page
-      for="bika.lims.interfaces.IPatient"
+      for="*"
       name="getDrugs"
       class="bika.lims.browser.patient.ajaxGetDrugs"
       permission="zope.Public"
@@ -77,7 +105,7 @@
     />
 
     <browser:page
-      for="bika.lims.interfaces.IPatient"
+      for="*"
       name="getTreatments"
       class="bika.lims.browser.patient.ajaxGetTreatments"
       permission="zope.Public"
@@ -93,7 +121,7 @@
     />
 
     <browser:page
-      for="bika.lims.interfaces.IPatient"
+      for="*"
       name="getImmunizations"
       class="bika.lims.browser.patient.ajaxGetImmunizations"
       permission="zope.Public"
@@ -101,7 +129,7 @@
     />
 
     <browser:page
-      for="bika.lims.interfaces.IPatient"
+      for="*"
       name="getVaccinationCenters"
       class="bika.lims.browser.patient.ajaxGetVaccinationCenters"
       permission="zope.Public"
