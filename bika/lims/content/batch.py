@@ -1,28 +1,21 @@
 from AccessControl import ClassSecurityInfo
-from DateTime import DateTime
-from Products.ATContentTypes.lib.historyaware import HistoryAwareMixin
-from Products.ATContentTypes.utils import DT2dt, dt2DT
 from Products.Archetypes.public import *
-from Products.Archetypes.references import HoldingReference
 from Products.ATExtensions.ateapi import DateTimeField
 from Products.ATExtensions.ateapi import RecordsField as RecordsField
 from Products.CMFCore.utils import getToolByName
 from bika.lims import bikaMessageFactory as _
-from bika.lims.content.client import Client
-from bika.lims.browser.fields import DurationField
 from bika.lims.browser.widgets import DateTimeWidget
-from bika.lims.browser.widgets import RecordsWidget
+from bika.lims.browser.widgets import CaseSymptomsWidget
 from bika.lims.config import PROJECTNAME
 from bika.lims.content.bikaschema import BikaSchema
 from bika.lims.interfaces import IBatch
-from datetime import timedelta
 from zope.interface import implements
 
 schema = BikaSchema.copy() + Schema((
     StringField('BatchID',
         searchable=True,
         required=1,
-        validators = ('uniquefieldvalidator',),
+        validators=('uniquefieldvalidator',),
         widget=StringWidget(
             label=_("Batch ID"),
         )
@@ -58,10 +51,10 @@ schema = BikaSchema.copy() + Schema((
         ),
     ),
     DateTimeField('DateOfOnset',
-        widget=DateTimeWidget(
-            label=_('Date of onset of illness'),
-        ),
-    ),
+          widget=DateTimeWidget(
+              label=_('Date of onset of illness'),
+          ),
+      ),
     TextField('ProvisionalDiagnosis',
         default_content_type='text/x-web-intelligent',
         allowable_content_types=('text/x-web-intelligent',),
@@ -71,25 +64,24 @@ schema = BikaSchema.copy() + Schema((
         ),
     ),
     StringField('CaseStatus',
-        vocabulary = 'getCaseStatuses',
-        widget = SelectionWidget(
-            format = 'select',
-            label = _("Case status")
+        vocabulary='getCaseStatuses',
+        widget=SelectionWidget(
+        format='select',
+            label=_("Case status")
         ),
     ),
     StringField('CaseOutcome',
-        vocabulary = 'getCaseOutcomes',
-        widget = SelectionWidget(
-            format = 'select',
-            label = _("Case outcome")
+        vocabulary='getCaseOutcomes',
+        widget=SelectionWidget(
+            format='select',
+            label=_("Case outcome")
         ),
     ),
     RecordsField('Symptoms',
         type='symptoms',
         subfields=('Code', 'Title', 'Description', 'Onset', 'Remarks'),
-        required_subfields=('title'),
-        subfield_sizes={'Code':7, 'Title':15, 'Description':25, 'Onset':10, 'Remarks':25},
-        widget=RecordsWidget(
+        subfield_sizes={'Code': 7, 'Title': 15, 'Description': 25, 'Onset': 10, 'Remarks': 25},
+        widget=CaseSymptomsWidget(
             label='Signs and Symptoms',
         ),
     ),
@@ -110,6 +102,7 @@ schema = BikaSchema.copy() + Schema((
 schema['title'].required = False
 schema['title'].widget.visible = False
 
+
 class Batch(BaseContent):
     implements(IBatch)
     security = ClassSecurityInfo()
@@ -117,6 +110,7 @@ class Batch(BaseContent):
     schema = schema
 
     _at_rename_after_creation = True
+
     def _renameAfterCreation(self, check_auto_id=False):
         from bika.lims.idserver import renameAfterCreation
         renameAfterCreation(self)
@@ -131,24 +125,26 @@ class Batch(BaseContent):
         return str(res).encode('utf-8')
 
     security.declarePublic('getCaseStatuses')
+
     def getCaseStatuses(self):
         """ return all Case Statuses from site setup """
         bsc = getToolByName(self, 'bika_setup_catalog')
         ret = []
-        for b in bsc(portal_type = 'CaseStatus',
-                      inactive_state = 'active',
-                      sort_on = 'sortable_title'):
+        for b in bsc(portal_type='CaseStatus',
+                     inactive_state='active',
+                     sort_on='sortable_title'):
             ret.append((b.Title, b.Title))
         return DisplayList(ret)
 
     security.declarePublic('getCaseOutcomes')
+
     def getCaseOutcomes(self):
         """ return all Case Outcomes from site setup """
         bsc = getToolByName(self, 'bika_setup_catalog')
         ret = []
-        for b in bsc(portal_type = 'CaseOutcome',
-                      inactive_state = 'active',
-                      sort_on = 'sortable_title'):
+        for b in bsc(portal_type='CaseOutcome',
+                     inactive_state='active',
+                     sort_on='sortable_title'):
             ret.append((b.Title, b.Title))
         return DisplayList(ret)
 
@@ -161,7 +157,6 @@ class Batch(BaseContent):
             if type(value) == str:
                 value = bsc(portal_type='Client', getClientID=value)[0].getObject()
             return self.setClientUID(value.UID())
-
 
     def setDoctorID(self, value):
         ret = self.Schema()['DoctorID'].set(self, value)
@@ -181,7 +176,6 @@ class Batch(BaseContent):
         if value:
             if type(value) == str:
                 print value
-                import pdb;pdb.set_trace()
                 value = bpc(portal_type='Patient', title=value)[0].getObject()
             return self.setPatientUID(value.UID())
 

@@ -58,22 +58,22 @@ class TreatmentHistoryView(BrowserView):
     template = ViewPageTemplateFile("templates/treatmenthistory.pt")
 
     def __call__(self):
-        
+
         if self.request.form.has_key('clear'):
             # Clear treatment history
             self.context.setTreatmentHistory([])
             self.context.plone_utils.addPortalMessage(PMF("Treatment history cleared"))
-            
+
         elif self.request.form.has_key('delete'):
             # Delete selected treatments
-            tre = self.context.getTreatmentHistory() 
+            tre = self.context.getTreatmentHistory()
             new = []
-            for i in range(len(tre)):        
+            for i in range(len(tre)):
                 if (not self.request.form.has_key('SelectItem-%s'%i)):
-                    new.append(tre[i])                    
+                    new.append(tre[i])
             self.context.setTreatmentHistory(new)
             self.context.plone_utils.addPortalMessage(PMF("Selected treatments deleted"))
-            
+
         elif 'submitted' in self.request:
             bsc = self.bika_setup_catalog
             new = len(self.context.getTreatmentHistory())>0 and self.context.getTreatmentHistory() or []
@@ -104,7 +104,7 @@ class TreatmentHistoryView(BrowserView):
             self.context.setTreatmentHistory(new)
             self.context.plone_utils.addPortalMessage(PMF("Changes saved"))
         return self.template()
-    
+
     def hasTreatmentHistory(self):
         return len(self.context.getTreatmentHistory())>0
 
@@ -115,22 +115,22 @@ class AllergiesView(BrowserView):
     template = ViewPageTemplateFile("templates/allergies.pt")
 
     def __call__(self):
-        
+
         if self.request.form.has_key('clear'):
             # Clear allergies
             self.context.setAllergies([])
             self.context.plone_utils.addPortalMessage(PMF("Allergies cleared"))
-        
+
         elif self.request.form.has_key('delete'):
             # Delete selected allergies
-            als = self.context.getAllergies() 
+            als = self.context.getAllergies()
             new = []
-            for i in range(len(als)):        
+            for i in range(len(als)):
                 if (not self.request.form.has_key('SelectItem-%s'%i)):
-                    new.append(als[i])                    
+                    new.append(als[i])
             self.context.setAllergies(new)
             self.context.plone_utils.addPortalMessage(PMF("Selected allergies deleted"))
-        
+
         elif 'submitted' in self.request:
             bsc = self.bika_setup_catalog
             new = len(self.context.getAllergies())>0 and self.context.getAllergies() or []
@@ -160,7 +160,7 @@ class AllergiesView(BrowserView):
             self.context.setAllergies(new)
             self.context.plone_utils.addPortalMessage(PMF("Changes saved"))
         return self.template()
-    
+
     def hasAllergies(self):
         return len(self.context.getAllergies())>0
 
@@ -171,22 +171,22 @@ class ImmunizationHistoryView(BrowserView):
     template = ViewPageTemplateFile("templates/immunizationhistory.pt")
 
     def __call__(self):
-        
+
         if self.request.form.has_key('clear'):
             # Clear immunization history
             self.context.setImmunizationHistory([])
             self.context.plone_utils.addPortalMessage(PMF("Immunization history cleared"))
-            
+
         elif self.request.form.has_key('delete'):
             # Delete selected allergies
-            imh = self.context.getImmunizationHistory() 
+            imh = self.context.getImmunizationHistory()
             new = []
-            for i in range(len(imh)):        
+            for i in range(len(imh)):
                 if (not self.request.form.has_key('SelectItem-%s'%i)):
-                    new.append(imh[i])                    
+                    new.append(imh[i])
             self.context.setImmunizationHistory(new)
             self.context.plone_utils.addPortalMessage(PMF("Selected immunizations deleted"))
-        
+
         elif 'submitted' in self.request:
             bsc = self.bika_setup_catalog
             new = len(self.context.getImmunizationHistory())>0 and self.context.getImmunizationHistory() or []
@@ -195,7 +195,7 @@ class ImmunizationHistoryView(BrowserView):
                 I = self.request.form['Immunization'][i]
                 V = self.request.form['VaccinationCenter'][i]
                 D = self.request.form['Date'][i]
-                
+
                 # Create new VaccinationCenter entry if none exists
                 Vlist = bsc(portal_type='VaccinationCenter', Title=V)
                 if not Vlist:
@@ -215,7 +215,7 @@ class ImmunizationHistoryView(BrowserView):
     def getEPINumber(self):
         ih = self.context.getImmunizationHistory()
         return len(ih) > 0 and ih[0]['EPINumber'] or ''
-    
+
     def hasImmunizationHistory(self):
         return len(self.context.getImmunizationHistory())>0
 
@@ -235,15 +235,17 @@ class ChronicConditionsView(BrowserView):
                 D = self.request.form['Description'][i]
                 O = self.request.form['Onset'][i]
 
-                # Create new Symptom entry if none exists
+                # Create new Symptom entry if none exists (check ICD9 and setup)
                 Slist = bsc(portal_type='Symptom', title=S)
-                if not Slist:
+                ISlist = [x for x in icd9_codes['R']
+                          if x['code'] == C
+                          and x['short'] == S
+                          and x['long'] == D]
+                if not Slist and not ISlist:
                     folder = self.context.bika_setup.bika_symptoms
                     _id = folder.invokeFactory('Symptom', id='tmp')
                     obj = folder[_id]
-                    obj.edit(title = S,
-                             description = D,
-                             Code = C)
+                    obj.edit(title = S, description = D, Code = C)
                     obj.unmarkCreationFlag()
                     renameAfterCreation(obj)
 
@@ -252,7 +254,7 @@ class ChronicConditionsView(BrowserView):
             self.context.setChronicConditions(self.context.getChronicConditions() + new)
             self.context.plone_utils.addPortalMessage(PMF("Changes saved"))
         return self.template()
-    
+
 class TravelHistoryView(BrowserView):
     """ bika listing to display Travel history
     """
@@ -260,22 +262,22 @@ class TravelHistoryView(BrowserView):
     template = ViewPageTemplateFile("templates/travelhistory.pt")
 
     def __call__(self):
-        
+
         if self.request.form.has_key('clear'):
             # Clear travel history
             self.context.setTravelHistory([])
             self.context.plone_utils.addPortalMessage(PMF("Travel history cleared"))
-            
+
         elif self.request.form.has_key('delete'):
             # Delete selected allergies
-            imh = self.context.getTravelHistory() 
+            imh = self.context.getTravelHistory()
             new = []
-            for i in range(len(imh)):        
+            for i in range(len(imh)):
                 if (not self.request.form.has_key('SelectItem-%s'%i)):
-                    new.append(imh[i])                    
+                    new.append(imh[i])
             self.context.setTravelHistory(new)
             self.context.plone_utils.addPortalMessage(PMF("Selected travels deleted"))
-            
+
         elif 'submitted' in self.request:
             new = len(self.context.getTravelHistory())>0 and self.context.getTravelHistory() or []
             for i in range(len(self.request.form['TripStartDate'])):
@@ -289,7 +291,7 @@ class TravelHistoryView(BrowserView):
             self.context.setTravelHistory(new)
             self.context.plone_utils.addPortalMessage(PMF("Changes saved"))
         return self.template()
-    
+
     def hasTravelHistory(self):
         return len(self.context.getTravelHistory())>0
 
