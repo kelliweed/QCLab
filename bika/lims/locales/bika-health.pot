@@ -28,3 +28,8 @@ msgstr "Case ID"
 msgid "Batches"
 msgstr "Cases"
 
+msgid "Batch labels"
+msgstr "Case Syndrome Classifications"
+
+msgid "Batch label"
+msgstr "Syndrome Classification"

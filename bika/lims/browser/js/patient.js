@@ -5,7 +5,7 @@ $(document).ready(function(){
 	PMF = window.jsi18n_plone;
 
     // Add Patient popup
-    if(window.location.href.search(window.bika_utils.data.prefixes['Patient']) == -1 &&
+    if(window.location.href.search(window.bika_utils.data.prefixes['Patient'] + "-") == -1 &&
        window.location.href.search('portal_factory/Patient') == -1){
             $("input[id=PatientID]").after('<a style="border-bottom:none !important;margin-left:.5;"' +
                         ' class="add_patient"' +

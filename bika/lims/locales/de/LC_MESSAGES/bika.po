@@ -499,6 +499,14 @@ msgstr ""
 msgid "Batch end date"
 msgstr "Batch-Enddatum"
 
+# 
+msgid "Batch label"
+msgstr "Syndrome Classification"
+
+# 
+msgid "Batch labels"
+msgstr "Case Syndrome Classifications"
+
 msgid "Batch start date"
 msgstr "Batch-Startdatum"
 
