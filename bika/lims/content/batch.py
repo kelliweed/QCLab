@@ -73,15 +73,15 @@ schema = BikaSchema.copy() + Schema((
     ),
     StringField('CaseStatus',
         vocabulary='getCaseStatuses',
-        widget=SelectionWidget(
-        format='select',
+        widget=MultiSelectionWidget(
+            format='checkbox',
             label=_("Case status")
         ),
     ),
     StringField('CaseOutcome',
         vocabulary='getCaseOutcomes',
-        widget=SelectionWidget(
-            format='select',
+        widget=MultiSelectionWidget(
+            format='checkbox',
             label=_("Case outcome")
         ),
     ),
@@ -109,6 +109,8 @@ schema = BikaSchema.copy() + Schema((
 
 schema['title'].required = False
 schema['title'].widget.visible = False
+schema.moveField('BatchLabels', after='ProvisionalDiagnosis')
+schema.moveField('PatientID', after='BatchID')
 
 class Batch(BaseContent):
     implements(IBatch)
@@ -140,8 +142,6 @@ class Batch(BaseContent):
                       sort_on = 'sortable_title'):
             ret.append((p.UID, p.Title))
         return DisplayList(ret)
-        
-    security.declarePublic('getCaseStatuses')
 
     def getCaseStatuses(self):
         """ return all Case Statuses from site setup """
@@ -152,8 +152,6 @@ class Batch(BaseContent):
                      sort_on='sortable_title'):
             ret.append((b.Title, b.Title))
         return DisplayList(ret)
-
-    security.declarePublic('getCaseOutcomes')
 
     def getCaseOutcomes(self):
         """ return all Case Outcomes from site setup """

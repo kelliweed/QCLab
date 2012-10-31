@@ -1601,7 +1601,8 @@ class ajaxAnalysisRequestSubmit():
             if values.has_key('PatientID'):
                 patient = bpc(getPatientID=values['PatientID'])[0].getObject()
 
-            if values.has_key('Doctor'):
+            values['Doctor'] = None
+            if values.has_key('Doctor') and values['Doctor']:
                 values['Doctor'] = pc(portal_type = 'Doctor',
                                       title=values['Doctor'])[0].getObject()
 
