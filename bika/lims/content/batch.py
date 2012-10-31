@@ -20,6 +20,13 @@ schema = BikaSchema.copy() + Schema((
             label=_("Batch ID"),
         )
     ),
+    LinesField('BatchLabels',
+        vocabulary = "BatchLabelVocabulary",
+        widget=MultiSelectionWidget(
+            label=_("Batch labels"),
+            format="checkbox",
+        )
+    ),
     StringField('ClientID',
         widget=StringWidget(
             label=_("Client"),
@@ -95,14 +102,13 @@ schema = BikaSchema.copy() + Schema((
             macro="bika_widgets/remarks",
             label=_('Remarks'),
             append_only=True,
-        ),
-    ),
-),
+        )
+    )
+)
 )
 
 schema['title'].required = False
 schema['title'].widget.visible = False
-
 
 class Batch(BaseContent):
     implements(IBatch)
@@ -125,6 +131,16 @@ class Batch(BaseContent):
         res = self.getBatchID()
         return str(res).encode('utf-8')
 
+    def BatchLabelVocabulary(self):
+        """ return all batch labels """
+        bsc = getToolByName(self, 'bika_setup_catalog')
+        ret = []
+        for p in bsc(portal_type = 'BatchLabel',
+                      inactive_state = 'active',
+                      sort_on = 'sortable_title'):
+            ret.append((p.UID, p.Title))
+        return DisplayList(ret)
+        
     security.declarePublic('getCaseStatuses')
 
     def getCaseStatuses(self):
