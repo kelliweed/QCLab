@@ -186,9 +186,12 @@ msgid "Batch Labels"
 msgstr ""
 
 # 
-# File: ../profiles/default/controlpanel.xml, line: -1
+msgid "Batch label"
+msgstr "Syndrome Classification"
+
+# 
 msgid "Batch labels"
-msgstr ""
+msgstr "Case Syndrome Classifications"
 
 # 
 msgid "Batches"
@@ -238,6 +241,7 @@ msgid "Case Statuses"
 msgstr ""
 
 # 
+# File: ../profiles/default/types/Batch.xml, line: -1
 # File: ../profiles/default/types/Patient.xml, line: -1
 msgid "Chronic Conditions"
 msgstr ""
@@ -401,6 +405,7 @@ msgid "Immunization"
 msgstr ""
 
 # 
+# File: ../profiles/default/types/Batch.xml, line: -1
 # File: ../profiles/default/types/Patient.xml, line: -1
 msgid "Immunization History"
 msgstr ""
@@ -894,6 +899,7 @@ msgid "To be verified"
 msgstr ""
 
 # 
+# File: ../profiles/default/types/Batch.xml, line: -1
 # File: ../profiles/default/types/Patient.xml, line: -1
 msgid "Travel History"
 msgstr ""
@@ -904,6 +910,7 @@ msgid "Treatment"
 msgstr ""
 
 # 
+# File: ../profiles/default/types/Batch.xml, line: -1
 # File: ../profiles/default/types/Patient.xml, line: -1
 msgid "Treatment History"
 msgstr ""

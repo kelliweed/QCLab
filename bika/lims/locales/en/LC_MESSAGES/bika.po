@@ -816,6 +816,14 @@ msgid "Batch end date"
 msgstr ""
 
 # 
+msgid "Batch label"
+msgstr "Syndrome Classification"
+
+# 
+msgid "Batch labels"
+msgstr "Case Syndrome Classifications"
+
+# 
 # File: ../content/invoicebatch.py, line: 18
 msgid "Batch start date"
 msgstr ""
@@ -1005,12 +1013,12 @@ msgid "Case Statuses"
 msgstr ""
 
 # 
-# File: ../content/batch.py, line: 84
+# File: ../content/batch.py, line: 85
 msgid "Case outcome"
 msgstr ""
 
 # 
-# File: ../content/batch.py, line: 77
+# File: ../content/batch.py, line: 78
 msgid "Case status"
 msgstr ""
 
@@ -1221,6 +1229,7 @@ msgstr ""
 
 # 
 # File: ../browser/templates/patient_chronicconditions.pt, line: 20
+# File: ../browser/widgets/case_symptoms.pt, line: 16
 msgid "Code"
 msgstr ""
 
@@ -1464,7 +1473,7 @@ msgid "Date Submitted"
 msgstr ""
 
 # 
-# File: ../content/batch.py, line: 62
+# File: ../content/batch.py, line: 56
 msgid "Date of onset of illness"
 msgstr ""
 
@@ -2797,6 +2806,7 @@ msgstr ""
 
 # 
 # File: ../browser/templates/patient_chronicconditions.pt, line: 33
+# File: ../browser/widgets/case_symptoms.pt, line: 29
 msgid "Onset"
 msgstr ""
 
@@ -3146,7 +3156,7 @@ msgid "Profiles"
 msgstr ""
 
 # 
-# File: ../content/batch.py, line: 70
+# File: ../content/batch.py, line: 64
 msgid "Provisional Diagnosis and additional notes"
 msgstr ""
 
@@ -4062,6 +4072,7 @@ msgstr ""
 
 # 
 # File: ../browser/templates/patient_chronicconditions.pt, line: 24
+# File: ../browser/widgets/case_symptoms.pt, line: 20
 # File: ../controlpanel/bika_symptoms.py, line: 37
 msgid "Symptom"
 msgstr ""

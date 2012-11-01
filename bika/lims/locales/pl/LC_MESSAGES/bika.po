@@ -495,6 +495,14 @@ msgstr ""
 msgid "Batch end date"
 msgstr ""
 
+# 
+msgid "Batch label"
+msgstr "Syndrome Classification"
+
+# 
+msgid "Batch labels"
+msgstr "Case Syndrome Classifications"
+
 msgid "Batch start date"
 msgstr "Data rozpoczęcia partii"
 

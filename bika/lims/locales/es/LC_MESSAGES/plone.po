@@ -123,6 +123,10 @@ msgid "Batch Labels"
 msgstr ""
 
 # 
+msgid "Batch label"
+msgstr "Syndrome Classification"
+
+# 
 # File: ../profiles/default/controlpanel.xml, line: -1
 msgid "Batch labels"
 msgstr ""

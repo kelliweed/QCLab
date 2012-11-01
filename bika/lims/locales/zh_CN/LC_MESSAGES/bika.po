@@ -498,6 +498,14 @@ msgstr ""
 msgid "Batch end date"
 msgstr "批量处理完成时间"
 
+# 
+msgid "Batch label"
+msgstr "Syndrome Classification"
+
+# 
+msgid "Batch labels"
+msgstr "Case Syndrome Classifications"
+
 msgid "Batch start date"
 msgstr "批量处理开始时间"
 

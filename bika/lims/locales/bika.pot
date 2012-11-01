@@ -29,6 +29,12 @@ msgstr "Case ID"
 msgid "Batches"
 msgstr "Cases"
 #
+msgid "Batch labels"
+msgstr "Case Syndrome Classifications"
+#
+msgid "Batch label"
+msgstr "Syndrome Classification"
+#
 #. The variables used here are the same as used in the strftime formating.
 #. Supported are ${A}, ${a}, ${B}, ${b}, ${H}, ${I}, ${m}, ${d}, ${M}, ${p},
 #. ${S}, ${Y}, ${y}, ${Z}, each used as variable in the msgstr.
@@ -912,11 +918,11 @@ msgstr ""
 msgid "Case Statuses"
 msgstr ""
 #
-# File: ../content/batch.py, line: 84
+# File: ../content/batch.py, line: 85
 msgid "Case outcome"
 msgstr ""
 #
-# File: ../content/batch.py, line: 77
+# File: ../content/batch.py, line: 78
 msgid "Case status"
 msgstr ""
 #
@@ -1098,6 +1104,7 @@ msgid "Closed"
 msgstr ""
 #
 # File: ../browser/templates/patient_chronicconditions.pt, line: 20
+# File: ../browser/widgets/case_symptoms.pt, line: 16
 msgid "Code"
 msgstr ""
 #
@@ -1301,7 +1308,7 @@ msgstr ""
 msgid "Date Submitted"
 msgstr ""
 #
-# File: ../content/batch.py, line: 62
+# File: ../content/batch.py, line: 56
 msgid "Date of onset of illness"
 msgstr ""
 #
@@ -2437,6 +2444,7 @@ msgid ""
 msgstr ""
 #
 # File: ../browser/templates/patient_chronicconditions.pt, line: 33
+# File: ../browser/widgets/case_symptoms.pt, line: 29
 msgid "Onset"
 msgstr ""
 #
@@ -2726,7 +2734,7 @@ msgstr ""
 msgid "Profiles"
 msgstr ""
 #
-# File: ../content/batch.py, line: 70
+# File: ../content/batch.py, line: 64
 msgid "Provisional Diagnosis and additional notes"
 msgstr ""
 #
@@ -3508,6 +3516,7 @@ msgid "Surname"
 msgstr ""
 #
 # File: ../browser/templates/patient_chronicconditions.pt, line: 24
+# File: ../browser/widgets/case_symptoms.pt, line: 20
 # File: ../controlpanel/bika_symptoms.py, line: 37
 msgid "Symptom"
 msgstr ""
