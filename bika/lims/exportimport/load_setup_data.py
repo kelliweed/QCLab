@@ -129,7 +129,8 @@ class LoadSetupData(BrowserView):
         self.load_containers(sheets["Containers"])
         self.load_instruments(sheets['Instruments'])
         self.load_sample_matrices(sheets['Sample Matrices'])
-        self.load_BatchLabels(sheets['Batch Labels'])
+        if 'Batch Labels' in sheets:
+            self.load_BatchLabels(sheets['Batch Labels'])
 
         if 'Case Statuses' in sheets:
             self.load_CaseStatuses(sheets['Case Statuses'])
