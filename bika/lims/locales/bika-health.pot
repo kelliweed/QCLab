@@ -32,4 +32,4 @@ msgid "Batch labels"
 msgstr "Case Syndrome Classifications"
 
 msgid "Batch label"
-msgstr "Syndrome Classification"
+msgstr "Case Syndrome Classification"
