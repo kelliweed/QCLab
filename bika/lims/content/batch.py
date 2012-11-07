@@ -206,12 +206,12 @@ class Batch(BaseContent):
 
     def setDoctorID(self, value):
         self.Schema()['DoctorID'].set(self, value)
-        bc = getToolByName(self, 'bika_catalog')
+        pc = getToolByName(self, 'portal_catalog')
         if type(value) in (list, tuple):
             value = value[0]
         if value:
             if type(value) == str:
-                value = bc(portal_type='Doctor', getDoctorID=value)[0].getObject()
+                value = pc(portal_type='Doctor', getDoctorID=value)[0].getObject()
             return self.setDoctorUID(value.UID())
 
     def setPatientID(self, value):
