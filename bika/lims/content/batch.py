@@ -196,7 +196,7 @@ class Batch(BaseContent):
 
     def setClientID(self, value):
         self.Schema()['ClientID'].set(self, value)
-        pc = getToolByName(self, 'bika_setup_catalog')
+        pc = getToolByName(self, 'portal_catalog')
         if type(value) in (list, tuple):
             value = value[0]
         if value:
