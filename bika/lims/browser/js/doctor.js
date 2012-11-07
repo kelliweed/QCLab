@@ -15,7 +15,7 @@ $(document).ready(function(){
         $("input[id*=DoctorID]").combogrid({
             colModel: [{'columnName':'DoctorUID','hidden':true},
                        {'columnName':'DoctorID','width':'25','label':window.jsi18n_bika('Doctor ID')},
-                       {'columnName':'Title','width':'35','label':window.jsi18n_bika('Title')}],
+                       {'columnName':'Title','width':'75','label':window.jsi18n_bika('Title')}],
             url: window.portal_url + "/getDoctors?_authenticator=" + $('input[name="_authenticator"]').val(),
             select: function( event, ui ) {
                 $(this).val(ui.item.DoctorID);
