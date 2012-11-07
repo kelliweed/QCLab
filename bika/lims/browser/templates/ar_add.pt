@@ -236,7 +236,7 @@
     </tr>
 
     <!-- Doctor -->
-    <tr tal:define="field_name string:Doctor">
+    <tr tal:define="field_name string:DoctorID">
         <th colspan="2" style="white-space:nowrap">
             <span i18n:translate="">Doctor</span>
             <a style="border-bottom:none !important;margin-left:1em;"
@@ -247,7 +247,7 @@
             </a>
         </th>
         <td>
-            <img class="copyButton DoctorCopyButton"
+            <img class="copyButton DoctorIDCopyButton"
                 tal:attributes="name field_name;src string:${portal/absolute_url}/++resource++bika.lims.images/copy.png"/>
         </td>
         <tal:block repeat="column python:range(view.col_count)">
