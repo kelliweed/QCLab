@@ -75,7 +75,7 @@ class UpgradeFrom1000Tests(FunctionalUpgradeTestCase):
 
 def test_suite():
     return unittest.TestSuite((
-        unittest.makeSuite(UpgradeFrom20Tests),
+        unittest.makeSuite(UpgradeFrom1000Tests),
         ))
 
 if __name__ == '__main__':
