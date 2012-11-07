@@ -16,6 +16,7 @@ from zope.interface import implements
 
 schema = Contact.schema.copy() + Schema((
     StringField('DoctorID',
+        required=1,
         widget=StringWidget(
             label=_('Doctor ID'),
         ),
