@@ -295,6 +295,12 @@
    <bound-workflow workflow_id="bika_one_state_workflow"/>
    <bound-workflow workflow_id="bika_inactive_workflow"/>
   </type>
+  
+  <type type_id="SampleOrigins"/>
+  <type type_id="SampleOrigin">
+   <bound-workflow workflow_id="bika_one_state_workflow"/>
+   <bound-workflow workflow_id="bika_inactive_workflow"/>
+  </type>
 
   <type type_id="SamplePartition">
    <bound-workflow workflow_id="bika_sample_workflow"/>
@@ -305,7 +311,7 @@
   <type type_id="SamplePoint">
    <bound-workflow workflow_id="bika_one_state_workflow"/>
    <bound-workflow workflow_id="bika_inactive_workflow"/>
-  </type>
+  </type>  
 
   <type type_id="SampleTypes"/>
   <type type_id="SampleType">

@@ -145,6 +145,7 @@ class BikaSetupCatalog(CatalogTool):
                                                  'SampleMatrix',
                                                  'SampleType',
                                                  'SamplePoint',
+                                                 'SampleOrigin',
                                                  'SamplingDeviation',
                                                  'Instrument',
                                                  'Method',

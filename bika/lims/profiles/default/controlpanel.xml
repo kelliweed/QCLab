@@ -92,6 +92,15 @@
 	i18n:attributes="title">
   <permission>BIKA: Manage Bika</permission>
  </configlet>
+ 
+  <configlet title="Sample Origins" action_id="bika_sampleorigins"
+    appId="bika.lims" category="bika" condition_expr=""
+    icon_expr="string:++resource++bika.lims.images/sampleorigin.png"
+    url_expr="string:$portal_url/bika_setup/bika_sampleorigins"
+	visible="True"
+	i18n:attributes="title">
+  <permission>BIKA: Manage Bika</permission>
+ </configlet>
 
  <configlet title="Sampling Deviations" action_id="bika_samplingdeviations"
     appId="bika.lims" category="bika" condition_expr=""

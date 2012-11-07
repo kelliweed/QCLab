@@ -136,7 +136,9 @@ class LoadSetupData(BrowserView):
             self.load_CaseStatuses(sheets['Case Statuses'])
         if 'Case Outcomes' in sheets:
             self.load_CaseOutcomes(sheets['Case Outcomes'])
-
+        if 'Sample Origins' in sheets:
+            self.load_SampleOrigins(sheets['Sample Origins'])
+            
         self.load_sample_types(sheets['Sample Types'])
         self.load_sample_points(sheets['Sample Points'])
         self.link_samplepoint_sampletype(sheets['Sample Point Sample Types'])
@@ -357,34 +359,16 @@ class LoadSetupData(BrowserView):
             self.containertypes[unicode(row['title'])] = obj
 
 
-    def load_CaseStatuses(self, sheet):
+    def load_SampleOrigins(self, sheet):
         nr_rows = sheet.get_highest_row()
         nr_cols = sheet.get_highest_column()
         rows = [[sheet.cell(row=row_nr, column=col_nr).value for col_nr in range(nr_cols)] for row_nr in range(nr_rows)]
         fields = rows[0]
-        folder = self.context.bika_setup.bika_casestatuses
+        folder = self.context.bika_setup.bika_sampleorigins
         self.containertypes = {}
         for row in rows[3:]:
             row = dict(zip(fields, row))
-            _id = folder.invokeFactory('CaseStatus', id = 'tmp')
-            obj = folder[_id]
-            obj.edit(title = unicode(row['title']),
-                     description = unicode(row['description']))
-            obj.unmarkCreationFlag()
-            renameAfterCreation(obj)
-            self.containertypes[unicode(row['title'])] = obj
-
-
-    def load_CaseOutcomes(self, sheet):
-        nr_rows = sheet.get_highest_row()
-        nr_cols = sheet.get_highest_column()
-        rows = [[sheet.cell(row=row_nr, column=col_nr).value for col_nr in range(nr_cols)] for row_nr in range(nr_rows)]
-        fields = rows[0]
-        folder = self.context.bika_setup.bika_caseoutcomes
-        self.containertypes = {}
-        for row in rows[3:]:
-            row = dict(zip(fields, row))
-            _id = folder.invokeFactory('CaseOutcome', id = 'tmp')
+            _id = folder.invokeFactory('SampleOrigin', id = 'tmp')
             obj = folder[_id]
             obj.edit(title = unicode(row['title']),
                      description = unicode(row['description']))
