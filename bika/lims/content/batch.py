@@ -196,22 +196,22 @@ class Batch(BaseContent):
 
     def setClientID(self, value):
         self.Schema()['ClientID'].set(self, value)
-        bsc = getToolByName(self, 'bika_setup_catalog')
+        pc = getToolByName(self, 'portal_catalog')
         if type(value) in (list, tuple):
             value = value[0]
         if value:
             if type(value) == str:
-                value = bsc(portal_type='Client', getClientID=value)[0].getObject()
+                value = pc(portal_type='Client', getClientID=value)[0].getObject()
             return self.setClientUID(value.UID())
 
     def setDoctorID(self, value):
         self.Schema()['DoctorID'].set(self, value)
-        bc = getToolByName(self, 'bika_catalog')
+        pc = getToolByName(self, 'portal_catalog')
         if type(value) in (list, tuple):
             value = value[0]
         if value:
             if type(value) == str:
-                value = bc(portal_type='Doctor', getDoctorID=value)[0].getObject()
+                value = pc(portal_type='Doctor', getDoctorID=value)[0].getObject()
             return self.setDoctorUID(value.UID())
 
     def setPatientID(self, value):
