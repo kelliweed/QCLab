@@ -101,11 +101,12 @@ class ajaxGetDoctors(BrowserView):
         sidx = self.request['sidx']
         wf = getToolByName(self.context, 'portal_workflow')
 
-        rows = [{'DoctorID': b.getDoctorID or '',
-                 'Title': b.Title,
-                 'DoctorUID': b.UID} for b in self.portal_catalog(portal_type='Doctor')
-                if b.getDoctorID.find(searchTerm) > -1
-                or b.Title.find(searchTerm) > -1]
+        doctors = (x.getObject() for x in self.portal_catalog(portal_type="Doctor"))
+        rows = [{'DoctorID': b.getDoctorID(),
+                 'Title': b.Title(),
+                 'DoctorUID': b.UID()} for b in doctors
+                if b.getDoctorID().find(searchTerm) > -1
+                or b.Title().find(searchTerm) > -1]
 
         rows = sorted(rows, key=itemgetter(sidx and sidx or 'DoctorID'))
         if sord == 'desc':
