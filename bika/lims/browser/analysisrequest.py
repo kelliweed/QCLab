@@ -1512,6 +1512,9 @@ class ajaxAnalysisRequestSubmit():
             if len(ar.keys()) == 3: # three empty price fields
                 if ar.has_key('subtotal'):
                     continue
+            if len(ar.keys()) == 5: # In batch context, this includes two Batch fields.
+                if ar.has_key('BatchID') and ar.has_key('subtotal'):
+                    continue
             columns.append(column)
 
         if len(columns) == 0:
