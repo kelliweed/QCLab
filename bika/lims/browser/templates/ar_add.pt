@@ -657,6 +657,7 @@
     cats view/Categories;
     POINTS_OF_CAPTURE python: modules['bika.lims.config'].POINTS_OF_CAPTURE;">
     <tal:i repeat="poc python:['field', 'lab']">
+    <tal:has_poc tal:condition="python:poc in cats">
         <thead class="pointofcapture"
             tal:attributes="id poc">
             <tr>
@@ -688,6 +689,7 @@
     <tr></tr>
 </tbody>
 </tal:i>
+</tal:has_poc>
 </tal:i>
 </tal:i>
 
