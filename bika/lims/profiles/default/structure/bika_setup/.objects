@@ -28,6 +28,7 @@ bika_drugs,Drugs
 bika_drugprohibitions,DrugProhibitions
 bika_symptoms,Symptoms
 bika_diseases,Diseases
+bika_aetiologicagents,AetiologicAgents
 bika_treatments,Treatments
 bika_immunizations,Immunizations
 bika_vaccinationcenters,VaccinationCenters

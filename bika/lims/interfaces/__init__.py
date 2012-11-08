@@ -175,6 +175,8 @@ class ISymptoms(Interface):
     ""
 class IDiseases(Interface):
     ""
+class IAetiologicAgents(Interface):
+    ""
 class ITreatments(Interface):
     ""
 class IVaccinationCenter(Interface):

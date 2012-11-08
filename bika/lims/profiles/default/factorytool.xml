@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <object name="portal_factory" meta_type="Plone Factory Tool">
  <factorytypes>
+  <type portal_type="AetiologicAgent"/>
   <type portal_type="ARImport"/>
   <type portal_type="ARImportItem"/>
   <type portal_type="AnalysisProfile"/>
@@ -22,9 +23,9 @@
   <type portal_type="Contact"/>
   <type portal_type="Container"/>
   <type portal_type="ContainerType"/>
-  <type portal_type="Department"/>  
+  <type portal_type="Department"/>    
   <type portal_type="Disease"/>
-  <type portal_type="Doctor"/>
+  <type portal_type="Doctor"/>  
   <type portal_type="Drug"/>
   <type portal_type="DrugProhibition"/>
   <type portal_type="Immunization" />
@@ -47,7 +48,7 @@
   <type portal_type="SampleType"/>
   <type portal_type="SamplingDeviation"/>
   <type portal_type="Symptom"/>
-  <type portal_type="Treatment"/>
+  <type portal_type="Treatment"/>  
   <type portal_type="VaccinationCenter" />
   <type portal_type="WorksheetTemplate"/>
  </factorytypes>
