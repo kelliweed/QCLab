@@ -262,7 +262,9 @@
     </tr>
 
     <!-- Patient selector -->
-    <tr tal:define="field_name string:PatientID">
+    <tr tal:define="field_name string:PatientID;
+                    PatientID python:hasattr(context, 'getPatientID') and context.getPatientID() or '';
+                    PatientUID python:hasattr(context, 'getPatientUID') and context.getPatientUID() or ''">
         <th colspan="2" style="white-space:nowrap">
             <span i18n:translate="">Patient</span>
             <a style="border-bottom:none !important;margin-left:1em;"
@@ -288,11 +290,12 @@
                 class field_name;
                 column column;
                 id input_id;
+                value PatientID;
                 name input_name;"
                 style="width:96px; position:absolute; z-index:+1;"/>
             <input type="hidden" tal:attributes="
-                class string:${field_name}UID;
                 column column;
+                value PatientUID;
                 id hidden_id;
                 name hidden_name;"/>
             </div>
@@ -301,7 +304,9 @@
     </tr>
 
     <!-- Doctor -->
-    <tr tal:define="field_name string:DoctorID">
+    <tr tal:define="field_name string:DoctorID;
+                    DoctorID python:hasattr(context, 'getDoctorID') and context.getDoctorID() or '';
+                    DoctorUID python:hasattr(context, 'getDoctorUID') and context.getDoctorUID() or ''">
         <th colspan="2" style="white-space:nowrap">
             <span i18n:translate="">Doctor</span>
             <a style="border-bottom:none !important;margin-left:1em;"
@@ -327,12 +332,14 @@
                 class field_name;
                 column column;
                 id input_id;
+                value DoctorID;
                 name input_name;"
                 style="width:96px; position:absolute; z-index:+1;"/>
             <input type="hidden" tal:attributes="
-                class string:${field_name}UID;
+                class string:${field_name};
                 column column;
                 id hidden_id;
+                value DoctorUID;
                 name hidden_name;"/>
             </div>
             </td>
