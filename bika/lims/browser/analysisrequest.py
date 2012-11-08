@@ -1511,8 +1511,9 @@ class ajaxAnalysisRequestSubmit():
                 continue
             ar = form[formkey]
             keys = ar.keys()
-            for k in ('subtotal', 'vat', 'total', 'BatchID', 'BatchUID'):
-                keys.remove(k)
+            for k in ('subtotal', 'vat', 'total', 'ClientID', 'ClientUID', 'BatchID', 'BatchUID'):
+                if k in keys:
+                    keys.remove(k)
             if len(keys) == 0:
                 continue
             columns.append(column)
