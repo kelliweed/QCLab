@@ -1482,6 +1482,7 @@ class ajaxAnalysisRequestSubmit():
         wftool = getToolByName(self.context, 'portal_workflow')
         pc = getToolByName(self.context, 'portal_catalog')
         bc = getToolByName(self.context, 'bika_catalog')
+        pc = getToolByName(self.context, 'portal_catalog')
         bsc = getToolByName(self.context, 'bika_setup_catalog')
         bpc = getToolByName(self.context, 'bika_patient_catalog')
 
@@ -1509,11 +1510,11 @@ class ajaxAnalysisRequestSubmit():
             if not form.has_key(formkey):
                 continue
             ar = form[formkey]
-            if len(ar.keys()) == 3: # three empty price fields
+            if len(ar.keys()) == 3: # three empty price fields (client context)
                 if ar.has_key('subtotal'):
                     continue
-            if len(ar.keys()) == 5: # In batch context, this includes two Batch fields.
-                if ar.has_key('BatchID') and ar.has_key('subtotal'):
+            if len(ar.keys()) == 2: # two empty Batch fields (batch context)
+                if ar.has_key('BatchID'):
                     continue
             columns.append(column)
 
@@ -1634,7 +1635,13 @@ class ajaxAnalysisRequestSubmit():
                             id = values['SampleID'])[0].getObject()
             else:
                 # Primary AR
-                client = self.context
+                if self.context.portal_type == 'Client':
+                    client = self.context
+                else:
+                    ClientID = values['ClientID']
+                    proxies = pc(portal_type = 'Client', getClientID = ClientID)
+                    client = proxies[0].getObject()
+
                 _id = client.invokeFactory('Sample', id = 'tmp')
                 sample = client[_id]
                 # Strip "Lab: " from sample point title
@@ -1744,9 +1751,9 @@ class ajaxAnalysisRequestSubmit():
             Analyses = values['Analyses']
             del values['Analyses']
 
-            _id = self.context.generateUniqueId('AnalysisRequest')
-            self.context.invokeFactory('AnalysisRequest', id = _id)
-            ar = self.context[_id]
+            _id = client.generateUniqueId('AnalysisRequest')
+            client.invokeFactory('AnalysisRequest', id = _id)
+            ar = client[_id]
             # ar.edit() for some fields before firing the event
             ar.edit(
                 Batch = batch_uid,
