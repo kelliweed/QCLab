@@ -107,7 +107,7 @@ class Client(Organisation):
 
     def getClientID(self):
         ### If no ID is defined (old data) invent one
-        cid = self.getField('ClientID').get(self))
+        cid = self.getField('ClientID').get(self)
         if cid:
             return cid.decode('utf-8').encode('utf-8')
         return self.getId().decode('utf-8').encode('utf-8')
