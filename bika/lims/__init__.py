@@ -30,6 +30,7 @@ allow_module('zope.i18n.locales')
 
 def initialize(context):
 
+    from content.aetiologicagent import AetiologicAgent
     from content.analysis import Analysis
     from content.analysiscategory import AnalysisCategory
     from content.analysisrequest import AnalysisRequest
@@ -110,6 +111,7 @@ def initialize(context):
     from content.worksheetfolder import WorksheetFolder
     from content.worksheettemplate import WorksheetTemplate
 
+    from controlpanel.bika_aetiologicagents import AetiologicAgents
     from controlpanel.bika_analysiscategories import AnalysisCategories
     from controlpanel.bika_analysisservices import AnalysisServices
     from controlpanel.bika_analysisspecs import AnalysisSpecs

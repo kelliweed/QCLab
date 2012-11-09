@@ -27,6 +27,13 @@
   <default>
    <bound-workflow workflow_id="plone_workflow"/>
   </default>
+  
+  <type type_id="AetiologicAgents"/>
+  <type type_id="AetiologicAgent">
+   <bound-workflow workflow_id="bika_one_state_workflow"/>
+   <bound-workflow workflow_id="bika_inactive_workflow"/>
+  </type>
+  
   <type type_id="ARImport">
    <bound-workflow workflow_id="bika_arimport_workflow"/>
   </type>
