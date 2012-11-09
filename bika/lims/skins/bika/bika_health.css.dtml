@@ -41,4 +41,22 @@
   width:10%;
 }
 
+div.template-symptoms td input[type="text"] {
+	width:100%;
+}
+div.template-symptoms td,
+div.template-symptoms th {
+	padding: 0 5px 0px 5px;
+}
+div.template-symptoms td.Code,
+div.template-symptoms td.Onset {
+  	width:10%;
+}
+div.template-symptoms td.Title {
+	width:30%;
+}
+div.template-symptoms td.Description {
+	width:45%;
+}
+
 /* </dtml-with> */

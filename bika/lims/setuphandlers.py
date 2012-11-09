@@ -56,7 +56,8 @@ class BikaGenerator:
             obj.reindexObject()
 
         bika_setup = portal._getOb('bika_setup')
-        for obj_id in ('bika_analysiscategories',
+        for obj_id in ('bika_aetiologicagents',
+                       'bika_analysiscategories',
                        'bika_analysisservices',
                        'bika_attachmenttypes',
                        'bika_batchlabels',
@@ -75,6 +76,7 @@ class BikaGenerator:
                        'bika_labproducts',
                        'bika_samplematrices',
                        'bika_samplingdeviations',
+                       'bika_sampleorigins',
                        'bika_samplepoints',
                        'bika_sampletypes',
                        'bika_diseases',
@@ -605,6 +607,7 @@ class BikaGenerator:
         at.setCatalogsByType('Drug', ['bika_setup_catalog', ])
         at.setCatalogsByType('BatchLabel', ['bika_setup_catalog', ])
         at.setCatalogsByType('Disease', ['bika_setup_catalog', ])
+        at.setCatalogsByType('AetiologicAgent', ['bika_setup_catalog', ])
         at.setCatalogsByType('Treatment', ['bika_setup_catalog'])
         at.setCatalogsByType('Symptom', ['bika_setup_catalog'])
         at.setCatalogsByType('DrugProhibition', ['bika_setup_catalog'])

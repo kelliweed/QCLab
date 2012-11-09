@@ -89,6 +89,7 @@
     <element value="Immunization"/>
     <element value="Worksheet"/>
     <element value="WorksheetTemplate"/>
+    <element value="AetiologicAgent" />
     <element value="ATBooleanCriterion"/>
     <element value="ATDateCriteria"/>
     <element value="ATDateRangeCriterion"/>

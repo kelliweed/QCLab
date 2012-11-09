@@ -38,11 +38,33 @@ class PatientsView(BikaListingView):
         self.columns = {
             'getPatientID': {'title': _('Patient ID'),
                              'index': 'getPatientID'},
+                        
             'Title': {'title': _('Patient'),
                       'index': 'sortable_title'},
-            'Description': {'title': _('Description'),
-                            'index': 'Description',
-                            'toggle': True},
+                        
+            'getGender': {'title': _('Gender'),
+                       'index': 'getGender',
+                       'toggle': True}, 
+                        
+            'getAge': {'title': _('Age'),
+                   'index': 'getAge',
+                   'toggle': True}, 
+                        
+            'getBirthDate': {'title': _('BirthDate'),
+                            'index':'getBirthDate',
+                            'toggle': True}, 
+                        
+            'getCitizenship': {'title': _('Citizenship'),
+                          'index':'getCitizenship',
+                          'toggle': True}, 
+                        
+            'getPrimaryReferrer' : {'title': _('Primary Referrer'),
+                                    'index': 'getPrimaryReferrer',
+                                    'toggle': True},       
+                        
+  #          'Description': {'title': _('Description'),
+  #                          'index': 'Description',
+  #                          'toggle': True},
         }
 
         self.review_states = [
@@ -50,7 +72,8 @@ class PatientsView(BikaListingView):
              'title': _('All'),
              'contentFilter':{},
              'transitions':[{'id':'empty'},],
-             'columns': ['getPatientID', 'Title', 'Description']},
+             'columns': ['getPatientID', 'Title', 'getGender', 'getAge', 
+                         'getBirthDate', 'getCitizenship', 'getPrimaryReferrer']},
         ]
 
     def __call__(self):
@@ -78,13 +101,15 @@ class PatientsView(BikaListingView):
                  'title': _('Active'),
                  'contentFilter': {'inactive_state': 'active'},
                  'transitions': [{'id':'deactivate'}, ],
-                 'columns': ['Title', 'Description', 'getPatientID']})
+                 'columns': ['Title', 'getPatientID', 'getGender', 'getAge', 
+                             'getBirthDate', 'getCitizenship', 'getPrimaryReferrer']})
             self.review_states.append(
                 {'id':'inactive',
                  'title': _('Dormant'),
                  'contentFilter': {'inactive_state': 'inactive'},
                  'transitions': [{'id':'activate'}, ],
-                 'columns': ['Title', 'Description', 'getPatientID']})
+                 'columns': ['Title', 'getPatientID', 'getGender', 'getAge', 
+                             'getBirthDate', 'getCitizenship', 'getPrimaryReferrer']})
 
         items = BikaListingView.folderitems(self)
         for x in range(len(items)):

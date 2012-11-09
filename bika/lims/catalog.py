@@ -162,6 +162,7 @@ class BikaSetupCatalog(CatalogTool):
                                                  'BatchLabel',
                                                  'Symptom',
                                                  'Disease',
+                                                 'AetiologicAgent',
                                                  'Immunization',
                                                  'VaccinationCenter',
                                                  'CaseStatus',
