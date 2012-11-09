@@ -1,9 +1,9 @@
-Bika Health
-===========
+Bika Epidemiology
+=================
 
 Bika Laboratory Information Management System.
 
-This version is customised for use in health-care laboratories.  See
+This version is customised for use in epidemiology laboratories.  See
 docs/CHANGELOG.txt for details.
 
 http://www.bikalabs.com/helpcentre/manual/bika-installation-guides

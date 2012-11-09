@@ -55,7 +55,6 @@ $(document).ready(function(){
                     this.getOverlay().find("#archetypes-fieldname-Remarks").remove();
                 },
                 onClose: function(){
-                    // here is where we'd populate the form controls, if we cared to.
                 }
             }
         }
