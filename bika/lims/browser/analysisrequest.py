@@ -1770,6 +1770,7 @@ class ajaxAnalysisRequestSubmit():
                 Sample = sample_uid,
                 Profile = profile,
                 Patient = patient,
+                Doctor = doctor,
                 **dict(values)
             )
             ar.processForm()
