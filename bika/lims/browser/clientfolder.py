@@ -110,7 +110,7 @@ class ClientFolderContentsView(BikaListingView):
             if not items[x].has_key('obj'): continue
             obj = items[x]['obj']
 
-            items[x]['replace']['title'] = "<a href='%s'>%s</a>"%\
+            items[x]['replace']['title'] = "<a href='%s/batches'>%s</a>"%\
                  (items[x]['url'], items[x]['title'])
 
             items[x]['EmailAddress'] = obj.getEmailAddress()
