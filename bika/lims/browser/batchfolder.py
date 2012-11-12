@@ -103,7 +103,7 @@ class BatchFolderContentsView(BikaListingView):
                 continue
             obj = items[x]['obj']
 
-            items[x]['replace']['BatchID'] = "<a href='%s'>%s</a>" % (items[x]['url'], obj.getBatchID())
+            items[x]['replace']['BatchID'] = "<a href='%s/analysisrequests'>%s</a>" % (items[x]['url'], obj.getBatchID())
             items[x]['Requests'] = len(self.context.getBackReferences("AnalysisRequestBatch"))
 
         return items
