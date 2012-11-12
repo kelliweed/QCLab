@@ -189,6 +189,12 @@
   <type type_id="DuplicateAnalysis">
    <bound-workflow workflow_id="bika_duplicateanalysis_workflow"/>
   </type>
+  
+  <type type_id="EpidemiologicalYears"/>
+  <type type_id="EpidemiologicalYear">
+   <bound-workflow workflow_id="bika_one_state_workflow"/>
+   <bound-workflow workflow_id="bika_inactive_workflow"/>
+  </type>
 
   <type type_id="Instruments"/>
   <type type_id="Instrument">

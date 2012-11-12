@@ -284,6 +284,14 @@
       layer="bika.lims.interfaces.IBikaLIMS"
     />
 
+    <browser:page
+      for="bika.lims.interfaces.IEpidemiologicalYears"
+      name="folder_view"
+      class=".bika_epidemiologicalyears.EpidemiologicalYearsView"
+      permission="bika.lims.ManageBika"
+      layer="bika.lims.interfaces.IBikaLIMS"
+    />
+
     <!-- For autocomplete dropdown -->
     <browser:page
       for="*"

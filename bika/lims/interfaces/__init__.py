@@ -189,6 +189,8 @@ class ICaseOutcomes(Interface):
     ""
 class IWorksheetTemplates(Interface):
     ""
+class IEpidemiologicalYears(Interface):
+    ""
 
 class IBikaCatalog(Interface):
     ""
