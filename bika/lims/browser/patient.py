@@ -197,14 +197,15 @@ class ImmunizationHistoryView(BrowserView):
                 D = self.request.form['Date'][i]
 
                 # Create new VaccinationCenter entry if none exists
-                Vlist = bsc(portal_type='VaccinationCenter', Title=V)
-                if not Vlist:
-                    folder = self.context.bika_setup.bika_vaccinationcenters
-                    _id = folder.invokeFactory('VaccinationCenter', id='tmp')
-                    obj = folder[_id]
-                    obj.edit(title = V)
-                    obj.unmarkCreationFlag()
-                    renameAfterCreation(obj)
+                if (len(V.strip())>0):
+                    Vlist = bsc(portal_type='VaccinationCenter', Title=V)
+                    if not Vlist:
+                        folder = self.context.bika_setup.bika_vaccinationcenters
+                        _id = folder.invokeFactory('VaccinationCenter', id='tmp')
+                        obj = folder[_id]
+                        obj.edit(title = V)
+                        obj.unmarkCreationFlag()
+                        renameAfterCreation(obj)
 
                 new.append({'EPINumber':E, 'Immunization':I, 'VaccinationCenter':V, 'Date':D})
 
@@ -213,8 +214,8 @@ class ImmunizationHistoryView(BrowserView):
         return self.template()
 
     def getEPINumber(self):
-        ih = self.context.getImmunizationHistory()
-        return len(ih) > 0 and ih[0]['EPINumber'] or ''
+        ih = self.context.getImmunizationHistory()     
+        return (len(ih) > 0 and 'EPINumber' in ih[0]) and ih[0]['EPINumber'] or ''
 
     def hasImmunizationHistory(self):
         return len(self.context.getImmunizationHistory())>0
