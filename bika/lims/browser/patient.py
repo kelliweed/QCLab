@@ -226,9 +226,22 @@ class ChronicConditionsView(BrowserView):
     template = ViewPageTemplateFile("templates/patient_chronicconditions.pt")
 
     def __call__(self):
-        if 'submitted' in self.request:
-            bsc = self.bika_setup_catalog
+        if self.request.form.has_key('clear'):
+            self.context.setChronicConditions([])
+            self.context.plone_utils.addPortalMessage(PMF("Chronic conditions cleared"))
+
+        elif self.request.form.has_key('delete'):
+            imh = self.context.getChronicConditions()
             new = []
+            for i in range(len(imh)):
+                if (not self.request.form.has_key('SelectItem-%s'%i)):
+                    new.append(imh[i])
+            self.context.setChronicConditions(new)
+            self.context.plone_utils.addPortalMessage(PMF("Selected chronic conditions deleted"))
+
+        elif 'submitted' in self.request:
+            bsc = self.bika_setup_catalog
+            new = len(self.context.getChronicConditions())>0 and self.context.getChronicConditions() or []
             for i in range(len(self.request.form['Title'])):
                 C = self.request.form['Code'][i]
                 S = self.request.form['Title'][i]
@@ -251,9 +264,12 @@ class ChronicConditionsView(BrowserView):
 
                 new.append({'Code':C, 'Title':S, 'Description':D, 'Onset': O})
 
-            self.context.setChronicConditions(self.context.getChronicConditions() + new)
-            self.context.plone_utils.addPortalMessage(PMF("Changes saved"))
+            self.context.setChronicConditions(new)
+            self.context.plone_utils.addPortalMessage(PMF("Changes saved"))            
         return self.template()
+    
+    def hasChronicConditions(self):
+        return len(self.context.getChronicConditions())>0
 
 class TravelHistoryView(BrowserView):
     """ bika listing to display Travel history
