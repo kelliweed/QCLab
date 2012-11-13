@@ -81,12 +81,12 @@ class BatchFolderContentsView(BikaListingView):
             # in contexts other than /batches, we do want to show the edit border
             self.request.set('disable_border', 1)
         if self.context.absolute_url() == self.portal.batches.absolute_url() \
-        and self.portal_membership.checkPermission(AddBatch, self.portal.batches):
+                and self.portal_membership.checkPermission(AddBatch, self.portal.batches):
             self.context_actions[_('Add')] = \
                 {'url': 'createObject?type_name=Batch',
                  'icon': self.portal.absolute_url() + '/++resource++bika.lims.images/add.png'}
         if self.context.portal_type == "Client" \
-        and self.portal_membership.checkPermission(AddBatch, self.portal.batches):
+                and self.portal_membership.checkPermission(AddBatch, self.portal.batches):
             clientid = self.context.getClientID()
             url = self.portal.batches.absolute_url() + "/portal_factory/Batch/new/edit?ClientID=%s" % clientid
             self.context_actions[_('Add')] = \
@@ -114,6 +114,7 @@ class ajaxGetBatches(BrowserView):
     """
     def __call__(self):
         plone.protect.CheckAuthenticator(self.request)
+        ClientUID = self.request.get('ClientUID', '')
         searchTerm = self.request['searchTerm']
         page = self.request['page']
         nr_rows = self.request['rows']
@@ -121,11 +122,22 @@ class ajaxGetBatches(BrowserView):
         sidx = self.request['sidx']
         wf = getToolByName(self.context, 'portal_workflow')
 
-        rows = [{'BatchID': b.Title or '',
-                 'Description': b.Description,
-                 'BatchUID': b.UID} for b in self.bika_catalog(portal_type='Batch')
-                if b.Title.find(searchTerm) > -1
-                or b.Description.find(searchTerm) > -1]
+        rows = []
+        if ClientUID:
+            batches = self.bika_catalog(portal_type='Batch', getClientUID=ClientUID)
+        else:
+            batches = self.bika_catalog(portal_type='Batch')
+
+        for batch in batches:
+            batch = batch.getObject()
+            if batch.Title().find(searchTerm) > -1 \
+                    or batch.Description().find(searchTerim) > -1:
+                rows.append({'BatchID': batch.Title(),
+                             'Description': batch.Description(),
+                             'BatchUID': batch.UID(),
+                             'PatientID': batch.getPatientID(),
+                             'DoctorID': batch.getDoctorID(),
+                             'ClientID': batch.getClientID()})
 
         rows = sorted(rows, key=itemgetter(sidx and sidx or 'BatchID'))
         if sord == 'desc':

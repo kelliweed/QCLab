@@ -12,12 +12,29 @@ $(document).ready(function(){
                     ' rel="#overlay">' +
                     ' <img style="padding-bottom:1px;" src="'+window.portal_url+'/++resource++bika.lims.images/add.png"/>' +
                 ' </a>');
+        ajax_url = window.location.href.replace("/ar_add","")
+                 + "/getBatches?_authenticator=" + $('input[name="_authenticator"]').val();
+        if ($("#ar_0_ClientUID").length > 0) { // epid ar_add
+            ajax_url = ajax_url + "&ClientUID=" + $("#ar_0_ClientUID").val();
+        }
         $("input[id*=BatchID]").combogrid({
             colModel: [{'columnName':'BatchUID','hidden':true},
                        {'columnName':'BatchID','width':'25','label':window.jsi18n_bika('Batch ID')},
                        {'columnName':'Description','width':'35','label':window.jsi18n_bika('Description')}],
-            url: window.location.href.replace("/ar_add","") + "/getBatches?_authenticator=" + $('input[name="_authenticator"]').val(),
+            url: ajax_url,
             select: function( event, ui ) {
+                if (window.location.href.search('ar_add') > -1){  // epid ar_add
+                    column = $(this).attr('name').split(".")[1];
+                    if($('#ar_'+column+'_PatientID').length > 0){
+                        $('#ar_'+column+'_PatientID').val(ui.item.PatientID);
+                    }
+                    if($('#ar_'+column+'_DoctorID').length > 0){
+                        $('#ar_'+column+'_DoctorID').val(ui.item.DoctorID);
+                    }
+                    if($('#ar_'+column+'_ClientID').length > 0){
+                        $('#ar_'+column+'_ClientID').val(ui.item.ClientID);
+                    }
+                }
                 $(this).val(ui.item.BatchID);
                 $(this).change();
                 return false;
