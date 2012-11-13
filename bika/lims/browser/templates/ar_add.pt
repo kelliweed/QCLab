@@ -169,8 +169,37 @@
             </tal:define>
         </tal:block>
     </tal:got_client>
+    <tal:got_primaryreferrer tal:condition="python:context.portal_type == 'Patient' and context.getPrimaryReferrer()"
+                    tal:repeat="column python:range(view.col_count)"
+                    tal:define="field_name string:ClientID">
+        <tal:block repeat="column python:range(view.col_count)">
+            <tal:define define="ClientID python:context.getPrimaryReferrer().getClientID();
+                                ClientUID python:context.getPrimaryReferrer().UID();
+                                input_name string:ar.${column}.${field_name}:ignore_empty:record;
+                                input_id string:ar_${column}_${field_name};
+                                hidden_name string:ar.${column}.ClientUID:ignore_empty:record;
+                                hidden_id string:ar_${column}_ClientUID;">
+                <input
+                    type="hidden"
+                    tal:attributes="class field_name;
+                                    column column;
+                                    id input_id;
+                                    name input_name;
+                                    value ClientID"/>
+                <input
+                    type="hidden"
+                    tal:attributes="class field_name;
+                                    column column;
+                                    id hidden_id;
+                                    name hidden_name;
+                                    value ClientUID"/>
+            </tal:define>
+        </tal:block>
+    </tal:got_primaryreferrer>
     <tal:got_no_client tal:condition="python:context.portal_type != 'Client'
-                                             and not hasattr(context, 'getClientID')"
+                                             and not hasattr(context, 'getClientID')
+                                             and not context.portal_type == 'Patient'
+                                             and not context.getPrimaryReferrer()"
                        tal:define="field_name string:ClientID">
         <!-- Client selector -->
         <tr tal:define="field_name string:ClientID">

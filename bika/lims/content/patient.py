@@ -125,10 +125,10 @@ schema = Person.schema.copy() + Schema((
                          'Country':_('Country'),
                          'Location':_('Location'),
                          'Remarks':_('Remarks')},
-        subfield_sizes={'TripStartDate':10, 
-                        'TripEndDate':10, 
-                        'Country':20, 
-                        'Location':20, 
+        subfield_sizes={'TripStartDate':10,
+                        'TripEndDate':10,
+                        'Country':20,
+                        'Location':20,
                         'Remarks':25},
         widget=RecordsWidget(
                 label='Travel History',
@@ -136,7 +136,7 @@ schema = Person.schema.copy() + Schema((
                 visible = False,
         ),
     ),
-    
+
     RecordsField('ChronicConditions',
         type='chronicconditions',
         subfields=('Code', 'Title', 'Description', 'Onset', 'Remarks'),
@@ -216,6 +216,10 @@ class Patient(Person):
     def Title(self):
         """ Return the Fullname as title """
         return self.getFullname()
+
+    def getCCContacts(self):
+        pr = self.getPrimaryReferrer()
+        return pr and pr.getCCContacts() or []
 
     security.declarePublic('getSamples')
     def getSamples(self):
