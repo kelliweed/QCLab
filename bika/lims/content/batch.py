@@ -31,6 +31,7 @@ schema = BikaSchema.copy() + Schema((
         )
     ),
     StringField('ClientID',
+        required=1,
         widget=StringWidget(
             label=_("Client"),
         )
@@ -41,6 +42,7 @@ schema = BikaSchema.copy() + Schema((
         ),
     ),
     StringField('DoctorID',
+        required=1,
         widget=StringWidget(
             label=_("Doctor"),
         )
