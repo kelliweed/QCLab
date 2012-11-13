@@ -15,7 +15,7 @@
 					i18n:attributes="title"
 					i18n:translate="">(Required)</span>
 				<input type="text" name="EPINumber" size="30"
-					tal:attributes="value python: view.getEPINumber() or view.request.get('EPINumber', '')"/>
+					tal:attributes="value python: view.getEPINumber()"/>
 			</tal:hasepinumber>
 		</div>
 		
@@ -37,7 +37,7 @@
 							<th class="sortable column"
 							    id="foldercontents-VaccinationCenter-column"
 							    style="width:40%">
-                                <span i18n:translate="">VaccinationCenter</span>
+                                <span i18n:translate="">Vaccination Center</span>
                             </th>
 							<th class="sortable column" i18n:translate=""
 							    id="foldercontents-Date-column"
@@ -76,7 +76,7 @@
                                  <input class="wide" id="VaccinationCenter" type="text" value="" autocomplete="off"/>
                             </td>
                             <td colspan="1" rowspan="1" class="state-active Date">
-                                 <input class="wide datepicker" id="Date" type="text" value="" autocomplete="off"/>
+                                 <input class="datepicker_nofuture" id="Date" type="text" value="" autocomplete="off"/>
                             </td>
 					</tbody>
 					<tfoot>
