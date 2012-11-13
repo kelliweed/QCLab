@@ -68,10 +68,10 @@
                         <tr id="new">
                         	<td style="padding-bottom:15px;">&nbsp;</td>
                             <td colspan="1" rowspan="1" class="state-active TripStartDate">
-                                 <input class="wide datepicker" id="TripStartDate" type="text" value="" autocomplete="off"/>
+                                 <input class="datepicker_nofuture" id="TripStartDate" type="text" value="" autocomplete="off"/>
                             </td>
                             <td colspan="1" rowspan="1" class="state-active TripEndDate">
-                                 <input class="wide datepicker" id="TripEndDate" type="text" value="" autocomplete="off"/>
+                                 <input class="datepicker" id="TripEndDate" type="text" value="" autocomplete="off"/>
                             </td>
                             <td colspan="1" rowspan="1" class="state-active Country">
                                  <input class="wide" id="Country" type="text" value="" autocomplete="off"/>

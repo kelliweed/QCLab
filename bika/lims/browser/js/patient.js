@@ -81,7 +81,7 @@ $(document).ready(function(){
 		$(".template-treatmenthistory #Treatment").combogrid({
 			colModel: [{'columnName':'Type', 'width':'50', 'label':window.jsi18n_bika('Type')},
 			           {'columnName':'Title', 'width':'50', 'label':window.jsi18n_bika('Title')}],
-			url: window.portal_url + "/getTreatments?_authenticator=" + $('input[name="_authenticator"]').val(),
+			url: window.location.href.replace("/treatmenthistory","") + "/getTreatments?_authenticator=" + $('input[name="_authenticator"]').val(),
 			select: function( event, ui ) {
 				event.preventDefault();
 				$(this).val(ui.item.Title);
@@ -93,7 +93,8 @@ $(document).ready(function(){
 		// Treatment History Drug search popup
 		$(".template-treatmenthistory #Drug").combogrid({
 			colModel: [{'columnName':'Title', 'width':'50', 'label':window.jsi18n_bika('Title')}],
-			url: window.portal_url + "/getDrugs?_authenticator=" + $('input[name="_authenticator"]').val(),
+			url: window.location.href.replace("/treatmenthistory","") + "/getDrugs?_authenticator=" + $('input[name="_authenticator"]').val(),
+			
 			select: function( event, ui ) {
 				event.preventDefault();
 				$(this).val(ui.item.Title);
@@ -191,6 +192,9 @@ $(document).ready(function(){
 		if (T == '' || D == ''){
 	        return false;
 		}
+		$("#Start").attr('class', 'datepicker_nofuture');
+		$("#End").attr('class', 'datepicker');
+		
 		newrow = $("tr#new").clone();
         $("tr#new").removeAttr('id');
 		$("#Treatment").parent().append("<span>"+T+"</span>");
@@ -248,6 +252,8 @@ $(document).ready(function(){
 		if (I == '' || V == ''){
 	        return false;
 		}
+		$("#Date").attr('class', 'datepicker_nofuture');
+		
 		newrow = $("tr#new").clone();
         $("tr#new").removeAttr('id');
 		$("#Immunization").parent().append("<span>"+I+"</span>");
@@ -278,7 +284,9 @@ $(document).ready(function(){
 		R = $("#Remarks").val();
 		if (T == ''){
 	        return false;
-		}
+		}		
+		$("#Onset").attr('class', 'datepicker_nofuture');
+		
 		newrow = $("tr#new").clone();
         $("tr#new").removeAttr('id');
 		$("#Code").parent().append("<span>"+C+"</span>");
@@ -312,6 +320,9 @@ $(document).ready(function(){
 		if (T == ''){
 	        return false;
 		}
+		$("#TripStartDate").attr('class', 'datepicker_nofuture');
+		$("#TripEndDate").attr('class', 'datepicker');
+		
 		newrow = $("tr#new").clone();
         $("tr#new").removeAttr('id');
 		$("#TripStartDate").parent().append("<span>"+S+"</span>");
