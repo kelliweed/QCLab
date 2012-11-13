@@ -655,7 +655,8 @@
         </tal:block>
     </tr>
     <!-- Composite -->
-    <tr tal:define="field_name string:Composite">
+    <tr tal:define="field_name string:Composite"
+        tal:condition="python: context.portal_type != 'Batch'">
         <th colspan="2" style="white-space:nowrap" i18n:translate="">Composite</th>
         <td>
             <img class="copyButton"
