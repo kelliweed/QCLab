@@ -262,148 +262,143 @@
     </tr>
 
     <!-- Patient selector -->
-    <!-- Batch context -->
-    <tal:x tal:define="field_name string:PatientID;
-                       PatientID python:hasattr(context, 'getPatientID') and context.getPatientID() or '';
-                       PatientUID python:hasattr(context, 'getPatientUID') and context.getPatientUID() or ''"
-           tal:condition="python:context.portal_type == 'Batch'">
-        <tal:repeat repeat="column python:range(view.col_count)">
-            <tal:block
-                tal:define="
-                    input_name string:ar.${column}.${field_name}:ignore_empty:record;
-                    input_id string:ar_${column}_${field_name};
-                    hidden_name string:ar.${column}.PatientUID:ignore_empty:record;
-                    hidden_id string:ar_${column}_PatientUID;">
-            <input tal:attributes="
-                class field_name;
-                column column;
-                id input_id;
-                value PatientID;
-                name input_name;"
-                type="hidden"/>
-            <input type="hidden" tal:attributes="
-                column column;
-                value PatientUID;
-                id hidden_id;
-                name hidden_name;"/>
-            </tal:block>
-        </tal:repeat>
-    </tal:x>
-    <!-- non-Batch context -->
-    <tr tal:define="field_name string:PatientID;
-                    PatientID python:hasattr(context, 'getPatientID') and context.getPatientID() or '';
-                    PatientUID python:hasattr(context, 'getPatientUID') and context.getPatientUID() or ''"
-        tal:condition="python:context.portal_type != 'Batch'">
-        <th colspan="2" style="white-space:nowrap">
-            <span i18n:translate="">Patient</span>
-            <a style="border-bottom:none !important;margin-left:1em;"
-               class='add_patient'
-               tal:attributes="href string:${portal/absolute_url}/patients/portal_factory/Patient/new/edit?PrimaryReferrer=${context/UID}"
-               rel="#overlay">
-               <img style="padding-bottom:2px;" tal:attributes="src string:${portal/absolute_url}/++resource++bika.lims.images/add.png"/>
-            </a>
-        </th>
-        <td>
-            <img class="copyButton PatientIDCopyButton"
-                 tal:attributes="name field_name;src string:${portal/absolute_url}/++resource++bika.lims.images/copy.png"/>
-        </td>
-        <tal:block repeat="column python:range(view.col_count)">
-            <td class="topborder ar_column" style="padding-top:2px;"
-                tal:define="
-                    input_name string:ar.${column}.${field_name}:ignore_empty:record;
-                    input_id string:ar_${column}_${field_name};
-                    hidden_name string:ar.${column}.PatientUID:ignore_empty:record;
-                    hidden_id string:ar_${column}_PatientUID;">
-            <div style="width:100px; border:none;text-align:left;padding-left:2px;">
-            <input tal:attributes="
-                class field_name;
-                column column;
-                id input_id;
-                value PatientID;
-                name input_name;"
-                style="width:96px; position:absolute; z-index:+1;"/>
-            <input type="hidden" tal:attributes="
-                column column;
-                value PatientUID;
-                id hidden_id;
-                name hidden_name;"/>
-            </div>
+    <tal:patient
+        define="field_name string:PatientID;
+                PatientID python:hasattr(context, 'getPatientID') and context.getPatientID() or '';
+                PatientUID python:hasattr(context, 'getPatientUID') and context.getPatientUID() or ''">
+        <tr tal:condition="python:not PatientID">
+            <th colspan="2" style="white-space:nowrap">
+                <span i18n:translate="">Patient</span>
+                <a style="border-bottom:none !important;margin-left:1em;"
+                   class='add_patient'
+                   tal:attributes="href string:${portal/absolute_url}/patients/portal_factory/Patient/new/edit?PrimaryReferrer=${context/UID}"
+                   rel="#overlay">
+                   <img style="padding-bottom:2px;" tal:attributes="src string:${portal/absolute_url}/++resource++bika.lims.images/add.png"/>
+                </a>
+            </th>
+            <td>
+                <img class="copyButton PatientIDCopyButton"
+                     tal:attributes="name field_name;src string:${portal/absolute_url}/++resource++bika.lims.images/copy.png"/>
             </td>
+            <tal:block repeat="column python:range(view.col_count)">
+                <td class="topborder ar_column" style="padding-top:2px;"
+                    tal:define="
+                        input_name string:ar.${column}.${field_name}:ignore_empty:record;
+                        input_id string:ar_${column}_${field_name};
+                        hidden_name string:ar.${column}.PatientUID:ignore_empty:record;
+                        hidden_id string:ar_${column}_PatientUID;">
+                <div style="width:100px; border:none;text-align:left;padding-left:2px;">
+                <input tal:attributes="
+                    class field_name;
+                    column column;
+                    id input_id;
+                    value PatientID;
+                    name input_name;"
+                    style="width:96px; position:absolute; z-index:+1;"/>
+                <input type="hidden" tal:attributes="
+                    column column;
+                    value PatientUID;
+                    id hidden_id;
+                    name hidden_name;"/>
+                </div>
+                </td>
+            </tal:block>
+        </tr>
+        <tal:block condition="python:PatientID" repeat="column python:range(view.col_count)">
+            <tal:define define="
+                        input_name string:ar.${column}.${field_name}:ignore_empty:record;
+                        input_id string:ar_${column}_${field_name};
+                        hidden_name string:ar.${column}.PatientUID:ignore_empty:record;
+                        hidden_id string:ar_${column}_PatientUID;">
+                <input
+                    type="hidden"
+                    tal:condition="PatientID"
+                    tal:attributes="
+                        class field_name;
+                        column column;
+                        id input_id;
+                        value PatientID;
+                        name input_name;"/>
+                <input
+                    type="hidden"
+                    tal:attributes="
+                        column column;
+                        value PatientUID;
+                        id hidden_id;
+                        name hidden_name;"/>
+            </tal:define>
         </tal:block>
-    </tr>
-
+    </tal:patient>
 
     <!-- Doctor -->
-    <!-- Batch context -->
-    <tal:x tal:define="field_name string:DoctorID;
-                       DoctorID python:hasattr(context, 'getDoctorID') and context.getDoctorID() or '';
-                       DoctorUID python:hasattr(context, 'getDoctorUID') and context.getDoctorUID() or ''"
-           tal:condition="python:context.portal_type == 'Batch'">
-        <tal:repeat repeat="column python:range(view.col_count)">
-            <tal:block
-                tal:define="
-                    input_name string:ar.${column}.${field_name}:ignore_empty:record;
-                    input_id string:ar_${column}_${field_name};
-                    hidden_name string:ar.${column}.DoctorUID:ignore_empty:record;
-                    hidden_id string:ar_${column}_DoctorUID;">
-            <input tal:attributes="
-                class field_name;
-                column column;
-                id input_id;
-                value DoctorID;
-                name input_name;"
-                type="hidden"/>
-            <input type="hidden" tal:attributes="
-                column column;
-                value DoctorUID;
-                id hidden_id;
-                name hidden_name;"/>
-            </tal:block>
-        </tal:repeat>
-    </tal:x>
-    <!-- non-Batch context -->
-    <tr tal:define="field_name string:DoctorID;
-                    DoctorID python:hasattr(context, 'getDoctorID') and context.getDoctorID() or '';
-                    DoctorUID python:hasattr(context, 'getDoctorUID') and context.getDoctorUID() or ''"
-        tal:condition="python:context.portal_type != 'Batch'">
-        <th colspan="2" style="white-space:nowrap">
-            <span i18n:translate="">Doctor</span>
-            <a style="border-bottom:none !important;margin-left:1em;"
-               class='add_doctor'
-               tal:attributes="href string:${portal/absolute_url}/doctors/portal_factory/Doctor/new/edit"
-               rel="#overlay">
-               <img style="padding-bottom:2px;" tal:attributes="src string:${portal/absolute_url}/++resource++bika.lims.images/add.png"/>
-            </a>
-        </th>
-        <td>
-            <img class="copyButton DoctorIDCopyButton"
-                tal:attributes="name field_name;src string:${portal/absolute_url}/++resource++bika.lims.images/copy.png"/>
-        </td>
-        <tal:block repeat="column python:range(view.col_count)">
-            <td class="topborder ar_column" style="padding-top:2px;"
-                tal:define="
-                    input_name string:ar.${column}.${field_name}:ignore_empty:record;
-                    input_id string:ar_${column}_${field_name};
-                    hidden_name string:ar.${column}.DoctorUID:ignore_empty:record;
-                    hidden_id string:ar_${column}_DoctorUID;">
-            <div style="width:100px; border:none;text-align:left;padding-left:2px;">
-            <input tal:attributes="
-                class field_name;
-                column column;
-                id input_id;
-                value DoctorID;
-                name input_name;"
-                style="width:96px; position:absolute; z-index:+1;"/>
-            <input type="hidden" tal:attributes="
-                class string:${field_name};
-                column column;
-                id hidden_id;
-                value DoctorUID;
-                name hidden_name;"/>
-            </div>
+    <tal:doctor
+        define="field_name string:DoctorID;
+                DoctorID python:hasattr(context, 'getDoctorID') and context.getDoctorID() or '';
+                DoctorUID python:hasattr(context, 'getDoctorUID') and context.getDoctorUID() or ''">
+        <tr tal:condition="python:not DoctorID">
+            <th colspan="2" style="white-space:nowrap">
+                <span i18n:translate="">Doctor</span>
+                <a style="border-bottom:none !important;margin-left:1em;"
+                   class='add_doctor'
+                   tal:attributes="href string:${portal/absolute_url}/doctors/portal_factory/Doctor/new/edit"
+                   rel="#overlay">
+                   <img style="padding-bottom:2px;" tal:attributes="src string:${portal/absolute_url}/++resource++bika.lims.images/add.png"/>
+                </a>
+            </th>
+            <td>
+                <img class="copyButton DoctorIDCopyButton"
+                    tal:attributes="name field_name;src string:${portal/absolute_url}/++resource++bika.lims.images/copy.png"/>
             </td>
+            <tal:block repeat="column python:range(view.col_count)">
+                <td class="topborder ar_column" style="padding-top:2px;"
+                    tal:define="
+                        input_name string:ar.${column}.${field_name}:ignore_empty:record;
+                        input_id string:ar_${column}_${field_name};
+                        hidden_name string:ar.${column}.DoctorUID:ignore_empty:record;
+                        hidden_id string:ar_${column}_DoctorUID;">
+                <div style="width:100px; border:none;text-align:left;padding-left:2px;">
+                <input tal:attributes="
+                    class field_name;
+                    column column;
+                    id input_id;
+                    value DoctorID;
+                    name input_name;"
+                    style="width:96px; position:absolute; z-index:+1;"/>
+                <input type="hidden" tal:attributes="
+                    class string:${field_name};
+                    column column;
+                    id hidden_id;
+                    value DoctorUID;
+                    name hidden_name;"/>
+                </div>
+                </td>
+            </tal:block>
+        </tr>
+        <tal:block condition="python:DoctorID" repeat="column python:range(view.col_count)">
+            <tal:define define="
+                        input_name string:ar.${column}.${field_name}:ignore_empty:record;
+                        input_id string:ar_${column}_${field_name};
+                        hidden_name string:ar.${column}.DoctorUID:ignore_empty:record;
+                        hidden_id string:ar_${column}_DoctorUID;">
+                <input
+                    type="hidden"
+                    tal:condition="DoctorID"
+                    tal:attributes="
+                        class field_name;
+                        column column;
+                        id input_id;
+                        value DoctorID;
+                        name input_name;"/>
+                <input
+                    type="hidden"
+                    tal:attributes="
+                        column column;
+                        value DoctorUID;
+                        id hidden_id;
+                        name hidden_name;"/>
+            </tal:define>
         </tal:block>
-    </tr>
+    </tal:doctor>
 
     <!-- AR Template (only visible and useable for AR-Add-->
     <tr tal:define="field_name string:ARTemplate">
