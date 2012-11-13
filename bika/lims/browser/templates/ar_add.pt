@@ -262,9 +262,38 @@
     </tr>
 
     <!-- Patient selector -->
+    <!-- Batch context -->
+    <tal:x tal:define="field_name string:PatientID;
+                       PatientID python:hasattr(context, 'getPatientID') and context.getPatientID() or '';
+                       PatientUID python:hasattr(context, 'getPatientUID') and context.getPatientUID() or ''"
+           tal:condition="python:context.portal_type == 'Batch'">
+        <tal:repeat repeat="column python:range(view.col_count)">
+            <tal:block
+                tal:define="
+                    input_name string:ar.${column}.${field_name}:ignore_empty:record;
+                    input_id string:ar_${column}_${field_name};
+                    hidden_name string:ar.${column}.PatientUID:ignore_empty:record;
+                    hidden_id string:ar_${column}_PatientUID;">
+            <input tal:attributes="
+                class field_name;
+                column column;
+                id input_id;
+                value PatientID;
+                name input_name;"
+                type="hidden"/>
+            <input type="hidden" tal:attributes="
+                column column;
+                value PatientUID;
+                id hidden_id;
+                name hidden_name;"/>
+            </tal:block>
+        </tal:repeat>
+    </tal:x>
+    <!-- non-Batch context -->
     <tr tal:define="field_name string:PatientID;
                     PatientID python:hasattr(context, 'getPatientID') and context.getPatientID() or '';
-                    PatientUID python:hasattr(context, 'getPatientUID') and context.getPatientUID() or ''">
+                    PatientUID python:hasattr(context, 'getPatientUID') and context.getPatientUID() or ''"
+        tal:condition="python:context.portal_type != 'Batch'">
         <th colspan="2" style="white-space:nowrap">
             <span i18n:translate="">Patient</span>
             <a style="border-bottom:none !important;margin-left:1em;"
@@ -303,10 +332,40 @@
         </tal:block>
     </tr>
 
+
     <!-- Doctor -->
+    <!-- Batch context -->
+    <tal:x tal:define="field_name string:DoctorID;
+                       DoctorID python:hasattr(context, 'getDoctorID') and context.getDoctorID() or '';
+                       DoctorUID python:hasattr(context, 'getDoctorUID') and context.getDoctorUID() or ''"
+           tal:condition="python:context.portal_type == 'Batch'">
+        <tal:repeat repeat="column python:range(view.col_count)">
+            <tal:block
+                tal:define="
+                    input_name string:ar.${column}.${field_name}:ignore_empty:record;
+                    input_id string:ar_${column}_${field_name};
+                    hidden_name string:ar.${column}.DoctorUID:ignore_empty:record;
+                    hidden_id string:ar_${column}_DoctorUID;">
+            <input tal:attributes="
+                class field_name;
+                column column;
+                id input_id;
+                value DoctorID;
+                name input_name;"
+                type="hidden"/>
+            <input type="hidden" tal:attributes="
+                column column;
+                value DoctorUID;
+                id hidden_id;
+                name hidden_name;"/>
+            </tal:block>
+        </tal:repeat>
+    </tal:x>
+    <!-- non-Batch context -->
     <tr tal:define="field_name string:DoctorID;
                     DoctorID python:hasattr(context, 'getDoctorID') and context.getDoctorID() or '';
-                    DoctorUID python:hasattr(context, 'getDoctorUID') and context.getDoctorUID() or ''">
+                    DoctorUID python:hasattr(context, 'getDoctorUID') and context.getDoctorUID() or ''"
+        tal:condition="python:context.portal_type != 'Batch'">
         <th colspan="2" style="white-space:nowrap">
             <span i18n:translate="">Doctor</span>
             <a style="border-bottom:none !important;margin-left:1em;"
