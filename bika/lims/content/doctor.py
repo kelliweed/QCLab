@@ -34,9 +34,15 @@ class Doctor(Contact):
     def getContactsDisplayList(self):
         pc = getToolByName(self, 'portal_catalog')
         pairs = []
-        for contact in pc(portal_type = 'Contact',
-                          inactive_state = 'active'):
-            pairs.append((contact.UID, contact.title))
+        for contact in pc(portal_type = 'Doctor', inactive_state = 'active'):
+            contact = contact.getObject()
+            pairs.append((contact.UID(), contact.Title()))
+        for contact in pc(portal_type = 'Contact', inactive_state = 'active'):
+            contact = contact.getObject()
+            pairs.append((contact.UID(), contact.Title()))
+        for contact in pc(portal_type = 'LabContact', inactive_state = 'active'):
+            contact = contact.getObject()
+            pairs.append((contact.UID(), contact.Title()))
         # sort the list by the second item
         pairs.sort(lambda x, y:cmp(x[1], y[1]))
         return DisplayList(pairs)
