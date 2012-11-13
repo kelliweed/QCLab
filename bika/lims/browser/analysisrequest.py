@@ -1530,8 +1530,8 @@ class ajaxAnalysisRequestSubmit():
             return json.dumps({'errors':errors})
 
         # Now some basic validation
-        required_fields = ['SampleType', 'SamplingDate']
-        validated_fields = ('SampleID', 'SampleType', 'SamplePoint', 'PatientID', 'Doctor')
+        required_fields = ['SampleType', 'SamplingDate', 'DoctorID', 'PatientID']
+        validated_fields = ('SampleID', 'SampleType', 'SamplePoint', 'PatientID', 'DoctorID')
 
         for column in columns:
             formkey = "ar.%s" % column
@@ -1582,14 +1582,14 @@ class ajaxAnalysisRequestSubmit():
                         error(field, column, self.context.translate(msg))
 
                 elif field == "PatientID":
-                    if not bpc(PatientID = ar[field]):
+                    if not bpc(getPatientID = ar[field]):
                         msg = _("${value} is not a valid patient ID",
                                 mapping={'value':ar[field]})
                         error(field, column, self.context.translate(msg))
 
-                elif field == "Doctor":
+                elif field == "DoctorID":
                     if not pc(portal_type='Doctor',
-                              title = ar[field]):
+                              getDoctorID = ar[field]):
                         msg = _("${value} is not a valid doctor",
                                 mapping={'value':ar[field]})
                         error(field, column, self.context.translate(msg))
