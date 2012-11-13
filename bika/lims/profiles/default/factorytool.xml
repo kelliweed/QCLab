@@ -28,6 +28,7 @@
   <type portal_type="Doctor"/>  
   <type portal_type="Drug"/>
   <type portal_type="DrugProhibition"/>
+  <type portal_type="EpidemiologicalYear"/>
   <type portal_type="Immunization" />
   <type portal_type="Instrument"/>
   <type portal_type="LabContact"/>

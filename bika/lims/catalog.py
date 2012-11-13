@@ -167,7 +167,8 @@ class BikaSetupCatalog(CatalogTool):
                                                  'VaccinationCenter',
                                                  'CaseStatus',
                                                  'CaseOutcome',
-                                                 'WorksheetTemplate'),
+                                                 'WorksheetTemplate',
+                                                 'EpidemiologicalYear'),
                                 search_sub = True,
                                 apply_func = indexObject)
 

@@ -38,30 +38,30 @@ class PatientsView(BikaListingView):
         self.columns = {
             'getPatientID': {'title': _('Patient ID'),
                              'index': 'getPatientID'},
-                        
+
             'Title': {'title': _('Patient'),
                       'index': 'sortable_title'},
-                        
+
             'getGender': {'title': _('Gender'),
                        'index': 'getGender',
-                       'toggle': True}, 
-                        
+                       'toggle': True},
+
             'getAge': {'title': _('Age'),
                    'index': 'getAge',
-                   'toggle': True}, 
-                        
+                   'toggle': True},
+
             'getBirthDate': {'title': _('BirthDate'),
                             'index':'getBirthDate',
-                            'toggle': True}, 
-                        
+                            'toggle': True},
+
             'getCitizenship': {'title': _('Citizenship'),
                           'index':'getCitizenship',
-                          'toggle': True}, 
-                        
+                          'toggle': True},
+
             'getPrimaryReferrer' : {'title': _('Primary Referrer'),
                                     'index': 'getPrimaryReferrer',
-                                    'toggle': True},       
-                        
+                                    'toggle': True},
+
   #          'Description': {'title': _('Description'),
   #                          'index': 'Description',
   #                          'toggle': True},
@@ -72,7 +72,7 @@ class PatientsView(BikaListingView):
              'title': _('All'),
              'contentFilter':{},
              'transitions':[{'id':'empty'},],
-             'columns': ['getPatientID', 'Title', 'getGender', 'getAge', 
+             'columns': ['getPatientID', 'Title', 'getGender', 'getAge',
                          'getBirthDate', 'getCitizenship', 'getPrimaryReferrer']},
         ]
 
@@ -101,14 +101,14 @@ class PatientsView(BikaListingView):
                  'title': _('Active'),
                  'contentFilter': {'inactive_state': 'active'},
                  'transitions': [{'id':'deactivate'}, ],
-                 'columns': ['Title', 'getPatientID', 'getGender', 'getAge', 
+                 'columns': ['Title', 'getPatientID', 'getGender', 'getAge',
                              'getBirthDate', 'getCitizenship', 'getPrimaryReferrer']})
             self.review_states.append(
                 {'id':'inactive',
                  'title': _('Dormant'),
                  'contentFilter': {'inactive_state': 'inactive'},
                  'transitions': [{'id':'activate'}, ],
-                 'columns': ['Title', 'getPatientID', 'getGender', 'getAge', 
+                 'columns': ['Title', 'getPatientID', 'getGender', 'getAge',
                              'getBirthDate', 'getCitizenship', 'getPrimaryReferrer']})
 
         items = BikaListingView.folderitems(self)
@@ -116,8 +116,11 @@ class PatientsView(BikaListingView):
             if not items[x].has_key('obj'): continue
             obj = items[x]['obj']
             items[x]['getPatientID'] = obj.getPatientID()
-            items[x]['replace']['getPatientID'] = "<a href='%s'>%s</a>" % \
+            items[x]['getBirthDate'] = self.ulocalized_time(obj.getBirthDate())
+            items[x]['replace']['getPatientID'] = "<a href='%s/analysisrequests'>%s</a>" % \
                  (items[x]['url'], items[x]['getPatientID'])
+            pr = obj.getPrimaryReferrer()
+            items[x]['getPrimaryReferrer'] = pr and pr.Title() or ''
 
         return items
 

@@ -87,8 +87,8 @@ class BatchFolderContentsView(BikaListingView):
                  'icon': self.portal.absolute_url() + '/++resource++bika.lims.images/add.png'}
         if self.context.portal_type == "Client" \
         and self.portal_membership.checkPermission(AddBatch, self.portal.batches):
-            title = self.context.Title()
-            url = self.portal.batches.absolute_url() + "/portal_factory/Batch/new/edit?ClientID=%s" % title
+            clientid = self.context.getClientID()
+            url = self.portal.batches.absolute_url() + "/portal_factory/Batch/new/edit?ClientID=%s" % clientid
             self.context_actions[_('Add')] = \
                 {'url': url,
                  'icon': self.portal.absolute_url() + '/++resource++bika.lims.images/add.png'}

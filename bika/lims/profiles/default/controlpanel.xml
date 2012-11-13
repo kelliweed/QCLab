@@ -255,6 +255,13 @@
     visible="True"
 	i18n:attributes="title">
   <permission>BIKA: Manage Bika</permission>
+ </configlet>  <configlet title="Sample Origins" action_id="bika_sampleorigins"
+    appId="bika.lims" category="bika" condition_expr=""
+    icon_expr="string:++resource++bika.lims.images/sampleorigin.png"
+    url_expr="string:$portal_url/bika_setup/bika_sampleorigins"
+	visible="True"
+	i18n:attributes="title">
+  <permission>BIKA: Manage Bika</permission>
  </configlet>
 
  <configlet title="Drug Prohibition Explanations" action_id="bika_drugprohibitions"
@@ -334,6 +341,15 @@
     icon_expr="string:++resource++bika.lims.images/worksheettemplate.png"
     url_expr="string:$portal_url/bika_setup/bika_worksheettemplates"
     visible="True"
+	i18n:attributes="title">
+  <permission>BIKA: Manage Bika</permission>
+ </configlet>
+ 
+ <configlet title="Epidemiological Years" action_id="bika_epidemiologicalyears"
+    appId="bika.lims" category="bika" condition_expr=""
+    icon_expr="string:++resource++bika.lims.images/epidemiologicalyear.png"
+    url_expr="string:$portal_url/bika_setup/bika_epidemiologicalyears"
+	visible="True"
 	i18n:attributes="title">
   <permission>BIKA: Manage Bika</permission>
  </configlet>
