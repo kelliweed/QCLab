@@ -68,10 +68,10 @@
                                  <input class="wide" id="Drug" type="text" value="" autocomplete="off"/>
                             </td>
                             <td colspan="1" rowspan="1" class="state-active Start">
-                                 <input class="wide datepicker" id="Start" type="text" value="" autocomplete="off"/>
+                                 <input class="datepicker_nofuture" id="Start" type="text" value="" autocomplete="off"/>
                             </td>
                             <td colspan="1" rowspan="1" class="state-active End">
-                                 <input class="wide datepicker" id="End" type="text" value="" autocomplete="off"/>
+                                 <input class="datepicker" id="End" type="text" value="" autocomplete="off"/>
                             </td>
 					</tbody>
 					<tfoot>

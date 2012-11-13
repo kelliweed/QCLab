@@ -192,6 +192,9 @@ $(document).ready(function(){
 		if (T == '' || D == ''){
 	        return false;
 		}
+		$("#Start").attr('class', 'datepicker_nofuture');
+		$("#End").attr('class', 'datepicker');
+		
 		newrow = $("tr#new").clone();
         $("tr#new").removeAttr('id');
 		$("#Treatment").parent().append("<span>"+T+"</span>");
@@ -249,6 +252,8 @@ $(document).ready(function(){
 		if (I == '' || V == ''){
 	        return false;
 		}
+		$("#Date").attr('class', 'datepicker_nofuture');
+		
 		newrow = $("tr#new").clone();
         $("tr#new").removeAttr('id');
 		$("#Immunization").parent().append("<span>"+I+"</span>");
@@ -279,7 +284,9 @@ $(document).ready(function(){
 		R = $("#Remarks").val();
 		if (T == ''){
 	        return false;
-		}
+		}		
+		$("#Onset").attr('class', 'datepicker_nofuture');
+		
 		newrow = $("tr#new").clone();
         $("tr#new").removeAttr('id');
 		$("#Code").parent().append("<span>"+C+"</span>");
@@ -313,6 +320,9 @@ $(document).ready(function(){
 		if (T == ''){
 	        return false;
 		}
+		$("#TripStartDate").attr('class', 'datepicker_nofuture');
+		$("#TripEndDate").attr('class', 'datepicker');
+		
 		newrow = $("tr#new").clone();
         $("tr#new").removeAttr('id');
 		$("#TripStartDate").parent().append("<span>"+S+"</span>");
