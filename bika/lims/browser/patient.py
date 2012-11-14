@@ -55,7 +55,7 @@ class TreatmentHistoryView(BrowserView):
         TreatmentHistory field.
     """
 
-    template = ViewPageTemplateFile("templates/treatmenthistory.pt")
+    template = ViewPageTemplateFile("templates/patient_treatmenthistory.pt")
 
     def __call__(self):
 
@@ -112,7 +112,7 @@ class AllergiesView(BrowserView):
     """ bika listing to display Allergies for Drug Prohibitions
     """
 
-    template = ViewPageTemplateFile("templates/allergies.pt")
+    template = ViewPageTemplateFile("templates/patient_allergies.pt")
 
     def __call__(self):
 
@@ -168,7 +168,7 @@ class ImmunizationHistoryView(BrowserView):
     """ bika listing to display Immunization history
     """
 
-    template = ViewPageTemplateFile("templates/immunizationhistory.pt")
+    template = ViewPageTemplateFile("templates/patient_immunizationhistory.pt")
 
     def __call__(self):
 
@@ -214,7 +214,7 @@ class ImmunizationHistoryView(BrowserView):
         return self.template()
 
     def getEPINumber(self):
-        ih = self.context.getImmunizationHistory()     
+        ih = self.context.getImmunizationHistory()
         return (len(ih) > 0 and 'EPINumber' in ih[0]) and ih[0]['EPINumber'] or ''
 
     def hasImmunizationHistory(self):
@@ -266,9 +266,9 @@ class ChronicConditionsView(BrowserView):
                 new.append({'Code':C, 'Title':S, 'Description':D, 'Onset': O})
 
             self.context.setChronicConditions(new)
-            self.context.plone_utils.addPortalMessage(PMF("Changes saved"))            
+            self.context.plone_utils.addPortalMessage(PMF("Changes saved"))
         return self.template()
-    
+
     def hasChronicConditions(self):
         return len(self.context.getChronicConditions())>0
 
@@ -276,7 +276,7 @@ class TravelHistoryView(BrowserView):
     """ bika listing to display Travel history
     """
 
-    template = ViewPageTemplateFile("templates/travelhistory.pt")
+    template = ViewPageTemplateFile("templates/patient_travelhistory.pt")
 
     def __call__(self):
 
