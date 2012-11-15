@@ -223,8 +223,7 @@ class Batch(BaseContent):
             value = value[0]
         if value:
             if type(value) == str:
-                print value
-                value = bpc(portal_type='Patient', title=value)[0].getObject()
+                value = bpc(portal_type='Patient', getPatientID=value)[0].getObject()
             return self.setPatientUID(value.UID())
 
     def setChronicConditions(self, value):
