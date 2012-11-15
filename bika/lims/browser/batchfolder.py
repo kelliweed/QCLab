@@ -35,8 +35,11 @@ class BatchFolderContentsView(BikaListingView):
 
         self.columns = {
             'BatchID': {'title': _('Batch ID')},
+            'OnsetDate': {'title': _('Onset Date')},
+            'Patient': {'title': _('Patient')},
+            'Doctor': {'title': _('Doctor')},
+            'Client': {'title': _('Client')},
             'Description': {'title': _('Description')},
-            'Requests': {'title': _('Analysis Requests')},
             'state_title': {'title': _('State'), 'sortable': False},
         }
 
@@ -46,32 +49,44 @@ class BatchFolderContentsView(BikaListingView):
                                'review_state': 'open'},
              'title': _('Open'),
              'columns':['BatchID',
+                        'Patient',
+                        'Doctor',
+                        'Client',
+                        'OnsetDate',
                         'Description',
-                        'Requests',
                         'state_title', ]
              },
             {'id':'closed',
              'contentFilter': {'review_state': 'closed'},
              'title': _('Closed'),
              'columns':['BatchID',
+                        'Patient',
+                        'Doctor',
+                        'Client',
+                        'OnsetDate',
                         'Description',
-                        'Requests',
                         'state_title', ]
              },
             {'id':'cancelled',
              'title': _('Cancelled'),
              'contentFilter': {'cancellation_state': 'cancelled'},
              'columns':['BatchID',
+                        'Patient',
+                        'Doctor',
+                        'Client',
+                        'OnsetDate',
                         'Description',
-                        'Requests',
                         'state_title', ]
              },
             {'id':'all',
              'title': _('All'),
              'contentFilter':{},
              'columns':['BatchID',
+                        'Patient',
+                        'Doctor',
+                        'Client',
+                        'OnsetDate',
                         'Description',
-                        'Requests',
                         'state_title', ]
              },
         ]
@@ -97,6 +112,8 @@ class BatchFolderContentsView(BikaListingView):
     def folderitems(self):
         self.filter_indexes = None
 
+        uc = getToolByName(self.context, 'uid_catalog')
+
         items = BikaListingView.folderitems(self)
         for x in range(len(items)):
             if 'obj' not in items[x]:
@@ -104,7 +121,36 @@ class BatchFolderContentsView(BikaListingView):
             obj = items[x]['obj']
 
             items[x]['replace']['BatchID'] = "<a href='%s/analysisrequests'>%s</a>" % (items[x]['url'], obj.getBatchID())
-            items[x]['Requests'] = len(self.context.getBackReferences("AnalysisRequestBatch"))
+
+            patient = uc(UID=obj.getPatientUID())
+            if patient:
+                patient = patient[0].getObject()
+                items[x]['Patient'] = patient.Title()
+                items[x]['replace']['Patient'] = "<a href='%s'>%s</a>" % (patient.absolute_url(), patient.Title())
+            else:
+                items[x]['Patient'] = ''
+
+            doctor = uc(UID=obj.getDoctorUID())
+            if doctor:
+                doctor = doctor[0].getObject()
+                items[x]['Doctor'] = doctor.Title()
+                items[x]['replace']['Doctor'] = "<a href='%s'>%s</a>" % (doctor.absolute_url(), doctor.Title())
+            else:
+                items[x]['Doctor'] = ''
+
+            client = uc(UID=obj.getClientUID())
+            if client:
+                client = client[0].getObject()
+                items[x]['Client'] = client.Title()
+                items[x]['replace']['Client'] = "<a href='%s'>%s</a>" % (client.absolute_url(), client.Title())
+            else:
+                items[x]['Client'] = ''
+
+            osd = obj.getOnsetDate()
+            if osd:
+                items[x]['OnsetDate'] = self.ulocalized_time(osd)
+            else:
+                items[x]['OnsetDate'] = ''
 
         return items
 

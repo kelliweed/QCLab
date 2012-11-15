@@ -61,12 +61,12 @@ msgstr "${samplepoint} is ongeldig"
 msgid "${sampletype} is not a valid sample type"
 msgstr "${sampletype} is ongeldig"
 
-# 
+#
 # File: ../browser/analysisrequest.py, line: 1563
 msgid "${value} is not a valid doctor"
 msgstr ""
 
-# 
+#
 # File: ../browser/analysisrequest.py, line: 1556
 msgid "${value} is not a valid patient ID"
 msgstr ""
@@ -95,30 +95,30 @@ msgstr "(Vereis)"
 msgid "+-"
 msgstr "±"
 
-# 
+#
 msgid "<p>${service} requires the following services to be selected:</p><br/><p>${deps}</p><br/><p>Do you want to apply these selections now?</p>"
 msgstr ""
 
-# 
+#
 msgid "<p>The following services depend on ${service}, and will be unselected if you continue:</p><br/><p>${deps}</p><br/><p>Do you want to remove these selections now?</p>"
 msgstr ""
 
-# 
+#
 # File: ../content/patient.py, line: 115
 msgid "A list of immunizations administered to the patient."
 msgstr ""
 
-# 
+#
 # File: ../content/patient.py, line: 88
 msgid "A list of patient treatments and drugs administered."
 msgstr ""
 
-# 
+#
 # File: ../content/patient.py, line: 135
 msgid "A list of places visited by the patient."
 msgstr ""
 
-# 
+#
 # File: ../content/patient.py, line: 126
 msgid "A list of this patient's chronic conditions."
 msgstr ""
@@ -177,12 +177,12 @@ msgstr "Aksie"
 msgid "Active"
 msgstr "Aktief"
 
-# 
+#
 # File: ../content/immunization.py, line: 110
 msgid "Active immunization"
 msgstr ""
 
-# 
+#
 # File: ../content/treatment.py, line: 78
 msgid "Active treatment"
 msgstr ""
@@ -211,7 +211,7 @@ msgstr "Voef profiel by"
 msgid "Add Template"
 msgstr "Voeg templaat by"
 
-# 
+#
 # File: ../controlpanel/bika_symptoms.py, line: 30
 msgid "Additional Symptoms and chronic conditions not covered by ICD codes, can be entered here."
 msgstr ""
@@ -225,7 +225,7 @@ msgstr "Voeg tweesyfer jaar na ID voorvoegsel in"
 msgid "Administrative Reports"
 msgstr "Administratiewe Verslae"
 
-# 
+#
 # File: ../content/patient.py, line: 53
 msgid "Age"
 msgstr ""
@@ -410,7 +410,7 @@ msgstr "Toegepas"
 msgid "Apply template"
 msgstr "Pas Templaat Toe"
 
-# 
+#
 # File: ../content/drug.py, line: 39
 msgid "Appropriate doses and dosage"
 msgstr ""
@@ -487,7 +487,7 @@ msgstr ""
 msgid "Batch ID"
 msgstr ""
 
-# 
+#
 # File: ../controlpanel/bika_batchlabels.py, line: 23
 msgid "Batch Labels"
 msgstr ""
@@ -495,11 +495,11 @@ msgstr ""
 msgid "Batch end date"
 msgstr "Bondel Enddatum"
 
-# 
+#
 msgid "Batch label"
 msgstr "Syndrome Classification"
 
-# 
+#
 msgid "Batch labels"
 msgstr "Case Syndrome Classifications"
 
@@ -512,7 +512,7 @@ msgstr ""
 msgid "Bearing"
 msgstr "Rigting"
 
-# 
+#
 # File: ../controlpanel/overview.py, line: 10
 msgid "Bika Health Configuration"
 msgstr ""
@@ -520,17 +520,17 @@ msgstr ""
 msgid "Billing address"
 msgstr "Rekeningadres"
 
-# 
+#
 # File: ../content/patient.py, line: 59
 msgid "Birth date"
 msgstr ""
 
-# 
+#
 # File: ../content/patient.py, line: 65
 msgid "Birth date is estimated"
 msgstr ""
 
-# 
+#
 # File: ../content/patient.py, line: 132
 msgid "Birth place"
 msgstr ""
@@ -595,7 +595,7 @@ msgstr "Gekanselleer"
 msgid "Cannot activate calculation, because the following service dependencies are inactive: ${inactive_services}"
 msgstr "Kan berekening nie aktiveer nie want die volgende afhanklike dienste is onaktief: ${inactive_services}"
 
-# 
+#
 # File: ../content/patients.py, line: 67
 msgid "Cannot create patients without any system clients configured."
 msgstr ""
@@ -609,22 +609,22 @@ msgstr "Kapasiteit"
 msgid "Captured"
 msgstr "Vasgelê"
 
-# 
+#
 # File: ../controlpanel/bika_caseoutcomes.py, line: 23
 msgid "Case Outcomes"
 msgstr ""
 
-# 
+#
 # File: ../controlpanel/bika_casestatuses.py, line: 23
 msgid "Case Statuses"
 msgstr ""
 
-# 
+#
 # File: ../content/batch.py, line: 84
 msgid "Case outcome"
 msgstr ""
 
-# 
+#
 # File: ../content/batch.py, line: 77
 msgid "Case status"
 msgstr ""
@@ -641,7 +641,7 @@ msgstr "Kategorie"
 msgid "Category cannot be deactivated because it contains Analysis Services"
 msgstr "Kategorie kan nie deaktiveer word nie weens"
 
-# 
+#
 # File: ../content/treatment.py, line: 79
 msgid "Causal treatment"
 msgstr ""
@@ -664,7 +664,7 @@ msgstr "Kies hierdie blokkie om 'n afsonderlike monsterhouer te gebruik vir dier
 msgid "Check this if you want to use a separate ID server. Prefixes are configurable separately in each Bika site"
 msgstr "Kies hier om 'n afsonderlike ID-bediener te gebruik. Voorvoegsels is afsonderlik stelbaar in elke Bika-webwerf"
 
-# 
+#
 # File: ../content/patient.py, line: 144
 msgid "Citizenship"
 msgstr ""
@@ -672,7 +672,7 @@ msgstr ""
 msgid "City"
 msgstr "Stad"
 
-# 
+#
 # File: ../content/patient.py, line: 154
 msgid "Civil status"
 msgstr ""
@@ -752,12 +752,12 @@ msgstr "Kliënte"
 msgid "Closed"
 msgstr ""
 
-# 
+#
 # File: ../browser/templates/patient_chronicconditions.pt, line: 20
 msgid "Code"
 msgstr ""
 
-# 
+#
 # File: ../content/immunization.py, line: 73
 msgid "Collectives at risk"
 msgstr ""
@@ -774,7 +774,7 @@ msgstr "Stel die monsterafdelings en preservering vir hierdie templaat. Wys ontl
 msgid "Confirm password"
 msgstr "Bevestig Wagwoord"
 
-# 
+#
 # File: ../content/treatment.py, line: 80
 msgid "Conservative treatment"
 msgstr ""
@@ -884,15 +884,15 @@ msgstr "Datum Gemonster"
 msgid "Date Submitted"
 msgstr "Datum Ingehandig"
 
-# 
+#
 # File: ../content/batch.py, line: 62
-msgid "Date of onset of illness"
+msgid "Onset Date"
 msgstr ""
 
 msgid "Days"
 msgstr "Dae"
 
-# 
+#
 msgid "Default"
 msgstr ""
 
@@ -932,7 +932,7 @@ msgstr "Definieer die voorvoegsels vir die unieke reeksID's wat die stelsel uitr
 msgid "Degrees"
 msgstr "Grade"
 
-# 
+#
 # File: ../browser/templates/allergies.pt, line: 71
 # File: ../browser/templates/immunizationhistory.pt, line: 93
 # File: ../browser/templates/treatmenthistory.pt, line: 88
@@ -942,7 +942,7 @@ msgstr ""
 msgid "Delete attachment"
 msgstr "Verwyder aanhangsel"
 
-# 
+#
 # File: ../browser/templates/allergies.pt, line: 68
 # File: ../browser/templates/immunizationhistory.pt, line: 90
 # File: ../browser/templates/treatmenthistory.pt, line: 85
@@ -970,12 +970,12 @@ msgstr "Afslag"
 msgid "Discount %"
 msgstr "Afslag %"
 
-# 
+#
 # File: ../controlpanel/bika_diseases.py, line: 37
 msgid "Disease"
 msgstr ""
 
-# 
+#
 # File: ../controlpanel/bika_diseases.py, line: 28
 msgid "Diseases"
 msgstr ""
@@ -995,24 +995,24 @@ msgstr "Verwyderd"
 msgid "District"
 msgstr ""
 
-# 
+#
 # File: ../browser/analysisrequest.py, line: 455
 # File: ../browser/sample.py, line: 328
 # File: ../browser/templates/ar_add.pt, line: 186
 msgid "Doctor"
 msgstr ""
 
-# 
+#
 # File: ../content/doctor.py, line: 20
 msgid "Doctor ID"
 msgstr ""
 
-# 
+#
 # File: ../content/doctors.py, line: 28
 msgid "Doctors"
 msgstr ""
 
-# 
+#
 # File: ../config.py, line: 77
 msgid "Don't Know"
 msgstr ""
@@ -1020,54 +1020,54 @@ msgstr ""
 msgid "Dormant"
 msgstr "Dormant"
 
-# 
+#
 # File: ../browser/templates/allergies.pt, line: 26
 # File: ../browser/templates/treatmenthistory.pt, line: 26
 # File: ../content/patient.py, line: 83
 msgid "Drug"
 msgstr ""
 
-# 
+#
 # File: ../controlpanel/bika_drugprohibitions.py, line: 37
 msgid "Drug Prohibition"
 msgstr ""
 
-# 
+#
 # File: ../browser/templates/allergies.pt, line: 21
 # File: ../content/patient.py, line: 96
 msgid "Drug Prohibition Explanation"
 msgstr ""
 
-# 
+#
 # File: ../controlpanel/bika_drugprohibitions.py, line: 28
 msgid "Drug Prohibition Explanations"
 msgstr ""
 
-# 
+#
 # File: ../content/drug.py, line: 26
 #. Default: "Indications"
 msgid "Drug indications"
 msgstr ""
 
-# 
+#
 # File: ../content/drug.py, line: 37
 #. Default: "Posology"
 msgid "Drug posology"
 msgstr ""
 
-# 
+#
 # File: ../content/drug.py, line: 59
 #. Default: "Preservation"
 msgid "Drug preservation"
 msgstr ""
 
-# 
+#
 # File: ../content/drug.py, line: 48
 #. Default: "Side effects"
 msgid "Drug side effects"
 msgstr ""
 
-# 
+#
 # File: ../controlpanel/bika_drugs.py, line: 28
 msgid "Drugs"
 msgstr ""
@@ -1117,7 +1117,7 @@ msgstr "Duur"
 msgid "E.g. SANAS, APLAC, etc."
 msgstr "Bv. SANAS, APLAC, etc."
 
-# 
+#
 # File: ../browser/templates/immunizationhistory.pt, line: 13
 # File: ../content/patient.py, line: 109
 msgid "EPI Number"
@@ -1141,7 +1141,7 @@ msgstr "E-posadres"
 msgid "Email subject line"
 msgstr "E-pos Onderwerpnaam"
 
-# 
+#
 # File: ../content/treatment.py, line: 81
 msgid "Empirical treatment"
 msgstr ""
@@ -1149,7 +1149,7 @@ msgstr ""
 msgid "Enable the Sampling workflow"
 msgstr "Stel die monster-werkvloei"
 
-# 
+#
 # File: ../browser/templates/treatmenthistory.pt, line: 32
 # File: ../content/patient.py, line: 84
 msgid "End"
@@ -1179,12 +1179,12 @@ msgstr "Sleutel die posisie se breedte graad in 0-90, minute 0-59, sekondes 0-59
 msgid "Enter the Sample Point's longitude in degrees 0-180, minutes 0-59, seconds 0-59 and E/W indicator"
 msgstr "Sleutel die posisie se lengtegraad in, in grade 0-180, minute 0-59, sekondes 0-59 en 'n Oos/Wes (E/W) aanduiding"
 
-# 
+#
 # File: ../content/patient.py, line: 138
 msgid "Ethnicity"
 msgstr ""
 
-# 
+#
 # File: ../content/patient.py, line: 139
 msgid "Ethnicity eg. Asian, African, etc."
 msgstr ""
@@ -1192,7 +1192,7 @@ msgstr ""
 msgid "Exclude from invoice"
 msgstr "Sluit uit van faktuur"
 
-# 
+#
 # File: ../content/treatment.py, line: 82
 msgid "Expectant/Symptomatic treatment"
 msgstr ""
@@ -1209,7 +1209,7 @@ msgstr "Verval"
 msgid "Expiry Date"
 msgstr "Vervaldatum"
 
-# 
+#
 # File: Profile, line: -1
 # File: description, line: -1
 # File: in, line: -1
@@ -1223,7 +1223,7 @@ msgstr "Faks"
 msgid "Fax (business)"
 msgstr "Faks (besigheids)"
 
-# 
+#
 # File: ../content/patient.py, line: 165
 msgid "Feature"
 msgstr ""
@@ -1264,17 +1264,17 @@ msgstr "Volle Naam"
 msgid "Future dated sample"
 msgstr "Toekomstige monster"
 
-# 
+#
 # File: ../content/patient.py, line: 48
 msgid "Gender"
 msgstr ""
 
-# 
+#
 # File: ../content/immunization.py, line: 45
 msgid "Geographical areas can be characterized as having high, intermediate or low levels of infection."
 msgstr ""
 
-# 
+#
 # File: ../content/immunization.py, line: 44
 msgid "Geographical distribution"
 msgstr ""
@@ -1291,7 +1291,7 @@ msgstr "Skadelik"
 msgid "Hours"
 msgstr "Ure"
 
-# 
+#
 # File: ../content/disease.py, line: 17
 msgid "ICD Code"
 msgstr ""
@@ -1317,20 +1317,20 @@ msgstr "Indien die benodigde monstertipe nie hier gelys word nie, bestaan 'n spe
 msgid "If this container is pre-preserved, then the preservation method could be selected here."
 msgstr "Indien hierdie houer vooraf gepreserveerd is, moet die preserveringsmetode hier gekies word."
 
-# 
+#
 # File: ../browser/templates/immunizationhistory.pt, line: 34
 # File: ../content/patient.py, line: 109
 # File: ../controlpanel/bika_immunizations.py, line: 37
 msgid "Immunization"
 msgstr ""
 
-# 
+#
 # File: ../content/immunization.py, line: 17
 #. Default: "Type"
 msgid "Immunization form"
 msgstr ""
 
-# 
+#
 # File: ../controlpanel/bika_immunizations.py, line: 28
 msgid "Immunizations"
 msgstr ""
@@ -1416,12 +1416,12 @@ msgstr "Sleutelwoord"
 msgid "Keywords"
 msgstr "Sleutelwoorde"
 
-# 
+#
 # File: ../content/patient.py, line: 101
 msgid "Known Patient allergies to keep information that can aid drug reaction interpretation"
 msgstr ""
 
-# 
+#
 # File: ../content/drug.py, line: 50
 msgid "Known undesirable effects of the drug"
 msgstr ""
@@ -1447,7 +1447,7 @@ msgstr "Lab Produkte"
 msgid "Lab URL"
 msgstr "Lab URL"
 
-# 
+#
 # File: ../controlpanel/bika_batchlabels.py, line: 32
 msgid "Label"
 msgstr ""
@@ -1488,7 +1488,7 @@ msgstr "Laai beskrywende dokumente vir die metode"
 msgid "Loaded"
 msgstr "Gelaai"
 
-# 
+#
 # File: ../browser/templates/travelhistory.pt, line: 39
 # File: ../content/patient.py, line: 126
 msgid "Location"
@@ -1606,7 +1606,7 @@ msgstr "Model"
 msgid "More"
 msgstr "Meer"
 
-# 
+#
 # File: ../content/patient.py, line: 149
 msgid "Mothers name"
 msgstr ""
@@ -1704,7 +1704,7 @@ msgstr "Aantal versoeke"
 msgid "Number of samples"
 msgstr "Aantal Monsters"
 
-# 
+#
 # File: ../content/treatment.py, line: 58
 msgid "Objective clinical findings"
 msgstr ""
@@ -1712,7 +1712,7 @@ msgstr ""
 msgid "Once preserved, the sample must be disposed of within this time period.  If not specified, the sample type retention period will be used."
 msgstr "Indien gepreserveer, moet die monster binne hierdie tydsbestek vernietig word. Indien ongespesifiseerd, sal die monster-restensietyd gebruik word."
 
-# 
+#
 # File: ../browser/templates/patient_chronicconditions.pt, line: 33
 msgid "Onset"
 msgstr ""
@@ -1738,7 +1738,7 @@ msgstr "Bestellings"
 msgid "PDF"
 msgstr "PDF"
 
-# 
+#
 # File: ../content/treatment.py, line: 83
 msgid "Palliative treatment"
 msgstr ""
@@ -1749,7 +1749,7 @@ msgstr "Parameters ongedefinieer"
 msgid "Parameters undefined"
 msgstr "Parameters ongedefinieer"
 
-# 
+#
 msgid "Parent"
 msgstr ""
 
@@ -1762,7 +1762,7 @@ msgstr "Afdelingsopstelling"
 msgid "Partitions"
 msgstr "Afdelings"
 
-# 
+#
 # File: ../content/immunization.py, line: 111
 msgid "Passive immunization"
 msgstr ""
@@ -1773,20 +1773,20 @@ msgstr "Wagwoord"
 msgid "Password lifetime"
 msgstr "Wagwoord leeftyd"
 
-# 
+#
 # File: ../browser/analysisrequest.py, line: 449
 # File: ../browser/sample.py, line: 322
 # File: ../browser/templates/ar_add.pt, line: 146
 msgid "Patient"
 msgstr ""
 
-# 
+#
 # File: ../content/patient.py, line: 25
 # File: ../content/patients.py, line: 39
 msgid "Patient ID"
 msgstr ""
 
-# 
+#
 # File: ../content/patients.py, line: 30
 msgid "Patients"
 msgstr ""
@@ -1818,7 +1818,7 @@ msgstr "Foon (tuis)"
 msgid "Phone (mobile)"
 msgstr "Foon (mobiel)"
 
-# 
+#
 # File: ../content/patient.py, line: 159
 msgid "Photo"
 msgstr ""
@@ -1874,12 +1874,12 @@ msgstr "Preserverings"
 msgid "Preserver"
 msgstr "Preserveerder"
 
-# 
+#
 # File: ../content/immunization.py, line: 91
 msgid "Prevention"
 msgstr ""
 
-# 
+#
 # File: ../content/treatment.py, line: 84
 msgid "Preventive/Prophylactic treatment"
 msgstr ""
@@ -1896,7 +1896,7 @@ msgstr "Prys BTW uitgeslote"
 msgid "Pricelist for"
 msgstr "Pryslys vir"
 
-# 
+#
 # File: ../content/patient.py, line: 35
 msgid "Primary Referrer"
 msgstr ""
@@ -1928,7 +1928,7 @@ msgstr "Profiel Sleutelwoord"
 msgid "Profiles"
 msgstr "Profiele"
 
-# 
+#
 # File: ../content/batch.py, line: 70
 msgid "Provisional Diagnosis and additional notes"
 msgstr ""
@@ -1981,7 +1981,7 @@ msgstr "Bereik min"
 msgid "Range spec"
 msgstr "Bereikspesifikasie"
 
-# 
+#
 # File: ../content/treatment.py, line: 85
 msgid "Rational treatment"
 msgstr ""
@@ -2049,7 +2049,7 @@ msgstr "Verwsyingsdefinisie verteenwoordig 'n Verwysingsdefinisie of monstertipe
 msgid "Register"
 msgstr "Registreer"
 
-# 
+#
 # File: ../content/immunization.py, line: 35
 msgid "Relevant Facts"
 msgstr ""
@@ -2220,17 +2220,17 @@ msgstr "Monstering Reelmaat"
 msgid "Save"
 msgstr "Stoor"
 
-# 
+#
 # File: ../browser/templates/allergies.pt, line: 81
 msgid "Save allergies"
 msgstr ""
 
-# 
+#
 # File: ../browser/templates/patient_chronicconditions.pt, line: 77
 msgid "Save chronic conditions"
 msgstr ""
 
-# 
+#
 # File: ../browser/templates/immunizationhistory.pt, line: 103
 msgid "Save immunization history"
 msgstr ""
@@ -2238,12 +2238,12 @@ msgstr ""
 msgid "Save remarks"
 msgstr "Stoor opmerkings"
 
-# 
+#
 # File: ../browser/templates/travelhistory.pt, line: 104
 msgid "Save travel history"
 msgstr ""
 
-# 
+#
 # File: ../browser/templates/treatmenthistory.pt, line: 98
 msgid "Save treatment history"
 msgstr ""
@@ -2278,12 +2278,12 @@ msgstr "Kies 'n posisie en die ontledingsversoek om te dupliseer"
 msgid "Select a manager from the available personnel configured under the 'lab contacts' setup item. Departmental managers are referenced on analysis results reports containing analyses by their department."
 msgstr "Kies 'n bestuurder uit die bestaande personeel onder die 'lab kontakte' opstelling.  Afdelingsbestuurders word na verwys op analise resultaatsverslae wat analises per afdeling bevat."
 
-# 
+#
 # File: ../content/immunization.py, line: 19
 msgid "Select a type of immunization. <br/>Active immunization entails the introduction of a foreign molecule into the body, which causes the body itself to generate immunity against the target. Vaccination is an active form of immunization<br/>Passive immunization is where pre-synthesized elements of the immune system are transferred to a person so that the body does not need to produce these elements itself. Currently, antibodies can be used for passive immunization"
 msgstr ""
 
-# 
+#
 # File: ../content/treatment.py, line: 21
 msgid "Select a type of treatment."
 msgstr ""
@@ -2357,7 +2357,7 @@ msgstr "Reeksnommer"
 msgid "Service"
 msgstr "Diens"
 
-# 
+#
 # ../browser/js/analysisrequest.js
 msgid "Service dependencies"
 msgstr ""
@@ -2386,7 +2386,7 @@ msgstr "Stel die laboratorium ontledingsdiens op"
 msgid "Shipping address"
 msgstr "Verskepingsadres"
 
-# 
+#
 # File: ../content/treatment.py, line: 86
 msgid "Shock treatment"
 msgstr ""
@@ -2400,7 +2400,7 @@ msgstr "Handtekening"
 msgid "Size"
 msgstr "Grootte"
 
-# 
+#
 # ../browser/js/attachments.js
 msgid "Slot"
 msgstr ""
@@ -2411,7 +2411,7 @@ msgstr "Klein"
 msgid "Special"
 msgstr "Spesiaal"
 
-# 
+#
 # File: ../content/treatment.py, line: 87
 msgid "Specific treatment"
 msgstr ""
@@ -2428,7 +2428,7 @@ msgstr "Spesifiseer die grootte van die werksblad, bv ooreenkomstig spesifieke i
 msgid "Specify the uncertainty value for a given range, e.g. for results in a range with minimum of 0 and maximum of 10, the uncertainty value is 0.5 - a result of 6.67 will be reported as 6.67 +- 0.5. Please ensure successive ranges are continuous, e.g. 0.00 - 10.00 is followed by 10.01 - 20.00, 20.01 - 30 .00 etc."
 msgstr "Spesifiseer die onsekerheidswaardes vir 'n gegewe bereik, bv. vir resultate in 'n bereik met 'n minimum van 0 en 'n maksimum van 10 is die onsekerheidswaarde 0.5. 'n Resultaat van 6.67 sal gerapporteer word as 6.67 +- 0.5. maak seker opeenvolgende bereike is aaneenlopend, bv. 0.00-10.00 word gevolg deur 10.01-20.00, 20.01-30.00, ens. "
 
-# 
+#
 # File: ../browser/templates/treatmenthistory.pt, line: 29
 # File: ../content/patient.py, line: 83
 msgid "Start"
@@ -2440,7 +2440,7 @@ msgstr "Staat"
 msgid "Status"
 msgstr "Status"
 
-# 
+#
 # File: ../content/treatment.py, line: 49
 msgid "Subjective clinical findings"
 msgstr ""
@@ -2454,7 +2454,7 @@ msgstr "Subtotaal"
 msgid "Supplier"
 msgstr "Verskaffer"
 
-# 
+#
 # File: ../content/treatment.py, line: 88
 msgid "Supporting treatment"
 msgstr ""
@@ -2462,19 +2462,19 @@ msgstr ""
 msgid "Surname"
 msgstr "Van"
 
-# 
+#
 # File: ../browser/templates/patient_chronicconditions.pt, line: 24
 # File: ../controlpanel/bika_symptoms.py, line: 37
 msgid "Symptom"
 msgstr ""
 
-# 
+#
 # File: ../content/immunization.py, line: 64
 # File: ../controlpanel/bika_symptoms.py, line: 28
 msgid "Symptoms"
 msgstr ""
 
-# 
+#
 # File: ../content/drug.py, line: 28
 msgid "Symptoms or the like for which the drug is suitable"
 msgstr ""
@@ -2650,7 +2650,7 @@ msgstr ""
 msgid "This value is reported at the bottom of all published results"
 msgstr "Hierdie waarde word onder aan alle gepubliseerde resulate vertoon"
 
-# 
+#
 # ../browser/js/client.js
 msgid "This will remove all existing client analysis specifications and create copies of all lab specifications. Are you sure you want to do this?"
 msgstr ""
@@ -2682,63 +2682,63 @@ msgstr "Totale aantal datapunte"
 msgid "Total price"
 msgstr "Totale Prys"
 
-# 
+#
 # File: ../content/immunization.py, line: 55
 msgid "Transmission"
 msgstr ""
 
-# 
+#
 # File: ../browser/templates/treatmenthistory.pt, line: 21
 # File: ../content/immunization.py, line: 82
 # File: ../content/patient.py, line: 83
 msgid "Treatment"
 msgstr ""
 
-# 
+#
 # File: ../content/treatment.py, line: 64
 msgid "Treatment Document"
 msgstr ""
 
-# 
+#
 # File: ../content/treatment.py, line: 40
 msgid "Treatment care"
 msgstr ""
 
-# 
+#
 # File: ../content/treatment.py, line: 30
 #. Default: "Procedure"
 msgid "Treatment procedure"
 msgstr ""
 
-# 
+#
 # File: ../content/treatment.py, line: 19
 #. Default: "Type"
 msgid "Treatment type"
 msgstr ""
 
-# 
+#
 # File: ../controlpanel/bika_treatments.py, line: 28
 msgid "Treatments"
 msgstr ""
 
-# 
+#
 # File: ../content/patient.py, line: 124
 #. Default: "End date"
 msgid "Trip End Date"
 msgstr ""
 
-# 
+#
 # File: ../content/patient.py, line: 123
 #. Default: "Start date"
 msgid "Trip Start Date"
 msgstr ""
 
-# 
+#
 # File: ../browser/templates/travelhistory.pt, line: 29
 msgid "Trip end date"
 msgstr ""
 
-# 
+#
 # File: ../browser/templates/travelhistory.pt, line: 23
 msgid "Trip start date"
 msgstr ""
@@ -2797,17 +2797,17 @@ msgstr "BTW Amount"
 msgid "VAT number"
 msgstr "BTW nommer"
 
-# 
+#
 # File: ../content/patient.py, line: 110
 msgid "Vaccination Center"
 msgstr ""
 
-# 
+#
 # File: ../controlpanel/bika_vaccinationcenters.py, line: 31
 msgid "Vaccination Centers"
 msgstr ""
 
-# 
+#
 # File: ../browser/templates/immunizationhistory.pt, line: 40
 msgid "VaccinationCenter"
 msgstr ""
@@ -2986,7 +2986,7 @@ msgstr "berekeningsformule beskrywing"
 msgid "client"
 msgstr "kliënt"
 
-# 
+#
 # File: TranslationServiceTool.py, line: -1
 #. The variables used here are the same as used in the strftime formating.
 #. Supported are ${A}, ${a}, ${B}, ${b}, ${H}, ${I}, ${m}, ${d}, ${M}, ${p},
@@ -2997,7 +2997,7 @@ msgstr "kliënt"
 msgid "date_format_long"
 msgstr "${Y}-${m}-${d} ${I}:${M} ${p}"
 
-# 
+#
 # File: TranslationServiceTool.py, line: -1
 #. The variables used here are the same as used in the strftime formating.
 #. Supported are ${A}, ${a}, ${B}, ${b}, ${H}, ${I}, ${m}, ${d}, ${M}, ${p},
@@ -3008,7 +3008,7 @@ msgstr "${Y}-${m}-${d} ${I}:${M} ${p}"
 msgid "date_format_short"
 msgstr "${Y}-${m}-${d}"
 
-# 
+#
 #. Date format used with the datepicker jqueryui plugin.
 #. Please only use 'dd', 'mm', 'yy', '-', '/', '.' in this string.
 #. Default: "mm/dd/yy"
@@ -3038,7 +3038,7 @@ msgstr "maks"
 msgid "min"
 msgstr "min"
 
-# 
+#
 # File: ../content/drug.py, line: 61
 msgid "preservation"
 msgstr ""
@@ -3050,7 +3050,7 @@ msgstr "bereik"
 msgid "summary_content_listing"
 msgstr "Opsomming inhoudslys"
 
-# 
+#
 # File: TranslationServiceTool.py, line: -1
 #. The variables used here are the same as used in the strftime formating.
 #. Supported are ${A}, ${a}, ${B}, ${b}, ${H}, ${I}, ${m}, ${d}, ${M}, ${p},
