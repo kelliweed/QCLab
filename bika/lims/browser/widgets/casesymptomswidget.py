@@ -23,6 +23,9 @@ class CaseSymptomsView(BrowserView):
 
     def __call__(self):
         return self.template()
+    
+    def hasSymptoms(self):
+        return len(self.context.getSymptoms())>0
 
 
 class CaseSymptomsWidget(TypesWidget):
@@ -40,8 +43,18 @@ class CaseSymptomsWidget(TypesWidget):
     def process_form(self, instance, field, form, empty_marker=None, emptyReturnsMarker=False):
         """ Return a list of dictionaries fit for Case/Symptoms RecordsField
         """
-        value = []
-        if 'submitted' in form:
+        value = len(instance.getSymptoms())>0 and instance.getSymptoms() or []
+        if 'clear' in form:
+            value = []
+            
+        elif 'delete' in form:
+            valueout = []
+            for i in range(len(value)):
+                if not ('SelectItem-%s'%i in form):
+                    valueout.append(value[i])
+            value = valueout
+            
+        elif 'submitted' in form:
             bsc = getToolByName(instance, 'bika_setup_catalog')
             for i in range(len(form.get('CSY_Title', []))):
                 C = form['CSY_Code'][i]

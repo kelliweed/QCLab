@@ -29,6 +29,10 @@ $(document).ready(function(){
         if (T == ''){
             return false;
         }
+        
+        // Avoids datewidget unload after adding new row without postback
+        $("#Onset").attr('class', 'datepicker_nofuture');
+        
         newrow = $("tr#new").clone();
         $("tr#new").removeAttr('id');
         $("#Code").parent().append("<span>"+C+"</span>");
