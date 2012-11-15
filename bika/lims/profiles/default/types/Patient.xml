@@ -67,18 +67,6 @@
   <permission value="View"/>
  </action>
 
- <action title="Treatment History"
-         action_id="treatmenthistory"
-         category="object"
-         condition_expr=""
-         icon_expr="string:${portal_url}/images/drug.png"
-         link_target=""
-         url_expr="string:${object_url}/treatmenthistory"
-         i18n:attributes="title"
-         visible="True">
-  <permission value="View"/>
- </action>
-
  <action title="Allergies"
          action_id="allergies"
          category="object"
@@ -86,6 +74,18 @@
          icon_expr="string:${portal_url}/images/drug.png"
          link_target=""
          url_expr="string:${object_url}/allergies"
+         i18n:attributes="title"
+         visible="True">
+  <permission value="View"/>
+ </action>
+
+ <action title="Chronic Conditions"
+         action_id="chronicconditions"
+         category="object"
+         condition_expr=""
+         icon_expr="string:${portal_url}/images/symptom.png"
+         link_target=""
+         url_expr="string:${object_url}/chronicconditions"
          i18n:attributes="title"
          visible="True">
   <permission value="View"/>
@@ -103,18 +103,18 @@
   <permission value="View"/>
  </action>
 
- <action title="Chronic Conditions"
-         action_id="chronicconditions"
+ <action title="Treatment History"
+         action_id="treatmenthistory"
          category="object"
          condition_expr=""
-         icon_expr="string:${portal_url}/images/symptom.png"
+         icon_expr="string:${portal_url}/images/drug.png"
          link_target=""
-         url_expr="string:${object_url}/chronicconditions"
+         url_expr="string:${object_url}/treatmenthistory"
          i18n:attributes="title"
          visible="True">
   <permission value="View"/>
  </action>
-  
+
   <action title="Travel History"
          action_id="travelhistory"
          category="object"
