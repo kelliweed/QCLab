@@ -63,9 +63,9 @@ schema = BikaSchema.copy() + Schema((
             visible=False,
         ),
     ),
-    DateTimeField('DateOfOnset',
+    DateTimeField('OnsetDate',
           widget=DateTimeWidget(
-              label=_('Date of onset of illness'),
+              label=_('Onset Date'),
           ),
       ),
     TextField('ProvisionalDiagnosis',

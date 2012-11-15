@@ -1309,7 +1309,7 @@ msgid "Date Submitted"
 msgstr ""
 #
 # File: ../content/batch.py, line: 56
-msgid "Date of onset of illness"
+msgid "Onset Date"
 msgstr ""
 #
 # File: ../browser/fields/durationfield.py, line: 19
