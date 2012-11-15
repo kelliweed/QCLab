@@ -209,6 +209,7 @@
             </th>
             <td>
                 <img class="copyButton ClientIDCopyButton"
+                     tal:condition="python:view.col_count > 1"
                      tal:attributes="name field_name;src string:${portal/absolute_url}/++resource++bika.lims.images/copy.png"/>
             </td>
             <tal:block repeat="column python:range(view.col_count)">
@@ -270,7 +271,7 @@
         </th>
         <td>
             <img class="copyButton BatchIDCopyButton"
-                 tal:condition="python:context.portal_type != 'Batch'"
+                 tal:condition="python:context.portal_type != 'Batch' and view.col_count > 1"
                  tal:attributes="name field_name;src string:${portal/absolute_url}/++resource++bika.lims.images/copy.png"/>
         </td>
         <tal:block repeat="column python:range(view.col_count)">
@@ -434,7 +435,8 @@
         <th colspan="2" style="white-space:nowrap" i18n:translate="">Template</th>
         <td>
             <img class="copyButton ARTemplateCopyButton"
-                tal:attributes="name field_name;src string:${portal/absolute_url}/++resource++bika.lims.images/copy.png"/>
+                 tal:condition="python:view.col_count > 1"
+                 tal:attributes="name field_name;src string:${portal/absolute_url}/++resource++bika.lims.images/copy.png"/>
         </td>
         <tal:block repeat="column python:range(view.col_count)">
             <td class="topborder ar_column" style="padding-top:2px;"
@@ -467,7 +469,8 @@
         <th colspan="2" style="white-space:nowrap" i18n:translate="">Profile</th>
         <td>
             <img class="copyButton AnalysisProfileCopyButton"
-                tal:attributes="name field_name;src string:${portal/absolute_url}/++resource++bika.lims.images/copy.png"/>
+                 tal:condition="python:view.col_count > 1"
+                 tal:attributes="name field_name;src string:${portal/absolute_url}/++resource++bika.lims.images/copy.png"/>
         </td>
         <tal:block repeat="column python:range(view.col_count)">
             <td class="topborder ar_column" style="padding-top:2px;"
@@ -532,7 +535,8 @@
         <th colspan="2" style="white-space:nowrap" i18n:translate="">Client Order</th>
         <td>
             <img class="copyButton"
-                tal:attributes="name field_name;src string:${portal/absolute_url}/++resource++bika.lims.images/copy.png"/>
+                 tal:condition="python:view.col_count > 1"
+                 tal:attributes="name field_name;src string:${portal/absolute_url}/++resource++bika.lims.images/copy.png"/>
         </td>
         <tal:block repeat="column python:range(view.col_count)">
             <td tal:define="input_name string:ar.${column}.${field_name}:ignore_empty:record;
@@ -552,7 +556,8 @@
         <th colspan="2" style="white-space:nowrap" i18n:translate="">Client Reference</th>
         <td>
             <img class="copyButton"
-                tal:attributes="name field_name;src string:${portal/absolute_url}/++resource++bika.lims.images/copy.png"/>
+                 tal:condition="python:view.col_count > 1"
+                 tal:attributes="name field_name;src string:${portal/absolute_url}/++resource++bika.lims.images/copy.png"/>
         </td>
         <tal:block repeat="column python:range(view.col_count)">
             <td tal:define="input_name string:ar.${column}.${field_name}:ignore_empty:record;
@@ -571,7 +576,8 @@
         <th colspan="2" style="white-space:nowrap" i18n:translate="">Client SID</th>
         <td>
             <img class="copyButton"
-                tal:attributes="name field_name;src string:${portal/absolute_url}/++resource++bika.lims.images/copy.png"/>
+                 tal:condition="python:view.col_count > 1"
+                 tal:attributes="name field_name;src string:${portal/absolute_url}/++resource++bika.lims.images/copy.png"/>
         </td>
         <tal:block repeat="column python:range(view.col_count)">
             <td tal:define="input_name string:ar.${column}.${field_name}:ignore_empty:record;
@@ -593,7 +599,8 @@
         </th>
         <td>
             <img class="copyButton"
-                tal:attributes="name field_name;src string:${portal/absolute_url}/++resource++bika.lims.images/copy.png"/>
+                 tal:condition="python:view.col_count > 1"
+                 tal:attributes="name field_name;src string:${portal/absolute_url}/++resource++bika.lims.images/copy.png"/>
         </td>
         <tal:block repeat="column python:range(view.col_count)">
             <td tal:define="input_name string:ar.${column}.${field_name}:ignore_empty:record;
@@ -611,7 +618,8 @@
         <th colspan="2"><span id="" style="white-space:nowrap" i18n:translate="">Sample Point</span></th>
         <td>
             <img class="copyButton"
-                tal:attributes="name field_name;src string:${portal/absolute_url}/++resource++bika.lims.images/copy.png"/>
+                 tal:condition="python:view.col_count > 1"
+                 tal:attributes="name field_name;src string:${portal/absolute_url}/++resource++bika.lims.images/copy.png"/>
         </td>
         <tal:block repeat="column python:range(view.col_count)">
             <td tal:define="input_name string:ar.${column}.${field_name}:ignore_empty:record;
@@ -633,7 +641,8 @@
         </th>
         <td>
             <img class="copyButton SampleTypeCopyButton"
-                tal:attributes="name field_name;src string:${portal/absolute_url}/++resource++bika.lims.images/copy.png"/>
+                 tal:condition="python:view.col_count > 1"
+                 tal:attributes="name field_name;src string:${portal/absolute_url}/++resource++bika.lims.images/copy.png"/>
         </td>
         <tal:block repeat="column python:range(view.col_count)">
             <td tal:define="input_name string:ar.${column}.${field_name}:ignore_empty:record;
@@ -650,7 +659,8 @@
         <th colspan="2" style="white-space:nowrap" i18n:translate="">Sampling Deviation</th>
         <td>
             <img class="copyButton SamplingDeviationCopyButton"
-                tal:attributes="name field_name;src string:${portal/absolute_url}/++resource++bika.lims.images/copy.png"/>
+                 tal:condition="python:view.col_count > 1"
+                 tal:attributes="name field_name;src string:${portal/absolute_url}/++resource++bika.lims.images/copy.png"/>
         </td>
         <tal:block repeat="column python:range(view.col_count)">
             <td class="topborder ar_column" style="padding-top:2px;"
@@ -685,7 +695,8 @@
         <th colspan="2" style="white-space:nowrap" i18n:translate="">Default Container Type</th>
         <td>
             <img class="copyButton DefaultContainerTypeCopyButton"
-                tal:attributes="name field_name;src string:${portal/absolute_url}/++resource++bika.lims.images/copy.png"/>
+                 tal:condition="python:view.col_count > 1"
+                 tal:attributes="name field_name;src string:${portal/absolute_url}/++resource++bika.lims.images/copy.png"/>
         </td>
         <tal:block repeat="column python:range(view.col_count)">
             <td class="topborder ar_column" style="padding-top:2px;"
@@ -720,7 +731,8 @@
         <th colspan="2" style="white-space:nowrap" i18n:translate="">Ad-Hoc</th>
         <td>
             <img class="copyButton"
-                tal:attributes="name field_name;src string:${portal/absolute_url}/++resource++bika.lims.images/copy.png"/>
+                 tal:condition="python:view.col_count > 1"
+                 tal:attributes="name field_name;src string:${portal/absolute_url}/++resource++bika.lims.images/copy.png"/>
         </td>
         <tal:block repeat="column python:range(view.col_count)">
             <td class="cb"
@@ -743,7 +755,8 @@
         <th colspan="2" style="white-space:nowrap" i18n:translate="">Composite</th>
         <td>
             <img class="copyButton"
-                tal:attributes="name field_name;src string:${portal/absolute_url}/++resource++bika.lims.images/copy.png"/>
+                 tal:condition="python:view.col_count > 1"
+                 tal:attributes="name field_name;src string:${portal/absolute_url}/++resource++bika.lims.images/copy.png"/>
         </td>
         <tal:block repeat="column python:range(view.col_count)">
             <td class="cb"
@@ -766,7 +779,8 @@
         <th colspan="2" style="white-space:nowrap" i18n:translate="">Report as Dry Matter</th>
         <td>
             <img class="copyButton"
-                tal:attributes="name field_name;src string:${portal/absolute_url}/++resource++bika.lims.images/copy.png"/>
+                 tal:condition="python:view.col_count > 1"
+                 tal:attributes="name field_name;src string:${portal/absolute_url}/++resource++bika.lims.images/copy.png"/>
         </td>
         <tal:block repeat="column python:range(view.col_count)">
             <td class="cb"
@@ -789,7 +803,8 @@
         <th colspan="2" style="white-space:nowrap" i18n:translate="">Exclude from invoice</th>
         <td>
             <img class="copyButton"
-                tal:attributes="name field_name;src string:${portal/absolute_url}/++resource++bika.lims.images/copy.png"/>
+                 tal:condition="python:view.col_count > 1"
+                 tal:attributes="name field_name;src string:${portal/absolute_url}/++resource++bika.lims.images/copy.png"/>
         </td>
         <tal:block repeat="column python:range(view.col_count)">
             <td class="cb"
