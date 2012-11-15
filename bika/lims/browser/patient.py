@@ -41,7 +41,7 @@ class PatientAnalysisRequestsView(AnalysisRequestsView):
         if isActive(self.context):
             if mtool.checkPermission(AddAnalysisRequest, PR):
                 self.context_actions[self.context.translate(_('Add'))] = {
-                    'url':PR.absolute_url()+'/ar_add',
+                    'url':self.context.absolute_url()+'/ar_add',
                     'icon': '++resource++bika.lims.images/add.png'}
         return super(PatientAnalysisRequestsView, self).__call__()
 
