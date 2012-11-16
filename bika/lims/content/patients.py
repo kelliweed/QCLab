@@ -119,8 +119,16 @@ class PatientsView(BikaListingView):
             items[x]['getBirthDate'] = self.ulocalized_time(obj.getBirthDate())
             items[x]['replace']['getPatientID'] = "<a href='%s/analysisrequests'>%s</a>" % \
                  (items[x]['url'], items[x]['getPatientID'])
+            items[x]['replace']['Title'] = "<a href='%s/analysisrequests'>%s</a>" % \
+                 (items[x]['url'], items[x]['Title'])
+
             pr = obj.getPrimaryReferrer()
-            items[x]['getPrimaryReferrer'] = pr and pr.Title() or ''
+            if pr:
+                items[x]['getPrimaryReferrer'] = pr.Title()
+                items[x]['replace']['getPrimaryReferrer'] = "<a href='%s/analysisrequests'>%s</a>" % \
+                     (pr.absolute_url(), pr.Title())
+            else:
+                items[x]['getPrimaryReferrer'] = ''
 
         return items
 
