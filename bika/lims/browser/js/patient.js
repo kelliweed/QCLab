@@ -5,7 +5,7 @@ $(document).ready(function(){
 	PMF = window.jsi18n_plone;
 
     // Add Patient popup
-    if(window.location.href.search(window.bika_utils.data.prefixes['Patient'] + "-") == -1 &&
+    if($(".portaltype-patient").length == 0 &&
        window.location.href.search('portal_factory/Patient') == -1){
             $("input[id=PatientID]").after('<a style="border-bottom:none !important;margin-left:.5;"' +
                         ' class="add_patient"' +
@@ -94,7 +94,7 @@ $(document).ready(function(){
 		$(".template-treatmenthistory #Drug").combogrid({
 			colModel: [{'columnName':'Title', 'width':'50', 'label':window.jsi18n_bika('Title')}],
 			url: window.location.href.replace("/treatmenthistory","") + "/getDrugs?_authenticator=" + $('input[name="_authenticator"]').val(),
-			
+
 			select: function( event, ui ) {
 				event.preventDefault();
 				$(this).val(ui.item.Title);
@@ -194,7 +194,7 @@ $(document).ready(function(){
 		}
 		$("#Start").attr('class', 'datepicker_nofuture');
 		$("#End").attr('class', 'datepicker');
-		
+
 		newrow = $("tr#new").clone();
         $("tr#new").removeAttr('id');
 		$("#Treatment").parent().append("<span>"+T+"</span>");
@@ -253,7 +253,7 @@ $(document).ready(function(){
 	        return false;
 		}
 		$("#Date").attr('class', 'datepicker_nofuture');
-		
+
 		newrow = $("tr#new").clone();
         $("tr#new").removeAttr('id');
 		$("#Immunization").parent().append("<span>"+I+"</span>");
@@ -284,9 +284,9 @@ $(document).ready(function(){
 		R = $("#Remarks").val();
 		if (T == ''){
 	        return false;
-		}		
+		}
 		$("#Onset").attr('class', 'datepicker_nofuture');
-		
+
 		newrow = $("tr#new").clone();
         $("tr#new").removeAttr('id');
 		$("#Code").parent().append("<span>"+C+"</span>");
@@ -322,7 +322,7 @@ $(document).ready(function(){
 		}
 		$("#TripStartDate").attr('class', 'datepicker_nofuture');
 		$("#TripEndDate").attr('class', 'datepicker');
-		
+
 		newrow = $("tr#new").clone();
         $("tr#new").removeAttr('id');
 		$("#TripStartDate").parent().append("<span>"+S+"</span>");
