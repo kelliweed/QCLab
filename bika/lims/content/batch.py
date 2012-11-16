@@ -174,26 +174,15 @@ class Batch(BaseContent):
 
     security.declarePublic('getCCContacts')
     def getCCContacts(self):
-        """ Return JSON containing all Lab contacts (with empty default CC lists).
-        This function is used to set form values for javascript.
+        """ Return JSON containing all contacts from selected Hospital.
         """
         contact_data = []
-        for contact in self.bika_setup.bika_labcontacts.objectValues('LabContact'):
-            if isActive(contact):
-                this_contact_data = {'title': contact.Title(),
-                                     'uid': contact.UID(), }
-                ccs = []
-                if hasattr(contact, 'getCCContact'):
-                    for cc in contact.getCCContact():
-                        if isActive(cc):
-                            ccs.append({'title': cc.Title(),
-                                        'uid': cc.UID(),})
-                this_contact_data['ccs_json'] = json.dumps(ccs)
-                this_contact_data['ccs'] = ccs
-            contact_data.append(this_contact_data)
-        contact_data.sort(lambda x, y:cmp(x['title'].lower(),
-                                          y['title'].lower()))
-        return contact_data
+        pc = getToolByName(self, 'portal_catalog')
+        client = pc(portal_type='Client', UID=self.getClientUID())
+        if client:
+            return client[0].getObject().getCCContacts()
+        else:
+            return []
 
     def BatchLabelVocabulary(self):
         """ return all batch labels """
