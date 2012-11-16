@@ -33,6 +33,16 @@ def AfterTransitionEventHandler(instance, event):
         if not skip(sample, action_id, peek=True):
             workflow.doActionFor(sample, action_id)
 
+        # Update any Batches' OnsetDate if necessary
+        if instance.getBatchUID():
+            bc = getToolByName(instance, 'bika_catalog')
+            batch = bc(portal_type='Batch', UID=instance.getBatchUID())
+            if batch:
+                batch = batch[0].getObject()
+                if batch.getOnsetDateEstimated():
+                    osd = batch.estOnsetDate()
+                    batch.Schema()['OnsetDate'].set(instance, osd)
+
     elif action_id == "to_be_preserved":
         pass
 
@@ -61,6 +71,16 @@ def AfterTransitionEventHandler(instance, event):
         for analysis in analyses:
             if not skip(analysis, action_id):
                 workflow.doActionFor(analysis.getObject(), 'receive')
+
+        # Update any Batches' OnsetDate if necessary
+        if instance.getBatchUID():
+            bc = getToolByName(instance, 'bika_catalog')
+            batch = bc(portal_type='Batch', UID=instance.getBatchUID())
+            if batch:
+                batch = batch[0].getObject()
+                if batch.getOnsetDateEstimated():
+                    osd = batch.estOnsetDate()
+                    batch.Schema()['OnsetDate'].set(instance, osd)
 
     elif action_id == "submit":
         instance.reindexObject(idxs = ["review_state", ])

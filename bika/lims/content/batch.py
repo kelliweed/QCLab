@@ -2,6 +2,7 @@ from AccessControl import ClassSecurityInfo
 from Products.Archetypes.public import *
 from Products.ATExtensions.ateapi import DateTimeField
 from Products.ATExtensions.ateapi import RecordsField as RecordsField
+from DateTime import DateTime
 from Products.CMFCore.utils import getToolByName
 from bika.lims import bikaMessageFactory as _
 from bika.lims.browser.widgets import DateTimeWidget
@@ -68,6 +69,12 @@ schema = BikaSchema.copy() + Schema((
               label=_('Onset Date'),
           ),
       ),
+    BooleanField('OnsetDateEstimated',
+        default=False,
+        widget=BooleanWidget(
+            label = _("Onset Date Estimated"),
+        ),
+    ),
     TextField('ProvisionalDiagnosis',
         default_content_type='text/x-web-intelligent',
         allowable_content_types=('text/x-web-intelligent',),
@@ -138,6 +145,34 @@ class Batch(BaseContent):
         res = self.getBatchID()
         return str(res).encode('utf-8')
 
+    def getOnsetDate(self):
+        """ Return OnsetDate, but calculate it first if it's not set
+        """
+        osd = self.getField('OnsetDate').get(self)
+        if not osd:
+            self.setOnsetDateEstimated(True)
+            osd = self.estOnsetDate()
+            self.setOnsetDate(osd)
+        return osd
+
+    def estOnsetDate(self):
+        """ If onset date is not specified, we estimate it.
+        we use the earliest 'DateSampled' or 'DateReceived'
+        value for samples in this batch.
+        """
+        earliest = DateTime()
+        swe = self.bika_setup.getSamplingWorkflowEnabled()
+        for ar in self.getAnalysisRequests():
+            sample = ar.getSample()
+            if swe:
+                d = sample.getDateSampled()
+                if d and d < earliest:
+                    earliest = d
+            d = ar.getDateReceived()
+            if d and d < earliest:
+                earliest = d
+        return earliest
+
     security.declarePublic('getCCContacts')
     def getCCContacts(self):
         """ Return JSON containing all Lab contacts (with empty default CC lists).
@@ -173,9 +208,10 @@ class Batch(BaseContent):
 
     def getAnalysisRequests(self):
         bc = getToolByName(self, 'bika_catalog')
-        uid = self.context.UID()
+        uid = self.UID()
         return [b.getObject() for b in bc(portal_type='AnalysisRequest',
                                           getBatchUID=uid)]
+
     def getCaseStatuses(self):
         """ return all Case Statuses from site setup """
         bsc = getToolByName(self, 'bika_setup_catalog')
