@@ -12,6 +12,9 @@
 	    		font-size:1.1em;
 	    		margin:15px 0px;
 	    	}  
+	    	#content-core div fieldset {
+	    		border-style:none;
+	    	}
 	    	ul#toc-reports {
 	    		list-style-type:square;
 	    		color:#CDCDCD;
@@ -76,15 +79,14 @@
     		<a href="#" id="dailysamplesreceived_selector" 
     		i18n:translate="">Daily samples received</a><br/>
     		<span i18n:translate="">
-    			Lists all samples received for a date range, 
-    			and sub totals them per country
+    			Lists all samples received for a date range
     		</span>
     		<div id="dailysamplesreceived" style="display:none" class="criteria">
 				<form action="createreport" method="post" name="productivity_dailysamplesreceived">
 				    <input type="hidden" name="report_id" value="productivity_dailysamplesreceived" />
 				    <fieldset>
 				        <tal:x content="structure python:view.selection_macros.select_daterange(
-					                                          field_id='Received',
+					                                          field_id='getDateReceived',
 					                                          field_title='Date Received')"/>
 				    </fieldset>
 				    <input tabindex=""
@@ -111,7 +113,7 @@
 				    <input type="hidden" name="report_id" value="productivity_samplereceivedvsreported" />
 				    <fieldset>
 				        <tal:x content="structure python:view.selection_macros.select_daterange(
-					                                          field_id='Received',
+					                                          field_id='getDateReceived',
 					                                          field_title='Date Received')"/>
 				    </fieldset>
 				    <input tabindex=""
@@ -295,7 +297,6 @@
 			    <form action="createreport" method="post" name="productivity_analysestats_overtime">
 			        <input type="hidden" name="report_id" value="productivity_analysestats_overtime" />
 			        <fieldset>
-			        <legend i18n:translate="">Analysis turnaround time over time</legend>
 			            <tal:x content="structure python:view.selection_macros.select_analysisservice(
 			                                                   allow_blank=False,
 			                                                   multiselect=True)"/>
@@ -316,21 +317,26 @@
 			</div>
 		</li>
 		
-		<!-- Analyses by lab department weekly -->
+		<!-- Analyses by lab department -->
 		<li>
-    		<a href="#" id="analysesbydepartment_selector" 
-    		i18n:translate="">Analyses by lab department weekly</a><br/>
+    		<a href="#" id="analysesperdepartment_selector" 
+    		i18n:translate="">Analyses per lab department</a><br/>
     		<span i18n:translate="">
     			Report tables between a period of time the number of
     			analyses published per department
     		</span>
-    		<div id="analysesbydepartment" style="display:none" class="criteria">
-				<form action="createreport" method="post" name="productivity_analysesbydepartment">
-				    <input type="hidden" name="report_id" value="productivity_analysesbydepartment" />
+    		<div id="analysesperdepartment" style="display:none" class="criteria">
+				<form action="createreport" method="post" name="productivity_analysesperdepartment">
+				    <input type="hidden" name="report_id" value="productivity_analysesperdepartment" />
 				    <fieldset>
 				        <tal:x content="structure python:view.selection_macros.select_daterange(
-					                                          field_id='Received',
-					                                          field_title='Date Received')"/>
+				                                               field_id='getDateRequested',
+				                                               field_title='Date Requested')"/>
+				        <tal:x content="structure python:view.selection_macros.select_state(
+				                                               workflow_id='bika_analysis_workflow',
+				                                               field_id='getAnalysisState',
+				                                               field_title='Analysis state')"/>
+				    	<tal:x content="structure python:view.selection_macros.select_groupingperiod()"/>
 				    </fieldset>
 				    <input tabindex=""
 				        class="searchButton"
@@ -356,8 +362,9 @@
 				    <input type="hidden" name="report_id" value="productivity_analysesperformedpertotal" />
 				    <fieldset>
 				        <tal:x content="structure python:view.selection_macros.select_daterange(
-					                                          field_id='Received',
-					                                          field_title='Date Received')"/>
+				                                               field_id='getDateRequested',
+				                                               field_title='Date Requested')"/>
+					    <tal:x content="structure python:view.selection_macros.select_groupingperiod()"/>
 				    </fieldset>
 				    <input tabindex=""
 				        class="searchButton"
