@@ -39,7 +39,6 @@ class BatchFolderContentsView(BikaListingView):
             'Patient': {'title': _('Patient')},
             'Doctor': {'title': _('Doctor')},
             'Client': {'title': _('Client')},
-            'Description': {'title': _('Description')},
             'state_title': {'title': _('State'), 'sortable': False},
         }
 
@@ -53,7 +52,6 @@ class BatchFolderContentsView(BikaListingView):
                         'Doctor',
                         'Client',
                         'OnsetDate',
-                        'Description',
                         'state_title', ]
              },
             {'id':'closed',
@@ -64,7 +62,6 @@ class BatchFolderContentsView(BikaListingView):
                         'Doctor',
                         'Client',
                         'OnsetDate',
-                        'Description',
                         'state_title', ]
              },
             {'id':'cancelled',
@@ -75,7 +72,6 @@ class BatchFolderContentsView(BikaListingView):
                         'Doctor',
                         'Client',
                         'OnsetDate',
-                        'Description',
                         'state_title', ]
              },
             {'id':'all',
@@ -86,7 +82,6 @@ class BatchFolderContentsView(BikaListingView):
                         'Doctor',
                         'Client',
                         'OnsetDate',
-                        'Description',
                         'state_title', ]
              },
         ]
