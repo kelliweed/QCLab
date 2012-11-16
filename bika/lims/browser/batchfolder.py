@@ -147,6 +147,7 @@ class BatchFolderContentsView(BikaListingView):
             else:
                 items[x]['OnsetDate'] = ''
 
+        items = sorted(items, key = itemgetter('OnsetDate'))
         return items
 
 
