@@ -150,7 +150,6 @@ class Batch(BaseContent):
         """
         osd = self.getField('OnsetDate').get(self)
         if not osd:
-            self.setOnsetDateEstimated(True)
             osd = self.estOnsetDate()
             self.setOnsetDate(osd)
         return osd
