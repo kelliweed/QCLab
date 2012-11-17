@@ -143,11 +143,15 @@ class BatchFolderContentsView(BikaListingView):
 
             osd = obj.getOnsetDate()
             if osd:
-                items[x]['OnsetDate'] = self.ulocalized_time(osd)
+                items[x]['OnsetDate'] = osd
+                items[x]['replace']['OnsetDate'] = self.ulocalized_time(osd)
             else:
-                items[x]['OnsetDate'] = ''
+                items[x]['OnsetDate'] = 'zzz'
+                items[x]['replace']['OnsetDate'] = ''
 
         items = sorted(items, key = itemgetter('OnsetDate'))
+        items.reverse()
+
         return items
 
 
