@@ -108,7 +108,7 @@ class ajaxGetDoctors(BrowserView):
                 if b.getDoctorID().find(searchTerm) > -1
                 or b.Title().find(searchTerm) > -1]
 
-        rows = sorted(rows, key=itemgetter(sidx and sidx or 'DoctorID'))
+        rows = sorted(rows, cmp=lambda x,y: cmp(x.lower(), y.lower()), key=itemgetter(sidx and sidx or 'DoctorID'))
         if sord == 'desc':
             rows.reverse()
         pages = len(rows) / int(nr_rows)

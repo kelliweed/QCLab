@@ -340,7 +340,7 @@ class ajaxGetPatients(BrowserView):
                          'PrimaryReferrer': patient.getPrimaryReferrer().Title(),
                          'PatientUID': patient.UID()})
 
-        rows = sorted(rows, key=itemgetter(sidx and sidx or 'Title'))
+        rows = sorted(rows, cmp=lambda x,y: cmp(x.lower(), y.lower()), key=itemgetter(sidx and sidx or 'Title'))
         if sord == 'desc':
             rows.reverse()
         pages = len(rows) / int(nr_rows)
@@ -372,7 +372,7 @@ class ajaxGetDrugs(BrowserView):
         for p in brains:
             rows.append({'Title': p.Title})
 
-        rows = sorted(rows, key=itemgetter(sidx and sidx or 'Title'))
+        rows = sorted(rows, cmp=lambda x,y: cmp(x.lower(), y.lower()), key=itemgetter(sidx and sidx or 'Title'))
         if sord == 'desc':
             rows.reverse()
         pages = len(rows) / int(nr_rows)
@@ -404,7 +404,7 @@ class ajaxGetTreatments(BrowserView):
         for p in brains:
             rows.append({'Title': p.Title})
 
-        rows = sorted(rows, key=itemgetter(sidx and sidx or 'Title'))
+        rows = sorted(rows, cmp=lambda x,y: cmp(x.lower(), y.lower()), key=itemgetter(sidx and sidx or 'Title'))
         if sord == 'desc':
             rows.reverse()
         pages = len(rows) / int(nr_rows)
@@ -436,7 +436,7 @@ class ajaxGetDrugProhibitions(BrowserView):
         for p in brains:
             rows.append({'Title': p.Title})
 
-        rows = sorted(rows, key=itemgetter(sidx and sidx or 'Title'))
+        rows = sorted(rows, cmp=lambda x,y: cmp(x.lower(), y.lower()), key=itemgetter(sidx and sidx or 'Title'))
         if sord == 'desc':
             rows.reverse()
         pages = len(rows) / int(nr_rows)
@@ -468,7 +468,7 @@ class ajaxGetImmunizations(BrowserView):
         for p in brains:
             rows.append({'Title': p.Title})
 
-        rows = sorted(rows, key=itemgetter(sidx and sidx or 'Title'))
+        rows = sorted(rows, cmp=lambda x,y: cmp(x.lower(), y.lower()), key=itemgetter(sidx and sidx or 'Title'))
         if sord == 'desc':
             rows.reverse()
         pages = len(rows) / int(nr_rows)
@@ -500,7 +500,7 @@ class ajaxGetVaccinationCenters(BrowserView):
         for p in brains:
             rows.append({'Title': p.Title})
 
-        rows = sorted(rows, key=itemgetter(sidx and sidx or 'Title'))
+        rows = sorted(rows, cmp=lambda x,y: cmp(x.lower(), y.lower()), key=itemgetter(sidx and sidx or 'Title'))
         if sord == 'desc':
             rows.reverse()
         pages = len(rows) / int(nr_rows)
@@ -542,7 +542,7 @@ class ajaxGetSymptoms(BrowserView):
                              'Title': icd9['short'],
                              'Description': icd9['long']})
 
-        rows = sorted(rows, key=itemgetter(sidx and sidx or 'Title'))
+        rows = sorted(rows, cmp=lambda x,y: cmp(x.lower(), y.lower()), key=itemgetter(sidx and sidx or 'Title'))
         if sord == 'desc':
             rows.reverse()
         pages = len(rows) / int(nr_rows)
@@ -573,7 +573,7 @@ class ajaxGetCountries(BrowserView):
                 rows.append({'Code': country['code'],
                              'Country': country['name']})
 
-        rows = sorted(rows, key=itemgetter(sidx and sidx or 'Country'))
+        rows = sorted(rows, cmp=lambda x,y: cmp(x.lower(), y.lower()), key=itemgetter(sidx and sidx or 'Country'))
         if sord == 'desc':
             rows.reverse()
         pages = len(rows) / int(nr_rows)
