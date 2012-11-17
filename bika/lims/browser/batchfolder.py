@@ -177,7 +177,7 @@ class ajaxGetBatches(BrowserView):
         for batch in batches:
             batch = batch.getObject()
             if batch.Title().find(searchTerm) > -1 \
-                    or batch.Description().find(searchTerim) > -1:
+                    or batch.Description().find(searchTerm) > -1:
                 rows.append({'BatchID': batch.Title(),
                              'BatchUID': batch.UID(),
                              'PatientID': batch.getPatientID(),
