@@ -324,13 +324,21 @@ $(document).ready(function(){
 			});
 	});
 
-	$('#kss-spinner')
-		.empty()
-		.append('<img src="spinner.gif" alt="Loading"/>')
-		.ajaxComplete(function() { $(this).toggle(false); });
+	$('#kss-spinner').remove();
+	$('body').append('<div id="bika-spinner"><img src="spinner.gif" alt="'+_("Loading")+'"/></div>');
+	$('#bika-spinner')
+	    .hide()  // hide it initially
+	    .ajaxStart(function() {
+	        $(this).show();
+	    })
+	    .ajaxStop(function() {
+	        $(this).hide();
+	    })
+	    .ajaxComplete(function() {
+	        $(this).hide();
+	    });
 
 	$(".numeric").live('keypress', function(event) {
-
 		// Backspace, tab, enter, end, home, left, right, ., <, >, and -
 		// We don't support the del key in Opera because del == . == 46.
 		var allowedKeys = [8, 9, 13, 35, 36, 37, 39, 46, 60, 62, 45];

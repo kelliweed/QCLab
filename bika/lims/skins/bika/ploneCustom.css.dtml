@@ -86,7 +86,7 @@ textarea#description,
 }
 
 
-.kss-spinner {
+.bika-spinner {
   position: fixed;
   top: 50%;
   left: 50%;
@@ -101,9 +101,9 @@ textarea#description,
   overflow: auto;
 }
 
-.kss-spinner img {
-  height:20px;
-  width:20px;
+.bika-spinner img {
+  height:32px;
+  width:32px;
 }
 
 /* edit-bar */
