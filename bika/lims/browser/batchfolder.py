@@ -168,7 +168,6 @@ class ajaxGetBatches(BrowserView):
         sidx = self.request['sidx']
         wf = getToolByName(self.context, 'portal_workflow')
 
-<<<<<<< HEAD
         rows = []
         if ClientUID:
             batches = self.bika_catalog(portal_type='Batch', getClientUID=ClientUID)
@@ -185,13 +184,6 @@ class ajaxGetBatches(BrowserView):
                              'DoctorID': batch.getDoctorID(),
                              'ClientID': batch.getClientID()})
 
-=======
-        rows = [{'BatchID': b.Title or '',
-                 'Description': b.Description,
-                 'BatchUID': b.UID} for b in self.bika_catalog(portal_type='Batch')
-                if b.Title.find(searchTerm) > -1
-                or b.Description.find(searchTerm) > -1]
->>>>>>> health
         rows = sorted(rows, cmp=lambda x,y: cmp(x.lower(), y.lower()), key=itemgetter(sidx and sidx or 'BatchID'))
         if sord == 'desc':
             rows.reverse()
