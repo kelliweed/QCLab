@@ -4,7 +4,7 @@ $(document).ready(function(){
 	_ = window.jsi18n_bika;
 	PMF = window.jsi18n_plone;
 
-    if(window.location.href.search(window.bika_utils.data.prefixes['Doctor']) == -1 &&
+    if($(".portaltype-doctor").length == 0 &&
        window.location.href.search('portal_factory/Doctor') == -1){
         $("input[id=DoctorID]").after('<a style="border-bottom:none !important;margin-left:.5;"' +
                     ' class="add_doctor"' +
