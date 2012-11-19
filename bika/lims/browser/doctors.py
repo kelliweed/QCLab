@@ -23,6 +23,7 @@ class DoctorsView(ClientContactsView):
         self.pagesize = 50
 
         self.columns = {
+            'getDoctorID': {'title': _('Doctor ID')},
             'getFullname': {'title': _('Full Name'),
                             'index': 'getFullname'},
             'getEmailAddress': {'title': _('Email Address')},
@@ -35,7 +36,8 @@ class DoctorsView(ClientContactsView):
              'title': _('All'),
              'contentFilter':{},
              'transitions':[{'id':'empty'}],
-             'columns': ['getFullname',
+             'columns': ['getDoctorID',
+                         'getFullname',
                          'getEmailAddress',
                          'getBusinessPhone',
                          'getMobilePhone']},
@@ -55,7 +57,8 @@ class DoctorsView(ClientContactsView):
                  'title': _('All'),
                  'contentFilter':{},
                  'transitions':[{'id':'empty'}],
-                 'columns': ['getFullname',
+                 'columns': ['getDoctorID',
+                             'getFullname',
                              'getEmailAddress',
                              'getBusinessPhone',
                              'getMobilePhone']},
@@ -63,7 +66,8 @@ class DoctorsView(ClientContactsView):
                  'title': _('Active'),
                  'contentFilter': {'inactive_state': 'active'},
                  'transitions': [{'id':'deactivate'}, ],
-                 'columns': ['getFullname',
+                 'columns': ['getDoctorID',
+                             'getFullname',
                              'getEmailAddress',
                              'getBusinessPhone',
                              'getMobilePhone']},
@@ -71,7 +75,8 @@ class DoctorsView(ClientContactsView):
                  'title': _('Dormant'),
                  'contentFilter': {'inactive_state': 'inactive'},
                  'transitions': [{'id':'activate'}, ],
-                 'columns': ['getFullname',
+                 'columns': ['getDoctorID',
+                             'getFullname',
                              'getEmailAddress',
                              'getBusinessPhone',
                              'getMobilePhone']},
@@ -84,6 +89,8 @@ class DoctorsView(ClientContactsView):
             if not 'obj' in items[x]:
                 continue
             obj = items[x]['obj']
+            items[x]['replace']['getDoctorID'] = "<a href='%s'>%s</a>" % \
+                 (items[x]['url'], items[x]['getDoctorID'])
             items[x]['replace']['getFullname'] = "<a href='%s'>%s</a>" % \
                  (items[x]['url'], items[x]['getFullname'])
 
@@ -102,13 +109,13 @@ class ajaxGetDoctors(BrowserView):
         wf = getToolByName(self.context, 'portal_workflow')
 
         doctors = (x.getObject() for x in self.portal_catalog(portal_type="Doctor"))
-        rows = [{'DoctorID': b.getDoctorID(),
+        rows = [{'getDoctorID': b.getDoctorID(),
                  'Title': b.Title(),
                  'DoctorUID': b.UID()} for b in doctors
                 if b.getDoctorID().find(searchTerm) > -1
                 or b.Title().find(searchTerm) > -1]
 
-        rows = sorted(rows, key=itemgetter(sidx and sidx or 'DoctorID'))
+        rows = sorted(rows, cmp=lambda x,y: cmp(x.lower(), y.lower()), key=itemgetter(sidx and sidx or 'getDoctorID'))
         if sord == 'desc':
             rows.reverse()
         pages = len(rows) / int(nr_rows)
