@@ -18,9 +18,10 @@ import json
 schema = BikaSchema.copy() + Schema((
     StringField('BatchID',
         searchable=True,
-        required=1,
+        required=0,
         validators=('uniquefieldvalidator',),
         widget=StringWidget(
+            visible = False,
             label=_("Batch ID"),
         )
     ),
@@ -144,6 +145,10 @@ class Batch(BaseContent):
         """ Return the BatchID or id as title """
         res = self.getBatchID()
         return str(res).encode('utf-8')
+
+    security.declarePublic('getBatchID')
+    def getBatchID(self):
+        return self.getId()
 
     def getOnsetDate(self):
         """ Return OnsetDate, but calculate it first if it's not set
