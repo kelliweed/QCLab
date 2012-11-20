@@ -13,7 +13,6 @@ from bika.lims.browser.client import ClientAnalysisRequestsView, \
     ClientSamplesView
 from bika.lims.browser.publish import Publish
 from bika.lims.browser.sample import SamplesView
-from bika.lims.countries import countries
 from bika.lims.idserver import renameAfterCreation
 from bika.lims.interfaces import IContacts
 from bika.lims.permissions import *
@@ -543,37 +542,6 @@ class ajaxGetSymptoms(BrowserView):
                              'Description': icd9['long']})
 
         rows = sorted(rows, cmp=lambda x,y: cmp(x.lower(), y.lower()), key=itemgetter(sidx and sidx or 'Title'))
-        if sord == 'desc':
-            rows.reverse()
-        pages = len(rows) / int(nr_rows)
-        pages += divmod(len(rows), int(nr_rows))[1] and 1 or 0
-        ret = {'page':page,
-               'total':pages,
-               'records':len(rows),
-               'rows':rows[ (int(page) - 1) * int(nr_rows) : int(page) * int(nr_rows) ]}
-
-        return json.dumps(ret)
-
-class ajaxGetCountries(BrowserView):
-    """ Countries from ISO
-    """
-    def __call__(self):
-        plone.protect.CheckAuthenticator(self.request)
-        searchTerm = self.request['searchTerm']
-        page = self.request['page']
-        nr_rows = self.request['rows']
-        sord = self.request['sord']
-        sidx = self.request['sidx']
-        rows = []
-
-        # lookup objects from ISO code list
-        for country in countries:
-            if country['code'].find(searchTerm) > -1 \
-                or country['name'].find(searchTerm) > -1:
-                rows.append({'Code': country['code'],
-                             'Country': country['name']})
-
-        rows = sorted(rows, cmp=lambda x,y: cmp(x.lower(), y.lower()), key=itemgetter(sidx and sidx or 'Country'))
         if sord == 'desc':
             rows.reverse()
         pages = len(rows) / int(nr_rows)
