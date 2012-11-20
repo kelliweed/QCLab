@@ -20,8 +20,9 @@ from zope.interface import implements
 schema = Person.schema.copy() + Schema((
     StringField('PatientID',
         searchable=1,
-        required=1,
+        required=0,
         widget=StringWidget(
+            visible=0,
             label=_('Patient ID'),
         ),
     ),
@@ -198,7 +199,7 @@ schema['title'].widget.visible = False
 schema['EmailAddress'].schemata = 'Personal'
 schema['HomePhone'].schemata = 'Personal'
 schema['MobilePhone'].schemata = 'Personal'
-schema.moveField('PatientID', pos='top')
+#schema.moveField('PatientID', pos='top')
 schema.moveField('PrimaryReferrer', after='Surname')
 schema.moveField('Gender', after='PrimaryReferrer')
 
@@ -216,6 +217,10 @@ class Patient(Person):
     def Title(self):
         """ Return the Fullname as title """
         return self.getFullname()
+
+    security.declarePublic('getPatientID')
+    def getPatientID(self):
+        return self.getId()
 
     def getCCContacts(self):
         pr = self.getPrimaryReferrer()
