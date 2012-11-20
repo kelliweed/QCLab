@@ -20,4 +20,12 @@
       layer="bika.lims.interfaces.IBikaLIMS"
     />
 
+    <browser:page
+      for="bika.lims.interfaces.IBatch"
+      name="getBatchInfo"
+      class="bika.lims.browser.batch.ajaxGetBatchInfo"
+      permission="zope.Public"
+      layer="bika.lims.interfaces.IBikaLIMS"
+    />
+
 </configure>

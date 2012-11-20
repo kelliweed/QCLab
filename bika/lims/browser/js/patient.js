@@ -21,6 +21,10 @@ $(document).ready(function(){
             select: function( event, ui ) {
                 $(this).val(ui.item.PatientID);
                 $(this).change();
+                if($(".portaltype-batch").length > 0 && $(".template-base_edit").length > 0) {
+                    $(".jsPatientTitle").remove();
+                    $("#archetypes-fieldname-PatientID").append("<span class='jsPatientTitle'>"+ui.item.Title+"</span>");
+                }
                 return false;
             }
         });

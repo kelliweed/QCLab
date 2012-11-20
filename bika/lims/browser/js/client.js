@@ -68,6 +68,10 @@ $(document).ready(function(){
         select: function( event, ui ) {
             $(this).val(ui.item.ClientID);
             $(this).change();
+            if($(".portaltype-batch").length > 0 && $(".template-base_edit").length > 0) {
+                $(".jsClientTitle").remove();
+                $("#archetypes-fieldname-ClientID").append("<span class='jsClientTitle'>"+ui.item.Title+"</span>");
+            }
             return false;
         }
     });

@@ -86,3 +86,23 @@ class BatchSamplesView(SamplesView):
                 if ar.getBatchUID() == self.context.UID():
                     samples[sample.getId()] = sample
         return samples.values()
+
+class ajaxGetBatchInfo(BrowserView):
+    """ Grab the details for Doctor, Patient, Hospital (Titles).
+    These are displayed onload next to the ID fields, but they are not part of the schema.
+    """
+    def __call__(self):
+        plone.protect.CheckAuthenticator(self.request)
+
+        batch = self.context
+        clientUID = batch.getClientUID()
+        client = self.portal_catalog(portal_type='Client', UID=batch.getClientUID())
+        patient = self.bika_patient_catalog(portal_type='Patient', UID=batch.getPatientUID())
+        doctor = self.portal_catalog(portal_type='Doctor', UID=batch.getDoctorUID())
+
+        ret = {'Client': client and client[0].Title or 'None',
+               'Patient': patient and patient[0].Title or 'None',
+               'Doctor': doctor and doctor[0].Title or 'None'}
+
+        return json.dumps(ret)
+

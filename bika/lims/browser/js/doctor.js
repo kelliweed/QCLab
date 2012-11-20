@@ -20,6 +20,10 @@ $(document).ready(function(){
             select: function( event, ui ) {
                 $(this).val(ui.item.DoctorID);
                 $(this).change();
+                if($(".portaltype-batch").length > 0 && $(".template-base_edit").length > 0) {
+                    $(".jsDoctorTitle").remove();
+                    $("#archetypes-fieldname-DoctorID").append("<span class='jsDoctorTitle'>"+ui.item.Title+"</span>");
+                }
                 return false;
             }
         });
