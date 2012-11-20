@@ -165,6 +165,7 @@ class Batch(BaseContent):
         value for samples in this batch.
         """
         earliest = DateTime()
+        found = 0
         swe = self.bika_setup.getSamplingWorkflowEnabled()
         for ar in self.getAnalysisRequests():
             sample = ar.getSample()
@@ -172,10 +173,13 @@ class Batch(BaseContent):
                 d = sample.getDateSampled()
                 if d and d < earliest:
                     earliest = d
+                    found = 1
             d = ar.getDateReceived()
             if d and d < earliest:
                 earliest = d
-        return earliest
+                found = 1
+        if found:
+            return earliest
 
     security.declarePublic('getCCContacts')
     def getCCContacts(self):
