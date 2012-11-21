@@ -316,25 +316,31 @@ class ajaxGetPatients(BrowserView):
     """
     def __call__(self):
         plone.protect.CheckAuthenticator(self.request)
-        searchTerm = self.request['searchTerm']
+        searchTerm = self.request['searchTerm'].lower()
         page = self.request['page']
         nr_rows = self.request['rows']
         sord = self.request['sord']
         sidx = self.request['sidx']
-        wf = getToolByName(self.context, 'portal_workflow')
+
         rows = []
 
-        if searchTerm and len(searchTerm) < 3:
-            return json.dumps(rows)
-
         # lookup patient objects from ZODB
-        aq = MatchRegexp('Title', "%s" % searchTerm) | \
-             MatchRegexp('Description', "%s" % searchTerm) | \
-             MatchRegexp('getPatientID', "%s" % searchTerm)
-        brains = self.bika_patient_catalog.evalAdvancedQuery(aq)
+        # AdvancedQuery is faster, but requires whole words.
+        # if searchTerm and len(searchTerm) < 3:
+        #     return json.dumps(rows)
+        # We'll have to do something else to make this acceptable.
+        # aq = MatchRegexp('Title', "%s" % searchTerm) | \
+        #      MatchRegexp('Description', "%s" % searchTerm) | \
+        #      MatchRegexp('getPatientID', "%s" % searchTerm)
+        # brains = self.bika_patient_catalog.evalAdvancedQuery(aq)
 
-        for patient in (o.getObject() for o in brains):
-            rows.append({'Title': patient.Title() or '',
+        bpc = self.bika_patient_catalog
+        proxies = bpc(portal_type='Patient')
+        for patient in proxies:
+            if patient.Title.lower().find(searchTerm) > -1 \
+            or patient.getPatientID.lower().find(searchTerm) > -1:
+                patient = patient.getObject()
+                rows.append({'Title': patient.Title() or '',
                          'PatientID': patient.getPatientID(),
                          'PrimaryReferrer': patient.getPrimaryReferrer().Title(),
                          'PatientUID': patient.UID()})
@@ -356,7 +362,7 @@ class ajaxGetDrugs(BrowserView):
     """
     def __call__(self):
         plone.protect.CheckAuthenticator(self.request)
-        searchTerm = self.request['searchTerm']
+        searchTerm = self.request['searchTerm'].lower()
         page = self.request['page']
         nr_rows = self.request['rows']
         sord = self.request['sord']
@@ -388,7 +394,7 @@ class ajaxGetTreatments(BrowserView):
     """
     def __call__(self):
         plone.protect.CheckAuthenticator(self.request)
-        searchTerm = self.request['searchTerm']
+        searchTerm = self.request['searchTerm'].lower()
         page = self.request['page']
         nr_rows = self.request['rows']
         sord = self.request['sord']
@@ -420,7 +426,7 @@ class ajaxGetDrugProhibitions(BrowserView):
     """
     def __call__(self):
         plone.protect.CheckAuthenticator(self.request)
-        searchTerm = self.request['searchTerm']
+        searchTerm = self.request['searchTerm'].lower()
         page = self.request['page']
         nr_rows = self.request['rows']
         sord = self.request['sord']
@@ -452,7 +458,7 @@ class ajaxGetImmunizations(BrowserView):
     """
     def __call__(self):
         plone.protect.CheckAuthenticator(self.request)
-        searchTerm = self.request['searchTerm']
+        searchTerm = self.request['searchTerm'].lower()
         page = self.request['page']
         nr_rows = self.request['rows']
         sord = self.request['sord']
@@ -484,7 +490,7 @@ class ajaxGetVaccinationCenters(BrowserView):
     """
     def __call__(self):
         plone.protect.CheckAuthenticator(self.request)
-        searchTerm = self.request['searchTerm']
+        searchTerm = self.request['searchTerm'].lowere()
         page = self.request['page']
         nr_rows = self.request['rows']
         sord = self.request['sord']
@@ -516,7 +522,7 @@ class ajaxGetSymptoms(BrowserView):
     """
     def __call__(self):
         plone.protect.CheckAuthenticator(self.request)
-        searchTerm = self.request['searchTerm']
+        searchTerm = self.request['searchTerm'].lower()
         page = self.request['page']
         nr_rows = self.request['rows']
         sord = self.request['sord']
@@ -530,13 +536,15 @@ class ajaxGetSymptoms(BrowserView):
                                         or p.Description.lower().find(searchTerm) > -1]
         for p in brains:
             p = p.getObject()
-            rows.append({'Code': p.getCode(), 'Title': p.Title(), 'Description': p.Description()})
+            rows.append({'Code': p.getCode(),
+                         'Title': p.Title(),
+                         'Description': p.Description()})
 
         # lookup objects from ICD code list
         for icd9 in icd9_codes['R']:
             if icd9['code'].find(searchTerm) > -1 \
-               or icd9['short'].find(searchTerm) > -1 \
-               or icd9['long'].find(searchTerm) > -1:
+               or icd9['short'].lower().find(searchTerm) > -1 \
+               or icd9['long'].lower().find(searchTerm) > -1:
                 rows.append({'Code': icd9['code'],
                              'Title': icd9['short'],
                              'Description': icd9['long']})

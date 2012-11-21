@@ -1,8 +1,8 @@
 (function( $ ) {
 $(document).ready(function(){
 
-    _ = window.jsi18n_bika;
-    PMF = window.jsi18n_plone;
+    _ = jarn.i18n.MessageFactory('bika');
+    PMF = jarn.i18n.MessageFactory('plone');
 
      if($(".portaltype-batch").length == 0 &&
        window.location.href.search('portal_factory/Batch') == -1){
@@ -19,8 +19,8 @@ $(document).ready(function(){
         }
         $("input[id*=BatchID]").combogrid({
             colModel: [{'columnName':'BatchUID','hidden':true},
-                       {'columnName':'BatchID','width':'25','label':window.jsi18n_bika('Batch ID')},
-                       {'columnName':'Description','width':'35','label':window.jsi18n_bika('Description')}],
+                       {'columnName':'BatchID','width':'25','label':_('Batch ID')},
+                       {'columnName':'Description','width':'35','label':_('Description')}],
             url: ajax_url,
             select: function( event, ui ) {
                 if (window.location.href.search('ar_add') > -1){  // epid ar_add
@@ -41,6 +41,27 @@ $(document).ready(function(){
             }
         });
     }
+
+    if($(".portaltype-batch").length > 0 && $(".template-base_edit").length > 0) {
+        $.ajax({
+            url: window.location.href
+                       .split("?")[0]
+                       .replace("/base_edit", "")
+                       .replace("/edit", "") + "/getBatchInfo",
+            type: 'POST',
+            data: {'_authenticator': $('input[name="_authenticator"]').val()},
+            dataType: "json",
+            success: function(data, textStatus, $XHR){
+                $(".jsClientTitle").remove();
+                $("#archetypes-fieldname-ClientID").append("<span class='jsClientTitle'>"+data['Client']+"</span>");
+                $(".jsPatientTitle").remove();
+                $("#archetypes-fieldname-PatientID").append("<span class='jsPatientTitle'>"+data['Patient']+"</span>");
+                $(".jsDoctorTitle").remove();
+                $("#archetypes-fieldname-DoctorID").append("<span class='jsDoctorTitle'>"+data['Doctor']+"</span>");
+            }
+        });
+    }
+
 
     $('a.add_batch').prepOverlay(
         {
