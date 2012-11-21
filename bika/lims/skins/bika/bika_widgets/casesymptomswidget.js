@@ -1,12 +1,15 @@
 jQuery(function($){
 $(document).ready(function(){
 
+    _ = jarn.i18n.MessageFactory('bika');
+    PMF = jarn.i18n.MessageFactory('plone');
+
     // Case Symptoms -> combined ICD9(R)/bika_symptoms lookup
     function lookups(){
         $(".template-symptoms #Title").combogrid({
-            colModel: [{'columnName':'Code', 'width':'10', 'label':window.jsi18n_bika('Code')},
-                       {'columnName':'Title', 'width':'25', 'label':window.jsi18n_bika('Title')},
-                       {'columnName':'Description', 'width':'65', 'label':window.jsi18n_bika('Description')}],
+            colModel: [{'columnName':'Code', 'width':'10', 'label':_('Code')},
+                       {'columnName':'Title', 'width':'25', 'label':_('Title')},
+                       {'columnName':'Description', 'width':'65', 'label':_('Description')}],
             url: window.portal_url + "/getSymptoms?_authenticator=" + $('input[name="_authenticator"]').val(),
             select: function( event, ui ) {
                 event.preventDefault();
@@ -29,10 +32,10 @@ $(document).ready(function(){
         if (T == ''){
             return false;
         }
-        
+
         // Avoids datewidget unload after adding new row without postback
         $("#Onset").attr('class', 'datepicker_nofuture');
-        
+
         newrow = $("tr#new").clone();
         $("tr#new").removeAttr('id');
         $("#Code").parent().append("<span>"+C+"</span>");

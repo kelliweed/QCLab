@@ -1,8 +1,8 @@
 (function( $ ) {
 $(document).ready(function(){
 
-	_ = window.jsi18n_bika;
-	PMF = window.jsi18n_plone;
+    _ = jarn.i18n.MessageFactory('bika');
+    PMF = jarn.i18n.MessageFactory('plone');
 
     // Add Patient popup
     if($(".portaltype-patient").length == 0 &&
@@ -15,8 +15,8 @@ $(document).ready(function(){
                     ' </a>');
         $("input[id*=PatientID]").combogrid({
             colModel: [{'columnName':'PatientUID','hidden':true},
-                       {'columnName':'PatientID','width':'25','label':window.jsi18n_bika('Patient ID')},
-                       {'columnName':'Title','width':'35','label':window.jsi18n_bika('Full name')}],
+                       {'columnName':'PatientID','width':'25','label':_('Patient ID')},
+                       {'columnName':'Title','width':'35','label':_('Full name')}],
             url: window.portal_url + "/getPatients?_authenticator=" + $('input[name="_authenticator"]').val(),
             select: function( event, ui ) {
                 $(this).val(ui.item.PatientID);
@@ -83,8 +83,8 @@ $(document).ready(function(){
 	function lookups(){
 		// Treatment History Treatment search popup
 		$(".template-treatmenthistory #Treatment").combogrid({
-			colModel: [{'columnName':'Type', 'width':'50', 'label':window.jsi18n_bika('Type')},
-			           {'columnName':'Title', 'width':'50', 'label':window.jsi18n_bika('Title')}],
+			colModel: [{'columnName':'Type', 'width':'50', 'label':_('Type')},
+			           {'columnName':'Title', 'width':'50', 'label':_('Title')}],
 			url: window.location.href.replace("/treatmenthistory","") + "/getTreatments?_authenticator=" + $('input[name="_authenticator"]').val(),
 			select: function( event, ui ) {
 				event.preventDefault();
@@ -96,7 +96,7 @@ $(document).ready(function(){
 
 		// Treatment History Drug search popup
 		$(".template-treatmenthistory #Drug").combogrid({
-			colModel: [{'columnName':'Title', 'width':'50', 'label':window.jsi18n_bika('Title')}],
+			colModel: [{'columnName':'Title', 'width':'50', 'label':_('Title')}],
 			url: window.location.href.replace("/treatmenthistory","") + "/getDrugs?_authenticator=" + $('input[name="_authenticator"]').val(),
 
 			select: function( event, ui ) {
@@ -109,7 +109,7 @@ $(document).ready(function(){
 
 		// Allergies > Prohibited Drug Explanations search popup
 		$(".template-allergies #DrugProhibition").combogrid({
-			colModel: [{'columnName':'Title', 'width':'50', 'label':window.jsi18n_bika('Title')}],
+			colModel: [{'columnName':'Title', 'width':'50', 'label':_('Title')}],
 			url: window.location.href.replace("/allergies","") + "/getDrugProhibitions?_authenticator=" + $('input[name="_authenticator"]').val(),
 			select: function( event, ui ) {
 				event.preventDefault();
@@ -121,7 +121,7 @@ $(document).ready(function(){
 
 		// Allergies > Drug search popup
 		$(".template-allergies #Drug").combogrid({
-			colModel: [{'columnName':'Title', 'width':'50', 'label':window.jsi18n_bika('Title')}],
+			colModel: [{'columnName':'Title', 'width':'50', 'label':_('Title')}],
 			url: window.location.href.replace("/allergies","") + "/getDrugs?_authenticator=" + $('input[name="_authenticator"]').val(),
 			select: function( event, ui ) {
 				event.preventDefault();
@@ -133,7 +133,7 @@ $(document).ready(function(){
 
 		// Immunization History > Immunization search popup
 		$(".template-immunizationhistory #Immunization").combogrid({
-			colModel: [{'columnName':'Title', 'width':'50', 'label':window.jsi18n_bika('Title')}],
+			colModel: [{'columnName':'Title', 'width':'50', 'label':_('Title')}],
 			url: window.location.href.replace("/immunizationhistory","") + "/getImmunizations?_authenticator=" + $('input[name="_authenticator"]').val(),
 			select: function( event, ui ) {
 				event.preventDefault();
@@ -145,7 +145,7 @@ $(document).ready(function(){
 
 		// Immunization History > VaccionationCenter search popup
 		$(".template-immunizationhistory #VaccinationCenter").combogrid({
-			colModel: [{'columnName':'Title', 'width':'50', 'label':window.jsi18n_bika('Title')}],
+			colModel: [{'columnName':'Title', 'width':'50', 'label':_('Title')}],
 			url: window.location.href.replace("/immunizationhistory","") + "/getVaccinationCenters?_authenticator=" + $('input[name="_authenticator"]').val(),
 			select: function( event, ui ) {
 				event.preventDefault();
@@ -157,9 +157,9 @@ $(document).ready(function(){
 
 		// Chronic Conditions -> combined ICD9(R)/bika_symptoms lookup
 		$(".template-chronicconditions #Title").combogrid({
-			colModel: [{'columnName':'Code', 'width':'10', 'label':window.jsi18n_bika('Code')},
-			           {'columnName':'Title', 'width':'25', 'label':window.jsi18n_bika('Title')},
-			           {'columnName':'Description', 'width':'65', 'label':window.jsi18n_bika('Description')}],
+			colModel: [{'columnName':'Code', 'width':'10', 'label':_('Code')},
+			           {'columnName':'Title', 'width':'25', 'label':_('Title')},
+			           {'columnName':'Description', 'width':'65', 'label':_('Description')}],
 			url: window.portal_url + "/getSymptoms?_authenticator=" + $('input[name="_authenticator"]').val(),
 			select: function( event, ui ) {
 				event.preventDefault();
@@ -173,8 +173,8 @@ $(document).ready(function(){
 
 		// Travel History > Countries search popup
 		$(".template-travelhistory #Country").combogrid({
-			colModel: [{'columnName':'Code', 'width':'10', 'label':window.jsi18n_bika('Code')},
-			           {'columnName':'Country', 'width':'25', 'label':window.jsi18n_bika('Country')}],
+			colModel: [{'columnName':'Code', 'width':'10', 'label':_('Code')},
+			           {'columnName':'Country', 'width':'25', 'label':_('Country')}],
 			url: window.location.href.replace("/travelhistory","") + "/getCountries?_authenticator=" + $('input[name="_authenticator"]').val(),
 			select: function( event, ui ) {
 				event.preventDefault();

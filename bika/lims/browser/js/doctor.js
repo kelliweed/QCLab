@@ -1,8 +1,8 @@
 (function( $ ) {
 $(document).ready(function(){
 
-	_ = window.jsi18n_bika;
-	PMF = window.jsi18n_plone;
+    _ = jarn.i18n.MessageFactory('bika');
+    PMF = jarn.i18n.MessageFactory('plone');
 
     if($(".portaltype-doctor").length == 0 &&
        window.location.href.search('portal_factory/Doctor') == -1){
@@ -14,8 +14,8 @@ $(document).ready(function(){
                 ' </a>');
         $("input[id*=DoctorID]").combogrid({
             colModel: [{'columnName':'DoctorUID','hidden':true},
-                       {'columnName':'DoctorID','width':'25','label':window.jsi18n_bika('Doctor ID')},
-                       {'columnName':'Title','width':'75','label':window.jsi18n_bika('Title')}],
+                       {'columnName':'DoctorID','width':'25','label':_('Doctor ID')},
+                       {'columnName':'Title','width':'75','label':_('Title')}],
             url: window.portal_url + "/getDoctors?_authenticator=" + $('input[name="_authenticator"]').val(),
             select: function( event, ui ) {
                 $(this).val(ui.item.DoctorID);
