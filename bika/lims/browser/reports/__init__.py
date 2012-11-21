@@ -40,7 +40,17 @@ class QualityControlView(BrowserView):
         self.selection_macros = SelectionMacrosView(self.context, self.request)
         self.icon = "++resource++bika.lims.images/report_big.png"
         return self.template()
-
+    
+class EpidemiologyView(BrowserView):
+    """ Epidemiology View form
+    """
+    implements(IViewView)
+    template = ViewPageTemplateFile("templates/epidemiology.pt")
+    def __call__(self):
+        self.selection_macros = SelectionMacrosView(self.context, self.request)
+        self.icon = "++resource++bika.lims.images/report_big.png"
+        self.getAnalysts = getUsers(self.context, ['Manager', 'LabManager', 'Analyst'])
+        return self.template()
 
 class AdministrationView(BrowserView):
     """ Administration View form

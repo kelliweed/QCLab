@@ -21,7 +21,13 @@
       permission="zope2.View"
       layer="bika.lims.interfaces.IBikaLIMS"
     />
-
+    <browser:page
+      for="bika.lims.interfaces.IReportFolder"
+      name="epidemiology"
+      class="bika.lims.browser.reports.EpidemiologyView"
+      permission="zope2.View"
+      layer="bika.lims.interfaces.IBikaLIMS"
+    />
     <browser:page
       for="bika.lims.interfaces.IReportFolder"
       name="administration"
