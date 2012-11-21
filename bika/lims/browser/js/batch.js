@@ -1,8 +1,8 @@
 (function( $ ) {
 $(document).ready(function(){
 
-    _ = window.jsi18n_bika;
-    PMF = window.jsi18n_plone;
+    _ = jarn.i18n.MessageFactory('bika');
+    PMF = jarn.i18n.MessageFactory('plone');
 
      if($(".portaltype-batch").length == 0 &&
        window.location.href.search('portal_factory/Batch') == -1){
@@ -19,8 +19,8 @@ $(document).ready(function(){
         }
         $("input[id*=BatchID]").combogrid({
             colModel: [{'columnName':'BatchUID','hidden':true},
-                       {'columnName':'BatchID','width':'25','label':window.jsi18n_bika('Batch ID')},
-                       {'columnName':'Description','width':'35','label':window.jsi18n_bika('Description')}],
+                       {'columnName':'BatchID','width':'25','label':_('Batch ID')},
+                       {'columnName':'Description','width':'35','label':_('Description')}],
             url: ajax_url,
             select: function( event, ui ) {
                 if (window.location.href.search('ar_add') > -1){  // epid ar_add
