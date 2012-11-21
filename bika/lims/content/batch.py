@@ -1,19 +1,20 @@
 from AccessControl import ClassSecurityInfo
-from Products.Archetypes.public import *
+from DateTime import DateTime
 from Products.ATExtensions.ateapi import DateTimeField
 from Products.ATExtensions.ateapi import RecordsField as RecordsField
-from DateTime import DateTime
+from Products.Archetypes.public import *
 from Products.CMFCore.utils import getToolByName
 from bika.lims import bikaMessageFactory as _
-from bika.lims.browser.widgets import DateTimeWidget
+from bika.lims.browser.widgets import CaseAetiologicAgentsWidget
 from bika.lims.browser.widgets import CaseSymptomsWidget
+from bika.lims.browser.widgets import DateTimeWidget
 from bika.lims.config import PROJECTNAME
 from bika.lims.content.bikaschema import BikaSchema
 from bika.lims.interfaces import IBatch
 from bika.lims.utils import isActive
 from zope.interface import implements
-import plone
 import json
+import plone
 
 schema = BikaSchema.copy() + Schema((
     StringField('BatchID',
@@ -104,6 +105,14 @@ schema = BikaSchema.copy() + Schema((
         subfield_sizes={'Code': 7, 'Title': 15, 'Description': 25, 'Onset': 10, 'Remarks': 25},
         widget=CaseSymptomsWidget(
             label='Signs and Symptoms',
+        ),
+    ),
+    RecordsField('AetiologicAgents',
+        type='aetiologicagents',
+        subfields=('Code', 'Title', 'Description', 'Onset', 'Remarks'),
+        subfield_sizes={'Title': 15, 'Description': 25, 'Subtype': 10, 'Remarks': 25},
+        widget=CaseAetiologicAgentsWidget(
+            label='Aetiologic Agents',
         ),
     ),
     TextField('Remarks',
