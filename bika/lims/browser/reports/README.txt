@@ -7,6 +7,7 @@ that will be displayed to select criteria. This file is currently one of:
     bika/lims/browser/reports/templates/administration.pt
     bika/lims/browser/reports/templates/productivity.pt
     bika/lims/browser/reports/templates/qualitycontrol.pt
+    bika/lims/browser/reports/templates/epidemiology.pt
 
 Add the following files for your report:
 
