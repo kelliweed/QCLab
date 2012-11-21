@@ -79,18 +79,66 @@
     <ul id="toc-reports">  
     	
 		<li>
-    		<a href="#" id="dailysamplesreceived_selector" 
-    		i18n:translate="">Daily samples received</a><br/>
+    		<a href="#" id="casespercountry_selector" 
+    		i18n:translate="">Cases per country</a><br/>
     		<span i18n:translate="">
-    			Lists all samples received for a date range grouped by countries
+    			Lists all cases for a date range grouped by countries
     		</span>
-    		<div id="dailysamplesreceived" style="display:none" class="criteria">
-				<form action="createreport" method="post" name="epidemiology_dailysamplesreceived">
-				    <input type="hidden" name="report_id" value="epidemiology_dailysamplesreceived" />
+    		<div id="casespercountry" style="display:none" class="criteria">
+				<form action="createreport" method="post" name="epidemiology_casespercountry">
+				    <input type="hidden" name="report_id" value="epidemiology_casespercountry" />
 				    <fieldset>
 				        <tal:x content="structure python:view.selection_macros.select_daterange(
-					                                          field_id='getDateReceived',
-					                                          field_title='Date Received')"/>
+					                                          field_id='getDateCreated',
+					                                          field_title='Date Created')"/>
+				    </fieldset>
+				    <input tabindex=""
+				        class="searchButton"
+				        type="submit"
+				        name="submit"
+				        value="Generate report"
+				        i18n:attributes="value"/>
+				</form>
+			</div>
+		</li> 
+		
+		<li>
+    		<a href="#" id="numcasespercountry_selector" 
+    		i18n:translate="">Number of cases per country</a><br/>
+    		<span i18n:translate="">
+    			Summary of number of cases per country for a date range
+    		</span>
+    		<div id="numcasespercountry" style="display:none" class="criteria">
+				<form action="createreport" method="post" name="epidemiology_numcasespercountry">
+				    <input type="hidden" name="report_id" value="epidemiology_numcasespercountry" />
+				    <fieldset>
+				        <tal:x content="structure python:view.selection_macros.select_daterange(
+					                                          field_id='getDateCreated',
+					                                          field_title='Date Created')"/>
+				    </fieldset>
+				    <input tabindex=""
+				        class="searchButton"
+				        type="submit"
+				        name="submit"
+				        value="Generate report"
+				        i18n:attributes="value"/>
+				</form>
+			</div>
+		</li> 
+		
+		<li>
+    		<a href="#" id="arspercountry_selector" 
+    		i18n:translate="">Analysis Requests per country</a><br/>
+    		<span i18n:translate="">
+    			Lists all Analysis Requests for a date range grouped by countries
+    		</span>
+    		<div id="arspercountry" style="display:none" class="criteria">
+				<form action="createreport" method="post" name="epidemiology_arspercountry">
+				    <input type="hidden" name="report_id" value="epidemiology_arspercountry" />
+				    <fieldset>
+				        <tal:x content="structure python:view.selection_macros.select_daterange(
+					                                          field_id='getDateCreated',
+					                                          field_title='Date Created')"/>
 				    </fieldset>
 				    <input tabindex=""
 				        class="searchButton"
