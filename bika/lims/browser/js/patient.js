@@ -197,7 +197,7 @@ $(document).ready(function(){
 	        return false;
 		}
 		if (Date.parse(E) <= Date.parse(S)) {
-			alert(window.jsi18n_bika('End date must be after start date'))
+			alert(_('End date must be after start date'))
 			return false;
 		}
 		$("#Start").attr('class', 'datepicker_nofuture');
@@ -330,7 +330,7 @@ $(document).ready(function(){
 		}
 		
 		if (Date.parse(E) <= Date.parse(S)) {
-			alert(window.jsi18n_bika('End date must be after start date'))
+			alert(_('End date must be after start date'))
 			return false;
 		}
 		
