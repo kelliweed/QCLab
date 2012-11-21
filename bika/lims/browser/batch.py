@@ -100,9 +100,9 @@ class ajaxGetBatchInfo(BrowserView):
         patient = self.bika_patient_catalog(portal_type='Patient', UID=batch.getPatientUID())
         doctor = self.portal_catalog(portal_type='Doctor', UID=batch.getDoctorUID())
 
-        ret = {'Client': client and client[0].Title or 'None',
-               'Patient': patient and patient[0].Title or 'None',
-               'Doctor': doctor and doctor[0].Title or 'None'}
+        ret = {'Client': client and client[0].Title or '',
+               'Patient': patient and patient[0].Title or '',
+               'Doctor': doctor and doctor[0].Title or ''}
 
         return json.dumps(ret)
 
