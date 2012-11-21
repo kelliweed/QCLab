@@ -97,32 +97,36 @@ class DoctorsView(ClientContactsView):
         return items
 
 class ajaxGetDoctors(BrowserView):
-    """ Vocabulary source for jquery combo dropdown box
+    """ vocabulary source for jquery combo dropdown box
     """
     def __call__(self):
         plone.protect.CheckAuthenticator(self.request)
-        searchTerm = self.request['searchTerm']
+        searchTerm = self.request['searchTerm'].lower()
         page = self.request['page']
         nr_rows = self.request['rows']
         sord = self.request['sord']
         sidx = self.request['sidx']
-        wf = getToolByName(self.context, 'portal_workflow')
 
-        doctors = (x.getObject() for x in self.portal_catalog(portal_type="Doctor"))
-        rows = [{'DoctorID': b.getDoctorID(),
-                 'Title': b.Title(),
-                 'DoctorUID': b.UID()} for b in doctors
-                if b.getDoctorID().find(searchTerm) > -1
-                or b.Title().find(searchTerm) > -1]
+        rows = []
 
-        rows = sorted(rows, cmp=lambda x,y: cmp(x.lower(), y.lower()), key=itemgetter(sidx and sidx or 'DoctorID'))
+        pc = self.portal_catalog
+        proxies = pc(portal_type="Doctor")
+        for doctor in proxies:
+            doctor = doctor.getObject()
+            if doctor.Title().lower().find(searchTerm) > -1 \
+            or doctor.getDoctorID().lower().find(searchTerm) > -1:
+                rows.append({'Title': doctor.Title() or '',
+                             'DoctorID': doctor.getDoctorID(),
+                             'DoctorUID': doctor.UID()})
+
+        rows = sorted(rows, cmp=lambda x,y: cmp(x.lower(), y.lower()), key = itemgetter(sidx and sidx or 'Title'))
         if sord == 'desc':
             rows.reverse()
         pages = len(rows) / int(nr_rows)
         pages += divmod(len(rows), int(nr_rows))[1] and 1 or 0
-        ret = {'page': page,
-               'total': pages,
-               'records': len(rows),
-               'rows': rows[(int(page) - 1) * int(nr_rows): int(page) * int(nr_rows)]}
+        ret = {'page':page,
+               'total':pages,
+               'records':len(rows),
+               'rows':rows[ (int(page)-1)*int(nr_rows) : int(page)*int(nr_rows) ]}
 
         return json.dumps(ret)
