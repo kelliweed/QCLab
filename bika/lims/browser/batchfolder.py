@@ -115,7 +115,7 @@ class BatchFolderContentsView(BikaListingView):
                 continue
             obj = items[x]['obj']
 
-            items[x]['replace']['BatchID'] = "<a href='%s/analysisrequests'>%s</a>" % (items[x]['url'], obj.getBatchID())
+            items[x]['replace']['BatchID'] = "<a href='%s'>%s</a>" % (items[x]['url'], obj.getBatchID())
 
             patient = uc(UID=obj.getPatientUID())
             if patient:
@@ -161,23 +161,23 @@ class ajaxGetBatches(BrowserView):
     def __call__(self):
         plone.protect.CheckAuthenticator(self.request)
         ClientUID = self.request.get('ClientUID', '')
-        searchTerm = self.request['searchTerm']
+        searchTerm = self.request['searchTerm'].lower()
         page = self.request['page']
         nr_rows = self.request['rows']
         sord = self.request['sord']
         sidx = self.request['sidx']
-        wf = getToolByName(self.context, 'portal_workflow')
 
         rows = []
+
         if ClientUID:
             batches = self.bika_catalog(portal_type='Batch', getClientUID=ClientUID)
         else:
             batches = self.bika_catalog(portal_type='Batch')
 
         for batch in batches:
-            batch = batch.getObject()
-            if batch.Title().find(searchTerm) > -1 \
-                    or batch.Description().find(searchTerm) > -1:
+            if batch.Title.lower().find(searchTerm) > -1 \
+                    or batch.Description.lower().find(searchTerm) > -1:
+                batch = batch.getObject()
                 rows.append({'BatchID': batch.Title(),
                              'BatchUID': batch.UID(),
                              'PatientID': batch.getPatientID(),
