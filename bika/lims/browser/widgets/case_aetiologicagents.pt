@@ -51,13 +51,13 @@
                     </tr>
                     <tr id="new">
                     	<td style="padding-bottom:15px;">&nbsp;</td>
-                        <td colspan="1" rowspan="1" class="state-active Code">
+                        <td colspan="1" rowspan="1" class="state-active Title">
                              <input class="wide" id="Title" type="text" value="" autocomplete="off"/>
                         </td>
-                        <td colspan="1" rowspan="1" class="state-active Title">
+                        <td colspan="1" rowspan="1" class="state-active Description">
                              <input class="wide" id="Description" type="text"  readonly="readonly" value="" autocomplete="off"/>
                         </td>
-                        <td colspan="1" rowspan="1" class="state-active Description">
+                        <td colspan="1" rowspan="1" class="state-active Subtype">
                              <input class="wide" id="Subtype" type="text" value="" autocomplete="off"/>
                         </td>
                     </tr>
@@ -69,14 +69,14 @@
 						       type="submit"
 							   i18n:attributes="value"
 							   value="Add" />								
-							<tal:hassymptoms tal:condition="python:hasattr(view, 'hasAetiologicAgents') and view.hasAetiologicAgents()">
+							<tal:hasaetiologicagents tal:condition="python:hasattr(view, 'hasAetiologicAgents') and view.hasAetiologicAgents()">
 								<input class="workflow_action_button action_button" type="submit"
 									name="delete"
 									i18n:attributes="value" value="Delete selected" />
 								<input class="workflow_action_button action_button" type="submit"
 									name="clear"
 									i18n:attributes="value" value="Delete all" />
-							</tal:hassymptoms>
+							</tal:hasaetiologicagents>
 					   </td>
 					</tr>
 				</tfoot>

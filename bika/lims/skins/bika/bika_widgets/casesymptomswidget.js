@@ -25,37 +25,37 @@ $(document).ready(function(){
 
     $(".template-symptoms .add_row").click(function(event){
         event.preventDefault();
-        C = $("#Code").val();
-        T = $("#Title").val();
-        D = $("#Description").val();
-        O = $("#Onset").val();
+        C = $(".template-symptoms #Code").val();
+        T = $(".template-symptoms #Title").val();
+        D = $(".template-symptoms #Description").val();
+        O = $(".template-symptoms #Onset").val();
         if (T == ''){
             return false;
         }
 
         // Avoids datewidget unload after adding new row without postback
-        $("#Onset").attr('class', 'datepicker_nofuture');
+        $(".template-symptoms #Onset").attr('class', 'datepicker_nofuture');
 
-        newrow = $("tr#new").clone();
-        $("tr#new").removeAttr('id');
-        $("#Code").parent().append("<span>"+C+"</span>");
-        $("#Code").parent().append("<input type='hidden' name='CSY_Code:list' value='"+C+"'/>");
-        $("#Code").remove();
-        $("#Title").parent().append("<span>"+T+"</span>");
-        $("#Title").parent().append("<input type='hidden' name='CSY_Title:list' value='"+T+"'/>");
-        $("#Title").remove();
-        $("#Description").parent().append("<span>"+D+"</span>");
-        $("#Description").parent().append("<input type='hidden' name='CSY_Description:list' value='"+D+"'/>");
-        $("#Description").remove();
-        $("#Onset").parent().append("<span>"+O+"</span>");
-        $("#Onset").parent().append("<input type='hidden' name='CSY_Onset:list' value='"+O+"'/>");
-        $("#Onset").remove();
+        newrow = $(".template-symptoms tr#new").clone();
+        $(".template-symptoms tr#new").removeAttr('id');
+        $(".template-symptoms #Code").parent().append("<span>"+C+"</span>");
+        $(".template-symptoms #Code").parent().append("<input type='hidden' name='CSY_Code:list' value='"+C+"'/>");
+        $(".template-symptoms #Code").remove();
+        $(".template-symptoms #Title").parent().append("<span>"+T+"</span>");
+        $(".template-symptoms #Title").parent().append("<input type='hidden' name='CSY_Title:list' value='"+T+"'/>");
+        $(".template-symptoms #Title").remove();
+        $(".template-symptoms #Description").parent().append("<span>"+D+"</span>");
+        $(".template-symptoms #Description").parent().append("<input type='hidden' name='CSY_Description:list' value='"+D+"'/>");
+        $(".template-symptoms #Description").remove();
+        $(".template-symptoms #Onset").parent().append("<span>"+O+"</span>");
+        $(".template-symptoms #Onset").parent().append("<input type='hidden' name='CSY_Onset:list' value='"+O+"'/>");
+        $(".template-symptoms #Onset").remove();
         for(i=0; i<$(newrow).children().length; i++){
             td = $(newrow).children()[i];
             input = $(td).children()[0];
             $(input).val('');
         }
-        $(newrow).appendTo($(".bika-listing-table"));
+        $(newrow).appendTo($(".template-symptoms .bika-listing-table"));
         lookups();
         return false;
     })

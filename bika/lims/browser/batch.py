@@ -105,4 +105,4 @@ class ajaxGetBatchInfo(BrowserView):
                'Doctor': doctor and doctor[0].Title or ''}
 
         return json.dumps(ret)
-
+    

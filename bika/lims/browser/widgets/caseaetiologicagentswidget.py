@@ -1,14 +1,16 @@
+from AccessControl import ClassSecurityInfo
+from Products.Archetypes.Registry import registerWidget
+from Products.Archetypes.Widget import TypesWidget
 from Products.CMFCore.utils import getToolByName
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from bika.lims import PMF, bikaMessageFactory as _
 from bika.lims.browser import BrowserView
 from bika.lims.browser.bika_listing import BikaListingView
 from bika.lims.idserver import renameAfterCreation
-from Products.Archetypes.Registry import registerWidget
 from bika.lims.permissions import *
+from operator import itemgetter
 import json
-from AccessControl import ClassSecurityInfo
-from Products.Archetypes.Widget import TypesWidget
+import plone
 
 
 class CaseAetiologicAgentsView(BrowserView):
@@ -95,3 +97,58 @@ registerWidget(CaseAetiologicAgentsWidget,
                title='Aetiologic agents',
                description="Laboratory confirmed aetiologic agent and subtype, as the disease's cause",
                )
+
+class ajaxGetAetiologicAgents(BrowserView):
+    """ Aetologic Agents from site setup
+    """
+    def __call__(self):
+        plone.protect.CheckAuthenticator(self.request)
+        searchTerm = self.request['searchTerm'].lower()
+        page = self.request['page']
+        nr_rows = self.request['rows']
+        sord = self.request['sord']
+        sidx = self.request['sidx']
+        rows = []
+
+        # lookup objects from ZODB
+        agents = self.bika_setup_catalog(portal_type= 'AetiologicAgent')
+        if agents and searchTerm:
+            agents = [agent for agent in agents if agent.Title.lower().find(searchTerm) > -1
+                                                or agent.Description.lower().find(searchTerm) > -1]
+        for agent in agents:
+            agent = agent.getObject()
+            rows.append({'Title': agent.getTitle(),
+                         'Description': agent.Description()})
+        
+        rows = sorted(rows, cmp=lambda x,y: cmp(x.lower(), y.lower()), key=itemgetter(sidx and sidx or 'Title'))
+        if sord == 'desc':
+            rows.reverse()
+        pages = len(rows) / int(nr_rows)
+        pages += divmod(len(rows), int(nr_rows))[1] and 1 or 0
+        ret = {'page':page,
+               'total':pages,
+               'records':len(rows),
+               'rows':rows[ (int(page) - 1) * int(nr_rows) : int(page) * int(nr_rows) ]}
+
+        return json.dumps(ret) 
+    
+class ajaxGetAetiologicAgentSubtypes(BrowserView):
+    """ Aetologic Agent Subtypes for a specified Aetiologic Agent from site setup
+    """
+    def __call__(self):
+        plone.protect.CheckAuthenticator(self.request)
+        searchTerm = self.request['searchTerm'].lower()
+        page = self.request['page']
+        nr_rows = self.request['rows']
+        sord = self.request['sord']
+        sidx = self.request['sidx']
+        rows = []
+
+        pages = len(rows) / int(nr_rows)
+        pages += divmod(len(rows), int(nr_rows))[1] and 1 or 0
+        ret = {'page':page,
+               'total':pages,
+               'records':len(rows),
+               'rows':rows[ (int(page) - 1) * int(nr_rows) : int(page) * int(nr_rows) ]}
+
+        return json.dumps(ret) 
