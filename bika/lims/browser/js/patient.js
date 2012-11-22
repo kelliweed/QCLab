@@ -3,6 +3,7 @@ $(document).ready(function(){
 
     _ = jarn.i18n.MessageFactory('bika');
     PMF = jarn.i18n.MessageFactory('plone');
+    dateFormat = _("date_format_short_datepicker");
 
     // Add Patient popup
     if($(".portaltype-patient").length == 0 &&
@@ -39,8 +40,22 @@ $(document).ready(function(){
             noform:'close',
             config: {
             	onLoad: function() {
-            		// manually remove remarks
-            		this.getOverlay().find("#archetypes-fieldname-Remarks").remove();
+                    // manually remove remarks
+                    this.getOverlay().find("#archetypes-fieldname-Remarks").remove();
+                    // reapply datepicker widget
+                    this.getOverlay().find("#BirthDate").live('click', function() {
+                        $(this).datepicker({
+                            showOn:'focus',
+                            showAnim:'',
+                            changeMonth:true,
+                            changeYear:true,
+                            maxDate: '+0d',
+                            dateFormat: dateFormat
+                        })
+                        .click(function(){$(this).attr('value', '');})
+                        .focus();
+                    });
+
 	            }
             }
 	    }

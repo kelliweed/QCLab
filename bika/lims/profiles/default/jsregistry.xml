@@ -62,7 +62,7 @@
               conditionalcomment=""
               cookable="True"
               enabled="on"
-              expression="python:here.portal_type in ['Client', 'AnalysisRequest', 'Batch']"
+              expression="python:here.portal_type in ['Client', 'AnalysisRequest', 'Batch', 'Patient']"
               id="++resource++bika.lims.js/batch.js"
               inline="False"
               insert-after="*"/>
