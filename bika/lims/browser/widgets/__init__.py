@@ -12,3 +12,4 @@ from artemplateanalyseswidget import ARTemplateAnalysesWidget
 from artemplatepartitionswidget import ARTemplatePartitionsWidget
 from addresswidget import AddressWidget
 from casesymptomswidget import CaseSymptomsWidget
+from caseaetiologicagentswidget import CaseAetiologicAgentsWidget
