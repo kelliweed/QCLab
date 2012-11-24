@@ -5,7 +5,7 @@
 
     <div id="folderlisting-main-table" class="template-caseaetiologicagents">
         <input tal:replace="structure context/@@authenticator/authenticator" />
-        <input type="hidden" name="submitted" value="1"/>
+        <input type="hidden" name="CAE_submitted" value="1"/>
         <div class="bika-listing-table-container">
             <table summary="Content listing" style="margin-bottom: 0px;"
                 class="bika-listing-table">
@@ -33,11 +33,11 @@
                     <tr tal:repeat="row context/getAetiologicAgents">
                     	<td>
                           	 <input class="noborder" type="checkbox" 
-                          		name="SelectItem" id="SelectItem"
+                          		name="CAE_SelectItem" id="CAE_SelectItem"
                           		tal:define="global index python:index+1;"
                           		tal:attributes="
-                          			id python:'SelectItem-%s'%(index);
-                          			name python:'SelectItem-%s'%(index);"/>
+                          			id python:'CAE_SelectItem-%s'%(index);
+                          			name python:'CAE_SelectItem-%s'%(index);"/>
                         </td>
                         <td colspan="1" rowspan="1" class="state-active Title">
                              <span tal:content="row/Title"/>
@@ -53,9 +53,10 @@
                     	<td style="padding-bottom:15px;">&nbsp;</td>
                         <td colspan="1" rowspan="1" class="state-active Title">
                              <input class="wide" id="Title" type="text" value="" autocomplete="off"/>
+                             <input type="hidden" name="AgentUID" id="AgentUID" value=""/>
                         </td>
                         <td colspan="1" rowspan="1" class="state-active Description">
-                             <input class="wide" id="Description" type="text"  readonly="readonly" value="" autocomplete="off"/>
+                             <input class="wide" id="Description" type="text" value="" autocomplete="off"/>
                         </td>
                         <td colspan="1" rowspan="1" class="state-active Subtype">
                              <input class="wide" id="Subtype" type="text" value="" autocomplete="off"/>
@@ -71,10 +72,10 @@
 							   value="Add" />								
 							<tal:hasaetiologicagents tal:condition="python:hasattr(view, 'hasAetiologicAgents') and view.hasAetiologicAgents()">
 								<input class="workflow_action_button action_button" type="submit"
-									name="delete"
+									name="CAE_delete"
 									i18n:attributes="value" value="Delete selected" />
 								<input class="workflow_action_button action_button" type="submit"
-									name="clear"
+									name="CAE_clear"
 									i18n:attributes="value" value="Delete all" />
 							</tal:hasaetiologicagents>
 					   </td>

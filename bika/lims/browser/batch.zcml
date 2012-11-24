@@ -27,5 +27,21 @@
       permission="zope.Public"
       layer="bika.lims.interfaces.IBikaLIMS"
     />
+    
+    <browser:page
+      for="*"
+      name="getAetiologicAgents"
+      class="bika.lims.browser.batch.ajaxGetAetiologicAgents"
+      permission="zope.Public"
+      layer="bika.lims.interfaces.IBikaLIMS"
+    />
+    
+    <browser:page
+      for="*"
+      name="getAetiologicAgentSubtypes"
+      class="bika.lims.browser.batch.ajaxGetAetiologicAgentSubtypes"
+      permission="zope.Public"
+      layer="bika.lims.interfaces.IBikaLIMS"
+    />
 
 </configure>

@@ -10,27 +10,31 @@ $(document).ready(function(){
         $(".template-caseaetiologicagents #Title").combogrid({
             colModel: [{'columnName':'Title', 'width':'25', 'label':_('Title')},
                        {'columnName':'Description', 'width':'65', 'label':_('Description')},
-                       {'columnName':'Subtype', 'width':'25', 'label':_('Subtype')}],
+                       {'columnName':'AgentUID', 'hidden':true}],
             url: window.portal_url + "/getAetiologicAgents?_authenticator=" + $('input[name="_authenticator"]').val(),
             select: function( event, ui ) {
                 event.preventDefault();
                 $(this).val(ui.item.Title);
                 $(this).parents('tr').find('input[id=Title]').val(ui.item.Title);
-                $(this).parents('tr').find('input[id=Description]').val(ui.item.Description)
-                $(this).change();
-                return false;
-            }
-        });
-        
-        // Case Aetiologic Agents > Aetiologic agent row > Subtypes popup
-        $(".template-caseaetiologicagents #Subtype").combogrid({
-        	colModel: [{'columnName':'Subtype', 'width':'25', 'label':_('Subtype')},
-                       {'columnName':'SubtypeRemarks', 'width':'65', 'label':_('SubtypeRemarks')}],
-            url: window.portal_url + "/getAetiologicAgentSubtypes?_authenticator=" + $('input[name="_authenticator"]').val(),
-     //       						+"&aetiologicagent=" + $(this).parents('tr').find('input[id=Title]').val(),
-            select: function( event, ui ) {
-                event.preventDefault();
-                $(this).val(ui.item.Title);
+                $(this).parents('tr').find('input[id=Description]').val(ui.item.Description);
+                $(this).parents('tr').find('input[id=AgentUID]').val(ui.item.AgentUID);
+                //$(".template-caseaetiologicagents #Subtype").combogrid.url+=("&auid=" + ui.item.AgentUID);
+                
+                // Case Aetiologic Agents > Aetiologic agent row > Subtypes popup
+                // This combo depends on the selected Aetiologic agent in the previous one
+                $(".template-caseaetiologicagents #Subtype").combogrid({
+                	colModel: [{'columnName':'Subtype', 'width':'25', 'label':_('Subtype')},
+                               {'columnName':'SubtypeRemarks', 'width':'65', 'label':_('SubtypeRemarks')}],
+                    url: window.portal_url + "/getAetiologicAgentSubtypes?_authenticator=" + $('input[name="_authenticator"]').val()+"&auid=" + ui.item.AgentUID,
+                    select: function( event, ui ) {
+                        event.preventDefault();
+                        $(this).val(ui.item.Subtype);
+                        $(this).parents('tr').find('input[id=Subtype]').val(ui.item.Subtype);
+                        $(this).change();
+                        return false;
+                    }
+                });
+                
                 $(this).change();
                 return false;
             }
@@ -43,6 +47,7 @@ $(document).ready(function(){
         T = $(".template-caseaetiologicagents #Title").val();
         D = $(".template-caseaetiologicagents #Description").val();
         S = $(".template-caseaetiologicagents #Subtype").val();
+        I = $(".template-caseaetiologicagents #AgentUID").val();
         if (T == ''){
             return false;
         }
@@ -52,6 +57,8 @@ $(document).ready(function(){
         $(".template-caseaetiologicagents #Title").parent().append("<span>"+T+"</span>");
         $(".template-caseaetiologicagents #Title").parent().append("<input type='hidden' name='CAE_Title:list' value='"+T+"'/>");
         $(".template-caseaetiologicagents #Title").remove();
+        $(".template-caseaetiologicagents #AgentUID").parent().append("<input type='hidden' name='CAE_AgentUID:list' value='"+I+"'/>");
+        $(".template-caseaetiologicagents #AgentUID").remove();
         $(".template-caseaetiologicagents #Description").parent().append("<span>"+D+"</span>");
         $(".template-caseaetiologicagents #Description").parent().append("<input type='hidden' name='CAE_Description:list' value='"+D+"'/>");
         $(".template-caseaetiologicagents #Description").remove();
