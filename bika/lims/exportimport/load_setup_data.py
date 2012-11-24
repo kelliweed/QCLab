@@ -148,7 +148,7 @@ class LoadSetupData(BrowserView):
             self.load_CaseOutcomes(sheets['Case Outcomes'])
         if 'Sample Origins' in sheets:
             self.load_SampleOrigins(sheets['Sample Origins'])
-            
+        if 'Sample Types' in sheets:
             self.load_sample_types(sheets['Sample Types'])
         if 'Sample Points' in sheets:
             self.load_sample_points(sheets['Sample Points'])

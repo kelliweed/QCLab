@@ -72,7 +72,6 @@ class CaseAetiologicAgentsWidget(TypesWidget):
                     _id = folder.invokeFactory('AetiologicAgent', id='tmp')
                     obj = folder[_id]
                     obj.edit(title=T, description=D)
-                    import pdb;pdb.set_trace()
                     if S and len(S) > 0:
                         prova='hola'
                     obj.unmarkCreationFlag()
