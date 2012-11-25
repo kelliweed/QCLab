@@ -33,4 +33,5 @@ bika_treatments,Treatments
 bika_immunizations,Immunizations
 bika_vaccinationcenters,VaccinationCenters
 bika_epidemiologicalyears,EpidemiologicalYears
+bika_identifiertypes,IdentifierTypes
 bika_worksheettemplates,WorksheetTemplates

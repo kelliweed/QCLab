@@ -89,7 +89,8 @@ class BikaGenerator:
                        'bika_casestatuses',
                        'bika_caseoutcomes',
                        'bika_worksheettemplates',
-                       'bika_epidemiologicalyears'):
+                       'bika_epidemiologicalyears',
+                       'bika_identifiertypes'):
             obj = bika_setup._getOb(obj_id)
             obj.unmarkCreationFlag()
             obj.reindexObject()
@@ -617,6 +618,7 @@ class BikaGenerator:
         at.setCatalogsByType('CaseStatus', ['bika_setup_catalog', ])
         at.setCatalogsByType('CaseOutcome', ['bika_setup_catalog', ])
         at.setCatalogsByType('EpidemiologicalYear', ['bika_setup_catalog', ])
+        at.setCatalogsByType('IdentifierType', ['bika_setup_catalog', ])
 
         # create lexicon
         wordSplitter = Empty()

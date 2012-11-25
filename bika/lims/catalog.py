@@ -168,7 +168,8 @@ class BikaSetupCatalog(CatalogTool):
                                                  'CaseStatus',
                                                  'CaseOutcome',
                                                  'WorksheetTemplate',
-                                                 'EpidemiologicalYear'),
+                                                 'EpidemiologicalYear',
+                                                 'IdentifierType'),
                                 search_sub = True,
                                 apply_func = indexObject)
 

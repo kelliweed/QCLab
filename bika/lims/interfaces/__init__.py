@@ -191,6 +191,8 @@ class IWorksheetTemplates(Interface):
     ""
 class IEpidemiologicalYears(Interface):
     ""
+class IIdentifierTypes(Interface):
+    ""
 
 class IBikaCatalog(Interface):
     ""
