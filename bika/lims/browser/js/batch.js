@@ -14,7 +14,10 @@ $(document).ready(function(){
                 ' </a>');
         ajax_url = window.location.href.replace("/ar_add","")
                  + "/getBatches?_authenticator=" + $('input[name="_authenticator"]').val();
-        if ($("#ar_0_ClientUID").length > 0) { // epid ar_add
+        if ($("#ar_0_PatientUID").length > 0) {
+            ajax_url = ajax_url + "&PatientUID=" + $("#ar_0_PatientUID").val();
+        }
+        if ($("#ar_0_ClientUID").length > 0) {
             ajax_url = ajax_url + "&ClientUID=" + $("#ar_0_ClientUID").val();
         }
         $("input[id*=BatchID]").combogrid({
