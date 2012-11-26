@@ -63,13 +63,13 @@
                         <tr id="new">
                         	<td style="padding-bottom:15px;">&nbsp;</td>
                             <td colspan="1" rowspan="1" class="state-active Code">
-                                 <input class="wide" id="Code" type="text" value="" autocomplete="off"/>
+                                 <input class="wide" id="Code" type="text" value="" autocomplete="off" readonly="true"/>
                             </td>
                             <td colspan="1" rowspan="1" class="state-active Title">
                                  <input class="wide" id="Title" type="text" value="" autocomplete="off"/>
                             </td>
                             <td colspan="1" rowspan="1" class="state-active Description">
-                                 <input class="wide" id="Description" type="text" value="" autocomplete="off"/>
+                                 <input class="wide" id="Description" type="text" value="" autocomplete="off" readonly="true"/>
                             </td>
                             <td colspan="1" rowspan="1" class="state-active Onset">
                                  <input class="datepicker_nofuture" id="Onset" type="text" value="" autocomplete="off"/>
