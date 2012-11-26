@@ -15,6 +15,7 @@ from bika.lims.utils import isActive
 from zope.interface import implements
 import json
 import plone
+from bika.lims.browser.widgets.patientidentifierswidget import PatientIdentifiersWidget
 
 schema = BikaSchema.copy() + Schema((
     StringField('BatchID',
@@ -76,7 +77,8 @@ schema = BikaSchema.copy() + Schema((
         widget=BooleanWidget(
             label = _("Onset Date Estimated"),
         ),
-    ),
+    ),  
+                                                      
     TextField('ProvisionalDiagnosis',
         default_content_type='text/x-web-intelligent',
         allowable_content_types=('text/x-web-intelligent',),
@@ -286,7 +288,21 @@ class Batch(BaseContent):
         if patient:
             patient = patient[0].getObject()
             return patient.getChronicConditions()
-
+    
+    def getPatientIdentifiers(self):
+        bpc = getToolByName(self, 'bika_patient_catalog')
+        patient = bpc(UID=self.getPatientUID())
+        if patient:
+            return patient[0].getObject().getPatientIdentifiers()
+    
+    def getPatientIdentifiersStr(self):
+        import pdb;pdb.set_trace()
+        bpc = getToolByName(self, 'bika_patient_catalog')
+        patient = bpc(UID=self.getPatientUID())
+        if patient:
+            patient = patient[0].getObject()
+            return patient.getPatientIdentifiersStr()
+    
     def setTreatmentHistory(self, value):
         bpc = getToolByName(self, 'bika_patient_catalog')
         patient = bpc(UID=self.getPatientUID())

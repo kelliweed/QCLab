@@ -21,7 +21,7 @@ class PatientIdentifiersView(BrowserView):
     
     def hasIdentifiers(self):
         return len(self.context.getPatientIdentifiers())>0
-    
+            
 
 class PatientIdentifiersWidget(TypesWidget):
     _properties = TypesWidget._properties.copy()
@@ -29,11 +29,12 @@ class PatientIdentifiersWidget(TypesWidget):
         'macro': "bika_widgets/patientidentifierswidget",
         'helper_js': ("bika_widgets/patientidentifierswidget.js",),
         'helper_css': ("bika_widgets/patientidentifierswidget.css",),
+        'read_only': False,
     })
 
     security = ClassSecurityInfo()
+    
     security.declarePublic('process_form')
-
     def process_form(self, instance, field, form, empty_marker=None, emptyReturnsMarker=False):
         value = len(instance.getPatientIdentifiers())>0 and instance.getPatientIdentifiers() or []
         if 'PID_clear' in form:
@@ -74,7 +75,6 @@ class PatientIdentifiersWidget(TypesWidget):
         return value, {}
 
     security.declarePublic('PatientIdentifiers')
-
     def PatientIdentifiers(self, field, allow_edit=False):
         fieldvalue = getattr(field, field.accessor)()
         view = PatientIdentifiersView(self,
@@ -82,7 +82,8 @@ class PatientIdentifiersWidget(TypesWidget):
                                 fieldvalue=fieldvalue,
                                 allow_edit=allow_edit)
         return view()
-
+    
+    
 registerWidget(PatientIdentifiersWidget,
                title=_('Patient identifiers'),
                description=_("Patient additional identifiers"),)
