@@ -1,5 +1,3 @@
-"""
-"""
 from AccessControl import ClassSecurityInfo
 from AccessControl.Permissions import manage_users
 from Products.ATContentTypes.content import schemata
@@ -16,6 +14,7 @@ from bika.lims.content.person import Person
 from bika.lims.interfaces import IPatient
 from bika.lims.permissions import *
 from zope.interface import implements
+from bika.lims.browser.widgets import PatientIdentifiersWidget
 
 schema = Person.schema.copy() + Schema((
     StringField('PatientID',
@@ -66,6 +65,17 @@ schema = Person.schema.copy() + Schema((
             label=_('Birth date is estimated'),
         ),
     ),
+    RecordsField('PatientIdentifiers',
+        type='patientidentifiers',
+        subfields=('IdentifierTypeUID', 'IdentifierType', 'Identifier'),
+        subfield_labels={'IdentifierType':_('Identifier Type'), 'Identifier': _('Identifier')},
+        subfield_sizes={'Identifier': 15, 'Identifier Type': 25},
+        widget=PatientIdentifiersWidget(
+            label=_('Additional identifiers'),
+            description=_('Patient additional identifiers')
+        ),
+    ),                                    
+    
     TextField('Remarks',
         searchable=True,
         default_content_type='text/x-web-intelligent',

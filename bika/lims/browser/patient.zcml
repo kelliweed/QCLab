@@ -143,5 +143,13 @@
       permission="zope.Public"
       layer="bika.lims.interfaces.IBikaLIMS"
     />
+    
+    <browser:page
+      for="*"
+      name="getIdentifierTypes"
+      class="bika.lims.browser.patient.ajaxGetIdentifierTypes"
+      permission="zope.Public"
+      layer="bika.lims.interfaces.IBikaLIMS"
+    />
 
 </configure>
