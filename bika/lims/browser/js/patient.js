@@ -101,6 +101,7 @@ $(document).ready(function(){
 			colModel: [{'columnName':'Type', 'width':'50', 'label':_('Type')},
 			           {'columnName':'Title', 'width':'50', 'label':_('Title')}],
 			url: window.location.href.replace("/treatmenthistory","") + "/getTreatments?_authenticator=" + $('input[name="_authenticator"]').val(),
+            showOn: true,
 			select: function( event, ui ) {
 				event.preventDefault();
 				$(this).val(ui.item.Title);
@@ -113,7 +114,7 @@ $(document).ready(function(){
 		$(".template-treatmenthistory #Drug").combogrid({
 			colModel: [{'columnName':'Title', 'width':'50', 'label':_('Title')}],
 			url: window.location.href.replace("/treatmenthistory","") + "/getDrugs?_authenticator=" + $('input[name="_authenticator"]').val(),
-
+            showOn: true,
 			select: function( event, ui ) {
 				event.preventDefault();
 				$(this).val(ui.item.Title);
@@ -126,6 +127,7 @@ $(document).ready(function(){
 		$(".template-allergies #DrugProhibition").combogrid({
 			colModel: [{'columnName':'Title', 'width':'50', 'label':_('Title')}],
 			url: window.location.href.replace("/allergies","") + "/getDrugProhibitions?_authenticator=" + $('input[name="_authenticator"]').val(),
+            showOn: true,
 			select: function( event, ui ) {
 				event.preventDefault();
 				$(this).val(ui.item.Title);
@@ -138,6 +140,7 @@ $(document).ready(function(){
 		$(".template-allergies #Drug").combogrid({
 			colModel: [{'columnName':'Title', 'width':'50', 'label':_('Title')}],
 			url: window.location.href.replace("/allergies","") + "/getDrugs?_authenticator=" + $('input[name="_authenticator"]').val(),
+            showOn: true,
 			select: function( event, ui ) {
 				event.preventDefault();
 				$(this).val(ui.item.Title);
@@ -150,6 +153,7 @@ $(document).ready(function(){
 		$(".template-immunizationhistory #Immunization").combogrid({
 			colModel: [{'columnName':'Title', 'width':'50', 'label':_('Title')}],
 			url: window.location.href.replace("/immunizationhistory","") + "/getImmunizations?_authenticator=" + $('input[name="_authenticator"]').val(),
+            showOn: true,
 			select: function( event, ui ) {
 				event.preventDefault();
 				$(this).val(ui.item.Title);
@@ -162,6 +166,7 @@ $(document).ready(function(){
 		$(".template-immunizationhistory #VaccinationCenter").combogrid({
 			colModel: [{'columnName':'Title', 'width':'50', 'label':_('Title')}],
 			url: window.location.href.replace("/immunizationhistory","") + "/getVaccinationCenters?_authenticator=" + $('input[name="_authenticator"]').val(),
+            showOn: true,
 			select: function( event, ui ) {
 				event.preventDefault();
 				$(this).val(ui.item.Title);
@@ -176,6 +181,7 @@ $(document).ready(function(){
 			           {'columnName':'Title', 'width':'25', 'label':_('Title')},
 			           {'columnName':'Description', 'width':'65', 'label':_('Description')}],
 			url: window.portal_url + "/getSymptoms?_authenticator=" + $('input[name="_authenticator"]').val(),
+            showOn: true,
 			select: function( event, ui ) {
 				event.preventDefault();
 				$(this).val(ui.item.Title);
@@ -191,6 +197,7 @@ $(document).ready(function(){
 			colModel: [{'columnName':'Code', 'width':'10', 'label':_('Code')},
 			           {'columnName':'Country', 'width':'25', 'label':_('Country')}],
 			url: window.location.href.replace("/travelhistory","") + "/getCountries?_authenticator=" + $('input[name="_authenticator"]').val(),
+            showOn: true,
 			select: function( event, ui ) {
 				event.preventDefault();
 				$(this).val(ui.item.Title);

@@ -194,7 +194,18 @@ class ImmunizationHistoryView(BrowserView):
                 I = self.request.form['Immunization'][i]
                 V = self.request.form['VaccinationCenter'][i]
                 D = self.request.form['Date'][i]
-
+                
+                # Create new Immunization entry if none exists
+                if (len(I.strip())>0):
+                    ilist = bsc(portal_type='Immunization', title=I)
+                    if not ilist:
+                        folder = self.context.bika_setup.bika_immunizations
+                        _id = folder.invokeFactory('Immunization', id='tmp')
+                        obj = folder[_id]
+                        obj.edit(title = I)
+                        obj.unmarkCreationFlag()
+                        renameAfterCreation(obj)
+                
                 # Create new VaccinationCenter entry if none exists
                 if (len(V.strip())>0):
                     Vlist = bsc(portal_type='VaccinationCenter', title=V)
@@ -202,7 +213,7 @@ class ImmunizationHistoryView(BrowserView):
                         folder = self.context.bika_setup.bika_vaccinationcenters
                         _id = folder.invokeFactory('VaccinationCenter', id='tmp')
                         obj = folder[_id]
-                        obj.edit(title = V)
+                        obj.edit(Name = V)
                         obj.unmarkCreationFlag()
                         renameAfterCreation(obj)
 
