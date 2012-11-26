@@ -70,7 +70,7 @@ class PatientIdentifiersWidget(TypesWidget):
                     else:
                         instance.plone_utils.addPortalMessage(_("Identifier '%s' has no Identifier Type defined") % I, "error")
                      
-            value.append({'IdentifierTypeUID':U, 'IdentifierType': T, 'Identifier': I, 'IdentifierTypeDescription': D })
+                value.append({'IdentifierTypeUID':U, 'IdentifierType': T, 'Identifier': I, 'IdentifierTypeDescription': D })
         return value, {}
 
     security.declarePublic('PatientIdentifiers')
