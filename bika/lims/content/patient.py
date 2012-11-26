@@ -257,5 +257,13 @@ class Patient(Person):
                 continue
             clients.append([client.UID(), client.Title()])
         return DisplayList(clients)
+    
+    def getPatientIdentifiersStr(self):
+        ids = self.getPatientIdentifiers()
+        idsstr = ''
+        for id in ids:
+            idsstr += idsstr == '' and id['Identifier'] or (', ' + id['Identifier'])
+        return idsstr
+            
 
 atapi.registerType(Patient, PROJECTNAME)
