@@ -11,6 +11,7 @@ $(document).ready(function(){
             colModel: [{'columnName':'Title', 'width':'25', 'label':_('Title')},
                        {'columnName':'Description', 'width':'65', 'label':_('Description')},
                        {'columnName':'AgentUID', 'hidden':true}],
+            showOn: true,
             url: window.portal_url + "/getAetiologicAgents?_authenticator=" + $('input[name="_authenticator"]').val(),
             select: function( event, ui ) {
                 event.preventDefault();
@@ -25,6 +26,7 @@ $(document).ready(function(){
                 $(".template-caseaetiologicagents #Subtype").combogrid({
                 	colModel: [{'columnName':'Subtype', 'width':'25', 'label':_('Subtype')},
                                {'columnName':'SubtypeRemarks', 'width':'65', 'label':_('SubtypeRemarks')}],
+                    showOn: true,
                     url: window.portal_url + "/getAetiologicAgentSubtypes?_authenticator=" + $('input[name="_authenticator"]').val()+"&auid=" + ui.item.AgentUID,
                     select: function( event, ui ) {
                         event.preventDefault();
