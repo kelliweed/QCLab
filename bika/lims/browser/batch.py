@@ -95,14 +95,19 @@ class ajaxGetBatchInfo(BrowserView):
         plone.protect.CheckAuthenticator(self.request)
 
         batch = self.context
-        clientUID = batch.getClientUID()
         client = self.portal_catalog(portal_type='Client', UID=batch.getClientUID())
+        if client:
+            client = client[0].getObject()
         patient = self.bika_patient_catalog(portal_type='Patient', UID=batch.getPatientUID())
+        if patient:
+            patient = patient[0].getObject()
         doctor = self.portal_catalog(portal_type='Doctor', UID=batch.getDoctorUID())
+        if doctor:
+            doctor = doctor[0].getObject()
 
-        ret = {'Client': client and client[0].Title or '',
-               'Patient': patient and patient[0].Title or '',
-               'Doctor': doctor and doctor[0].Title or ''}
+        ret = {'Client': client and "<a href='%s/edit'>%s</a>"%(client.absolute_url(), client.Title()) or '',
+               'Patient': patient and "<a href='%s/edit'>%s</a>"%(patient.absolute_url(), patient.Title()) or '',
+               'Doctor': doctor and "<a href='%s/edit'>%s</a>"%(doctor.absolute_url(), doctor.Title()) or ''}
 
         return json.dumps(ret)
 
@@ -117,7 +122,7 @@ class ajaxGetAetiologicAgents(BrowserView):
         sord = self.request['sord']
         sidx = self.request['sidx']
         rows = []
-        
+
         # lookup objects from ZODB
         agents = self.bika_setup_catalog(portal_type= 'AetiologicAgent')
         if agents and searchTerm:
@@ -128,7 +133,7 @@ class ajaxGetAetiologicAgents(BrowserView):
             rows.append({'Title': agent.Title(),
                          'Description': agent.Description(),
                          'AgentUID':agent.UID()})
-        
+
         rows = sorted(rows, cmp=lambda x,y: cmp(x.lower(), y.lower()), key=itemgetter(sidx and sidx or 'Title'))
         if sord == 'desc':
             rows.reverse()
@@ -139,8 +144,8 @@ class ajaxGetAetiologicAgents(BrowserView):
                'records':len(rows),
                'rows':rows[ (int(page) - 1) * int(nr_rows) : int(page) * int(nr_rows) ]}
 
-        return json.dumps(ret) 
-    
+        return json.dumps(ret)
+
 class ajaxGetAetiologicAgentSubtypes(BrowserView):
     """ Aetologic Agent Subtypes for a specified Aetiologic Agent from site setup
     """
@@ -153,18 +158,18 @@ class ajaxGetAetiologicAgentSubtypes(BrowserView):
         sidx = self.request['sidx']
         agentuid = self.request['auid']
         rows = []
-        
+
         agents = self.bika_setup_catalog(portal_type='AetiologicAgent', UID=agentuid)
         if agents and len(agents) == 1:
             agent = agents[0].getObject()
-            subtypes = agent.getAetiologicAgentSubtypes()        
+            subtypes = agent.getAetiologicAgentSubtypes()
             if subtypes and searchTerm:
                 subtypes = [subtype for subtype in subtypes if subtype['Subtype'].lower().find(searchTerm) > -1]
-        
+
         for subtype in subtypes:
             rows.append({'Subtype': subtype['Subtype'],
                          'SubtypeRemarks': subtype['SubtypeRemarks']})
-        
+
         rows = sorted(rows, cmp=lambda x,y: cmp(x.lower(), y.lower()), key=itemgetter(sidx and sidx or 'Subtype'))
         if sord == 'desc':
             rows.reverse()
@@ -175,4 +180,4 @@ class ajaxGetAetiologicAgentSubtypes(BrowserView):
                'records':len(rows),
                'rows':rows[ (int(page) - 1) * int(nr_rows) : int(page) * int(nr_rows) ]}
 
-        return json.dumps(ret) 
+        return json.dumps(ret)
