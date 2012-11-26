@@ -10,8 +10,8 @@
             <table summary="Content listing" style="margin-bottom: 0px;"
                 class="bika-listing-table">
                 <thead>
-                    <tr>
-                		<th></th>
+                    <tr tal:condition="not:here/read_only">
+                		<th tal:condition="not:here/read_only"></th>
                         <th id="foldercontents-identifier-column"
                         	class="fieldRequired" i18n:translate="">Identifier</th>
                         <th id="foldercontents-identifiertype-column"
@@ -19,11 +19,17 @@
                         <th id="foldercontents-identifiertypedescription-column"
                             class="column fieldRequired" i18n:translate="">Identifier Type Description</th>
                     </tr>
+                    <tr tal:condition="here/read_only">
+                		<th tal:condition="not:here/read_only"></th>
+                        <th id="foldercontents-identifier-column" i18n:translate="">Identifier</th>
+                        <th id="foldercontents-identifiertype-column" i18n:translate="">Identifier Type</th>
+                        <th id="foldercontents-identifiertypedescription-column" i18n:translate="">Identifier Type Description</th>
+                    </tr>
                 </thead>
                 <tbody class="item-listing-tbody"
                 		tal:define="global index python:-1">
                     <tr tal:repeat="row context/getPatientIdentifiers">
-                    	<td>
+                    	<td tal:condition="not:here/read_only">
                           	 <input class="noborder" type="checkbox" 
                           		name="PID_SelectItem" id="PID_SelectItem"
                           		tal:define="global index python:index+1;"
@@ -35,8 +41,8 @@
                         <td colspan="1" rowspan="1" class="state-active IdentifierType" tal:content="row/IdentifierType"></td>
                         <td colspan="1" rowspan="1" class="state-active IdentifierTypeDescription" tal:content="row/IdentifierTypeDescription"></td>
                     </tr>
-                    <tr id="new">
-                    	<td style="padding-bottom:15px;">&nbsp;</td>
+                    <tr id="new" tal:condition="not:here/read_only">
+                    	<td style="padding-bottom:15px;" tal:condition="not:here/read_only">&nbsp;</td>
                         <td colspan="1" rowspan="1" class="state-active Identifier">
                              <input class="wide" id="Identifier" name="Identifier" type="text" value="" autocomplete="off"/>
                         </td>
@@ -51,7 +57,7 @@
                 </tbody>
                 <tfoot>
 					<tr>
-						<td class="noborder workflow_actions" colspan="5"  style="padding:5px;">
+						<td class="noborder workflow_actions" colspan="5"  style="padding:5px;" tal:condition="not:here/read_only">
 							<input class="workflow_action_button action_button add_row allowMultiSubmit"
 						       type="submit"
 							   i18n:attributes="value"

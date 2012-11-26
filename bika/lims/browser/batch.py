@@ -95,18 +95,20 @@ class ajaxGetBatchInfo(BrowserView):
         plone.protect.CheckAuthenticator(self.request)
 
         batch = self.context
+        patientids = ''
         client = self.portal_catalog(portal_type='Client', UID=batch.getClientUID())
         if client:
             client = client[0].getObject()
         patient = self.bika_patient_catalog(portal_type='Patient', UID=batch.getPatientUID())
         if patient:
             patient = patient[0].getObject()
+            patientids = len(patient.getPatientIdentifiersStr()) > 0 and "("+patient.getPatientIdentifiersStr()+")" or '' 
         doctor = self.portal_catalog(portal_type='Doctor', UID=batch.getDoctorUID())
         if doctor:
             doctor = doctor[0].getObject()
-
+        
         ret = {'Client': client and "<a href='%s/edit'>%s</a>"%(client.absolute_url(), client.Title()) or '',
-               'Patient': patient and "<a href='%s/edit'>%s</a>"%(patient.absolute_url(), patient.Title()) or '',
+               'Patient': patient and "<a href='%s/edit'>%s</a> %s"%(patient.absolute_url(), patient.Title(), patientids) or '',
                'Doctor': doctor and "<a href='%s/edit'>%s</a>"%(doctor.absolute_url(), doctor.Title()) or ''}
 
         return json.dumps(ret)
