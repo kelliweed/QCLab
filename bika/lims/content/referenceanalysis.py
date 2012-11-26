@@ -112,7 +112,7 @@ class ReferenceAnalysis(BaseContent):
         """ Return the Service ID as title """
         s = self.getService()
         s = s and s.Title() or ''
-        return str(s).encode('utf-8')
+        return str(s).decode('utf-8').encode('utf-8')
 
     def getUncertainty(self, result = None):
         """ Calls self.Service.getUncertainty with either the
