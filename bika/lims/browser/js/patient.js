@@ -17,10 +17,12 @@ $(document).ready(function(){
         $("input[id*=PatientID]").combogrid({
             colModel: [{'columnName':'PatientUID','hidden':true},
                        {'columnName':'PatientID','width':'25','label':_('Patient ID')},
-                       {'columnName':'Title','width':'35','label':_('Full name')}],
+                       {'columnName':'Title','width':'35','label':_('Full name')},
+                       {'columnName':'AdditionalIdentifiers', 'width':'35','label':_('Additional Identifiers')}],
             url: window.portal_url + "/getPatients?_authenticator=" + $('input[name="_authenticator"]').val(),
             select: function( event, ui ) {
                 $(this).val(ui.item.PatientID);
+                $(this).parents('tr').find('input[id=AdditionalIdentifiers]').val(ui.item.AdditionalIdentifiers);
                 $(this).change();
                 if($(".portaltype-batch").length > 0 && $(".template-base_edit").length > 0) {
                     $(".jsPatientTitle").remove();
