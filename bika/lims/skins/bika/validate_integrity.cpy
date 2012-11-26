@@ -61,6 +61,9 @@ else:
     elif context.portal_type == 'EpidemiologicalYear':
     	state.setNextAction('redirect_to:string:${portal_url}/bika_setup/bika_epidemiologicalyears')
     
+    elif context.portal_type == 'IdentifierType':
+    	state.setNextAction('redirect_to:string:${portal_url}/bika_setup/bika_identifiertypes')
+    
     else:
     	stat = 'success'
     	

@@ -124,6 +124,8 @@ class LoadSetupData(BrowserView):
             self.load_lab_contacts(sheets['Lab Contacts'])
         if 'Lab Departments' in sheets:
             self.load_lab_departments(sheets['Lab Departments'])
+        if 'Identifier Types' in sheets:
+            self.load_identifiertypes(sheets['Identifier Types'])
         if 'Clients' in sheets:
             self.load_clients(sheets['Clients'])
         if 'Client Contacts' in sheets:
@@ -148,7 +150,7 @@ class LoadSetupData(BrowserView):
             self.load_CaseOutcomes(sheets['Case Outcomes'])
         if 'Sample Origins' in sheets:
             self.load_SampleOrigins(sheets['Sample Origins'])
-            
+        if 'Sample Types' in sheets:
             self.load_sample_types(sheets['Sample Types'])
         if 'Sample Points' in sheets:
             self.load_sample_points(sheets['Sample Points'])
@@ -409,6 +411,22 @@ class LoadSetupData(BrowserView):
             renameAfterCreation(obj)
             self.containertypes[unicode(row['title'])] = obj
 
+    def load_identifiertypes(self, sheet):
+        nr_rows = sheet.get_highest_row()
+        nr_cols = sheet.get_highest_column()
+        rows = [[sheet.cell(row=row_nr, column=col_nr).value for col_nr in range(nr_cols)] for row_nr in range(nr_rows)]
+        fields = rows[0]
+        folder = self.context.bika_setup.bika_identifiertypes
+        self.containertypes = {}
+        for row in rows[3:]:
+            row = dict(zip(fields, row))
+            _id = folder.invokeFactory('IdentifierType', id = 'tmp')
+            obj = folder[_id]
+            obj.edit(title = unicode(row['title']),
+                     description = unicode(row['description']))
+            obj.unmarkCreationFlag()
+            renameAfterCreation(obj)
+            self.containertypes[unicode(row['title'])] = obj
 
     def load_preservations(self, sheet):
         nr_rows = sheet.get_highest_row()

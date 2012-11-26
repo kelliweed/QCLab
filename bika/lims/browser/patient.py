@@ -82,7 +82,7 @@ class TreatmentHistoryView(BrowserView):
                 S = self.request.form['Start'][t]
                 E = self.request.form['End'][t]
                 # Create new Treatment entry if none exists
-                Tlist = bsc(portal_type='Treatment', Title=T)
+                Tlist = bsc(portal_type='Treatment', title=T)
                 if not Tlist:
                     folder = self.context.bika_setup.bika_treatments
                     _id = folder.invokeFactory('Treatment', id = 'tmp')
@@ -91,7 +91,7 @@ class TreatmentHistoryView(BrowserView):
                     obj.unmarkCreationFlag()
                     renameAfterCreation(obj)
                 # Create new Drug entry if none exists
-                Dlist = bsc(portal_type='Drug', Title=D)
+                Dlist = bsc(portal_type='Drug', title=D)
                 if not Dlist:
                     folder = self.context.bika_setup.bika_drugs
                     _id = folder.invokeFactory('Drug', id = 'tmp')
@@ -138,7 +138,7 @@ class AllergiesView(BrowserView):
                 D = self.request.form['Drug'][p]
 
                 # Create new Allergy entry if none exists
-                Plist = bsc(portal_type='DrugProhibition', Title=P)
+                Plist = bsc(portal_type='DrugProhibition', title=P)
                 if not Plist:
                     folder = self.context.bika_setup.bika_drugprohibitions
                     _id = folder.invokeFactory('DrugProhibition', id = 'tmp')
@@ -147,7 +147,7 @@ class AllergiesView(BrowserView):
                     obj.unmarkCreationFlag()
                     renameAfterCreation(obj)
                 # Create new Drug entry if none exists
-                Dlist = bsc(portal_type='Drug', Title=D)
+                Dlist = bsc(portal_type='Drug', title=D)
                 if not Dlist:
                     folder = self.context.bika_setup.bika_drugs
                     _id = folder.invokeFactory('Drug', id = 'tmp')
@@ -197,7 +197,7 @@ class ImmunizationHistoryView(BrowserView):
 
                 # Create new VaccinationCenter entry if none exists
                 if (len(V.strip())>0):
-                    Vlist = bsc(portal_type='VaccinationCenter', Title=V)
+                    Vlist = bsc(portal_type='VaccinationCenter', title=V)
                     if not Vlist:
                         folder = self.context.bika_setup.bika_vaccinationcenters
                         _id = folder.invokeFactory('VaccinationCenter', id='tmp')

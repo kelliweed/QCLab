@@ -60,6 +60,7 @@ def initialize(context):
     from content.disease import Disease
     from content.duplicateanalysis import DuplicateAnalysis
     from content.epidemiologicalyear import EpidemiologicalYear
+    from content.identifiertype import IdentifierType
     from content.immunization import Immunization
     from content.instrument import Instrument
     from content.invoice import Invoice
@@ -130,6 +131,7 @@ def initialize(context):
     from controlpanel.bika_drugs import Drugs
     from controlpanel.bika_drugprohibitions import DrugProhibitions
     from controlpanel.bika_epidemiologicalyears import EpidemiologicalYears
+    from controlpanel.bika_identifiertypes import IdentifierTypes
     from controlpanel.bika_immunizations import Immunizations
     from controlpanel.bika_instruments import Instruments
     from controlpanel.bika_labcontacts import LabContacts
