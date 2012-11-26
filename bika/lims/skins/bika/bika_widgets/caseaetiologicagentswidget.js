@@ -13,6 +13,7 @@ $(document).ready(function(){
                        {'columnName':'AgentUID', 'hidden':true}],
             showOn: true,
             url: window.portal_url + "/getAetiologicAgents?_authenticator=" + $('input[name="_authenticator"]').val(),
+            showOn: true,
             select: function( event, ui ) {
                 event.preventDefault();
                 $(this).val(ui.item.Title);
