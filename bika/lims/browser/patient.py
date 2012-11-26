@@ -13,6 +13,7 @@ from bika.lims.browser.client import ClientAnalysisRequestsView, \
     ClientSamplesView
 from bika.lims.browser.publish import Publish
 from bika.lims.browser.sample import SamplesView
+from bika.lims.content.treatment import getTreatmentTypes
 from bika.lims.idserver import renameAfterCreation
 from bika.lims.interfaces import IContacts
 from bika.lims.permissions import *
@@ -194,7 +195,7 @@ class ImmunizationHistoryView(BrowserView):
                 I = self.request.form['Immunization'][i]
                 V = self.request.form['VaccinationCenter'][i]
                 D = self.request.form['Date'][i]
-                
+
                 # Create new Immunization entry if none exists
                 if (len(I.strip())>0):
                     ilist = bsc(portal_type='Immunization', title=I)
@@ -205,7 +206,7 @@ class ImmunizationHistoryView(BrowserView):
                         obj.edit(title = I)
                         obj.unmarkCreationFlag()
                         renameAfterCreation(obj)
-                
+
                 # Create new VaccinationCenter entry if none exists
                 if (len(V.strip())>0):
                     Vlist = bsc(portal_type='VaccinationCenter', title=V)
@@ -412,8 +413,17 @@ class ajaxGetTreatments(BrowserView):
         if brains and searchTerm:
             brains = [p for p in brains if p.Title.lower().find(searchTerm) > -1]
 
+        TTypes = getTreatmentTypes(self.context)
+
         for p in brains:
-            rows.append({'Title': p.Title})
+            o = p.getObject()
+            ttype = o.getType()
+            if ttype:
+                ttype = TTypes.getValue(ttype[0])
+            else:
+                ttype = ''
+            rows.append({'Title': o.Title(),
+                         'Type': ttype})
 
         rows = sorted(rows, cmp=lambda x,y: cmp(x.lower(), y.lower()), key=itemgetter(sidx and sidx or 'Title'))
         if sord == 'desc':

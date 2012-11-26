@@ -295,7 +295,8 @@
     <tal:patient
         define="field_name string:PatientID;
                 PatientID python:hasattr(context, 'getPatientID') and context.getPatientID() or '';
-                PatientUID python:hasattr(context, 'getPatientUID') and context.getPatientUID() or ''">
+                PatientUID python:hasattr(context, 'getPatientUID') and context.getPatientUID() or '';
+                PatientUID python:context.portal_type == 'Patient' and context.UID() or PatientUID;">
         <tr tal:condition="python:not PatientID">
             <th colspan="2" style="white-space:nowrap">
                 <span i18n:translate="">Patient</span>
