@@ -17,7 +17,8 @@ $(document).ready(function(){
                 event.preventDefault();
                 $(this).val(ui.item.Title);
                 $(this).parents('tr').find('input[id=IdentifierType]').val(ui.item.Title);
-                $(this).parents('tr').find('input[id=IdentifierTypeUID]').val(ui.item.Description); 
+                $(this).parents('tr').find('input[id=IdentifierTypeUID]').val(ui.item.UID);
+                $(this).parents('tr').find('input[id=IdentifierTypeDescription]').val(ui.item.Description);
                 $(this).change();
                 return false;
             }
@@ -29,9 +30,14 @@ $(document).ready(function(){
         event.preventDefault();
         U = $(".template-patientidentifiers #IdentifierTypeUID").val();
         T = $(".template-patientidentifiers #IdentifierType").val();
+        D = $(".template-patientidentifiers #IdentifierTypeDescription").val();
         I = $(".template-patientidentifiers #Identifier").val();
         if (T == ''){
+        	alert(_("No Identifier Type defined"))
             return false;
+        } else if (I == '') {
+        	alert(_("No Identifier entered"))
+        	return false;
         }
         
         newrow = $(".template-patientidentifiers tr#new").clone();
@@ -41,6 +47,9 @@ $(document).ready(function(){
         $(".template-patientidentifiers #IdentifierType").parent().append("<span>"+T+"</span>");
         $(".template-patientidentifiers #IdentifierType").parent().append("<input type='hidden' name='PID_IdentifierType:list' value='"+T+"'/>");
         $(".template-patientidentifiers #IdentifierType").remove();
+        $(".template-patientidentifiers #IdentifierTypeDescription").parent().append("<span>"+D+"</span>");
+        $(".template-patientidentifiers #IdentifierTypeDescription").parent().append("<input type='hidden' name='PID_IdentifierTypeDescription:list' value='"+D+"'/>");
+        $(".template-patientidentifiers #IdentifierTypeDescription").remove();
         $(".template-patientidentifiers #Identifier").parent().append("<span>"+I+"</span>");
         $(".template-patientidentifiers #Identifier").parent().append("<input type='hidden' name='PID_Identifier:list' value='"+I+"'/>");
         $(".template-patientidentifiers #Identifier").remove();

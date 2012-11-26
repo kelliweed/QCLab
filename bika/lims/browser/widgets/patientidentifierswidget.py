@@ -5,6 +5,7 @@ from Products.CMFCore.utils import getToolByName
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from bika.lims import PMF, bikaMessageFactory as _
 from bika.lims.browser import BrowserView
+from bika.lims.idserver import renameAfterCreation
 
 class PatientIdentifiersView(BrowserView):
     template = ViewPageTemplateFile("patient_identifiers.pt")
@@ -47,15 +48,29 @@ class PatientIdentifiersWidget(TypesWidget):
             
         elif 'PID_submitted' in form:
             bsc = getToolByName(instance, 'bika_setup_catalog')
-            for i in range(len(form.get('PID_IdentifierTypeUID', []))):
+            for i in range(len(form.get('PID_IdentifierType', []))):
                 U = form['PID_IdentifierTypeUID'][i]
                 T = form['PID_IdentifierType'][i]
-                I = form['PID_Identifier'][i]
+                D = form['PID_IdentifierTypeDescription'][i]
+                I = form['PID_Identifier'][i]                
                 
-                # Only add the element if the Identifier Type exists
-                itlist = bsc(portal_type='IdentifierType', title=T)
-                if itlist:
-                    value.append({'IdentifierTypeUID':U, 'IdentifierType': T, 'Identifier': I })
+                if (len(I.strip())==0):
+                    instance.plone_utils.addPortalMessage(_("No identifier entered") % I, "error")
+                else:
+                    # Create new Identifier Type if not exists
+                    if (len(T.strip())>0):
+                        itlist = bsc(portal_type='IdentifierType', title=T)
+                        if not itlist:
+                            folder = instance.bika_setup.bika_identifiertypes
+                            _id = folder.invokeFactory('IdentifierType', id='tmp')
+                            obj = folder[_id]
+                            obj.edit(title = T, description = D)
+                            obj.unmarkCreationFlag()
+                            renameAfterCreation(obj)          
+                    else:
+                        instance.plone_utils.addPortalMessage(_("Identifier '%s' has no Identifier Type defined") % I, "error")
+                     
+            value.append({'IdentifierTypeUID':U, 'IdentifierType': T, 'Identifier': I, 'IdentifierTypeDescription': D })
         return value, {}
 
     security.declarePublic('PatientIdentifiers')

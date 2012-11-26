@@ -16,6 +16,8 @@
                         	class="fieldRequired" i18n:translate="">Identifier</th>
                         <th id="foldercontents-identifiertype-column"
                             class="column fieldRequired" i18n:translate="">Identifier Type</th>
+                        <th id="foldercontents-identifiertypedescription-column"
+                            class="column fieldRequired" i18n:translate="">Identifier Type Description</th>
                     </tr>
                 </thead>
                 <tbody class="item-listing-tbody"
@@ -31,6 +33,7 @@
                         </td>
                         <td colspan="1" rowspan="1" class="state-active Identifier" tal:content="row/Identifier"></td>
                         <td colspan="1" rowspan="1" class="state-active IdentifierType" tal:content="row/IdentifierType"></td>
+                        <td colspan="1" rowspan="1" class="state-active IdentifierTypeDescription" tal:content="row/IdentifierTypeDescription"></td>
                     </tr>
                     <tr id="new">
                     	<td style="padding-bottom:15px;">&nbsp;</td>
@@ -40,6 +43,9 @@
                         <td colspan="1" rowspan="1" class="state-active IdentifierType">
                              <input class="wide" id="IdentifierType" name="IdentifierType" type="text" value="" autocomplete="off"/>
                              <input type="hidden" id="IdentifierTypeUID" name="IdentifierTypeUID" value=""/>
+                        </td>
+                        <td colspan="1" rowspan="1" class="state-active IdentifierTypeDescription">
+                             <input class="wide" id="IdentifierTypeDescription" name="IdentifierTypeDescription" type="text" value="" autocomplete="off"/>
                         </td>
                     </tr>
                 </tbody>
