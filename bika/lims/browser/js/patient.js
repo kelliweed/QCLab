@@ -312,7 +312,8 @@ $(document).ready(function(){
 		D = $("#Description").val();
 		O = $("#Onset").val();
 		R = $("#Remarks").val();
-		if (T == ''){
+		if (T == '' || C == ''){
+			alert(_("Non valid symptom selected"));
 	        return false;
 		}
 		$("#Onset").attr('class', 'datepicker_nofuture');

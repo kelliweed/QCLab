@@ -258,25 +258,20 @@ class ChronicConditionsView(BrowserView):
                 S = self.request.form['Title'][i]
                 D = self.request.form['Description'][i]
                 O = self.request.form['Onset'][i]
-
-                # Create new Symptom entry if none exists (check ICD9 and setup)
-                Slist = bsc(portal_type='Symptom', title=S)
+                
+                # Only allow to create entry if the selected symptom exists 
+                Slist = bsc(portal_type='Symptom', title=S, code=C)
                 ISlist = [x for x in icd9_codes['R']
                           if x['code'] == C
                           and x['short'] == S
                           and x['long'] == D]
                 if not Slist and not ISlist:
-                    folder = self.context.bika_setup.bika_symptoms
-                    _id = folder.invokeFactory('Symptom', id='tmp')
-                    obj = folder[_id]
-                    obj.edit(title = S, description = D, Code = C)
-                    obj.unmarkCreationFlag()
-                    renameAfterCreation(obj)
-
-                new.append({'Code':C, 'Title':S, 'Description':D, 'Onset': O})
-
+                    self.context.plone_utils.addPortalMessage(_("The chronic condition symptom '%s' is not valid") % S, "error")
+                else:
+                    new.append({'Code':C, 'Title':S, 'Description':D, 'Onset': O})          
+                      
             self.context.setChronicConditions(new)
-            self.context.plone_utils.addPortalMessage(PMF("Changes saved"))
+            self.context.plone_utils.addPortalMessage(PMF("Changes saved"))     
         return self.template()
 
     def hasChronicConditions(self):
