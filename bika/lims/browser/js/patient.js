@@ -312,7 +312,8 @@ $(document).ready(function(){
 		D = $("#Description").val();
 		O = $("#Onset").val();
 		R = $("#Remarks").val();
-		if (T == ''){
+		if (T == '' || C == ''){
+			alert(_("Non valid symptom selected"));
 	        return false;
 		}
 		$("#Onset").attr('class', 'datepicker_nofuture');
@@ -350,12 +351,12 @@ $(document).ready(function(){
 		if (T == ''){
 	        return false;
 		}
-		
+
 		if (Date.parse(E) <= Date.parse(S)) {
 			alert(_('End date must be after start date'))
 			return false;
 		}
-		
+
 		$("#TripStartDate").attr('class', 'datepicker_nofuture');
 		$("#TripEndDate").attr('class', 'datepicker');
 

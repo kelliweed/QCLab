@@ -115,7 +115,9 @@ class BatchFolderContentsView(BikaListingView):
                 continue
             obj = items[x]['obj']
 
-            items[x]['replace']['BatchID'] = "<a href='%s'>%s</a>" % (items[x]['url'], obj.getBatchID())
+            bid = obj.getBatchID()
+            items[x]['BatchID'] = bid
+            items[x]['replace']['BatchID'] = "<a href='%s'>%s</a>" % (items[x]['url'], bid)
 
             patient = uc(UID=obj.getPatientUID())
             if patient:
