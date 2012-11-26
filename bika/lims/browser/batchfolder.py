@@ -160,6 +160,7 @@ class ajaxGetBatches(BrowserView):
     """
     def __call__(self):
         plone.protect.CheckAuthenticator(self.request)
+        PatientUID = self.request.get('PatientUID', '')
         ClientUID = self.request.get('ClientUID', '')
         searchTerm = self.request['searchTerm'].lower()
         page = self.request['page']
@@ -169,7 +170,9 @@ class ajaxGetBatches(BrowserView):
 
         rows = []
 
-        if ClientUID:
+        if PatientUID:
+            batches = self.bika_catalog(portal_type='Batch', getPatientUID=PatientUID)
+        elif ClientUID:
             batches = self.bika_catalog(portal_type='Batch', getClientUID=ClientUID)
         else:
             batches = self.bika_catalog(portal_type='Batch')
