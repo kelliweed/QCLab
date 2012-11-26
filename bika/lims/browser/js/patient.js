@@ -350,12 +350,12 @@ $(document).ready(function(){
 		if (T == ''){
 	        return false;
 		}
-		
+
 		if (Date.parse(E) <= Date.parse(S)) {
 			alert(_('End date must be after start date'))
 			return false;
 		}
-		
+
 		$("#TripStartDate").attr('class', 'datepicker_nofuture');
 		$("#TripEndDate").attr('class', 'datepicker');
 
