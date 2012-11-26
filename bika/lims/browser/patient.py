@@ -595,7 +595,9 @@ class ajaxGetIdentifierTypes(BrowserView):
             brains = [p for p in brains if p.Title.lower().find(searchTerm) > -1]
 
         for p in brains:
-            rows.append({'Title': p.Title})
+            rows.append({'Title': p.Title,
+                         'Description':p.Description,
+                         'UID':p.UID})
 
         rows = sorted(rows, cmp=lambda x,y: cmp(x.lower(), y.lower()), key=itemgetter(sidx and sidx or 'Title'))
         if sord == 'desc':

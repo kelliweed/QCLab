@@ -36,11 +36,12 @@ class PatientsView(BikaListingView):
         self.pagesize = 25
 
         self.columns = {
-            'getPatientID': {'title': _('Patient ID'),
-                             'index': 'getPatientID'},
 
             'Title': {'title': _('Patient'),
                       'index': 'sortable_title'},
+
+            'getPatientID': {'title': _('Patient ID'),
+                             'index': 'getPatientID'},
 
             'getGender': {'title': _('Gender'),
                        'index': 'getGender',
@@ -72,7 +73,7 @@ class PatientsView(BikaListingView):
              'title': _('All'),
              'contentFilter':{},
              'transitions':[{'id':'empty'},],
-             'columns': ['getPatientID', 'Title', 'getGender', 'getAge',
+             'columns': ['Title', 'getPatientID', 'getGender', 'getAge',
                          'getBirthDate', 'getCitizenship', 'getPrimaryReferrer']},
         ]
 
@@ -101,14 +102,14 @@ class PatientsView(BikaListingView):
                  'title': _('Active'),
                  'contentFilter': {'inactive_state': 'active'},
                  'transitions': [{'id':'deactivate'}, ],
-                 'columns': ['Title', 'getPatientID', 'getGender', 'getAge',
+                 'columns': ['getPatientID', 'Title', 'getGender', 'getAge',
                              'getBirthDate', 'getCitizenship', 'getPrimaryReferrer']})
             self.review_states.append(
                 {'id':'inactive',
                  'title': _('Dormant'),
                  'contentFilter': {'inactive_state': 'inactive'},
                  'transitions': [{'id':'activate'}, ],
-                 'columns': ['Title', 'getPatientID', 'getGender', 'getAge',
+                 'columns': ['getPatientID', 'Title', 'getGender', 'getAge',
                              'getBirthDate', 'getCitizenship', 'getPrimaryReferrer']})
 
         items = BikaListingView.folderitems(self)
