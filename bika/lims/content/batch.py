@@ -153,6 +153,11 @@ class Batch(BaseContent):
     def Title(self):
         """ Return the BatchID or id as title """
         res = self.getBatchID()
+        p_uid = self.getPatientUID()
+        if p_uid:
+            bpc = getToolByName(self, 'bika_patient_catalog')
+            patient = bpc(UID=p_uid)[0]
+            res = "%s (%s)" % (res, patient.Title)
         return str(res).encode('utf-8')
 
     security.declarePublic('getBatchID')
