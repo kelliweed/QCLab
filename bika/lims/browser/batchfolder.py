@@ -112,6 +112,7 @@ class BatchFolderContentsView(BikaListingView):
         items = BikaListingView.folderitems(self)
         for x in range(len(items)):
             if 'obj' not in items[x]:
+                items[x]['OnsetDate'] = 'zzz'
                 continue
             obj = items[x]['obj']
 
