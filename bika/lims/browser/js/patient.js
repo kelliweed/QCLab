@@ -15,10 +15,11 @@ $(document).ready(function(){
                         ' <img style="padding-bottom:1px;" src="'+window.portal_url+'/++resource++bika.lims.images/add.png"/>' +
                     ' </a>');
         $("input[id*=PatientID]").combogrid({
+            width: "550px",
             colModel: [{'columnName':'PatientUID','hidden':true},
-                       {'columnName':'PatientID','width':'25','label':_('Patient ID')},
-                       {'columnName':'Title','width':'35','label':_('Full name')},
-                       {'columnName':'AdditionalIdentifiers', 'width':'35','label':_('Additional Identifiers')}],
+                       {'columnName':'PatientID','width':'20','label':_('Patient ID')},
+                       {'columnName':'Title','width':'40','label':_('Full name')},
+                       {'columnName':'AdditionalIdentifiers', 'width':'40','label':_('Additional Identifiers')}],
             url: window.portal_url + "/getPatients?_authenticator=" + $('input[name="_authenticator"]').val(),
             select: function( event, ui ) {
                 $(this).val(ui.item.PatientID);
@@ -52,7 +53,8 @@ $(document).ready(function(){
                             changeMonth:true,
                             changeYear:true,
                             maxDate: '+0d',
-                            dateFormat: dateFormat
+                            dateFormat: dateFormat,
+                            yearRange: "-100:+0"
                         })
                         .click(function(){$(this).attr('value', '');})
                         .focus();
