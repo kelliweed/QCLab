@@ -86,6 +86,7 @@ $(document).ready(function(){
 //                  $("#fieldset-schemaname").remove();
                 },
                 onClose: function(){
+                    debugger;
                     // here is where we'd populate the form controls, if we cared to.
                 }
             }
