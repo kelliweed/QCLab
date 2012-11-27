@@ -392,7 +392,9 @@ class ajaxGetDrugs(BrowserView):
             brains = [p for p in brains if p.Title.lower().find(searchTerm) > -1]
 
         for p in brains:
-            rows.append({'Title': p.Title})
+            rows.append({'Title': p.Title,
+                         'UID': p.UID,
+                         'Description' : p.Description})
 
         rows = sorted(rows, cmp=lambda x,y: cmp(x.lower(), y.lower()), key=itemgetter(sidx and sidx or 'Title'))
         if sord == 'desc':
@@ -433,7 +435,9 @@ class ajaxGetTreatments(BrowserView):
             else:
                 ttype = ''
             rows.append({'Title': o.Title(),
-                         'Type': ttype})
+                         'Type': ttype,
+                         'UID': o.UID(),
+                         'Description': o.Description()})
 
         rows = sorted(rows, cmp=lambda x,y: cmp(x.lower(), y.lower()), key=itemgetter(sidx and sidx or 'Title'))
         if sord == 'desc':
@@ -465,7 +469,9 @@ class ajaxGetDrugProhibitions(BrowserView):
             brains = [p for p in brains if p.Title.lower().find(searchTerm) > -1]
 
         for p in brains:
-            rows.append({'Title': p.Title})
+            rows.append({'Title': p.Title,
+                         'UID': p.UID,
+                         'Description' : p.Description})
 
         rows = sorted(rows, cmp=lambda x,y: cmp(x.lower(), y.lower()), key=itemgetter(sidx and sidx or 'Title'))
         if sord == 'desc':
@@ -497,7 +503,9 @@ class ajaxGetImmunizations(BrowserView):
             brains = [p for p in brains if p.Title.lower().find(searchTerm) > -1]
 
         for p in brains:
-            rows.append({'Title': p.Title})
+            rows.append({'Title': p.Title,
+                         'UID': p.UID,
+                         'Description' : p.Description})
 
         rows = sorted(rows, cmp=lambda x,y: cmp(x.lower(), y.lower()), key=itemgetter(sidx and sidx or 'Title'))
         if sord == 'desc':
