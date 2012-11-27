@@ -102,8 +102,10 @@ $(document).ready(function(){
 	function lookups(){
 		// Treatment History Treatment search popup
 		$(".template-treatmenthistory #Treatment").combogrid({
-			colModel: [{'columnName':'Type', 'width':'50', 'label':_('Type')},
-			           {'columnName':'Title', 'width':'50', 'label':_('Title')}],
+			colModel: [{'columnName':'UID'  	  , 'hidden': true},
+			           {'columnName':'Title'	  , 'label':_('Title')},
+			           {'columnName':'Type' 	  , 'label':_('Type')},
+			           {'columnName':'Description', 'label':_('Description')}],
 			url: window.location.href.replace("/treatmenthistory","") + "/getTreatments?_authenticator=" + $('input[name="_authenticator"]').val(),
             showOn: true,
 			select: function( event, ui ) {
@@ -116,7 +118,9 @@ $(document).ready(function(){
 
 		// Treatment History Drug search popup
 		$(".template-treatmenthistory #Drug").combogrid({
-			colModel: [{'columnName':'Title', 'width':'50', 'label':_('Title')}],
+			colModel: [{'columnName':'UID'		, 'hidden':true},
+			           {'columnName':'Title'	, 'label':_('Title')},
+			           {'columnName':'Description' , 'label':_('Description')}],
 			url: window.location.href.replace("/treatmenthistory","") + "/getDrugs?_authenticator=" + $('input[name="_authenticator"]').val(),
             showOn: true,
 			select: function( event, ui ) {
@@ -129,7 +133,9 @@ $(document).ready(function(){
 
 		// Allergies > Prohibited Drug Explanations search popup
 		$(".template-allergies #DrugProhibition").combogrid({
-			colModel: [{'columnName':'Title', 'width':'50', 'label':_('Title')}],
+			colModel: [{'columnName':'UID'		, 'hidden':true},
+			           {'columnName':'Title'	, 'label':_('Title')},
+			           {'columnName':'Description' , 'label':_('Description')}],
 			url: window.location.href.replace("/allergies","") + "/getDrugProhibitions?_authenticator=" + $('input[name="_authenticator"]').val(),
             showOn: true,
 			select: function( event, ui ) {
@@ -142,7 +148,9 @@ $(document).ready(function(){
 
 		// Allergies > Drug search popup
 		$(".template-allergies #Drug").combogrid({
-			colModel: [{'columnName':'Title', 'width':'50', 'label':_('Title')}],
+			colModel: [{'columnName':'UID'		, 'hidden':true},
+			           {'columnName':'Title'	, 'label':_('Title')},
+			           {'columnName':'Description' , 'label':_('Description')}],
 			url: window.location.href.replace("/allergies","") + "/getDrugs?_authenticator=" + $('input[name="_authenticator"]').val(),
             showOn: true,
 			select: function( event, ui ) {
@@ -155,7 +163,9 @@ $(document).ready(function(){
 
 		// Immunization History > Immunization search popup
 		$(".template-immunizationhistory #Immunization").combogrid({
-			colModel: [{'columnName':'Title', 'width':'50', 'label':_('Title')}],
+			colModel: [{'columnName':'UID'		, 'hidden':true},
+			           {'columnName':'Title'	, 'label':_('Title')},
+			           {'columnName':'Description' , 'label':_('Description')}],
 			url: window.location.href.replace("/immunizationhistory","") + "/getImmunizations?_authenticator=" + $('input[name="_authenticator"]').val(),
             showOn: true,
 			select: function( event, ui ) {
@@ -219,8 +229,13 @@ $(document).ready(function(){
 		D = $("#Drug").val();
 		S = $("#Start").val();
 		E = $("#End").val();
-		if (T == '' || D == ''){
-	        return false;
+		if (T == '') {
+			alert(_('Treatment field cannot be empty'));
+			return false;
+		}
+		if (D == '') {
+			alert(_('Drug field cannot be empty'));
+			return false;
 		}
 		if (Date.parse(E) <= Date.parse(S)) {
 			alert(_('End date must be after start date'))
