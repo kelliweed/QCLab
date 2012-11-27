@@ -767,7 +767,7 @@ class BikaGenerator:
         addIndex(bpc, 'getObjPositionInParent', 'GopipIndex')
         addIndex(bpc, 'sortable_title', 'FieldIndex')
         addIndex(bpc, 'review_state', 'FieldIndex')
-        addIndex(bpc, 'getPatientID', 'ZCTextIndex', zc_extras)
+        addIndex(bpc, 'getPatientID', 'FieldIndex')
         addIndex(bpc, 'getPrimaryReferrerUID', 'FieldIndex')
 
         addColumn(bpc, 'id')
