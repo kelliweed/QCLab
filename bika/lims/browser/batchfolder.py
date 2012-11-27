@@ -171,6 +171,8 @@ class ajaxGetBatches(BrowserView):
         sord = self.request['sord']
         sidx = self.request['sidx']
 
+        uc = getToolByName(self.context, 'uid_catalog')
+
         rows = []
 
         if PatientUID:
@@ -181,14 +183,21 @@ class ajaxGetBatches(BrowserView):
             batches = self.bika_catalog(portal_type='Batch')
 
         for batch in batches:
-            if batch.Title.lower().find(searchTerm) > -1 \
-                    or batch.Description.lower().find(searchTerm) > -1:
+            if batch.Title.lower().find(searchTerm) > -1:
                 batch = batch.getObject()
+
+                p_uid = batch.getPatientUID()
+                d_uid = batch.getDoctorUID()
+                c_uid = batch.getClientUID()
+
                 rows.append({'BatchID': batch.Title(),
                              'BatchUID': batch.UID(),
                              'PatientID': batch.getPatientID(),
+                             'PatientTitle': p_uid and uc(UID=p_uid)[0].Title or '',
                              'DoctorID': batch.getDoctorID(),
-                             'ClientID': batch.getClientID()})
+                             'DoctorTitle': d_uid and uc(UID=d_uid)[0].Title or '',
+                             'ClientID': batch.getClientID(),
+                             'ClientTitle': c_uid and uc(UID=c_uid)[0].Title or ''})
 
         rows = sorted(rows, cmp=lambda x,y: cmp(x.lower(), y.lower()), key=itemgetter(sidx and sidx or 'BatchID'))
         if sord == 'desc':
