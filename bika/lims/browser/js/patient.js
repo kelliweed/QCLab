@@ -52,7 +52,8 @@ $(document).ready(function(){
                             changeMonth:true,
                             changeYear:true,
                             maxDate: '+0d',
-                            dateFormat: dateFormat
+                            dateFormat: dateFormat,
+                            yearRange: "-100:+0"
                         })
                         .click(function(){$(this).attr('value', '');})
                         .focus();
