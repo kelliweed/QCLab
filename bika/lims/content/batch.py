@@ -158,8 +158,9 @@ class Batch(BaseContent):
         p_uid = self.getPatientUID()
         if p_uid:
             bpc = getToolByName(self, 'bika_patient_catalog')
-            patient = bpc(UID=p_uid)[0]
-            res = "%s (%s)" % (res, patient.Title)        
+            patient = bpc(UID=p_uid)
+            if patient:
+                res = "%s (%s)" % (res, patient[0].Title)
         return str(res).decode('utf-8').encode('utf-8')
 
     security.declarePublic('getBatchID')
