@@ -103,12 +103,12 @@ $(document).ready(function(){
 	function setPatientAgeAtCaseOnsetDate() {
 		var now = new Date($("#OnsetDate").val());
 		var dob = new Date($('input[name="PatientBirthDate"]').val()); 
-		if (now!= undefined && now != null && dob!=undefined && dob != null){
-			var currentday=now.getDay();
-			var currentmonth=now.getMonth();
+		if (now!= undefined && now != null && dob!=undefined && dob != null	&& now >= dob){
+			var currentday=now.getDate();
+			var currentmonth=now.getMonth()+1;
 			var currentyear=now.getFullYear();
-			var birthday=dob.getDay();
-			var birthmonth=dob.getMonth();
+			var birthday=dob.getDate();
+			var birthmonth=dob.getMonth()+1;
 			var birthyear=dob.getFullYear();
   		    var ageday = currentday-birthday;
 			var agemonth=0;
