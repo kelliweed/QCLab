@@ -19,7 +19,6 @@ from bika.lims.browser.widgets.splitteddatewidget import SplittedDateWidget
 from Products.ATContentTypes.utils import DT2dt
 from datetime import datetime, timedelta
 from calendar import monthrange
-from bika.lims.suredate import SureDate
 
 schema = Person.schema.copy() + Schema((
     StringField('PatientID',
@@ -306,48 +305,53 @@ class Patient(Person):
     
     def getAgeSplitted(self):
         
-        dob = DT2dt(self.getBirthDate()).replace(tzinfo=None)         
-        now = datetime.today()
-        
-        currentday = now.day
-        currentmonth = now.month
-        currentyear = now.year
-        birthday = dob.day
-        birthmonth = dob.month
-        birthyear = dob.year
-        ageday = currentday-birthday
-        agemonth = 0
-        ageyear = 0            
-        months31days = [1,3,5,7,8,10,12]
-        
-        if (ageday < 0):
-            currentmonth-=1
-            if (currentmonth < 1):
-                currentyear-=1
-                currentmonth = currentmonth + 12;
-
-            dayspermonth = 30;
-            if currentmonth in months31days:
-                dayspermonth = 31;
-            elif currentmonth == 2:
-                dayspermonth = 28
-                if(currentyear % 4 == 0 
-                   and (currentyear % 100 > 0 or currentyear % 400==0)):
-                    dayspermonth += 1
-           
-            ageday = ageday + dayspermonth
-       
-        agemonth = currentmonth - birthmonth
-        if (agemonth < 0):
-            currentyear-=1
-            agemonth = agemonth + 12
-        
-        ageyear = currentyear - birthyear
-                
-        return {'year':ageyear,
-                'month':agemonth,
-                'day':ageday}
+        if (self.getBirthDate()):
+            dob = DT2dt(self.getBirthDate()).replace(tzinfo=None)         
+            now = datetime.today()
+            
+            currentday = now.day
+            currentmonth = now.month
+            currentyear = now.year
+            birthday = dob.day
+            birthmonth = dob.month
+            birthyear = dob.year
+            ageday = currentday-birthday
+            agemonth = 0
+            ageyear = 0            
+            months31days = [1,3,5,7,8,10,12]
+            
+            if (ageday < 0):
+                currentmonth-=1
+                if (currentmonth < 1):
+                    currentyear-=1
+                    currentmonth = currentmonth + 12;
     
+                dayspermonth = 30;
+                if currentmonth in months31days:
+                    dayspermonth = 31;
+                elif currentmonth == 2:
+                    dayspermonth = 28
+                    if(currentyear % 4 == 0 
+                       and (currentyear % 100 > 0 or currentyear % 400==0)):
+                        dayspermonth += 1
+               
+                ageday = ageday + dayspermonth
+           
+            agemonth = currentmonth - birthmonth
+            if (agemonth < 0):
+                currentyear-=1
+                agemonth = agemonth + 12
+            
+            ageyear = currentyear - birthyear
+        
+            return {'year':ageyear,
+                    'month':agemonth,
+                    'day':ageday}
+        else:
+             return {'year':'',
+                        'month':'',
+                        'day':''}
+
     def getAge(self):
         return self.getAgeSplitted()['year']
 
