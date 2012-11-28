@@ -71,18 +71,18 @@ $(document).ready(function(){
 	// Mod the Age if DOB is selected
 	$("#BirthDate").live('change', function(){
 		var dob = new Date($(this).val());
-		if (dob!= undefined && dob != null){
-			var now = new Date();			
-			var currentday=now.getDay();
-			var currentmonth=now.getMonth();
+		var now = new Date();
+		if (dob!= undefined && dob != null && now>=dob){
+			var now = new Date();	
+			var currentday=now.getDate();
+			var currentmonth=now.getMonth()+1;
 			var currentyear=now.getFullYear();
-			var birthday=dob.getDay();
-			var birthmonth=dob.getMonth();
+			var birthday=dob.getDate();
+			var birthmonth=dob.getMonth()+1;
 			var birthyear=dob.getFullYear();
   		    var ageday = currentday-birthday;
 			var agemonth=0;
 			var ageyear=0;
-			
 			if (ageday < 0) {
 				currentmonth--;
 				if (currentmonth < 1) {
@@ -103,7 +103,6 @@ $(document).ready(function(){
 			    }
 				ageday = ageday + dayspermonth;
 			}
-
 			agemonth = currentmonth - birthmonth;
 			if (agemonth < 0) {
 				currentyear--;
