@@ -1,4 +1,4 @@
-jQuery(function($){
+/*jQuery(function($){
 $(document).ready(function(){
 	
     _ = jarn.i18n.MessageFactory('bika');

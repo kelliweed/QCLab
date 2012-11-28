@@ -346,11 +346,11 @@ class ajaxGetPatients(BrowserView):
         for patient in proxies:
             # Also search across additional identifiers
             addidfound = False
-            addids = patient.getObject().getPatientIdentifiers()       
-            for addid in addids:
-                if addid['Identifier'].lower().find(searchTerm) > -1:
-                    addidfound = True
-                    break
+            #addids = patient.getObject().getPatientIdentifiers()       
+            #for addid in addids:
+            #    if addid['Identifier'].lower().find(searchTerm) > -1:
+            #        addidfound = True
+            #        break
                 
             if patient.Title.lower().find(searchTerm) > -1 \
             or patient.getPatientID.lower().find(searchTerm) > -1 \
