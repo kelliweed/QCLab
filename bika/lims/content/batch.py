@@ -76,6 +76,11 @@ schema = BikaSchema.copy() + Schema((
               label=_('Onset Date'),
           ),
     ),
+    StringField('PatientBirthDate',
+          widget=StringWidget(
+              visible={'view': 'hidden', 'edit': 'hidden' },
+          ),
+    ),
     RecordsField('PatientAgeAtCaseOnsetDate',
         widget=SplittedDateWidget(
             label=_('Patient Age at Case Onset Date'),
@@ -380,6 +385,13 @@ class Batch(BaseContent):
         if patient:
             patient = patient[0].getObject()
             return patient.getTravelHistory()
+    
+    def getPatientBirthDate(self):
+        bpc = getToolByName(self, 'bika_patient_catalog')
+        patient = bpc(UID=self.getPatientUID())        
+        if patient:
+            patient = patient[0].getObject()   
+            return patient.getBirthDate()
     
     def getPatientAgeAtCaseOnsetDate(self):
         bpc = getToolByName(self, 'bika_patient_catalog')

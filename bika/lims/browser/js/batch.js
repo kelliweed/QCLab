@@ -40,7 +40,7 @@ $(document).ready(function(){
                     if($('#ar_'+column+'_ClientID').length > 0){
                         $('#ar_'+column+'_ClientID').val(ui.item.ClientID);
                     }
-                }
+                }                
                 $(this).val(ui.item.BatchID);
                 $(this).change();
                 return false;
@@ -91,7 +91,67 @@ $(document).ready(function(){
             }
         }
     );
+    
+    $('input[name="PatientBirthDate"]').live('change', function(){
+    	setPatientAgeAtCaseOnsetDate();
+    });
+    
+	$("#OnsetDate").live('change', function(){
+		setPatientAgeAtCaseOnsetDate();
+	});
+	
+	function setPatientAgeAtCaseOnsetDate() {
+		var now = new Date($("#OnsetDate").val());
+		var dob = new Date($('input[name="PatientBirthDate"]').val()); 
+		if (now!= undefined && now != null && dob!=undefined && dob != null){
+			var currentday=now.getDay();
+			var currentmonth=now.getMonth();
+			var currentyear=now.getFullYear();
+			var birthday=dob.getDay();
+			var birthmonth=dob.getMonth();
+			var birthyear=dob.getFullYear();
+  		    var ageday = currentday-birthday;
+			var agemonth=0;
+			var ageyear=0;
+			
+			if (ageday < 0) {
+				currentmonth--;
+				if (currentmonth < 1) {
+					currentyear--;
+					currentmonth = currentmonth + 12;
+				}
+				dayspermonth = 30;
+				if (currentmonth==1 || currentmonth==3 || 
+					currentmonth==5 || currentmonth==7 || 
+					currentmonth==8 || currentmonth==10||
+					currentmonth==12) {
+					dayspermonth = 31;
+				} else if (currentmonth == 2) {
+					dayspermonth = 28;
+			        if(!(currentyear%4) && (currentyear%100 || !(currentyear%400))) {
+			        	dayspermonth++;
+			        }
+			    }
+				ageday = ageday + dayspermonth;
+			}
 
+			agemonth = currentmonth - birthmonth;
+			if (agemonth < 0) {
+				currentyear--;
+				agemonth = agemonth + 12;
+			}
+			ageyear = currentyear - birthyear;
+			
+		    $("#PatientAgeAtCaseOnsetDate_year").val(ageyear);
+		    $("#PatientAgeAtCaseOnsetDate_month").val(agemonth);
+		    $("#PatientAgeAtCaseOnsetDate_day").val(ageday);
+			
+		} else {
+			$("#PatientAgeAtCaseOnsetDate_year").val('');
+		    $("#PatientAgeAtCaseOnsetDate_month").val('');
+		    $("#PatientAgeAtCaseOnsetDate_day").val('');
+		}
+	}
 
 });
 }(jQuery));

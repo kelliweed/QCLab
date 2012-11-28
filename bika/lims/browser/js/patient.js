@@ -19,7 +19,8 @@ $(document).ready(function(){
             colModel: [{'columnName':'PatientUID','hidden':true},
                        {'columnName':'PatientID','width':'20','label':_('Patient ID')},
                        {'columnName':'Title','width':'40','label':_('Full name')},
-                       {'columnName':'AdditionalIdentifiers', 'width':'40','label':_('Additional Identifiers')}],
+                       {'columnName':'AdditionalIdentifiers', 'width':'40','label':_('Additional Identifiers')},
+                       {'columnName':'PatientBirthDate','hidden':true}],
             url: window.portal_url + "/getPatients?_authenticator=" + $('input[name="_authenticator"]').val(),
             select: function( event, ui ) {
                 $(this).val(ui.item.PatientID);
@@ -28,6 +29,7 @@ $(document).ready(function(){
                 if($(".portaltype-batch").length > 0 && $(".template-base_edit").length > 0) {
                     $(".jsPatientTitle").remove();
                     $("#archetypes-fieldname-PatientID").append("<span class='jsPatientTitle'>"+ui.item.Title+"</span>");
+                    $('input[name="PatientBirthDate"]').val(ui.item.PatientBirthDate);
                 }
                 return false;
             }
