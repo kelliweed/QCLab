@@ -78,17 +78,6 @@ schema = Person.schema.copy() + Schema((
             label=_('Birth date is estimated'),
         ),
     ),
-#    RecordsField('PatientIdentifiers',
-#        type='patientidentifiers',
-#        subfields=('IdentifierTypeUID', 'IdentifierType', 'Identifier'),
-#        subfield_labels={'IdentifierType':_('Identifier Type'), 'Identifier': _('Identifier')},
-#        subfield_sizes={'Identifier': 15, 'Identifier Type': 25},
-#        widget=PatientIdentifiersWidget(
-#            label=_('Additional identifiers'),
-#            description=_('Patient additional identifiers')
-#        ),
-#    ),
-
     StringField('SendersPatientID',
         widget=StringWidget(
             label=_("Sender's Patient ID"),
