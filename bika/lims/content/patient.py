@@ -241,8 +241,8 @@ class Patient(Person):
             pairs.append((contact.UID, contact.Title))
         pr = self.getPrimaryReferrer()
         if pr:
-            for contact in = pc(portal_type = 'Contact', inactive_state = 'active', getClientUID = pr):
-            pairs.append((contact.UID, contact.Title))
+            for contact in pc(portal_type = 'Contact', inactive_state = 'active', getClientUID = pr):
+                pairs.append((contact.UID, contact.Title))
         for contact in pc(portal_type = 'LabContact', inactive_state = 'active'):
             pairs.append((contact.UID, contact.Title))
         # sort the list by the second item
@@ -255,11 +255,6 @@ class Patient(Person):
     def getCCContactsDisplayList(self):
         pr = self.getPrimaryReferrer()
         all_contacts = pr and pr.getCCContacts() or []
-        # remove myself
-        # pairs = []
-        # for item in all_contacts:
-        #     if item[0] != self.UID():
-        #         pairs.append((item[0], item[1]))
         return DisplayList(all_contacts)
 
     def getCCContacts(self):
