@@ -68,8 +68,8 @@ class PatientIdentifiersWidget(TypesWidget):
                             obj.edit(title = T, description = D)
                             obj.unmarkCreationFlag()
                             renameAfterCreation(obj)          
-                    else:
-                        instance.plone_utils.addPortalMessage(_("Identifier '%s' has no Identifier Type defined") % I, "error")
+                  #  else:
+                  #      instance.plone_utils.addPortalMessage(_("Identifier '%s' has no Identifier Type defined") % I, "error")
                      
                 value.append({'IdentifierTypeUID':U, 'IdentifierType': T, 'Identifier': I, 'IdentifierTypeDescription': D })
         return value, {}
