@@ -8,11 +8,15 @@ from bika.lims import bikaMessageFactory as _
 from bika.lims.browser.widgets import CaseAetiologicAgentsWidget
 from bika.lims.browser.widgets import CaseSymptomsWidget
 from bika.lims.browser.widgets import DateTimeWidget
+from bika.lims.browser.widgets import SplittedDateWidget
 from bika.lims.config import PROJECTNAME
 from bika.lims.content.bikaschema import BikaSchema
 from bika.lims.interfaces import IBatch
 from bika.lims.utils import isActive
 from zope.interface import implements
+from Products.ATContentTypes.utils import DT2dt
+from datetime import datetime, timedelta
+from calendar import monthrange
 import json
 import plone
 from bika.lims.browser.widgets.patientidentifierswidget import PatientIdentifiersWidget
@@ -71,7 +75,17 @@ schema = BikaSchema.copy() + Schema((
           widget=DateTimeWidget(
               label=_('Onset Date'),
           ),
-      ),
+    ),
+    StringField('PatientBirthDate',
+          widget=StringWidget(
+              visible={'view': 'hidden', 'edit': 'hidden' },
+          ),
+    ),
+    RecordsField('PatientAgeAtCaseOnsetDate',
+        widget=SplittedDateWidget(
+            label=_('Patient Age at Case Onset Date'),
+        ),
+    ),
     BooleanField('OnsetDateEstimated',
         default=False,
         widget=BooleanWidget(
@@ -371,5 +385,63 @@ class Batch(BaseContent):
         if patient:
             patient = patient[0].getObject()
             return patient.getTravelHistory()
+    
+    def getPatientBirthDate(self):
+        bpc = getToolByName(self, 'bika_patient_catalog')
+        patient = bpc(UID=self.getPatientUID())        
+        if patient:
+            patient = patient[0].getObject()   
+            return patient.getBirthDate()
+    
+    def getPatientAgeAtCaseOnsetDate(self):
+        bpc = getToolByName(self, 'bika_patient_catalog')
+        patient = bpc(UID=self.getPatientUID())        
+        if patient and self.getOnsetDate():
+            patient = patient[0].getObject()            
+            dob = DT2dt(patient.getBirthDate()).replace(tzinfo=None)         
+            now = DT2dt(self.getOnsetDate()).replace(tzinfo=None)
+            
+            currentday = now.day
+            currentmonth = now.month
+            currentyear = now.year
+            birthday = dob.day
+            birthmonth = dob.month
+            birthyear = dob.year
+            ageday = currentday-birthday
+            agemonth = 0
+            ageyear = 0            
+            months31days = [1,3,5,7,8,10,12]
+            
+            if (ageday < 0):
+                currentmonth-=1
+                if (currentmonth < 1):
+                    currentyear-=1
+                    currentmonth = currentmonth + 12;
+    
+                dayspermonth = 30;
+                if currentmonth in months31days:
+                    dayspermonth = 31;
+                elif currentmonth == 2:
+                    dayspermonth = 28
+                    if(currentyear % 4 == 0 
+                       and (currentyear % 100 > 0 or currentyear % 400==0)):
+                        dayspermonth += 1
+               
+                ageday = ageday + dayspermonth
+           
+            agemonth = currentmonth - birthmonth
+            if (agemonth < 0):
+                currentyear-=1
+                agemonth = agemonth + 12
+            
+            ageyear = currentyear - birthyear
+                    
+            return {'year':ageyear,
+                    'month':agemonth,
+                    'day':ageday}
+        else:
+            return {'year':'',
+                    'month':'',
+                    'day':''}
 
 registerType(Batch, PROJECTNAME)
