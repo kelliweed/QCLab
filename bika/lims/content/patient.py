@@ -363,11 +363,19 @@ class Patient(Person):
                     'month':agemonth,
                     'day':ageday}
         else:
-             return {'year':'',
-                        'month':'',
-                        'day':''}
+            return {'year':'',
+                    'month':'',
+                    'day':''}
 
     def getAge(self):
         return self.getAgeSplitted()['year']
+    
+    def getAgeSplittedStr(self):
+        splitted = self.getAgeSplitted()
+        arr = []
+        arr.append(splitted['year'] and str(splitted['year']) + 'y' or '')
+        arr.append(splitted['month'] and str(splitted['month']) + 'm' or '')
+        arr.append(splitted['day'] and str(splitted['day']) + 'd' or '')
+        return ' '.join(arr)
 
 atapi.registerType(Patient, PROJECTNAME)
