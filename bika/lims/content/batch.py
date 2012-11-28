@@ -208,7 +208,7 @@ class Batch(BaseContent):
         patient = self.getPatient()
         pr = patient and patient.getPrimaryReferrer() or None
         if pr:
-            for contact in = pc(portal_type = 'Contact', inactive_state = 'active', getClientUID = pr):
+            for contact in pc(portal_type = 'Contact', inactive_state = 'active', getClientUID = pr):
             pairs.append((contact.UID, contact.Title))
         for contact in pc(portal_type = 'LabContact', inactive_state = 'active'):
             pairs.append((contact.UID, contact.Title))

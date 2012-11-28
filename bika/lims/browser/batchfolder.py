@@ -112,6 +112,7 @@ class BatchFolderContentsView(BikaListingView):
         items = BikaListingView.folderitems(self)
         for x in range(len(items)):
             if 'obj' not in items[x]:
+                items[x]['OnsetDate'] = 'zzz'
                 continue
             obj = items[x]['obj']
 
@@ -184,11 +185,12 @@ class ajaxGetBatches(BrowserView):
         for batch in batches:
             if batch.Title.lower().find(searchTerm) > -1:
                 batch = batch.getObject()
-                rows.append({'BatchID': batch.getBatchID(),
+
                 p_uid = batch.getPatientUID()
                 d_uid = batch.getDoctorUID()
                 c_uid = batch.getClientUID()
 
+                rows.append({'BatchID': batch.getBatchID(),
                              'BatchUID': batch.UID(),
                              'PatientID': batch.getPatientID(),
                              'PatientTitle': p_uid and uc(UID=p_uid)[0].Title or '',
