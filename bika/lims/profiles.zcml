@@ -27,4 +27,12 @@
         sortkey="1"
         profile="bika.lims:default"/>
 
+ <genericsetup:upgradeStep
+        title="IdentifierTypes, getPatientID, permissions"
+        description=""
+        source="1010"
+        destination="1011"
+        handler="bika.lims.upgrade.1010to1011.upgrade"
+        sortkey="1"
+        profile="bika.lims:default"/>
 </configure>
