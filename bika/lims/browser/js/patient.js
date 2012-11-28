@@ -65,40 +65,62 @@ $(document).ready(function(){
 	    }
     );
 
-	// Estimate DOB if an age is typed
-	$("#Age").live('change', function(){
-		if (parseInt($(this).val()) > 0){
-			var d = new Date();
-			year = d.getFullYear() - $(this).val();
-			var dob = year + "-01-01";
-			$("#BirthDate").val(dob);
-			$("#BirthDateEstimated").attr('checked', true);
-		}
-		else {
-			$("#BirthDate").val("");
-			$("#BirthDateEstimated").attr('checked', false);
-		}
-	})
 
 	// Mod the Age if DOB is selected
 	$("#BirthDate").live('change', function(){
 		var dob = new Date($(this).val());
 		if (dob!= undefined && dob != null){
-			var now = new Date();
-			var one_year = 86400 * 365 * 1000
-			var age = ((now.getTime()-dob.getTime())/one_year).toString().split(".")[0];
-			if (age == undefined || age == 'NaN') {
-				$("#Age").val("");
-			} else {
-				$("#Age").val(age);
+			var now = new Date();			
+			var currentday=now.getDay();
+			var currentmonth=now.getMonth();
+			var currentyear=now.getFullYear();
+			var birthday=dob.getDay();
+			var birthmonth=dob.getMonth();
+			var birthyear=dob.getFullYear();
+  		    var ageday = currentday-birthday;
+			var agemonth=0;
+			var ageyear=0;
+			
+			if (ageday < 0) {
+				currentmonth--;
+				if (currentmonth < 1) {
+					currentyear--;
+					currentmonth = currentmonth + 12;
+				}
+				dayspermonth = 30;
+				if (currentmonth==1 || currentmonth==3 || 
+					currentmonth==5 || currentmonth==7 || 
+					currentmonth==8 || currentmonth==10||
+					currentmonth==12) {
+					dayspermonth = 31;
+				} else if (currentmonth == 2) {
+					dayspermonth = 28;
+			        if(!(currentyear%4) && (currentyear%100 || !(currentyear%400))) {
+			        	dayspermonth++;
+			        }
+			    }
+				ageday = ageday + dayspermonth;
 			}
-		}
-		else {
-			$("#Age").val("");
+
+			agemonth = currentmonth - birthmonth;
+			if (agemonth < 0) {
+				currentyear--;
+				agemonth = agemonth + 12;
+			}
+			ageyear = currentyear - birthyear;
+			
+		    $("#AgeSplitted_year").val(ageyear);
+		    $("#AgeSplitted_month").val(agemonth);
+		    $("#AgeSplitted_day").val(ageday);
+			
+		} else {
+			$("#AgeSplitted_year").val('');
+		    $("#AgeSplitted_month").val('');
+		    $("#AgeSplitted_day").val('');
 		}
 		$("#BirthDateEstimated").attr('checked', false);
 	});
-
+		
 	function lookups(){
 		// Treatment History Treatment search popup
 		$(".template-treatmenthistory #Treatment").combogrid({
