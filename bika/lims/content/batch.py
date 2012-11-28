@@ -77,8 +77,8 @@ schema = BikaSchema.copy() + Schema((
         widget=BooleanWidget(
             label = _("Onset Date Estimated"),
         ),
-    ),  
-                                                      
+    ),
+
     TextField('ProvisionalDiagnosis',
         default_content_type='text/x-web-intelligent',
         allowable_content_types=('text/x-web-intelligent',),
@@ -198,17 +198,43 @@ class Batch(BaseContent):
         if found:
             return earliest
 
-    security.declarePublic('getCCContacts')
-    def getCCContacts(self):
-        """ Return JSON containing all contacts from selected Hospital.
-        """
-        contact_data = []
+    # This is copied from Client (Contact acquires it, but we do not)
+    security.declarePublic('getContactsDisplayList')
+    def getContactsDisplayList(self):
+        pc = getToolByName(self, 'portal_catalog')
+        pairs = []
+        for contact in pc(portal_type = 'Doctor', inactive_state = 'active'):
+            pairs.append((contact.UID, contact.Title))
+        patient = self.getPatient()
+        pr = patient and patient.getPrimaryReferrer() or None
+        if pr:
+            for contact in pc(portal_type = 'Contact', inactive_state = 'active', getClientUID = pr):
+                pairs.append((contact.UID, contact.Title))
+        for contact in pc(portal_type = 'LabContact', inactive_state = 'active'):
+            pairs.append((contact.UID, contact.Title))
+        # sort the list by the second item
+        pairs.sort(lambda x, y:cmp(x[1], y[1]))
+        return DisplayList(pairs)
+
+    # This is copied from Contact (In contact, it refers to the parent's
+    # getContactsDisplayList, while we define our own (our client's)
+    security.declarePublic('getCCContactsDisplayList')
+    def getCCContactsDisplayList(self):
+        contacts = []
         pc = getToolByName(self, 'portal_catalog')
         client = pc(portal_type='Client', UID=self.getClientUID())
         if client:
             return client[0].getObject().getCCContacts()
         else:
-            return []
+            patient = self.getPatient()
+            pr = patient and patient.getPrimaryReferrer() or None
+            return DisplayList(pr and pr.getCCContacts() or [])
+
+
+    security.declarePublic('getCCContacts')
+    def getCCContacts(self):
+        """ Return JSON containing all contacts from selected Hospital.
+        """
 
     def BatchLabelVocabulary(self):
         """ return all batch labels """
@@ -289,13 +315,13 @@ class Batch(BaseContent):
         if patient:
             patient = patient[0].getObject()
             return patient.getChronicConditions()
-    
+
     def getPatientIdentifiers(self):
         bpc = getToolByName(self, 'bika_patient_catalog')
         patient = bpc(UID=self.getPatientUID())
         if patient:
             return patient[0].getObject().getPatientIdentifiers()
-    
+
     def getPatientIdentifiersStr(self):
         import pdb;pdb.set_trace()
         bpc = getToolByName(self, 'bika_patient_catalog')
@@ -303,7 +329,7 @@ class Batch(BaseContent):
         if patient:
             patient = patient[0].getObject()
             return patient.getPatientIdentifiersStr()
-    
+
     def setTreatmentHistory(self, value):
         bpc = getToolByName(self, 'bika_patient_catalog')
         patient = bpc(UID=self.getPatientUID())

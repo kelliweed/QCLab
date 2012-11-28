@@ -190,7 +190,7 @@ class ajaxGetBatches(BrowserView):
                 d_uid = batch.getDoctorUID()
                 c_uid = batch.getClientUID()
 
-                rows.append({'BatchID': batch.Title(),
+                rows.append({'BatchID': batch.getBatchID(),
                              'BatchUID': batch.UID(),
                              'PatientID': batch.getPatientID(),
                              'PatientTitle': p_uid and uc(UID=p_uid)[0].Title or '',

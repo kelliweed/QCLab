@@ -74,8 +74,8 @@ schema = Person.schema.copy() + Schema((
             label=_('Additional identifiers'),
             description=_('Patient additional identifiers')
         ),
-    ),                                    
-    
+    ),
+
     TextField('Remarks',
         searchable=True,
         default_content_type='text/x-web-intelligent',
@@ -232,6 +232,31 @@ class Patient(Person):
     def getPatientID(self):
         return self.getId()
 
+    # This is copied from Client (Contact acquires it, but we do not)
+    security.declarePublic('getContactsDisplayList')
+    def getContactsDisplayList(self):
+        pc = getToolByName(self, 'portal_catalog')
+        pairs = []
+        for contact in pc(portal_type = 'Doctor', inactive_state = 'active'):
+            pairs.append((contact.UID, contact.Title))
+        pr = self.getPrimaryReferrer()
+        if pr:
+            for contact in pc(portal_type = 'Contact', inactive_state = 'active', getClientUID = pr):
+                pairs.append((contact.UID, contact.Title))
+        for contact in pc(portal_type = 'LabContact', inactive_state = 'active'):
+            pairs.append((contact.UID, contact.Title))
+        # sort the list by the second item
+        pairs.sort(lambda x, y:cmp(x[1], y[1]))
+        return DisplayList(pairs)
+
+    # This is copied from Contact (In contact, it refers to the parent's
+    # getContactsDisplayList, while we define our own (our client's)
+    security.declarePublic('getCCContactsDisplayList')
+    def getCCContactsDisplayList(self):
+        pr = self.getPrimaryReferrer()
+        all_contacts = pr and pr.getCCContacts() or []
+        return DisplayList(all_contacts)
+
     def getCCContacts(self):
         pr = self.getPrimaryReferrer()
         return pr and pr.getCCContacts() or []
@@ -257,13 +282,13 @@ class Patient(Person):
                 continue
             clients.append([client.UID(), client.Title()])
         return DisplayList(clients)
-    
+
     def getPatientIdentifiersStr(self):
         ids = self.getPatientIdentifiers()
         idsstr = ''
         for id in ids:
             idsstr += idsstr == '' and id['Identifier'] or (', ' + id['Identifier'])
         return idsstr
-            
+
 
 atapi.registerType(Patient, PROJECTNAME)
