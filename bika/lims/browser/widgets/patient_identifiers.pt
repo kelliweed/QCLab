@@ -15,9 +15,9 @@
                         <th id="foldercontents-identifier-column"
                         	class="fieldRequired" i18n:translate="">Identifier</th>
                         <th id="foldercontents-identifiertype-column"
-                            class="column fieldRequired" i18n:translate="">Identifier Type</th>
+                            class="column" i18n:translate="">Identifier Type</th>
                         <th id="foldercontents-identifiertypedescription-column"
-                            class="column fieldRequired" i18n:translate="">Identifier Type Description</th>
+                            class="column" i18n:translate="">Identifier Type Description</th>
                     </tr>
                     <tr tal:condition="here/read_only">
                 		<th tal:condition="not:here/read_only"></th>
