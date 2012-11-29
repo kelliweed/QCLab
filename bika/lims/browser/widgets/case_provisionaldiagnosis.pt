@@ -18,7 +18,7 @@
                         </th>
                         <th class="column"
                             id="foldercontents-Title-column">
-                            <span i18n:translate="" class="fieldRequired">Symptom</span>
+                            <span i18n:translate="" class="fieldRequired">Provisional Diagnosis</span>
                         </th>
                         <th class="column"
                             id="foldercontents-Description-column">
@@ -35,7 +35,7 @@
                 		tal:define="global index python:-1">
                     <tr tal:repeat="row context/getProvisionalDiagnosis">
                     	<td>
-                          	 <input class="noborder" type="checkbox" 
+                          	 <input class="noborder" type="checkbox"
                           		name="CPD-SelectItem" id="CPD_SelectItem"
                           		tal:define="global index python:index+1;"
                           		tal:attributes="
@@ -77,12 +77,12 @@
 							<input class="workflow_action_button action_button add_row allowMultiSubmit"
 						       type="submit"
 							   i18n:attributes="value"
-							   value="Add" />								
+							   value="Add" />
 							<tal:hasprovisionaldiagnosis tal:condition="python:hasattr(view, 'hasProvisionalDiagnosis') and view.hasProvisionalDiagnosis()">
-								<input class="workflow_action_button action_button" type="submit"
+								<input class="workflow_action_button action_button allowMultiSubmit" type="submit"
 									name="CPD_delete"
 									i18n:attributes="value" value="Delete selected" />
-								<input class="workflow_action_button action_button" type="submit"
+								<input class="workflow_action_button action_button allowMultiSubmit" type="submit"
 									name="CPD_clear"
 									i18n:attributes="value" value="Delete all" />
 							</tal:hasprovisionaldiagnosis>

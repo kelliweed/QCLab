@@ -7,7 +7,7 @@
 
 	<metal:content-core fill-slot="content-core">
     <form name="travelhistory" method="POST">
-    			
+
 		<div id="folderlisting-main-table">
             <input tal:replace="structure context/@@authenticator/authenticator" />
             <input type="hidden" name="submitted" value="1"/>
@@ -44,7 +44,7 @@
 							tal:define="global index python:-1">
                         <tr tal:repeat="row context/getTravelHistory">
                         	<td>
-                            	<input class="noborder" type="checkbox" 
+                            	<input class="noborder" type="checkbox"
                             		name="SelectItem" id="SelectItem"
                             		tal:define="global index python:index+1;"
                             		tal:attributes="
@@ -82,15 +82,15 @@
 					<tfoot>
 						<tr>
 							<td class="noborder workflow_actions" colspan="5"  style="padding:5px;">
-								<input class="workflow_action_button action_button add_row allowMultiSubmit"
+								<input class="action_button add_row allowMultiSubmit"
 							       type="submit"
 								   i18n:attributes="value"
-								   value="Add" />								
+								   value="Add" />
 								<tal:hashistory tal:condition="python:hasattr(view, 'hasTravelHistory') and view.hasTravelHistory()">
-									<input class="workflow_action_button action_button" type="submit"
+									<input class="action_button" type="submit"
 										name="delete"
 										i18n:attributes="value" value="Delete selected" />
-									<input class="workflow_action_button action_button" type="submit"
+									<input class="action_button" type="submit"
 										name="clear"
 										i18n:attributes="value" value="Delete all" />
 								</tal:hashistory>
@@ -100,9 +100,9 @@
 				</table>
 			</div>
 		</div>
-		<input class="workflow_action_button action_button" type="submit"
+		<input class="action_button" type="submit"
 			i18n:attributes="value" value="Save travel history" />
-			
+
 		<tal:hasremarks tal:condition="python:hasattr(context, 'Remarks')">
 			<tal:remarks
 				define="
