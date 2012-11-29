@@ -343,9 +343,17 @@ class ajaxGetPatients(BrowserView):
 
         bpc = self.bika_patient_catalog
         proxies = bpc(portal_type='Patient')
-        for patient in proxies:                
+        for patient in proxies:   
+            addidfound = False   
+            addids = patient.getObject().getPatientIdentifiers()
+            for addid in addids:
+                if addid['Identifier'].lower().find(searchTerm) > -1:
+                    addidfound = True
+                    break
+                          
             if patient.Title.lower().find(searchTerm) > -1 \
-            or patient.getPatientID.lower().find(searchTerm) > -1:
+            or patient.getPatientID.lower().find(searchTerm) > -1 \
+            or addidfound:
                 patient = patient.getObject()
                 rows.append({'Title': patient.Title() or '',
                          'PatientID': patient.getPatientID(),

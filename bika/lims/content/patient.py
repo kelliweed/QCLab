@@ -78,23 +78,35 @@ schema = Person.schema.copy() + Schema((
             label=_('Birth date is estimated'),
         ),
     ),
-    StringField('SendersPatientID',
-        widget=StringWidget(
-            label=_("Sender's Patient ID"),
-        ),
-    ),
                                         
-    StringField('SendersCaseID',
-        widget=StringWidget(
-            label=_("Sender's Case ID"),
+    RecordsField('PatientIdentifiers',
+        type='patientidentifiers',
+        subfields=('IdentifierTypeUID', 'IdentifierType', 'Identifier'),
+        subfield_labels={'IdentifierType':_('Identifier Type'), 'Identifier': _('Identifier')},
+        subfield_sizes={'Identifier': 15, 'Identifier Type': 25},
+        widget=PatientIdentifiersWidget(
+            label=_('Additional identifiers'),
+            description=_('Patient additional identifiers')
         ),
     ),
 
-    StringField('SendersSpecimenID',
-        widget=StringWidget(
-            label=_("Sender's Specimen ID"),
-        ),
-    ),
+#    StringField('SendersPatientID',
+#        widget=StringWidget(
+#            label=_("Sender's Patient ID"),
+#        ),
+#    ),
+                                        
+#    StringField('SendersCaseID',
+#        widget=StringWidget(
+#            label=_("Sender's Case ID"),
+#        ),
+#    ),
+
+#    StringField('SendersSpecimenID',
+#        widget=StringWidget(
+#            label=_("Sender's Specimen ID"),
+#        ),
+#    ),
 
     TextField('Remarks',
         searchable=True,
@@ -316,7 +328,12 @@ class Patient(Person):
         return DisplayList(clients)
     
     def getPatientIdentifiersStr(self):
-        return self.getSendersPatientID()+" "+self.getSendersCaseID()+" "+self.getSendersSpecimenID()        
+        ids = self.getPatientIdentifiers()
+        idsstr = ''
+        for id in ids:
+            idsstr += idsstr == '' and id['Identifier'] or (', ' + id['Identifier'])
+        return idsstr
+        #return self.getSendersPatientID()+" "+self.getSendersCaseID()+" "+self.getSendersSpecimenID()        
     
     def getAgeSplitted(self):
         
