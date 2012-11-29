@@ -192,6 +192,7 @@ class BikaGenerator:
         mp(AddSamplePartition, ['Manager', 'Owner', 'LabManager', 'LabClerk', 'Doctor', 'Sampler'], 1)
         mp(AddDoctor, ['Manager', 'Owner', 'LabManager', 'LabClerk'], 1)
         mp(AddPatient, ['Manager', 'Owner', 'LabManager', 'LabClerk'], 1)
+        mp(AddAetiologicAgent, ['Manager', 'Owner', 'LabManager', 'LabClerk', 'Doctor'], 1)
 
         mp(permissions.AddPortalContent, ['Manager', 'Owner', 'LabManager'], 1)
         mp(permissions.ListFolderContents, ['Manager', 'Owner'], 1)

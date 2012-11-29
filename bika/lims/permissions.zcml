@@ -30,6 +30,7 @@
 <permission id="bika.lims.permissions.AddSampleMatrix" title="BIKA: Add SampleMatrix"/>
 <permission id="bika.lims.permissions.AddSamplePartition" title="BIKA: Add SamplePartition"/>
 <permission id="bika.lims.permissions.AddSamplingDeviation" title="BIKA: Add SamplingDeviation"/>
+<permission id="bika.lims.permissions.AddAetiologicAgent" title="BIKA: Add AetiologicAgent"/>
 
 # Old stuff I haven't looked at
 # =============================
