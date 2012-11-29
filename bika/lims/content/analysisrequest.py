@@ -64,7 +64,7 @@ schema = BikaSchema.copy() + Schema((
         relationship='AnalysisRequestContact',
     ),
     ReferenceField('Doctor',
-        required = 1,
+        required = 0,
         allowed_types = ('Doctor',),
         referenceClass = HoldingReference,
         relationship = 'AnalysisRequestDoctor',

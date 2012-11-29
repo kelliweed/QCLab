@@ -65,6 +65,7 @@ $(document).ready(function(){
                    {'columnName':'ClientID','width':'25','label':_('Client ID')},
                    {'columnName':'Title','width':'75','label':_('Title')}],
         url: window.portal_url + "/getClients?_authenticator=" + $('input[name="_authenticator"]').val(),
+        showOn: true,
         select: function( event, ui ) {
             $(this).val(ui.item.ClientID);
             $(this).change();

@@ -22,6 +22,7 @@ $(document).ready(function(){
                        {'columnName':'AdditionalIdentifiers', 'width':'40','label':_('Additional Identifiers')},
                        {'columnName':'PatientBirthDate','hidden':true}],
             url: window.portal_url + "/getPatients?_authenticator=" + $('input[name="_authenticator"]').val(),
+            showOn: true,
             select: function( event, ui ) {
                 $(this).val(ui.item.PatientID);
                 $(this).parents('tr').find('input[id=AdditionalIdentifiers]').val(ui.item.AdditionalIdentifiers);
@@ -62,7 +63,61 @@ $(document).ready(function(){
                         .focus();
                     });
 
-	            }
+                    // Identifier Types popup
+                    $(".template-patientidentifiers #IdentifierType").combogrid({
+                        colModel: [{'columnName':'UID', 'hidden':true},
+                                   {'columnName':'Title', 'width':'25', 'label':_('Title')},
+                                   {'columnName':'Description', 'width':'65', 'label':_('Description')}],
+                        url: window.portal_url + "/getIdentifierTypes?_authenticator=" + $('input[name="_authenticator"]').val(),
+                        showOn: true,
+                        select: function( event, ui ) {
+                            event.preventDefault();
+                            $(this).val(ui.item.Title);
+                            $(this).parents('tr').find('input[id=IdentifierType]').val(ui.item.Title);
+                            $(this).parents('tr').find('input[id=IdentifierTypeUID]').val(ui.item.UID);
+                            $(this).parents('tr').find('input[id=IdentifierTypeDescription]').val(ui.item.Description);
+                            $(this).change();
+                            return false;
+                        }
+                    });
+                    
+                    $(".template-patientidentifiers .add_row").click(function(event){
+                        event.preventDefault();
+                        U = $(".template-patientidentifiers #IdentifierTypeUID").val();
+                        T = $(".template-patientidentifiers #IdentifierType").val();
+                        D = $(".template-patientidentifiers #IdentifierTypeDescription").val();
+                        I = $(".template-patientidentifiers #Identifier").val();
+                        if (T == ''){
+                        	alert(_("No Identifier Type defined"))
+                            return false;
+                        } else if (I == '') {
+                        	alert(_("No Identifier entered"))
+                        	return false;
+                        }
+                        
+                        newrow = $(".template-patientidentifiers tr#new").clone();
+                        $(".template-patientidentifiers tr#new").removeAttr('id');
+                        $(".template-patientidentifiers #IdentifierTypeUID").parent().append("<input type='hidden' name='PID_IdentifierTypeUID:list' value='"+U+"'/>");
+                        $(".template-patientidentifiers #IdentifierTypeUID").remove();
+                        $(".template-patientidentifiers #IdentifierType").parent().append("<span>"+T+"</span>");
+                        $(".template-patientidentifiers #IdentifierType").parent().append("<input type='hidden' name='PID_IdentifierType:list' value='"+T+"'/>");
+                        $(".template-patientidentifiers #IdentifierType").remove();
+                        $(".template-patientidentifiers #IdentifierTypeDescription").parent().append("<span>"+D+"</span>");
+                        $(".template-patientidentifiers #IdentifierTypeDescription").parent().append("<input type='hidden' name='PID_IdentifierTypeDescription:list' value='"+D+"'/>");
+                        $(".template-patientidentifiers #IdentifierTypeDescription").remove();
+                        $(".template-patientidentifiers #Identifier").parent().append("<span>"+I+"</span>");
+                        $(".template-patientidentifiers #Identifier").parent().append("<input type='hidden' name='PID_Identifier:list' value='"+I+"'/>");
+                        $(".template-patientidentifiers #Identifier").remove();
+                        for(i=0; i<$(newrow).children().length; i++){
+                            td = $(newrow).children()[i];
+                            input = $(td).children()[0];
+                            $(input).val('');
+                        }
+                        $(newrow).appendTo($(".template-patientidentifiers .bika-listing-table"));
+                        lookups();
+                        return false;
+                    })
+            	}
             }
 	    }
     );
@@ -71,18 +126,18 @@ $(document).ready(function(){
 	// Mod the Age if DOB is selected
 	$("#BirthDate").live('change', function(){
 		var dob = new Date($(this).val());
-		if (dob!= undefined && dob != null){
-			var now = new Date();			
-			var currentday=now.getDay();
-			var currentmonth=now.getMonth();
+		var now = new Date();
+		if (dob!= undefined && dob != null && now>=dob){
+			var now = new Date();	
+			var currentday=now.getDate();
+			var currentmonth=now.getMonth()+1;
 			var currentyear=now.getFullYear();
-			var birthday=dob.getDay();
-			var birthmonth=dob.getMonth();
+			var birthday=dob.getDate();
+			var birthmonth=dob.getMonth()+1;
 			var birthyear=dob.getFullYear();
   		    var ageday = currentday-birthday;
 			var agemonth=0;
 			var ageyear=0;
-			
 			if (ageday < 0) {
 				currentmonth--;
 				if (currentmonth < 1) {
@@ -103,7 +158,6 @@ $(document).ready(function(){
 			    }
 				ageday = ageday + dayspermonth;
 			}
-
 			agemonth = currentmonth - birthmonth;
 			if (agemonth < 0) {
 				currentyear--;
@@ -244,24 +298,6 @@ $(document).ready(function(){
 				return false;
 			}
 		});
-		
-		// Patient identifiers > Identifier Types popup
-        $(".template-patientidentifiers #IdentifierType").combogrid({
-            colModel: [{'columnName':'UID', 'hidden':true},
-                       {'columnName':'Title', 'width':'25', 'label':_('Title')},
-                       {'columnName':'Description', 'width':'65', 'label':_('Description')}],
-            url: window.portal_url + "/getIdentifierTypes?_authenticator=" + $('input[name="_authenticator"]').val(),
-            showOn: true,
-            select: function( event, ui ) {
-                event.preventDefault();
-                $(this).val(ui.item.Title);
-                $(this).parents('tr').find('input[id=IdentifierType]').val(ui.item.Title);
-                $(this).parents('tr').find('input[id=IdentifierTypeUID]').val(ui.item.UID);
-                $(this).parents('tr').find('input[id=IdentifierTypeDescription]').val(ui.item.Description);
-                $(this).change();
-                return false;
-            }
-        });
     }
 	lookups();
 
@@ -444,40 +480,5 @@ $(document).ready(function(){
         lookups();
         return false;
 	})
-	
-	$(".template-patientidentifiers .add_row").click(function(event){
-        event.preventDefault();
-        U = $(".template-patientidentifiers #IdentifierTypeUID").val();
-        T = $(".template-patientidentifiers #IdentifierType").val();
-        D = $(".template-patientidentifiers #IdentifierTypeDescription").val();
-        I = $(".template-patientidentifiers #Identifier").val();
-        if (I == '') {
-        	alert(_("No Identifier entered"))
-        	return false;
-        }
-        
-        newrow = $(".template-patientidentifiers tr#new").clone();
-        $(".template-patientidentifiers tr#new").removeAttr('id');
-        $(".template-patientidentifiers #IdentifierTypeUID").parent().append("<input type='hidden' name='PID_IdentifierTypeUID:list' value='"+U+"'/>");
-        $(".template-patientidentifiers #IdentifierTypeUID").remove();
-        $(".template-patientidentifiers #IdentifierType").parent().append("<span>"+T+"</span>");
-        $(".template-patientidentifiers #IdentifierType").parent().append("<input type='hidden' name='PID_IdentifierType:list' value='"+T+"'/>");
-        $(".template-patientidentifiers #IdentifierType").remove();
-        $(".template-patientidentifiers #IdentifierTypeDescription").parent().append("<span>"+D+"</span>");
-        $(".template-patientidentifiers #IdentifierTypeDescription").parent().append("<input type='hidden' name='PID_IdentifierTypeDescription:list' value='"+D+"'/>");
-        $(".template-patientidentifiers #IdentifierTypeDescription").remove();
-        $(".template-patientidentifiers #Identifier").parent().append("<span>"+I+"</span>");
-        $(".template-patientidentifiers #Identifier").parent().append("<input type='hidden' name='PID_Identifier:list' value='"+I+"'/>");
-        $(".template-patientidentifiers #Identifier").remove();
-        for(i=0; i<$(newrow).children().length; i++){
-            td = $(newrow).children()[i];
-            input = $(td).children()[0];
-            $(input).val('');
-        }
-        $(newrow).appendTo($(".template-patientidentifiers .bika-listing-table"));
-        lookups();
-        return false;
-    })
-
 });
 }(jQuery));

@@ -48,8 +48,8 @@ class PatientsView(BikaListingView):
                        'index': 'getGender',
                        'toggle': True},
 
-            'getAge': {'title': _('Age'),
-                   'index': 'getAge',
+            'getAgeSplittedStr': {'title': _('Age'),
+                   'index': 'getAgeSplittedStr',
                    'toggle': True},
 
             'getBirthDate': {'title': _('BirthDate'),
@@ -64,9 +64,6 @@ class PatientsView(BikaListingView):
                                     'index': 'getPrimaryReferrer',
                                     'toggle': True},
 
-  #          'Description': {'title': _('Description'),
-  #                          'index': 'Description',
-  #                          'toggle': True},
         }
 
         self.review_states = [
@@ -74,7 +71,7 @@ class PatientsView(BikaListingView):
              'title': _('All'),
              'contentFilter':{},
              'transitions':[{'id':'empty'},],
-             'columns': ['Title', 'getPatientID', 'getGender', 'getAge',
+             'columns': ['Title', 'getPatientID', 'getGender', 'getAgeSplittedStr',
                          'getBirthDate', 'getCitizenship', 'getPrimaryReferrer']},
         ]
 
@@ -103,14 +100,14 @@ class PatientsView(BikaListingView):
                  'title': _('Active'),
                  'contentFilter': {'inactive_state': 'active'},
                  'transitions': [{'id':'deactivate'}, ],
-                 'columns': ['getPatientID', 'Title', 'getGender', 'getAge',
+                 'columns': ['getPatientID', 'Title', 'getGender', 'getAgeSplittedStr',
                              'getBirthDate', 'getCitizenship', 'getPrimaryReferrer']})
             self.review_states.append(
                 {'id':'inactive',
                  'title': _('Dormant'),
                  'contentFilter': {'inactive_state': 'inactive'},
                  'transitions': [{'id':'activate'}, ],
-                 'columns': ['getPatientID', 'Title', 'getGender', 'getAge',
+                 'columns': ['getPatientID', 'Title', 'getGender', 'getAgeSplittedStr',
                              'getBirthDate', 'getCitizenship', 'getPrimaryReferrer']})
 
         items = BikaListingView.folderitems(self)

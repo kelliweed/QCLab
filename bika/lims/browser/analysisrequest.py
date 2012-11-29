@@ -1548,8 +1548,8 @@ class ajaxAnalysisRequestSubmit():
             return json.dumps({'errors':errors})
 
         # Now some basic validation
-        required_fields = ['SampleType', 'SamplingDate', 'DoctorID', 'PatientID']
-        validated_fields = ('SampleID', 'SampleType', 'SamplePoint', 'PatientID', 'DoctorID')
+        required_fields = ['SampleType', 'SamplingDate', 'PatientID']
+        validated_fields = ('SampleID', 'SampleType', 'SamplePoint', 'PatientID')
 
         for column in columns:
             formkey = "ar.%s" % column

@@ -1,4 +1,4 @@
-/*jQuery(function($){
+jQuery(function($){
 $(document).ready(function(){
 	
     _ = jarn.i18n.MessageFactory('bika');
@@ -32,10 +32,10 @@ $(document).ready(function(){
         T = $(".template-patientidentifiers #IdentifierType").val();
         D = $(".template-patientidentifiers #IdentifierTypeDescription").val();
         I = $(".template-patientidentifiers #Identifier").val();
-        if (T == ''){
+        /*if (T == ''){
         	alert(_("No Identifier Type defined"))
             return false;
-        } else if (I == '') {
+        } else */ if (I == '') {
         	alert(_("No Identifier entered"))
         	return false;
         }
