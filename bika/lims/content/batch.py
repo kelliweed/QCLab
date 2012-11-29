@@ -195,8 +195,10 @@ class Batch(BaseContent):
         pc = getToolByName(self, 'portal_catalog')
         bc = getToolByName(self, 'bika_catalog')
         bsc = getToolByName(self, 'bika_setup_catalog')
+        bpc = getToolByName(self, 'bika_patient_catalog')
         pairs = []
         objects = []
+        client = None
         # Try get Client
         c_uid = self.getClientUID()
         if c_uid:
@@ -206,6 +208,19 @@ class Batch(BaseContent):
                     pairs.append((contact.UID(), contact.Title()))
                     if not dl:
                         objects.append(contact)
+        # Try get Patient/PrimaryReferrer
+        p_uid = self.getPatientUID()
+        if p_uid:
+            patient = bpc(UID=p_uid)[0].getObject()
+            if patient:
+                pr = patient.getPrimaryReferrer()
+                if pr and pr.UID() != client.UID():
+                    for contact in pr.objectValues('Contact'):
+                        if isActive(contact):
+                            pairs.append((contact.UID(), contact.Title()))
+                            if not dl:
+                                objects.append(contact)
+        if pairs:
             pairs.sort(lambda x, y:cmp(x[1].lower(), y[1].lower()))
             return dl and DisplayList(pairs) or objects
         # fallback to LabContacts
