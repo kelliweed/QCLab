@@ -24,7 +24,7 @@ schema = Person.schema.copy() + Schema((
         searchable=1,
         required=0,
         widget=ReadonlyStringWidget(
-            visible=1,
+            visible={'view': 'visible', 'edit': 'hidden' },
             label=_('Patient ID'),
             css='readonly-emphasize',
         ),
@@ -78,7 +78,7 @@ schema = Person.schema.copy() + Schema((
             label=_('Birth date is estimated'),
         ),
     ),
-                                        
+
     RecordsField('PatientIdentifiers',
         type='patientidentifiers',
         subfields=('IdentifierTypeUID', 'IdentifierType', 'Identifier'),
@@ -95,7 +95,7 @@ schema = Person.schema.copy() + Schema((
 #            label=_("Sender's Patient ID"),
 #        ),
 #    ),
-                                        
+
 #    StringField('SendersCaseID',
 #        widget=StringWidget(
 #            label=_("Sender's Case ID"),
@@ -305,7 +305,7 @@ class Patient(Person):
         for id in ids:
             idsstr += idsstr == '' and id['Identifier'] or (', ' + id['Identifier'])
         return idsstr
-        #return self.getSendersPatientID()+" "+self.getSendersCaseID()+" "+self.getSendersSpecimenID()        
+        #return self.getSendersPatientID()+" "+self.getSendersCaseID()+" "+self.getSendersSpecimenID()
 
     def getAgeSplitted(self):
 
@@ -358,7 +358,7 @@ class Patient(Person):
 
     def getAge(self):
         return self.getAgeSplitted()['year']
-    
+
     def getAgeSplittedStr(self):
         splitted = self.getAgeSplitted()
         arr = []
