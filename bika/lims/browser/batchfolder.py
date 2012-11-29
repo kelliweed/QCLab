@@ -183,8 +183,11 @@ class ajaxGetBatches(BrowserView):
             batches = self.bika_catalog(portal_type='Batch')
 
         for batch in batches:
-            if batch.Title.lower().find(searchTerm) > -1:
-                batch = batch.getObject()
+            batch = batch.getObject()
+            if self.portal_workflow.getInfoFor(batch, 'review_state', 'open') == 'closed':
+                continue
+            if batch.Title().lower().find(searchTerm) > -1 \
+            or batch.Description().lower().find(searchTerm) > -1:
 
                 p_uid = batch.getPatientUID()
                 d_uid = batch.getDoctorUID()
