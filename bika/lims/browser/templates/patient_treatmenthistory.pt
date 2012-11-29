@@ -7,11 +7,11 @@
 
 	<metal:content-core fill-slot="content-core">
     <form name="treatmenthistory" method="POST">
-		
+
 		<div id="folderlisting-main-table">
             <input tal:replace="structure context/@@authenticator/authenticator" />
             <input type="hidden" name="submitted" value="1"/>
-			
+
 			<div class="bika-listing-table-container">
 				<table summary="Content listing" style="margin-bottom: 0px;"
 					class="bika-listing-table">
@@ -51,15 +51,15 @@
 					<tfoot>
 						<tr>
 							<td colspan="5" style="padding:5px;">
-								<input class="workflow_action_button action_button add_row allowMultiSubmit"
+								<input class="action_button add_row allowMultiSubmit"
 								       type="submit"
 									   i18n:attributes="value"
-									   value="Add" />								
+									   value="Add" />
 								<tal:hastreatments tal:condition="python:hasattr(view, 'hasTreatmentHistory') and view.hasTreatmentHistory()">
-									<input class="workflow_action_button action_button" type="submit"
+									<input class="action_button" type="submit"
 										name="delete"
 										i18n:attributes="value" value="Delete selected" />
-									<input class="workflow_action_button action_button" type="submit"
+									<input class="action_button" type="submit"
 										name="clear"
 										i18n:attributes="value" value="Delete all" />
 								</tal:hastreatments>
@@ -69,7 +69,7 @@
 				</table>
 			</div>
 		</div>
-		<input class="workflow_action_button action_button" type="submit"
+		<input class="action_button" type="submit"
 			i18n:attributes="value" value="Save treatment history" />
 
 		<tal:hasremarks tal:condition="python:hasattr(context, 'Remarks')">

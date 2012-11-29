@@ -74,15 +74,15 @@
                 <tfoot>
 					<tr>
 						<td class="noborder workflow_actions" colspan="5"  style="padding:5px;">
-							<input class="workflow_action_button action_button add_row allowMultiSubmit"
+							<input class="action_button add_row allowMultiSubmit"
 						       type="submit"
 							   i18n:attributes="value"
 							   value="Add" />								
 							<tal:hasprovisionaldiagnosis tal:condition="python:hasattr(view, 'hasProvisionalDiagnosis') and view.hasProvisionalDiagnosis()">
-								<input class="workflow_action_button action_button" type="submit"
+								<input class="action_button" type="submit"
 									name="CPD_delete"
 									i18n:attributes="value" value="Delete selected" />
-								<input class="workflow_action_button action_button" type="submit"
+								<input class="action_button" type="submit"
 									name="CPD_clear"
 									i18n:attributes="value" value="Delete all" />
 							</tal:hasprovisionaldiagnosis>
