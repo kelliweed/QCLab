@@ -32,13 +32,20 @@ schema = BikaSchema.copy() + Schema((
             label=_("Batch ID"),
         )
     ),
+    StringField('ClientBatchID',
+        searchable=True,
+        required=0,
+        widget=StringWidget(
+            label=_("Client Batch ID")
+        )
+    ),
     LinesField('BatchLabels',
         vocabulary = "BatchLabelVocabulary",
         widget=MultiSelectionWidget(
             label=_("Batch labels"),
             format="checkbox",
         )
-    ),
+    ),    
     StringField('ClientID',
         required=1,
         widget=StringWidget(
