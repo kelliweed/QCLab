@@ -16,3 +16,4 @@ from caseaetiologicagentswidget import CaseAetiologicAgentsWidget
 from patientidentifierswidget import PatientIdentifiersWidget
 from splitteddatewidget import SplittedDateWidget
 from readonlystringwidget import ReadonlyStringWidget
+from caseprovisionaldiagnosiswidget import CaseProvisionalDiagnosisWidget
