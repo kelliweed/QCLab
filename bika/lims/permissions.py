@@ -27,6 +27,13 @@ AddSamplePoint = 'BIKA: Add SamplePoint'
 AddSampleMatrix = 'BIKA: Add SampleMatrix'
 AddSamplePartition = 'BIKA: Add SamplePartition'
 AddSamplingDeviation = 'BIKA: Add SamplingDeviation'
+AddAetiologicAgent = 'BIKA: Add AetiologicAgent'
+AddTreatment = 'BIKA: AddTreatment'
+AddDrug = 'BIKA: Add Drug'
+AddImmunization = 'BIKA: Add Immunization'
+AddVaccinationCenter = 'BIKA: Add VaccinationCenter'
+AddSymptom = 'BIKA: Add Symptom'
+AddDrugProhibition = 'BIKA: Add DrugProhibition'
 
 # Default Archetypes Add Permission
 ADD_CONTENT_PERMISSION = AddPortalContent
@@ -46,6 +53,13 @@ ADD_CONTENT_PERMISSIONS = {
     'SampleMatrix': AddSampleMatrix,
     'SamplePartition': AddSamplePartition,
     'SamplingDeviation': AddSamplingDeviation,
+    'AetiologicAgent': AddAetiologicAgent,
+    'Treatment': AddTreatment,
+    'Drug': AddDrug,
+    'Immunization': AddImmunization,
+    'VaccinationCenter': AddVaccinationCenter,
+    'Symptom': AddSymptom,
+    'DrugProhibition': AddDrugProhibition,
 }
 
 # Very Old permissions:

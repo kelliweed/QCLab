@@ -21,6 +21,7 @@
                                id fieldName;
                                value value;
                                size widget/size;
+                               class widget/css;
                                maxlength widget/maxlength;
                                readonly python:widget.readonly(context, request)"
                />

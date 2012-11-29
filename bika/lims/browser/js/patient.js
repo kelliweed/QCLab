@@ -350,8 +350,13 @@ $(document).ready(function(){
 		event.preventDefault();
 		P = $("#DrugProhibition").val();
 		D = $("#Drug").val();
-		if (P == '' || D == ''){
-	        return false;
+		if (P == '') {
+			alert(_('Allergic reaction cannot be empty'));
+			return false;
+		}
+		if (D == '') {
+			alert(_('Drug field cannot be empty'));
+			return false;
 		}
 		newrow = $("tr#new").clone();
         $("tr#new").removeAttr('id');
@@ -444,14 +449,22 @@ $(document).ready(function(){
 		S = $("#TripStartDate").val();
 		E = $("#TripEndDate").val();
 		T = $("#Country").val();
-		L = $("#Location").val();
-		if (T == ''){
+		L = $("#Location").val();		
+		if (S == '') {
+			alert(_('Trip start date not defined'))
 	        return false;
 		}
-
+		if (E == '') {
+			alert(_('Trip end date not defined'))
+	        return false;
+		}
 		if (Date.parse(E) <= Date.parse(S)) {
 			alert(_('End date must be after start date'))
 			return false;
+		}
+		if (T == ''){
+			alert(_('Country not defined'))
+	        return false;
 		}
 
 		$("#TripStartDate").attr('class', 'datepicker_nofuture');

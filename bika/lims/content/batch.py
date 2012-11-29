@@ -1,25 +1,26 @@
 from AccessControl import ClassSecurityInfo
 from DateTime import DateTime
+from Products.ATContentTypes.utils import DT2dt
 from Products.ATExtensions.ateapi import DateTimeField
 from Products.ATExtensions.ateapi import RecordsField as RecordsField
 from Products.Archetypes.public import *
 from Products.CMFCore.utils import getToolByName
 from bika.lims import bikaMessageFactory as _
 from bika.lims.browser.widgets import CaseAetiologicAgentsWidget
+from bika.lims.browser.widgets import CaseProvisionalDiagnosisWidget
 from bika.lims.browser.widgets import CaseSymptomsWidget
 from bika.lims.browser.widgets import DateTimeWidget
+from bika.lims.browser.widgets import PatientIdentifiersWidget
 from bika.lims.browser.widgets import SplittedDateWidget
 from bika.lims.config import PROJECTNAME
 from bika.lims.content.bikaschema import BikaSchema
 from bika.lims.interfaces import IBatch
 from bika.lims.utils import isActive
-from zope.interface import implements
-from Products.ATContentTypes.utils import DT2dt
-from datetime import datetime, timedelta
 from calendar import monthrange
+from datetime import datetime, timedelta
+from zope.interface import implements
 import json
 import plone
-from bika.lims.browser.widgets.patientidentifierswidget import PatientIdentifiersWidget
 
 schema = BikaSchema.copy() + Schema((
     StringField('BatchID',
@@ -92,13 +93,22 @@ schema = BikaSchema.copy() + Schema((
             label = _("Onset Date Estimated"),
         ),
     ),
+    
+    RecordsField('ProvisionalDiagnosis',
+        type='provisionaldiagnosis',
+        subfields=('Code', 'Title', 'Description', 'Onset', 'Remarks'),
+        subfield_sizes={'Code': 7, 'Title': 15, 'Description': 25, 'Onset': 10, 'Remarks': 25},
+        widget=CaseProvisionalDiagnosisWidget(
+            label='Provisional diagnosis',
+        ),
+    ),
 
-    TextField('ProvisionalDiagnosis',
+    TextField('AdditionalNotes',
         default_content_type='text/x-web-intelligent',
         allowable_content_types=('text/x-web-intelligent',),
         default_output_type="text/html",
         widget=TextAreaWidget(
-            label=_('Provisional Diagnosis and additional notes'),
+            label=_('Additional notes'),
         ),
     ),
     StringField('CaseStatus',
@@ -147,7 +157,7 @@ schema = BikaSchema.copy() + Schema((
 
 schema['title'].required = False
 schema['title'].widget.visible = False
-schema.moveField('BatchLabels', after='ProvisionalDiagnosis')
+schema.moveField('BatchLabels', after='AdditionalNotes')
 schema.moveField('PatientID', after='BatchID')
 
 class Batch(BaseContent):
@@ -185,8 +195,10 @@ class Batch(BaseContent):
         pc = getToolByName(self, 'portal_catalog')
         bc = getToolByName(self, 'bika_catalog')
         bsc = getToolByName(self, 'bika_setup_catalog')
+        bpc = getToolByName(self, 'bika_patient_catalog')
         pairs = []
         objects = []
+        client = None
         # Try get Client
         c_uid = self.getClientUID()
         if c_uid:
@@ -196,6 +208,19 @@ class Batch(BaseContent):
                     pairs.append((contact.UID(), contact.Title()))
                     if not dl:
                         objects.append(contact)
+        # Try get Patient/PrimaryReferrer
+        p_uid = self.getPatientUID()
+        if p_uid:
+            patient = bpc(UID=p_uid)[0].getObject()
+            if patient:
+                pr = patient.getPrimaryReferrer()
+                if pr and pr.UID() != client.UID():
+                    for contact in pr.objectValues('Contact'):
+                        if isActive(contact):
+                            pairs.append((contact.UID(), contact.Title()))
+                            if not dl:
+                                objects.append(contact)
+        if pairs:
             pairs.sort(lambda x, y:cmp(x[1].lower(), y[1].lower()))
             return dl and DisplayList(pairs) or objects
         # fallback to LabContacts
@@ -386,7 +411,6 @@ class Batch(BaseContent):
             return patient[0].getObject().getPatientIdentifiers()
 
     def getPatientIdentifiersStr(self):
-        import pdb;pdb.set_trace()
         bpc = getToolByName(self, 'bika_patient_catalog')
         patient = bpc(UID=self.getPatientUID())
         if patient:
