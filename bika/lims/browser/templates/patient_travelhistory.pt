@@ -20,18 +20,17 @@
 							<th class="sortable column"
 							    id="foldercontents-start-column"
 							    style="width:22%">
-                                <span i18n:translate="">Trip start date</span>
-                                <span class="fieldRequired">&nbsp;</span>
+                                <span i18n:translate="" class="fieldRequired">Trip start date</span>
 							</th>
 							<th class="sortable column"
 							    id="foldercontents-end-column"
 							    style="width:22%">
-                                <span i18n:translate="">Trip end date</span>
+                                <span i18n:translate="" class="fieldRequired">Trip end date</span>
                             </th>
                             <th class="sortable column"
 							    id="foldercontents-country-column"
 							    style="width:22%">
-                                <span i18n:translate="">Country</span>
+                                <span i18n:translate="" class="fieldRequired">Country</span>
                             </th>
                             <th class="sortable column"
 							    id="foldercontents-location-column"
