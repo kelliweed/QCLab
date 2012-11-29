@@ -17,6 +17,7 @@ $(document).ready(function(){
                        {'columnName':'DoctorID','width':'25','label':_('Doctor ID')},
                        {'columnName':'Title','width':'75','label':_('Title')}],
             url: window.portal_url + "/getDoctors?_authenticator=" + $('input[name="_authenticator"]').val(),
+            showOn: true,
             select: function( event, ui ) {
                 $(this).val(ui.item.DoctorID);
                 $(this).change();
