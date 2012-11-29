@@ -1549,7 +1549,9 @@ class ajaxAnalysisRequestSubmit():
 
         # Now some basic validation
         required_fields = ['SampleType', 'SamplingDate', 'PatientID']
-        validated_fields = ('SampleID', 'SampleType', 'SamplePoint', 'PatientID')
+        if self.context.portal_type == 'Batch':
+            required_fields.append('ClientID')
+        validated_fields = ('SampleID', 'SampleType', 'SamplePoint')
 
         for column in columns:
             formkey = "ar.%s" % column
