@@ -3,15 +3,15 @@
     xmlns:i18n="http://xml.zope.org/namespaces/i18n" i18n:domain="bika">
 <body>
 
-    <div id="folderlisting-main-table" class="template-symptoms">
+    <div id="folderlisting-main-table" class="template-caseprovisionaldiagnosis">
         <input tal:replace="structure context/@@authenticator/authenticator" />
-        <input type="hidden" name="submitted" value="1"/>
+        <input type="hidden" name="CPD_submitted" value="1"/>
         <div class="bika-listing-table-container">
             <table summary="Content listing" style="margin-bottom: 0px;"
                 class="bika-listing-table">
                 <thead>
                     <tr>
-                		<th>&nbsp;</th>
+                		<th></th>
                         <th class="column"
                             id="foldercontents-Code-column">
                             <span i18n:translate="">Code</span>
@@ -33,30 +33,30 @@
 
                 <tbody class="item-listing-tbody"
                 		tal:define="global index python:-1">
-                    <tr tal:repeat="row context/getSymptoms">
+                    <tr tal:repeat="row context/getProvisionalDiagnosis">
                     	<td>
                           	 <input class="noborder" type="checkbox" 
-                          		name="SelectItem" id="SelectItem"
+                          		name="CPD-SelectItem" id="CPD_SelectItem"
                           		tal:define="global index python:index+1;"
                           		tal:attributes="
-                          			id python:'SelectItem-%s'%(index);
-                          			name python:'SelectItem-%s'%(index);"/>
+                          			id python:'CPD-SelectItem-%s'%(index);
+                          			name python:'CPD-SelectItem-%s'%(index);"/>
                         </td>
-                        <td colspan="1" rowspan="1" class="state-active Code">
+                        <td class="state-active Code">
                              <span tal:content="row/Code"/>
                         </td>
-                        <td colspan="1" rowspan="1" class="state-active Title">
+                        <td class="state-active Title">
                              <span tal:content="row/Title"/>
                         </td>
-                        <td colspan="1" rowspan="1" class="state-active Description">
+                        <td class="state-active Description">
                              <span tal:content="row/Description"/>
                         </td>
-                        <td colspan="1" rowspan="1" class="state-active Onset">
+                        <td class="state-active Onset">
                              <span tal:content="row/Onset"/>
                         </td>
                     </tr>
                     <tr id="new">
-                    	<td style="padding-bottom:15px;">&nbsp;</td>
+                    	<td style="padding-bottom:15px;"></td>
                         <td colspan="1" rowspan="1" class="state-active Code">
                              <input class="wide" id="Code" type="text" value="" autocomplete="off" readonly="readonly"/>
                         </td>
@@ -78,14 +78,14 @@
 						       type="submit"
 							   i18n:attributes="value"
 							   value="Add" />								
-							<tal:hassymptoms tal:condition="python:hasattr(view, 'hasSymptoms') and view.hasSymptoms()">
+							<tal:hasprovisionaldiagnosis tal:condition="python:hasattr(view, 'hasProvisionalDiagnosis') and view.hasProvisionalDiagnosis()">
 								<input class="workflow_action_button action_button" type="submit"
-									name="delete"
+									name="CPD_delete"
 									i18n:attributes="value" value="Delete selected" />
 								<input class="workflow_action_button action_button" type="submit"
-									name="clear"
+									name="CPD_clear"
 									i18n:attributes="value" value="Delete all" />
-							</tal:hassymptoms>
+							</tal:hasprovisionaldiagnosis>
 					   </td>
 					</tr>
 				</tfoot>
