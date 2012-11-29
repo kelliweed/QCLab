@@ -71,7 +71,7 @@ schema = Person.schema.copy() + Schema((
             label=_('Age'),
         ),
     ),
-    
+
     BooleanField('BirthDateEstimated',
         default=False,
         widget=BooleanWidget(
@@ -94,7 +94,7 @@ schema = Person.schema.copy() + Schema((
             label=_("Sender's Patient ID"),
         ),
     ),
-                                        
+
     StringField('SendersCaseID',
         widget=StringWidget(
             label=_("Sender's Case ID"),
@@ -275,35 +275,6 @@ class Patient(Person):
     def getPatientID(self):
         return self.getId()
 
-    # This is copied from Client (Contact acquires it, but we do not)
-    security.declarePublic('getContactsDisplayList')
-    def getContactsDisplayList(self):
-        pc = getToolByName(self, 'portal_catalog')
-        pairs = []
-        for contact in pc(portal_type = 'Doctor', inactive_state = 'active'):
-            pairs.append((contact.UID, contact.Title))
-        pr = self.getPrimaryReferrer()
-        if pr:
-            for contact in pc(portal_type = 'Contact', inactive_state = 'active', getClientUID = pr):
-                pairs.append((contact.UID, contact.Title))
-        for contact in pc(portal_type = 'LabContact', inactive_state = 'active'):
-            pairs.append((contact.UID, contact.Title))
-        # sort the list by the second item
-        pairs.sort(lambda x, y:cmp(x[1], y[1]))
-        return DisplayList(pairs)
-
-    # This is copied from Contact (In contact, it refers to the parent's
-    # getContactsDisplayList, while we define our own (our client's)
-    security.declarePublic('getCCContactsDisplayList')
-    def getCCContactsDisplayList(self):
-        pr = self.getPrimaryReferrer()
-        all_contacts = pr and pr.getCCContacts() or []
-        return DisplayList(all_contacts)
-
-    def getCCContacts(self):
-        pr = self.getPrimaryReferrer()
-        return pr and pr.getCCContacts() or []
-
     security.declarePublic('getSamples')
     def getSamples(self):
         """ get all samples taken from this Patient """
@@ -325,16 +296,16 @@ class Patient(Person):
                 continue
             clients.append([client.UID(), client.Title()])
         return DisplayList(clients)
-    
+
     def getPatientIdentifiersStr(self):
-        return self.getSendersPatientID()+" "+self.getSendersCaseID()+" "+self.getSendersSpecimenID()        
-    
+        return self.getSendersPatientID()+" "+self.getSendersCaseID()+" "+self.getSendersSpecimenID()
+
     def getAgeSplitted(self):
-        
+
         if (self.getBirthDate()):
-            dob = DT2dt(self.getBirthDate()).replace(tzinfo=None)         
+            dob = DT2dt(self.getBirthDate()).replace(tzinfo=None)
             now = datetime.today()
-            
+
             currentday = now.day
             currentmonth = now.month
             currentyear = now.year
@@ -343,33 +314,33 @@ class Patient(Person):
             birthyear = dob.year
             ageday = currentday-birthday
             agemonth = 0
-            ageyear = 0            
+            ageyear = 0
             months31days = [1,3,5,7,8,10,12]
-            
+
             if (ageday < 0):
                 currentmonth-=1
                 if (currentmonth < 1):
                     currentyear-=1
                     currentmonth = currentmonth + 12;
-    
+
                 dayspermonth = 30;
                 if currentmonth in months31days:
                     dayspermonth = 31;
                 elif currentmonth == 2:
                     dayspermonth = 28
-                    if(currentyear % 4 == 0 
+                    if(currentyear % 4 == 0
                        and (currentyear % 100 > 0 or currentyear % 400==0)):
                         dayspermonth += 1
-               
+
                 ageday = ageday + dayspermonth
-           
+
             agemonth = currentmonth - birthmonth
             if (agemonth < 0):
                 currentyear-=1
                 agemonth = agemonth + 12
-            
+
             ageyear = currentyear - birthyear
-        
+
             return {'year':ageyear,
                     'month':agemonth,
                     'day':ageday}
