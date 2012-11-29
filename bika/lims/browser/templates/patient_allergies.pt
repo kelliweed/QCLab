@@ -18,7 +18,7 @@
                             <th>&nbsp;</th>
 							<th class="sortable column"
 							    id="foldercontents-DrugProhibition-column" style="width:48%">
-                                <span i18n:translate="">Drug Prohibition Explanation</span>
+                                <span i18n:translate="">Allergic reaction</span>
                                 <span class="fieldRequired">&nbsp;</span>
 							</th>
 							<th class="sortable column"

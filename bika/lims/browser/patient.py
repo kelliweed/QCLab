@@ -137,28 +137,23 @@ class AllergiesView(BrowserView):
             for p in range(len(self.request.form['DrugProhibition'])):
                 P = self.request.form['DrugProhibition'][p]
                 D = self.request.form['Drug'][p]
-
-                # Create new Allergy entry if none exists
+                
+                errors = False
                 Plist = bsc(portal_type='DrugProhibition', title=P)
                 if not Plist:
-                    folder = self.context.bika_setup.bika_drugprohibitions
-                    _id = folder.invokeFactory('DrugProhibition', id = 'tmp')
-                    obj = folder[_id]
-                    obj.edit(title = P)
-                    obj.unmarkCreationFlag()
-                    renameAfterCreation(obj)
+                    self.context.plone_utils.addPortalMessage(_("The allergic reaction '%s' is not valid") % P, "error")
+                    errors = True
                 # Create new Drug entry if none exists
                 Dlist = bsc(portal_type='Drug', title=D)
                 if not Dlist:
-                    folder = self.context.bika_setup.bika_drugs
-                    _id = folder.invokeFactory('Drug', id = 'tmp')
-                    obj = folder[_id]
-                    obj.edit(title = D)
-                    obj.unmarkCreationFlag()
-                    renameAfterCreation(obj)
-                new.append({'DrugProhibition':P, 'Drug':D})
-            self.context.setAllergies(new)
-            self.context.plone_utils.addPortalMessage(PMF("Changes saved"))
+                    self.context.plone_utils.addPortalMessage(_("The drug '%s' is not valid") % D, "error")
+                    errors = True
+                
+                if not errors:
+                    new.append({'DrugProhibition':P, 'Drug':D})
+                    self.context.setAllergies(new)
+                    self.context.plone_utils.addPortalMessage(PMF("Changes saved"))
+                    
         return self.template()
 
     def hasAllergies(self):
