@@ -113,6 +113,8 @@ class ajaxGetDoctors(BrowserView):
         proxies = pc(portal_type="Doctor")
         for doctor in proxies:
             doctor = doctor.getObject()
+            if self.portal_workflow.getInfoFor(doctor, 'inactive_state', 'active') == 'inactive':
+                continue
             if doctor.Title().lower().find(searchTerm) > -1 \
             or doctor.getDoctorID().lower().find(searchTerm) > -1:
                 rows.append({'Title': doctor.Title() or '',

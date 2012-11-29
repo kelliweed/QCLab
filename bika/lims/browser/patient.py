@@ -137,7 +137,7 @@ class AllergiesView(BrowserView):
             for p in range(len(self.request.form['DrugProhibition'])):
                 P = self.request.form['DrugProhibition'][p]
                 D = self.request.form['Drug'][p]
-                
+
                 errors = False
                 Plist = bsc(portal_type='DrugProhibition', title=P)
                 if not Plist:
@@ -148,12 +148,12 @@ class AllergiesView(BrowserView):
                 if not Dlist:
                     self.context.plone_utils.addPortalMessage(_("The drug '%s' is not valid") % D, "error")
                     errors = True
-                
+
                 if not errors:
                     new.append({'DrugProhibition':P, 'Drug':D})
                     self.context.setAllergies(new)
                     self.context.plone_utils.addPortalMessage(PMF("Changes saved"))
-                    
+
         return self.template()
 
     def hasAllergies(self):
@@ -254,8 +254,8 @@ class ChronicConditionsView(BrowserView):
                 S = self.request.form['Title'][i]
                 D = self.request.form['Description'][i]
                 O = self.request.form['Onset'][i]
-                
-                # Only allow to create entry if the selected symptom exists 
+
+                # Only allow to create entry if the selected symptom exists
                 Slist = bsc(portal_type='Symptom', title=S, code=C)
                 ISlist = [x for x in icd9_codes['R']
                           if x['code'] == C
@@ -264,10 +264,10 @@ class ChronicConditionsView(BrowserView):
                 if not Slist and not ISlist:
                     self.context.plone_utils.addPortalMessage(_("The chronic condition symptom '%s' is not valid") % S, "error")
                 else:
-                    new.append({'Code':C, 'Title':S, 'Description':D, 'Onset': O})          
-                      
+                    new.append({'Code':C, 'Title':S, 'Description':D, 'Onset': O})
+
             self.context.setChronicConditions(new)
-            self.context.plone_utils.addPortalMessage(PMF("Changes saved"))     
+            self.context.plone_utils.addPortalMessage(PMF("Changes saved"))
         return self.template()
 
     def hasChronicConditions(self):
@@ -338,18 +338,21 @@ class ajaxGetPatients(BrowserView):
 
         bpc = self.bika_patient_catalog
         proxies = bpc(portal_type='Patient')
-        for patient in proxies:   
-            addidfound = False   
-            addids = patient.getObject().getPatientIdentifiers()
+        for patient in proxies:
+            patient = patient.getObject()
+            if self.portal_workflow.getInfoFor(patient, 'inactive_state', 'active') == 'inactive':
+                continue
+            addidfound = False
+            addids = patient.getPatientIdentifiers()
+
             for addid in addids:
                 if addid['Identifier'].lower().find(searchTerm) > -1:
                     addidfound = True
                     break
-                          
-            if patient.Title.lower().find(searchTerm) > -1 \
-            or patient.getPatientID.lower().find(searchTerm) > -1 \
+
+            if patient.Title().lower().find(searchTerm) > -1 \
+            or patient.getPatientID().lower().find(searchTerm) > -1 \
             or addidfound:
-                patient = patient.getObject()
                 rows.append({'Title': patient.Title() or '',
                          'PatientID': patient.getPatientID(),
                          'PrimaryReferrer': patient.getPrimaryReferrer().Title(),
@@ -382,7 +385,8 @@ class ajaxGetDrugs(BrowserView):
         rows = []
 
         # lookup objects from ZODB
-        brains = self.bika_setup_catalog(portal_type = 'Drug')
+        brains = self.bika_setup_catalog(portal_type = 'Drug',
+                                         inactive_state = 'active')
         if brains and searchTerm:
             brains = [p for p in brains if p.Title.lower().find(searchTerm) > -1]
 
@@ -416,7 +420,8 @@ class ajaxGetTreatments(BrowserView):
         rows = []
 
         # lookup objects from ZODB
-        brains = self.bika_setup_catalog(portal_type = 'Treatment')
+        brains = self.bika_setup_catalog(portal_type = 'Treatment',
+                                         inactive_state = 'active')
         if brains and searchTerm:
             brains = [p for p in brains if p.Title.lower().find(searchTerm) > -1]
 
@@ -459,7 +464,8 @@ class ajaxGetDrugProhibitions(BrowserView):
         rows = []
 
         # lookup objects from ZODB
-        brains = self.bika_setup_catalog(portal_type = 'DrugProhibition')
+        brains = self.bika_setup_catalog(portal_type = 'DrugProhibition',
+                                         inactive_state = 'active')
         if brains and searchTerm:
             brains = [p for p in brains if p.Title.lower().find(searchTerm) > -1]
 
@@ -493,7 +499,8 @@ class ajaxGetImmunizations(BrowserView):
         rows = []
 
         # lookup objects from ZODB
-        brains = self.bika_setup_catalog(portal_type = 'Immunization')
+        brains = self.bika_setup_catalog(portal_type = 'Immunization',
+                                         inactive_state = 'active')
         if brains and searchTerm:
             brains = [p for p in brains if p.Title.lower().find(searchTerm) > -1]
 
@@ -527,7 +534,8 @@ class ajaxGetVaccinationCenters(BrowserView):
         rows = []
 
         # lookup objects from ZODB
-        brains = self.bika_setup_catalog(portal_type = 'VaccinationCenter')
+        brains = self.bika_setup_catalog(portal_type = 'VaccinationCenter',
+                                         inactive_state = 'active')
         if brains and searchTerm:
             brains = [p for p in brains if p.Title.lower().find(searchTerm) > -1]
 
@@ -559,7 +567,8 @@ class ajaxGetSymptoms(BrowserView):
         rows = []
 
         # lookup objects from ZODB
-        brains = self.bika_setup_catalog(portal_type = 'Symptom')
+        brains = self.bika_setup_catalog(portal_type = 'Symptom',
+                                         inactive_state = 'active')
         if brains and searchTerm:
             brains = [p for p in brains if p.Title.lower().find(searchTerm) > -1
                                         or p.Description.lower().find(searchTerm) > -1]
@@ -603,7 +612,8 @@ class ajaxGetIdentifierTypes(BrowserView):
         rows = []
 
         # lookup objects from ZODB
-        brains = self.bika_setup_catalog(portal_type = 'IdentifierType')
+        brains = self.bika_setup_catalog(portal_type = 'IdentifierType',
+                                         inactive_state = 'active')
         if brains and searchTerm:
             brains = [p for p in brains if p.Title.lower().find(searchTerm) > -1]
 
