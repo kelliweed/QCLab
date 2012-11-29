@@ -27,6 +27,7 @@ AddSamplePoint = 'BIKA: Add SamplePoint'
 AddSampleMatrix = 'BIKA: Add SampleMatrix'
 AddSamplePartition = 'BIKA: Add SamplePartition'
 AddSamplingDeviation = 'BIKA: Add SamplingDeviation'
+AddAetiologicAgent = 'BIKA: Add AetiologicAgent'
 
 # Default Archetypes Add Permission
 ADD_CONTENT_PERMISSION = AddPortalContent
@@ -46,6 +47,7 @@ ADD_CONTENT_PERMISSIONS = {
     'SampleMatrix': AddSampleMatrix,
     'SamplePartition': AddSamplePartition,
     'SamplingDeviation': AddSamplingDeviation,
+    'AetiologicAgent': AddAetiologicAgent,
 }
 
 # Very Old permissions:
