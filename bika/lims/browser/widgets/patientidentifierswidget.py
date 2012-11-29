@@ -18,10 +18,10 @@ class PatientIdentifiersView(BrowserView):
 
     def __call__(self):
         return self.template()
-    
+
     def hasIdentifiers(self):
         return len(self.context.getPatientIdentifiers())>0
-            
+
 
 class PatientIdentifiersWidget(TypesWidget):
     _properties = TypesWidget._properties.copy()
@@ -33,42 +33,43 @@ class PatientIdentifiersWidget(TypesWidget):
     })
 
     security = ClassSecurityInfo()
-    
+
     security.declarePublic('process_form')
     def process_form(self, instance, field, form, empty_marker=None, emptyReturnsMarker=False):
         value = len(instance.getPatientIdentifiers())>0 and instance.getPatientIdentifiers() or []
         if 'PID_clear' in form:
             value = []
-            
+
         elif 'PID_delete' in form:
             valueout = []
             for i in range(len(value)):
                 if not ('PID_SelectItem-%s'%i in form):
                     valueout.append(value[i])
             value = valueout
-            
+
         elif 'PID_submitted' in form:
             bsc = getToolByName(instance, 'bika_setup_catalog')
             for i in range(len(form.get('PID_IdentifierType', []))):
                 U = form['PID_IdentifierTypeUID'][i]
                 T = form['PID_IdentifierType'][i]
                 D = form['PID_IdentifierTypeDescription'][i]
-                I = form['PID_Identifier'][i]                
-                
+                I = form['PID_Identifier'][i]
+
                 if (len(I.strip())==0):
                     instance.plone_utils.addPortalMessage(_("No identifier entered") % I, "error")
                 else:
                     # Create new Identifier Type if not exists
                     if (len(T.strip())>0):
                         itlist = bsc(portal_type='IdentifierType', title=T)
-                        if not itlist:
-                            folder = instance.bika_setup.bika_identifiertypes
-                            _id = folder.invokeFactory('IdentifierType', id='tmp')
-                            obj = folder[_id]
-                            obj.edit(title = T, description = D)
-                            obj.unmarkCreationFlag()
-                            renameAfterCreation(obj)          
-                     
+                        # Just lookup from site-setup, no dynamic addition
+                        # if not itlist:
+                        #     folder = instance.bika_setup.bika_identifiertypes
+                        #     _id = folder.invokeFactory('IdentifierType', id='tmp')
+                        #     obj = folder[_id]
+                        #     obj.edit(title = T, description = D)
+                        #     obj.unmarkCreationFlag()
+                        #     renameAfterCreation(obj)
+
                 value.append({'IdentifierTypeUID':U, 'IdentifierType': T, 'Identifier': I, 'IdentifierTypeDescription': D })
         return value, {}
 
@@ -80,8 +81,8 @@ class PatientIdentifiersWidget(TypesWidget):
                                 fieldvalue=fieldvalue,
                                 allow_edit=allow_edit)
         return view()
-    
-    
+
+
 registerWidget(PatientIdentifiersWidget,
                title=_('Patient identifiers'),
                description=_("Patient additional identifiers"),)
