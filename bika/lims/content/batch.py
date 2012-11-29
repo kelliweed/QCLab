@@ -191,6 +191,48 @@ class Batch(BaseContent):
     def getBatchID(self):
         return self.getId()
 
+    def getContacts(self, dl=True):
+        pc = getToolByName(self, 'portal_catalog')
+        bc = getToolByName(self, 'bika_catalog')
+        bsc = getToolByName(self, 'bika_setup_catalog')
+        pairs = []
+        objects = []
+        # Try get Client
+        c_uid = self.getClientUID()
+        if c_uid:
+            client = pc(UID=c_uid)[0].getObject()
+            for contact in client.objectValues('Contact'):
+                if isActive(contact):
+                    pairs.append((contact.UID(), contact.Title()))
+                    if not dl:
+                        objects.append(contact)
+            pairs.sort(lambda x, y:cmp(x[1].lower(), y[1].lower()))
+            return dl and DisplayList(pairs) or objects
+        # fallback to LabContacts
+        for contact in bsc(portal_type = 'LabContact',
+                           inactive_state = 'active',
+                           sort_on = 'sortable_title'):
+            pairs.append((contact.UID, contact.Title))
+            if not dl:
+                objects.append(contact.getObject())
+        return dl and DisplayList(pairs) or objects
+
+    def getCCs(self):
+        items = []
+        for contact in self.getContacts(dl=False):
+            item = {'uid': contact.UID(), 'title': contact.Title()}
+            ccs = []
+            if hasattr(contact, 'getCCContact'):
+                for cc in contact.getCCContact():
+                    if isActive(cc):
+                        ccs.append({'title': cc.Title(),
+                                    'uid': cc.UID(),})
+            item['ccs_json'] = json.dumps(ccs)
+            item['ccs'] = ccs
+            items.append(item)
+        items.sort(lambda x, y:cmp(x['title'].lower(), y['title'].lower()))
+        return items
+
     def getOnsetDate(self):
         """ Return OnsetDate, but calculate it first if it's not set
         """
@@ -255,10 +297,17 @@ class Batch(BaseContent):
             return DisplayList(pr and pr.getCCContacts() or [])
 
 
-    security.declarePublic('getCCContacts')
-    def getCCContacts(self):
-        """ Return JSON containing all contacts from selected Hospital.
-        """
+            ccs = []
+            if hasattr(contact, 'getCCContact'):
+                for cc in contact.getCCContact():
+                    if isActive(cc):
+                        ccs.append({'title': cc.Title(),
+                                    'uid': cc.UID(),})
+            item['ccs_json'] = json.dumps(ccs)
+            item['ccs'] = ccs
+            items.append(item)
+        items.sort(lambda x, y:cmp(x['title'].lower(), y['title'].lower()))
+        return items
 
     def BatchLabelVocabulary(self):
         """ return all batch labels """
@@ -394,22 +443,22 @@ class Batch(BaseContent):
         if patient:
             patient = patient[0].getObject()
             return patient.getTravelHistory()
-    
+
     def getPatientBirthDate(self):
         bpc = getToolByName(self, 'bika_patient_catalog')
-        patient = bpc(UID=self.getPatientUID())        
+        patient = bpc(UID=self.getPatientUID())
         if patient:
-            patient = patient[0].getObject()   
+            patient = patient[0].getObject()
             return patient.getBirthDate()
-    
+
     def getPatientAgeAtCaseOnsetDate(self):
         bpc = getToolByName(self, 'bika_patient_catalog')
-        patient = bpc(UID=self.getPatientUID())        
+        patient = bpc(UID=self.getPatientUID())
         if patient and self.getOnsetDate():
-            patient = patient[0].getObject()            
-            dob = DT2dt(patient.getBirthDate()).replace(tzinfo=None)         
+            patient = patient[0].getObject()
+            dob = DT2dt(patient.getBirthDate()).replace(tzinfo=None)
             now = DT2dt(self.getOnsetDate()).replace(tzinfo=None)
-            
+
             currentday = now.day
             currentmonth = now.month
             currentyear = now.year
@@ -418,33 +467,33 @@ class Batch(BaseContent):
             birthyear = dob.year
             ageday = currentday-birthday
             agemonth = 0
-            ageyear = 0            
+            ageyear = 0
             months31days = [1,3,5,7,8,10,12]
-            
+
             if (ageday < 0):
                 currentmonth-=1
                 if (currentmonth < 1):
                     currentyear-=1
                     currentmonth = currentmonth + 12;
-    
+
                 dayspermonth = 30;
                 if currentmonth in months31days:
                     dayspermonth = 31;
                 elif currentmonth == 2:
                     dayspermonth = 28
-                    if(currentyear % 4 == 0 
+                    if(currentyear % 4 == 0
                        and (currentyear % 100 > 0 or currentyear % 400==0)):
                         dayspermonth += 1
-               
+
                 ageday = ageday + dayspermonth
-           
+
             agemonth = currentmonth - birthmonth
             if (agemonth < 0):
                 currentyear-=1
                 agemonth = agemonth + 12
-            
+
             ageyear = currentyear - birthyear
-                    
+
             return {'year':ageyear,
                     'month':agemonth,
                     'day':ageday}

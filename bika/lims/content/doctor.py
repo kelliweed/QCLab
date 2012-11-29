@@ -29,36 +29,6 @@ class Doctor(Contact):
     displayContentsTab = False
     schema = schema
 
-    # This is copied from Client (Contact acquires it, but we cannot)
-    security.declarePublic('getContactsDisplayList')
-    def getContactsDisplayList(self):
-        pc = getToolByName(self, 'portal_catalog')
-        pairs = []
-        for contact in pc(portal_type = 'Doctor', inactive_state = 'active'):
-            contact = contact.getObject()
-            pairs.append((contact.UID(), contact.Title()))
-        for contact in pc(portal_type = 'Contact', inactive_state = 'active'):
-            contact = contact.getObject()
-            pairs.append((contact.UID(), contact.Title()))
-        for contact in pc(portal_type = 'LabContact', inactive_state = 'active'):
-            contact = contact.getObject()
-            pairs.append((contact.UID(), contact.Title()))
-        # sort the list by the second item
-        pairs.sort(lambda x, y:cmp(x[1], y[1]))
-        return DisplayList(pairs)
-
-    # This is copied from Contact (In contact, it refers to the parent's
-    # getContactsDisplayList, while we define our own
-    security.declarePublic('getCCContactsDisplayList')
-    def getCCContactsDisplayList(self):
-        pairs = []
-        all_contacts = self.getContactsDisplayList().items()
-        # remove myself
-        for item in all_contacts:
-            if item[0] != self.UID():
-                pairs.append((item[0], item[1]))
-        return DisplayList(pairs)
-
     security.declarePublic('getSamples')
     def getSamples(self):
         """ get all samples taken from this Patient """
