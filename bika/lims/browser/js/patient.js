@@ -22,6 +22,7 @@ $(document).ready(function(){
                        {'columnName':'AdditionalIdentifiers', 'width':'40','label':_('Additional Identifiers')},
                        {'columnName':'PatientBirthDate','hidden':true}],
             url: window.portal_url + "/getPatients?_authenticator=" + $('input[name="_authenticator"]').val(),
+            showOn: true,
             select: function( event, ui ) {
                 $(this).val(ui.item.PatientID);
                 $(this).parents('tr').find('input[id=AdditionalIdentifiers]').val(ui.item.AdditionalIdentifiers);
