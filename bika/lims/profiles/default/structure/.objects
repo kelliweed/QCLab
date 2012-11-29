@@ -3,9 +3,9 @@ setup-data-in-this-installation,Document
 clients,ClientFolder
 doctors,Doctors
 patients,Patients
+batches,BatchFolder
 samples,SamplesFolder
 analysisrequests,AnalysisRequestsFolder
-batches,BatchFolder
 worksheets,WorksheetFolder
 referencesamples,ReferenceSamplesFolder
 invoices,InvoiceFolder

@@ -105,16 +105,35 @@ class Client(Organisation):
     def setTitle(self, value):
         return self.setName(value)
 
-    security.declarePublic('getContactsDisplayList')
-    def getContactsDisplayList(self):
-        wf = getToolByName(self, 'portal_workflow')
+    def getContacts(self, dl=True):
+        pc = getToolByName(self, 'portal_catalog')
+        bc = getToolByName(self, 'bika_catalog')
+        bsc = getToolByName(self, 'bika_setup_catalog')
         pairs = []
+        objects = []
         for contact in self.objectValues('Contact'):
-            if wf.getInfoFor(contact, 'inactive_state', '') == 'active':
+            if isActive(contact):
                 pairs.append((contact.UID(), contact.Title()))
-        # sort the list by the second item
-        pairs.sort(lambda x, y:cmp(x[1], y[1]))
-        return DisplayList(pairs)
+                if not dl:
+                    objects.append(contact)
+        pairs.sort(lambda x, y:cmp(x[1].lower(), y[1].lower()))
+        return dl and DisplayList(pairs) or objects
+
+    def getCCs(self):
+        items = []
+        for contact in self.getContacts(dl=False):
+            item = {'uid': contact.UID(), 'title': contact.Title()}
+            ccs = []
+            if hasattr(contact, 'getCCContact'):
+                for cc in contact.getCCContact():
+                    if isActive(cc):
+                        ccs.append({'title': cc.Title(),
+                                    'uid': cc.UID(),})
+            item['ccs_json'] = json.dumps(ccs)
+            item['ccs'] = ccs
+            items.append(item)
+        items.sort(lambda x, y:cmp(x['title'].lower(), y['title'].lower()))
+        return items
 
     security.declarePublic('getContactFromUsername')
     def getContactFromUsername(self, username):
@@ -136,27 +155,6 @@ class Client(Organisation):
         if len(r) == 1:
             return r[0].UID
 
-    security.declarePublic('getCCContacts')
-    def getCCContacts(self):
-        """Return a JSON value, containing all Contacts and their default CCs
-        for this client.  This function is used to set form values for javascript.
-        """
-        contact_data = []
-        for contact in self.objectValues('Contact'):
-            if isActive(contact):
-                this_contact_data = {'title': contact.Title(),
-                                     'uid': contact.UID(), }
-                ccs = []
-                for cc in contact.getCCContact():
-                    if isActive(cc):
-                        ccs.append({'title': cc.Title(),
-                                    'uid': cc.UID(),})
-                this_contact_data['ccs_json'] = json.dumps(ccs)
-                this_contact_data['ccs'] = ccs
-            contact_data.append(this_contact_data)
-        contact_data.sort(lambda x, y:cmp(x['title'].lower(),
-                                          y['title'].lower()))
-        return contact_data
 
     security.declarePublic('getDoctorFromUsername')
     def getDoctorFromUsername(self, username):

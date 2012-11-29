@@ -7,7 +7,7 @@ from Products.Archetypes.public import *
 from Products.CMFCore import permissions
 from Products.CMFCore.utils import getToolByName
 from bika.lims import PMF, bikaMessageFactory as _
-from bika.lims.browser.widgets import DateTimeWidget, RecordsWidget
+from bika.lims.browser.widgets import DateTimeWidget, RecordsWidget, SplittedDateWidget, ReadonlyStringWidget
 from bika.lims.config import ManageClients, PUBLICATION_PREFS, PROJECTNAME, \
     GENDERS
 from bika.lims.content.person import Person
@@ -15,6 +15,10 @@ from bika.lims.interfaces import IPatient
 from bika.lims.permissions import *
 from zope.interface import implements
 from bika.lims.browser.widgets import PatientIdentifiersWidget
+from bika.lims.browser.widgets.splitteddatewidget import SplittedDateWidget
+from Products.ATContentTypes.utils import DT2dt
+from datetime import datetime, timedelta
+from calendar import monthrange
 
 schema = Person.schema.copy() + Schema((
     StringField('PatientID',
@@ -48,23 +52,33 @@ schema = Person.schema.copy() + Schema((
             label=_('Gender'),
         ),
     ),
-    IntegerField('Age',
-        widget=StringWidget(
-            label=_('Age'),
-        ),
-    ),
     DateTimeField('BirthDate',
         required=1,
         widget=DateTimeWidget(
             label=_('Birth date'),
         ),
     ),
+    StringField('Age',
+        widget=ReadonlyStringWidget(
+            label=_('Age'),
+            visible=0,
+            width=3,
+        ),
+    ),
+    RecordsField('AgeSplitted',
+        required=1,
+        widget=SplittedDateWidget(
+            label=_('Age'),
+        ),
+    ),
+
     BooleanField('BirthDateEstimated',
         default=False,
         widget=BooleanWidget(
             label=_('Birth date is estimated'),
         ),
     ),
+                                        
     RecordsField('PatientIdentifiers',
         type='patientidentifiers',
         subfields=('IdentifierTypeUID', 'IdentifierType', 'Identifier'),
@@ -74,8 +88,38 @@ schema = Person.schema.copy() + Schema((
             label=_('Additional identifiers'),
             description=_('Patient additional identifiers')
         ),
-    ),                                    
-    
+    ),
+
+#    StringField('SendersPatientID',
+#        widget=StringWidget(
+#            label=_("Sender's Patient ID"),
+#        ),
+#    ),
+                                        
+#    StringField('SendersCaseID',
+#        widget=StringWidget(
+#            label=_("Sender's Case ID"),
+#        ),
+#    ),
+
+#    StringField('SendersSpecimenID',
+#        widget=StringWidget(
+#            label=_("Sender's Specimen ID"),
+#        ),
+#    ),
+
+    TextField('Remarks',
+        searchable=True,
+        default_content_type='text/x-web-intelligent',
+        allowable_content_types=('text/x-web-intelligent',),
+        default_output_type="text/html",
+        widget=TextAreaWidget(
+            macro="bika_widgets/remarks",
+            label=_('Remarks'),
+            append_only=True,
+        ),
+    ),
+
     TextField('Remarks',
         searchable=True,
         default_content_type='text/x-web-intelligent',
@@ -232,10 +276,6 @@ class Patient(Person):
     def getPatientID(self):
         return self.getId()
 
-    def getCCContacts(self):
-        pr = self.getPrimaryReferrer()
-        return pr and pr.getCCContacts() or []
-
     security.declarePublic('getSamples')
     def getSamples(self):
         """ get all samples taken from this Patient """
@@ -257,13 +297,73 @@ class Patient(Person):
                 continue
             clients.append([client.UID(), client.Title()])
         return DisplayList(clients)
-    
+
     def getPatientIdentifiersStr(self):
         ids = self.getPatientIdentifiers()
         idsstr = ''
         for id in ids:
             idsstr += idsstr == '' and id['Identifier'] or (', ' + id['Identifier'])
         return idsstr
-            
+        #return self.getSendersPatientID()+" "+self.getSendersCaseID()+" "+self.getSendersSpecimenID()        
+
+    def getAgeSplitted(self):
+
+        if (self.getBirthDate()):
+            dob = DT2dt(self.getBirthDate()).replace(tzinfo=None)
+            now = datetime.today()
+
+            currentday = now.day
+            currentmonth = now.month
+            currentyear = now.year
+            birthday = dob.day
+            birthmonth = dob.month
+            birthyear = dob.year
+            ageday = currentday-birthday
+            agemonth = 0
+            ageyear = 0
+            months31days = [1,3,5,7,8,10,12]
+
+            if (ageday < 0):
+                currentmonth-=1
+                if (currentmonth < 1):
+                    currentyear-=1
+                    currentmonth = currentmonth + 12;
+
+                dayspermonth = 30;
+                if currentmonth in months31days:
+                    dayspermonth = 31;
+                elif currentmonth == 2:
+                    dayspermonth = 28
+                    if(currentyear % 4 == 0
+                       and (currentyear % 100 > 0 or currentyear % 400==0)):
+                        dayspermonth += 1
+
+                ageday = ageday + dayspermonth
+
+            agemonth = currentmonth - birthmonth
+            if (agemonth < 0):
+                currentyear-=1
+                agemonth = agemonth + 12
+
+            ageyear = currentyear - birthyear
+
+            return {'year':ageyear,
+                    'month':agemonth,
+                    'day':ageday}
+        else:
+            return {'year':'',
+                    'month':'',
+                    'day':''}
+
+    def getAge(self):
+        return self.getAgeSplitted()['year']
+    
+    def getAgeSplittedStr(self):
+        splitted = self.getAgeSplitted()
+        arr = []
+        arr.append(splitted['year'] and str(splitted['year']) + 'y' or '')
+        arr.append(splitted['month'] and str(splitted['month']) + 'm' or '')
+        arr.append(splitted['day'] and str(splitted['day']) + 'd' or '')
+        return ' '.join(arr)
 
 atapi.registerType(Patient, PROJECTNAME)

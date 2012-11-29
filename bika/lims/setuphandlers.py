@@ -243,6 +243,9 @@ class BikaGenerator:
         mp(EditFieldResults, ['Manager', 'LabManager', 'Sampler'], 1)
         mp(CancelAndReinstate, ['Manager', 'LabManager', 'Owner'], 1)
 
+        mp('Access contents information',  ['Authenticated'], 1)
+        mp(permissions.View, ['Authenticated'], 1)
+
         mp = portal.bika_setup.manage_permission
         mp('Access contents information',  ['Authenticated'], 1)
         mp(permissions.View, ['Authenticated'], 1)
@@ -276,10 +279,10 @@ class BikaGenerator:
 
         # /patients
         mp = portal.patients.manage_permission
-        mp(CancelAndReinstate, ['Manager', 'LabManager', 'Doctor', ], 0)
-        mp('Access contents information', ['Manager', 'LabManager', 'Member', 'LabClerk', 'Doctor', 'Analyst', 'Sampler', 'Preserver', 'Owner'], 0)
-        mp(permissions.ListFolderContents, ['Manager', 'LabManager', 'LabClerk', 'LabTechnician', 'Doctor', 'Owner', 'Sampler', 'Preserver'], 0)
-        mp(permissions.View, ['Manager', 'LabManager', 'LabClerk', 'LabTechnician', 'Doctor', 'Owner', 'Sampler', 'Preserver'], 0)
+        mp(CancelAndReinstate, ['Manager', 'LabManager', 'Doctor', ], 1)
+        mp('Access contents information', ['Manager', 'LabManager', 'Member', 'LabClerk', 'Doctor', 'Analyst', 'Sampler', 'Preserver', 'Owner'], 1)
+        mp(permissions.ListFolderContents, ['Manager', 'LabManager', 'LabClerk', 'LabTechnician', 'Doctor', 'Owner', 'Sampler', 'Preserver'], 1)
+        mp(permissions.View, ['Manager', 'LabManager', 'LabClerk', 'LabTechnician', 'Doctor', 'Owner', 'Sampler', 'Preserver'], 1)
         portal.patients.reindexObject()
 
         # /worksheets folder permissions

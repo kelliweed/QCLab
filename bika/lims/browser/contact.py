@@ -1,6 +1,7 @@
 from Acquisition import aq_parent, aq_inner, aq_base
 from Products.CMFCore.utils import getToolByName
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
+from Products.Archetypes.utils import DisplayList
 from bika.lims import PMF, bikaMessageFactory as _
 from bika.lims.browser import BrowserView
 import json

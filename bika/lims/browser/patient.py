@@ -343,15 +343,14 @@ class ajaxGetPatients(BrowserView):
 
         bpc = self.bika_patient_catalog
         proxies = bpc(portal_type='Patient')
-        for patient in proxies:
-            # Also search across additional identifiers
-            addidfound = False
-            addids = patient.getObject().getPatientIdentifiers()       
+        for patient in proxies:   
+            addidfound = False   
+            addids = patient.getObject().getPatientIdentifiers()
             for addid in addids:
                 if addid['Identifier'].lower().find(searchTerm) > -1:
                     addidfound = True
                     break
-                
+                          
             if patient.Title.lower().find(searchTerm) > -1 \
             or patient.getPatientID.lower().find(searchTerm) > -1 \
             or addidfound:
@@ -360,7 +359,8 @@ class ajaxGetPatients(BrowserView):
                          'PatientID': patient.getPatientID(),
                          'PrimaryReferrer': patient.getPrimaryReferrer().Title(),
                          'PatientUID': patient.UID(),
-                         'AdditionalIdentifiers':patient.getPatientIdentifiersStr()})
+                         'AdditionalIdentifiers':patient.getPatientIdentifiersStr(),
+                         'PatientBirthDate':self.ulocalized_time(patient.getBirthDate(), long_format=0)})
 
         rows = sorted(rows, cmp=lambda x,y: cmp(x.lower(), y.lower()), key=itemgetter(sidx and sidx or 'Title'))
         if sord == 'desc':

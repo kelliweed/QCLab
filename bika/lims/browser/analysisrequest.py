@@ -1548,8 +1548,8 @@ class ajaxAnalysisRequestSubmit():
             return json.dumps({'errors':errors})
 
         # Now some basic validation
-        required_fields = ['SampleType', 'SamplingDate', 'DoctorID', 'PatientID']
-        validated_fields = ('SampleID', 'SampleType', 'SamplePoint', 'PatientID', 'DoctorID')
+        required_fields = ['SampleType', 'SamplingDate', 'PatientID']
+        validated_fields = ('SampleID', 'SampleType', 'SamplePoint', 'PatientID')
 
         for column in columns:
             formkey = "ar.%s" % column
@@ -1762,14 +1762,7 @@ class ajaxAnalysisRequestSubmit():
 
             # resolve BatchID
             batch_id = values.get('BatchID', '')
-            if batch_id:
-                brains = bc(portal_type="Batch", Title=values['BatchID'])
-                if brains:
-                    batch_uid = brains[0].UID
-                else:
-                    batch_uid = None
-            else:
-                batch_uid = None
+            batch_uid = values.get('BatchUID', '')
 
             # create the AR
 

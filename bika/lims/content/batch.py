@@ -8,11 +8,15 @@ from bika.lims import bikaMessageFactory as _
 from bika.lims.browser.widgets import CaseAetiologicAgentsWidget
 from bika.lims.browser.widgets import CaseSymptomsWidget
 from bika.lims.browser.widgets import DateTimeWidget
+from bika.lims.browser.widgets import SplittedDateWidget
 from bika.lims.config import PROJECTNAME
 from bika.lims.content.bikaschema import BikaSchema
 from bika.lims.interfaces import IBatch
 from bika.lims.utils import isActive
 from zope.interface import implements
+from Products.ATContentTypes.utils import DT2dt
+from datetime import datetime, timedelta
+from calendar import monthrange
 import json
 import plone
 from bika.lims.browser.widgets.patientidentifierswidget import PatientIdentifiersWidget
@@ -46,7 +50,7 @@ schema = BikaSchema.copy() + Schema((
         ),
     ),
     StringField('DoctorID',
-        required=1,
+        required=0,
         widget=StringWidget(
             label=_("Doctor"),
         )
@@ -71,14 +75,24 @@ schema = BikaSchema.copy() + Schema((
           widget=DateTimeWidget(
               label=_('Onset Date'),
           ),
-      ),
+    ),
+    StringField('PatientBirthDate',
+          widget=StringWidget(
+              visible={'view': 'hidden', 'edit': 'hidden' },
+          ),
+    ),
+    RecordsField('PatientAgeAtCaseOnsetDate',
+        widget=SplittedDateWidget(
+            label=_('Patient Age at Case Onset Date'),
+        ),
+    ),
     BooleanField('OnsetDateEstimated',
         default=False,
         widget=BooleanWidget(
             label = _("Onset Date Estimated"),
         ),
-    ),  
-                                                      
+    ),
+
     TextField('ProvisionalDiagnosis',
         default_content_type='text/x-web-intelligent',
         allowable_content_types=('text/x-web-intelligent',),
@@ -167,6 +181,48 @@ class Batch(BaseContent):
     def getBatchID(self):
         return self.getId()
 
+    def getContacts(self, dl=True):
+        pc = getToolByName(self, 'portal_catalog')
+        bc = getToolByName(self, 'bika_catalog')
+        bsc = getToolByName(self, 'bika_setup_catalog')
+        pairs = []
+        objects = []
+        # Try get Client
+        c_uid = self.getClientUID()
+        if c_uid:
+            client = pc(UID=c_uid)[0].getObject()
+            for contact in client.objectValues('Contact'):
+                if isActive(contact):
+                    pairs.append((contact.UID(), contact.Title()))
+                    if not dl:
+                        objects.append(contact)
+            pairs.sort(lambda x, y:cmp(x[1].lower(), y[1].lower()))
+            return dl and DisplayList(pairs) or objects
+        # fallback to LabContacts
+        for contact in bsc(portal_type = 'LabContact',
+                           inactive_state = 'active',
+                           sort_on = 'sortable_title'):
+            pairs.append((contact.UID, contact.Title))
+            if not dl:
+                objects.append(contact.getObject())
+        return dl and DisplayList(pairs) or objects
+
+    def getCCs(self):
+        items = []
+        for contact in self.getContacts(dl=False):
+            item = {'uid': contact.UID(), 'title': contact.Title()}
+            ccs = []
+            if hasattr(contact, 'getCCContact'):
+                for cc in contact.getCCContact():
+                    if isActive(cc):
+                        ccs.append({'title': cc.Title(),
+                                    'uid': cc.UID(),})
+            item['ccs_json'] = json.dumps(ccs)
+            item['ccs'] = ccs
+            items.append(item)
+        items.sort(lambda x, y:cmp(x['title'].lower(), y['title'].lower()))
+        return items
+
     def getOnsetDate(self):
         """ Return OnsetDate, but calculate it first if it's not set
         """
@@ -198,17 +254,50 @@ class Batch(BaseContent):
         if found:
             return earliest
 
-    security.declarePublic('getCCContacts')
-    def getCCContacts(self):
-        """ Return JSON containing all contacts from selected Hospital.
-        """
-        contact_data = []
+    # This is copied from Client (Contact acquires it, but we do not)
+    security.declarePublic('getContactsDisplayList')
+    def getContactsDisplayList(self):
+        pc = getToolByName(self, 'portal_catalog')
+        pairs = []
+        for contact in pc(portal_type = 'Doctor', inactive_state = 'active'):
+            pairs.append((contact.UID, contact.Title))
+        patient = self.getPatient()
+        pr = patient and patient.getPrimaryReferrer() or None
+        if pr:
+            for contact in pc(portal_type = 'Contact', inactive_state = 'active', getClientUID = pr):
+                pairs.append((contact.UID, contact.Title))
+        for contact in pc(portal_type = 'LabContact', inactive_state = 'active'):
+            pairs.append((contact.UID, contact.Title))
+        # sort the list by the second item
+        pairs.sort(lambda x, y:cmp(x[1], y[1]))
+        return DisplayList(pairs)
+
+    # This is copied from Contact (In contact, it refers to the parent's
+    # getContactsDisplayList, while we define our own (our client's)
+    security.declarePublic('getCCContactsDisplayList')
+    def getCCContactsDisplayList(self):
+        contacts = []
         pc = getToolByName(self, 'portal_catalog')
         client = pc(portal_type='Client', UID=self.getClientUID())
         if client:
             return client[0].getObject().getCCContacts()
         else:
-            return []
+            patient = self.getPatient()
+            pr = patient and patient.getPrimaryReferrer() or None
+            return DisplayList(pr and pr.getCCContacts() or [])
+
+
+            ccs = []
+            if hasattr(contact, 'getCCContact'):
+                for cc in contact.getCCContact():
+                    if isActive(cc):
+                        ccs.append({'title': cc.Title(),
+                                    'uid': cc.UID(),})
+            item['ccs_json'] = json.dumps(ccs)
+            item['ccs'] = ccs
+            items.append(item)
+        items.sort(lambda x, y:cmp(x['title'].lower(), y['title'].lower()))
+        return items
 
     def BatchLabelVocabulary(self):
         """ return all batch labels """
@@ -289,13 +378,13 @@ class Batch(BaseContent):
         if patient:
             patient = patient[0].getObject()
             return patient.getChronicConditions()
-    
+
     def getPatientIdentifiers(self):
         bpc = getToolByName(self, 'bika_patient_catalog')
         patient = bpc(UID=self.getPatientUID())
         if patient:
             return patient[0].getObject().getPatientIdentifiers()
-    
+
     def getPatientIdentifiersStr(self):
         import pdb;pdb.set_trace()
         bpc = getToolByName(self, 'bika_patient_catalog')
@@ -303,7 +392,7 @@ class Batch(BaseContent):
         if patient:
             patient = patient[0].getObject()
             return patient.getPatientIdentifiersStr()
-    
+
     def setTreatmentHistory(self, value):
         bpc = getToolByName(self, 'bika_patient_catalog')
         patient = bpc(UID=self.getPatientUID())
@@ -345,5 +434,63 @@ class Batch(BaseContent):
         if patient:
             patient = patient[0].getObject()
             return patient.getTravelHistory()
+
+    def getPatientBirthDate(self):
+        bpc = getToolByName(self, 'bika_patient_catalog')
+        patient = bpc(UID=self.getPatientUID())
+        if patient:
+            patient = patient[0].getObject()
+            return patient.getBirthDate()
+
+    def getPatientAgeAtCaseOnsetDate(self):
+        bpc = getToolByName(self, 'bika_patient_catalog')
+        patient = bpc(UID=self.getPatientUID())
+        if patient and self.getOnsetDate():
+            patient = patient[0].getObject()
+            dob = DT2dt(patient.getBirthDate()).replace(tzinfo=None)
+            now = DT2dt(self.getOnsetDate()).replace(tzinfo=None)
+
+            currentday = now.day
+            currentmonth = now.month
+            currentyear = now.year
+            birthday = dob.day
+            birthmonth = dob.month
+            birthyear = dob.year
+            ageday = currentday-birthday
+            agemonth = 0
+            ageyear = 0
+            months31days = [1,3,5,7,8,10,12]
+
+            if (ageday < 0):
+                currentmonth-=1
+                if (currentmonth < 1):
+                    currentyear-=1
+                    currentmonth = currentmonth + 12;
+
+                dayspermonth = 30;
+                if currentmonth in months31days:
+                    dayspermonth = 31;
+                elif currentmonth == 2:
+                    dayspermonth = 28
+                    if(currentyear % 4 == 0
+                       and (currentyear % 100 > 0 or currentyear % 400==0)):
+                        dayspermonth += 1
+
+                ageday = ageday + dayspermonth
+
+            agemonth = currentmonth - birthmonth
+            if (agemonth < 0):
+                currentyear-=1
+                agemonth = agemonth + 12
+
+            ageyear = currentyear - birthyear
+
+            return {'year':ageyear,
+                    'month':agemonth,
+                    'day':ageday}
+        else:
+            return {'year':'',
+                    'month':'',
+                    'day':''}
 
 registerType(Batch, PROJECTNAME)
