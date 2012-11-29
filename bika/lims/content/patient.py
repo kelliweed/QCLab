@@ -15,7 +15,6 @@ from bika.lims.interfaces import IPatient
 from bika.lims.permissions import *
 from zope.interface import implements
 from bika.lims.browser.widgets import PatientIdentifiersWidget
-from bika.lims.browser.widgets.splitteddatewidget import SplittedDateWidget
 from Products.ATContentTypes.utils import DT2dt
 from datetime import datetime, timedelta
 from calendar import monthrange
@@ -24,9 +23,10 @@ schema = Person.schema.copy() + Schema((
     StringField('PatientID',
         searchable=1,
         required=0,
-        widget=StringWidget(
-            visible=0,
+        widget=ReadonlyStringWidget(
+            visible=1,
             label=_('Patient ID'),
+            css='readonly-emphasize',
         ),
     ),
     ReferenceField('PrimaryReferrer',
@@ -256,6 +256,7 @@ schema['MobilePhone'].schemata = 'Personal'
 #schema.moveField('PatientID', pos='top')
 schema.moveField('PrimaryReferrer', after='Surname')
 schema.moveField('Gender', after='PrimaryReferrer')
+schema.moveField('PatientID', before='title')
 
 class Patient(Person):
     implements(IPatient)
