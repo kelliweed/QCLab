@@ -560,6 +560,10 @@ class ajaxGetSymptoms(BrowserView):
     def __call__(self):
         plone.protect.CheckAuthenticator(self.request)
         searchTerm = self.request['searchTerm'].lower()
+        try:
+            r_only = int(self.request.get('r_only', 1))
+        except ValueError:
+            r_only = 1
         page = self.request['page']
         nr_rows = self.request['rows']
         sord = self.request['sord']
@@ -579,7 +583,14 @@ class ajaxGetSymptoms(BrowserView):
                          'Description': p.Description()})
 
         # lookup objects from ICD code list
-        for icd9 in icd9_codes['R']:
+        if r_only:
+            codes = icd9_codes['R']
+        else:
+            codes = []
+            for k,v in icd9_codes.items():
+                codes += v
+
+        for icd9 in codes:
             if icd9['code'].find(searchTerm) > -1 \
                or icd9['short'].lower().find(searchTerm) > -1 \
                or icd9['long'].lower().find(searchTerm) > -1:

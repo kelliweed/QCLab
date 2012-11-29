@@ -10,7 +10,7 @@ $(document).ready(function(){
             colModel: [{'columnName':'Code', 'width':'10', 'label':_('Code')},
                        {'columnName':'Title', 'width':'25', 'label':_('Title')},
                        {'columnName':'Description', 'width':'65', 'label':_('Description')}],
-            url: window.portal_url + "/getSymptoms?_authenticator=" + $('input[name="_authenticator"]').val(),
+            url: window.portal_url + "/getSymptoms?r_only=0&_authenticator=" + $('input[name="_authenticator"]').val(),
             showOn: true,
             select: function( event, ui ) {
                 event.preventDefault();
