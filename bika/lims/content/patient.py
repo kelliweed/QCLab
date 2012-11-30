@@ -134,12 +134,12 @@ schema=Person.schema.copy()+Schema((
     RecordsField('TreatmentHistory',
         type='treatmenthistory',
         subfields=('Treatment','Drug','Start','End','Remarks'),
-        required_subfields=('Treatment','Drug','Start','End'),
-        subfield_labels={'Treatment':_('Treatment'),'Drug': _('Drug'),'Start':_('Start'),
+        required_subfields=('Drug','Start','End'),
+        subfield_labels={'Drug': _('Drug'),'Start':_('Start'),
                          'End': _('End'),'Remarks': _('Remarks')},
-        subfield_sizes={'Treatment':20,'Drug':20,'Start':10,'End':10,'Remarks':25},
+        subfield_sizes={'Drug':40,'Start':10,'End':10,'Remarks':25},
         widget=RecordsWidget(
-            label='Treatment History',
+            label='Drug History',
             description=_("A list of patient treatments and drugs administered."),
             visible=False,# uses view from browser/patient.py
         ),
