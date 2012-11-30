@@ -178,6 +178,23 @@ $(document).ready(function(){
 	});
 
 	function lookups(){
+		// Patient identifiers > Identifier Types popup
+		$(".template-patientidentifiers #IdentifierType").combogrid({
+			colModel: [{'columnName':'UID', 'hidden':true},
+					   {'columnName':'Title', 'width':'25', 'label':_('Title')},
+					   {'columnName':'Description', 'width':'65', 'label':_('Description')}],
+			url: window.portal_url + "/getIdentifierTypes?_authenticator=" + $('input[name="_authenticator"]').val(),
+			showOn: true,
+			select: function( event, ui ) {
+				event.preventDefault();
+				$(this).val(ui.item.Title);
+				$(this).parents('tr').find('input[id=IdentifierType]').val(ui.item.Title);
+				$(this).parents('tr').find('input[id=IdentifierTypeUID]').val(ui.item.UID);
+				$(this).parents('tr').find('input[id=IdentifierTypeDescription]').val(ui.item.Description);
+				$(this).change();
+				return false;
+			}
+		});
 		// Treatment History Treatment search popup
 		$(".template-treatmenthistory #Treatment").combogrid({
 			colModel: [{'columnName':'UID'  	  , 'hidden': true},
