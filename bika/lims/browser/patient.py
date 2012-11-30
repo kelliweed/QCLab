@@ -148,8 +148,8 @@ class AllergiesView(BrowserView):
                         obj.edit(title = P)
                         obj.unmarkCreationFlag()
                         renameAfterCreation(obj)
-                    
-                # Create new Drug entry if none exists                
+
+                # Create new Drug entry if none exists
                 if (len(D.strip())>0):
                     Dlist = bsc(portal_type='Drug', title=D)
                     if not Dlist:
@@ -159,8 +159,8 @@ class AllergiesView(BrowserView):
                         obj.edit(title = D)
                         obj.unmarkCreationFlag()
                         renameAfterCreation(obj)
-                    
-                new.append({'DrugProhibition':P, 'Drug':D})                
+
+                new.append({'DrugProhibition':P, 'Drug':D})
             self.context.setAllergies(new)
             self.context.plone_utils.addPortalMessage(PMF("Changes saved"))
         return self.template()
@@ -214,13 +214,13 @@ class ImmunizationHistoryView(BrowserView):
                 # Create new VaccinationCenter entry if none exists
                 if (len(V.strip())>0):
                     Vlist = bsc(portal_type='VaccinationCenter', title=V)
-                    if not Vlist:
-                        folder = self.context.bika_setup.bika_vaccinationcenters
-                        _id = folder.invokeFactory('VaccinationCenter', id='tmp')
-                        obj = folder[_id]
-                        obj.edit(Name = V)
-                        obj.unmarkCreationFlag()
-                        renameAfterCreation(obj)
+                    # if not Vlist:
+                    #     folder = self.context.bika_setup.bika_vaccinationcenters
+                    #     _id = folder.invokeFactory('VaccinationCenter', id='tmp')
+                    #     obj = folder[_id]
+                    #     obj.edit(Name = V)
+                    #     obj.unmarkCreationFlag()
+                    #     renameAfterCreation(obj)
 
                 new.append({'EPINumber':E, 'Immunization':I, 'VaccinationCenter':V, 'Date':D})
 
