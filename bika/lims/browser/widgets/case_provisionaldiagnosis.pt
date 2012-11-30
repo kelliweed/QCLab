@@ -79,10 +79,10 @@
 							   i18n:attributes="value"
 							   value="Add" />
 							<tal:hasprovisionaldiagnosis tal:condition="python:hasattr(view, 'hasProvisionalDiagnosis') and view.hasProvisionalDiagnosis()">
-								<input class="workflow_action_button action_button" type="submit"
+								<input class="workflow_action_button action_button allowMultiSubmit" type="submit"
 									name="CPD_delete"
 									i18n:attributes="value" value="Delete selected" />
-								<input class="workflow_action_button action_button" type="submit"
+								<input class="workflow_action_button action_button allowMultiSubmit" type="submit"
 									name="CPD_clear"
 									i18n:attributes="value" value="Delete all" />
 							</tal:hasprovisionaldiagnosis>

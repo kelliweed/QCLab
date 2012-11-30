@@ -27,7 +27,7 @@
       permission="zope.Public"
       layer="bika.lims.interfaces.IBikaLIMS"
     />
-    
+
     <browser:page
       for="*"
       name="getAetiologicAgents"
@@ -35,11 +35,36 @@
       permission="zope.Public"
       layer="bika.lims.interfaces.IBikaLIMS"
     />
-    
+
     <browser:page
       for="*"
       name="getAetiologicAgentSubtypes"
       class="bika.lims.browser.batch.ajaxGetAetiologicAgentSubtypes"
+      permission="zope.Public"
+      layer="bika.lims.interfaces.IBikaLIMS"
+    />
+
+
+    <browser:page
+      for="bika.lims.interfaces.IBatch"
+      name="ajax_rm_provisional"
+      class="bika.lims.browser.batch.ajax_rm_provisional"
+      permission="zope.Public"
+      layer="bika.lims.interfaces.IBikaLIMS"
+    />
+
+    <browser:page
+      for="bika.lims.interfaces.IBatch"
+      name="ajax_rm_aetiologic"
+      class="bika.lims.browser.batch.ajax_rm_aetiologic"
+      permission="zope.Public"
+      layer="bika.lims.interfaces.IBikaLIMS"
+    />
+
+    <browser:page
+      for="bika.lims.interfaces.IBatch"
+      name="ajax_rm_symptoms"
+      class="bika.lims.browser.batch.ajax_rm_symptoms"
       permission="zope.Public"
       layer="bika.lims.interfaces.IBikaLIMS"
     />

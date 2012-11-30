@@ -308,6 +308,7 @@ class BikaGenerator:
         mp(permissions.AddPortalContent, ['Manager', 'LabManager', 'LabClerk', 'Analyst'], 0)
         mp(permissions.View, ['Manager', 'LabManager', 'LabClerk', 'Analyst'], 0)
         mp('Access contents information', ['Manager', 'LabManager', 'LabClerk', 'Analyst', 'Authenticated'], 0)
+        mp(permissions.ModifyPortalContent, ['Manager', 'LabManager', 'LabClerk', 'Analyst', 'Owner'], 1)
         mp(permissions.DeleteObjects, ['Manager', 'LabManager', 'Owner'], 0)
         portal.batches.reindexObject()
 

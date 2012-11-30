@@ -184,3 +184,78 @@ class ajaxGetAetiologicAgentSubtypes(BrowserView):
                'rows':rows[ (int(page) - 1) * int(nr_rows) : int(page) * int(nr_rows) ]}
 
         return json.dumps(ret)
+
+        plone.protect.CheckAuthenticator(self.request)
+        nrs = []
+        for nr in json.loads(self.request.get('nrs', "[]")):
+            try:
+                nrs.append(int(nr))
+            except ValueError:
+                continue
+        if not nrs:
+            return
+        value = self.context.getProvisionalDiagnosis()
+        new = []
+        for i,v in enumerate(value):
+            if i in nrs:
+                continue
+            new.append(v)
+        self.context.setProvisionalDiagnosis(new)
+
+class ajax_rm_provisional(BrowserView):
+    def __call__(self):
+        plone.protect.CheckAuthenticator(self.request)
+        nrs = []
+        for nr in json.loads(self.request.get('nrs', "[]")):
+            try:
+                nrs.append(int(nr))
+            except ValueError:
+                continue
+        if not nrs:
+            return
+        value = self.context.getProvisionalDiagnosis()
+        new = []
+        for i,v in enumerate(value):
+            if i in nrs:
+                continue
+            new.append(v)
+        self.context.setProvisionalDiagnosis(new)
+
+class ajax_rm_aetiologic(BrowserView):
+    def __call__(self):
+        plone.protect.CheckAuthenticator(self.request)
+        nrs = []
+        for nr in json.loads(self.request.get('nrs', "[]")):
+            try:
+                nrs.append(int(nr))
+            except ValueError:
+                continue
+        if not nrs:
+            return
+        value = self.context.getAetiologicAgents()
+        new = []
+        for i,v in enumerate(value):
+            if i in nrs:
+                continue
+            new.append(v)
+        self.context.setAetiologicAgents(new)
+
+class ajax_rm_symptoms(BrowserView):
+    def __call__(self):
+        plone.protect.CheckAuthenticator(self.request)
+        nrs = []
+        for nr in json.loads(self.request.get('nrs', "[]")):
+            try:
+                nrs.append(int(nr))
+            except ValueError:
+                continue
+        if not nrs:
+            return
+        value = self.context.getSymptoms()
+        new = []
+        for i,v in enumerate(value):
+            if i in nrs:
+                continue
+            new.append(v)
+        self.context.setSymptoms(new)
+
