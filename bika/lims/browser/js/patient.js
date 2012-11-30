@@ -197,49 +197,49 @@ $(document).ready(function(){
 		});
 
 		// Treatment History Drug search popup
-		$(".template-treatmenthistory #Drug").combogrid({
-			colModel: [{'columnName':'UID'		, 'hidden':true},
-					   {'columnName':'Title'	, 'label':_('Title')},
-					   {'columnName':'Description' , 'label':_('Description')}],
-			url: window.location.href.replace("/treatmenthistory","") + "/getDrugs?_authenticator=" + $('input[name="_authenticator"]').val(),
-			showOn: true,
-			select: function( event, ui ) {
-				event.preventDefault();
-				$(this).val(ui.item.Title);
-				$(this).change();
-				return false;
-			}
-		});
+		// $(".template-treatmenthistory #Drug").combogrid({
+		// 	colModel: [{'columnName':'UID'		, 'hidden':true},
+		// 			   {'columnName':'Title'	, 'label':_('Title')},
+		// 			   {'columnName':'Description' , 'label':_('Description')}],
+		// 	url: window.location.href.replace("/treatmenthistory","") + "/getDrugs?_authenticator=" + $('input[name="_authenticator"]').val(),
+		// 	showOn: true,
+		// 	select: function( event, ui ) {
+		// 		event.preventDefault();
+		// 		$(this).val(ui.item.Title);
+		// 		$(this).change();
+		// 		return false;
+		// 	}
+		// });
 
 		// Allergies > Prohibited Drug Explanations search popup
-		$(".template-allergies #DrugProhibition").combogrid({
-			colModel: [{'columnName':'UID'		, 'hidden':true},
-					   {'columnName':'Title'	, 'label':_('Title')},
-					   {'columnName':'Description' , 'label':_('Description')}],
-			url: window.location.href.replace("/allergies","") + "/getDrugProhibitions?_authenticator=" + $('input[name="_authenticator"]').val(),
-			showOn: true,
-			select: function( event, ui ) {
-				event.preventDefault();
-				$(this).val(ui.item.Title);
-				$(this).change();
-				return false;
-			}
-		});
+		// $(".template-allergies #DrugProhibition").combogrid({
+		// 	colModel: [{'columnName':'UID'		, 'hidden':true},
+		// 			   {'columnName':'Title'	, 'label':_('Title')},
+		// 			   {'columnName':'Description' , 'label':_('Description')}],
+		// 	url: window.location.href.replace("/allergies","") + "/getDrugProhibitions?_authenticator=" + $('input[name="_authenticator"]').val(),
+		// 	showOn: true,
+		// 	select: function( event, ui ) {
+		// 		event.preventDefault();
+		// 		$(this).val(ui.item.Title);
+		// 		$(this).change();
+		// 		return false;
+		// 	}
+		// });
 
 		// Allergies > Drug search popup
-		$(".template-allergies #Drug").combogrid({
-			colModel: [{'columnName':'UID'		, 'hidden':true},
-					   {'columnName':'Title'	, 'label':_('Title')},
-					   {'columnName':'Description' , 'label':_('Description')}],
-			url: window.location.href.replace("/allergies","") + "/getDrugs?_authenticator=" + $('input[name="_authenticator"]').val(),
-			showOn: true,
-			select: function( event, ui ) {
-				event.preventDefault();
-				$(this).val(ui.item.Title);
-				$(this).change();
-				return false;
-			}
-		});
+		// $(".template-allergies #Drug").combogrid({
+		// 	colModel: [{'columnName':'UID'		, 'hidden':true},
+		// 			   {'columnName':'Title'	, 'label':_('Title')},
+		// 			   {'columnName':'Description' , 'label':_('Description')}],
+		// 	url: window.location.href.replace("/allergies","") + "/getDrugs?_authenticator=" + $('input[name="_authenticator"]').val(),
+		// 	showOn: true,
+		// 	select: function( event, ui ) {
+		// 		event.preventDefault();
+		// 		$(this).val(ui.item.Title);
+		// 		$(this).change();
+		// 		return false;
+		// 	}
+		// });
 
 		// Immunization History > Immunization search popup
 		$(".template-immunizationhistory #Immunization").combogrid({
@@ -256,18 +256,18 @@ $(document).ready(function(){
 			}
 		});
 
-		// Immunization History > VaccionationCenter search popup
-		$(".template-immunizationhistory #VaccinationCenter").combogrid({
-			colModel: [{'columnName':'Title', 'width':'50', 'label':_('Title')}],
-			url: window.location.href.replace("/immunizationhistory","") + "/getVaccinationCenters?_authenticator=" + $('input[name="_authenticator"]').val(),
-			showOn: true,
-			select: function( event, ui ) {
-				event.preventDefault();
-				$(this).val(ui.item.Title);
-				$(this).change();
-				return false;
-			}
-		});
+		// // Immunization History > VaccionationCenter search popup
+		// $(".template-immunizationhistory #VaccinationCenter").combogrid({
+		// 	colModel: [{'columnName':'Title', 'width':'50', 'label':_('Title')}],
+		// 	url: window.location.href.replace("/immunizationhistory","") + "/getVaccinationCenters?_authenticator=" + $('input[name="_authenticator"]').val(),
+		// 	showOn: true,
+		// 	select: function( event, ui ) {
+		// 		event.preventDefault();
+		// 		$(this).val(ui.item.Title);
+		// 		$(this).change();
+		// 		return false;
+		// 	}
+		// });
 
 		// Chronic Conditions -> combined FULL ICD9/bika_symptoms lookup
 		$(".template-chronicconditions #Title").combogrid({
