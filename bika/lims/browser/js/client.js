@@ -31,34 +31,34 @@ $(document).ready(function(){
 			});
     });
 
-     if($(".portaltype-client").length == 0 &&
-       window.location.href.search('portal_factory/Client') == -1){
-        $("input[id=ClientID]").after('<a style="border-bottom:none !important;margin-left:.5;"' +
-                    ' class="add_client"' +
-                    ' href="'+window.portal_url+'/clients/portal_factory/Client/new/edit"' +
-                    ' rel="#overlay">' +
-                    ' <img style="padding-bottom:1px;" src="'+window.portal_url+'/++resource++bika.lims.images/add.png"/>' +
-                ' </a>');
-    }
+    //  if($(".portaltype-client").length == 0 &&
+    //    window.location.href.search('portal_factory/Client') == -1){
+    //     $("input[id=ClientID]").after('<a style="border-bottom:none !important;margin-left:.5;"' +
+    //                 ' class="add_client"' +
+    //                 ' href="'+window.portal_url+'/clients/portal_factory/Client/new/edit"' +
+    //                 ' rel="#overlay">' +
+    //                 ' <img style="padding-bottom:1px;" src="'+window.portal_url+'/++resource++bika.lims.images/add.png"/>' +
+    //             ' </a>');
+    // }
 
-    $('a.add_client').prepOverlay(
-        {
-            subtype: 'ajax',
-            filter: 'head>*,#content>*:not(div.configlet),dl.portalMessage.error,dl.portalMessage.info',
-            formselector: '#client-base-edit',
-            closeselector: '[name="form.button.cancel"]',
-            width:'70%',
-            noform:'close',
-            config: {
-                onLoad: function() {
-                    // manually remove remarks
-                    this.getOverlay().find("#archetypes-fieldname-Remarks").remove();
-                },
-                onClose: function(){
-                }
-            }
-        }
-    );
+    // $('a.add_client').prepOverlay(
+    //     {
+    //         subtype: 'ajax',
+    //         filter: 'head>*,#content>*:not(div.configlet),dl.portalMessage.error,dl.portalMessage.info',
+    //         formselector: '#client-base-edit',
+    //         closeselector: '[name="form.button.cancel"]',
+    //         width:'70%',
+    //         noform:'close',
+    //         config: {
+    //             onLoad: function() {
+    //                 // manually remove remarks
+    //                 this.getOverlay().find("#archetypes-fieldname-Remarks").remove();
+    //             },
+    //             onClose: function(){
+    //             }
+    //         }
+    //     }
+    // );
 
     $("input[id*=ClientID]").combogrid({
         colModel: [{'columnName':'ClientUID','hidden':true},
