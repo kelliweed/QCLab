@@ -267,13 +267,13 @@ $(document).ready(function(){
 			}
 		});
 
-		// Chronic Conditions -> combined ICD9(R)/bika_symptoms lookup
+		// Chronic Conditions -> combined FULL ICD9/bika_symptoms lookup
 		$(".template-chronicconditions #Title").combogrid({
 			colModel: [{'columnName':'Code', 'width':'10', 'label':_('Code')},
-					   {'columnName':'Title', 'width':'25', 'label':_('Title')},
-					   {'columnName':'Description', 'width':'65', 'label':_('Description')}],
-			url: window.portal_url + "/getSymptoms?_authenticator=" + $('input[name="_authenticator"]').val(),
-			showOn: true,
+			           {'columnName':'Title', 'width':'25', 'label':_('Title')},
+			           {'columnName':'Description', 'width':'65', 'label':_('Description')}],
+			url: window.portal_url + "/getDiseases?_authenticator=" + $('input[name="_authenticator"]').val(),
+            showOn: true,
 			select: function( event, ui ) {
 				event.preventDefault();
 				$(this).val(ui.item.Title);
@@ -410,9 +410,8 @@ $(document).ready(function(){
 		D = $("#Description").val();
 		O = $("#Onset").val();
 		R = $("#Remarks").val();
-		if (T == '' || C == ''){
-			alert(_("Non valid symptom selected"));
-			return false;
+		if (T == ''){
+	        return false;
 		}
 		$("#Onset").attr('class', 'datepicker_nofuture');
 

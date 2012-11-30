@@ -18,11 +18,11 @@
 							<th>&nbsp;</th>
                             <th class="sortable column"
                                 id="foldercontents-Code-column">
-                                <span i18n:translate="">Code</span>
+                                <span i18n:translate="">ICD Code</span>
                             </th>
                             <th class="sortable column"
                                 id="foldercontents-Title-column">
-                                <span i18n:translate="">Symptom</span>
+                                <span i18n:translate="">Disease</span>
                                 <span class="fieldRequired">&nbsp;</span>
                             </th>
                             <th class="sortable column"
@@ -97,7 +97,7 @@
 			</div>
 		</div>
 		<input class="action_button" type="submit"
-			i18n:attributes="value" value="Save chronic conditions" />
+			i18n:attributes="value" value="Save past medical history" />
 
 		<tal:hasremarks tal:condition="python:hasattr(context, 'Remarks')">
 			<tal:remarks
