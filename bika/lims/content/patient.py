@@ -6,9 +6,9 @@ from Products.Archetypes import atapi
 from Products.Archetypes.public import *
 from Products.CMFCore import permissions
 from Products.CMFCore.utils import getToolByName
-from bika.lims import PMF, bikaMessageFactory as _
-from bika.lims.browser.widgets import DateTimeWidget, RecordsWidget, SplittedDateWidget, ReadonlyStringWidget
-from bika.lims.config import ManageClients, PUBLICATION_PREFS, PROJECTNAME, \
+from bika.lims import PMF,bikaMessageFactory as _
+from bika.lims.browser.widgets import DateTimeWidget,RecordsWidget,SplittedDateWidget,ReadonlyStringWidget
+from bika.lims.config import ManageClients,PUBLICATION_PREFS,PROJECTNAME,\
     GENDERS
 from bika.lims.content.person import Person
 from bika.lims.interfaces import IPatient
@@ -16,15 +16,15 @@ from bika.lims.permissions import *
 from zope.interface import implements
 from bika.lims.browser.widgets import PatientIdentifiersWidget
 from Products.ATContentTypes.utils import DT2dt
-from datetime import datetime, timedelta
+from datetime import datetime,timedelta
 from calendar import monthrange
 
-schema = Person.schema.copy() + Schema((
+schema=Person.schema.copy()+Schema((
     StringField('PatientID',
         searchable=1,
         required=0,
         widget=ReadonlyStringWidget(
-            visible={'view': 'visible', 'edit': 'hidden' },
+            visible={'view': 'visible','edit': 'hidden' },
             label=_('Patient ID'),
             css='readonly-emphasize',
         ),
@@ -81,9 +81,9 @@ schema = Person.schema.copy() + Schema((
 
     RecordsField('PatientIdentifiers',
         type='patientidentifiers',
-        subfields=('IdentifierTypeUID', 'IdentifierType', 'Identifier'),
-        subfield_labels={'IdentifierType':_('Identifier Type'), 'Identifier': _('Identifier')},
-        subfield_sizes={'Identifier': 15, 'Identifier Type': 25},
+        subfields=('IdentifierTypeUID','IdentifierType','Identifier'),
+        subfield_labels={'IdentifierType':_('Identifier Type'),'Identifier': _('Identifier')},
+        subfield_sizes={'Identifier': 15,'Identifier Type': 25},
         widget=PatientIdentifiersWidget(
             label=_('Additional identifiers'),
             description=_('Patient additional identifiers')
@@ -133,50 +133,50 @@ schema = Person.schema.copy() + Schema((
     ),
     RecordsField('TreatmentHistory',
         type='treatmenthistory',
-        subfields=('Treatment', 'Drug', 'Start', 'End', 'Remarks'),
-        required_subfields=('Treatment', 'Drug', 'Start', 'End'),
-        subfield_labels={'Treatment':_('Treatment'), 'Drug': _('Drug'), 'Start':_('Start'),
-                         'End': _('End'), 'Remarks': _('Remarks')},
-        subfield_sizes={'Treatment':20, 'Drug':20, 'Start':10, 'End':10, 'Remarks':25},
+        subfields=('Treatment','Drug','Start','End','Remarks'),
+        required_subfields=('Treatment','Drug','Start','End'),
+        subfield_labels={'Treatment':_('Treatment'),'Drug': _('Drug'),'Start':_('Start'),
+                         'End': _('End'),'Remarks': _('Remarks')},
+        subfield_sizes={'Treatment':20,'Drug':20,'Start':10,'End':10,'Remarks':25},
         widget=RecordsWidget(
             label='Treatment History',
             description=_("A list of patient treatments and drugs administered."),
-            visible = False, # uses view from browser/patient.py
+            visible=False,# uses view from browser/patient.py
         ),
     ),
     RecordsField('Allergies',
         type='allergies',
-        subfields=('DrugProhibition', 'Drug', 'Remarks'),
-        required_subfields=('DrugProhibition', 'Drug'),
-        subfield_labels={'DrugProhibition':_('Drug Prohibition Explanation'), 'Drug': _('Drug'),
+        subfields=('DrugProhibition','Drug','Remarks'),
+        required_subfields=('DrugProhibition','Drug'),
+        subfield_labels={'DrugProhibition':_('Drug Prohibition Explanation'),'Drug': _('Drug'),
                          'Remarks': _('Remarks')},
-        subfield_sizes={'DrugProhibition':20, 'Drug':20, 'Remarks':25},
+        subfield_sizes={'DrugProhibition':20,'Drug':20,'Remarks':25},
         widget=RecordsWidget(
             label='Allergies',
             description=_("Known Patient allergies to keep information that can aid drug reaction interpretation"),
-            visible = False, # uses view from browser/patient.py
+            visible=False,# uses view from browser/patient.py
         ),
     ),
     RecordsField('ImmunizationHistory',
         type='immunizationhistory',
-        subfields=('EPINumber', 'Immunization', 'VaccinationCenter', 'Date', 'Remarks'),
-        required_subfields=('EPINumber', 'Immunization', 'Date'),
-        subfield_labels={'EPINumber':_('EPI Number'), 'Immunization': _('Immunization'),
-                         'VaccinationCenter':_('Vaccination Center'), 'Date': _('Date'),
+        subfields=('EPINumber','Immunization','VaccinationCenter','Date','Remarks'),
+        required_subfields=('EPINumber','Immunization','Date'),
+        subfield_labels={'EPINumber':_('EPI Number'),'Immunization': _('Immunization'),
+                         'VaccinationCenter':_('Vaccination Center'),'Date': _('Date'),
                          'Remarks': _('Remarks')},
-        subfield_sizes={'EPINumber':12, 'Immunization':20, 'VaccinationCenter':10, 'Date':10, 'Remarks':25},
+        subfield_sizes={'EPINumber':12,'Immunization':20,'VaccinationCenter':10,'Date':10,'Remarks':25},
         widget=RecordsWidget(
             label='Immunization History',
             description=_("A list of immunizations administered to the patient."),
-            visible = False, # uses view from browser/patient.py
+            visible=False,# uses view from browser/patient.py
         ),
     ),
     RecordsField('TravelHistory',
         type='travelhistory',
-        subfields=('TripStartDate', 'TripEndDate', 'Country', 'Location', 'Remarks'),
+        subfields=('TripStartDate','TripEndDate','Country','Location','Remarks'),
         required_subfields=('Country'),
-        subfield_labels={'TripStartDate':_('Trip Start Date', 'Start date'),
-                         'TripEndDate':_('Trip End Date', 'End date'),
+        subfield_labels={'TripStartDate':_('Trip Start Date','Start date'),
+                         'TripEndDate':_('Trip End Date','End date'),
                          'Country':_('Country'),
                          'Location':_('Location'),
                          'Remarks':_('Remarks')},
@@ -188,54 +188,54 @@ schema = Person.schema.copy() + Schema((
         widget=RecordsWidget(
                 label='Travel History',
                 description=_("A list of places visited by the patient."),
-                visible = False,
+                visible=False,
         ),
     ),
 
     RecordsField('ChronicConditions',
         type='chronicconditions',
-        subfields=('Code', 'Title', 'Description', 'Onset', 'Remarks'),
+        subfields=('Code','Title','Description','Onset','Remarks'),
         required_subfields=('title'),
-        subfield_sizes={'Code':7, 'Title':15, 'Description':25, 'Onset':10, 'Remarks':25},
+        subfield_sizes={'Code':7,'Title':15,'Description':25,'Onset':10,'Remarks':25},
         widget=RecordsWidget(
-            label='Chronic Conditions',
-            description=_("A list of this patient's chronic conditions."),
-            visible = False, # uses view from browser/patient.py
+            label='Past Medical History',
+            description=_("Patient's past medical history."),
+            visible=False,# uses view from browser/patient.py
         ),
     ),
-    StringField('BirthPlace', schemata='Personal',
+    StringField('BirthPlace',schemata='Personal',
         widget=StringWidget(
             label=_('Birth place'),
         ),
     ),
-    StringField('Ethnicity', schemata='Personal',
+    StringField('Ethnicity',schemata='Personal',
         index='FieldIndex',
         widget=StringWidget(
             label=_('Ethnicity'),
             description=_("Ethnicity eg. Asian, African, etc."),
         ),
     ),
-    StringField('Citizenship', schemata='Personal',
+    StringField('Citizenship',schemata='Personal',
         widget=StringWidget(
             label=_('Citizenship'),
         ),
     ),
-    StringField('MothersName', schemata='Personal',
+    StringField('MothersName',schemata='Personal',
         widget=StringWidget(
             label=_('Mothers name'),
         ),
     ),
-    StringField('CivilStatus', schemata='Personal',
+    StringField('CivilStatus',schemata='Personal',
         widget=StringWidget(
             label=_('Civil status'),
         ),
     ),
-    ImageField('Photo', schemata='Identification',
+    ImageField('Photo',schemata='Identification',
         widget=ImageWidget(
             label=_('Photo'),
         ),
     ),
-    ImageField('Feature', schemata='Identification',
+    ImageField('Feature',schemata='Identification',
         multiValue=1,
         widget=ImageWidget(
             label=_('Feature'),
@@ -243,29 +243,29 @@ schema = Person.schema.copy() + Schema((
     ),
 ))
 
-schema['JobTitle'].widget.visible = False
-schema['Department'].widget.visible = False
-schema['BusinessPhone'].widget.visible = False
-schema['BusinessFax'].widget.visible = False
+schema['JobTitle'].widget.visible=False
+schema['Department'].widget.visible=False
+schema['BusinessPhone'].widget.visible=False
+schema['BusinessFax'].widget.visible=False
 # Don't make title required - it will be computed from the Person's Fullname
-schema['title'].required = 0
-schema['title'].widget.visible = False
-schema['EmailAddress'].schemata = 'Personal'
-schema['HomePhone'].schemata = 'Personal'
-schema['MobilePhone'].schemata = 'Personal'
+schema['title'].required=0
+schema['title'].widget.visible=False
+schema['EmailAddress'].schemata='Personal'
+schema['HomePhone'].schemata='Personal'
+schema['MobilePhone'].schemata='Personal'
 #schema.moveField('PatientID', pos='top')
-schema.moveField('PrimaryReferrer', after='Surname')
-schema.moveField('Gender', after='PrimaryReferrer')
-schema.moveField('PatientID', before='title')
+schema.moveField('PrimaryReferrer',after='Surname')
+schema.moveField('Gender',after='PrimaryReferrer')
+schema.moveField('PatientID',before='title')
 
 class Patient(Person):
     implements(IPatient)
-    security = ClassSecurityInfo()
-    displayContentsTab = False
-    schema = schema
+    security=ClassSecurityInfo()
+    displayContentsTab=False
+    schema=schema
 
-    _at_rename_after_creation = True
-    def _renameAfterCreation(self, check_auto_id=False):
+    _at_rename_after_creation=True
+    def _renameAfterCreation(self,check_auto_id=False):
         from bika.lims.idserver import renameAfterCreation
         renameAfterCreation(self)
 
@@ -280,73 +280,73 @@ class Patient(Person):
     security.declarePublic('getSamples')
     def getSamples(self):
         """ get all samples taken from this Patient """
-        bc = getToolByName(self, 'bika_catalog')
-        return [p.getObject() for p in bc(portal_type='Sample', getPatientUID=self.UID())]
+        bc=getToolByName(self,'bika_catalog')
+        return [p.getObject() for p in bc(portal_type='Sample',getPatientUID=self.UID())]
 
     security.declarePublic('getARs')
-    def getARs(self, analysis_state):
-        bc = getToolByName(self, 'bika_catalog')
-        return [p.getObject() for p in bc(portal_type='AnalysisRequest', getPatientUID=self.UID())]
+    def getARs(self,analysis_state):
+        bc=getToolByName(self,'bika_catalog')
+        return [p.getObject() for p in bc(portal_type='AnalysisRequest',getPatientUID=self.UID())]
 
     def get_clients(self):
         ## Only show clients to which we have Manage AR rights.
-        mtool = getToolByName(self, 'portal_membership')
-        clientfolder = self.clients
-        clients = []
+        mtool=getToolByName(self,'portal_membership')
+        clientfolder=self.clients
+        clients=[]
         for client in clientfolder.objectValues("Client"):
-            if not mtool.checkPermission(ManageAnalysisRequests, client):
+            if not mtool.checkPermission(ManageAnalysisRequests,client):
                 continue
-            clients.append([client.UID(), client.Title()])
+            clients.append([client.UID(),client.Title()])
         return DisplayList(clients)
 
     def getPatientIdentifiersStr(self):
-        ids = self.getPatientIdentifiers()
-        idsstr = ''
+        ids=self.getPatientIdentifiers()
+        idsstr=''
         for id in ids:
-            idsstr += idsstr == '' and id['Identifier'] or (', ' + id['Identifier'])
+            idsstr+=idsstr=='' and id['Identifier'] or (', '+id['Identifier'])
         return idsstr
         #return self.getSendersPatientID()+" "+self.getSendersCaseID()+" "+self.getSendersSpecimenID()
 
     def getAgeSplitted(self):
 
         if (self.getBirthDate()):
-            dob = DT2dt(self.getBirthDate()).replace(tzinfo=None)
-            now = datetime.today()
+            dob=DT2dt(self.getBirthDate()).replace(tzinfo=None)
+            now=datetime.today()
 
-            currentday = now.day
-            currentmonth = now.month
-            currentyear = now.year
-            birthday = dob.day
-            birthmonth = dob.month
-            birthyear = dob.year
-            ageday = currentday-birthday
-            agemonth = 0
-            ageyear = 0
-            months31days = [1,3,5,7,8,10,12]
+            currentday=now.day
+            currentmonth=now.month
+            currentyear=now.year
+            birthday=dob.day
+            birthmonth=dob.month
+            birthyear=dob.year
+            ageday=currentday-birthday
+            agemonth=0
+            ageyear=0
+            months31days=[1,3,5,7,8,10,12]
 
-            if (ageday < 0):
+            if (ageday<0):
                 currentmonth-=1
-                if (currentmonth < 1):
+                if (currentmonth<1):
                     currentyear-=1
-                    currentmonth = currentmonth + 12;
+                    currentmonth=currentmonth+12;
 
-                dayspermonth = 30;
+                dayspermonth=30;
                 if currentmonth in months31days:
-                    dayspermonth = 31;
-                elif currentmonth == 2:
-                    dayspermonth = 28
-                    if(currentyear % 4 == 0
-                       and (currentyear % 100 > 0 or currentyear % 400==0)):
-                        dayspermonth += 1
+                    dayspermonth=31;
+                elif currentmonth==2:
+                    dayspermonth=28
+                    if(currentyear%4==0
+                       and (currentyear%100>0 or currentyear%400==0)):
+                        dayspermonth+=1
 
-                ageday = ageday + dayspermonth
+                ageday=ageday+dayspermonth
 
-            agemonth = currentmonth - birthmonth
-            if (agemonth < 0):
+            agemonth=currentmonth-birthmonth
+            if (agemonth<0):
                 currentyear-=1
-                agemonth = agemonth + 12
+                agemonth=agemonth+12
 
-            ageyear = currentyear - birthyear
+            ageyear=currentyear-birthyear
 
             return {'year':ageyear,
                     'month':agemonth,
@@ -360,11 +360,11 @@ class Patient(Person):
         return self.getAgeSplitted()['year']
 
     def getAgeSplittedStr(self):
-        splitted = self.getAgeSplitted()
-        arr = []
-        arr.append(splitted['year'] and str(splitted['year']) + 'y' or '')
-        arr.append(splitted['month'] and str(splitted['month']) + 'm' or '')
-        arr.append(splitted['day'] and str(splitted['day']) + 'd' or '')
+        splitted=self.getAgeSplitted()
+        arr=[]
+        arr.append(splitted['year'] and str(splitted['year'])+'y' or '')
+        arr.append(splitted['month'] and str(splitted['month'])+'m' or '')
+        arr.append(splitted['day'] and str(splitted['day'])+'d' or '')
         return ' '.join(arr)
 
-atapi.registerType(Patient, PROJECTNAME)
+atapi.registerType(Patient,PROJECTNAME)

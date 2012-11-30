@@ -151,5 +151,13 @@
       permission="zope.Public"
       layer="bika.lims.interfaces.IBikaLIMS"
     />
+    
+    <browser:page
+      for="*"
+      name="getDiseases"
+      class="bika.lims.browser.patient.ajaxGetDiseases"
+      permission="zope.Public"
+      layer="bika.lims.interfaces.IBikaLIMS"
+    />
 
 </configure>
