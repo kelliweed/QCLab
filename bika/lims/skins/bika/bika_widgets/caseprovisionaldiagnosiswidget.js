@@ -31,7 +31,6 @@ $(document).ready(function(){
         D = $(".template-caseprovisionaldiagnosis #Description").val();
         O = $(".template-caseprovisionaldiagnosis #Onset").val();
         if (T == ''){
-        	alert(_("No Symptom defined"));
             return false;
         }
 

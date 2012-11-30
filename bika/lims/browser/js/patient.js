@@ -350,12 +350,7 @@ $(document).ready(function(){
 		event.preventDefault();
 		P = $("#DrugProhibition").val();
 		D = $("#Drug").val();
-		if (P == '') {
-			alert(_('Allergic reaction cannot be empty'));
-			return false;
-		}
-		if (D == '') {
-			alert(_('Drug field cannot be empty'));
+		if (D == '' || P == '') {
 			return false;
 		}
 		newrow = $("tr#new").clone();
@@ -381,7 +376,8 @@ $(document).ready(function(){
 		I = $("#Immunization").val();
 		V = $("#VaccinationCenter").val();
 		D = $("#Date").val();
-		if (I == '' || V == ''){
+		if (I == ''){
+			alert(_('Immunization field cannot be empty'));
 	        return false;
 		}
 		$("#Date").attr('class', 'datepicker_nofuture');

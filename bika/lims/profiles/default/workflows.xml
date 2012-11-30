@@ -363,6 +363,12 @@
   </type>
   <type type_id="Immunizations"/>
   
+  <type type_id="Symptoms"/>
+  <type type_id="Symptom">
+   <bound-workflow workflow_id="bika_one_state_workflow"/>
+   <bound-workflow workflow_id="bika_inactive_workflow"/>
+  </type>
+  
   <type type_id="VaccinationCenter">
    <bound-workflow workflow_id="bika_one_state_workflow"/>
    <bound-workflow workflow_id="bika_inactive_workflow"/>
