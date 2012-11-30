@@ -15,16 +15,12 @@
 					class="bika-listing-table">
 					<thead>
 						<tr>
-                            <th>&nbsp;</th>
-							<th class="sortable column"
-							    id="foldercontents-DrugProhibition-column" style="width:48%">
-                                <span i18n:translate="">Allergic reaction</span>
-                                <span class="fieldRequired">&nbsp;</span>
+                            <th></th>
+							<th id="foldercontents-DrugProhibition-column" style="width:48%">
+                                <span i18n:translate="" class="fieldRequired">Allergic reaction</span>
 							</th>
-							<th class="sortable column"
-							    id="foldercontents-Drug-column" style="width:48%">
-                                <span i18n:translate="">Drug</span>
-                                <span class="fieldRequired">&nbsp;</span>
+							<th id="foldercontents-Drug-column" style="width:48%">
+                                <span i18n:translate="" class="fieldRequired">Causative agent</span>
                             </th>
 						</tr>
 					</thead>

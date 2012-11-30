@@ -31,7 +31,6 @@ $(document).ready(function(){
         D = $(".template-symptoms #Description").val();
         O = $(".template-symptoms #Onset").val();
         if (T == ''){
-        	alert(_("No Symptom defined"));
             return false;
         }
 

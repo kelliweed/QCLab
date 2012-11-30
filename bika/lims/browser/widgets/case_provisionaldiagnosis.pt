@@ -74,7 +74,7 @@
                 <tfoot>
 					<tr>
 						<td class="noborder workflow_actions" colspan="5"  style="padding:5px;">
-							<input class="workflow_action_button action_button add_row allowMultiSubmit"
+							<input class="action_button add_row allowMultiSubmit"
 						       type="submit"
 							   i18n:attributes="value"
 							   value="Add" />
