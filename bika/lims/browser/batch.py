@@ -171,7 +171,7 @@ class ajaxGetAetiologicAgentSubtypes(BrowserView):
 
         for subtype in subtypes:
             rows.append({'Subtype': subtype['Subtype'],
-                         'SubtypeRemarks': subtype['SubtypeRemarks']})
+                         'SubtypeRemarks': subtype.get('SubtypeRemarks', '')})
 
         rows = sorted(rows, cmp=lambda x,y: cmp(x.lower(), y.lower()), key=itemgetter(sidx and sidx or 'Subtype'))
         if sord == 'desc':
