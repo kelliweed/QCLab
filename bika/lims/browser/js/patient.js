@@ -381,7 +381,8 @@ $(document).ready(function(){
 		I = $("#Immunization").val();
 		V = $("#VaccinationCenter").val();
 		D = $("#Date").val();
-		if (I == '' || V == ''){
+		if (I == ''){
+			alert(_('Immunization field cannot be empty'));
 	        return false;
 		}
 		$("#Date").attr('class', 'datepicker_nofuture');
