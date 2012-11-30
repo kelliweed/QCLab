@@ -402,11 +402,13 @@ $(document).ready(function(){
 		T = $("#Title").val();
 		D = $("#Description").val();
 		O = $("#Onset").val();
+		E = $("#End").val();
 		R = $("#Remarks").val();
 		if (T == ''){
 	        return false;
 		}
 		$("#Onset").attr('class', 'datepicker_nofuture');
+		$("#End").attr('class', 'datepicker');
 
 		newrow = $("tr#new").clone();
 		$("tr#new").removeAttr('id');
@@ -422,6 +424,9 @@ $(document).ready(function(){
 		$("#Onset").parent().append("<span>"+O+"</span>");
 		$("#Onset").parent().append("<input type='hidden' name='Onset:list' value='"+O+"'/>");
 		$("#Onset").remove();
+		$("#End").parent().append("<span>"+E+"</span>");
+		$("#End").parent().append("<input type='hidden' name='End:list' value='"+E+"'/>");
+		$("#End").remove();
 		for(i=0; i<$(newrow).children().length; i++){
 			td = $(newrow).children()[i];
 			input = $(td).children()[0];

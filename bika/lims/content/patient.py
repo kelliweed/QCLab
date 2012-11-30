@@ -194,9 +194,9 @@ schema=Person.schema.copy()+Schema((
 
     RecordsField('ChronicConditions',
         type='chronicconditions',
-        subfields=('Code','Title','Description','Onset','Remarks'),
+        subfields=('Code','Title','Description','Onset','End','Remarks'),
         required_subfields=('title'),
-        subfield_sizes={'Code':7,'Title':15,'Description':25,'Onset':10,'Remarks':25},
+        subfield_sizes={'Code':7,'Title':15,'Description':25,'Onset':7,'End':7,'Remarks':25},
         widget=RecordsWidget(
             label='Past Medical History',
             description=_("Patient's past medical history."),

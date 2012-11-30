@@ -253,6 +253,7 @@ class ChronicConditionsView(BrowserView):
                 S=self.request.form['Title'][i]
                 D=self.request.form['Description'][i]
                 O=self.request.form['Onset'][i]
+                E=self.request.form['End'][i]
 
                 # Only allow to create entry if the selected disease exists
                 Slist=bsc(portal_type='Disease',title=S,code=C)
@@ -268,7 +269,7 @@ class ChronicConditionsView(BrowserView):
                 if not Slist and not ISlist:
                     self.context.plone_utils.addPortalMessage(_("The disease '%s' is not valid")%S,"error")
                 else:
-                    new.append({'Code':C,'Title':S,'Description':D,'Onset': O})
+                    new.append({'Code':C,'Title':S,'Description':D,'Onset': O, 'End': E})
 
             self.context.setChronicConditions(new)
             self.context.plone_utils.addPortalMessage(PMF("Changes saved"))
