@@ -9,7 +9,7 @@ from Products.CMFCore.utils import getToolByName
 from bika.lims import PMF, bikaMessageFactory as _
 from bika.lims.browser.widgets import DateTimeWidget, RecordsWidget, SplittedDateWidget, ReadonlyStringWidget
 from bika.lims.config import ManageClients, PUBLICATION_PREFS, PROJECTNAME, \
-    GENDERS
+    GENDERS, ETHNICITIES
 from bika.lims.content.person import Person
 from bika.lims.interfaces import IPatient
 from bika.lims.permissions import *
@@ -210,7 +210,8 @@ schema = Person.schema.copy() + Schema((
     ),
     StringField('Ethnicity', schemata='Personal',
         index='FieldIndex',
-        widget=StringWidget(
+        vocabulary = ETHNICITIES,
+        widget=ReferenceWidget(
             label=_('Ethnicity'),
             description=_("Ethnicity eg. Asian, African, etc."),
         ),
