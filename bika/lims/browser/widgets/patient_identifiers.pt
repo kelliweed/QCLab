@@ -63,10 +63,10 @@
 							   i18n:attributes="value"
 							   value="Add" />
 							<tal:hasidentifiers tal:condition="python:hasattr(view, 'hasIdentifiers') and view.hasIdentifiers()">
-								<input class="action_button" type="submit"
+								<input class="action_button allowMultiSubmit" type="submit"
 									name="PID_delete"
 									i18n:attributes="value" value="Delete selected" />
-								<input class="action_button" type="submit"
+								<input class="action_button allowMultiSubmit" type="submit"
 									name="PID_clear"
 									i18n:attributes="value" value="Delete all" />
 							</tal:hasidentifiers>

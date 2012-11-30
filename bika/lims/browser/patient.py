@@ -77,7 +77,7 @@ class TreatmentHistoryView(BrowserView):
         elif 'submitted' in self.request:
             bsc=self.bika_setup_catalog
             new=len(self.context.getTreatmentHistory())>0 and self.context.getTreatmentHistory() or []
-            for t in range(len(self.request.form['Drug'])):
+            for t in range(len(self.request.form.get('Drug', []))):
                 D=self.request.form['Drug'][t]
                 S=self.request.form['Start'][t]
                 E=self.request.form['End'][t]
@@ -124,7 +124,7 @@ class AllergiesView(BrowserView):
         elif 'submitted' in self.request:
             bsc=self.bika_setup_catalog
             new=len(self.context.getAllergies())>0 and self.context.getAllergies() or []
-            for p in range(len(self.request.form['DrugProhibition'])):
+            for p in range(len(self.request.form.get('DrugProhibition', []))):
                 P=self.request.form['DrugProhibition'][p]
                 D=self.request.form['Drug'][p]
 
@@ -185,7 +185,7 @@ class ImmunizationHistoryView(BrowserView):
             bsc=self.bika_setup_catalog
             new=len(self.context.getImmunizationHistory())>0 and self.context.getImmunizationHistory() or []
             E=self.request.form['EPINumber']
-            for i in range(len(self.request.form['Immunization'])):
+            for i in range(len(self.request.form.get('Immunization', []))):
                 I=self.request.form['Immunization'][i]
                 V=self.request.form['VaccinationCenter'][i]
                 D=self.request.form['Date'][i]
@@ -248,7 +248,7 @@ class ChronicConditionsView(BrowserView):
         elif 'submitted' in self.request:
             bsc=self.bika_setup_catalog
             new=len(self.context.getChronicConditions())>0 and self.context.getChronicConditions() or []
-            for i in range(len(self.request.form['Title'])):
+            for i in range(len(self.request.form.get('Title', []))):
                 C=self.request.form['Code'][i]
                 S=self.request.form['Title'][i]
                 D=self.request.form['Description'][i]
@@ -303,7 +303,7 @@ class TravelHistoryView(BrowserView):
 
         elif 'submitted' in self.request:
             new=len(self.context.getTravelHistory())>0 and self.context.getTravelHistory() or []
-            for i in range(len(self.request.form['TripStartDate'])):
+            for i in range(len(self.request.form.get('TripStartDate', []))):
                 S=self.request.form['TripStartDate'][i]
                 E=self.request.form['TripEndDate'][i]
                 T=self.request.form['Country'][i]

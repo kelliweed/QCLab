@@ -53,10 +53,10 @@
 									   i18n:attributes="value"
 									   value="Add" />
 								<tal:hastreatments tal:condition="python:hasattr(view, 'hasTreatmentHistory') and view.hasTreatmentHistory()">
-									<input class="action_button" type="submit"
+									<input class="action_button allowMultiSubmit" type="submit"
 										name="delete"
 										i18n:attributes="value" value="Delete selected" />
-									<input class="action_button" type="submit"
+									<input class="action_button allowMultiSubmit" type="submit"
 										name="clear"
 										i18n:attributes="value" value="Delete all" />
 								</tal:hastreatments>
@@ -66,7 +66,7 @@
 				</table>
 			</div>
 		</div>
-		<input class="action_button" type="submit"
+		<input class="action_button allowMultiSubmit" type="submit"
 			i18n:attributes="value" value="Save drug history" />
 
 		<tal:hasremarks tal:condition="python:hasattr(context, 'Remarks')">

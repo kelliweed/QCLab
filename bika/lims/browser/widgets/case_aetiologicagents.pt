@@ -71,10 +71,10 @@
 							   i18n:attributes="value"
 							   value="Add" />
 							<tal:hasaetiologicagents tal:condition="python:hasattr(view, 'hasAetiologicAgents') and view.hasAetiologicAgents()">
-								<input class="action_button" type="submit"
+								<input class="action_button allowMultiSubmit" type="submit"
 									name="CAE_delete"
 									i18n:attributes="value" value="Delete selected" />
-								<input class="action_button" type="submit"
+								<input class="action_button allowMultiSubmit" type="submit"
 									name="CAE_clear"
 									i18n:attributes="value" value="Delete all" />
 							</tal:hasaetiologicagents>

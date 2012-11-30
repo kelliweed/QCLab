@@ -87,10 +87,10 @@
 								   i18n:attributes="value"
 								   value="Add" />
 								<tal:hashistory tal:condition="python:hasattr(view, 'hasImmunizationHistory') and view.hasImmunizationHistory()">
-									<input class="action_button" type="submit"
+									<input class="action_button allowMultiSubmit" type="submit"
 										name="delete"
 										i18n:attributes="value" value="Delete selected" />
-									<input class="action_button" type="submit"
+									<input class="action_button allowMultiSubmit" type="submit"
 										name="clear"
 										i18n:attributes="value" value="Delete all" />
 								</tal:hashistory>
@@ -100,7 +100,7 @@
 				</table>
 			</div>
 		</div>
-		<input class="action_button" type="submit"
+		<input class="action_button allowMultiSubmit immuzationhistory_save" type="submit"
 			i18n:attributes="value" value="Save immunization history" />
 
 		<tal:hasremarks tal:condition="python:hasattr(context, 'Remarks')">

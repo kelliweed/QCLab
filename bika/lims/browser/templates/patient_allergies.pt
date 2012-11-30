@@ -61,10 +61,10 @@
 								   i18n:attributes="value"
 								   value="Add" />
 								<tal:hasallergies tal:condition="python:hasattr(view, 'hasAllergies') and view.hasAllergies()">
-									<input class="action_button" type="submit"
+									<input class="action_button allowMultiSubmit" type="submit"
 										name="delete"
 										i18n:attributes="value" value="Delete selected" />
-									<input class="action_button" type="submit"
+									<input class="action_button allowMultiSubmit" type="submit"
 										name="clear"
 										i18n:attributes="value" value="Delete all" />
 								</tal:hasallergies>
@@ -74,7 +74,7 @@
 				</table>
 			</div>
 		</div>
-		<input class="action_button" type="submit"
+		<input class="action_button allowMultiSubmit" type="submit"
 			i18n:attributes="value" value="Save allergies" />
 
 		<tal:hasremarks tal:condition="python:hasattr(context, 'Remarks')">
