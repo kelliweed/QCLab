@@ -25,7 +25,7 @@
 							<th class="sortable column"
 							    id="foldercontents-end-column"
 							    style="width:22%">
-                                <span i18n:translate="" class="fieldRequired">Trip end date</span>
+                                <span i18n:translate="">Trip end date</span>
                             </th>
                             <th class="sortable column"
 							    id="foldercontents-country-column"
