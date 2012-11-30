@@ -178,21 +178,6 @@ $(document).ready(function(){
 	});
 
 	function lookups(){
-		// Treatment History Treatment search popup
-		$(".template-treatmenthistory #Treatment").combogrid({
-			colModel: [{'columnName':'UID'  	  , 'hidden': true},
-					   {'columnName':'Title'	  , 'label':_('Title')},
-					   {'columnName':'Type' 	  , 'label':_('Type')},
-					   {'columnName':'Description', 'label':_('Description')}],
-			url: window.location.href.replace("/treatmenthistory","") + "/getTreatments?_authenticator=" + $('input[name="_authenticator"]').val(),
-			showOn: true,
-			select: function( event, ui ) {
-				event.preventDefault();
-				$(this).val(ui.item.Title);
-				$(this).change();
-				return false;
-			}
-		});
 
 		// Treatment History Drug search popup
 		$(".template-treatmenthistory #Drug").combogrid({
@@ -303,16 +288,10 @@ $(document).ready(function(){
 
 	$(".template-treatmenthistory .add_row").click(function(event){
 		event.preventDefault();
-		T = $("#Treatment").val();
 		D = $("#Drug").val();
 		S = $("#Start").val();
 		E = $("#End").val();
-		if (T == '') {
-			alert(_('Treatment field cannot be empty'));
-			return false;
-		}
 		if (D == '') {
-			alert(_('Drug field cannot be empty'));
 			return false;
 		}
 		if (Date.parse(E) <= Date.parse(S)) {
@@ -324,9 +303,6 @@ $(document).ready(function(){
 
 		newrow = $("tr#new").clone();
 		$("tr#new").removeAttr('id');
-		$("#Treatment").parent().append("<span>"+T+"</span>");
-		$("#Treatment").parent().append("<input type='hidden' name='Treatment:list' value='"+T+"'/>");
-		$("#Treatment").remove();
 		$("#Drug").parent().append("<span>"+D+"</span>");
 		$("#Drug").parent().append("<input type='hidden' name='Drug:list' value='"+D+"'/>");
 		$("#Drug").remove();
