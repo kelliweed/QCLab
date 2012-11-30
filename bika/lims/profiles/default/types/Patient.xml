@@ -79,7 +79,7 @@
   <permission value="View"/>
  </action>
 
- <action title="Past medical history"
+ <action title="Past Medical History"
          action_id="chronicconditions"
          category="object"
          condition_expr=""
@@ -103,7 +103,7 @@
   <permission value="View"/>
  </action>
 
- <action title="Treatment History"
+ <action title="Drug History"
          action_id="treatmenthistory"
          category="object"
          condition_expr=""

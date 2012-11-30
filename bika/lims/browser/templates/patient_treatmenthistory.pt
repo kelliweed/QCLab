@@ -18,7 +18,6 @@
 					<thead>
 						<tr>
 	                		<th></th>
-	                        <th class="fieldRequired" i18n:translate="">Treatment</th>
 	                        <th class="fieldRequired" i18n:translate="">Drug</th>
 	                        <th i18n:translate="">Start</th>
 	                        <th i18n:translate="">End</th>
@@ -35,14 +34,12 @@
                             			id python:'SelectItem-%s'%(index);
                             			name python:'SelectItem-%s'%(index);"/>
                             </td>
-                            <td tal:content="row/Treatment"></td>
                             <td tal:content="row/Drug"></td>
                             <td tal:content="row/Start"></td>
                             <td tal:content="row/End"></td>
                         </tr>
                         <tr id="new">
                         	<td></td>
-                            <td class="Treatment"><input id="Treatment" class="wide" type="text" value="" autocomplete="off"/></td>
                             <td class="Drug"><input id="Drug" class="wide" type="text" value="" autocomplete="off"/></td>
                             <td class="Start"><input id="Start" class="datepicker_nofuture" type="text" value="" autocomplete="off"/></td>
                             <td class="End"><input id="End" class="datepicker" type="text" value="" autocomplete="off"/></td>
@@ -70,7 +67,7 @@
 			</div>
 		</div>
 		<input class="action_button" type="submit"
-			i18n:attributes="value" value="Save treatment history" />
+			i18n:attributes="value" value="Save drug history" />
 
 		<tal:hasremarks tal:condition="python:hasattr(context, 'Remarks')">
 			<tal:remarks

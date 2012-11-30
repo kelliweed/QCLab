@@ -62,7 +62,7 @@ class TreatmentHistoryView(BrowserView):
         if self.request.form.has_key('clear'):
             # Clear treatment history
             self.context.setTreatmentHistory([])
-            self.context.plone_utils.addPortalMessage(PMF("Treatment history cleared"))
+            self.context.plone_utils.addPortalMessage(PMF("Drug history cleared"))
 
         elif self.request.form.has_key('delete'):
             # Delete selected treatments
@@ -72,25 +72,15 @@ class TreatmentHistoryView(BrowserView):
                 if (not self.request.form.has_key('SelectItem-%s'%i)):
                     new.append(tre[i])
             self.context.setTreatmentHistory(new)
-            self.context.plone_utils.addPortalMessage(PMF("Selected treatments deleted"))
+            self.context.plone_utils.addPortalMessage(PMF("The selected drug history items have been deleted"))
 
         elif 'submitted' in self.request:
             bsc=self.bika_setup_catalog
             new=len(self.context.getTreatmentHistory())>0 and self.context.getTreatmentHistory() or []
-            for t in range(len(self.request.form['Treatment'])):
-                T=self.request.form['Treatment'][t]
+            for t in range(len(self.request.form['Drug'])):
                 D=self.request.form['Drug'][t]
                 S=self.request.form['Start'][t]
                 E=self.request.form['End'][t]
-                # Create new Treatment entry if none exists
-                Tlist=bsc(portal_type='Treatment',title=T)
-                if not Tlist:
-                    folder=self.context.bika_setup.bika_treatments
-                    _id=folder.invokeFactory('Treatment',id='tmp')
-                    obj=folder[_id]
-                    obj.edit(title=T)
-                    obj.unmarkCreationFlag()
-                    renameAfterCreation(obj)
                 # Create new Drug entry if none exists
                 Dlist=bsc(portal_type='Drug',title=D)
                 if not Dlist:
@@ -100,7 +90,7 @@ class TreatmentHistoryView(BrowserView):
                     obj.edit(title=D)
                     obj.unmarkCreationFlag()
                     renameAfterCreation(obj)
-                new.append({'Treatment':T,'Drug':D,'Start':S,'End':E})
+                new.append({'Treatment':'','Drug':D,'Start':S,'End':E})
             self.context.setTreatmentHistory(new)
             self.context.plone_utils.addPortalMessage(PMF("Changes saved"))
         return self.template()
