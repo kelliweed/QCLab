@@ -29,9 +29,13 @@
                                 id="foldercontents-Description-column">
                                 <span i18n:translate="">Description</span>
                             </th>
-							<th class="sortable column"
-							    id="foldercontents-Onset-column">
+                            <th class="sortable column"
+                                id="foldercontents-Onset-column">
                                 <span i18n:translate="">Onset</span>
+                            </th>
+                            <th class="sortable column"
+                                id="foldercontents-End-column">
+                                <span i18n:translate="">End</span>
                             </th>
 						</tr>
 					</thead>
@@ -59,6 +63,9 @@
                             <td colspan="1" rowspan="1" class="state-active Onset">
                                  <span tal:content="row/Onset"/>
                             </td>
+                            <td colspan="1" rowspan="1" class="state-active End">
+                                 <span tal:content="python:row.get('End', '')"/>
+                            </td>
                         </tr>
                         <tr id="new">
                         	<td style="padding-bottom:15px;">&nbsp;</td>
@@ -73,6 +80,9 @@
                             </td>
                             <td colspan="1" rowspan="1" class="state-active Onset">
                                  <input class="datepicker_nofuture" id="Onset" type="text" value="" autocomplete="off"/>
+                            </td>
+                            <td colspan="1" rowspan="1" class="state-active End">
+                                 <input class="datepicker_nofuture" id="End" type="text" value="" autocomplete="off"/>
                             </td>
 					</tbody>
 					<tfoot>

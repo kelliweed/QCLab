@@ -31,6 +31,7 @@ class Doctors(ATFolder):
         bc = getToolByName(self, 'bika_catalog')
         bsc = getToolByName(self, 'bika_setup_catalog')
         pairs = []
+        objects = []
         # All Doctors
         for contact in pc(portal_type = 'Doctor',
                           inactive_state = 'active',

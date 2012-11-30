@@ -128,27 +128,27 @@ class AllergiesView(BrowserView):
                 P=self.request.form['DrugProhibition'][p]
                 D=self.request.form['Drug'][p]
 
-                # Create new Allergy entry if none exists
-                if (len(P.strip())>0):
-                    Plist=bsc(portal_type='DrugProhibition',title=P)
-                    if not Plist:
-                        folder=self.context.bika_setup.bika_drugprohibitions
-                        _id=folder.invokeFactory('DrugProhibition',id='tmp')
-                        obj=folder[_id]
-                        obj.edit(title=P)
-                        obj.unmarkCreationFlag()
-                        renameAfterCreation(obj)
+                # # Create new Allergy entry if none exists
+                # if (len(P.strip())>0):
+                #     Plist=bsc(portal_type='DrugProhibition',title=P)
+                #     if not Plist:
+                #         folder=self.context.bika_setup.bika_drugprohibitions
+                #         _id=folder.invokeFactory('DrugProhibition',id='tmp')
+                #         obj=folder[_id]
+                #         obj.edit(title=P)
+                #         obj.unmarkCreationFlag()
+                #         renameAfterCreation(obj)
 
-                # Create new Drug entry if none exists                
-                if (len(D.strip())>0):
-                    Dlist=bsc(portal_type='Drug',title=D)
-                    if not Dlist:
-                        folder=self.context.bika_setup.bika_drugs
-                        _id=folder.invokeFactory('Drug',id='tmp')
-                        obj=folder[_id]
-                        obj.edit(title=D)
-                        obj.unmarkCreationFlag()
-                        renameAfterCreation(obj)
+                # Create new Drug entry if none exists
+                # if (len(D.strip())>0):
+                #     Dlist=bsc(portal_type='Drug',title=D)
+                #     if not Dlist:
+                #         folder=self.context.bika_setup.bika_drugs
+                #         _id=folder.invokeFactory('Drug',id='tmp')
+                #         obj=folder[_id]
+                #         obj.edit(title=D)
+                #         obj.unmarkCreationFlag()
+                #         renameAfterCreation(obj)
 
                 new.append({'DrugProhibition':P,'Drug':D})
             self.context.setAllergies(new)
@@ -202,15 +202,15 @@ class ImmunizationHistoryView(BrowserView):
                         renameAfterCreation(obj)
 
                 # Create new VaccinationCenter entry if none exists
-                if (len(V.strip())>0):
-                    Vlist=bsc(portal_type='VaccinationCenter',title=V)
-                    if not Vlist:
-                        folder=self.context.bika_setup.bika_vaccinationcenters
-                        _id=folder.invokeFactory('VaccinationCenter',id='tmp')
-                        obj=folder[_id]
-                        obj.edit(Name=V)
-                        obj.unmarkCreationFlag()
-                        renameAfterCreation(obj)
+                # if (len(V.strip())>0):
+                #     Vlist=bsc(portal_type='VaccinationCenter',title=V)
+                #     if not Vlist:
+                #         folder=self.context.bika_setup.bika_vaccinationcenters
+                #         _id=folder.invokeFactory('VaccinationCenter',id='tmp')
+                #         obj=folder[_id]
+                #         obj.edit(Name=V)
+                #         obj.unmarkCreationFlag()
+                #         renameAfterCreation(obj)
 
                 new.append({'EPINumber':E,'Immunization':I,'VaccinationCenter':V,'Date':D})
 
@@ -253,6 +253,7 @@ class ChronicConditionsView(BrowserView):
                 S=self.request.form['Title'][i]
                 D=self.request.form['Description'][i]
                 O=self.request.form['Onset'][i]
+                E=self.request.form['End'][i]
 
                 # Only allow to create entry if the selected disease exists
                 Slist=bsc(portal_type='Disease',title=S,code=C)
@@ -264,11 +265,11 @@ class ChronicConditionsView(BrowserView):
                               and x['long']==D]
                     if ISlist:
                         break;
-                    
+
                 if not Slist and not ISlist:
                     self.context.plone_utils.addPortalMessage(_("The disease '%s' is not valid")%S,"error")
                 else:
-                    new.append({'Code':C,'Title':S,'Description':D,'Onset': O})
+                    new.append({'Code':C,'Title':S,'Description':D,'Onset': O, 'End': E})
 
             self.context.setChronicConditions(new)
             self.context.plone_utils.addPortalMessage(PMF("Changes saved"))
