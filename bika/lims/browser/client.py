@@ -261,13 +261,12 @@ class ClientBatchesView(BatchFolderContentsView):
     def contentsMethod(self, contentFilter):
         bc = getToolByName(self.context, "bika_catalog")
         state = [x for x in self.review_states if x['id'] == self.review_state][0]
-        batches = {}
-        for ar in bc(portal_type = 'AnalysisRequest',
+        batches = []
+        for batch in bc(portal_type = 'Batch',
                      getClientUID = self.context.UID()):
-            ar = ar.getObject()
-            if ar.getBatchUID():
-                batches[ar.getBatchUID()] = ar.getBatch()
-        return batches.values()
+            batch = batch.getObject()
+            batches.append(batch)
+        return batches
 
 class ClientAnalysisRequestsView(AnalysisRequestsView):
     def __init__(self, context, request):
