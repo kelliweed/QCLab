@@ -143,8 +143,7 @@ class Patients(ATFolder):
         bsc = getToolByName(self, 'bika_setup_catalog')
         pairs = []
         objects = []
-        client = None
-        client = self.getPrimaryReferrer()
+        client = hasattr(self, 'getPrimaryReferrer') and self.getPrimaryReferrer() or None
         if client:
             for contact in client.objectValues('Contact'):
                 if isActive(contact):
