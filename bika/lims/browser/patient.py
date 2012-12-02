@@ -8,6 +8,7 @@ from bika.lims import PMF,logger,bikaMessageFactory as _
 from bika.lims.browser import BrowserView
 from bika.lims.browser.analysisrequest import AnalysisRequestWorkflowAction,\
     AnalysisRequestsView
+from bika.lims.browser.batchfolder import BatchFolderContentsView
 from bika.lims.browser.bika_listing import BikaListingView
 from bika.lims.browser.client import ClientAnalysisRequestsView,\
     ClientSamplesView
@@ -317,6 +318,21 @@ class TravelHistoryView(BrowserView):
 
     def hasTravelHistory(self):
         return len(self.context.getTravelHistory())>0
+
+class PatientBatchesView(BatchFolderContentsView):
+    def __init__(self, context, request):
+        super(PatientBatchesView, self).__init__(context, request)
+        self.view_url = self.context.absolute_url() + "/batches"
+
+    def contentsMethod(self, contentFilter):
+        bc = getToolByName(self.context, "bika_catalog")
+        state = [x for x in self.review_states if x['id'] == self.review_state][0]
+        batches = []
+        for batch in bc(portal_type = 'Batch',
+                     getPatientID = self.context.id):
+            batch = batch.getObject()
+            batches.append(batch)
+        return batches
 
 class ajaxGetPatients(BrowserView):
     """ Patient vocabulary source for jquery combo dropdown box

@@ -42,6 +42,18 @@
          visible="True">
     <permission value="BIKA: Manage Patients"/>
  </action>
+ 
+ <action title="Batches"
+         action_id="batches"
+         category="object"
+         condition_expr=""
+         icon_expr="string:${portal_url}/images/batch.png"
+         link_target=""
+         url_expr="string:${object_url}/batches"
+         i18n:attributes="title"
+         visible="True">
+  <permission value="BIKA: Manage Patients"/>
+ </action>
 
  <action title="Analysis Requests"
          action_id="analysisrequests"
