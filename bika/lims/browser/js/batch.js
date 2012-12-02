@@ -102,6 +102,16 @@ $(document).ready(function(){
 	
 	$("#PatientID").live('change', function(){
 		setPatientAgeAtCaseOnsetDate();
+		$.ajax({
+            type: 'POST',
+            url: window.location.href.split("/batches")[0] 
+					+ "/patients/" + $(this).val()
+					+ "/getLastReferralId",
+            data: {'_authenticator': $('input[name="_authenticator"]').val()},
+	        success: function(data,textStatus,$XHR){
+	        	$("#ClientID").val(data);
+			},
+        });
 	});
 
 	function setPatientAgeAtCaseOnsetDate() {
