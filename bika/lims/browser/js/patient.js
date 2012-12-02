@@ -121,11 +121,29 @@ $(document).ready(function(){
 			}
 		}
 	);
-
+	
+	// Mod the Age if DOB is selected
+	$("#Age").live('change', function(){
+		if (parseInt($(this).val()) > 0) {
+			var d = new Date();
+			year = d.getFullYear() - $(this).val();
+			var dob = year + "-01-01";			
+			$("#BirthDate").val(dob);
+			calculateAge();
+			$("#BirthDateEstimated").attr('checked', true);
+		} else {
+			$("#BirthDate".val(""));
+			calculateAge();
+		}
+	});
 
 	// Mod the Age if DOB is selected
 	$("#BirthDate").live('change', function(){
-		var dob = new Date($(this).val());
+		calculateAge();
+	});
+	
+	function calculateAge() {
+		var dob = new Date($("#BirthDate").val());
 		var now = new Date();
 		if (dob!= undefined && dob != null && now>=dob){
 			var now = new Date();
@@ -164,18 +182,21 @@ $(document).ready(function(){
 				agemonth = agemonth + 12;
 			}
 			ageyear = currentyear - birthyear;
-
+			
+			$("#Age").val(ageyear);
 			$("#AgeSplitted_year").val(ageyear);
 			$("#AgeSplitted_month").val(agemonth);
 			$("#AgeSplitted_day").val(ageday);
 
 		} else {
+			
+			$("#Age").val('');
 			$("#AgeSplitted_year").val('');
 			$("#AgeSplitted_month").val('');
 			$("#AgeSplitted_day").val('');
 		}
 		$("#BirthDateEstimated").attr('checked', false);
-	});
+	}
 
 	function lookups(){
 		// Patient identifiers > Identifier Types popup
