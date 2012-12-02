@@ -8,6 +8,7 @@ class ReadonlyStringWidget(StringWidget):
     _properties = StringWidget._properties.copy()
     _properties.update({
         'macro' : "bika_widgets/readonlystringwidget",
+        'css' : "readonly",
         })
     security = ClassSecurityInfo()
     

@@ -52,30 +52,29 @@ schema=Person.schema.copy()+Schema((
             label=_('Gender'),
         ),
     ),
+    StringField('Age',
+        widget=StringWidget(
+            label=_('Age'),
+            visible=1,
+            width=3,
+        ),
+    ),
     DateTimeField('BirthDate',
         required=1,
         widget=DateTimeWidget(
             label=_('Birth date'),
         ),
-    ),
-    StringField('Age',
-        widget=ReadonlyStringWidget(
-            label=_('Age'),
-            visible=0,
-            width=3,
-        ),
-    ),
-    RecordsField('AgeSplitted',
-        required=1,
-        widget=SplittedDateWidget(
-            label=_('Age'),
-        ),
-    ),
-
+    ),      
     BooleanField('BirthDateEstimated',
         default=False,
         widget=BooleanWidget(
             label=_('Birth date is estimated'),
+        ),
+    ),  
+    RecordsField('AgeSplitted',
+        required=1,
+        widget=SplittedDateWidget(
+            label=_('Age'),
         ),
     ),
 
