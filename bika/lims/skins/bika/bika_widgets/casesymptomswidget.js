@@ -29,7 +29,7 @@ $(document).ready(function(){
         C = $(".template-symptoms #Code").val();
         T = $(".template-symptoms #Title").val();
         D = $(".template-symptoms #Description").val();
-        O = $(".template-symptoms #Onset").val();
+        O = $(".template-symptoms #SymptomOnset").val();
         if (T == ''){
             return false;
         }
@@ -48,9 +48,9 @@ $(document).ready(function(){
         $(".template-symptoms #Description").parent().append("<span>"+D+"</span>");
         $(".template-symptoms #Description").parent().append("<input type='hidden' name='CSY_Description:list' value='"+D+"'/>");
         $(".template-symptoms #Description").remove();
-        $(".template-symptoms #Onset").parent().append("<span>"+O+"</span>");
-        $(".template-symptoms #Onset").parent().append("<input type='hidden' name='CSY_Onset:list' value='"+O+"'/>");
-        $(".template-symptoms #Onset").remove();
+        $(".template-symptoms #SymptomOnset").parent().append("<span>"+O+"</span>");
+        $(".template-symptoms #SymptomOnset").parent().append("<input type='hidden' name='CSY_Onset:list' value='"+O+"'/>");
+        $(".template-symptoms #SymptomOnset").remove();
         for(i=0; i<$(newrow).children().length; i++){
             td = $(newrow).children()[i];
             input = $(td).children()[0];
