@@ -710,3 +710,17 @@ class ajaxGetIdentifierTypes(BrowserView):
                'rows':rows[ (int(page)-1)*int(nr_rows) : int(page)*int(nr_rows) ]}
 
         return json.dumps(ret)
+
+class ajaxGetPatientLastReferralID(BrowserView):
+    """ Returns the referral used on the last case from a patient
+    """
+    def __call__(self):
+        plone.protect.CheckAuthenticator(self.request)
+        clientID = ''
+        bpc = getToolByName(self, 'bika_catalog')
+        batches = bpc(portal_type='Batch', getPatientID=self.context.id)
+        if batches and batches[0]:
+            batch = batches[0].getObject()
+            clientID = batch.getClientID()
+
+        return clientID;
