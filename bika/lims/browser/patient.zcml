@@ -162,8 +162,8 @@
     
     <browser:page
       for="*"
-      name="getDiseases"
-      class="bika.lims.browser.patient.ajaxGetDiseases"
+      name="getLastReferralId"
+      class="bika.lims.browser.patient.ajaxGetPatientLastReferralID"
       permission="zope.Public"
       layer="bika.lims.interfaces.IBikaLIMS"
     />
