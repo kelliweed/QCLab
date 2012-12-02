@@ -99,6 +99,10 @@ $(document).ready(function(){
 	$("#OnsetDate").live('change', function(){
 		setPatientAgeAtCaseOnsetDate();
 	});
+	
+	$("#PatientID").live('change', function(){
+		setPatientAgeAtCaseOnsetDate();
+	});
 
 	function setPatientAgeAtCaseOnsetDate() {
 		var now = new Date($("#OnsetDate").val());
