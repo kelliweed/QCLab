@@ -104,7 +104,8 @@
 				<metal:block tal:repeat="line footlines">
 				<tr>
 					<td i18n:translate="" class='total_label'>Total:</td>
-					<td tal:content="python:line['TotalCount']" colspan="4"></td>
+					<td tal:content="python:line['AnalysesCount']"></td>
+					<td tal:content="python:line['SamplesCount']" colspan="3"></td>
 				</tr>
 				</metal:block>
 			</tfoot>		

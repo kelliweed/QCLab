@@ -40,7 +40,8 @@ class Report(BrowserView):
             return self.default_template()
               
         datalines = {}
-        analyses_count = 0        
+        analyses_count = 0  
+        samples_count = 0      
         for sample in samples:
             countrysamples = []
             sample = sample.getObject()
@@ -70,14 +71,14 @@ class Report(BrowserView):
                 countryline['AnalysesCount'] += 1
                 if not (dataline['SampleID'] in countrysamples):
                     countrysamples.append(dataline['SampleID'])
-                    countryline['SamplesCount'] += 1        
+                    countryline['SamplesCount'] += 1     
+                    samples_count += 1   
                 datalines[country]=countryline   
                 analyses_count += 1  
             
-            
         # Footer total data      
         footlines = []  
-        footline = {'TotalCount': analyses_count}
+        footline = {'AnalysesCount': analyses_count, 'SamplesCount':samples_count}
         footlines.append(footline)
         
         self.report_data = {
