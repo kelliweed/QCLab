@@ -81,7 +81,7 @@
 			</thead>
 			<tbody>				
 				<metal:block tal:repeat="country python:datalines.keys()">
-					<tr>
+					<tr style="background-color:#efefef;">
 						<td  class='total_label' tal:content="country" colspan="5"></td>
 					</tr>	
 					<metal:block tal:repeat="sample python:datalines[country]['Samples']">
