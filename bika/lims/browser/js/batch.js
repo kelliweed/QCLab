@@ -108,8 +108,11 @@ $(document).ready(function(){
 					+ "/patients/" + $(this).val()
 					+ "/getLastReferralId",
             data: {'_authenticator': $('input[name="_authenticator"]').val()},
-	        success: function(data,textStatus,$XHR){
-	        	$("#ClientID").val(data);
+            dataType: "json",
+	        success: function(data){
+				$("#ClientID").val(data["clientid"]);
+				$(".jsClientTitle").remove();
+				$("#archetypes-fieldname-ClientID").append("<span class='jsClientTitle'>"+data["clientname"]+"</span>");
 			},
         });
 	});
