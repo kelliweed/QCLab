@@ -142,6 +142,23 @@ $(document).ready(function(){
 		calculateAge();
 	});
 	
+	$("#CountryState.country").live('change', function(){
+		$("#PhysicalAddress.country").val($(this).val());
+		populate_state_select("PhysicalAddress")
+	});
+	$("#CountryState.state").live('change', function(){
+		$("#PhysicalAddress.state").val($(this).val());
+		populate_state_select("PhysicalAddress")
+	});
+	$("#PhysicalAddress.country").live('change', function(){
+		$("#CountryState.country").val($(this).val());
+		populate_district_select("CountryState")
+	});
+	$("#PhysicalAddress.state").live('change', function(){
+		$("#CountryState.state").val($(this).val());
+		populate_district_select("CountryState")
+	});
+	
 	function calculateAge() {
 		var dob = new Date($("#BirthDate").val());
 		var now = new Date();
