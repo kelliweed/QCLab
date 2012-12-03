@@ -83,7 +83,7 @@ schema=Person.schema.copy()+Schema((
     ),
     AddressField('CountryState',
         widget = AddressWidget(
-           label = _("Country"),
+           label = _("Country and state"),
            showLegend = True,
            showDistrict = False,
            showCopyFrom = False,
