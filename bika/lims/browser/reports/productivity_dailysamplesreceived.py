@@ -39,10 +39,22 @@ class Report(BrowserView):
             self.context.plone_utils.addPortalMessage(message, "error")
             return self.default_template()
               
-        datalines = []
-        analyses_count = 0
+        datalines = {}
+        analyses_count = 0  
+        samples_count = 0      
         for sample in samples:
+            countrysamples = []
             sample = sample.getObject()
+            
+            patient = sample.getPatient()
+            country = patient.getPhysicalAddress().get('country',_('Unknown'))
+            countryline = {'Country':country, 
+                           'CountryName':country, 
+                           'Samples':[], 
+                           'AnalysesCount':0, 
+                           'SamplesCount': 0 }
+            if country in datalines:
+                countryline = datalines[country]
             
             # For each sample, retrieve the analyses and generate
             # a data line for each one
@@ -55,12 +67,18 @@ class Report(BrowserView):
                              'SampleType': sample.getSampleType().Title(),
                              'SampleDateReceived': self.ulocalized_time(sample.getDateReceived(), long_format=1),
                              'SampleSamplingDate': self.ulocalized_time(sample.getSamplingDate())}
-                datalines.append(dataline)
-                analyses_count += 1
+                countryline['Samples'].append(dataline)
+                countryline['AnalysesCount'] += 1
+                if not (dataline['SampleID'] in countrysamples):
+                    countrysamples.append(dataline['SampleID'])
+                    countryline['SamplesCount'] += 1     
+                    samples_count += 1   
+                datalines[country]=countryline   
+                analyses_count += 1  
             
         # Footer total data      
         footlines = []  
-        footline = {'TotalCount': analyses_count}
+        footline = {'AnalysesCount': analyses_count, 'SamplesCount':samples_count}
         footlines.append(footline)
         
         self.report_data = {

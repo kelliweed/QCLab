@@ -1,23 +1,27 @@
 from AccessControl import ClassSecurityInfo
 from AccessControl.Permissions import manage_users
 from Products.ATContentTypes.content import schemata
+from Products.ATContentTypes.utils import DT2dt
 from Products.ATExtensions.ateapi import RecordsField
 from Products.Archetypes import atapi
 from Products.Archetypes.public import *
 from Products.CMFCore import permissions
 from Products.CMFCore.utils import getToolByName
 from bika.lims import PMF, bikaMessageFactory as _
-from bika.lims.browser.widgets import DateTimeWidget, RecordsWidget, SplittedDateWidget, ReadonlyStringWidget
+from bika.lims.browser.fields import AddressField
+from bika.lims.browser.widgets import AddressWidget
+from bika.lims.browser.widgets import DateTimeWidget
+from bika.lims.browser.widgets import PatientIdentifiersWidget
+from bika.lims.browser.widgets import ReadonlyStringWidget
+from bika.lims.browser.widgets import RecordsWidget
+from bika.lims.browser.widgets import SplittedDateWidget
 from bika.lims.config import ManageClients, PUBLICATION_PREFS, PROJECTNAME, \
     GENDERS, ETHNICITIES
 from bika.lims.content.person import Person
 from bika.lims.interfaces import IPatient
 from bika.lims.permissions import *
+from datetime import datetime
 from zope.interface import implements
-from bika.lims.browser.widgets import PatientIdentifiersWidget
-from Products.ATContentTypes.utils import DT2dt
-from datetime import datetime,timedelta
-from calendar import monthrange
 
 schema=Person.schema.copy()+Schema((
     StringField('PatientID',
@@ -77,7 +81,17 @@ schema=Person.schema.copy()+Schema((
             label=_('Age'),
         ),
     ),
-
+    AddressField('CountryState',
+        widget = AddressWidget(
+           label = _("Country"),
+           showLegend = True,
+           showDistrict = False,
+           showCopyFrom = False,
+           showCity =  False,
+           showPostalCode = False,
+           showAddress = False,
+        ),
+    ),
     RecordsField('PatientIdentifiers',
         type='patientidentifiers',
         subfields=('IdentifierTypeUID','IdentifierType','Identifier'),
@@ -88,37 +102,6 @@ schema=Person.schema.copy()+Schema((
             description=_('Patient additional identifiers')
         ),
     ),
-
-#    StringField('SendersPatientID',
-#        widget=StringWidget(
-#            label=_("Sender's Patient ID"),
-#        ),
-#    ),
-
-#    StringField('SendersCaseID',
-#        widget=StringWidget(
-#            label=_("Sender's Case ID"),
-#        ),
-#    ),
-
-#    StringField('SendersSpecimenID',
-#        widget=StringWidget(
-#            label=_("Sender's Specimen ID"),
-#        ),
-#    ),
-
-    TextField('Remarks',
-        searchable=True,
-        default_content_type='text/x-web-intelligent',
-        allowable_content_types=('text/x-web-intelligent',),
-        default_output_type="text/html",
-        widget=TextAreaWidget(
-            macro="bika_widgets/remarks",
-            label=_('Remarks'),
-            append_only=True,
-        ),
-    ),
-
     TextField('Remarks',
         searchable=True,
         default_content_type='text/x-web-intelligent',
@@ -366,5 +349,14 @@ class Patient(Person):
         arr.append(splitted['month'] and str(splitted['month'])+'m' or '')
         arr.append(splitted['day'] and str(splitted['day'])+'d' or '')
         return ' '.join(arr)
+    
+    def setCountryState(self, value):
+        pa = self.getPhysicalAddress() and self.getPhysicalAddress() or {'country': '', 'state': ''}
+        pa['country'] = self.REQUEST.form['CountryState']['country']
+        pa['state'] = self.REQUEST.form['CountryState']['state']
+        return self.setPhysicalAddress(pa)
+    
+    def getCountryState(self):
+        return self.getPhysicalAddress()
 
 atapi.registerType(Patient,PROJECTNAME)
