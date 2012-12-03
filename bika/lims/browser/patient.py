@@ -705,11 +705,16 @@ class ajaxGetPatientLastReferralID(BrowserView):
     """
     def __call__(self):
         plone.protect.CheckAuthenticator(self.request)
-        clientID = ''
+        ret = {'clientid':'','clientname':''}
         bpc = getToolByName(self, 'bika_catalog')
         batches = bpc(portal_type='Batch', getPatientID=self.context.id)
         if batches and batches[0]:
             batch = batches[0].getObject()
-            clientID = batch.getClientID()
-
-        return clientID;
+            clientid = batch.getClientID()
+            if (clientid):
+                ret['clientid'] = clientid            
+                pc = getToolByName(self, 'portal_catalog')
+                clients = pc(portal_type='Client', UID=batch.getClientUID())
+                if (clients and len(clients)>0):
+                    ret['clientname'] = clients[0].Title
+        return json.dumps(ret);
