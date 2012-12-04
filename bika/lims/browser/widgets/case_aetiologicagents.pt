@@ -23,7 +23,7 @@
                         </th>
                         <th class="column"
                             id="foldercontents-subtype-column">
-                            <span i18n:translate="">Subtype</span>
+                            <span i18n:translate="" class="fieldRequired">Subtype</span>
                         </th>
                     </tr>
                 </thead>
