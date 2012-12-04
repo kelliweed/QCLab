@@ -353,8 +353,11 @@ class Patient(Person):
 
     def setCountryState(self, value):
         pa = self.getPhysicalAddress() and self.getPhysicalAddress() or {'country': '', 'state': ''}
-        pa['country'] = self.REQUEST.form['CountryState']['country']
-        pa['state'] = self.REQUEST.form['CountryState']['state']
+        pa['country'] = self.REQUEST.form.get('CountryState', {'country':''})['country']
+        pa['state'] = self.REQUEST.form.get('CountryState', {'state':''})['state']
+        if not pa['country']:
+            return
+
         return self.setPhysicalAddress(pa)
 
     def getCountryState(self):
