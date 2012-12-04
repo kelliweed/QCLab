@@ -42,6 +42,36 @@ $(document).ready(function(){
                 return false;
             }
         });
+        
+        $(".template-caseaetiologicagents #Title").change(function(event){
+        	$.ajax({
+                type: 'POST',
+                url: window.portal_url + '/getAetiologicAgents',
+                data: {'_authenticator': $('input[name="_authenticator"]').val(),
+                       'title': $(this).val()},
+        		dataType: "json",
+	        	success: function(data, textStatus, $XHR){   
+	        		if (data == null || data['rows'].length < 1) {
+	        			//Aetiologic agent doesn't exist
+	        			$(".template-caseaetiologicagents #Subtype").val('');
+	        			$(".template-caseaetiologicagents #Title").val('');
+	        			$(".template-caseaetiologicagents #Title").focus();
+	        			$(".template-caseaetiologicagents #Subtype").attr('readonly', true);
+	        		} else {
+	        			$(".template-caseaetiologicagents #Subtype").focus();
+	        			$(".template-caseaetiologicagents #Subtype").attr('readonly', false);
+	        		}	        		
+				},
+				error: function(){
+					//Error while searching for aetiologic agent
+        			$(".template-caseaetiologicagents #Subtype").combogrid = null;
+        			$(".template-caseaetiologicagents #Title").val('');
+        			$(".template-caseaetiologicagents #Subtype").val('');
+        			$(".template-caseaetiologicagents #Title").focus();
+        			$(".template-caseaetiologicagents #Subtype").attr('readonly', false);
+				}
+            });
+        });
     }
     lookups();
 
@@ -51,7 +81,7 @@ $(document).ready(function(){
         D = $(".template-caseaetiologicagents #Description").val();
         S = $(".template-caseaetiologicagents #Subtype").val();
         I = $(".template-caseaetiologicagents #AgentUID").val();
-        if (T == ''){
+        if (T == '' || S == ''){
             return false;
         }
         

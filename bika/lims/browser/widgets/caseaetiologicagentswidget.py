@@ -64,13 +64,16 @@ class CaseAetiologicAgentsWidget(TypesWidget):
                   
                 # Create new Aetiologic Agent entry if none exists
                 aelist = bsc(portal_type='AetiologicAgent', title=T)
-                if not aelist:                    
-                    folder = instance.bika_setup.bika_aetiologicagents
-                    _id = folder.invokeFactory('AetiologicAgent', id='tmp')
-                    obj = folder[_id]
-                    obj.edit(title = T, description = D, aetiologicagentsubtypes = {'Subtype' : S, 'SubtypeRemarks': ''})
-                    obj.unmarkCreationFlag()
-                    renameAfterCreation(obj)          
+                if not aelist:
+                    self.context.plone_utils.addPortalMessage(_("The Aetiologic agent '%s' is not valid")%T,"error")
+                    
+                #if not aelist:                    
+                #    folder = instance.bika_setup.bika_aetiologicagents
+                #    _id = folder.invokeFactory('AetiologicAgent', id='tmp')
+                #    obj = folder[_id]
+                #    obj.edit(title = T, description = D, aetiologicagentsubtypes = {'Subtype' : S, 'SubtypeRemarks': ''})
+                #    obj.unmarkCreationFlag()
+                #    renameAfterCreation(obj)          
                 #else:
                 #    # Check if the aetiologic agent already contains the entered subtype
                 #    agent = aelist[0].getObject()
@@ -88,8 +91,9 @@ class CaseAetiologicAgentsWidget(TypesWidget):
                 #        agent.setAetiologicAgentSubtypes(subtypes) 
                 #        agent.unmarkCreationFlag()
                 #        renameAfterCreation(agent)         
-                                       
-                value.append({'Title': T, 'Description': D, 'Subtype': S})
+                
+                else:
+                    value.append({'Title': T, 'Description': D, 'Subtype': S})
         return value, {}
 
     security.declarePublic('CaseAetiologicAgents')

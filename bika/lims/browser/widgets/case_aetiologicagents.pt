@@ -56,10 +56,10 @@
                              <input type="hidden" name="AgentUID" id="AgentUID" value=""/>
                         </td>
                         <td colspan="1" rowspan="1" class="state-active Description">
-                             <input class="wide" id="Description" type="text" value="" autocomplete="off"/>
+                             <input class="wide" id="Description" type="text" value="" autocomplete="off" readonly="readonly"/>
                         </td>
                         <td colspan="1" rowspan="1" class="state-active Subtype">
-                             <input class="wide" id="Subtype" type="text" value="" autocomplete="off"/>
+                             <input class="wide" id="Subtype" type="text" value="" autocomplete="off"  readonly="readonly"/>
                         </td>
                     </tr>
                 </tbody>
