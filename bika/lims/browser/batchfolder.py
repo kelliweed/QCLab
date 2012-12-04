@@ -165,7 +165,7 @@ class ajaxGetBatches(BrowserView):
         plone.protect.CheckAuthenticator(self.request)
         PatientUID = self.request.get('PatientUID', '')
         ClientUID = self.request.get('ClientUID', '')
-        searchTerm = self.request['searchTerm'].lower()
+        searchTerm = 'searchTerm' in self.request and self.request['searchTerm'].lower() or ''
         page = self.request['page']
         nr_rows = self.request['rows']
         sord = self.request['sord']
