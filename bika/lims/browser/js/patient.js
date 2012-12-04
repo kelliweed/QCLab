@@ -359,7 +359,7 @@ $(document).ready(function(){
 		if (D == '') {
 			return false;
 		}
-		if (Date.parse(E) <= Date.parse(S)) {
+		if (Date.parse(E) < Date.parse(S)) {
 			alert(_('End date must be after start date'))
 			return false;
 		}
@@ -496,7 +496,7 @@ $(document).ready(function(){
 			return false;
 		}
 		if (E != '') {
-			if (Date.parse(E) <= Date.parse(S)) {
+			if (Date.parse(E) < Date.parse(S)) {
 				alert(_('End date must be after start date'))
 				return false;
 			}
