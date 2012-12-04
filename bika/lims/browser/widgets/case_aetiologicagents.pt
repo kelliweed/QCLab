@@ -41,12 +41,15 @@
                         </td>
                         <td colspan="1" rowspan="1" class="state-active Title">
                              <span tal:content="row/Title"/>
+                             <input type="hidden" name="CAE_STitle:list" tal:attributes="value row/Title"/>
                         </td>
                         <td colspan="1" rowspan="1" class="state-active Description">
                              <span tal:content="row/Description"/>
+                             <input type="hidden" name="CAE_SDescription:list" tal:attributes="value row/Description"/>                             
                         </td>
                         <td colspan="1" rowspan="1" class="state-active Subtype">
                              <span tal:content="row/Subtype"/>
+                             <input type="hidden" name="CAE_SSubtype:list" tal:attributes="value row/Subtype"/>
                         </td>
                     </tr>
                     <tr id="new">

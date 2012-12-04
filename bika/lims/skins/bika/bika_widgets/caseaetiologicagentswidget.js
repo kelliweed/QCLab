@@ -85,6 +85,19 @@ $(document).ready(function(){
         }
         
         // Check if record has been already added
+        titrows = $("input[name='CAE_STitle:list']");
+        for(i=0; i<titrows.length; i++){
+        	title = titrows[i];
+        	if (T==title.value) {
+        		str=$("input[name='CAE_SSubtype:list']")[i];
+        		if (str.value==S) {
+        			alert(_('Aetiologic agent already added'));
+        			$(".template-caseaetiologicagents #Subtype").val('');
+        			$(".template-caseaetiologicagents #Subtype").focus();
+        			return false;
+        		}
+        	}
+		}
         titrows = $("input[name='CAE_Title:list']");
         for(i=0; i<titrows.length; i++){
         	title = titrows[i];
