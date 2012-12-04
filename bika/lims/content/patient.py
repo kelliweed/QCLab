@@ -68,13 +68,13 @@ schema=Person.schema.copy()+Schema((
         widget=DateTimeWidget(
             label=_('Birth date'),
         ),
-    ),      
+    ),
     BooleanField('BirthDateEstimated',
         default=False,
         widget=BooleanWidget(
             label=_('Birth date is estimated'),
         ),
-    ),  
+    ),
     RecordsField('AgeSplitted',
         required=1,
         widget=SplittedDateWidget(
@@ -280,6 +280,7 @@ class Patient(Person):
             if not mtool.checkPermission(ManageAnalysisRequests,client):
                 continue
             clients.append([client.UID(),client.Title()])
+        clients.sort(lambda x,y:cmp(x[1], y[1]))
         return DisplayList(clients)
 
     def getPatientIdentifiersStr(self):
@@ -349,13 +350,13 @@ class Patient(Person):
         arr.append(splitted['month'] and str(splitted['month'])+'m' or '')
         arr.append(splitted['day'] and str(splitted['day'])+'d' or '')
         return ' '.join(arr)
-    
+
     def setCountryState(self, value):
         pa = self.getPhysicalAddress() and self.getPhysicalAddress() or {'country': '', 'state': ''}
         pa['country'] = self.REQUEST.form['CountryState']['country']
         pa['state'] = self.REQUEST.form['CountryState']['state']
         return self.setPhysicalAddress(pa)
-    
+
     def getCountryState(self):
         return self.getPhysicalAddress()
 
