@@ -173,6 +173,8 @@ class LoadSetupData(BrowserView):
 
         if 'Calculations' in sheets:
             self.load_calculations(sheets['Calculations'])
+        if 'AnalysisService InterimFields' in sheets:
+            self.load_service_interims(sheets['AnalysisService InterimFields'])
         if 'Analysis Services' in sheets:
             self.load_analysis_services(sheets['Analysis Services'])
         if 'AnalysisService ResultOptions' in sheets:
@@ -207,6 +209,13 @@ class LoadSetupData(BrowserView):
             self.load_wst_services(sheets['Worksheet Template Services'])
         if 'Worksheet Templates' in sheets:
             self.load_worksheet_templates(sheets['Worksheet Templates'])
+
+        if 'Immunizations' in sheets:
+            self.load_immunizations(sheets['Immunizations'])
+        if 'Aetiological Agents' in sheets:
+            self.load_aetiological_agents(sheets['Aetiological Agents'])
+        if 'Aetiological Agents Subtypes' in sheets:
+            self.load_aetiological_agents_subtypes(sheets['Aetiological Agents Subtypes'])
 
 #        if 'Reference Sample Results' in sheets:
 #            self.load_reference_sample_results(sheets['Reference Sample Results'])
@@ -349,7 +358,6 @@ class LoadSetupData(BrowserView):
         rows = [[sheet.cell(row=row_nr, column=col_nr).value for col_nr in range(nr_cols)] for row_nr in range(nr_rows)]
         fields = rows[0]
         folder = self.context.bika_setup.bika_batchlabels
-        self.containertypes = {}
         for row in rows[3:]:
             row = dict(zip(fields, row))
             _id = folder.invokeFactory('BatchLabel', id = 'tmp')
@@ -357,8 +365,6 @@ class LoadSetupData(BrowserView):
             obj.edit(title = unicode(row['title']))
             obj.unmarkCreationFlag()
             renameAfterCreation(obj)
-            self.containertypes[unicode(row['title'])] = obj
-
 
     def load_CaseStatuses(self, sheet):
         nr_rows = sheet.get_highest_row()
@@ -366,7 +372,6 @@ class LoadSetupData(BrowserView):
         rows = [[sheet.cell(row=row_nr, column=col_nr).value for col_nr in range(nr_cols)] for row_nr in range(nr_rows)]
         fields = rows[0]
         folder = self.context.bika_setup.bika_casestatuses
-        self.containertypes = {}
         for row in rows[3:]:
             row = dict(zip(fields, row))
             _id = folder.invokeFactory('CaseStatus', id = 'tmp')
@@ -375,7 +380,6 @@ class LoadSetupData(BrowserView):
                      description = unicode(row['description']))
             obj.unmarkCreationFlag()
             renameAfterCreation(obj)
-            self.containertypes[unicode(row['title'])] = obj
 
 
     def load_CaseOutcomes(self, sheet):
@@ -384,7 +388,6 @@ class LoadSetupData(BrowserView):
         rows = [[sheet.cell(row=row_nr, column=col_nr).value for col_nr in range(nr_cols)] for row_nr in range(nr_rows)]
         fields = rows[0]
         folder = self.context.bika_setup.bika_caseoutcomes
-        self.containertypes = {}
         for row in rows[3:]:
             row = dict(zip(fields, row))
             _id = folder.invokeFactory('CaseOutcome', id = 'tmp')
@@ -393,7 +396,6 @@ class LoadSetupData(BrowserView):
                      description = unicode(row['description']))
             obj.unmarkCreationFlag()
             renameAfterCreation(obj)
-            self.containertypes[unicode(row['title'])] = obj
 
 
     def load_SampleOrigins(self, sheet):
@@ -402,7 +404,6 @@ class LoadSetupData(BrowserView):
         rows = [[sheet.cell(row=row_nr, column=col_nr).value for col_nr in range(nr_cols)] for row_nr in range(nr_rows)]
         fields = rows[0]
         folder = self.context.bika_setup.bika_sampleorigins
-        self.containertypes = {}
         for row in rows[3:]:
             row = dict(zip(fields, row))
             _id = folder.invokeFactory('SampleOrigin', id = 'tmp')
@@ -411,7 +412,6 @@ class LoadSetupData(BrowserView):
                      description = unicode(row['description']))
             obj.unmarkCreationFlag()
             renameAfterCreation(obj)
-            self.containertypes[unicode(row['title'])] = obj
 
     def load_identifiertypes(self, sheet):
         nr_rows = sheet.get_highest_row()
@@ -419,7 +419,6 @@ class LoadSetupData(BrowserView):
         rows = [[sheet.cell(row=row_nr, column=col_nr).value for col_nr in range(nr_cols)] for row_nr in range(nr_rows)]
         fields = rows[0]
         folder = self.context.bika_setup.bika_identifiertypes
-        self.containertypes = {}
         for row in rows[3:]:
             row = dict(zip(fields, row))
             _id = folder.invokeFactory('IdentifierType', id = 'tmp')
@@ -428,7 +427,6 @@ class LoadSetupData(BrowserView):
                      description = unicode(row['description']))
             obj.unmarkCreationFlag()
             renameAfterCreation(obj)
-            self.containertypes[unicode(row['title'])] = obj
 
     def load_preservations(self, sheet):
         nr_rows = sheet.get_highest_row()
@@ -1805,4 +1803,57 @@ class LoadSetupData(BrowserView):
             self.set_wf_history(obj, row['workflow_history'])
             obj.unmarkCreationFlag()
 
+    def load_aetiological_agents(self, sheet):
+        nr_rows = sheet.get_highest_row()
+        nr_cols = sheet.get_highest_column()
+        rows = [[sheet.cell(row=row_nr, column=col_nr).value for col_nr in range(nr_cols)] for row_nr in range(nr_rows)]
+        fields = rows[0]
+        folder = self.context.bika_setup.bika_aetiologicagents
+        self.aetiologicagents = {}
+        for row in rows[3:]:
+            row = dict(zip(fields, row))
+            _id = folder.invokeFactory('AetiologicAgent', id = 'tmp')
+            obj = folder[_id]
 
+            obj.edit(title = unicode(row['title']),
+                     description = unicode(row['description']))
+            obj.unmarkCreationFlag()
+            renameAfterCreation(obj)
+            self.aetiologicagents[row['title']] = obj
+
+    def load_aetiological_agents_subtypes(self, sheet):
+        nr_rows = sheet.get_highest_row()
+        nr_cols = sheet.get_highest_column()
+        rows = [[sheet.cell(row=row_nr, column=col_nr).value for col_nr in range(nr_cols)] for row_nr in range(nr_rows)]
+        fields = rows[0]
+        for row in rows[3:]:
+            row = dict(zip(fields, row))
+            agent = self.aetiologicagents[row['aetiologicagent_title']]
+
+            subtypes = agent.getAetiologicAgentSubtypes()
+            subtypes.append({'Subtype': row['subtype'],
+                            'Remarks': row['remarks']})
+            agent.setAetiologicAgentSubtypes(subtypes)
+
+    def load_immunizations(self, sheet):
+        nr_rows = sheet.get_highest_row()
+        nr_cols = sheet.get_highest_column()
+        rows = [[sheet.cell(row=row_nr, column=col_nr).value for col_nr in range(nr_cols)] for row_nr in range(nr_rows)]
+        fields = rows[0]
+        folder = self.context.bika_setup.bika_immunizations
+        for row in rows[3:]:
+            row = dict(zip(fields, row))
+            _id = folder.invokeFactory('Immunization', id = 'tmp')
+            obj = folder[_id]
+            obj.edit(title = unicode(row['title']),
+                     description = unicode(row['description']),
+                     Form = unicode(row['Form']),
+                     RelevantFacts = unicode(row['RelevantFacts']),
+                     GeographicalDistribution = unicode(row['GeographicalDistribution']),
+                     Transmission = unicode(row['Transmission']),
+                     Symptoms = unicode(row['Symptoms']),
+                     Risk = unicode(row['Risk']),
+                     Treatment = unicode(row['Treatment']),
+                     Prevention = unicode(row['Prevention']))
+            obj.unmarkCreationFlag()
+            renameAfterCreation(obj)
