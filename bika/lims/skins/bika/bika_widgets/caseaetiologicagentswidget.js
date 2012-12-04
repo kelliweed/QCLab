@@ -64,11 +64,10 @@ $(document).ready(function(){
 				},
 				error: function(){
 					//Error while searching for aetiologic agent
-        			$(".template-caseaetiologicagents #Subtype").combogrid = null;
         			$(".template-caseaetiologicagents #Title").val('');
         			$(".template-caseaetiologicagents #Subtype").val('');
         			$(".template-caseaetiologicagents #Title").focus();
-        			$(".template-caseaetiologicagents #Subtype").attr('readonly', false);
+        			$(".template-caseaetiologicagents #Subtype").attr('readonly', true);
 				}
             });
         });
@@ -84,6 +83,21 @@ $(document).ready(function(){
         if (T == '' || S == ''){
             return false;
         }
+        
+        // Check if record has been already added
+        titrows = $("input[name='CAE_Title:list']");
+        for(i=0; i<titrows.length; i++){
+        	title = titrows[i];
+        	if (T==title.value) {
+        		str=$("input[name='CAE_Subtype:list']")[i];
+        		if (str.value==S) {
+        			alert(_('Aetiologic agent already added'));
+        			$(".template-caseaetiologicagents #Subtype").val('');
+        			$(".template-caseaetiologicagents #Subtype").focus();
+        			return false;
+        		}
+        	}
+		}
         
         newrow = $(".template-caseaetiologicagents tr#new").clone();
         $(".template-caseaetiologicagents tr#new").removeAttr('id');
