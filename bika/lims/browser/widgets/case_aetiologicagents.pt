@@ -72,7 +72,7 @@
 							<input class="action_button add_row allowMultiSubmit"
 						       type="submit"
 							   i18n:attributes="value"
-							   value="Add" />
+							   value="Add" disabled="disabled"/>
 							<tal:hasaetiologicagents tal:condition="python:hasattr(view, 'hasAetiologicAgents') and view.hasAetiologicAgents()">
 								<input class="action_button" type="submit"
 									name="CAE_delete"

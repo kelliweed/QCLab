@@ -66,34 +66,23 @@ class CaseAetiologicAgentsWidget(TypesWidget):
                 aelist = bsc(portal_type='AetiologicAgent', title=T)
                 if not aelist:
                     self.context.plone_utils.addPortalMessage(_("The Aetiologic agent '%s' is not valid")%T,"error")
-                    
-                #if not aelist:                    
-                #    folder = instance.bika_setup.bika_aetiologicagents
-                #    _id = folder.invokeFactory('AetiologicAgent', id='tmp')
-                #    obj = folder[_id]
-                #    obj.edit(title = T, description = D, aetiologicagentsubtypes = {'Subtype' : S, 'SubtypeRemarks': ''})
-                #    obj.unmarkCreationFlag()
-                #    renameAfterCreation(obj)          
-                #else:
-                #    # Check if the aetiologic agent already contains the entered subtype
-                #    agent = aelist[0].getObject()
-                #    subtypes = agent.getAetiologicAgentSubtypes()
-                #    exists = False
-                #    for subtype in subtypes:
-                #        subtypetitle = subtype['Subtype']
-                #        if (subtypetitle.lower().strip() == S.lower().strip()):
-                #            exists = True
-                #            S = subtypetitle
-                #            break
-                #    if not exists:                        
-                #        # Add the subtype to Aetiologic agent setup entity
-                #        subtypes.append({'Subtype':S, 'SubtypeRemarks':''})   
-                #        agent.setAetiologicAgentSubtypes(subtypes) 
-                #        agent.unmarkCreationFlag()
-                #        renameAfterCreation(agent)         
-                
                 else:
-                    value.append({'Title': T, 'Description': D, 'Subtype': S})
+                    # Check if the aetiologic agent already contains the entered subtype
+                    agent = aelist[0].getObject()
+                    subtypes = agent.getAetiologicAgentSubtypes()
+                    exists = False
+                    for subtype in subtypes:
+                        subtypetitle = subtype['Subtype']
+                        if (subtypetitle.lower().strip() == S.lower().strip()):
+                            exists = True
+                            S = subtypetitle
+                            break
+
+                    if exists:
+                        value.append({'Title': T, 'Description': D, 'Subtype': S})
+                    else:
+                        self.context.plone_utils.addPortalMessage(_("The Aetiologic agent subtype '%s' is not valid")%S,"error")
+                        
         return value, {}
 
     security.declarePublic('CaseAetiologicAgents')

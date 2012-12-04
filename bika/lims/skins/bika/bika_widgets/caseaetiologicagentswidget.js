@@ -71,6 +71,35 @@ $(document).ready(function(){
 				}
             });
         });
+        
+        $(".template-caseaetiologicagents #Subtype").change(function(event){
+        	$.ajax({
+                type: 'POST',
+                url: window.portal_url + '/getAetiologicAgentSubtypes',
+                data: {'_authenticator': $('input[name="_authenticator"]').val(),
+                       'title': $(this).val(),
+                       'auid':$(".template-caseaetiologicagents #AgentUID").val()},
+        		dataType: "json",
+	        	success: function(data, textStatus, $XHR){   
+	        		if (data == null || data['rows'].length < 1) {
+	        			//Subtype doesn't exist
+	        			$(".template-caseaetiologicagents #Subtype").val('');
+	        			$(".template-caseaetiologicagents #Subtype").focus();
+	        			$(".template-caseaetiologicagents .add_row").attr('disabled', 'disabled')
+	        			return false;
+	        		} else {
+	        			$(".template-caseaetiologicagents .add_row").attr('disabled', '')
+	        		}        		
+				},
+				error: function(){
+					//Error while searching
+        			$(".template-caseaetiologicagents #Subtype").val('');
+        			$(".template-caseaetiologicagents #Subtype").focus();
+        			$(".template-caseaetiologicagents .add_row").attr('disabled', '')
+        			return false;
+				}
+            });
+        });
     }
     lookups();
 
