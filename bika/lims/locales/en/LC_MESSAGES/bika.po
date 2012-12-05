@@ -808,12 +808,12 @@ msgstr "Case ID"
 #
 # File: ../controlpanel/bika_batchlabels.py, line: 23
 msgid "Batch Labels"
-msgstr ""
+msgstr "Case Syndrome Classifications"
 
 #
 # File: ../content/invoicebatch.py, line: 25
 msgid "Batch end date"
-msgstr ""
+msgstr "Case end date"
 
 #
 msgid "Batch label"
@@ -826,7 +826,7 @@ msgstr "Case Syndrome Classifications"
 #
 # File: ../content/invoicebatch.py, line: 18
 msgid "Batch start date"
-msgstr ""
+msgstr "Case start date"
 
 #
 msgid "Batches"

@@ -178,12 +178,12 @@ msgstr "Case ID"
 # 
 # File: ../profiles/default/types/BatchLabel.xml, line: -1
 msgid "Batch Label"
-msgstr ""
+msgstr "Case Syndrome Classification"
 
 # 
 # File: ../profiles/default/types/BatchLabels.xml, line: -1
 msgid "Batch Labels"
-msgstr ""
+msgstr "Case Syndrome Classifications"
 
 # 
 msgid "Batch label"
@@ -392,7 +392,7 @@ msgstr ""
 # 
 # File: ../profiles/default/types/InvoiceBatch.xml, line: -1
 msgid "Export batch"
-msgstr ""
+msgstr "Export case"
 
 # 
 # File: ../profiles/default/actions.xml, line: -1
@@ -450,12 +450,12 @@ msgstr ""
 # 
 # File: ../profiles/default/types/InvoiceBatch.xml, line: -1
 msgid "Invoice batch"
-msgstr ""
+msgstr "Invoice case"
 
 # 
 # File: ../profiles/default/types/InvoiceFolder.xml, line: -1
 msgid "Invoice batches"
-msgstr ""
+msgstr "Invoice cases"
 
 # 
 # File: ../profiles/default/types/InvoiceBatch.xml, line: -1
@@ -610,7 +610,7 @@ msgstr ""
 # 
 # File: ../profiles/default/types/InvoiceBatch.xml, line: -1
 msgid "Print batch"
-msgstr ""
+msgstr "Print case"
 
 # 
 # File: ../profiles/default/types/Invoice.xml, line: -1
