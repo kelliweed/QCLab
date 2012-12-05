@@ -22,7 +22,7 @@ msgstr ""
 #
 # File: ../browser/analysisrequest.py, line: 1537
 msgid "${id} is not a valid sample ID"
-msgstr ""
+msgstr "${id} is not a valid specimen ID"
 
 #
 # File: ../browser/client.py, line: 118
@@ -83,7 +83,7 @@ msgstr ""
 # File: ../browser/sample.py, line: 473
 # File: ../content/artemplate.py, line: 153
 msgid "${sampletype} is not a valid sample type"
-msgstr ""
+msgstr "${sampletype} is not a valid specimen type"
 
 #
 # File: ../browser/analysisrequest.py, line: 1564
@@ -103,7 +103,7 @@ msgstr ""
 #
 # File: ../content/bikasetup.py, line: 190
 msgid "'Classic' indicates importing analysis requests per sample and analysis service selection. With 'Profiles', analysis profile keywords are used to select multiple analysis services together"
-msgstr ""
+msgstr "'Classic' indicates importing analysis requests per specimen and analysis service selection. With 'Profiles', analysis profile keywords are used to select multiple analysis services together"
 
 #
 # File: ../content/referencesample.py, line: 180
@@ -295,12 +295,12 @@ msgstr ""
 #
 # File: ../browser/worksheet.py, line: 667
 msgid "Add Blank Reference"
-msgstr ""
+msgstr "Add Blank Control"
 
 #
 # File: ../browser/worksheet.py, line: 711
 msgid "Add Control Reference"
-msgstr ""
+msgstr "Add Control"
 
 #
 # File: ../browser/worksheet.py, line: 754
@@ -357,7 +357,7 @@ msgstr ""
 #
 # File: ../browser/analysisrequest.py, line: 1334
 msgid "All Samples"
-msgstr ""
+msgstr "All Specimens"
 
 #
 # File: ../browser/analysisrequest.py, line: 2297
@@ -372,12 +372,12 @@ msgstr ""
 #
 # File: ../browser/referencesample.py, line: 184
 msgid "All reference samples in the system are displayed here."
-msgstr ""
+msgstr "All control specimens in the system are displayed here."
 
 #
 # File: ../content/client.py, line: 64
 msgid "Always expand the selected categories in client views"
-msgstr ""
+msgstr "Always expand the selected categories in referring institution views"
 
 #
 # File: ../browser/reports/administration_arsnotinvoiced.py, line: 71
@@ -415,7 +415,7 @@ msgstr ""
 # File: ../browser/reports/productivity_analysespersampletype.py, line: 34
 # File: ../browser/reports/templates/productivity.pt, line: 40
 msgid "Analyses per sample type"
-msgstr ""
+msgstr "Analyses per specimen type"
 
 #
 # File: ../browser/reports/templates/productivity.pt, line: 29
@@ -430,7 +430,7 @@ msgstr ""
 #
 # File: ../browser/reports/qualitycontrol_analysesoutofrange.py, line: 30
 msgid "Analyses results out of client or lab specified range"
-msgstr ""
+msgstr "Analyses results out of referring institution or lab specified range"
 
 #
 # File: ../browser/reports/qualitycontrol_analysesrepeated.py, line: 29
@@ -582,7 +582,7 @@ msgstr ""
 # File: ../browser/reports/productivity_analysesperclient.py, line: 41
 # File: ../browser/reports/templates/productivity.pt, line: 63
 msgid "Analysis requests and analyses per client"
-msgstr ""
+msgstr "Analysis requests and analyses per referring institution"
 
 #
 # File: ../browser/reports/administration_arsnotinvoiced.py, line: 30
@@ -603,12 +603,12 @@ msgstr ""
 #
 # File: ../browser/reports/templates/qualitycontrol.pt, line: 31
 msgid "Analysis results out of lab or client specified range Note that this may take several minutes"
-msgstr ""
+msgstr "Analysis results out of lab or referring institution specified range Note that this may take several minutes"
 
 #
 # File: ../browser/mailtemplates/analysisrequest_results.pt, line: 410
 msgid "Analysis results relate only to the samples tested"
-msgstr ""
+msgstr "Analysis results relate only to the specimens tested"
 
 #
 # File: ../browser/queries/analysisrequests.py, line: 245
@@ -808,12 +808,12 @@ msgstr "Case ID"
 #
 # File: ../controlpanel/bika_batchlabels.py, line: 23
 msgid "Batch Labels"
-msgstr ""
+msgstr "Case Syndrome Classifications"
 
 #
 # File: ../content/invoicebatch.py, line: 25
 msgid "Batch end date"
-msgstr ""
+msgstr "Case end date"
 
 #
 msgid "Batch label"
@@ -826,7 +826,7 @@ msgstr "Case Syndrome Classifications"
 #
 # File: ../content/invoicebatch.py, line: 18
 msgid "Batch start date"
-msgstr ""
+msgstr "Case start date"
 
 #
 msgid "Batches"
@@ -982,7 +982,7 @@ msgstr ""
 #
 # File: ../content/patients.py, line: 67
 msgid "Cannot create patients without any system clients configured."
-msgstr ""
+msgstr "Cannot create patients without any system referring institutions configured."
 
 #
 # File: ../subscribers/calculation.py, line: 47
@@ -1058,12 +1058,12 @@ msgstr ""
 #
 # File: ../content/samplepoint.py, line: 70
 msgid "Check this box if the samples taken at this point are 'composite' and put together from more than one sub sample, e.g. several surface samples from a dam mixed together to be a representative sample for the dam. The default, unchecked, indicates 'grab' samples"
-msgstr ""
+msgstr "Check this box if the specimens taken at this point are 'composite' and put together from more than one sub specimen, e.g. several surface specimens from a dam mixed together to be a representative specimen for the dam. The default, unchecked, indicates 'grab' specimens"
 
 #
 # File: ../content/container.py, line: 37
 msgid "Check this box if this container is already preserved.Setting this will short-circuit the preservation workflow for sample partitions stored in this container."
-msgstr ""
+msgstr "Check this box if this container is already preserved.Setting this will short-circuit the preservation workflow for specimen aliquots stored in this container."
 
 #
 # File: ../content/laboratory.py, line: 35
@@ -1073,7 +1073,7 @@ msgstr ""
 #
 # File: ../content/analysisservice.py, line: 456
 msgid "Check this box to ensure a separate sample container is used for this analysis service"
-msgstr ""
+msgstr "Check this box to ensure a separate specimen container is used for this analysis service"
 
 #
 # File: ../content/bikasetup.py, line: 306
@@ -1110,7 +1110,7 @@ msgstr ""
 #
 # File: ../browser/analysisrequest.py, line: 1290
 msgid "Click on a sample to create a secondary AR"
-msgstr ""
+msgstr "Click on a specimen to create a secondary AR"
 
 #
 # File: ../browser/templates/analysisservice_popup.pt, line: 108
@@ -1119,108 +1119,108 @@ msgstr ""
 
 #
 msgid "Client"
-msgstr "Hospital"
+msgstr "Referring Institution"
 
 #
 # File: ../content/arimport.py, line: 47
 msgid "Client Address"
-msgstr ""
+msgstr "Referring Institution Address"
 
 #
 # File: ../content/arimport.py, line: 52
 msgid "Client City"
-msgstr ""
+msgstr "Referring Institution City"
 
 #
 # File: ../content/arimport.py, line: 85
 msgid "Client Email"
-msgstr ""
+msgstr "Referring Institution Email"
 
 #
 # File: ../content/arimport.py, line: 42
 msgid "Client Fax"
-msgstr ""
+msgstr "Referring Institution Fax"
 
 #
 msgid "Client ID"
-msgstr "Hospital ID"
+msgstr "Referring Institution ID"
 
 #
 # File: ../content/arimport.py, line: 32
 msgid "Client Name"
-msgstr ""
+msgstr "Referring Institution Name"
 
 #
 # File: ../browser/analysisrequest.py, line: 499
 # File: ../browser/mailtemplates/analysisrequest_results.pt, line: 85
 # File: ../browser/templates/ar_add.pt, line: 360
 msgid "Client Order"
-msgstr ""
+msgstr "Referring Institution Order"
 
 #
 # File: ../browser/queries/queries_query.pt, line: 83
 msgid "Client Order ID"
-msgstr ""
+msgstr "Referring Institution Order ID"
 
 #
 # File: ../content/arimport.py, line: 37
 msgid "Client Phone"
-msgstr ""
+msgstr "Referring Institution Phone"
 
 #
 # File: ../browser/analysisrequest.py, line: 1884
 # File: ../browser/sample.py, line: 618
 # File: ../content/arimportitem.py, line: 20
 msgid "Client Ref"
-msgstr ""
+msgstr "Institution Ref"
 
 #
 # File: ../browser/analysisrequest.py, line: 493
 # File: ../browser/mailtemplates/analysisrequest_results.pt, line: 92
 # File: ../browser/queries/queries_query.pt, line: 88
 msgid "Client Reference"
-msgstr ""
+msgstr "Referring Institution Reference"
 
 #
 # File: ../content/arimportitem.py, line: 25
 msgid "Client Remarks"
-msgstr ""
+msgstr "Referring Institution Remar"
 
 #
 # File: ../browser/analysisrequest.py, line: 487
 # File: ../browser/mailtemplates/analysisrequest_results.pt, line: 99
 # File: ../browser/sample.py, line: 334
 msgid "Client SID"
-msgstr ""
+msgstr "Referring Institution SID"
 
 #
 # File: ../browser/queries/queries_query.pt, line: 93
 msgid "Client Sample ID"
-msgstr ""
+msgstr "Referring Institution Specimen ID"
 
 #
 # File: ../browser/client.py, line: 293
 msgid "Client contact required before request may be submitted"
-msgstr ""
+msgstr "Referring Institution contact required before request may be submitted"
 
 #
 # File: ../browser/queries/analysisrequests.py, line: 123
 msgid "Client order number"
-msgstr ""
+msgstr "Referring Institution order number"
 
 #
 # File: ../browser/queries/analysisrequests.py, line: 134
 msgid "Client reference"
-msgstr ""
+msgstr "Referring Institution reference"
 
 #
 # File: ../browser/queries/analysisrequests.py, line: 145
 msgid "Client sample ID"
-msgstr ""
+msgstr "Referring Institution specimen ID"
 
 #
 msgid "Clients"
-msgstr "Hospitals"
+msgstr "Referring Institutions"
 
 #
 # File: ../browser/batchfolder.py, line: 55
@@ -1253,7 +1253,7 @@ msgstr ""
 #
 # File: ../content/artemplate.py, line: 81
 msgid "Configure the sample partitions and preservations for this template. Assign analyses to the different partitions on the template's Analyses tab"
-msgstr ""
+msgstr "Configure the specimen aliquots and preservations for this template. Assign analyses to the different aliquots on the template's Analyses tab"
 
 #
 # File: ../browser/templates/login_details.pt, line: 81
@@ -1520,7 +1520,7 @@ msgstr ""
 #
 # File: ../content/bikasetup.py, line: 222
 msgid "Default sample retention period"
-msgstr ""
+msgstr "Default specimen retention period"
 
 #
 # File: ../browser/fields/interimfieldsfield.py, line: 16
@@ -1540,7 +1540,7 @@ msgstr ""
 #
 # File: ../content/bikasetup.py, line: 265
 msgid "Define the prefixes for the unique sequential IDs the system issues for objects. In the 'Padding' field, indicate with how many leading zeros the numbers must be padded. E.g. a prefix of WS for worksheets with padding of 4, will see them numbered from WS-0001 to WS-9999. NB: Note that samples and analysis requests are prefixed with sample type abbreviations and are not configured in this table - their padding can be set in the specified fields below"
-msgstr ""
+msgstr "Define the prefixes for the unique sequential IDs the system issues for objects. In the 'Padding' field, indicate with how many leading zeros the numbers must be padded. E.g. a prefix of WS for worksheets with padding of 4, will see them numbered from WS-0001 to WS-9999. NB: Note that specimens and analysis requests are prefixed with specimen type abbreviations and are not configured in this table - their padding can be set in the specified fields below"
 
 #
 # File: ../browser/fields/coordinatefield.py, line: 20
@@ -1582,7 +1582,7 @@ msgstr ""
 #
 # File: ../content/method.py, line: 35
 msgid "Describes the method in layman terms. This information is made available to lab clients"
-msgstr ""
+msgstr "Describes the method in layman terms. This information is made available to lab referring institutions"
 
 #
 # File: ../browser/batchfolder.py, line: 38
@@ -2039,7 +2039,7 @@ msgstr ""
 # File: ../browser/analysisrequest.py, line: 2303
 # File: ../browser/sample.py, line: 895
 msgid "Future dated sample"
-msgstr ""
+msgstr "Future date specimen"
 
 #
 # File: ../content/patient.py, line: 48
@@ -2104,7 +2104,7 @@ msgstr ""
 #
 # File: ../content/samplepoint.py, line: 48
 msgid "If a sample is taken periodically at this sample point,  enter frequency here, e.g. weekly"
-msgstr ""
+msgstr "If a specimen is taken periodically at this sample point,  enter frequency here, e.g. weekly"
 
 #
 # File: ../content/analysisservice.py, line: 265
@@ -2114,7 +2114,7 @@ msgstr ""
 #
 # File: ../content/analysisspec.py, line: 39
 msgid "If the sample type you are looking for is not listed here, a specification for it has been created already. To edit existing, specifications, navigate 1 level up and select the specification by clicking on the sample type in the list"
-msgstr ""
+msgstr "If the specimen type you are looking for is not listed here, a specification for it has been created already. To edit existing, specifications, navigate 1 level up and select the specification by clicking on the specimen type in the list"
 
 #
 # File: ../content/container.py, line: 52
@@ -2388,7 +2388,7 @@ msgstr ""
 #
 # File: ../content/sample.py, line: 84
 msgid "Linked Sample"
-msgstr ""
+msgstr "Linked Specimen"
 
 #
 # File: ../exportimport/import.pt, line: 46
@@ -2497,7 +2497,7 @@ msgstr ""
 #
 # File: ../content/container.py, line: 29
 msgid "Maximum possible size or volume of samples."
-msgstr ""
+msgstr "Maximum possible size or volume of specimens."
 
 #
 # File: ../content/analysis.py, line: 68
@@ -2716,7 +2716,7 @@ msgstr ""
 #
 # File: ../browser/reports/qualitycontrol_referenceanalysisqc.py, line: 50
 msgid "No reference sample was selected."
-msgstr ""
+msgstr "No control specimen was selected."
 
 #
 # File: ../browser/templates/login_details.pt, line: 26
@@ -2752,7 +2752,7 @@ msgstr ""
 #
 # File: ../browser/reports/productivity_analysesperclient.py, line: 42
 msgid "Number of Analysis requests and analyses per client"
-msgstr ""
+msgstr "Number of Analysis requests and analyses per referring institution"
 
 #
 # File: ../browser/queries/invoices.py, line: 117
@@ -2776,7 +2776,7 @@ msgstr ""
 #
 # File: ../browser/reports/productivity_analysespersampletype.py, line: 35
 msgid "Number of analyses requested per sample type"
-msgstr ""
+msgstr "Number of analyses requested per specimen type"
 
 #
 # File: ../browser/reports/administration_arsnotinvoiced.py, line: 114
@@ -2792,7 +2792,7 @@ msgstr ""
 #
 # File: ../content/arimport.py, line: 143
 msgid "Number of samples"
-msgstr ""
+msgstr "Number of specimens"
 
 #
 # File: ../content/treatment.py, line: 58
@@ -2802,7 +2802,7 @@ msgstr ""
 #
 # File: ../content/preservation.py, line: 24
 msgid "Once preserved, the sample must be disposed of within this time period.  If not specified, the sample type retention period will be used."
-msgstr ""
+msgstr "Once preserved, the specimen must be disposed of within this time period.  If not specified, the specimen type retention period will be used."
 
 #
 # File: ../browser/templates/patient_chronicconditions.pt, line: 33
@@ -2875,19 +2875,19 @@ msgstr ""
 # File: ../browser/analysisrequest.py, line: 1036
 # File: ../browser/sample.py, line: 46
 msgid "Partition"
-msgstr ""
+msgstr "Aliquot"
 
 #
 # File: ../browser/templates/analysisservice_popup.pt, line: 212
 msgid "Partition Setup"
-msgstr ""
+msgstr "Aliquot Setup"
 
 #
 # File: ../browser/templates/analysisrequest_analyses.pt, line: 55
 # File: ../browser/templates/analysisrequest_view.pt, line: 55
 # File: ../browser/templates/sample.pt, line: 31
 msgid "Partitions"
-msgstr ""
+msgstr "Aliquots"
 
 #
 # File: ../content/immunization.py, line: 111
@@ -2996,7 +2996,7 @@ msgstr ""
 #
 # File: ../content/analysisservice.py, line: 499
 msgid "Please specify preservations that differ from the analysis service's default preservation per sample type here."
-msgstr ""
+msgstr "Please specify preservations that differ from the analysis service's default preservation per specimen type here."
 
 #
 # File: ../content/laboratory.py, line: 84
@@ -3210,12 +3210,12 @@ msgstr ""
 #
 # File: ../browser/queries/queries_query.pt, line: 55
 msgid "Query invoices on client, invoice date and description"
-msgstr ""
+msgstr "Query invoices on referring institution, invoice date and description"
 
 #
 # File: ../browser/queries/queries_query.pt, line: 44
 msgid "Query orders on client, order data, product and status"
-msgstr ""
+msgstr "Query orders on referring institution, order data, product and status"
 
 #
 # File: ../content/arimport.py, line: 109
@@ -3277,89 +3277,89 @@ msgstr ""
 # File: ../browser/templates/referencesample_sticker.pt, line: 46
 # File: ../content/worksheettemplate.py, line: 25
 msgid "Reference"
-msgstr ""
+msgstr "Control"
 
 #
 # File: ../browser/referencesample.py, line: 210
 # File: ../browser/referencesupplier.py, line: 29
 # File: ../browser/templates/referencesample_view.pt, line: 75
 msgid "Reference Definition"
-msgstr ""
+msgstr "Control Definition"
 
 #
 # File: ../controlpanel/bika_referencedefinitions.py, line: 29
 msgid "Reference Definitions"
-msgstr ""
+msgstr "Control Definitions"
 
 #
 # File: ../controlpanel/bika_referencemanufacturers.py, line: 27
 msgid "Reference Manufacturers"
-msgstr ""
+msgstr "Control Manufacturers"
 
 #
 # File: ../browser/referencesample.py, line: 108
 # File: ../content/referencedefinition.py, line: 27
 msgid "Reference Results"
-msgstr ""
+msgstr "Control Results"
 
 #
 # File: ../browser/reports/qualitycontrol_referenceanalysisqc.py, line: 53
 # File: ../browser/reports/selection_macros/select_reference_sample.pt, line: 5
 msgid "Reference Sample"
-msgstr ""
+msgstr "Control Specimen"
 
 #
 # File: ../browser/referencesample.py, line: 183
 # File: ../browser/referencesupplier.py, line: 9
 msgid "Reference Samples"
-msgstr ""
+msgstr "Control Specimens"
 
 #
 # File: ../browser/reports/selection_macros/select_reference_supplier.pt, line: 3
 msgid "Reference Supplier"
-msgstr ""
+msgstr "Control Supplier"
 
 #
 # File: ../controlpanel/bika_referencesuppliers.py, line: 29
 msgid "Reference Suppliers"
-msgstr ""
+msgstr "Control Suppliers"
 
 #
 # File: ../content/referenceanalysis.py, line: 29
 msgid "Reference Type"
-msgstr ""
+msgstr "Control Type"
 
 #
 # File: ../browser/reports/qualitycontrol_referenceanalysisqc.py, line: 37
 # File: ../browser/reports/templates/qualitycontrol.pt, line: 58
 msgid "Reference analysis QC"
-msgstr ""
+msgstr "Control analysis QC"
 
 #
 # File: ../browser/reports/templates/qualitycontrol.pt, line: 62
 msgid "Reference analysis quality control graphs"
-msgstr ""
+msgstr "Control analysis quality control graphs"
 
 #
 # File: ../browser/reports/qualitycontrol_referenceanalysisqc.py, line: 38
 msgid "Reference analysis quality control graphs "
-msgstr ""
+msgstr "Control analysis quality control graphs"
 
 #
 # File: ../browser/worksheet.py, line: 998
 msgid "Reference sample"
-msgstr ""
+msgstr "Control specimen"
 
 #
 # File: ../content/referencedefinition.py, line: 44
 # File: ../content/referencesample.py, line: 41
 msgid "Reference sample values are zero or 'blank'"
-msgstr ""
+msgstr "Control specimen values are zero or 'blank'"
 
 #
 # File: ../controlpanel/bika_referencedefinitions.py, line: 30
 msgid "ReferenceDefinition represents a Reference Definition or sample type used for quality control testing"
-msgstr ""
+msgstr "Control Definition represents a Control Definition or specimen type used for quality control testing"
 
 #
 # File: ../content/bikasetup.py, line: 41
@@ -3547,7 +3547,7 @@ msgstr ""
 # File: ../browser/analysisrequest.py, line: 1879
 # File: ../content/arimportitem.py, line: 15
 msgid "Sample"
-msgstr ""
+msgstr "Specimen"
 
 #
 # File: ../content/arimportitem.py, line: 40
@@ -3558,38 +3558,38 @@ msgstr ""
 # File: ../browser/analysisrequest.py, line: 1343
 # File: ../skins/bika/portlet_sample_due.pt, line: 22
 msgid "Sample Due"
-msgstr ""
+msgstr "Specimen Due"
 
 #
 # File: ../browser/analysisrequest.py, line: 481
 # File: ../browser/mailtemplates/analysisrequest_results.pt, line: 130
 # File: ../browser/sample.py, line: 603
 msgid "Sample ID"
-msgstr ""
+msgstr "Specimen ID"
 
 #
 # File: ../content/bikasetup.py, line: 288
 msgid "Sample ID Padding"
-msgstr ""
+msgstr "Specimen ID Padding"
 
 #
 # File: ../controlpanel/bika_samplematrices.py, line: 31
 msgid "Sample Matrices"
-msgstr ""
+msgstr "Specimen Matrices"
 
 #
 # File: ../browser/analysisrequest.py, line: 512
 # File: ../browser/sample.py, line: 353
 # File: ../content/sampletype.py, line: 44
 msgid "Sample Matrix"
-msgstr ""
+msgstr "Specimen Matrix"
 
 #
 # File: ../browser/sample.py, line: 33
 # File: ../browser/templates/analysisrequest_analyses.pt, line: 59
 # File: ../browser/templates/analysisrequest_view.pt, line: 59
 msgid "Sample Partitions"
-msgstr ""
+msgstr "Specimen Aliquots"
 
 #
 # File: ../browser/analysisrequest.py, line: 518
@@ -3610,19 +3610,19 @@ msgstr ""
 # File: ../browser/client.py, line: 607
 # File: ../browser/mailtemplates/analysisrequest_results.pt, line: 148
 msgid "Sample Type"
-msgstr ""
+msgstr "Specimen Type"
 
 #
 # File: ../content/sampletype.py, line: 50
 msgid "Sample Type Prefix"
-msgstr ""
+msgstr "Specimen Type Prefix"
 
 #
 # File: ../browser/templates/analysisservice_popup.pt, line: 253
 # File: ../browser/worksheetfolder.py, line: 122
 # File: ../content/samplepoint.py, line: 60
 msgid "Sample Types"
-msgstr ""
+msgstr "Specimen Types"
 
 #
 # File: ../browser/queries/analysisrequests.py, line: 171
@@ -3634,14 +3634,14 @@ msgstr ""
 #
 # File: ../browser/analysisrequest.py, line: 1352
 msgid "Sample received"
-msgstr ""
+msgstr "Specimen received"
 
 #
 # File: ../browser/queries/analysisrequests.py, line: 158
 # File: ../browser/reports/administration_arsnotinvoiced.py, line: 68
 # File: ../browser/reports/productivity_analysespersampletype.py, line: 104
 msgid "Sample type"
-msgstr ""
+msgstr "Specimen type"
 
 #
 # File: ../browser/queries/analysisrequests.py, line: 183
@@ -3658,14 +3658,14 @@ msgstr ""
 #
 # File: ../browser/sample.py, line: 593
 msgid "Samples"
-msgstr ""
+msgstr "Specimens"
 
 #
 # File: ../content/referencedefinition.py, line: 52
 # File: ../content/referencesample.py, line: 49
 # File: ../content/sampletype.py, line: 33
 msgid "Samples of this type should be treated as hazardous"
-msgstr ""
+msgstr "Specimens of this type should be treated as hazardous"
 
 #
 # File: ../browser/analysisrequest.py, line: 537
@@ -3751,13 +3751,13 @@ msgstr ""
 #
 # File: ../content/bikasetup.py, line: 234
 msgid "Select 'Register' if you want labels to be automatically printed when new ARs or sample records are created. Select 'Receive' to print labels when ARs or Samples are received. Select 'None' to disable automatic printing"
-msgstr ""
+msgstr "Select 'Register' if you want labels to be automatically printed when new ARs or specimen records are created. Select 'Receive' to print labels when ARs or Specimens are received. Select 'None' to disable automatic printing"
 
 #
 # File: ../browser/analysisrequest.py, line: 1289
 # File: ../browser/templates/ar_add.pt, line: 337
 msgid "Select Sample"
-msgstr ""
+msgstr "Select Specimen"
 
 #
 # File: ../exportimport/import.py, line: 25
@@ -3767,7 +3767,7 @@ msgstr ""
 #
 # File: ../content/analysisservice.py, line: 471
 msgid "Select a default preservation for this analysis service. If the preservation depends on the sample type combination, specify a preservation per sample type in the table below"
-msgstr ""
+msgstr "Select a default preservation for this analysis service. If the preservation depends on the specimen type combination, specify a preservation per specimen type in the table below"
 
 #
 # File: ../browser/worksheet.py, line: 755
@@ -3832,7 +3832,7 @@ msgstr ""
 #
 # File: ../browser/worksheet.py, line: 668
 msgid "Select services in the left column to locate reference samples. Select a reference by clicking it. "
-msgstr ""
+msgstr "Select services in the left column to locate control specimens. Select a control by clicking it. "
 
 #
 # File: ../browser/templates/worksheet_add_analyses.pt, line: 45
@@ -3853,7 +3853,7 @@ msgstr ""
 #
 # File: ../content/analysisservice.py, line: 488
 msgid "Select the default container to be used for this analysis service. If the container to be used depends on the sample type and preservation combination, specify the container in the sample type table below"
-msgstr ""
+msgstr "Select the default container to be used for this analysis service. If the container to be used depends on the sample type and preservation combination, specify the container in the specimen type table below"
 
 #
 # File: ../content/analysisservice.py, line: 245
@@ -3869,7 +3869,7 @@ msgstr ""
 #
 # File: ../content/bikasetup.py, line: 159
 msgid "Select this to activate the sample collection workflow steps."
-msgstr ""
+msgstr "Select this to activate the specimen collection workflow steps."
 
 #
 # File: ../content/worksheettemplate.py, line: 46
@@ -3939,7 +3939,7 @@ msgstr ""
 #
 # File: ../content/bikasetup.py, line: 117
 msgid "Set the maximum number of analysis requests per results email. Too many columns per email are difficult to read for some clients who prefer fewer results per email"
-msgstr ""
+msgstr "Set the maximum number of analysis requests per results email. Too many columns per email are difficult to read for some referring institutions who prefer fewer results per email"
 
 #
 # File: ../browser/client.py, line: 636
@@ -3964,7 +3964,7 @@ msgstr ""
 #
 # File: ../content/client.py, line: 79
 msgid "Show only selected categories in client views"
-msgstr ""
+msgstr "Show only selected categories in referring institution views"
 
 #
 # File: ../content/labcontact.py, line: 19
@@ -4011,7 +4011,7 @@ msgstr ""
 #
 # File: ../content/worksheettemplate.py, line: 30
 msgid "Specify the size of the Worksheet, e.g. corresponding to a specific instrument's tray size. Then select an Analysis 'type' per Worksheet position. Where QC samples are selected, also select which Reference Sample should be used. If a duplicate analysis is selected, indicate which sample position it should be a duplicate of"
-msgstr ""
+msgstr "Specify the size of the Worksheet, e.g. corresponding to a specific instrument's tray size. Then select an Analysis 'type' per Worksheet position. Where QC specimens are selected, also select which Control Specimen should be used. If a duplicate analysis is selected, indicate which specimen position it should be a duplicate of"
 
 #
 # File: ../content/analysisservice.py, line: 425
@@ -4118,12 +4118,12 @@ msgstr ""
 #
 # File: ../content/analysisrequest.py, line: 41
 msgid "The ID assigned to the client's request by the lab"
-msgstr ""
+msgstr "The ID assigned to the referring institution's request by the lab"
 
 #
 # File: ../content/sample.py, line: 33
 msgid "The ID assigned to the client's sample by the lab"
-msgstr ""
+msgstr "The ID assigned to the referring institution's specimen by the lab"
 
 #
 # File: ../content/laboratory.py, line: 19
@@ -4164,12 +4164,12 @@ msgstr ""
 #
 # File: ../content/sampletype.py, line: 68
 msgid "The default container type. New sample partitions are automatically assigned a container of this type, unless it has been specified in more details per analysis service"
-msgstr ""
+msgstr "The default container type. New specimen aliquots are automatically assigned a container of this type, unless it has been specified in more details per analysis service"
 
 #
 # File: ../content/bikasetup.py, line: 86
 msgid "The discount percentage entered here, is applied to the prices for clients flagged as 'members', normally co-operative members or associates deserving of this discount"
-msgstr ""
+msgstr "The discount percentage entered here, is applied to the prices for referring institutions flagged as 'members', normally co-operative members or associates deserving of this discount"
 
 #
 # File: ../content/bikasetup.py, line: 314
@@ -4179,7 +4179,7 @@ msgstr ""
 #
 # File: ../content/samplepoint.py, line: 41
 msgid "The height or depth at which the sample has to be taken"
-msgstr ""
+msgstr "The height or depth at which the specimen has to be taken"
 
 #
 # File: ../content/instrument.py, line: 40
@@ -4206,7 +4206,7 @@ msgstr ""
 #
 # File: ../content/bikasetup.py, line: 289
 msgid "The length of the zero-padding for Sample IDs"
-msgstr ""
+msgstr "The length of the zero-padding for Specimen IDs"
 
 #
 # File: ../content/bikasetup.py, line: 298
@@ -4216,12 +4216,12 @@ msgstr ""
 #
 # File: ../content/sampletype.py, line: 83
 msgid "The list of sample points from which this sample type can be collected.  If no sample points are selected, then all sample points are available."
-msgstr ""
+msgstr "The list of sample points from which this specimen type can be collected.  If no sample points are selected, then all sample points are available."
 
 #
 # File: ../content/samplepoint.py, line: 61
 msgid "The list of sample types that can be collected at this sample point.  If no sample types are selected, then all sample types are available."
-msgstr ""
+msgstr "The list of specimen types that can be collected at this sample point.  If no specimen types are selected, then all specimen types are available."
 
 #
 # File: ../content/analysisservice.py, line: 175
@@ -4231,7 +4231,7 @@ msgstr ""
 #
 # File: ../content/sampletype.py, line: 57
 msgid "The minimum sample volume required for analysis eg. '10 ml' or '1 kg'."
-msgstr ""
+msgstr "The minimum specimen volume required for analysis eg. '10 ml' or '1 kg'."
 
 #
 # File: ../content/laboratory.py, line: 44
@@ -4246,7 +4246,7 @@ msgstr ""
 #
 # File: ../browser/reports/templates/productivity.pt, line: 44
 msgid "The number of analyses requested per sample type"
-msgstr ""
+msgstr "The number of analyses requested per specimen type"
 
 #
 # File: ../content/bikasetup.py, line: 57
@@ -4256,7 +4256,7 @@ msgstr ""
 #
 # File: ../content/bikasetup.py, line: 223
 msgid "The number of days before a sample expires and cannot be analysed any more. This setting can be overwritten per individual sample type in the sample types setup"
-msgstr ""
+msgstr "The number of days before a specimen expires and cannot be analysed any more. This setting can be overwritten per individual specimen type in the specimen types setup"
 
 #
 # File: ../content/bikasetup.py, line: 66
@@ -4271,17 +4271,17 @@ msgstr ""
 #
 # File: ../browser/reports/templates/productivity.pt, line: 67
 msgid "The number of requests and analyses per client"
-msgstr ""
+msgstr "The number of requests and analyses per referring institution"
 
 #
 # File: ../content/sampletype.py, line: 25
 msgid "The period for which un-preserved samples of this type can be kept before they expire and cannot be analysed any further"
-msgstr ""
+msgstr "The period for which un-preserved specimens of this type can be kept before they expire and cannot be analysed any further"
 
 #
 # File: ../content/analysisservice.py, line: 350
 msgid "The price charged per analysis for clients who qualify for bulk discounts"
-msgstr ""
+msgstr "The price charged per analysis for referring institutions who qualify for bulk discounts"
 
 #
 # File: ../content/analysisprofile.py, line: 23
@@ -4363,7 +4363,7 @@ msgstr ""
 #
 # File: ../browser/templates/analysisservice_popup.pt, line: 222
 msgid "This service does not require a separate partition"
-msgstr ""
+msgstr "This service does not require a separate aliquot"
 
 #
 # File: ../browser/templates/analysisservice_popup.pt, line: 219
@@ -4383,7 +4383,7 @@ msgstr ""
 #
 # ../browser/js/client.js
 msgid "This will remove all existing client analysis specifications and create copies of all lab specifications. Are you sure you want to do this?"
-msgstr ""
+msgstr "This will remove all existing referring institution analysis specifications and create copies of all lab specifications. Are you sure you want to do this?"
 
 #
 # File: ../browser/bika_listing.py, line: 201
@@ -4844,7 +4844,7 @@ msgstr ""
 #
 # File: ../content/analysisservice.py, line: 295
 msgid "When the results of duplicate analyses on worksheets, carried out on the same sample, differ with more than this percentage, an alert is raised"
-msgstr ""
+msgstr "When the results of duplicate analyses on worksheets, carried out on the same specimen, differ with more than this percentage, an alert is raised"
 
 #
 # File: ../browser/referencesample.py, line: 60
@@ -4892,7 +4892,7 @@ msgstr ""
 #
 # File: ../browser/templates/analysisrequest_analyses_not_requested.pt, line: 65
 msgid "client"
-msgstr ""
+msgstr "referring institution"
 
 #
 # File: TranslationServiceTool.py, line: -1

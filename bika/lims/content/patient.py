@@ -68,13 +68,13 @@ schema=Person.schema.copy()+Schema((
         widget=DateTimeWidget(
             label=_('Birth date'),
         ),
-    ),      
+    ),
     BooleanField('BirthDateEstimated',
         default=False,
         widget=BooleanWidget(
             label=_('Birth date is estimated'),
         ),
-    ),  
+    ),
     RecordsField('AgeSplitted',
         required=1,
         widget=SplittedDateWidget(
@@ -83,7 +83,7 @@ schema=Person.schema.copy()+Schema((
     ),
     AddressField('CountryState',
         widget = AddressWidget(
-           label = _("Country"),
+           label = _("Country and state"),
            showLegend = True,
            showDistrict = False,
            showCopyFrom = False,
@@ -280,6 +280,7 @@ class Patient(Person):
             if not mtool.checkPermission(ManageAnalysisRequests,client):
                 continue
             clients.append([client.UID(),client.Title()])
+        clients.sort(lambda x,y:cmp(x[1], y[1]))
         return DisplayList(clients)
 
     def getPatientIdentifiersStr(self):
@@ -289,7 +290,14 @@ class Patient(Person):
             idsstr+=idsstr=='' and id['Identifier'] or (', '+id['Identifier'])
         return idsstr
         #return self.getSendersPatientID()+" "+self.getSendersCaseID()+" "+self.getSendersSpecimenID()
-
+    
+    def getPatientIdentifiersStrHtml(self):
+        ids=self.getPatientIdentifiers()
+        idsstr='<table cellpadding="0" cellspacing="0" border="0" class="patientsidentifiers" style="text-align:left;width: 100%;"><tr><td>';
+        for id in ids:
+            idsstr+="<tr><td>"+id['Identifier']+'</td><td>'+id['IdentifierType']+"</td></tr>"
+        return "</table>"+idsstr
+    
     def getAgeSplitted(self):
 
         if (self.getBirthDate()):
@@ -349,13 +357,16 @@ class Patient(Person):
         arr.append(splitted['month'] and str(splitted['month'])+'m' or '')
         arr.append(splitted['day'] and str(splitted['day'])+'d' or '')
         return ' '.join(arr)
-    
+
     def setCountryState(self, value):
         pa = self.getPhysicalAddress() and self.getPhysicalAddress() or {'country': '', 'state': ''}
-        pa['country'] = self.REQUEST.form['CountryState']['country']
-        pa['state'] = self.REQUEST.form['CountryState']['state']
+        pa['country'] = self.REQUEST.form.get('CountryState', {'country':''})['country']
+        pa['state'] = self.REQUEST.form.get('CountryState', {'state':''})['state']
+        if not pa['country']:
+            return
+
         return self.setPhysicalAddress(pa)
-    
+
     def getCountryState(self):
         return self.getPhysicalAddress()
 

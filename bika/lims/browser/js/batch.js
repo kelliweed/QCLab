@@ -26,7 +26,7 @@ $(document).ready(function(){
                        {'columnName':'BatchID','width':'10','label':_('Batch ID')},
                        {'columnName':'PatientTitle','width':'30','label':_('Patient')},
                        {'columnName':'DoctorTitle','width':'30','label':_('Doctor')},
-                       {'columnName':'ClientTitle','width':'30','label':_('Hospital')}],
+                       {'columnName':'ClientTitle','width':'30','label':_('Client')}],
             url: ajax_url,
             select: function( event, ui ) {
                 if (window.location.href.search('ar_add') > -1){  // epid ar_add

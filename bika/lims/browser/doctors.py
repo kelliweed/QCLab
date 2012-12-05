@@ -101,7 +101,7 @@ class ajaxGetDoctors(BrowserView):
     """
     def __call__(self):
         plone.protect.CheckAuthenticator(self.request)
-        searchTerm = self.request['searchTerm'].lower()
+        searchTerm = 'searchTerm' in self.request and self.request['searchTerm'].lower() or ''
         page = self.request['page']
         nr_rows = self.request['rows']
         sord = self.request['sord']
