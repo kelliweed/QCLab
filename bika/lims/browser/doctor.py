@@ -35,3 +35,15 @@ class DoctorSamplesView(SamplesView):
         super(DoctorSamplesView, self).__init__(context, request)
         self.contentFilter['DoctorUID'] = self.context.UID()
 
+class ajaxGetDoctorID(BrowserView):
+    """ Grab ID for newly created doctor (#420)
+    """
+    def __call__(self):
+        plone.protect.CheckAuthenticator(self.request)
+        Fullname = self.request['Fullname']
+        if not Fullname:
+            return json.dumps({'DoctorID': ''})
+        proxies = self.portal_catalog(portal_type='Doctor', Title = Fullname, sort_on='created', sort_order='reverse')
+        if not proxies:
+            return json.dumps({'DoctorID': ''})
+        return json.dumps({'DoctorID':proxies[0].getObject().getDoctorID()})

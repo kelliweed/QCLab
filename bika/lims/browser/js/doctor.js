@@ -42,7 +42,22 @@ $(document).ready(function(){
             	onLoad: function() {
             		// manually remove remarks
             		this.getOverlay().find("#archetypes-fieldname-Remarks").remove();
-	            }
+	            },
+                onClose: function() {
+                    var Fullname = $("#Firstname").val() + " " + $("#Surname").val();
+                    $.ajax({
+                        url: window.portal_url + "/getDoctorID",
+                        type: 'POST',
+                        data: {'_authenticator': $('input[name="_authenticator"]').val(),
+                                'Fullname': Fullname},
+                        dataType: "json",
+                        success: function(data, textStatus, $XHR){
+                            $("#DoctorID").val(data['DoctorID']);
+                            $(".jsDoctorTitle").remove();
+                            $("#archetypes-fieldname-DoctorID").append("<span class='jsDoctorTitle'>"+Fullname+"</span>");
+                        }
+                    });
+                }
             }
 	    }
     );

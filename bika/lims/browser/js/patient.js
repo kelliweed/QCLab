@@ -63,12 +63,12 @@ $(document).ready(function(){
 						.click(function(){$(this).attr('value', '');})
 						.focus();
 					});
-					
+
 					// Address widget
 					$.ajax({
-					    url: 'bika_widgets/addresswidget.js',
-					    dataType: 'script',
-					    async: false
+						url: 'bika_widgets/addresswidget.js',
+						dataType: 'script',
+						async: false
 					});
 
 					// Identifier Types popup
@@ -125,17 +125,32 @@ $(document).ready(function(){
 						lookups();
 						return false;
 					})
+				},
+				onClose: function() {
+					var Fullname = $("#Firstname").val() + " " + $("#Surname").val();
+					$.ajax({
+						url: window.portal_url + "/getPatientID",
+						type: 'POST',
+						data: {'_authenticator': $('input[name="_authenticator"]').val(),
+								'Fullname': Fullname},
+						dataType: "json",
+						success: function(data, textStatus, $XHR){
+							$("#PatientID").val(data['PatientID']);
+							$(".jsPatientTitle").remove();
+							$("#archetypes-fieldname-PatientID").append("<span class='jsPatientTitle'>"+Fullname+"</span>");
+						}
+					});
 				}
 			}
 		}
 	);
-	
+
 	// Mod the Age if DOB is selected
 	$("#Age").live('change', function(){
 		if (parseInt($(this).val()) > 0) {
 			var d = new Date();
 			year = d.getFullYear() - $(this).val();
-			var dob = year + "-01-01";			
+			var dob = year + "-01-01";
 			$("#BirthDate").val(dob);
 			calculateAge();
 			$("#BirthDateEstimated").attr('checked', true);
@@ -149,7 +164,7 @@ $(document).ready(function(){
 	$("#BirthDate").live('change', function(){
 		calculateAge();
 	});
-	
+
 	$("#CountryState.country").live('change', function(){
 		$("#PhysicalAddress.country").val($(this).val());
 		populate_state_select("PhysicalAddress")
@@ -166,7 +181,7 @@ $(document).ready(function(){
 		$("#CountryState.state").val($(this).val());
 		populate_district_select("CountryState")
 	});
-	
+
 	function calculateAge() {
 		var dob = new Date($("#BirthDate").val());
 		var now = new Date();
@@ -207,14 +222,14 @@ $(document).ready(function(){
 				agemonth = agemonth + 12;
 			}
 			ageyear = currentyear - birthyear;
-			
+
 			$("#Age").val(ageyear);
 			$("#AgeSplitted_year").val(ageyear);
 			$("#AgeSplitted_month").val(agemonth);
 			$("#AgeSplitted_day").val(ageday);
 
 		} else {
-			
+
 			$("#Age").val('');
 			$("#AgeSplitted_year").val('');
 			$("#AgeSplitted_month").val('');
@@ -328,10 +343,10 @@ $(document).ready(function(){
 		// Chronic Conditions -> combined FULL ICD9/bika_symptoms lookup
 		$(".template-chronicconditions #Title").combogrid({
 			colModel: [{'columnName':'Code', 'width':'10', 'label':_('Code')},
-			           {'columnName':'Title', 'width':'25', 'label':_('Title')},
-			           {'columnName':'Description', 'width':'65', 'label':_('Description')}],
+					   {'columnName':'Title', 'width':'25', 'label':_('Title')},
+					   {'columnName':'Description', 'width':'65', 'label':_('Description')}],
 			url: window.portal_url + "/getDiseases?_authenticator=" + $('input[name="_authenticator"]').val(),
-            showOn: true,
+			showOn: true,
 			select: function( event, ui ) {
 				event.preventDefault();
 				$(this).val(ui.item.Title);
@@ -461,7 +476,7 @@ $(document).ready(function(){
 		E = $("#End").val();
 		R = $("#Remarks").val();
 		if (T == ''){
-	        return false;
+			return false;
 		}
 		$("#Onset").attr('class', 'datepicker_nofuture');
 		$("#End").attr('class', 'datepicker');

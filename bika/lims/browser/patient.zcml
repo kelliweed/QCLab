@@ -106,6 +106,14 @@
 
     <browser:page
       for="*"
+      name="getPatientID"
+      class="bika.lims.browser.patient.ajaxGetPatientID"
+      permission="zope.Public"
+      layer="bika.lims.interfaces.IBikaLIMS"
+    />
+
+    <browser:page
+      for="*"
       name="getDrugs"
       class="bika.lims.browser.patient.ajaxGetDrugs"
       permission="zope.Public"

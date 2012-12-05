@@ -393,6 +393,19 @@ class ajaxGetPatients(BrowserView):
 
         return json.dumps(ret)
 
+class ajaxGetPatientID(BrowserView):
+    """ Grab ID for newly created patient (#420)
+    """
+    def __call__(self):
+        plone.protect.CheckAuthenticator(self.request)
+        Fullname = self.request['Fullname']
+        if not Fullname:
+            return json.dumps({'PatientID': ''})
+        proxies = self.bika_patient_catalog(Title = Fullname, sort_on='created', sort_order='reverse')
+        if not proxies:
+            return json.dumps({'PatientID': ''})
+        return json.dumps({'PatientID':proxies[0].getPatientID})
+
 class ajaxGetDrugs(BrowserView):
     """ Drug vocabulary source for jquery combo dropdown box
     """
@@ -610,7 +623,7 @@ class ajaxGetSymptoms(BrowserView):
             if icd9['code'].find(searchTerm)>-1 \
                or icd9['short'].lower().find(searchTerm)>-1 \
                or icd9['long'].lower().find(searchTerm)>-1:
-                
+
                 if (len(title) > 0 and icd9['short'] == title):
                     rows.append({'Code': icd9['code'],
                                  'Title': icd9['short'],
@@ -619,7 +632,7 @@ class ajaxGetSymptoms(BrowserView):
                     rows.append({'Code': icd9['code'],
                                  'Title': icd9['short'],
                                  'Description': icd9['long']})
-                    
+
         rows=sorted(rows,cmp=lambda x,y: cmp(x.lower(),y.lower()),key=itemgetter(sidx and sidx or 'Title'))
         if sord=='desc':
             rows.reverse()
