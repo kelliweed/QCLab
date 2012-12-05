@@ -80,7 +80,7 @@
 <table class="main-table" cellpadding="2" cellspacing="0">
 
   <thead>
-
+<!--
     <tr>
       <th i18n:translate="">Client Order</th>
       <td tal:repeat="ar view/batch"
@@ -94,20 +94,7 @@
         tal:attributes="colspan python:ar.getReportDryMatter() and 2 or 1"
         tal:content="python:ar.getSample().getClientReference()">T01</td>
     </tr>
-
-    <tr>
-      <th i18n:translate="">Client SID</th>
-      <td tal:repeat="ar view/batch"
-        tal:attributes="colspan python:ar.getReportDryMatter() and 2 or 1"
-        tal:content="python:ar.getSample().getClientSampleID()">S01</td>
-    </tr>
-
-    <tr>
-      <th i18n:translate="">Sampling Deviation</th>
-      <td tal:repeat="ar view/batch"
-        tal:attributes="colspan python:ar.getReportDryMatter() and 2 or 1"
-        tal:content="python:ar.getSample().getSamplingDeviation()">None</td>
-    </tr>
+ -->
 
     <tr>
       <th i18n:translate="">Request ID</th>
@@ -127,6 +114,23 @@
     </tr>
 
     <tr>
+      <th i18n:translate="">Batch ID</th>
+      <td tal:repeat="ar view/batch"
+        tal:attributes="colspan python:ar.getReportDryMatter() and 2 or 1">
+        <a tal:condition="python: ar.getBatch()"
+          href="" tal:content="python: ar.getBatch().getBatchID()"
+          tal:attributes="href python:ar.getBatch().absolute_url()">C12-00001</a>
+      </td>
+    </tr>
+
+    <tr>
+      <th i18n:translate="">Patient</th>
+      <td tal:repeat="ar view/batch"
+        tal:attributes="colspan python:ar.getReportDryMatter() and 2 or 1"
+        tal:content="python:ar.getPatient() and ar.getPatient().getPatientID() or ''">Patient ID</td>
+    </tr>
+
+    <tr>
       <th i18n:translate="">Sample ID</th>
       <td tal:repeat="ar view/batch"
         tal:attributes="colspan python:ar.getReportDryMatter() and 2 or 1">
@@ -135,6 +139,13 @@
         tal:content="sample/getSampleID"
         tal:attributes="href sample/absolute_url">S-00001</a>
       </td>
+    </tr>
+
+    <tr>
+      <th i18n:translate="">Client SID</th>
+      <td tal:repeat="ar view/batch"
+        tal:attributes="colspan python:ar.getReportDryMatter() and 2 or 1"
+        tal:content="python:ar.getSample().getClientSampleID()">S01</td>
     </tr>
 
     <tr>
@@ -175,6 +186,13 @@
         tal:attributes="colspan python:ar.getReportDryMatter() and 2 or 1"
         tal:content="python:view.ulocalized_time(ar.getDatePublished(), long_format=1)"
         >2005-01-01 10:00</td>
+    </tr>
+
+    <tr>
+      <th i18n:translate="">Sampling Deviation</th>
+      <td tal:repeat="ar view/batch"
+        tal:attributes="colspan python:ar.getReportDryMatter() and 2 or 1"
+        tal:content="python:ar.getSample().getSamplingDeviation()">None</td>
     </tr>
 
     <tr>
