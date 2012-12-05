@@ -121,8 +121,11 @@ class Immunization(BaseContent):
     def _renameAfterCreation(self, check_auto_id=False):
         from bika.lims.idserver import renameAfterCreation
         renameAfterCreation(self)
-    
+
+    def Title(self):
+        return self.title
+
     def getImmunizationFormsList(self):
         return getImmunizationForms(self)
-    
+
 registerType(Immunization, PROJECTNAME)
