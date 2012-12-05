@@ -688,14 +688,14 @@ msgstr ""
 # 
 # File: ../profiles/default/types/ReferenceSample.xml, line: -1
 msgid "Reference Sample"
-msgstr ""
+msgstr "Reference Specimen"
 
 # 
 # File: ../profiles/default/actions.xml, line: -1
 # File: ../profiles/default/types/ReferenceSamplesFolder.xml, line: -1
 # File: ../profiles/default/types/ReferenceSupplier.xml, line: -1
 msgid "Reference Samples"
-msgstr ""
+msgstr "Reference Specimens"
 
 # 
 # File: ../profiles/default/types/ReferenceSupplier.xml, line: -1
@@ -734,35 +734,35 @@ msgstr ""
 # 
 # File: ../profiles/default/types/Sample.xml, line: -1
 msgid "Sample"
-msgstr ""
+msgstr "Specimen"
 
 # 
 # File: ../profiles/default/workflows/bika_analysis_workflow/definition.xml, line: -1
 # File: ../profiles/default/workflows/bika_ar_workflow/definition.xml, line: -1
 # File: ../profiles/default/workflows/bika_sample_workflow/definition.xml, line: -1
 msgid "Sample Due"
-msgstr ""
+msgstr "Specimen Due"
 
 # 
 # File: ../profiles/default/controlpanel.xml, line: -1
 # File: ../profiles/default/types/SampleMatrices.xml, line: -1
 msgid "Sample Matrices"
-msgstr ""
+msgstr "Specimen Matrices"
 
 # 
 # File: ../profiles/default/types/SampleMatrix.xml, line: -1
 msgid "Sample Matrix"
-msgstr ""
+msgstr "Specimen Matrix"
 
 # 
 # File: ../profiles/default/types/SamplePartition.xml, line: -1
 msgid "Sample Partition"
-msgstr ""
+msgstr "Specimen Aliquot"
 
 # 
 # File: ../profiles/default/types/Sample.xml, line: -1
 msgid "Sample Partitions"
-msgstr ""
+msgstr "Specimen Aliquots"
 
 # 
 # File: ../profiles/default/types/SamplePoint.xml, line: -1
@@ -778,18 +778,18 @@ msgstr ""
 # 
 # File: ../profiles/default/types/SampleType.xml, line: -1
 msgid "Sample Type"
-msgstr ""
+msgstr "Specimen Type"
 
 # 
 # File: ../profiles/default/controlpanel.xml, line: -1
 # File: ../profiles/default/types/SampleTypes.xml, line: -1
 msgid "Sample Types"
-msgstr ""
+msgstr "Specimen Types"
 
 # 
 # File: ../profiles/default/workflows/bika_sample_workflow/definition.xml, line: -1
 msgid "Sample received"
-msgstr ""
+msgstr "Specimen received"
 
 # 
 # File: ../profiles/default/types/Client.xml, line: -1
@@ -808,7 +808,7 @@ msgstr ""
 # File: ../profiles/default/types/Batch.xml, line: -1
 # File: ../profiles/default/types/Client.xml, line: -1
 msgid "Samples"
-msgstr ""
+msgstr "Specimens"
 
 # 
 # File: ../profiles/default/types/SamplesFolder.xml, line: -1
@@ -1121,7 +1121,7 @@ msgstr "Results Reports"
 
 # 
 msgid "label_schema_Sample Partitions"
-msgstr "Sample Partitions"
+msgstr "Specimen Partitions"
 
 # 
 msgid "label_schema_Security"
@@ -1169,7 +1169,7 @@ msgstr "Reassign"
 # File: ../profiles/default/workflows/bika_sample_workflow/definition.xml, line: -1
 #. Default: "Receive sample"
 msgid "receive_transition_title"
-msgstr "Receive sample"
+msgstr "Receive specimen"
 
 # 
 # File: ../profiles/default/workflows/bika_cancellation_workflow/definition.xml, line: -1
@@ -1211,7 +1211,7 @@ msgstr "Retract worksheet"
 # File: ../profiles/default/workflows/bika_sample_worflow/definition.xml, line: -1
 #. Default: "Sample"
 msgid "sample_transition_title"
-msgstr "Sample"
+msgstr "Specimen"
 
 # 
 #. Default: "Save analyses"
