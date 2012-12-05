@@ -339,7 +339,7 @@ class ajaxGetPatients(BrowserView):
     """
     def __call__(self):
         plone.protect.CheckAuthenticator(self.request)
-        searchTerm=self.request['searchTerm'].lower()
+        searchTerm = 'searchTerm' in self.request and self.request['searchTerm'].lower() or ''
         page=self.request['page']
         nr_rows=self.request['rows']
         sord=self.request['sord']
@@ -398,7 +398,7 @@ class ajaxGetDrugs(BrowserView):
     """
     def __call__(self):
         plone.protect.CheckAuthenticator(self.request)
-        searchTerm=self.request['searchTerm'].lower()
+        searchTerm = 'searchTerm' in self.request and self.request['searchTerm'].lower() or ''
         page=self.request['page']
         nr_rows=self.request['rows']
         sord=self.request['sord']
@@ -433,7 +433,7 @@ class ajaxGetTreatments(BrowserView):
     """
     def __call__(self):
         plone.protect.CheckAuthenticator(self.request)
-        searchTerm=self.request['searchTerm'].lower()
+        searchTerm = 'searchTerm' in self.request and self.request['searchTerm'].lower() or ''
         page=self.request['page']
         nr_rows=self.request['rows']
         sord=self.request['sord']
@@ -477,7 +477,7 @@ class ajaxGetDrugProhibitions(BrowserView):
     """
     def __call__(self):
         plone.protect.CheckAuthenticator(self.request)
-        searchTerm=self.request['searchTerm'].lower()
+        searchTerm = 'searchTerm' in self.request and self.request['searchTerm'].lower() or ''
         page=self.request['page']
         nr_rows=self.request['rows']
         sord=self.request['sord']
@@ -512,7 +512,7 @@ class ajaxGetImmunizations(BrowserView):
     """
     def __call__(self):
         plone.protect.CheckAuthenticator(self.request)
-        searchTerm=self.request['searchTerm'].lower()
+        searchTerm = 'searchTerm' in self.request and self.request['searchTerm'].lower() or ''
         page=self.request['page']
         nr_rows=self.request['rows']
         sord=self.request['sord']
@@ -547,7 +547,7 @@ class ajaxGetVaccinationCenters(BrowserView):
     """
     def __call__(self):
         plone.protect.CheckAuthenticator(self.request)
-        searchTerm=self.request['searchTerm'].lower()
+        searchTerm = 'searchTerm' in self.request and self.request['searchTerm'].lower() or ''
         page=self.request['page']
         nr_rows=self.request['rows']
         sord=self.request['sord']
@@ -637,7 +637,7 @@ class ajaxGetDiseases(BrowserView):
     """
     def __call__(self):
         plone.protect.CheckAuthenticator(self.request)
-        searchTerm=self.request['searchTerm'].lower()
+        searchTerm = 'searchTerm' in self.request and self.request['searchTerm'].lower() or ''
         page=self.request['page']
         nr_rows=self.request['rows']
         sord=self.request['sord']
@@ -682,7 +682,7 @@ class ajaxGetIdentifierTypes(BrowserView):
     """
     def __call__(self):
         plone.protect.CheckAuthenticator(self.request)
-        searchTerm=self.request['searchTerm'].lower()
+        searchTerm = 'searchTerm' in self.request and self.request['searchTerm'].lower() or ''
         page=self.request['page']
         nr_rows=self.request['rows']
         sord=self.request['sord']
@@ -724,7 +724,7 @@ class ajaxGetPatientLastReferralID(BrowserView):
             batch = batches[0].getObject()
             clientid = batch.getClientID()
             if (clientid):
-                ret['clientid'] = clientid            
+                ret['clientid'] = clientid
                 pc = getToolByName(self, 'portal_catalog')
                 clients = pc(portal_type='Client', UID=batch.getClientUID())
                 if (clients and len(clients)>0):
