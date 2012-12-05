@@ -248,15 +248,15 @@ msgstr ""
 
 # 
 msgid "Client"
-msgstr "Hospital"
+msgstr "Referring Institution"
 
 # 
 msgid "Client ID"
-msgstr "Hospital ID"
+msgstr "Referring Institution ID"
 
 # 
 msgid "Clients"
-msgstr "Hospitals"
+msgstr "Referring Institutions"
 
 # 
 # File: ../profiles/default/workflows/bika_batch_workflow/definition.xml, line: -1
