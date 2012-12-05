@@ -580,11 +580,12 @@ class ajaxGetSymptoms(BrowserView):
     """
     def __call__(self):
         plone.protect.CheckAuthenticator(self.request)
-        searchTerm = 'searchTerm' in self.request and self.request['searchTerm'].lower() or ''
-        page=self.request['page']
-        nr_rows=self.request['rows']
-        sord=self.request['sord']
-        sidx=self.request['sidx']
+        title = 'title' in self.request and self.request['title'] or ''
+        searchTerm = (len(title)==0 and 'searchTerm' in self.request) and self.request['searchTerm'].lower() or title.lower()
+        page = 'page' in self.request and self.request['page'] or 1
+        nr_rows = 'rows' in self.request and self.request['rows'] or 10
+        sord = 'sord' in self.request and self.request['sord'] or 'asc'
+        sidx = 'sidx' in self.request and self.request['sidx'] or 'Title'
         rows=[]
 
         # lookup objects from ZODB
@@ -595,7 +596,12 @@ class ajaxGetSymptoms(BrowserView):
                                         or p.Description.lower().find(searchTerm)>-1]
         for p in brains:
             p=p.getObject()
-            rows.append({'Code': p.getCode(),
+            if (len(title) > 0 and p.Title() == title):
+                rows.append({'Code': p.getCode(),
+                         'Title': p.Title(),
+                         'Description': p.Description()})
+            elif len(title)==0:
+                rows.append({'Code': p.getCode(),
                          'Title': p.Title(),
                          'Description': p.Description()})
 
@@ -604,10 +610,16 @@ class ajaxGetSymptoms(BrowserView):
             if icd9['code'].find(searchTerm)>-1 \
                or icd9['short'].lower().find(searchTerm)>-1 \
                or icd9['long'].lower().find(searchTerm)>-1:
-                rows.append({'Code': icd9['code'],
-                             'Title': icd9['short'],
-                             'Description': icd9['long']})
-
+                
+                if (len(title) > 0 and icd9['short'] == title):
+                    rows.append({'Code': icd9['code'],
+                                 'Title': icd9['short'],
+                                 'Description': icd9['long']})
+                elif len(title)==0:
+                    rows.append({'Code': icd9['code'],
+                                 'Title': icd9['short'],
+                                 'Description': icd9['long']})
+                    
         rows=sorted(rows,cmp=lambda x,y: cmp(x.lower(),y.lower()),key=itemgetter(sidx and sidx or 'Title'))
         if sord=='desc':
             rows.reverse()

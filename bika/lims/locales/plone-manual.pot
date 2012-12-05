@@ -76,7 +76,7 @@ msgid "label_schema_Uncertainties"
 msgstr "Uncertainties"
 
 msgid "label_schema_Sample Partitions"
-msgstr "Sample Partitions"
+msgstr "Sample Aliquots"
 
 msgid "label_schema_Analyses"
 msgstr "Analyses"
@@ -217,7 +217,7 @@ msgstr "Save analyses"
 
 #. Default: "Save partitions"
 msgid "save_partitions_button_transition_title"
-msgstr "Save partitions"
+msgstr "Save aliquots"
 
 #. Default: "Save selection"
 msgid "save_selection_button_transition_title"
