@@ -289,7 +289,14 @@ class Patient(Person):
             idsstr+=idsstr=='' and id['Identifier'] or (', '+id['Identifier'])
         return idsstr
         #return self.getSendersPatientID()+" "+self.getSendersCaseID()+" "+self.getSendersSpecimenID()
-
+    
+    def getPatientIdentifiersStrHtml(self):
+        ids=self.getPatientIdentifiers()
+        idsstr='<table cellpadding="0" cellspacing="0" border="0" class="patientsidentifiers" style="text-align:left;width: 100%;"><tr><td>';
+        for id in ids:
+            idsstr+="<tr><td>"+id['Identifier']+'</td><td>'+id['IdentifierType']+"</td></tr>"
+        return "</table>"+idsstr
+    
     def getAgeSplitted(self):
 
         if (self.getBirthDate()):

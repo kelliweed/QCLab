@@ -83,4 +83,11 @@ div.template-caseprovisionaldiagnosis td.Description {
 	  font-size: 1.8em;
 	  font-weight: bold;
 }
+div.cg-comboItem {
+	height:100%;
+}
+div.cg-DivItem {
+	height:auto;
+	text-align:left;
+}
 /* </dtml-with> */

@@ -378,7 +378,7 @@ class ajaxGetPatients(BrowserView):
                          'PatientID': patient.getPatientID(),
                          'PrimaryReferrer': patient.getPrimaryReferrer().Title(),
                          'PatientUID': patient.UID(),
-                         'AdditionalIdentifiers':patient.getPatientIdentifiersStr(),
+                         'AdditionalIdentifiers':patient.getPatientIdentifiersStrHtml(),
                          'PatientBirthDate':self.ulocalized_time(patient.getBirthDate(),long_format=0)})
 
         rows=sorted(rows,cmp=lambda x,y: cmp(x.lower(),y.lower()),key=itemgetter(sidx and sidx or 'Title'))
