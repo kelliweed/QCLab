@@ -1293,7 +1293,7 @@ class LoadSetupData(BrowserView):
                      Phone = unicode(row['Phone']),
                      Fax = unicode(row['Fax']))
             obj.unmarkCreationFlag()
-            self.ref_suppliers[obj.Title()] = obj
+            self.ref_suppliers[row['Name']] = obj
             renameAfterCreation(obj)
 
     def load_reference_supplier_contacts(self, sheet):
@@ -1305,8 +1305,7 @@ class LoadSetupData(BrowserView):
             row = dict(zip(fields, row))
             if not row['ReferenceSupplier_Name']:
                 continue
-            folder = self.bsc(portal_type="ReferenceSupplier",
-                              Title = row['ReferenceSupplier_Name'])[0].getObject()
+            folder = self.ref_suppliers[row['ReferenceSupplier_Name']]
             _id = folder.invokeFactory('SupplierContact', id = 'tmp')
             obj = folder[_id]
             obj.edit(
