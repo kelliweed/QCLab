@@ -62,6 +62,13 @@ $(document).ready(function(){
 						.click(function(){$(this).attr('value', '');})
 						.focus();
 					});
+					
+					// Address widget
+					$.ajax({
+					    url: 'bika_widgets/addresswidget.js',
+					    dataType: 'script',
+					    async: false
+					});
 
 					// Identifier Types popup
 					$(".template-patientidentifiers #IdentifierType").combogrid({
