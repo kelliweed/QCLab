@@ -148,7 +148,8 @@ table.bika-listing-table,
   background-color:#FFFFFF;
   color:#555555;
 }
-.bika-listing-table tbody tr td input[type="text"]:focus, input:not([type='checkbox']) {
+.bika-listing-table tbody tr td input:not([type='checkbox'],[type='submit'],[type='button']), 
+.bika-listing-table tbody tr td input:not([type='checkbox'],[type='submit'],[type='button']):focus {
 	-moz-appearance: textfield;
     -moz-user-select: text;
     background-color: -moz-field;

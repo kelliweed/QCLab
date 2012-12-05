@@ -44,23 +44,23 @@ class CaseSymptomsWidget(TypesWidget):
         """ Return a list of dictionaries fit for Case/Symptoms RecordsField
         """
         value = len(instance.getSymptoms())>0 and instance.getSymptoms() or []
-        if 'clear' in form:
+        if 'CSY_clear' in form:
             value = []
             
-        elif 'delete' in form:
+        elif 'CSY_delete' in form:
             valueout = []
             for i in range(len(value)):
                 if not ('SelectItem-%s'%i in form):
                     valueout.append(value[i])
             value = valueout
             
-        elif 'submitted' in form:
+        elif 'CSY_submitted' in form:
             bsc = getToolByName(instance, 'bika_setup_catalog')
             for i in range(len(form.get('CSY_Title', []))):
                 C = form['CSY_Code'][i]
                 S = form['CSY_Title'][i]
                 D = form['CSY_Description'][i]
-                O = form['CSY_Onset'][i]
+                O = form['CSY_SymptomOnset'][i]
 
                 # Create new Symptom entry if none exists (check ICD9 and setup)
                 Slist = bsc(portal_type='Symptom', title=S)

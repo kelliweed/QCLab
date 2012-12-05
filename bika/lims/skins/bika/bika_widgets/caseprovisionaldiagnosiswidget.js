@@ -37,7 +37,7 @@ $(document).ready(function(){
         	$(this).val('');
         });
     	
-    	// When subtype value changes it must be validated against ZopeDB
+    	// When symptom value changes it must be validated against ZopeDB
     	// If no exists, the code and description input elements will be setted
     	// up in editable mode, for further creation of the new Symptom 
     	$(".template-caseprovisionaldiagnosis #Title").change(function(event){

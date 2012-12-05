@@ -45,8 +45,8 @@
 					<td colspan="5" style="padding:5px;">
 						<input id="add_row" type="submit" i18n:attributes="value" value="Add" class="allowMultiSubmit"/>
 						<tal:hasaetiologicagents tal:condition="python:hasattr(view, 'hasAetiologicAgents') and view.hasAetiologicAgents()">
-							<input type="submit" name="CAE_delete" i18n:attributes="value" value="Delete selected"  class="allowMultiSubmit"/>
-							<input type="submit" name="CAE_clear"  i18n:attributes="value" value="Delete all"  class="allowMultiSubmit"/>
+							<input type="submit" name="CAE_delete" i18n:attributes="value" value="Delete selected" class="allowMultiSubmit"/>
+							<input type="submit" name="CAE_clear"  i18n:attributes="value" value="Delete all" class="allowMultiSubmit"/>
 						</tal:hasaetiologicagents>
 				   </td>
 				</tr>
