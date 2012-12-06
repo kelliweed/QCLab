@@ -295,7 +295,7 @@ class Patient(Person):
         ids=self.getPatientIdentifiers()
         idsstr='<table cellpadding="0" cellspacing="0" border="0" class="patientsidentifiers" style="text-align:left;width: 100%;"><tr><td>';
         for id in ids:
-            idsstr+="<tr><td>"+id['Identifier']+'</td><td>'+id['IdentifierType']+"</td></tr>"
+            idsstr+="<tr><td>"+id['IdentifierType']+':</td><td>'+id['Identifier']+"</td></tr>"
         return "</table>"+idsstr
     
     def getAgeSplitted(self):
