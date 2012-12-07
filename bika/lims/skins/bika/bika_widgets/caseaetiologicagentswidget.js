@@ -126,7 +126,7 @@ $(document).ready(function(){
             D = $(".template-caseaetiologicagents #Description").val();
             S = $(".template-caseaetiologicagents #Subtype").val();
             I = $(".template-caseaetiologicagents #AgentUID").val();
-            if (T == '' || S == ''){
+            if (T == ''){
                 return false;
             }
             

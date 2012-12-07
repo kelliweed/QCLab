@@ -65,7 +65,7 @@ class CaseAetiologicAgentsWidget(TypesWidget):
                 # Create new Aetiologic Agent entry if none exists
                 aelist = bsc(portal_type='AetiologicAgent', title=T)
                 if not aelist:
-                    self.context.plone_utils.addPortalMessage(_("The Aetiologic agent '%s' is not valid")%T,"error")
+                    instance.plone_utils.addPortalMessage(_("The Aetiologic agent '%s' is not valid")%T,"error")
                 else:
                     # Check if the aetiologic agent already contains the entered subtype
                     agent = aelist[0].getObject()
@@ -78,10 +78,10 @@ class CaseAetiologicAgentsWidget(TypesWidget):
                             S = subtypetitle
                             break
 
-                    if exists:
+                    if exists or S.lower().strip() == '':
                         value.append({'Title': T, 'Description': D, 'Subtype': S})
                     else:
-                        self.context.plone_utils.addPortalMessage(_("The Aetiologic agent subtype '%s' is not valid")%S,"error")
+                        instance.plone_utils.addPortalMessage(_("The Aetiologic agent subtype '%s' is not valid")%S,"error")
                         
         return value, {}
 
