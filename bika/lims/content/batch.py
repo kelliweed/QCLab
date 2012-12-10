@@ -359,10 +359,7 @@ class Batch(BaseContent):
                 return False
         return True
 
-    # def workflow_before_receive(self, state_info):
-    #     pass
-
-    def workflow_after_receive(self, state_info):
+    def workflow_script_receive(self, state_info):
         skip(self, 'receive')
 
     def workflow_guard_open(self):
@@ -375,10 +372,7 @@ class Batch(BaseContent):
                 return True
         return False
 
-    # def workflow_before_open(self, state_info):
-    #     pass
-
-    def workflow_after_open(self, state_info):
+    def workflow_script_open(self, state_info):
         skip(self, 'open')
         # reset everything and return to open state
         self.setDateReceived(None)
@@ -394,10 +388,7 @@ class Batch(BaseContent):
                 return False
         return True
 
-    # def workflow_before_submit(self, state_info):
-    #     pass
-
-    # def workflow_after_submit(self, state_info):
+    # def workflow_script_submit(self, state_info):
     #     skip(self, 'open')
 
     def workflow_guard_verify(self):
@@ -411,19 +402,13 @@ class Batch(BaseContent):
                 return False
         return True
 
-    # def workflow_before_verify(self, state_info):
-    #     pass
-
-    # def workflow_after_verify(self, state_info):
+    # def workflow_script_verify(self, state_info):
     #     skip(self, 'open')
 
     # def workflow_guard_close(self):
     #     return True
 
-    # def workflow_before_close(self, state_info):
-    #     pass
-
-    # def workflow_after_close(self, state_info):
+    # def workflow_script_close(self, state_info):
     #     skip(self, 'open')
 
     def getCaseStatuses(self):

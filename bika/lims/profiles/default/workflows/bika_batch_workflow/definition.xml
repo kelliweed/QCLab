@@ -102,8 +102,8 @@
              title="Receive"
              new_state="sample_received"
              trigger="USER"
-             before_script="before"
-             after_script="after"
+             before_script=""
+             after_script="default"
              i18n:attributes="title receive_transition_title">
   <description i18n:translate=""></description>
 <!--  <action url="" category="workflow" icon="" i18n:translate="receive_transition_title">Receive</action> -->
@@ -117,8 +117,8 @@
              title="Open"
              new_state="open"
              trigger="USER"
-             before_script="before"
-             after_script="after"
+             before_script=""
+             after_script="default"
              i18n:attributes="title open_transition_title">
   <description i18n:translate=""></description>
   <!-- <action url="" category="workflow" icon="" i18n:translate="open_transition_title">Open</action> -->
@@ -132,8 +132,8 @@
              title="Submit"
              new_state="to_be_verified"
              trigger="USER"
-             before_script="before"
-             after_script="after"
+             before_script=""
+             after_script="default"
              i18n:attributes="title submit_transition_title">
   <description i18n:translate=""></description>
   <!-- <action url="" category="workflow" icon="" i18n:translate="submit_transition_title">Submit</action> -->
@@ -147,8 +147,8 @@
              title="Verify"
              new_state="verified"
              trigger="USER"
-             before_script="before"
-             after_script="after"
+             before_script=""
+             after_script="default"
              i18n:attributes="title receive_transition_verify">
   <description i18n:translate=""></description>
   <action url="" category="workflow" icon="" i18n:translate="verify_transition_title">Verify</action>
@@ -162,8 +162,8 @@
              title="Close"
              new_state="closed"
              trigger="USER"
-             before_script="before"
-             after_script="after"
+             before_script=""
+             after_script="default"
              i18n:attributes="title close_transition_title">
   <description i18n:translate=""></description>
   <action url="" category="workflow" icon="" i18n:translate="close_transition_title">Close</action>
@@ -218,12 +218,8 @@
   </guard>
  </variable>
 
- <script script_id="before" type="Script (Python)"
-         filename="workflows/bika_batch_workflow/scripts/before.py"
-         module="" function=""/>
-
- <script script_id="after" type="Script (Python)"
-         filename="workflows/bika_batch_workflow/scripts/after.py"
+ <script script_id="default" type="Script (Python)"
+         filename="workflows/bika_batch_workflow/scripts/default.py"
          module="" function=""/>
 
 </dc-workflow>
