@@ -215,6 +215,9 @@ class LoadSetupData(BrowserView):
         if 'Aetiological Agents Subtypes' in sheets:
             self.load_aetiological_agents_subtypes(sheets['Aetiological Agents Subtypes'])
 
+        if 'Identifier Types' in sheets:
+            self.load_identifier_types(sheets['Identifier Types'])
+
 #        if 'Reference Sample Results' in sheets:
 #            self.load_reference_sample_results(sheets['Reference Sample Results'])
 #        if 'Reference Samples' in sheets:
@@ -393,7 +396,7 @@ class LoadSetupData(BrowserView):
             obj.edit(title = row.get('title', ''),
                      description = row.get('description', ''))
             obj.unmarkCreationFlag()
-            renameAfterCreation(obj)
+            # renameAfterCreation(obj)
 
 
     def load_SampleOrigins(self, sheet):
@@ -535,9 +538,9 @@ class LoadSetupData(BrowserView):
             ## Create LabContact
 
             if row['Signature']:
-                file_title = sortable_title(obj, values['AccreditationBodyLogo'])
+                file_title = sortable_title(obj, row['Signature'])
                 path = resource_filename("bika.lims","setupdata/%s/%s" \
-                                         % (self.dataset_name, row['MethodDocument']))
+                                         % (self.dataset_name, row['Signature']))
                 file_data = open(path, "rb").read()
             else:
                 file_data = None
@@ -977,7 +980,7 @@ class LoadSetupData(BrowserView):
                 Calculation = row['Calculation_title'] and self.calcs[row['Calculation_title']] or None,
                 DuplicateVariation = "%02f" % float(row['DuplicateVariation']),
                 Accredited = row['Accredited'] and True or False,
-                InterimFields = self.service_interims.get(title, [])
+                InterimFields = hasattr(self,'service_interims') and self.service_interims.get(title, []) or []
             )
             service_obj = obj
             self.services[row['title']] = obj
@@ -1029,7 +1032,7 @@ class LoadSetupData(BrowserView):
                 'keyword': unicode(row['keyword']),
                 'title': row.get('title', ''),
                 'type': 'int',
-                'hidden': row['hidden'] and True or False,
+                'hidden': ('hidden' in row and row['hidden']) and True or False,
                 'value': unicode(row['value']),
                 'unit': unicode(row['unit'] and row['unit'] or '')})
 
@@ -1306,29 +1309,31 @@ class LoadSetupData(BrowserView):
             if not row['ReferenceSupplier_Name']:
                 continue
             folder = self.ref_suppliers[row['ReferenceSupplier_Name']]
-            _id = folder.invokeFactory('SupplierContact', id = 'tmp')
-            obj = folder[_id]
-            obj.edit(
-                Firstname = unicode(row['Firstname']),
-                Surname = unicode(row['Surname']),
-                EmailAddress = unicode(row['EmailAddress']))
-            obj.unmarkCreationFlag()
-            renameAfterCreation(obj)
-
-            if 'Username' in row:
-##               'Password' in row:
-##                self.context.REQUEST.set('username', unicode(row['Username']))
-##                self.context.REQUEST.set('password', unicode(row['Password']))
-##                self.context.REQUEST.set('email', unicode(row['EmailAddress']))
-##                pr = getToolByName(self.context, 'portal_registration')
-##                pr.addMember(unicode(row['Username']),
-##                             unicode(row['Password']),
-##                             properties = {
-##                                 'username': unicode(row['Username']),
-##                                 'email': unicode(row['EmailAddress']),
-##                                 'fullname': " ".join((row['Firstname'],
-##                                                       row['Surname']))})
-                obj.setUsername(unicode(row['Username']))
+            if (len(folder) > 0):
+                folder = folder[0].getObject()
+                _id = folder.invokeFactory('SupplierContact', id = 'tmp')
+                obj = folder[_id]
+                obj.edit(
+                    Firstname = unicode(row['Firstname']),
+                    Surname = unicode(row['Surname']),
+                    EmailAddress = unicode(row['EmailAddress']))
+                obj.unmarkCreationFlag()
+                renameAfterCreation(obj)
+    
+                if 'Username' in row:
+    ##               'Password' in row:
+    ##                self.context.REQUEST.set('username', unicode(row['Username']))
+    ##                self.context.REQUEST.set('password', unicode(row['Password']))
+    ##                self.context.REQUEST.set('email', unicode(row['EmailAddress']))
+    ##                pr = getToolByName(self.context, 'portal_registration')
+    ##                pr.addMember(unicode(row['Username']),
+    ##                             unicode(row['Password']),
+    ##                             properties = {
+    ##                                 'username': unicode(row['Username']),
+    ##                                 'email': unicode(row['EmailAddress']),
+    ##                                 'fullname': " ".join((row['Firstname'],
+    ##                                                       row['Surname']))})
+                    obj.setUsername(unicode(row['Username']))
 
     def load_reference_sample_results(self, sheet):
         # Read the Ref Sample Results into self.refsample_results
@@ -1854,3 +1859,20 @@ class LoadSetupData(BrowserView):
                      Prevention = unicode(row['Prevention']))
             obj.unmarkCreationFlag()
             renameAfterCreation(obj)
+
+
+    def load_identifier_types(self, sheet):
+        nr_rows = sheet.get_highest_row()
+        nr_cols = sheet.get_highest_column()
+        rows = [[sheet.cell(row=row_nr, column=col_nr).value for col_nr in range(nr_cols)] for row_nr in range(nr_rows)]
+        fields = rows[0]
+        folder = self.context.bika_setup.bika_identifiertypes
+        for row in rows[3:]:
+            row = dict(zip(fields, row))
+            _id = folder.invokeFactory('IdentifierType', id = 'tmp')
+            obj = folder[_id]
+            obj.edit(title = row.get('title', ''),
+                     description = row.get('description', ''))
+            obj.unmarkCreationFlag()
+            renameAfterCreation(obj)
+

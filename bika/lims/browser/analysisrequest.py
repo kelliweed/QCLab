@@ -82,7 +82,7 @@ class AnalysisRequestWorkflowAction(WorkflowAction):
                     sample.manage_delObjects(['part-%s'%(nr_existing - i),])
             # modify part container/preservation
             for part_uid, part_id in form['PartTitle'][0].items():
-                part = sample[part_id]
+                part = sample["part-P"+str(int(part_id.split('-P')[1]))]
                 part.edit(
                     Container = form['getContainer'][0][part_uid],
                     Preservation = form['getPreservation'][0][part_uid],
@@ -1098,7 +1098,7 @@ class AnalysisRequestAnalysesView(BikaListingView):
             [(a.getService().getKeyword(), wf.getInfoFor(a, 'review_state'))
              for a in analyses])
 
-        partitions = [{'ResultValue':o.Title(), 'ResultText':o.Title()}
+        partitions = [{'ResultValue':o.Title(), 'ResultText':o.getSmartID()}
                       for o in
                       self.context.getSample().objectValues('SamplePartition')
                       if wf.getInfoFor(o, 'cancellation_state', 'active') == 'active']
@@ -2292,32 +2292,46 @@ class AnalysisRequestsView(BikaListingView):
             else:
                 url = obj.absolute_url()
 
+            items[x]['Client'] = obj.aq_parent.Title()
+            items[x]['replace']['Client'] = "<a href='%s'>%s</a>" % \
+                (obj.aq_parent.absolute_url(), obj.aq_parent.Title())
+            items[x]['Creator'] = self.user_fullname(obj.Creator())
+            items[x]['getRequestID'] = obj.getRequestID()
+            items[x]['replace']['getRequestID'] = "<a href='%s'>%s</a>" % \
+                 (url, items[x]['getRequestID'])
+            items[x]['getSample'] = sample
+            items[x]['replace']['getSample'] = \
+                "<a href='%s'>%s</a>" % (sample.absolute_url(), sample.Title())
+            items[x]['getClientOrderNumber'] = obj.getClientOrderNumber()
+            items[x]['getClientReference'] = obj.getClientReference()
+            items[x]['getClientSampleID'] = obj.getClientSampleID()
+           
             # Sanitize the list: If the user does not have local Owner role on the object's
             # parent, then some fields are not displayed
-            if member.id in obj.aq_parent.users_with_local_role('Owner'):
-                items[x]['Client'] = obj.aq_parent.Title()
-                items[x]['replace']['Client'] = "<a href='%s'>%s</a>" % \
-                    (obj.aq_parent.absolute_url(), obj.aq_parent.Title())
-                items[x]['Creator'] = self.user_fullname(obj.Creator())
-                items[x]['getRequestID'] = obj.getRequestID()
-                items[x]['replace']['getRequestID'] = "<a href='%s'>%s</a>" % \
-                     (url, items[x]['getRequestID'])
-                items[x]['getSample'] = sample
-                items[x]['replace']['getSample'] = \
-                    "<a href='%s'>%s</a>" % (sample.absolute_url(), sample.Title())
-            else:
-                items[x]['Client'] = ''
-                items[x]['Creator'] = ''
-                items[x]['getSample'] = sample.getSampleID()
-                items[x]['replace']['getSample'] = "<a href='%s'>%s</a>" % (sample.absolute_url(), items[x]['getSample'])
-                items[x]['getRequestID'] = obj.getRequestID()
-                items[x]['replace']['getRequestID'] = "<a href='%s'>%s</a>" % (obj.absolute_url(), items[x]['getRequestID'])
-                sp = sample.getSamplePoint()
-                if sp and sp.aq_parent != self.portal.bika_setup.bika_samplepoints:
-                    items[x]['replace']['getSamplePointTitle'] = ''
-                items[x]['getClientOrderNumber'] = ''
-                items[x]['getClientReference'] = ''
-                items[x]['getClientSampleID'] = ''
+            #if member.id in obj.aq_parent.users_with_local_role('Owner'):
+            #    items[x]['Client'] = obj.aq_parent.Title()
+            #    items[x]['replace']['Client'] = "<a href='%s'>%s</a>" % \
+            #        (obj.aq_parent.absolute_url(), obj.aq_parent.Title())
+            #    items[x]['Creator'] = self.user_fullname(obj.Creator())
+            #    items[x]['getRequestID'] = obj.getRequestID()
+            #    items[x]['replace']['getRequestID'] = "<a href='%s'>%s</a>" % \
+            #         (url, items[x]['getRequestID'])
+            #    items[x]['getSample'] = sample
+            #    items[x]['replace']['getSample'] = \
+            #        "<a href='%s'>%s</a>" % (sample.absolute_url(), sample.Title())
+            #else:
+            #    items[x]['Client'] = ''
+            #    items[x]['Creator'] = ''
+            #    items[x]['getSample'] = sample.getSampleID()
+            #    items[x]['replace']['getSample'] = "<a href='%s'>%s</a>" % (sample.absolute_url(), items[x]['getSample'])
+            #    items[x]['getRequestID'] = obj.getRequestID()
+            #    items[x]['replace']['getRequestID'] = "<a href='%s'>%s</a>" % (obj.absolute_url(), items[x]['getRequestID'])
+            #    sp = sample.getSamplePoint()
+            #    if sp and sp.aq_parent != self.portal.bika_setup.bika_samplepoints:
+            #        items[x]['replace']['getSamplePointTitle'] = ''
+            #    items[x]['getClientOrderNumber'] = ''
+            #    items[x]['getClientReference'] = ''
+            #    items[x]['getClientSampleID'] = ''
 
             batch = obj.getBatch()
             if batch:
