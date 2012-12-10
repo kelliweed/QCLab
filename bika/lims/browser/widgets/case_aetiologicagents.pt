@@ -11,7 +11,7 @@
             		<th class="minwidth"></th>
                     <th i18n:translate="" class="fieldRequired">Aetiologic agent</th>
                     <th i18n:translate="">Description</th>
-                    <th i18n:translate="" class="fieldRequired">Subtype</th>
+                    <th i18n:translate="">Subtype</th>
                 </tr>
             </thead>
             <tbody class="item-listing-tbody"
