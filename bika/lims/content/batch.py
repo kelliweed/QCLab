@@ -348,69 +348,6 @@ class Batch(BaseContent):
         uid = self.UID()
         return [b.getObject() for b in bc(portal_type='AnalysisRequest', getBatchUID=uid)]
 
-    def workflow_guard_receive(self):
-        """Permitted when all Samples are > sample_received
-        """
-        wf = getToolByName(self, 'portal_workflow')
-        states = ['sample_registered', 'to_be_sampled', 'sampled', 'to_be_preserved', 'sample_due']
-        import pdb;pdb.set_trace()
-        for o in self.getAnalysisRequests():
-            if wf.getInfoFor(o, 'review_state') in states:
-                return False
-        return True
-
-    def workflow_script_receive(self, state_info):
-        skip(self, 'receive')
-
-    def workflow_guard_open(self):
-        """Permitted when at least one sample is < sample_received
-        """
-        wf = getToolByName(self, 'portal_workflow')
-        states = ['sample_registered', 'to_be_sampled', 'sampled', 'to_be_preserved', 'sample_due']
-        for o in self.getAnalysisRequests():
-            if wf.getInfoFor(o, 'review_state') in states:
-                return True
-        return False
-
-    def workflow_script_open(self, state_info):
-        skip(self, 'open')
-        # reset everything and return to open state
-        self.setDateReceived(None)
-        self.reindexObject(idxs = ["getDateReceived", ])
-
-    def workflow_guard_submit(self):
-        """Permitted when all samples >= to_be_verified
-        """
-        wf = getToolByName(self, 'portal_workflow')
-        states = ['sample_registered', 'to_be_sampled', 'sampled', 'to_be_preserved', 'sample_due', 'sample_received']
-        for o in self.getAnalysisRequests():
-            if wf.getInfoFor(o, 'review_state') in states:
-                return False
-        return True
-
-    # def workflow_script_submit(self, state_info):
-    #     skip(self, 'open')
-
-    def workflow_guard_verify(self):
-        """Permitted when all samples >= verified
-        """
-        wf = getToolByName(self, 'portal_workflow')
-        states = ['sample_registered', 'to_be_sampled', 'sampled', 'to_be_preserved', 'sample_due', 'sample_received',
-                  'to_be_verified']
-        for o in self.getAnalysisRequests():
-            if wf.getInfoFor(o, 'review_state') in states:
-                return False
-        return True
-
-    # def workflow_script_verify(self, state_info):
-    #     skip(self, 'open')
-
-    # def workflow_guard_close(self):
-    #     return True
-
-    # def workflow_script_close(self, state_info):
-    #     skip(self, 'open')
-
     def getCaseStatuses(self):
         """ return all Case Statuses from site setup """
         bsc = getToolByName(self, 'bika_setup_catalog')
@@ -587,5 +524,83 @@ class Batch(BaseContent):
             return {'year':'',
                     'month':'',
                     'day':''}
+
+    def workflow_guard_receive(self):
+        """Permitted when all Samples are > sample_received
+        """
+        wf = getToolByName(self, 'portal_workflow')
+        states = ['sample_registered', 'to_be_sampled', 'sampled', 'to_be_preserved', 'sample_due']
+        import pdb;pdb.set_trace()
+        for o in self.getAnalysisRequests():
+            if wf.getInfoFor(o, 'review_state') in states:
+                return False
+        return True
+
+    def workflow_script_receive(self, state_info):
+        skip(self, 'receive')
+
+    def workflow_guard_open(self):
+        """Permitted when at least one sample is < sample_received
+        """
+        wf = getToolByName(self, 'portal_workflow')
+        states = ['sample_registered', 'to_be_sampled', 'sampled', 'to_be_preserved', 'sample_due']
+        for o in self.getAnalysisRequests():
+            if wf.getInfoFor(o, 'review_state') in states:
+                return True
+        return False
+
+    def workflow_script_open(self, state_info):
+        skip(self, 'open')
+        # reset everything and return to open state
+        self.setDateReceived(None)
+        self.reindexObject(idxs = ["getDateReceived", ])
+
+    def workflow_guard_submit(self):
+        """Permitted when all samples >= to_be_verified
+        """
+        wf = getToolByName(self, 'portal_workflow')
+        states = ['sample_registered', 'to_be_sampled', 'sampled', 'to_be_preserved', 'sample_due', 'sample_received']
+        for o in self.getAnalysisRequests():
+            if wf.getInfoFor(o, 'review_state') in states:
+                return False
+        return True
+
+    # def workflow_script_submit(self, state_info):
+    #     skip(self, 'open')
+
+    def workflow_guard_verify(self):
+        """Permitted when all samples >= verified
+        """
+        wf = getToolByName(self, 'portal_workflow')
+        states = ['sample_registered', 'to_be_sampled', 'sampled', 'to_be_preserved', 'sample_due', 'sample_received',
+                  'to_be_verified']
+        for o in self.getAnalysisRequests():
+            if wf.getInfoFor(o, 'review_state') in states:
+                return False
+        return True
+
+    # def workflow_script_verify(self, state_info):
+    #     skip(self, 'open')
+
+    # def workflow_guard_close(self):
+    #     return True
+
+    # def workflow_script_close(self, state_info):
+    #     skip(self, 'open')
+
+    def workflow_guard_publish(self):
+        return True
+
+    # doesn't work, action url in bika_publication_workflow does it.
+    # def workflow_script_publish(self, state_info):
+    #     self.REQUEST.RESPONSE.redirect(self.absolute_url() + "/publish")
+
+    def workflow_guard_republish(self):
+        return self.workflow_guard_publish()
+
+    # bika_publication_workflow republish action currently goes to "/publish"
+    # def workflow_script_republish(self, state_info):
+    #     self.workflow_script_publish(state_info)
+
 
 registerType(Batch, PROJECTNAME)
