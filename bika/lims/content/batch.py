@@ -147,7 +147,7 @@ schema = BikaSchema.copy() + Schema((
         subfields=('Code', 'Title', 'Description', 'Onset', 'Remarks'),
         subfield_sizes={'Title': 15, 'Description': 25, 'Subtype': 10, 'Remarks': 25},
         widget=CaseAetiologicAgentsWidget(
-            label='Aetiologic Agents',
+            label='Aetiological Agents',
         ),
     ),
     TextField('Remarks',
@@ -166,8 +166,20 @@ schema = BikaSchema.copy() + Schema((
 
 schema['title'].required = False
 schema['title'].widget.visible = False
-schema.moveField('BatchLabels', after='AdditionalNotes')
 schema.moveField('PatientID', after='BatchID')
+schema.moveField('ClientID', after='PatientID')
+schema.moveField('ClientBatchID', after='ClientID')
+schema.moveField('DoctorID', after='ClientBatchID')
+schema.moveField('OnsetDate', after='DoctorID')
+schema.moveField('PatientAgeAtCaseOnsetDate', after='OnsetDate')
+schema.moveField('OnsetDateEstimated', after='PatientAgeAtCaseOnsetDate')
+schema.moveField('ProvisionalDiagnosis', after='OnsetDateEstimated')
+schema.moveField('Symptoms', after='ProvisionalDiagnosis')
+schema.moveField('BatchLabels', after='Symptoms')
+schema.moveField('CaseStatus', after='BatchLabels')
+schema.moveField('CaseOutcome', after='CaseStatus')
+schema.moveField('AetiologicAgents', after='CaseOutcome')
+schema.moveField('AdditionalNotes', after='AetiologicAgents')
 
 class Batch(BaseContent):
     implements(IBatch)

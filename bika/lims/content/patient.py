@@ -238,8 +238,14 @@ schema['HomePhone'].schemata='Personal'
 schema['MobilePhone'].schemata='Personal'
 #schema.moveField('PatientID', pos='top')
 schema.moveField('PrimaryReferrer',after='Surname')
-schema.moveField('Gender',after='PrimaryReferrer')
 schema.moveField('PatientID',before='title')
+schema.moveField('PatientIdentifiers', after='PrimaryReferrer')
+schema.moveField('Gender',after='PatientIdentifiers')
+schema.moveField('Age', after='Gender')
+schema.moveField('BirthDate', after='Age')
+schema.moveField('BirthDateEstimated', after='BirthDate')
+schema.moveField('AgeSplitted', after='BirthDateEstimated')
+schema.moveField('CountryState', after='AgeSplitted')
 
 class Patient(Person):
     implements(IPatient)
