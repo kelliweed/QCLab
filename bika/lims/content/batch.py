@@ -102,7 +102,7 @@ schema = BikaSchema.copy() + Schema((
             label = _("Onset Date Estimated"),
         ),
     ),
-    
+
     RecordsField('ProvisionalDiagnosis',
         type='provisionaldiagnosis',
         subfields=('Code', 'Title', 'Description', 'Onset', 'Remarks'),
@@ -139,7 +139,7 @@ schema = BikaSchema.copy() + Schema((
         subfields=('Code', 'Title', 'Description', 'Onset', 'Remarks'),
         subfield_sizes={'Code': 7, 'Title': 15, 'Description': 25, 'Onset': 10, 'Remarks': 25},
         widget=CaseSymptomsWidget(
-            label='Signs and Symptoms',
+            label=_('Signs and Symptoms'),
         ),
     ),
     RecordsField('AetiologicAgents',
@@ -147,7 +147,7 @@ schema = BikaSchema.copy() + Schema((
         subfields=('Code', 'Title', 'Description', 'Onset', 'Remarks'),
         subfield_sizes={'Title': 15, 'Description': 25, 'Subtype': 10, 'Remarks': 25},
         widget=CaseAetiologicAgentsWidget(
-            label='Aetiologic Agents',
+            label=_('Aetiologic Agents'),
         ),
     ),
     TextField('Remarks',

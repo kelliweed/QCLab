@@ -321,6 +321,20 @@ class BatchPublishView(BrowserView):
         else:
             self.lab_address = None
 
+        # Patient
+        proxies = self.bika_patient_catalog(UID=self.context.getPatientUID())
+        if proxies:
+            self.patient = proxies[0].getObject()
+        else:
+            self.patient = None
+
+        # Doctor
+        proxies = self.portal_catalog(UID=self.context.getDoctorUID())
+        if proxies:
+            self.doctor = proxies[0].getObject()
+        else:
+            self.doctor = None
+
         # Analysis Request results
         self.ars = []
         self.ar_headers = [_("Request ID"),
@@ -379,7 +393,7 @@ class BatchPublishView(BrowserView):
             open(os.path.join(Globals.INSTANCE_HOME,'var', fn + ".pdf"),
                  "wb").write(pdf_data)
 
-        # Email to Doctors?  Lab Staff?
+        # Email to who?
 
         # Send PDF to browser
         if not pdf.err:
@@ -387,3 +401,27 @@ class BatchPublishView(BrowserView):
             setheader('Content-Type', 'application/pdf')
             setheader("Content-Disposition", "attachment;filename=\"%s\""%fn)
             self.request.RESPONSE.write(pdf_data)
+
+    def getPatientIdentifiersStrHtml(self):
+        ids=self.patient.getPatientIdentifiers()
+        idsstr='';
+        for id in ids:
+            idsstr+="(" + id['IdentifierType']+': '+id['Identifier']+") "
+        return idsstr
+
+    def getSymptomsStrHtml(self):
+        records=self.context.getSymptoms()
+        records.sort(lambda x,y:cmp(x['Onset'], y['Onset']))
+        res = [];
+        for record in records:
+            res.append("%(Onset)s: %(Code)s %(Description)s %(Remarks)s" % record)
+        return "<br/>".join(res)
+
+    def getProvisionalDiagnosisStrHtml(self):
+        records=self.context.getProvisionalDiagnosis()
+        records.sort(lambda x,y:cmp(x['Onset'], y['Onset']))
+        records.sort(lambda x,y:cmp(x['Code'], y['Code']))
+        res = [];
+        for record in records:
+            res.append("%(Onset)s: %(Code)s %(Description)s" % record)
+        return "<br/>".join(res)
