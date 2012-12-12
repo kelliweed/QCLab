@@ -16,9 +16,9 @@
     </style>
     <style type="text/css">
 
-      td {padding-top:2px;}
+     td {padding-top:2px;}
 
-      .ars_table td {
+     .ars_table td {
         padding: 0 50px 0 0;
       }
 
@@ -76,74 +76,6 @@
     </tr>
 </table>
 <br/>
-
-<!-- Patient -->
-<table style="width:100%;border-top:1px solid #dfdfdf;"
-       summary="Patient"
-       i18n:attributes="summary"
-       tal:define="html view/getPatientIdentifiersStrHtml;"
-       tal:condition="html">
-  <tbody>
-    <tr>
-      <td style="width:55%">
-        <span i18n:translate="">Patient</span>: <span tal:content="view/patient/Title"/>
-        (<span i18n:translate="">Patient ID</span>: <span tal:content="view/patient/getPatientID"/>)
-        <span tal:condition="view/patient/PatientIdentifiers" tal:content="structure html"/> <!-- this is in view python -->
-      </td>
-      <td style="width:15%"><span i18n:translate="">Gender</span>: <span tal:content="view/patient/getGender"/></td>
-      <td style="width:15%"><span i18n:translate="">Age</span>: <span tal:content="view/patient/getAgeSplittedStr"/></td>
-      <td style="width:15%"><span i18n:translate="">Birth date</span>: <span tal:content="python:view.ulocalized_time(view.patient.getBirthDate())"/></td>
-    </tr>
-  </tbody>
-</table>
-
-<!-- Doctor -->
-<table style="width:100%;border-top:1px solid #dfdfdf;"
-       summary="Doctor"
-       i18n:attributes="summary"
-       tal:define="doctor nocall:view/doctor;"
-       tal:condition="doctor">
-  <tbody>
-    <tr>
-      <td style="width:40%">
-        <span i18n:translate="">Doctor</span>: <span tal:content="doctor/getFullname"/>
-        (<span i18n:translate="">Doctor ID</span>: <span tal:content="doctor/getDoctorID"/>)
-      </td>
-      <td style="width:30%"><span i18n:translate="">Phone</span>: <span tal:content="doctor/getBusinessPhone"/></td>
-      <td style="width:30%"></td>
-    </tr>
-  </tbody>
-</table>
-
-<!-- Signs and Symptoms -->
-<table style="width:100%;border-top:1px solid #dfdfdf;"
-       summary="Symptoms"
-       i18n:attributes="summary">
-  <tbody>
-    <tr>
-      <td style="width:20%">
-        <span i18n:translate="">Signs and Symptoms</span>:
-      </td>
-      <td style="width:80%">
-        <span tal:content="structure view/getSymptomsStrHtml"/>
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-<!-- Provisional Diagnosis and additional notes -->
-<table style="width:100%;border-top:1px solid #dfdfdf;"
-       summary="Symptoms"
-       i18n:attributes="summary">
-  <tbody>
-    <tr>
-      <td style="width:20%;">
-        <span i18n:translate="">Provisional diagnosis</span>:</td>
-        <td><span tal:content="structure view/getProvisionalDiagnosisStrHtml"/>
-      </td>
-    </tr>
-  </tbody>
-</table>
 
 <!-- Analysis Request results -->
 <div tal:repeat="ar view/ars">
