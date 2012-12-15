@@ -11,12 +11,12 @@ from bika.lims.browser.widgets import RecordsWidget
 from zope.interface import implements
 
 schema = BikaSchema.copy() + Schema((
-                                          
+
     StringField('ICDCode',
         widget = StringWidget(
             label = _("ICD Code"),
         )
-    ),                                      
+    ),
 ))
 
 schema['description'].widget.visible = True
@@ -31,8 +31,5 @@ class Disease(BaseContent):
     def _renameAfterCreation(self, check_auto_id=False):
         from bika.lims.idserver import renameAfterCreation
         renameAfterCreation(self)
-
-    def Title(self):
-        return self.title
 
 registerType(Disease, PROJECTNAME)
