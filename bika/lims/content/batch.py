@@ -5,6 +5,7 @@ from Products.ATExtensions.ateapi import DateTimeField
 from Products.ATExtensions.ateapi import RecordsField as RecordsField
 from Products.Archetypes.public import *
 from Products.CMFCore.utils import getToolByName
+from Products.CMFPlone.utils import safe_unicode
 from bika.lims import bikaMessageFactory as _
 from bika.lims.browser.widgets import CaseAetiologicAgentsWidget
 from bika.lims.browser.widgets import CaseProvisionalDiagnosisWidget
@@ -194,7 +195,7 @@ class Batch(BaseContent):
             patient = bpc(UID=p_uid)
             if patient:
                 res = "%s (%s)" % (res, patient[0].Title)
-        return str(res).decode('utf-8').encode('utf-8')
+        return safe_unicode(res).encode('utf-8')
 
     security.declarePublic('getBatchID')
     def getBatchID(self):
@@ -530,7 +531,6 @@ class Batch(BaseContent):
         """
         wf = getToolByName(self, 'portal_workflow')
         states = ['sample_registered', 'to_be_sampled', 'sampled', 'to_be_preserved', 'sample_due']
-        import pdb;pdb.set_trace()
         for o in self.getAnalysisRequests():
             if wf.getInfoFor(o, 'review_state') in states:
                 return False
