@@ -185,7 +185,7 @@ class ImmunizationHistoryView(BrowserView):
         elif 'submitted' in self.request:
             bsc=self.bika_setup_catalog
             new=len(self.context.getImmunizationHistory())>0 and self.context.getImmunizationHistory() or []
-            E=self.request.form['EPINumber']
+            E=self.request.form.get('EPINumber', '')
             for i in range(len(self.request.form.get('Immunization', []))):
                 I=self.request.form['Immunization'][i]
                 V=self.request.form['VaccinationCenter'][i]

@@ -238,15 +238,16 @@ $(document).ready(function(){
 		$("#BirthDateEstimated").attr('checked', false);
 	}
 
-	// EPINumber is always required
-	$(".immuzationhistory_save").click(function(event){
-		epinr = $("input[name=EPINumber]").val();
-		if(epinr == '' || epinr == undefined){
-			alert(_("No EPI Number specified"))
-			event.preventDefault();
-			return false;
-		};
-	});
+	// #489, EPINumber is always required
+	// #489, no it isn't...
+	// $(".immuzationhistory_save").click(function(event){
+	// 	epinr = $("input[name=EPINumber]").val();
+	// 	if(epinr == '' || epinr == undefined){
+	// 		alert(_("No EPI Number specified"))
+	// 		event.preventDefault();
+	// 		return false;
+	// 	};
+	// });
 
 	function lookups(){
 		// Patient identifiers > Identifier Types popup

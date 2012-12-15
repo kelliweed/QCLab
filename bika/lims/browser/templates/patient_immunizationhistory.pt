@@ -11,9 +11,11 @@
     	<div class="field">
 	    	<tal:hasepinumber tal:condition="python:hasattr(view, 'getEPINumber')">
 				<label i18n:translate="">EPI Number</label>
-				<span class="fieldRequired" title="Required"
+				<!-- #489
+                <span class="fieldRequired" title="Required"
 					i18n:attributes="title"
 					i18n:translate="">(Required)</span>
+                -->
 				<input type="text" name="EPINumber" size="30"
 					tal:attributes="value python: view.getEPINumber()"/>
 			</tal:hasepinumber>
