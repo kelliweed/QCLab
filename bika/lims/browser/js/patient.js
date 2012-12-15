@@ -128,18 +128,20 @@ $(document).ready(function(){
 				},
 				onClose: function() {
 					var Fullname = $("#Firstname").val() + " " + $("#Surname").val();
-					$.ajax({
-						url: window.portal_url + "/getPatientID",
-						type: 'POST',
-						data: {'_authenticator': $('input[name="_authenticator"]').val(),
-								'Fullname': Fullname},
-						dataType: "json",
-						success: function(data, textStatus, $XHR){
-							$("#PatientID").val(data['PatientID']);
-							$(".jsPatientTitle").remove();
-							$("#archetypes-fieldname-PatientID").append("<span class='jsPatientTitle'>"+Fullname+"</span>");
-						}
-					});
+					if (Fullname.length > 1) {
+						$.ajax({
+							url: window.portal_url + "/getPatientID",
+							type: 'POST',
+							data: {'_authenticator': $('input[name="_authenticator"]').val(),
+									'Fullname': Fullname},
+							dataType: "json",
+							success: function(data, textStatus, $XHR){
+								$("#PatientID").val(data['PatientID']);
+								$(".jsPatientTitle").remove();
+								$("#archetypes-fieldname-PatientID").append("<span class='jsPatientTitle'>"+Fullname+"</span>");
+							}
+						});
+					}
 				}
 			}
 		}
