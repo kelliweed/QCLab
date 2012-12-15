@@ -18,7 +18,4 @@ class IdentifierType(BaseContent):
         from bika.lims.idserver import renameAfterCreation
         renameAfterCreation(self)
 
-    def Title(self):
-        return self.title
-
 registerType(IdentifierType, PROJECTNAME)

@@ -18,7 +18,4 @@ class CaseStatus(BaseContent):
         from bika.lims.idserver import renameAfterCreation
         renameAfterCreation(self)
 
-    def Title(self):
-        return self.title
-
 registerType(CaseStatus, PROJECTNAME)

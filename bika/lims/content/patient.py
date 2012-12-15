@@ -7,6 +7,7 @@ from Products.Archetypes import atapi
 from Products.Archetypes.public import *
 from Products.CMFCore import permissions
 from Products.CMFCore.utils import getToolByName
+from Products.CMFPlone.utils import safe_unicode
 from bika.lims import PMF, bikaMessageFactory as _
 from bika.lims.browser.fields import AddressField
 from bika.lims.browser.widgets import AddressWidget
@@ -260,7 +261,7 @@ class Patient(Person):
 
     def Title(self):
         """ Return the Fullname as title """
-        return self.getFullname()
+        return safe_unicode(self.getFullname()).encode('utf-8')
 
     security.declarePublic('getPatientID')
     def getPatientID(self):
@@ -296,14 +297,14 @@ class Patient(Person):
             idsstr+=idsstr=='' and id['Identifier'] or (', '+id['Identifier'])
         return idsstr
         #return self.getSendersPatientID()+" "+self.getSendersCaseID()+" "+self.getSendersSpecimenID()
-    
+
     def getPatientIdentifiersStrHtml(self):
         ids=self.getPatientIdentifiers()
         idsstr='<table cellpadding="0" cellspacing="0" border="0" class="patientsidentifiers" style="text-align:left;width: 100%;"><tr><td>';
         for id in ids:
             idsstr+="<tr><td>"+id['IdentifierType']+':</td><td>'+id['Identifier']+"</td></tr>"
         return "</table>"+idsstr
-    
+
     def getAgeSplitted(self):
 
         if (self.getBirthDate()):

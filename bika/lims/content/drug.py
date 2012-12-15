@@ -11,13 +11,13 @@ from bika.lims.browser.widgets import RecordsWidget
 from zope.interface import implements
 
 schema = BikaSchema.copy() + Schema((
-                                                               
+
     StringField('Category',
         widget = StringWidget(
             label = _("Category"),
         )
     ),
-                                     
+
     TextField('Indications',
         default_content_type = 'text/x-web-intelligent',
         allowable_content_types = ('text/x-web-intelligent',),
@@ -27,8 +27,8 @@ schema = BikaSchema.copy() + Schema((
                       "Indications"),
             description = _("Symptoms or the like for which the drug is suitable"),
         ),
-    ), 
-                                     
+    ),
+
     TextField('Posology',
         default_content_type = 'text/x-web-intelligent',
         allowable_content_types = ('text/x-web-intelligent',),
@@ -39,7 +39,7 @@ schema = BikaSchema.copy() + Schema((
             description = _("Appropriate doses and dosage"),
         ),
     ),
-                                     
+
     TextField('SideEffects',
         default_content_type = 'text/x-web-intelligent',
         allowable_content_types = ('text/x-web-intelligent',),
@@ -49,8 +49,8 @@ schema = BikaSchema.copy() + Schema((
                       "Side effects"),
             description = _("Known undesirable effects of the drug"),
         ),
-    ), 
-                                     
+    ),
+
     TextField('Preservation',
         default_content_type = 'text/x-web-intelligent',
         allowable_content_types = ('text/x-web-intelligent',),
@@ -61,7 +61,7 @@ schema = BikaSchema.copy() + Schema((
             description = _("preservation"),
         ),
     ),
-                                      
+
 ))
 
 schema['description'].widget.visible = True
@@ -76,8 +76,5 @@ class Drug(BaseContent):
     def _renameAfterCreation(self, check_auto_id=False):
         from bika.lims.idserver import renameAfterCreation
         renameAfterCreation(self)
-
-    def Title(self):
-        return self.title
 
 registerType(Drug, PROJECTNAME)
