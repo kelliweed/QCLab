@@ -44,6 +44,12 @@ $(document).ready(function(){
             	onLoad: function() {
             		// manually remove remarks
             		this.getOverlay().find("#archetypes-fieldname-Remarks").remove();
+                    // Address widget
+                    $.ajax({
+                        url: 'bika_widgets/addresswidget.js',
+                        dataType: 'script',
+                        async: false
+                    });
 	            },
                 onClose: function() {
                     var Fullname = $("#Firstname").val() + " " + $("#Surname").val();
