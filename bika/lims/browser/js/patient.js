@@ -15,13 +15,13 @@ $(document).ready(function(){
 						' <img style="padding-bottom:1px;" src="'+window.portal_url+'/++resource++bika.lims.images/add.png"/>' +
 					' </a>');
 		$("input[id*=PatientID]").combogrid({
-			width: "550px",
 			colModel: [{'columnName':'PatientUID','hidden':true},
 					   {'columnName':'PatientID','width':'20','label':_('Patient ID')},
 					   {'columnName':'Title','width':'40','label':_('Full name')},
 					   {'columnName':'AdditionalIdentifiers', 'width':'40','label':_('Additional Identifiers')},
 					   {'columnName':'PatientBirthDate','hidden':true}],
 			url: window.portal_url + "/getPatients?_authenticator=" + $('input[name="_authenticator"]').val(),
+            width: "650px",
 			rows:5,
 			showOn: true,
 			select: function( event, ui ) {
@@ -242,8 +242,8 @@ $(document).ready(function(){
 		// Patient identifiers > Identifier Types popup
 		$(".template-patientidentifiers #IdentifierType").combogrid({
 			colModel: [{'columnName':'UID', 'hidden':true},
-					   {'columnName':'Title', 'width':'25', 'label':_('Title')},
-					   {'columnName':'Description', 'width':'65', 'label':_('Description')}],
+					   {'columnName':'Title', 'width':'30', 'label':_('Title')},
+					   {'columnName':'Description', 'width':'70', 'label':_('Description')}],
 			url: window.portal_url + "/getIdentifierTypes?_authenticator=" + $('input[name="_authenticator"]').val(),
 			showOn: true,
 			select: function( event, ui ) {
@@ -333,10 +333,11 @@ $(document).ready(function(){
 		// Chronic Conditions -> combined FULL ICD9/bika_symptoms lookup
 		$(".template-chronicconditions #Title").combogrid({
 			colModel: [{'columnName':'Code', 'width':'10', 'label':_('Code')},
-					   {'columnName':'Title', 'width':'25', 'label':_('Title')},
-					   {'columnName':'Description', 'width':'65', 'label':_('Description')}],
+					   {'columnName':'Title', 'width':'30', 'label':_('Title')},
+					   {'columnName':'Description', 'width':'60', 'label':_('Description')}],
 			url: window.portal_url + "/getDiseases?_authenticator=" + $('input[name="_authenticator"]').val(),
 			showOn: true,
+            width: "650px",
 			select: function( event, ui ) {
 				event.preventDefault();
 				$(this).val(ui.item.Title);
@@ -350,9 +351,10 @@ $(document).ready(function(){
 		// Travel History > Countries search popup
 		$(".template-travelhistory #Country").combogrid({
 			colModel: [{'columnName':'Code', 'width':'10', 'label':_('Code')},
-					   {'columnName':'Country', 'width':'25', 'label':_('Country')}],
+					   {'columnName':'Country', 'width':'90', 'label':_('Country')}],
 			url: window.location.href.replace("/travelhistory","") + "/getCountries?_authenticator=" + $('input[name="_authenticator"]').val(),
 			showOn: true,
+            width: "450px",
 			select: function( event, ui ) {
 				event.preventDefault();
 				$(this).val(ui.item.Title);

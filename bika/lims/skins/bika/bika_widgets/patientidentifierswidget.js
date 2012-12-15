@@ -1,16 +1,16 @@
 jQuery(function($){
 $(document).ready(function(){
-	
+
     _ = jarn.i18n.MessageFactory('bika');
     PMF = jarn.i18n.MessageFactory('plone');
 
     function lookups(){
-    	
+
         // Patient identifiers > Identifier Types popup
         $(".template-patientidentifiers #IdentifierType").combogrid({
             colModel: [{'columnName':'UID', 'hidden':true},
-                       {'columnName':'Title', 'width':'25', 'label':_('Title')},
-                       {'columnName':'Description', 'width':'65', 'label':_('Description')}],
+                       {'columnName':'Title', 'width':'30', 'label':_('Title')},
+                       {'columnName':'Description', 'width':'70', 'label':_('Description')}],
             url: window.portal_url + "/getIdentifierTypes?_authenticator=" + $('input[name="_authenticator"]').val(),
             showOn: true,
             select: function( event, ui ) {
@@ -39,7 +39,7 @@ $(document).ready(function(){
         	alert(_("No Identifier entered"))
         	return false;
         }
-        
+
         newrow = $(".template-patientidentifiers tr#new").clone();
         $(".template-patientidentifiers tr#new").removeAttr('id');
         $(".template-patientidentifiers #IdentifierTypeUID").parent().append("<input type='hidden' name='PID_IdentifierTypeUID:list' value='"+U+"'/>");

@@ -1,14 +1,14 @@
 jQuery(function($){
 $(document).ready(function(){
-	
+
     _ = jarn.i18n.MessageFactory('bika');
     PMF = jarn.i18n.MessageFactory('plone');
 
     function loadAgentsCombo(){
         // Case Aetiologic Agents > Aetiologic Agent popup
         $(".template-caseaetiologicagents #Title").combogrid({
-            colModel: [{'columnName':'Title', 'width':'25', 'label':_('Title')},
-                       {'columnName':'Description', 'width':'65', 'label':_('Description')},
+            colModel: [{'columnName':'Title', 'width':'30', 'label':_('Title')},
+                       {'columnName':'Description', 'width':'70', 'label':_('Description')},
                        {'columnName':'AgentUID', 'hidden':true}],
             showOn: true,
             url: window.portal_url + "/getAetiologicAgents?_authenticator=" + $('input[name="_authenticator"]').val(),
@@ -24,15 +24,15 @@ $(document).ready(function(){
             }
         });
     }
-    
+
     function loadAgentSubtypesCombo() {
     	if ($(".template-caseaetiologicagents #Title").val() != '') {
 	    	// Case Aetiologic Agents > Aetiologic agent row > Subtypes popup
 	        // This combo depends on the selected Aetiologic agent in the previous one
     		auid = $('input[id=AgentUID]').val()
 	        $(".template-caseaetiologicagents #Subtype").combogrid({
-	        	colModel: [{'columnName':'Subtype', 'width':'25', 'label':_('Subtype')},
-	                       {'columnName':'SubtypeRemarks', 'width':'65', 'label':_('SubtypeRemarks')}],
+	        	colModel: [{'columnName':'Subtype', 'width':'30', 'label':_('Subtype')},
+	                       {'columnName':'SubtypeRemarks', 'width':'70', 'label':_('SubtypeRemarks')}],
 	            showOn: true,
 	            url: window.portal_url + "/getAetiologicAgentSubtypes?_authenticator=" + $('input[name="_authenticator"]').val()+"&auid=" + auid,
 	            select: function( event, ui ) {
@@ -46,15 +46,15 @@ $(document).ready(function(){
 			$(".template-caseaetiologicagents #Subtype").focus();
 			$(".template-caseaetiologicagents #Subtype").attr('readonly', false);
 			$(".template-caseaetiologicagents #Subtype").attr('disabled', false);
-    	} else { 			
+    	} else {
     		$(".template-caseaetiologicagents #Subtype").val('');
 			$(".template-caseaetiologicagents #Subtype").attr('readonly', true);
 			$(".template-caseaetiologicagents #Subtype").attr('disabled', true);
     	}
     }
-    
-    function load() {    	
-    	
+
+    function load() {
+
     	// When input receives focus, value must be reseted to empty and
     	// the popup must show all the items available
     	$(".template-caseaetiologicagents #Title").focus(function(event){
@@ -63,9 +63,9 @@ $(document).ready(function(){
         	$(this).val('');
         	loadAgentSubtypesCombo();
         });
-    	
+
     	// When aetiologic agent selected changes, the value must be validated
-    	// against ZopeDB, cause no free text is allowed. The combo for 
+    	// against ZopeDB, cause no free text is allowed. The combo for
     	// aetiologic agent subtypes will be also loaded in accordance
     	// to the aetiologic agent.
     	$(".template-caseaetiologicagents #Title").change(function(event){
@@ -75,11 +75,11 @@ $(document).ready(function(){
                 data: {'_authenticator': $('input[name="_authenticator"]').val(),
                        'title': $(this).val()},
         		dataType: "json",
-            	success: function(data, textStatus, $XHR){   
+            	success: function(data, textStatus, $XHR){
             		if (data == null || data['rows'].length < 1) {
             			//Aetiologic agent doesn't exist
             			$(".template-caseaetiologicagents #Title").focus();
-            		} 		
+            		}
     			},
     			error: function(){
     				//Error while searching for aetiologic agent
@@ -88,7 +88,7 @@ $(document).ready(function(){
             });
         	loadAgentSubtypesCombo();
         });
-        
+
     	// When subtype value changes it must be validated against ZopeDB
     	// (no free text allowed). If no exists, the input element will be
     	// reseted to empty
@@ -100,7 +100,7 @@ $(document).ready(function(){
                        'title': $(this).val(),
                        'auid':$(".template-caseaetiologicagents #AgentUID").val()},
         		dataType: "json",
-            	success: function(data, textStatus, $XHR){   
+            	success: function(data, textStatus, $XHR){
             		if (data == null || data['rows'].length < 1) {
             			//Subtype doesn't exist
             			$(".template-caseaetiologicagents #Subtype").val('');
@@ -108,7 +108,7 @@ $(document).ready(function(){
             			return false;
             		} else {
             			$(".template-caseaetiologicagents .add_row").removeAttr('disabled');
-            		}        		
+            		}
     			},
     			error: function(){
     				//Error while searching
@@ -119,7 +119,7 @@ $(document).ready(function(){
     			}
             });
         });
-        
+
         $(".template-caseaetiologicagents #add_row").click(function(event){
             event.preventDefault();
             T = $(".template-caseaetiologicagents #Title").val();
@@ -129,7 +129,7 @@ $(document).ready(function(){
             if (T == ''){
                 return false;
             }
-            
+
             // Check if case has already saved the entry
             titrows = $("input[name='CAE_STitle:list']");
             for(i=0; i<titrows.length; i++){
@@ -158,7 +158,7 @@ $(document).ready(function(){
             		}
             	}
     		}
-            
+
             // Add the new row
             newrow = $(".template-caseaetiologicagents tr#new").clone();
             $(".template-caseaetiologicagents tr#new").removeAttr('id');
@@ -182,12 +182,12 @@ $(document).ready(function(){
             load();
             return false;
         });
-        
+
         loadAgentsCombo();
         loadAgentSubtypesCombo();
     }
-    
+
     load();
-    
+
 });
 });
