@@ -217,6 +217,7 @@ class BikaGenerator:
         mp(ManageAnalysisRequests, ['Manager', 'LabManager', 'LabClerk', 'Doctor', 'Analyst', 'Sampler', 'Preserver', 'Owner'], 1)
         mp(ManageBika, ['Manager', 'LabManager'], 1)
         mp(ManageClients, ['Manager', 'LabManager', 'LabClerk'], 1)
+        mp(ManageLoginDetails, ['Manager', 'LabManager'], 1)
         mp(ManageOrders, ['Manager', 'LabManager', 'LabClerk'], 1)
         mp(ManagePatients, ['Manager', 'LabManager', 'Owner', 'LabClerk', 'Doctor', ], 1)
         mp(ManagePricelists, ['Manager', 'LabManager', 'Owner'], 1)
