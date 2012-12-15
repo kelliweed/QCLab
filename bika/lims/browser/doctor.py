@@ -11,6 +11,7 @@ from bika.lims.browser.analysisrequest import AnalysisRequestWorkflowAction, \
 from bika.lims.browser.bika_listing import BikaListingView
 from bika.lims.browser.client import ClientAnalysisRequestsView, \
     ClientSamplesView
+from Products.ZCTextIndex.ParseTree import ParseError
 from bika.lims.browser.publish import Publish
 from bika.lims.browser.sample import SamplesView
 from bika.lims.interfaces import IContacts
@@ -40,10 +41,14 @@ class ajaxGetDoctorID(BrowserView):
     """
     def __call__(self):
         plone.protect.CheckAuthenticator(self.request)
-        Fullname = self.request['Fullname']
+        Fullname = self.request.get('Fullname', '')
         if not Fullname:
             return json.dumps({'DoctorID': ''})
-        proxies = self.portal_catalog(portal_type='Doctor', Title = Fullname, sort_on='created', sort_order='reverse')
+        proxies = None
+        try:
+            proxies = self.portal_catalog(portal_type='Doctor', Title = Fullname, sort_on='created', sort_order='reverse')
+        except ParseError:
+            pass
         if not proxies:
             return json.dumps({'DoctorID': ''})
         return json.dumps({'DoctorID':proxies[0].getObject().getDoctorID()})
