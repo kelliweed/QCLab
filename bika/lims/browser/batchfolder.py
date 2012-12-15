@@ -176,9 +176,13 @@ class ajaxGetBatches(BrowserView):
         rows = []
 
         if PatientUID:
-            batches = self.bika_catalog(portal_type='Batch', getPatientUID=PatientUID)
+            batches = self.bika_catalog(portal_type='Batch',
+                                        getPatientUID=PatientUID,
+                                        cancellation_state = 'active')
         elif ClientUID:
-            batches = self.bika_catalog(portal_type='Batch', getClientUID=ClientUID)
+            batches = self.bika_catalog(portal_type='Batch',
+                                        getClientUID=ClientUID,
+                                        cancellation_state = 'active')
         else:
             batches = self.bika_catalog(portal_type='Batch')
 
