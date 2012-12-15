@@ -3,7 +3,7 @@
 
 <stylesheet
     id="++resource++bika.lims.css/hide_contentmenu.css"
-    expression="python:here.portal_type in ['Client', 'Batch', 'Doctor', 'Patient', 'AnalysisRequest', 'Worksheet', 'Sample', 'AnalysisCategory', 'AnalysisProfile', 'ARTemplate', 'AnalysisService', 'AnalysisSpec', 'Attachment', 'Calculation', 'Instrument', 'LabContact', 'Laboratory', 'Method', 'Department', 'ReferenceDefinition', 'ReferenceManufacturer', 'ReportFolder', 'SampleType', 'SampleOrigin', 'SamplePoint', 'WorksheetTemplate', 'LabProduct', 'ReferenceSupplier', 'ReferenceSample', 'Preservation','Drug', 'Treatment', 'DrugProhibition', 'VaccinationCenter', 'VaccinationCenters', 'Immunization', 'Immunizations', 'Disease', 'Diseases', 'CaseStatus', 'CaseStatuses', 'CaseOutcome', 'CaseOutcomes']"
+    expression="python:here.portal_type in ['Client', 'Batch', 'Doctor', 'Patient', 'AnalysisRequest', 'Worksheet', 'Sample', 'AnalysisCategory', 'AnalysisProfile', 'ARTemplate', 'AnalysisService', 'AnalysisSpec', 'Attachment', 'Calculation', 'Instrument', 'Contact', 'LabContact', 'Laboratory', 'Method', 'Department', 'ReferenceDefinition', 'ReferenceManufacturer', 'ReportFolder', 'SampleType', 'SampleOrigin', 'SamplePoint', 'WorksheetTemplate', 'LabProduct', 'ReferenceSupplier', 'ReferenceSample', 'Preservation','Drug', 'Treatment', 'DrugProhibition', 'VaccinationCenter', 'VaccinationCenters', 'Immunization', 'Immunizations', 'Disease', 'Diseases', 'CaseStatus', 'CaseStatuses', 'CaseOutcome', 'CaseOutcomes']"
     media="screen"
     rel="stylesheet"
     rendering="link"
