@@ -22,11 +22,12 @@ $(document).ready(function(){
         }
         $("input[id*=BatchID]").combogrid({
             width: "650px",
+            showOn: true,
             colModel: [{'columnName':'BatchUID','hidden':true},
-                       {'columnName':'BatchID','width':'10','label':_('Batch ID')},
-                       {'columnName':'PatientTitle','width':'30','label':_('Patient')},
-                       {'columnName':'DoctorTitle','width':'30','label':_('Doctor')},
-                       {'columnName':'ClientTitle','width':'30','label':_('Client')}],
+                       {'columnName':'BatchID','width':'16','label':_('Batch ID')},
+                       {'columnName':'PatientTitle','width':'28','label':_('Patient')},
+                       {'columnName':'DoctorTitle','width':'28','label':_('Doctor')},
+                       {'columnName':'ClientTitle','width':'28','label':_('Client')}],
             url: ajax_url,
             select: function( event, ui ) {
                 if (window.location.href.search('ar_add') > -1){  // epid ar_add
