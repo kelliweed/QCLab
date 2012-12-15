@@ -723,7 +723,8 @@ class AnalysisRequestViewView(BrowserView):
         profiles = []
         for profile in self.context.bika_setup.bika_analysisprofiles.objectValues("AnalysisProfile"):
             if isActive(profile):
-                profiles.append((self.context.translate(_('Lab')) + ": " + profile.Title(), profile))
+                profiles.append(("%s: %s" % (self.context.translate(_('Lab')), profile.Title().decode('utf-8')),
+                                  profile))
         profiles.sort(lambda x,y:cmp(x[0], y[0]))
         res += profiles
         return res
@@ -743,7 +744,8 @@ class AnalysisRequestViewView(BrowserView):
         templates = []
         for template in self.context.bika_setup.bika_artemplates.objectValues("ARTemplate"):
             if isActive(template):
-                templates.append((self.context.translate(_('Lab')) + ": " + template.Title(), template))
+                templates.append(("%s: %s" % (self.context.translate(_('Lab')), template.Title().decode('utf-8')),
+                                  template))
         templates.sort(lambda x,y:cmp(x[0], y[0]))
         res += templates
         return res
@@ -974,7 +976,7 @@ class AnalysisRequestAddView(AnalysisRequestViewView):
                         slist[key] = [p_service.UID(), ]
 
                 title = context == self.context.bika_setup.bika_analysisprofiles \
-                    and self.context.translate(_('Lab')) + ": " + profile.Title() \
+                    and "%s: %s" % (self.context.translate(_('Lab')), profile.Title().decode('utf-8')) \
                     or profile.Title()
 
                 p_dict = {
@@ -995,7 +997,7 @@ class AnalysisRequestAddView(AnalysisRequestViewView):
             for template in [t for t in context.objectValues("ARTemplate")
                              if isActive(t)]:
                 title = context == self.context.bika_setup.bika_artemplates \
-                    and self.context.translate(_('Lab')) + ": " + template.Title() \
+                    and "%s: %s" % (self.context.translate(_('Lab')), template.Title().decode('utf-8')) \
                     or template.Title()
                 sp_title = template.getSamplePoint()
                 st_title = template.getSampleType()
