@@ -330,7 +330,7 @@ class ClientARImportsView(BikaListingView):
         self.pagesize = 50
         self.form_id = "arimports"
 
-        self.icon = "++resource++bika.lims.images/arimport_big.png"
+        self.icon = self.portal_url + "/++resource++bika.lims.images/arimport_big.png"
         self.title = _("Analysis Request Imports")
         self.description = ""
 
@@ -396,7 +396,7 @@ class ClientAnalysisProfilesView(BikaListingView):
         self.pagesize = 50
         self.form_id = "analysisprofiles"
 
-        self.icon = "++resource++bika.lims.images/analysisprofile_big.png"
+        self.icon = self.portal_url + "/++resource++bika.lims.images/analysisprofile_big.png"
         self.title = _("Analysis Profiles")
         self.description = ""
 
@@ -463,7 +463,7 @@ class ClientARTemplatesView(BikaListingView):
         self.show_select_column = True
         self.pagesize = 50
         self.form_id = "artemplates"
-        self.icon = "++resource++bika.lims.images/artemplate_big.png"
+        self.icon = self.portal_url + "/++resource++bika.lims.images/artemplate_big.png"
         self.title = _("AR Templates")
         self.description = ""
 
@@ -529,7 +529,7 @@ class ClientSamplePointsView(BikaListingView):
         self.show_select_column = True
         self.pagesize = 50
         self.form_id = "SamplePoints"
-        self.icon = "++resource++bika.lims.images/samplepoint_big.png"
+        self.icon = self.portal_url + "/++resource++bika.lims.images/samplepoint_big.png"
         self.title = _("Sample Points")
         self.description = ""
 
@@ -599,7 +599,7 @@ class ClientAnalysisSpecsView(BikaListingView):
         self.pagesize = 50
         self.form_id = "analysisspecs"
 
-        self.icon = "++resource++bika.lims.images/analysisspec_big.png"
+        self.icon = self.portal_url + "/++resource++bika.lims.images/analysisspec_big.png"
         self.title = _("Analysis Specifications")
 
         self.columns = {
@@ -699,7 +699,7 @@ class ClientAttachmentsView(BikaListingView):
         self.pagesize = 50
         self.form_id = "attachments"
 
-        self.icon = "++resource++bika.lims.images/attachment_big.png"
+        self.icon = self.portal_url + "/++resource++bika.lims.images/attachment_big.png"
         self.title = _("Attachments")
         self.description = ""
 
@@ -773,7 +773,7 @@ class ClientOrdersView(BikaListingView):
         self.pagesize = 25
         self.form_id = "orders"
 
-        self.icon = "++resource++bika.lims.images/order_big.png"
+        self.icon = self.portal_url + "/++resource++bika.lims.images/order_big.png"
         self.title = _("Orders")
 
         self.columns = {
@@ -840,7 +840,7 @@ class ClientContactsView(BikaListingView):
         self.pagesize = 50
         self.form_id = "contacts"
 
-        self.icon = "++resource++bika.lims.images/client_contact_big.png"
+        self.icon = self.portal_url + "/++resource++bika.lims.images/client_contact_big.png"
         self.title = _("Contacts")
         self.description = ""
 

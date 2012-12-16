@@ -26,7 +26,7 @@ class DrugProhibitionsView(BikaListingView):
                                 {'url': 'createObject?type_name=DrugProhibition',
                                  'icon': '++resource++bika.lims.images/add.png'}}
         self.title = _("Drug Prohibition Explanations")
-        self.icon = "++resource++bika.lims.images/drugprohibition_big.png"
+        self.icon = self.portal_url + "/++resource++bika.lims.images/drugprohibition_big.png"
         self.description = ""
         self.show_sort_column = False
         self.show_select_row = False

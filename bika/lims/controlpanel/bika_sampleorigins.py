@@ -21,7 +21,7 @@ class SampleOriginsView(BikaListingView):
                                 {'url': 'createObject?type_name=SampleOrigin',
                                  'icon': '++resource++bika.lims.images/add.png'}}
         self.title = _("Sample Origins")
-        self.icon = "++resource++bika.lims.images/sampleorigin_big.png"
+        self.icon = self.portal_url + "/++resource++bika.lims.images/sampleorigin_big.png"
         self.description = _("Sample Origin, indicates whether a Sample is e.g. Animal, Environmental, Human or form a Validation study.")
         self.show_sort_column = False
         self.show_select_row = False

@@ -21,7 +21,7 @@ class EpidemiologicalYearsView(BikaListingView):
                                 {'url': 'createObject?type_name=EpidemiologicalYear',
                                  'icon': '++resoubika_batchlabelsrce++bika.lims.images/add.png'}}
         self.title = _("Epidemiological Years")
-        self.icon = "++resource++bika.lims.images/epidemiologicalyear_big.png"
+        self.icon = self.portal_url + "/++resource++bika.lims.images/epidemiologicalyear_big.png"
         self.description = _("Epidemiological year calendars")
         self.show_sort_column = False
         self.show_select_row = False
@@ -31,12 +31,12 @@ class EpidemiologicalYearsView(BikaListingView):
         self.columns = {
             'Title': {'title': _('Title'),
                      'index':'sortable_title'},
-                        
+
             'getStartDate': {'title':_('Start Date'),
                              'index':'getStartDate'},
-                        
+
             'getEndDate': {'title':_('End Date'),
-                           'index': 'getEndDate'},          
+                           'index': 'getEndDate'},
         }
 
         self.review_states = [
