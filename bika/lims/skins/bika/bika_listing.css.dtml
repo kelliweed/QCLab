@@ -78,6 +78,12 @@ table.bika-listing-table,
   margin-bottom:0px;
 }
 
+.bika-listing-table .listing_remarks {
+  width:99%;
+  border:1px solid #ababab;
+  margin:2px 0px;
+}
+
 .bika-listing-table thead {
   text-decoration:none;
   border: 0px solid rgb(220, 220, 220);
