@@ -1,7 +1,7 @@
 from bika.lims.browser import BrowserView
 from bika.lims.browser.bika_listing import BikaListingView
 from bika.lims import bikaMessageFactory as _
-    
+
 class ContactsView(BikaListingView):
 
     def __init__(self, context, request):
@@ -24,7 +24,7 @@ class ContactsView(BikaListingView):
         self.show_select_row = False
         self.show_select_column = True
         self.pagesize = 50
-        self.icon = "++resource++bika.lims.images/vaccinationcenter_contact_big.png"
+        self.icon = self.portal_url + "/++resource++bika.lims.images/vaccinationcenter_contact_big.png"
         self.title = _("Contacts")
 
         self.columns = {
@@ -68,11 +68,11 @@ class ContactsView(BikaListingView):
         items = BikaListingView.folderitems(self)
         for x in range(len(items)):
             if not items[x].has_key('obj'): continue
-            
+
             items[x]['replace']['getFullName'] = "<a href='%s'>%s</a>" % \
                  (items[x]['url'], items[x]['obj'].getFullname())
-                 
+
             items[x]['replace']['getEmailAddress'] = "<a href='mailto:%s'>%s</a>" % \
                  (items[x]['getEmailAddress'], items[x]['obj'].getEmailAddress())
-                 
+
         return items

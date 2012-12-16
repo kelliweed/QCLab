@@ -29,7 +29,7 @@ class PatientsView(BikaListingView):
                               'sort_on': 'sortable_title'}
         self.context_actions = {}
         self.title = _("Patients")
-        self.icon = "++resource++bika.lims.images/patient_big.png"
+        self.icon = self.portal_url + "/++resource++bika.lims.images/patient_big.png"
         self.description = ""
         self.show_sort_column = False
         self.show_select_row = False

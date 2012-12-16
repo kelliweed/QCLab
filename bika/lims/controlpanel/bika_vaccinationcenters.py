@@ -23,19 +23,19 @@ class VaccinationCentersView(BikaListingView):
     def __init__(self, context, request):
         super(VaccinationCentersView, self).__init__(context, request)
         self.catalog = 'bika_setup_catalog'
-        self.contentFilter = {'portal_type': 'VaccinationCenter', 
+        self.contentFilter = {'portal_type': 'VaccinationCenter',
                               'sort_on': 'getName'}
         self.context_actions = {_('Add'):
                                 {'url': 'createObject?type_name=VaccinationCenter',
                                  'icon': '++resource++bika.lims.images/add.png'}}
         self.title = _("Vaccination Centers")
-        self.icon = "++resource++bika.lims.images/vaccinationcenter_big.png"
+        self.icon = self.portal_url + "/++resource++bika.lims.images/vaccinationcenter_big.png"
         self.description = ""
         self.show_sort_column = False
         self.show_select_row = False
         self.show_select_column = True
         self.pagesize = 50
-        
+
         self.columns = {
             'Name': {'title': _('Name'),
                      'index': 'getName'},

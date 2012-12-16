@@ -417,11 +417,11 @@ class ajaxGetPatientInfo(BrowserView):
             return json.dumps(ret)
         patient = proxies[0].getObject()
         PR = patient.getPrimaryReferrer()
-        ret = {'PatientID': patient.getPatientID,
+        ret = {'PatientID': patient.getPatientID(),
                'ClientID': PR and PR.getClientID() or '',
                'ClientTitle': PR and PR.Title() or '',
                'PatientFullname': Fullname,
-               'PatientBirthDate': self.ulocalized_time(patient.getBirthDate)}
+               'PatientBirthDate': self.ulocalized_time(patient.getBirthDate())}
         return json.dumps(ret)
 
 class ajaxGetDrugs(BrowserView):

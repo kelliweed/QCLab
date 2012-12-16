@@ -21,7 +21,7 @@ class IdentifierTypesView(BikaListingView):
                                 {'url': 'createObject?type_name=IdentifierType',
                                  'icon': '++resource++bika.lims.images/add.png'}}
         self.title = _("Identifier Types")
-        self.icon = "++resource++bika.lims.images/identifiertype_big.png"
+        self.icon = self.portal_url + "/++resource++bika.lims.images/identifiertype_big.png"
         self.description = _("List of types of identifiers for multiple identifier records")
         self.show_sort_column = False
         self.show_select_row = False

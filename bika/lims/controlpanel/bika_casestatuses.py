@@ -21,7 +21,7 @@ class CaseStatusesView(BikaListingView):
                                 {'url': 'createObject?type_name=CaseStatus',
                                  'icon': '++resource++bika.lims.images/add.png'}}
         self.title = _("Case Statuses")
-        self.icon = "++resource++bika.lims.images/casestatus_big.png"
+        self.icon = self.portal_url + "/++resource++bika.lims.images/casestatus_big.png"
         self.description = ""
         self.show_sort_column = False
         self.show_select_row = False

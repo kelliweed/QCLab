@@ -26,7 +26,7 @@ class ImmunizationsView(BikaListingView):
                                 {'url': 'createObject?type_name=Immunization',
                                  'icon': '++resource++bika.lims.images/add.png'}}
         self.title = _("Immunizations")
-        self.icon = "++resource++bika.lims.images/immunization_big.png"
+        self.icon = self.portal_url + "/++resource++bika.lims.images/immunization_big.png"
         self.description = ""
         self.show_sort_column = False
         self.show_select_row = False
