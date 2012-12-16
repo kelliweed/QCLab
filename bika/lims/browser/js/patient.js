@@ -31,6 +31,9 @@ $(document).ready(function(){
 				if($(".portaltype-batch").length > 0 && $(".template-base_edit").length > 0) {
 					$(".jsPatientTitle").remove();
 					$("#archetypes-fieldname-PatientID").append("<span class='jsPatientTitle'>"+ui.item.Title+"</span>");
+					$("#ClientID").val(ui.item.ClientID);
+					$(".jsClientTitle").remove();
+					$("#archetypes-fieldname-Client").append("<span class='jsClientTitle'>"+ui.item.ClientTitle+"</span>");
 					$('input[name="PatientBirthDate"]').val(ui.item.PatientBirthDate);
 				}
 				return false;
@@ -130,7 +133,7 @@ $(document).ready(function(){
 					var Fullname = $("#Firstname").val() + " " + $("#Surname").val();
 					if (Fullname.length > 1) {
 						$.ajax({
-							url: window.portal_url + "/getPatientID",
+							url: window.portal_url + "/getPatientInfo",
 							type: 'POST',
 							data: {'_authenticator': $('input[name="_authenticator"]').val(),
 									'Fullname': Fullname},
@@ -139,6 +142,10 @@ $(document).ready(function(){
 								$("#PatientID").val(data['PatientID']);
 								$(".jsPatientTitle").remove();
 								$("#archetypes-fieldname-PatientID").append("<span class='jsPatientTitle'>"+Fullname+"</span>");
+								$("#ClientID").val(data['ClientID']);
+								$(".jsClientTitle").remove();
+								$("#archetypes-fieldname-Client").append("<span class='jsClientTitle'>"+data['ClientTitle']+"</span>");
+								$('input[name="PatientBirthDate"]').val(data['PatientBirthDate']);
 							}
 						});
 					}
