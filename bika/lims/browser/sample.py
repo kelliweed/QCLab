@@ -321,7 +321,7 @@ class SampleEdit(BrowserView):
             {'id': 'Patient',
              'title': _('Patient'),
              'allow_edit': False,
-             'value': patient and "%s %s" % (patient.getPatientID(),patient.Title()) or '',
+             'value': patient and "<a href='%s'>%s %s</a>"%(patient.absolute_url(),patient.getPatientID(),patient.Title()) or '',
              'condition':True,
              'type': 'text'},
             {'id': 'Doctor',
@@ -812,7 +812,7 @@ class SamplesView(BikaListingView):
         for x in range(len(items)):
             if not items[x].has_key('obj'): continue
             obj = items[x]['obj']
-            
+
             items[x]['replace']['getSampleID'] = "<a href='%s'>%s</a>" % \
                 (items[x]['url'], obj.getSampleID())
             items[x]['replace']['Requests'] = ",".join(
@@ -822,11 +822,11 @@ class SamplesView(BikaListingView):
                 (obj.aq_parent.absolute_url(), obj.aq_parent.Title())
             items[x]['Creator'] = self.user_fullname(obj.Creator())
             items[x]['getClientReference'] = obj.getClientReference()
-            items[x]['getClientSampleID'] = obj.getClientSampleID()        
+            items[x]['getClientSampleID'] = obj.getClientSampleID()
             sp = obj.getSamplePoint()
             if sp and sp.aq_parent != self.portal.bika_setup.bika_samplepoints:
                 items[x]['replace']['getSamplePointTitle'] = sp.Title()
-                
+
             # Sanitize the list: If the user does not have local Owner role on the object's
             # parent, then some fields are not displayed
             #if member.id in obj.aq_parent.users_with_local_role('Owner'):
@@ -848,7 +848,7 @@ class SamplesView(BikaListingView):
             #    sp = obj.getSamplePoint()
             #    if sp and sp.aq_parent != self.portal.bika_setup.bika_samplepoints:
             #        items[x]['replace']['getSamplePointTitle'] = ''
-             
+
             patient = obj.getPatient()
             if patient:
                 items[x]['getPatient'] = patient and patient.getPatientID() or ''
