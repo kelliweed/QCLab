@@ -38,8 +38,8 @@ class Report(BrowserView):
         count_all = 0
         query = {'portal_type': 'Analysis'}
 
-        if self.request.form.has_key('getServiceUID'):
-            service_uid = self.request.form['getServiceUID']
+        if self.request.form.has_key('ServiceUID'):
+            service_uid = self.request.form['ServiceUID']
             query['getServiceUID'] = service_uid
             service = rc.lookupObject(service_uid)
             service_title = service.Title()
@@ -78,10 +78,10 @@ class Report(BrowserView):
         else:
             period = 'Day'
 
-        date_query = formatDateQuery(self.context, 'tats_DateReceived')
+        date_query = formatDateQuery(self.context, 'Received')
         if date_query:
             query['created'] = date_query
-            received = formatDateParms(self.context, 'tats_DateReceived')
+            received = formatDateParms(self.context, 'Received')
         else:
             received = 'Undefined'
         parms.append(
