@@ -403,7 +403,7 @@ class LoadSetupData(BrowserView):
             obj.edit(title = _c(row.get('title', '')),
                      description = _c(row.get('description', '')))
             obj.unmarkCreationFlag()
-            # renameAfterCreation(obj)
+            renameAfterCreation(obj)
 
 
     def load_SampleOrigins(self, sheet):
