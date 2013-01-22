@@ -1510,7 +1510,7 @@ class ajaxAnalysisRequestSubmit():
         wftool = getToolByName(self.context, 'portal_workflow')
         pc = getToolByName(self.context, 'portal_catalog')
         bc = getToolByName(self.context, 'bika_catalog')
-        pc = getToolByName(self.context, 'portal_catalog')
+        uc = getToolByName(self.context, 'uid_catalog')
         bsc = getToolByName(self.context, 'bika_setup_catalog')
         bpc = getToolByName(self.context, 'bika_patient_catalog')
 
@@ -1657,9 +1657,8 @@ class ajaxAnalysisRequestSubmit():
                 patient = bpc(getPatientID=values['PatientID'])[0].getObject()
 
             doctor = None
-            if values.has_key('DoctorID') and values['DoctorID']:
-                doctor = pc(portal_type = 'Doctor',
-                            title=values['DoctorID'])[0].getObject()
+            if values.has_key('DoctorUID') and values['DoctorUID']:
+                doctor = uc(UID=values['DoctorUID'])[0].getObject()
 
             if self.context.portal_type == 'Client':
                 client = self.context
@@ -2311,7 +2310,7 @@ class AnalysisRequestsView(BikaListingView):
             items[x]['getClientOrderNumber'] = obj.getClientOrderNumber()
             items[x]['getClientReference'] = obj.getClientReference()
             items[x]['getClientSampleID'] = obj.getClientSampleID()
-           
+
             # Sanitize the list: If the user does not have local Owner role on the object's
             # parent, then some fields are not displayed
             #if member.id in obj.aq_parent.users_with_local_role('Owner'):
