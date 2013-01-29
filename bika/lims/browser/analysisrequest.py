@@ -12,7 +12,7 @@ from bika.lims import logger
 from bika.lims.browser.analyses import AnalysesView
 from bika.lims.browser.bika_listing import  WorkflowAction
 from bika.lims.browser.bika_listing import BikaListingView
-from bika.lims.browser.publish import Publish
+from bika.lims.browser.publish import doPublish
 from bika.lims.browser.sample import SamplePartitionsView
 from bika.lims.config import POINTS_OF_CAPTURE
 from bika.lims.permissions import *
@@ -63,6 +63,7 @@ class AnalysisRequestWorkflowAction(WorkflowAction):
         if action == "save_partitions_button":
             sample = self.context.portal_type == 'Sample' and self.context or\
                 self.context.getSample()
+            part_prefix = sample.getId() + "-P"
 
             nr_existing = len(sample.objectIds())
             nr_parts = len(form['PartTitle'][0])
@@ -76,13 +77,13 @@ class AnalysisRequestWorkflowAction(WorkflowAction):
             # remove excess parts
             if nr_existing > nr_parts:
                 for i in range(nr_existing - nr_parts):
-                    part = sample['part-%s'%(nr_existing - i)]
+                    part = sample['%s%s'%(part_prefix, nr_existing - i)]
                     for a in part.getBackReferences("AnalysisSamplePartition"):
                         a.setSamplePartition(None)
-                    sample.manage_delObjects(['part-%s'%(nr_existing - i),])
+                    sample.manage_delObjects(['%s%s'%(part_prefix, nr_existing - i),])
             # modify part container/preservation
             for part_uid, part_id in form['PartTitle'][0].items():
-                part = sample["part-P"+str(int(part_id.split('-P')[1]))]
+                part = sample["%s%s"%(part_prefix, part_id.split(part_prefix)[1])]
                 part.edit(
                     Container = form['getContainer'][0][part_uid],
                     Preservation = form['getPreservation'][0][part_uid],
@@ -359,7 +360,7 @@ class AnalysisRequestWorkflowAction(WorkflowAction):
 
             # publish entire AR.
             self.context.setDatePublished(DateTime())
-            transitioned = Publish(self.context,
+            transitioned = doPublish(self.context,
                                    self.request,
                                    action,
                                    [self.context, ])()
@@ -1722,13 +1723,39 @@ class ajaxAnalysisRequestSubmit():
                     if not parts[i].get('container', []):
                         parts[i]['container'] = d_clist
 
+            # resolve BatchID
+            batch_id = values.get('BatchID', '')
+            batch_uid = values.get('BatchUID', '')
+
+            # create the AR
+
+            Analyses = values['Analyses']
+            del values['Analyses']
+
+            _id = client.generateUniqueId('AnalysisRequest')
+            client.invokeFactory('AnalysisRequest', id = _id)
+            ar = client[_id]
+            # ar.edit() for some fields before firing the event
+            ar.edit(
+                Batch = batch_uid,
+                Contact = form['Contact'],
+                CCContact = form['cc_uids'].split(","),
+                CCEmails = form['CCEmails'],
+                Sample = sample_uid,
+                Profile = profile,
+                **dict(values)
+            )
+
             # Create sample partitions
+            # We do this before completing the AR processing because AR
+            # events affect partitions.
             parts_and_services = {}
             for _i in range(len(parts)):
                 p = parts[_i]
-                if 'part-%s'%(_i+1) in sample.objectIds():
-                    parts[_i]['object'] = sample['part-%s'%(_i+1)]
-                    parts_and_services['part-%s'%(_i+1)] = p['services']
+                part_prefix = sample.getId() + "-P"
+                if '%s%s'%(part_prefix, _i+1) in sample.objectIds():
+                    parts[_i]['object'] = sample['%s%s'%(part_prefix,_i+1)]
+                    parts_and_services['%s%s'%(part_prefix, _i+1)] = p['services']
                 else:
                     _id = sample.invokeFactory('SamplePartition', id = 'tmp')
                     part = sample[_id]
@@ -1771,30 +1798,8 @@ class ajaxAnalysisRequestSubmit():
                         wftool.doActionFor(part, 'no_sampling_workflow')
                     parts_and_services[part.id] = p['services']
 
-            # resolve BatchID
-            batch_id = values.get('BatchID', '')
-            batch_uid = values.get('BatchUID', '')
-
-            # create the AR
-
-            Analyses = values['Analyses']
-            del values['Analyses']
-
-            _id = client.generateUniqueId('AnalysisRequest')
-            client.invokeFactory('AnalysisRequest', id = _id)
-            ar = client[_id]
-            # ar.edit() for some fields before firing the event
-            ar.edit(
-                Batch = batch_uid,
-                Contact = form['Contact'],
-                CCContact = form['cc_uids'].split(","),
-                CCEmails = form['CCEmails'],
-                Sample = sample_uid,
-                Profile = profile,
                 Patient = patient,
                 Doctor = doctor,
-                **dict(values)
-            )
             ar.processForm()
             if SamplingWorkflowEnabled:
                 wftool.doActionFor(ar, 'sampling_workflow')
@@ -1953,6 +1958,8 @@ class AnalysisRequestsView(BikaListingView):
             'getClientSampleID': {'title': _('Client SID'),
                                   'index': 'getClientSampleID',
                                   'toggle': False},
+            'ClientContact': {'title': _('Contact'),
+                                 'toggle': False},
             'getSampleTypeTitle': {'title': _('Sample Type'),
                                    'index': 'getSampleTypeTitle',
                                    'toggle': True},
@@ -2015,6 +2022,7 @@ class AnalysisRequestsView(BikaListingView):
                         'Created',
                         # 'getClientOrderNumber',
                         # 'getClientReference',
+                        'ClientContact',
                         'getClientSampleID',
                         'getSampleTypeTitle',
                         'getSamplePointTitle',
@@ -2050,6 +2058,7 @@ class AnalysisRequestsView(BikaListingView):
                         # 'getClientOrderNumber',
                         # 'getClientReference',
                         'getClientSampleID',
+                        'ClientContact',
                         'getDateSampled',
                         'getSampler',
                         'getDatePreserved',
@@ -2078,6 +2087,7 @@ class AnalysisRequestsView(BikaListingView):
                         # 'getClientOrderNumber',
                         # 'getClientReference',
                         'getClientSampleID',
+                        'ClientContact',
                         'getSampleTypeTitle',
                         'getSamplePointTitle',
                         # 'SamplingDeviation',
@@ -2108,6 +2118,7 @@ class AnalysisRequestsView(BikaListingView):
                         # 'getClientOrderNumber',
                         # 'getClientReference',
                         'getClientSampleID',
+                        'ClientContact',
                         'getSampleTypeTitle',
                         'getSamplePointTitle',
                         # 'SamplingDeviation',
@@ -2134,6 +2145,7 @@ class AnalysisRequestsView(BikaListingView):
                         # 'getClientOrderNumber',
                         # 'getClientReference',
                         'getClientSampleID',
+                        'ClientContact',
                         'getSampleTypeTitle',
                         'getSamplePointTitle',
                         # 'SamplingDeviation',
@@ -2159,6 +2171,7 @@ class AnalysisRequestsView(BikaListingView):
                         # 'getClientOrderNumber',
                         # 'getClientReference',
                         'getClientSampleID',
+                        'ClientContact',
                         'getSampleTypeTitle',
                         'getSamplePointTitle',
                         # 'SamplingDeviation',
@@ -2190,6 +2203,7 @@ class AnalysisRequestsView(BikaListingView):
                         # 'getClientOrderNumber',
                         # 'getClientReference',
                         'getClientSampleID',
+                        'ClientContact',
                         'getSampleTypeTitle',
                         'getSamplePointTitle',
                         # 'SamplingDeviation',
@@ -2229,6 +2243,7 @@ class AnalysisRequestsView(BikaListingView):
                         # 'getClientOrderNumber',
                         # 'getClientReference',
                         'getClientSampleID',
+                        'ClientContact',
                         'getSampleTypeTitle',
                         'getSamplePointTitle',
                         # 'SamplingDeviation',
@@ -2268,6 +2283,7 @@ class AnalysisRequestsView(BikaListingView):
                         # 'getClientOrderNumber',
                         # 'getClientReference',
                         'getClientSampleID',
+                        'ClientContact',
                         'getSampleTypeTitle',
                         'getSamplePointTitle',
                         # 'SamplingDeviation',
@@ -2413,6 +2429,10 @@ class AnalysisRequestsView(BikaListingView):
                 sampler = ''
             items[x]['getDateSampled'] = datesampled
             items[x]['getSampler'] = sampler
+
+            items[x]['ClientContact'] = obj.getContact().Title()
+            items[x]['replace']['ClientContact'] = "<a href='%s'>%s</a>" % \
+                (obj.getContact().absolute_url(), obj.getContact().Title())
 
             # sampling workflow - inline edits for Sampler and Date Sampled
             checkPermission = self.context.portal_membership.checkPermission
