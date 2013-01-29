@@ -12,7 +12,6 @@ from bika.lims.browser.bika_listing import BikaListingView
 from bika.lims.browser.client import ClientAnalysisRequestsView, \
     ClientSamplesView
 from Products.ZCTextIndex.ParseTree import ParseError
-from bika.lims.browser.publish import Publish
 from bika.lims.browser.sample import SamplesView
 from bika.lims.interfaces import IContacts
 from bika.lims.permissions import *
