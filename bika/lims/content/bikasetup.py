@@ -367,4 +367,15 @@ class BikaSetup(folder.ATFolder):
         items.sort(lambda x,y: cmp(x[1], y[1]))
         return DisplayList(list(items))
 
+    def getPrefixFor(self, portal_type):
+        """Return the prefix for a portal_type.
+        If not found, simply uses the portal_type itself
+        """
+        prefix = [p for p in self.getPrefixes() if p['portal_type'] == portal_type]
+        if prefix:
+            return prefix[0]['prefix']
+        else:
+            return portal_type
+
+
 registerType(BikaSetup, PROJECTNAME)

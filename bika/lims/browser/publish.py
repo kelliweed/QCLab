@@ -2,6 +2,7 @@ from DateTime import DateTime
 from Products.Archetypes.config import REFERENCE_CATALOG
 from Products.CMFCore.WorkflowCore import WorkflowException
 from Products.CMFCore.utils import getToolByName
+from Products.CMFPlone.utils import safe_unicode
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from bika.lims.browser import BrowserView
 from bika.lims.config import POINTS_OF_CAPTURE
@@ -21,7 +22,7 @@ import Globals
 import re
 import xhtml2pdf.pisa as pisa
 
-class Publish(BrowserView):
+class doPublish(BrowserView):
     """Pre/Re/Publish analysis requests"""
     ar_results = ViewPageTemplateFile("mailtemplates/analysisrequest_results.pt")
 
@@ -149,6 +150,7 @@ class Publish(BrowserView):
 
                     # render template
                     ar_results = self.ar_results()
+                    ar_results = safe_unicode(ar_results).encode('utf-8')
 
                     debug_mode = App.config.getConfiguration().debug_mode
                     if debug_mode:

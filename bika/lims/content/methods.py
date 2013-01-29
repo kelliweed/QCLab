@@ -30,7 +30,7 @@ class MethodsView(BikaListingView):
         self.description = ""
         self.show_sort_column = False
         self.show_select_row = False
-        self.show_select_column = False
+        self.show_select_column = True
         self.pagesize = 25
 
         self.columns = {
@@ -41,6 +41,24 @@ class MethodsView(BikaListingView):
                             'toggle': True},
         }
 
+        self.review_states = [
+            {'id':'default',
+             'title': _('Active'),
+             'contentFilter': {'inactive_state': 'active'},
+             'transitions': [{'id':'deactivate'}, ],
+             'columns': ['Title', 'Description']},
+            {'id':'inactive',
+             'title': _('Dormant'),
+             'contentFilter': {'inactive_state': 'inactive'},
+             'transitions': [{'id':'activate'}, ],
+             'columns': ['Title', 'Description']},
+            {'id':'all',
+             'title': _('All'),
+             'contentFilter':{},
+             'columns': ['Title', 'Description']},
+        ]
+
+
 
     def __call__(self):
         mtool = getToolByName(self.context, 'portal_membership')
@@ -49,22 +67,12 @@ class MethodsView(BikaListingView):
                 'url': 'createObject?type_name=Method',
                 'icon': '++resource++bika.lims.images/add.png'
             }
-        if mtool.checkPermission(ManageBika, self.context):
-            self.show_select_column = True
+        if not mtool.checkPermission(ManageBika, self.context):
+            self.show_select_column = False
             self.review_states = [
                 {'id':'default',
                  'title': _('All'),
                  'contentFilter':{},
-                 'columns': ['Title', 'Description']},
-                {'id':'active',
-                 'title': _('Active'),
-                 'contentFilter': {'inactive_state': 'active'},
-                 'transitions': [{'id':'deactivate'}, ],
-                 'columns': ['Title', 'Description']},
-                {'id':'inactive',
-                 'title': _('Dormant'),
-                 'contentFilter': {'inactive_state': 'inactive'},
-                 'transitions': [{'id':'activate'}, ],
                  'columns': ['Title', 'Description']}
             ]
         return super(MethodsView, self).__call__()

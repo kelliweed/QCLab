@@ -258,6 +258,9 @@ class BikaGenerator:
         mp = portal.bika_setup.manage_permission
         mp('Access contents information', ['Authenticated'], 1)
         mp(permissions.View, ['Authenticated'], 1)
+        mp(ApplyVersionControl, ['Authenticated'], 1)
+        mp(SaveNewVersion, ['Authenticated'], 1)
+        mp(AccessPreviousVersions, ['Authenticated'], 1)
         portal.bika_setup.reindexObject()
 
         mp = portal.bika_setup.laboratory.manage_permission
@@ -378,10 +381,11 @@ class BikaGenerator:
         # /methods folder permissions
         mp = portal.methods.manage_permission
         mp(CancelAndReinstate, ['Manager', 'LabManager'], 0)
-        mp(permissions.ListFolderContents, ['Member'], 1)
+        mp(permissions.ListFolderContents, ['Member', 'Authenticated', 'Anonymous'], 1)
         mp(permissions.AddPortalContent, ['Manager', 'LabManager'], 0)
         mp(permissions.DeleteObjects, ['Manager', 'LabManager'], 0)
-        mp(permissions.View, ['Manager', 'LabManager', 'Member'], 0)
+        mp(permissions.View, ['Manager', 'Member', 'Authenticated', 'Anonymous'], 1)
+        mp('Access contents information', ['Manager', 'Member', 'Authenticated', 'Anonymous'], 1)
         portal.methods.reindexObject()
 
 

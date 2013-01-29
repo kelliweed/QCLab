@@ -320,6 +320,7 @@ $(document).ready(function(){
 		dialog
 			.load(window.portal_url + "/analysisservice_popup",
 				{'service_title':$(this).text(),
+				 'analysis_uid':$(this).parents('tr').attr('uid'),
 				 '_authenticator': $('input[name="_authenticator"]').val()}
 			)
 			.dialog({
@@ -370,6 +371,9 @@ $(document).ready(function(){
 
 	// Archetypes :int inputs get numeric class
 	$("input[name*='\\:int']").addClass('numeric');
+
+	// #336: focus searchGadget when page load completes
+	$("#searchGadget").focus();
 
 });
 }(jQuery));

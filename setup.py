@@ -1,15 +1,12 @@
 from setuptools import setup, find_packages
 import os
 
-version = '3.0rc1.1'
+version = '3.0rc2.3'
 
 setup(name='bika.lims',
       version=version,
       description="Bika Epidemiology",
-      long_description=open("README.md").read() + "\n" +
-                       open(os.path.join("docs", "linux.md")).read() + "\n" +
-                       open(os.path.join("docs", "windows.md")).read() + "\n" +
-                       open(os.path.join("docs", "CHANGELOG.txt")).read(),
+      long_description=open("README.md").read(),
       # Get more strings from
       # http://pypi.python.org/pypi?:action=list_classifiers
       classifiers=[
@@ -32,14 +29,14 @@ setup(name='bika.lims',
           'Products.AdvancedQuery',
           'Products.TinyMCE',
           'collective.indexing>=2.0a3',
-          'collective.js.jqueryui',
+          'collective.js.jqueryui==1.8.16.9',
           'plone.app.z3cform',
           'openpyxl==1.5.8',
           'plone.app.iterate',
           'xhtml2pdf',
           'magnitude',
           'gpw',
-          'jarn.jsi18n',
+          'jarn.jsi18n==0.3',
       ],
       extras_require = {
           'test': [
