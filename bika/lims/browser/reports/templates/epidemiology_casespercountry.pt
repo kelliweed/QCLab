@@ -15,7 +15,7 @@
 		report_data view/report_data;
         parameters python:report_data.has_key('parameters') and report_data['parameters'] or [];
         datalines python:report_data.has_key('datalines') and report_data['datalines'] or {};
-        batches python:reprt_data.has_key('batches') and report_data['batches'] or {}">
+        batches python:report_data.has_key('batches') and report_data['batches'] or {}">
         
         <!--
         
@@ -143,10 +143,10 @@
 				<metal:block tal:repeat="ankey python:batches[batchid]['Analyses'].keys()">
 				<tr>
 					<td colspan="3">&nbsp;</td>
-					<td tal:content="python:batches[batchid]['Analyses'][key]['AnalysisRequest']"></td>
-					<td tal:content="python:batches[batchid]['Analyses'][key]['Keyword']"></td>
-					<td tal:content="python:batches[batchid]['Analyses'][key]['ServiceTitle']"></td>
-					<td tal:content="python:batches[batchid]['Analyses'][key]['Result']"></td>
+					<td tal:content="python:batches[batchid]['Analyses'][ankey]['AnalysisRequest']"></td>
+					<td tal:content="python:batches[batchid]['Analyses'][ankey]['Keyword']"></td>
+					<td tal:content="python:batches[batchid]['Analyses'][ankey]['ServiceTitle']"></td>
+					<td tal:content="python:batches[batchid]['Analyses'][ankey]['Result']"></td>
 				</tr>
 				</metal:block> <!-- End Period/Country/Batch/Analysis Group -->				
 				</metal:block> <!-- End Period/Country/Batch Group -->

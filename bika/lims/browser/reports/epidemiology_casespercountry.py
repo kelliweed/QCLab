@@ -32,13 +32,13 @@ class Report(BrowserView):
             titles.append(val['titles'])           
                                 
         # Query the catalog and store results in a dictionary             
-        batches = self.bika_analysis_catalog(self.contentFilter)
+        batches = self.bika_catalog(self.contentFilter)
         if not batches:
             message = _("No batches matched your query")
             self.context.plone_utils.addPortalMessage(message, "error")
             return self.default_template()
         
-        batches = {}
+        batchlines = {}
         datalines = {}
         footlines = {}
         
@@ -98,10 +98,11 @@ class Report(BrowserView):
             
             ars = batch.getAnalysisRequests()            
             for ar in ars:
-                arid = ar.getRequestID()
-                analyses = ars.getAnalyses()
+                arid = ar.getRequestID()                
+                analyses = ar.getAnalyses()
                 batchline['NumAnalyses'] = batchline['NumAnalyses'] + len(analyses)
                 for an in analyses:
+                    an = an.getObject()
                     keyword = an.getKeyword()
                     anline = {'Keyword': keyword,
                               'AnalysisRequest': arid,
@@ -112,12 +113,12 @@ class Report(BrowserView):
             
             countryline['Batches'].append(batchid)
             groupline['Countries'][country]=countryline
-            batches[batchid] = batchline            
+            batchlines[batchid] = batchline            
             datalines[group] = groupline
             
         self.report_data = {'parameters': parms,
                             'datalines': datalines,
-                            'batches': batches}
+                            'batches': batchlines}
                     
         return {'report_title': _('Cases summary per country'),
                 'report_data': self.template()}    

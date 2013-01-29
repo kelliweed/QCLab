@@ -564,8 +564,5 @@ class AnalysisRequest(BaseFolder):
     def current_date(self):
         """ return current date """
         return DateTime()
-    
-    def getAnalyses(self):
-        return self.objectValues('Analysis')
 
 atapi.registerType(AnalysisRequest, PROJECTNAME)
