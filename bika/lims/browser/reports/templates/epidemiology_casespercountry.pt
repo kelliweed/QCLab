@@ -1,0 +1,158 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:tal="http://xml.zope.org/namespaces/tal"
+	xmlns:metal="http://xml.zope.org/namespaces/metal"
+	xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+	i18n:domain="bika"
+	tal:define="portal_url nocall:context/portal_url;
+				portal portal_url/getPortalObject;">
+	
+	<head>
+		<link rel="stylesheet" type="text/css" media="all" href=""
+	    	tal:attributes="href string:$portal_url/reports.css" />
+	</head>
+
+	<body tal:define="
+		report_data view/report_data;
+        parameters python:report_data.has_key('parameters') and report_data['parameters'] or [];
+        datalines python:report_data.has_key('datalines') and report_data['datalines'] or {};
+        batches python:reprt_data.has_key('batches') and report_data['batches'] or {}">
+        
+        <!--
+        
+        Report customization notes
+        ==========================================================================
+        Available attributes:
+        	
+       	parameters[]
+       	
+       	batches {
+       		<batch>: {
+       			BatchID,
+       			ClientBatchID,
+       			DateCreated,
+       			OnsetDate,
+       			PatientAge,
+       			PatientGender,
+       			PatientCountry,       			
+       			NumAnalyses,
+       			Analyses {
+       				<analysis> : {
+       					Keyword,
+       					AnalysisRequest,
+       					ServiceTitle,
+       					Result       					
+       				}
+       			}
+       		}
+       	}
+       	
+       	datalines {
+       		<group>: { 
+       			 Group,
+       			 Countries {
+	       			 <country>: {
+	       			 	Country,
+	       			 	Batches [
+	       			 		BatchID
+	       			 	]	       			 
+	       			 }
+       			 }       			      			 	
+   			}
+   		}
+     			
+   		From batches:
+   		- dict key <batch> is the BatchID
+   		- dict key <analysis> is the AnalysisRequest ID + "." + Analysis Keyword
+   		- BatchID: the Lab ID for the batch/case
+   		- ClientBatchID: the Client ID for the batch/case
+   		- DateCreated: creation date of the batch/case
+   		- OnsetDate: Batch/Case onset date
+   		- PatientAge: Batch/Case's patient age when onset date
+   		- PatientGender: Batch/Case's patient gender
+   		- PatientCountry: Batch/Case's patient country
+   		- NumAnalyses: Number of analyses per Batch/Case
+   		- Analysis.Keyword: Analysis Keyword
+   		- Analysis.AnalysisRequest: AnalysisRequest ID
+   		- Analysis.ServiceTitle: Analysis Service title
+   		- Analysis.Result: Analysis result
+   		
+		From datalines:
+   		- dict key <group> is the period grouping name (year, monthyear, yearweek)
+   		- dict key <country> is the Country name
+		- Group: The period grouping name
+		
+
+       	footlines {
+       		Total: {
+       			Requested,    	-- total requested analyses count
+       			Published,		-- total published analyses count
+       			PerformedRequestedRatio,
+       			PerformedRequestedRatioPercentage,
+       			PublishedPerformedRatio,	
+       			PublishedPerformedRatioPercentage
+       		}
+       	}
+        
+        -->
+        
+		<h2 i18n:translate="">Cases summary per country</h2>
+		<h3 i18n:translate="">Lists all cases for a date range grouped by countries</h3>
+			
+		<!-- Summary -->
+		<table class="bika-report-parms" summary="Parameters">
+			<tr tal:repeat="line parameters">
+				<td tal:content="python:line['title']"></td>
+				<td tal:content="python:line['value']"></td>
+			</tr>
+		</table>
+				
+		<!-- Results -->		
+		<table class="bika-report-table" summary="Results">
+			<thead>
+				<tr>
+					<th i18n:translate="">Period</th>
+					<th i18n:translate="">Country</th>
+					<th i18n:translate="">Case ID</th>					
+					<th i18n:translate="">Client's Case ID</th>
+					<th i18n:translate="">Onset Date</th>
+					<th i18n:translate="">Patient Age (years)</th>
+					<th i18n:translate="">Patient Gender</th>
+				</tr>
+			</thead>
+			<tbody>
+				<metal:block tal:repeat="key python:datalines.keys()">
+				<tr>
+					<td tal:content="key" colspan="7">
+				</td></tr>
+				
+				<metal:block tal:repeat="country python:datalines[key]['Countries'].keys()">
+				<tr>
+					<td>&nbsp;</td>
+					<td tal:content="country" colspan="6"></td>
+				</tr>
+				
+				<metal:block tal:repeat="batchid python:datalines[key]['Countries'][country]['Batches']">
+				<tr>
+					<td colspan="2">&nbsp;</td>
+					<td tal:content="python:batches[batchid]['BatchID']"></td>
+					<td tal:content="python:batches[batchid]['ClientBatchID']"></td>	
+					<td tal:content="python:batches[batchid]['OnsetDate']"></td>
+					<td tal:content="python:batches[batchid]['PatientAge']"></td>					
+					<td tal:content="python:batches[batchid]['PatientGender']"></td>
+				</tr>
+				<metal:block tal:repeat="ankey python:batches[batchid]['Analyses'].keys()">
+				<tr>
+					<td colspan="3">&nbsp;</td>
+					<td tal:content="python:batches[batchid]['Analyses'][key]['AnalysisRequest']"></td>
+					<td tal:content="python:batches[batchid]['Analyses'][key]['Keyword']"></td>
+					<td tal:content="python:batches[batchid]['Analyses'][key]['ServiceTitle']"></td>
+					<td tal:content="python:batches[batchid]['Analyses'][key]['Result']"></td>
+				</tr>
+				</metal:block> <!-- End Period/Country/Batch/Analysis Group -->				
+				</metal:block> <!-- End Period/Country/Batch Group -->
+				</metal:block> <!-- End Period/Country Group -->
+				</metal:block> <!-- End Period Group -->
+			</tbody>		
+		</table>
+	</body>
+</html>

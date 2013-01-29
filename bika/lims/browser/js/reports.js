@@ -101,6 +101,12 @@ $(document).ready(function(){
 		event.preventDefault();
 		$("#usershistory").toggle(true);
 	});
+	
+	$("#casespercountry_selector").click(function(event){
+		$(".criteria").toggle(false);
+		event.preventDefault();
+		$("#casespercountry").toggle(true);
+	});
 
 
 	// AJAX: Set ReferenceSamples dropdown when Supplier is selected

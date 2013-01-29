@@ -321,19 +321,6 @@ class Batch(BaseContent):
             pr = patient and patient.getPrimaryReferrer() or None
             return DisplayList(pr and pr.getCCContacts() or [])
 
-
-            ccs = []
-            if hasattr(contact, 'getCCContact'):
-                for cc in contact.getCCContact():
-                    if isActive(cc):
-                        ccs.append({'title': cc.Title(),
-                                    'uid': cc.UID(),})
-            item['ccs_json'] = json.dumps(ccs)
-            item['ccs'] = ccs
-            items.append(item)
-        items.sort(lambda x, y:cmp(x['title'].lower(), y['title'].lower()))
-        return items
-
     def BatchLabelVocabulary(self):
         """ return all batch labels """
         bsc = getToolByName(self, 'bika_setup_catalog')
@@ -525,6 +512,20 @@ class Batch(BaseContent):
             return {'year':'',
                     'month':'',
                     'day':''}
+            
+    def getPatientCountry(self):
+        bpc = getToolByName(self, 'bika_patient_catalog')
+        patient = bpc(UID=self.getPatientUID())
+        if patient:
+            patient = patient[0].getObject()
+            return patient.getCountryState()['country']
+    
+    def getPatientGender(self):
+        bpc = getToolByName(self, 'bika_patient_catalog')
+        patient = bpc(UID=self.getPatientUID())
+        if patient:
+            patient = patient[0].getObject()
+            return patient.getGender()
 
     def workflow_guard_receive(self):
         """Permitted when all Samples are > sample_received
