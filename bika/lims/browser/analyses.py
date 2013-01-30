@@ -1,19 +1,12 @@
 # coding=utf-8
 from AccessControl import getSecurityManager
-from DateTime import DateTime
-from Products.Archetypes.config import REFERENCE_CATALOG
-from Products.CMFCore.WorkflowCore import WorkflowException
-from Products.CMFCore.utils import getToolByName
-from Products.CMFPlone.utils import transaction_note
-from bika.lims.browser import BrowserView
-from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from bika.lims import bikaMessageFactory as _
 from bika.lims.browser.bika_listing import BikaListingView
 from bika.lims.permissions import *
 from bika.lims.utils import isActive
-from zope.component import getMultiAdapter
+from Products.Archetypes.config import REFERENCE_CATALOG
+from Products.CMFCore.utils import getToolByName
 import json
-import plone
 
 class AnalysesView(BikaListingView):
     """ Displays a list of Analyses in a table.
@@ -360,14 +353,18 @@ class AnalysesView(BikaListingView):
                     items[i]['table_row_class'] = "state-submitted-by-current-user"
 
             # add icon for assigned analyses in AR views
-            if self.context.portal_type == 'AnalysisRequest' and \
-               workflow.getInfoFor(items[i]['obj'], 'worksheetanalysis_review_state') == 'assigned':
-                ws = items[i]['obj'].getBackReferences('WorksheetAnalysis')[0]
-                items[i]['after']['state_title'] = \
-                     "<a href='%s'><img src='++resource++bika.lims.images/worksheet.png' title='%s'/></a>" % \
-                     (ws.absolute_url(), self.context.translate(
+            state = workflow.getInfoFor(
+                items[i]['obj'], 'worksheetanalysis_review_state')
+            if self.context.portal_type == 'AnalysisRequest' \
+            and state == 'assigned':
+                brefs = items[i]['obj'].getBackReferences('WorksheetAnalysis')
+                if brefs:
+                    ws = brefs[0]
+                    items[i]['after']['state_title'] = \
+                        "<a href='%s'><img src='++resource++bika.lims.images/worksheet.png' title='%s'/></a>" % \
+                        (ws.absolute_url(), self.context.translate(
                          _("Assigned to: ${worksheet_id}",
-                           mapping={'worksheet_id':ws.id})))
+                           mapping={'worksheet_id': ws.id})))
 
         # the TAL requires values for all interim fields on all
         # items, so we set blank values in unused cells
