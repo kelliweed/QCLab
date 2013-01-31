@@ -130,10 +130,10 @@ class BikaGenerator:
         if 'LabManagers' not in portal_groups.listGroupIds():
             try:
                 portal_groups.addGroup('LabManagers', title="Lab Managers",
-                       roles=['Member', 'LabManager', 'Site Administrator', 'Doctor', ])
+                       roles=['Member', 'LabManager', 'Site Administrator', ])
             except KeyError:
                 portal_groups.addGroup('LabManagers', title="Lab Managers",
-                       roles=['Member', 'LabManager', 'Manager', 'Doctor', ])# Plone < 4.1
+                       roles=['Member', 'LabManager', 'Manager' ])# Plone < 4.1
 
         if 'LabClerks' not in portal_groups.listGroupIds():
             portal_groups.addGroup('LabClerks', title="Lab Clerks",
