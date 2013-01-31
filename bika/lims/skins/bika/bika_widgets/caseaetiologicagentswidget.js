@@ -43,7 +43,6 @@ $(document).ready(function(){
 	                return false;
 	            }
 	        });
-			$(".template-caseaetiologicagents #Subtype").focus();
 			$(".template-caseaetiologicagents #Subtype").attr('readonly', false);
 			$(".template-caseaetiologicagents #Subtype").attr('disabled', false);
     	} else {
@@ -65,9 +64,7 @@ $(document).ready(function(){
         });
 
     	// When aetiologic agent selected changes, the value must be validated
-    	// against ZopeDB, cause no free text is allowed. The combo for
-    	// aetiologic agent subtypes will be also loaded in accordance
-    	// to the aetiologic agent.
+    	// against ZopeDB, cause no free text is allowed.
     	$(".template-caseaetiologicagents #Title").change(function(event){
         	$.ajax({
                 type: 'POST',
@@ -104,7 +101,6 @@ $(document).ready(function(){
             		if (data == null || data['rows'].length < 1) {
             			//Subtype doesn't exist
             			$(".template-caseaetiologicagents #Subtype").val('');
-            			$(".template-caseaetiologicagents #Subtype").focus();
             			return false;
             		} else {
             			$(".template-caseaetiologicagents .add_row").removeAttr('disabled');
@@ -113,7 +109,6 @@ $(document).ready(function(){
     			error: function(){
     				//Error while searching
         			$(".template-caseaetiologicagents #Subtype").val('');
-        			$(".template-caseaetiologicagents #Subtype").focus();
         			$(".template-caseaetiologicagents #add_row").removeAttr('disabled');
         			return false;
     			}
@@ -139,7 +134,6 @@ $(document).ready(function(){
             		if (str.value==S) {
             			alert(_('Aetiologic agent already added'));
             			$(".template-caseaetiologicagents #Subtype").val('');
-            			$(".template-caseaetiologicagents #Subtype").focus();
             			return false;
             		}
             	}
@@ -153,7 +147,6 @@ $(document).ready(function(){
             		if (str.value==S) {
             			alert(_('Aetiologic agent already added'));
             			$(".template-caseaetiologicagents #Subtype").val('');
-            			$(".template-caseaetiologicagents #Subtype").focus();
             			return false;
             		}
             	}
