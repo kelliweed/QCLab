@@ -622,18 +622,24 @@ class LoadSetupData(BrowserView):
                     print "Error creating {}: {}".format(row['Username'], msg)
                     member = self.portal_membership.getMemberById(
                         row['Username'])
-                group_ids = [g.strip() for g in _c(
-                    row['Groups']).split(',')]
 
+                group_ids = [g.strip() for g in _c(row['Groups']).split(',')]
                 role_ids = [r.strip() for r in _c(row['Roles']).split(',')]
+
                 # Add user to all specified groups
                 for group_id in group_ids:
                     group = self.portal_groups.getGroupById(group_id)
                     if group:
                         group.addMember(_c(row['Username']))
+
                 # Add user to all specified roles
                 for role_id in role_ids:
-                    member._addRole(role_id)
+                    try:
+                        member._addRole(role_id)
+                    except Exception, msg:
+                        print "Error setting role for {}: {} {}".format(
+                            member, role_id, msg)
+
                 # If user is in LabManagers, add Owner local role on clients
                 # folder
                 if 'LabManager' in group_ids:
