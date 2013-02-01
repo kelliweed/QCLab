@@ -526,6 +526,13 @@ class Batch(BaseContent):
         if patient:
             patient = patient[0].getObject()
             return patient.getGender()
+    
+    def getPatientFirstname(self):
+        bpc = getToolByName(self, 'bika_patient_catalog')
+        patient = bpc(UID=self.getPatientUID())
+        if patient:
+            patient = patient[0].getObject()
+            return patient.getFirstname()      
 
     def workflow_guard_receive(self):
         """Permitted when all Samples are > sample_received

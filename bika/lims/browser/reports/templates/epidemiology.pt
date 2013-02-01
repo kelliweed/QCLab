@@ -137,12 +137,13 @@
     			Lists all Analysis Requests for a date range grouped by countries
     		</span>
     		<div id="arspercountry" style="display:none" class="criteria">
-				<form action="createreport" method="post" name="epidemiology_arspercountry">
-				    <input type="hidden" name="report_id" value="epidemiology_arspercountry" />
+				<form action="createreport" method="post" name="epidemiology_analysisrequestspercountry">
+				    <input type="hidden" name="report_id" value="epidemiology_analysisrequestspercountry" />
 				    <fieldset>
 				        <tal:x content="structure python:view.selection_macros.select_daterange(
 					                                          field_id='getDateCreated',
 					                                          field_title='Date Created')"/>
+					    <tal:x content="structure python:view.selection_macros.select_groupingperiod()"/>
 				    </fieldset>
 				    <input tabindex=""
 				        class="searchButton allowMultiSubmit"

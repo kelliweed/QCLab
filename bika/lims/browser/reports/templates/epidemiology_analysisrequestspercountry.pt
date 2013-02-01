@@ -1,0 +1,245 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:tal="http://xml.zope.org/namespaces/tal"
+	xmlns:metal="http://xml.zope.org/namespaces/metal"
+	xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+	i18n:domain="bika"
+	tal:define="portal_url nocall:context/portal_url;
+				portal portal_url/getPortalObject;">
+	
+	<head>
+		<link rel="stylesheet" type="text/css" media="all" href=""
+	    	tal:attributes="href string:$portal_url/reports.css" />
+	</head>
+
+	<body tal:define="
+		report_data view/report_data;
+        parameters python:report_data.has_key('parameters') and report_data['parameters'] or [];
+        datalines python:report_data.has_key('datalines') and report_data['datalines'] or {};
+        ars python:report_data.has_key('analysisrequests') and report_data['analysisrequests'] or {}">
+        
+        <!--
+        
+        Report customization notes
+        ==========================================================================
+        Available attributes:
+        	
+       	parameters[]
+       	
+       	analysisrequests {
+       		<arid>: {
+       			AnalysisRequestID,
+       			PatientID,
+       			PatientFirstName,
+       			PatientAge,
+       			PatientGender,
+       			HospitalAnalysisRequestID,
+       			SampleType,       			
+       			DateSampled,
+       			DateReceived,
+       			CaseOnsetDate,
+       			AdditionalNotes,
+       			ProvisionalDiagnosis[],
+       			SignsAndSymptoms[]
+       		}
+       	}
+       	
+       	datalines {
+       		<group>: { 
+       			 Group,
+       			 Countries {
+	       			 <country>: {
+	       			 	Country,
+	       			 	AnalysisRequests [
+	       			 		arid
+	       			 	]	       			 
+	       			 }
+       			 }       			      			 	
+   			}
+   		}
+     			
+   		From analysisrequests:
+   		- dict key <arid> is the AnalysisRequestID
+   		- AnalysisRequestID: the Lab ID for Analysis Request
+   		- PatientID: the Lab's Patient ID
+   		- PatientFirstName: The AR Patient's first name
+   		- PatientAge: The AR Patient's age when onset date
+   		- PatientGender: The AR Patient's gender
+   		- HospitalAnalysisRequestID: The Client ID for the Analysis Request
+   		- SampleType: Type of the AR sample/specimen
+   		- DateSampled: Date when the AR sample/specimen was sampled
+   		- DateReceived: Date when the AR was received
+   		- CaseOnSetDate: AR's Batch/Case onset date
+   		- AdditionalNotes: AR's Batch/Case additional notes
+   		- ProvisionalDiagnosis: AR's Batch/Case provisional diagnosis
+   		- SignsAndSymptoms: AR's Batch/Case signs and symptoms
+   		
+		From datalines:
+   		- dict key <group> is the period grouping name (year, monthyear, yearweek)
+   		- dict key <country> is the Country name
+		- Group: The period grouping name	
+       
+        -->
+        
+		<h2 i18n:translate="">Analysis Requests per country</h2>
+		<h3 i18n:translate="">Lists all Analysis Requests for a date range grouped by countries</h3>
+			
+		<!-- Summary -->
+		<table class="bika-report-parms" summary="Parameters">
+			<tr tal:repeat="line parameters">
+				<td tal:content="python:line['title']"></td>
+				<td tal:content="python:line['value']"></td>
+			</tr>
+		</table>
+		
+		<!-- Results -->		
+		<table class="bika-report-table" summary="Cases">
+			<thead>
+				<tr>
+					<th i18n:translate="">Period</th>
+					<th i18n:translate="">Country</th>
+					<th i18n:translate="">Analysis Request ID</th>					
+					<th i18n:translate="">Patient ID</th>
+					<th i18n:translate="">Patient First name</th>
+					<th>						
+						<span i18n:translate="">Patient Age (years)</span>
+						<span style="font-size:0.6em;vertical-align:super;">1</span>
+					</th>
+					<th i18n:translate="">Patient Gender</th>
+					<th i18n:translate="">Hospital AR ID</th>
+					<th i18n:translate="">Sample Type</th>
+					<th i18n:translate="">Date sampled</th>
+					<th i18n:translate="">Date received</th>
+					<th i18n:translate="">Case onset date</th>
+				</tr>
+			</thead>
+			<tbody>
+				<metal:block tal:repeat="key python:datalines.keys()">
+				<tr tal:define="global periodnumars python:0;">
+					<td tal:content="key" colspan="12"></td>
+				</tr>
+				
+				<metal:block tal:repeat="country python:datalines[key]['Countries'].keys()">
+				<tr tal:define="global periodnumars python:+len(datalines[key]['Countries'][country]['AnalysisRequests']);">
+					<td style="border-bottom:none;">&nbsp;</td>
+					<td tal:content="country" colspan="11"></td>
+				</tr>
+				
+				<metal:block tal:repeat="arid python:datalines[key]['Countries'][country]['AnalysisRequests']">
+				<tr>
+					<td colspan="2" style="border-bottom:none;">&nbsp;</td>
+					<td tal:content="python:ars[arid]['AnalysisRequestID']" style="padding-top:5px"></td>
+					<td tal:content="python:ars[arid]['PatientID']" style="padding-top:5px"></td>	
+					<td tal:content="python:ars[arid]['PatientFirstName']" style="padding-top:5px"></td>
+					<td tal:content="python:ars[arid]['PatientAge']" style="padding-top:5px"></td>					
+					<td tal:content="python:ars[arid]['PatientGender']" style="padding-top:5px"></td>
+					<td tal:content="python:ars[arid]['HospitalAnalysisRequestID']" style="padding-top:5px"></td>
+					<td tal:content="python:ars[arid]['SampleType']" style="padding-top:5px"></td>
+					<td tal:content="python:ars[arid]['DateSampled']" style="padding-top:5px"></td>
+					<td tal:content="python:ars[arid]['DateReceived']" style="padding-top:5px"></td>
+					<td tal:content="python:ars[arid]['CaseOnsetDate']" style="padding-top:5px"></td>
+				</tr>		
+				<tr tal:condition="python:len(ars[arid]['AdditionalNotes'])>0">
+					<td colspan="3" style="border-bottom:none;">&nbsp;</td>
+					<td colspan="9" style="padding-top:5px;padding-bottom:5px;border-bottom:none;">
+						<table class="bika-report-table" style="font-size:11px;" summary="Results">
+							<thead>
+								<tr>
+									<th i18n:translate="" style="border-bottom:0px;">Additional notes</th>		
+								</tr>
+							</thead>
+							<tbody>
+								<td tal:content="python:ars[arid]['AdditionalNotes']"></td>
+							</tbody>
+						</table>
+					</td>
+				</tr>	
+				<tr tal:condition="python:len(ars[arid]['ProvisionalDiagnosis'])>0">
+					<td colspan="3" style="border-bottom:none;">&nbsp;</td>
+					<td colspan="9" style="padding-top:5px;padding-bottom:5px;border-bottom:none;">
+						<table class="bika-report-table" style="font-size:11px;" summary="Results">
+							<thead>
+								<tr>
+									<th i18n:translate="" style="border-bottom:0px;" colspan="4">Provisional Diagnosis</th>		
+								</tr>
+								<tr>
+									<th i18n:translate="">Code</th>
+									<th i18n:translate="">Title</th>
+									<th i18n:translate="">Description</th>	
+									<th i18n:translate="">Onset</th>		
+								</tr>
+							</thead>
+							<tbody>
+								<metal:block tal:repeat="pd python:ars[arid]['ProvisionalDiagnosis']">
+								<tr>
+									<td tal:content="python:pd['Code']"></td>
+									<td tal:content="python:pd['Title']"></td>
+									<td tal:content="python:pd['Description']"></td>
+									<td tal:content="python:pd['Onset']"></td>
+								</tr>
+								</metal:block> <!-- End Period/Country/AR/Provisional Diagnosis Group -->
+							</tbody>
+						</table>
+					</td>
+				</tr>
+				<tr tal:condition="python:len(ars[arid]['SignsAndSymptoms'])>0">
+					<td colspan="3" style="border-bottom:none;">&nbsp;</td>
+					<td colspan="9" style="padding-top:5px;padding-bottom:5px;border-bottom:none;">
+						<table class="bika-report-table" style="font-size:11px;" summary="Results">
+							<thead>
+								<tr>
+									<th i18n:translate="" style="border-bottom:0px;" colspan="4">Signs and Symptoms</th>		
+								</tr>
+								<tr>
+									<th i18n:translate="">Code</th>
+									<th i18n:translate="">Title</th>
+									<th i18n:translate="">Description</th>	
+									<th i18n:translate="">Onset</th>		
+								</tr>
+							</thead>
+							<tbody>
+								<metal:block tal:repeat="ss python:ars[arid]['SignsAndSymptoms']">
+								<tr>
+									<td tal:content="python:ss['Code']"></td>
+									<td tal:content="python:ss['Title']"></td>
+									<td tal:content="python:ss['Description']"></td>
+									<td tal:content="python:ss['Onset']"></td>
+								</tr>
+								</metal:block> <!-- End Period/Country/AR/Signs and Symptoms Group -->
+							</tbody>
+						</table>
+					</td>
+				</tr>
+				</metal:block> <!-- End Period/Country/AR Group -->
+				<tr>
+					<td style="border-bottom:none;">&nbsp;</td>
+					<td class='total_label' i18n:translate="" align="right" style="border-bottom:none;">Num of ARs</td>
+					<td colspan="10" tal:content="python:len(datalines[key]['Countries'][country]['AnalysisRequests'])"></td>
+				</tr>	
+				</metal:block> <!-- End Period/Country Group -->
+				<tr>
+					<td class='total_label' i18n:translate="" align="right" style="border-bottom:none;">Num of ARs</td>
+					<td colspan="11" tal:content="python:periodnumars"></td>
+				</tr>
+				<tr>
+					<td class='total_label' i18n:translate="" align="right" style="border-bottom:none;">Num of Countries</td>
+					<td colspan="11" tal:content="python:len(datalines[key]['Countries'])"></td>
+				</tr>
+				</metal:block> <!-- End Period Group -->
+			</tbody>
+			<tfoot>
+				<tr>
+					<td class='total_label' i18n:translate="" align="right" style="padding-top:15px;border-bottom:none;">Total Num of ARs</td>
+					<td tal:content="python:len(ars)" colspan="6" style="padding-top:15px;"></td>
+				</tr>
+			</tfoot>			
+		</table>
+		<div style="margin-top:20px;border-tpop:1px solid #DCDCDC;font-size:0.7em;">
+			<ul style='list-style-type: none;padding-left: 0px;margin-left:0px;padding-top:0px;'>
+				<li>
+					<span style="vertical-align:super;font-size:0.7em">1</span>&nbsp;&nbsp;
+					<span i18n:translate="">Patient's age when case's onset date</span>
+				</li>
+			</ul>
+		</div>
+	</body>
+</html>

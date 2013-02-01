@@ -107,6 +107,12 @@ $(document).ready(function(){
 		event.preventDefault();
 		$("#casespercountry").toggle(true);
 	});
+	
+	$("#arspercountry_selector").click(function(event){
+		$(".criteria").toggle(false);
+		event.preventDefault();
+		$("#arspercountry").toggle(true);
+	});
 
 
 	// AJAX: Set ReferenceSamples dropdown when Supplier is selected
