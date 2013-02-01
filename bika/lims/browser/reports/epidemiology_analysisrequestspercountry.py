@@ -73,6 +73,7 @@ class Report(BrowserView):
             datecreated = ar.created()     
             batch = ar.getBatch()       
             country = batch.getPatientCountry()
+            country = len(country) > 0 and country or _("Unknown")
             countryline['Country'] = country
             arline['AnalysisRequestID'] = arid
             arline['PatientID'] = batch.getPatientID()

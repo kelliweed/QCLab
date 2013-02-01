@@ -68,6 +68,7 @@ class Report(BrowserView):
             batchid = batch.getBatchID()     
             datecreated = batch.created()
             country = batch.getPatientCountry()
+            country = len(country) > 0 and country or _("Unknown")
             countryline['Country'] = country;
             batchline['BatchID'] = batchid;
             batchline['ClientBatchID'] = batch.getClientBatchID()
