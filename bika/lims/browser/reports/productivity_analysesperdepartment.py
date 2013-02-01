@@ -54,6 +54,7 @@ class Report(BrowserView):
         totalpublishedcount = 0
         totalperformedcount = 0
         groupby = ('GroupingPeriod' in self.request.form) and self.request.form['GroupingPeriod'] or 'Day'
+        parms.append({"title": _("Grouping period"), "value": _(groupby)})
         for analysis in analyses:
             analysis = analysis.getObject()
             analysisservice = analysis.getService()
