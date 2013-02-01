@@ -42,7 +42,9 @@ class Report(BrowserView):
         datalines = {}
         footlines = {}
         
-        groupby = ('GroupingPeriod' in self.request.form) and self.request.form['GroupingPeriod'] or 'Day'        
+        groupby = ('GroupingPeriod' in self.request.form) and self.request.form['GroupingPeriod'] or 'Day'   
+        parms.append({"title": _("Grouping period"), "value": _(groupby)})
+             
         for batch in batches:
             
             countryline = {'Country':'',
