@@ -56,6 +56,7 @@ div.bika_report {
 table.bika-report-parms {
 	border-collapse:collapse;
 	padding:0px;
+	margin-bottom:10px;
 }
 
 .bika-report-parms td, th {

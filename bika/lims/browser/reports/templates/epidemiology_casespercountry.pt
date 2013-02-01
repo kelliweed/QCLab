@@ -105,9 +105,9 @@
 				<td tal:content="python:line['value']"></td>
 			</tr>
 		</table>
-				
+		
 		<!-- Results -->		
-		<table class="bika-report-table" summary="Results">
+		<table class="bika-report-table" summary="Cases">
 			<thead>
 				<tr>
 					<th i18n:translate="">Period</th>
@@ -122,33 +122,49 @@
 			<tbody>
 				<metal:block tal:repeat="key python:datalines.keys()">
 				<tr>
-					<td tal:content="key" colspan="7">
-				</td></tr>
+					<td tal:content="key" colspan="7"></td>
+				</tr>
 				
 				<metal:block tal:repeat="country python:datalines[key]['Countries'].keys()">
 				<tr>
-					<td>&nbsp;</td>
+					<td style="border-bottom:none;">&nbsp;</td>
 					<td tal:content="country" colspan="6"></td>
 				</tr>
 				
 				<metal:block tal:repeat="batchid python:datalines[key]['Countries'][country]['Batches']">
 				<tr>
-					<td colspan="2">&nbsp;</td>
-					<td tal:content="python:batches[batchid]['BatchID']"></td>
-					<td tal:content="python:batches[batchid]['ClientBatchID']"></td>	
-					<td tal:content="python:batches[batchid]['OnsetDate']"></td>
-					<td tal:content="python:batches[batchid]['PatientAge']"></td>					
-					<td tal:content="python:batches[batchid]['PatientGender']"></td>
-				</tr>
-				<metal:block tal:repeat="ankey python:batches[batchid]['Analyses'].keys()">
+					<td colspan="2" style="border-bottom:none;">&nbsp;</td>
+					<td tal:content="python:batches[batchid]['BatchID']" style="padding-top:5px"></td>
+					<td tal:content="python:batches[batchid]['ClientBatchID']" style="padding-top:5px"></td>	
+					<td tal:content="python:batches[batchid]['OnsetDate']" style="padding-top:5px"></td>
+					<td tal:content="python:batches[batchid]['PatientAge']" style="padding-top:5px"></td>					
+					<td tal:content="python:batches[batchid]['PatientGender']" style="padding-top:5px"></td>
+				</tr>		
 				<tr>
-					<td colspan="3">&nbsp;</td>
-					<td tal:content="python:batches[batchid]['Analyses'][ankey]['AnalysisRequest']"></td>
-					<td tal:content="python:batches[batchid]['Analyses'][ankey]['Keyword']"></td>
-					<td tal:content="python:batches[batchid]['Analyses'][ankey]['ServiceTitle']"></td>
-					<td tal:content="python:batches[batchid]['Analyses'][ankey]['Result']"></td>
-				</tr>
-				</metal:block> <!-- End Period/Country/Batch/Analysis Group -->				
+					<td colspan="3" style="border-bottom:none;">&nbsp;</td>
+					<td colspan="4" style="padding-top:5px;padding-bottom:5px;border-bottom:none;">
+						<table class="bika-report-table" style="font-size:11px;" summary="Results">
+							<thead>
+								<tr>
+									<th i18n:translate="">Analysis Request ID</th>
+									<th i18n:translate="">Keyword</th>
+									<th i18n:translate="">Analysis</th>
+									<th i18n:translate="">Result</th>				
+								</tr>
+							</thead>
+							<tbody>
+								<metal:block tal:repeat="ankey python:batches[batchid]['Analyses'].keys()">
+								<tr>
+									<td tal:content="python:batches[batchid]['Analyses'][ankey]['AnalysisRequest']"></td>
+									<td tal:content="python:batches[batchid]['Analyses'][ankey]['Keyword']"></td>
+									<td tal:content="python:batches[batchid]['Analyses'][ankey]['ServiceTitle']"></td>
+									<td tal:content="python:batches[batchid]['Analyses'][ankey]['Result']"></td>
+								</tr>
+								</metal:block> <!-- End Period/Country/Batch/Analysis Group -->	
+							</tbody>
+						</table>
+					</td>
+				</tr>	
 				</metal:block> <!-- End Period/Country/Batch Group -->
 				</metal:block> <!-- End Period/Country Group -->
 				</metal:block> <!-- End Period Group -->
