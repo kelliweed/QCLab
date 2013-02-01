@@ -115,7 +115,10 @@
 					<th i18n:translate="">Case ID</th>					
 					<th i18n:translate="">Client's Case ID</th>
 					<th i18n:translate="">Onset Date</th>
-					<th i18n:translate="">Patient Age (years)</th>
+					<th>						
+						<span i18n:translate="">Patient Age (years)</span>
+						<span style="font-size:0.6em;vertical-align:super;">1</span>
+					</th>
 					<th i18n:translate="">Patient Gender</th>
 				</tr>
 			</thead>
@@ -189,5 +192,13 @@
 				</tr>
 			</tfoot>			
 		</table>
+		<div style="margin-top:20px;border-tpop:1px solid #DCDCDC;font-size:0.7em;">
+			<ul style='list-style-type: none;padding-left: 0px;margin-left:0px;padding-top:0px;'>
+				<li>
+					<span style="vertical-align:super;font-size:0.7em">1</span>&nbsp;&nbsp;
+					<span i18n:translate="">Patient's age when case's onset date</span>
+				</li>
+			</ul>
+		</div>
 	</body>
 </html>
