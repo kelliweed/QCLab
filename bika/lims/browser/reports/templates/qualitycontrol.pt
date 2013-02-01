@@ -100,7 +100,7 @@
                                                    field_title='Worksheet state')"/>
           </fieldset>
           <input tabindex=""
-            class="searchButton"
+            class="searchButton allowMultiSubmit"
             type="submit"
             name="submit"
             value="Report"
@@ -130,7 +130,7 @@
                                                      field_title='Worksheet state')"/>
           </fieldset>
             <input tabindex=""
-              class="searchButton"
+              class="searchButton allowMultiSubmit"
               type="submit"
               name="submit"
               value="Report"
@@ -160,7 +160,7 @@
                                              field_title='Worksheet state')"/>
           </fieldset>
           <input tabindex=""
-              class="searchButton"
+              class="searchButton allowMultiSubmit"
               type="submit"
               name="submit"
               value="Report"
@@ -181,7 +181,7 @@
                                              field_title='Date Verified')"/>
           </fieldset>
           <input tabindex=""
-              class="searchButton"
+              class="searchButton allowMultiSubmit"
               type="submit"
               name="submit"
               value="Report"

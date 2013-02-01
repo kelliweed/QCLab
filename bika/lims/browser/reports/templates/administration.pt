@@ -103,7 +103,7 @@
 	                                                 field_title='Cancellation state')"/>
 	              </fieldset>
 	              <input tabindex=""
-	                     class="searchButton"
+	                     class="searchButton allowMultiSubmit"
 	                     type="submit"
 	                     name="submit"
 	                     value="Report"
@@ -131,7 +131,7 @@
 	                <tal:x content="structure context/@@selection_macros/select_user"/>
 	              </fieldset>
 	              <input tabindex=""
-	                     class="searchButton"
+	                     class="searchButton allowMultiSubmit"
 	                     type="submit"
 	                     name="submit"
 	                     value="Report"
