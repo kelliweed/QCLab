@@ -59,7 +59,7 @@ class Report(BrowserView):
             analysis = analysis.getObject()
             analysisservice = analysis.getService()
             department = analysisservice.getDepartment().Title()
-            daterequested = analysis.getDateReceived()
+            daterequested = analysis.created()
 
             group = ''
             if groupby == 'Day':
