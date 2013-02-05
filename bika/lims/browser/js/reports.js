@@ -120,7 +120,12 @@ $(document).ready(function(){
 		$("#epiddetailsperanalysis").toggle(true);
 	});
 
-
+	$("#epiddetailspercase_selector").click(function(event){
+		$(".criteria").toggle(false);
+		event.preventDefault();
+		$("#epiddetailspercase").toggle(true);
+	});
+	
 	// AJAX: Set ReferenceSamples dropdown when Supplier is selected
 	$("#ReferenceSupplierUID").change(function(){
 		val = $(this).val();
