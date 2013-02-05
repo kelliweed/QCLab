@@ -171,7 +171,8 @@
 				        <tal:x content="structure python:view.selection_macros.select_daterange(
 					                                          field_id='getDateCreated',
 					                                          field_title='Date Created')"/>
-					    <tal:x content="structure python:view.selection_macros.select_groupingperiod()"/>
+					    <tal:x content="structure python:view.selection_macros.select_groupingperiod(
+					    						allow_blank=True)"/>
 				    </fieldset>
 				    <input tabindex=""
 				        class="searchButton allowMultiSubmit"

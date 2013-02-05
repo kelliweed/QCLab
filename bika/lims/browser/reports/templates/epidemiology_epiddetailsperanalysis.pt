@@ -103,7 +103,8 @@
 		<!-- Results -->		
 		<metal:block tal:repeat="period python:datalines.keys()">
 			<h4 tal:content="period" 
-				tal:define="global numars python:numars + len(datalines[period]);">
+				tal:define="global numars python:numars + len(datalines[period]);"
+				tal:condition="python:len(period)>0">
 			</h4>		
 			
 			<table class="bika-report-table" summary="Cases">
@@ -143,10 +144,10 @@
 					</tr>	
 					</metal:block> <!-- End ARs -->
 				</tbody>
-				<tfoot>
+				<tfoot tal:condition="python:len(period)>0">
 					<tr>
-						<td class='total_label' i18n:translate="" align="right" style="padding-top:15px;border-bottom:none;">Num of ARs</td>
-						<td tal:content="python:len(datalines[period])" colspan="6" style="padding-top:15px;"></td>
+						<td class='total_label' i18n:translate="" align="right" style="border-bottom:none;">Num of ARs</td>
+						<td tal:content="python:len(datalines[period])" colspan="6" style="border-bottom:none;"></td>
 					</tr>
 				</tfoot>			
 			</table>

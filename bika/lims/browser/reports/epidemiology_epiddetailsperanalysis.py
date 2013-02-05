@@ -84,7 +84,7 @@ class Report(BrowserView):
                     elif groupby == 'Year':
                         group = datecreated.strftime("%Y")
                     else :
-                        group = 'All'
+                        group = ''
                     
                     analyseslines = {an.UID(): line}
                     if group in datalines:
