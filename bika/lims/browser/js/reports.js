@@ -113,6 +113,12 @@ $(document).ready(function(){
 		event.preventDefault();
 		$("#arspercountry").toggle(true);
 	});
+	
+	$("#epiddetailsperanalysis_selector").click(function(event){
+		$(".criteria").toggle(false);
+		event.preventDefault();
+		$("#epiddetailsperanalysis").toggle(true);
+	});
 
 
 	// AJAX: Set ReferenceSamples dropdown when Supplier is selected

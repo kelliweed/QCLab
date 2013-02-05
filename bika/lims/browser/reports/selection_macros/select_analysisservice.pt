@@ -8,7 +8,7 @@
             id="ServiceUID"
             tal:attributes="
                 size python:view.multiselect and '7' or '1';
-                style string:font-family:${here/base_properties/fontFamily};;font-size:100%;
+                style string:font-family:${here/base_properties/fontFamily};;font-size:100%;;width:90%;
                 multiple view/multiselect">
 
         <option tal:condition="python:view.allow_blank and not view.multiselect" value=""/>

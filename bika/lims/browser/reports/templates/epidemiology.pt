@@ -156,21 +156,22 @@
 		</li> 
 		<li>
     		<a href="#" id="epiddetailsperanalysis_selector" 
-    		i18n:translate="">Epid-Case details per analysis</a><br/>
+    		i18n:translate="">Epid details per analysis</a><br/>
     		<span i18n:translate="">
     			For a selected analysis (ej. <i>Influenzae</i>) and date range, report Analysis Requests, alernatively Cases, 
     			showing the hospital, sample type, fever (Y/N), pain (Y/N), provisional diagnosis, etc.
     		</span>
     		<div id="epiddetailsperanalysis" style="display:none" class="criteria">
 				<form action="createreport" method="post" name="epidemiology_epiddetailsperanalysis">
-				    <input type="hidden" name="report_id" value="epidemiology_epiddetailsperanalysis" />
-		            <tal:x content="structure python:view.selection_macros.select_analysisservice(
-                                               allow_blank=False,
-                                               multiselect=True)"/>
+				    <input type="hidden" name="report_id" value="epidemiology_epiddetailsperanalysis" />				    
 				    <fieldset>
+		            	<tal:x content="structure python:view.selection_macros.select_analysisservice(
+                                               allow_blank=False,
+                                               multiselect=False)"/>
 				        <tal:x content="structure python:view.selection_macros.select_daterange(
 					                                          field_id='getDateCreated',
 					                                          field_title='Date Created')"/>
+					    <tal:x content="structure python:view.selection_macros.select_groupingperiod()"/>
 				    </fieldset>
 				    <input tabindex=""
 				        class="searchButton allowMultiSubmit"

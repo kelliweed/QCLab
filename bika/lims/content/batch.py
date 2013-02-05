@@ -320,6 +320,12 @@ class Batch(BaseContent):
             patient = self.getPatient()
             pr = patient and patient.getPrimaryReferrer() or None
             return DisplayList(pr and pr.getCCContacts() or [])
+    
+    def getClientName(self):
+        pc = getToolByName(self, 'portal_catalog')
+        client = pc(portal_type='Client', UID=self.getClientUID())
+        if client:
+            return client[0].getObject().Title()
 
     def BatchLabelVocabulary(self):
         """ return all batch labels """
