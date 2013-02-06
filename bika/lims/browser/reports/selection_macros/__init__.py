@@ -212,3 +212,10 @@ class SelectionMacrosView(BrowserView):
     def select_groupingperiod(self, allow_blank=False):
         self.allow_blank = allow_blank
         return self.select_groupingperiod_pt()
+
+    select_aetiologicagent_pt = ViewPageTemplateFile("select_aetiologicagent.pt")
+    def select_aetiologicagent(self, allow_blank=True, multiselect=False):
+        self.allow_blank = allow_blank
+        self.multiselect = multiselect
+        self.aetiologicagents = self.bsc(portal_type='AetiologicAgent', sort_on='sortable_title')
+        return self.select_aetiologicagent_pt()

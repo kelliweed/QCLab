@@ -518,13 +518,18 @@ class Batch(BaseContent):
             return {'year':'',
                     'month':'',
                     'day':''}
-            
-    def getPatientCountry(self):
+    
+    def getPatientCountryState(self):
         bpc = getToolByName(self, 'bika_patient_catalog')
         patient = bpc(UID=self.getPatientUID())
         if patient:
             patient = patient[0].getObject()
-            return patient.getCountryState()['country']
+            return patient.getCountryState()
+        
+    def getPatientCountry(self):
+        countrystate = self.getPatientCountryState()
+        if countrystate:
+            return countrystate['country']
     
     def getPatientGender(self):
         bpc = getToolByName(self, 'bika_patient_catalog')

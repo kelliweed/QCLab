@@ -126,6 +126,12 @@ $(document).ready(function(){
 		$("#epiddetailspercase").toggle(true);
 	});
 	
+	$("#aagentspercountry_selector").click(function(event){
+		$(".criteria").toggle(false);
+		event.preventDefault();
+		$("#aagentspercountry").toggle(true);
+	});
+	
 	// AJAX: Set ReferenceSamples dropdown when Supplier is selected
 	$("#ReferenceSupplierUID").change(function(){
 		val = $(this).val();

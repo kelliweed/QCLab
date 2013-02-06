@@ -238,21 +238,26 @@
 		</li> 
     </ul>
     
-    <h2 i18n:translate="">Analyses-specific reports</h2>    
+    <h2 i18n:translate="">Other reports</h2>    
     <ul id="toc-reports">
     	<li>
-    		<a href="#" id="salmonellasp_selector" 
-    		i18n:translate=""><i>Salmonella</i> prevalent species</a><br/>
+    		<a href="#" id="aagentspercountry_selector" 
+    		i18n:translate="">Aetiologic agent prevalent species per country</a><br/>
     		<span i18n:translate="">
-    			Report the prevalent <i>Salmonella</i> species, and subtypes serotype, AMR, PT, PFGE type etc.
+    			Report the prevalent species from a selected aetiologic agent (ex.<i>Salmonella</i>), and subtypes serotype, AMR, PT, PFGE type etc.
     		</span>
-    		<div id="dengue" style="display:none" class="criteria">
-				<form action="createreport" method="post" name="salmonellasp_dengue">
-				    <input type="hidden" name="report_id" value="salmonellasp_dengue" />
+    		<div id="aagentspercountry" style="display:none" class="criteria">
+				<form action="createreport" method="post" name="epidemiology_aagentspercountry">
+				    <input type="hidden" name="report_id" value="epidemiology_aagentspercountry" />
 				    <fieldset>
+				    	<tal:x content="structure python:view.selection_macros.select_aetiologicagent(
+                                               allow_blank=False,
+                                               multiselect=False)"/>
 				        <tal:x content="structure python:view.selection_macros.select_daterange(
 					                                          field_id='getDateCreated',
 					                                          field_title='Date Created')"/>
+  					    <tal:x content="structure python:view.selection_macros.select_groupingperiod(
+					    						allow_blank=True)"/>
 				    </fieldset>
 				    <input tabindex=""
 				        class="searchButton allowMultiSubmit"

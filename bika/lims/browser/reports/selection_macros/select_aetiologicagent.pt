@@ -1,0 +1,29 @@
+<div class="field" i18n:domain="bika">
+
+    <label i18n:translate="">Aetiologic agent</label>
+    <br/>
+
+    <select name="AetiologicAgentUID:ignore_empty"
+            size="7"
+            id="AetiologicAgentUID"
+            tal:attributes="
+                size python:view.multiselect and '7' or '1';
+                style string:font-family:${here/base_properties/fontFamily};;font-size:100%;;width:90%;
+                multiple view/multiselect">
+
+        <option tal:condition="python:view.allow_blank and not view.multiselect" value=""/>
+
+        <tal:services  tal:repeat="aetiologicagent view/aetiologicagents">
+
+            <option value=""
+                tal:define="aetiologicagent_uid python:aetiologicagent.UID"
+                tal:attributes="
+                    value aetiologicagent_uid;
+                    selected python:request.get('AetiologicAgentUID', '') == aetiologicagent_uid and 'selected' or ''"
+                tal:content="aetiologicagent/Title">
+            </option>
+
+        </tal:services>
+
+    </select>
+</div>
