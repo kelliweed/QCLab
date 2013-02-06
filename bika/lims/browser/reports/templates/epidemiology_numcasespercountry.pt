@@ -1,0 +1,122 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:tal="http://xml.zope.org/namespaces/tal"
+	xmlns:metal="http://xml.zope.org/namespaces/metal"
+	xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+	i18n:domain="bika"
+	tal:define="portal_url nocall:context/portal_url;
+				portal portal_url/getPortalObject;">
+	
+	<head>
+		<link rel="stylesheet" type="text/css" media="all" href=""
+	    	tal:attributes="href string:$portal_url/reports.css" />
+	</head>
+
+	<body tal:define="
+		report_data view/report_data;
+        parameters python:report_data.has_key('parameters') and report_data['parameters'] or [];
+        datalines python:report_data.has_key('datalines') and report_data['datalines'] or {};
+        totalnum python:0">
+        <!--
+        
+        Report customization notes
+        ==========================================================================
+        Available attributes:
+        	
+       	parameters[]
+       	
+       	datalines {
+       		<group>: {
+       			<country> : {
+       				Count,
+       				RatioGroup,
+       				RatioTotal
+       				PercentageGroup,
+       				PercentageTotal   
+       			}    					      			 	
+   			}
+   		}
+     			
+   		Where:
+   		- dict key <group> is the period grouping name (year, monthyear, yearweek)
+   		- dict key <country> is the name of the country
+   		- Count is the number of cases
+   		   		   		
+   		Default structure:
+   		
+   		Jan 2012 (grouping period - if grouping selected)   
+   		[Country]			[NumOfCases]	[% of Period]		[% of Total]	
+   		=======================================================================================
+   		Spain				 4					 40.0%				20.0%
+   		South Africa		 5					 50.0%				25.0%
+   		Australia			 1					 10.0%				 5.0%
+   		---------------------------------------------------------------------------------------
+   					Total	10					100.0%				50.0%		
+   		
+   		Feb 2012 (grouping period - if grouping selected)   
+   		[Country]			[NumOfCases]	[% of Period]		[% of Total]	
+   		=======================================================================================
+   		Spain				 1					 10.0%				 5.0%
+   		South Africa		 7					 70.0%				35.0%
+   		Australia			 2					 20.0%				10.0%
+   		---------------------------------------------------------------------------------------
+   					Total	10					100.0%				50.0%
+   		
+   		Total Num of Cases	20
+   		
+        -->
+        
+		<h2 i18n:translate="">Number of cases per country</h2>
+		<h3 i18n:translate="">Summary of number of cases per country for a date range</h3>
+			
+		<!-- Summary -->
+		<table class="bika-report-parms" summary="Parameters">
+			<tr tal:repeat="line parameters">
+				<td tal:content="python:line['title']"></td>
+				<td tal:content="python:line['value']"></td>
+			</tr>
+		</table>
+		
+		<!-- Results -->		
+		<metal:block tal:repeat="period python:datalines.keys()">
+			<h4 tal:content="period" 
+				tal:condition="python:len(period)>0"
+				tal:define="global numperiod python:0;
+							global ratiototal python:0;">
+			</h4>			
+			<table class="bika-report-table" summary="Number of Cases">
+				<thead>
+					<tr>
+						<th i18n:translate="">Country</th>
+						<th i18n:translate="">Num of cases</th>					
+						<th i18n:translate="" tal:condition="python:len(period)>0">% of Period</th>
+						<th i18n:translate="">% of Total</th>
+					</tr>
+				</thead>
+				<tbody>					
+					<metal:block tal:repeat="country python:datalines[period].keys()">
+					<tr tal:define="global numperiod python:numperiod+datalines[period][country]['Count'];
+									global totalnum python:totalnum+datalines[period][country]['Count'];
+									global ratiototal python:ratiototal+datalines[period][country]['RatioTotal']">
+						<td tal:content="python:country"></td>
+						<td tal:content="python:datalines[period][country]['Count']"></td>	
+						<td tal:content="python:datalines[period][country]['PercentageGroup']" tal:condition="python:len(period)>0"></td>
+						<td tal:content="python:datalines[period][country]['PercentageTotal']"></td>
+					</tr>	
+					</metal:block>
+				</tbody>
+				<tfoot>
+					<tr>
+						<td class='total_label' i18n:translate="" align="right" style="border-bottom:none;">Total</td>
+						<td tal:content="python:numperiod" style="border-bottom:none;"></td>
+						<td style="border-bottom:none;" tal:condition="python:len(period)>0">100%</td>
+						<td tal:content="python:('{0:.0f}'.format(ratiototal*100))+'%'" style="border-bottom:none;"></td>
+					</tr>
+				</tfoot>			
+			</table>
+		</metal:block>
+		<div style="margin-top:20px;border-tpop:1px solid #DCDCDC;" tal:condition="python:len(datalines.keys()[0])>0">
+			<span class='total_label' i18n:translate="">Total Count</span>:&nbsp;&nbsp;
+			<span class='total_label' tal:content="python:totalnum"></span>
+		</div>
+	</body>
+</html>
