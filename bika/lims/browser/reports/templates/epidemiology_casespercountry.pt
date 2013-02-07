@@ -113,7 +113,7 @@
 					<th i18n:translate="">Period</th>
 					<th i18n:translate="">Country</th>
 					<th i18n:translate="">Case ID</th>					
-					<th i18n:translate="">Client's Case ID</th>
+					<th i18n:translate="">Hospital's Case ID</th>
 					<th i18n:translate="">Onset Date</th>
 					<th>						
 						<span i18n:translate="">Patient Age (years)</span>
