@@ -164,7 +164,7 @@
 										<tr>
 											<td tal:content="python:batches[batchid]['Analyses'][ankey]['AnalysisRequest']"></td>
 											<td tal:content="python:batches[batchid]['Analyses'][ankey]['Keyword']"></td>
-											<td tal:content="python:batches[batchid]['Analyses'][ankey]['ServiceTitle']"></td>
+											<td width="100%" tal:content="python:batches[batchid]['Analyses'][ankey]['ServiceTitle']"></td>
 											<td tal:content="python:batches[batchid]['Analyses'][ankey]['Result']"></td>
 										</tr>
 										</metal:block> <!-- End Period/Country/Batch/Analysis Group -->
@@ -176,11 +176,11 @@
 					</tbody>
 					<tfoot>
 						<tr>
-							<td class='total_label' i18n:translate="" align="right" style="border-bottom:none;">								
+							<td class='total_label' i18n:translate="" style="border-bottom:none;" colspan="5">								
 								<span i18n:translate="">Cases</span>&nbsp;
-								(<span tal:content='python:country'></span>)
+								(<span tal:content='python:country'></span>)&nbsp;&nbsp;
+								<span class='total_label' tal:content="python:numcountry"></span>
 							</td>
-							<td tal:content="python:numcountry" colspan="5" style="border-bottom:none;"></td>
 						</tr>
 					</tfoot>
 				</table>
@@ -188,12 +188,12 @@
 			<div tal:condition="python:len(period)>0">
 				<span class='total_label' i18n:translate="">Cases</span>&nbsp;
 				(<span class='total_label' tal:content="python:period"></span>):&nbsp;&nbsp;
-				<span class='total_label' tal:content="python:numperiod"></span><br/>
+				<span class='total_label' tal:content="python:numperiod"></span>
 			</div>	
 		</metal:block>
 		<div style="margin-top:20px;border-tpop:1px solid #DCDCDC;">
 			<span class='total_label' i18n:translate="">Total Cases</span>:&nbsp;&nbsp;
-			<span class='total_label' tal:content="python:totalnum"></span><br/>
+			<span class='total_label' tal:content="python:totalnum"></span>
 		</div>		
 		<div style="margin-top:20px;border-tpop:1px solid #DCDCDC;font-size:0.7em;">
 			<ul style='list-style-type: none;padding-left: 0px;margin-left:0px;padding-top:0px;'>
