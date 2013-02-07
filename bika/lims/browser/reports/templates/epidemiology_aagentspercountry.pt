@@ -121,10 +121,10 @@
 					tal:define="global numcountry python:0;"
 					tal:condition="python:len(period)==0">
 				</h4>	
-				<h3 tal:content="country" 
+				<h5 tal:content="country" 
 					tal:define="global numcountry python:0;"
 					tal:condition="python:len(period)>0">
-				</h3>			
+				</h5>			
 				
 				<table class="bika-report-table" summary="Cases">
 					<thead>
@@ -164,7 +164,7 @@
 			</metal:block>
 			<div tal:condition="python:len(period)>0">
 				<span class='total_label' i18n:translate="">Total Count</span>&nbsp;
-				(<span class='total_label' tal_content="python:period"></span>):&nbsp;&nbsp;
+				(<span class='total_label' tal:content="python:period"></span>):&nbsp;&nbsp;
 				<span class='total_label' tal:content="python:numperiod"></span>
 			</div>
 		</metal:block>
