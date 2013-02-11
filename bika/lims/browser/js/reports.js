@@ -138,6 +138,12 @@ $(document).ready(function(){
 		$("#numcasespercountry").toggle(true);
 	});
 	
+	$("#casesperanalysis_selector").click(function(event){
+		$(".criteria").toggle(false);
+		event.preventDefault();
+		$("#casesperanalysis").toggle(true);
+	});
+	
 	// AJAX: Set ReferenceSamples dropdown when Supplier is selected
 	$("#ReferenceSupplierUID").change(function(){
 		val = $(this).val();

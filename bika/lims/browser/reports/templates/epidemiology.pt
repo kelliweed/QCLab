@@ -128,7 +128,35 @@
 				        i18n:attributes="value"/>
 				</form>
 			</div>
-		</li> 		
+		</li> 
+		<li>
+    		<a href="#" id="casesperanalysis_selector" 
+    		i18n:translate="">Cases per analysis</a><br/>
+    		<span i18n:translate="">
+    			Cases for a selected analysis and any given period of time
+    		</span>
+    		<div id="casesperanalysis" style="display:none" class="criteria">
+				<form action="createreport" method="post" name="epidemiology_casesperanalysis">
+				    <input type="hidden" name="report_id" value="epidemiology_casesperanalysis" />
+				    <fieldset>
+				    	<tal:x content="structure python:view.selection_macros.select_analysisservice(
+                                               allow_blank=False,
+                                               multiselect=False)"/>
+				        <tal:x content="structure python:view.selection_macros.select_daterange(
+					                                          field_id='getDateCreated',
+					                                          field_title='Date Created')"/>
+   					    <tal:x content="structure python:view.selection_macros.select_groupingperiod(
+					    						allow_blank=True)"/>
+				    </fieldset>
+				    <input tabindex=""
+				        class="searchButton allowMultiSubmit"
+				        type="submit"
+				        name="submit"
+				        value="Generate report"
+				        i18n:attributes="value"/>
+				</form>
+			</div>
+		</li>		
 	</ul>
 	
 	<h2 i18n:translate="">Analyses related reports</h2>    
@@ -261,29 +289,6 @@
 					                                          field_title='Date Created')"/>
   					    <tal:x content="structure python:view.selection_macros.select_groupingperiod(
 					    						allow_blank=True)"/>
-				    </fieldset>
-				    <input tabindex=""
-				        class="searchButton allowMultiSubmit"
-				        type="submit"
-				        name="submit"
-				        value="Generate report"
-				        i18n:attributes="value"/>
-				</form>
-			</div>
-		</li>
-    	<li>
-    		<a href="#" id="dengue_selector" 
-    		i18n:translate="">Dengue report</a><br/>
-    		<span i18n:translate="">
-    			Dengue cases for any given period of time
-    		</span>
-    		<div id="dengue" style="display:none" class="criteria">
-				<form action="createreport" method="post" name="epidemiology_dengue">
-				    <input type="hidden" name="report_id" value="epidemiology_dengue" />
-				    <fieldset>
-				        <tal:x content="structure python:view.selection_macros.select_daterange(
-					                                          field_id='getDateCreated',
-					                                          field_title='Date Created')"/>
 				    </fieldset>
 				    <input tabindex=""
 				        class="searchButton allowMultiSubmit"
