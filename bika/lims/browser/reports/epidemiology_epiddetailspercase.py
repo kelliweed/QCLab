@@ -9,7 +9,7 @@ from zope.interface import implements
 class Report(BrowserView):
     implements(IViewView)
     default_template = ViewPageTemplateFile("templates/epidemiology.pt")
-    template = ViewPageTemplateFile("templates/epidemiology_epiddetailsperanalysis.pt")
+    template = ViewPageTemplateFile("templates/epidemiology_epiddetailspercase.pt")
 
     def __init__(self, context, request, report=None):
         super(Report, self).__init__(context, request)
@@ -42,7 +42,7 @@ class Report(BrowserView):
         # Query the catalog and store results in a dictionary             
         ars = self.bika_catalog(self.contentFilter)
         if not ars:
-            message = _("No analysis requests matched your query")
+            message = _("No analyses found")
             self.context.plone_utils.addPortalMessage(message, "error")
             return self.default_template()
         
@@ -57,13 +57,14 @@ class Report(BrowserView):
             arid = ar.getRequestID()
             datecreated = ar.created()
             batch = ar.getBatch()
+            caseid = batch.getBatchID()
             
             analyses = ar.getAnalyses()
             for an in analyses:
                 an = an.getObject()
                 if (an.getServiceUID() == service_uid):
                     line = {'AnalysisUID': an.UID(),
-                            'AnalysisRequestID': arid,
+                            'CaseID': arid,
                             'HospitalAnalysisRequestID': batch.getClientBatchID(),
                             'Hospital': batch.getClientName(),
                             'SampleType': ar.getSampleTypeTitle(), 
@@ -101,6 +102,6 @@ class Report(BrowserView):
         self.report_data = {'parameters': parms,
                             'datalines': datalines}
                     
-        return {'report_title': _('Epid details per analysis'),
+        return {'report_title': _('Epid details per cases'),
                 'report_data': self.template()}    
         

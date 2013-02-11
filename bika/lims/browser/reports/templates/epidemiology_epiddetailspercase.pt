@@ -5,7 +5,7 @@
 	i18n:domain="bika"
 	tal:define="portal_url nocall:context/portal_url;
 				portal portal_url/getPortalObject;">
-
+	
 	<head>
 		<link rel="stylesheet" type="text/css" media="all" href=""
 	    	tal:attributes="href string:$portal_url/reports.css" />
@@ -17,34 +17,34 @@
         datalines python:report_data.has_key('datalines') and report_data['datalines'] or {};
         numars python:0;">
         <!--
-
+        
         Report customization notes
         ==========================================================================
         Available attributes:
-
+        	
        	parameters[]
-
+       	
        	datalines {
-       		<group>: {
-       			 <analysisuid>: {
+       		<group>: { 
+       			 <caseuid>: {
        			 	AnalysisUID,
-       			 	AnalysisRequestID,
+       			 	CaseID,
 	       			HospitalAnalysisRequestID,
 	       			Hospital,
-	       			SampleType,
+	       			SampleType,	
 	       			Keyword,
 	       			ServiceTitle,
 	       			Result,
 	       			CaseAdditionalNotes,
 	       			CaseProvisionalDiagnosis[],
-	       			CaseSignsAndSymptoms[]
-       			 }
+	       			CaseSignsAndSymptoms[]	       			 
+       			 }    			      			 	
    			}
    		}
-
+     			
    		Where:
    		- dict key <group> is the period grouping name (year, monthyear, yearweek)
-   		- dict key <analysisuid> is the UID for an Analysis Request analysis (not the service)
+   		- dict key <analysisuid> is the UID for an Analysis Request Case's analysis (not the service)
    		- AnalysisRequestID: the Lab ID for Analysis Request
    		- HospitalAnalysisRequestID: The Client ID for the Analysis Request
    		- SampleType: Type of the AR sample/specimen
@@ -55,43 +55,43 @@
    		- CaseAdditionalNotes: Case's additional notes
    		- CaseProvisionalDiagnosis: Case's provisional diagnosis
    		- CaseSignsAndSymptoms: Case's signs and symptoms
-
-
+   		
+   		
    		Default structure:
-
-   		Jan 2012 (grouping period - if grouping selected)
-   		[ARID]		[Hospital]	 	[SampleType]	[Result]	[ProvisionalDiagnosis]	[SignsAndSymptoms]	[AdditionalNotes]
+   		
+   		Jan 2012 (grouping period - if grouping selected)   		
+   		[CASEID]	[Hospital]	 	[SampleType]	[Result]	[ProvisionalDiagnosis]	[SignsAndSymptoms]	[AdditionalNotes]
    		=======================================================================================================================
-   		AR0001		Hospital01		Blood			83   		ICD012 - ProvDiag1		ICD829 - Symptom01	Additional Notes for
-   																ICD013 - ProvDiag2							AR0001 Case's
-   		························································································································
-   		AR0002		Hospital01		Blood			3   		ICD012 - ProvDiag1		ICD829 - Symptom01	Additional Notes for
+   		C0001		Hospital01		Blood			83   		ICD012 - ProvDiag1		ICD829 - Symptom01	Additional notes for 
+   																ICD013 - ProvDiag2							AR0001 Case's		
+   		························································································································														
+   		C0002		Hospital01		Blood			3   		ICD012 - ProvDiag1		ICD829 - Symptom01	Additional notes for 
    																ICD013 - ProvDiag2							AR0002 Case's
    		------------------------------------------------------------------------------------------------------------------------
    		Num of ARs:	2
-
+   		
    		Feb 2012 (grouping period - if grouping selected)
-   		[ARID]		[Hospital]	 	[SampleType]	[Result]	[ProvisionalDiagnosis]	[SignsAndSymptoms]	[AdditionalNotes]
+   		[CASEID]	[Hospital]	 	[SampleType]	[Result]	[ProvisionalDiagnosis]	[SignsAndSymptoms]	[AdditionalNotes]
    		=======================================================================================================================
-   		AR0003		Hospital01		Blood			8   		ICD012 - ProvDiag1		ICD829 - Symptom01	Additional Notes for
-   																ICD013 - ProvDiag2							AR0003 Case's
+   		C0003		Hospital01		Blood			8   		ICD012 - ProvDiag1		ICD829 - Symptom01	Additional notes for 
+   																ICD013 - ProvDiag2							AR0003 Case's		
+   		························································································································														
+   		C0004		Hospital01		Blood			12   		ICD012 - ProvDiag1		ICD829 - Symptom01	Additional notes for 
+   																ICD013 - ProvDiag2							AR0004 Case's		
    		························································································································
-   		AR0004		Hospital01		Blood			12   		ICD012 - ProvDiag1		ICD829 - Symptom01	Additional Notes for
-   																ICD013 - ProvDiag2							AR0004 Case's
-   		························································································································
-   		AR0004		Hospital01		Blood			8   		ICD012 - ProvDiag1		ICD829 - Symptom01	Additional Notes for
-   																ICD013 - ProvDiag2							AR0005 Case's
+   		AR0004		Hospital01		Blood			8   		ICD012 - ProvDiag1		ICD829 - Symptom01	Additional notes for 
+   																ICD013 - ProvDiag2							AR0005 Case's		
    		------------------------------------------------------------------------------------------------------------------------
-   		Num of ARs:	2
-
+   		Num of Cases:	2 
+  			
    		------------------------------------------------------------------------------------------------------------------------
-   		Total Num of ARs: 4
-
+   		Total Num of Cases: 4
+   		
         -->
-
+        
 		<h2 i18n:translate="">Epid details per analysis</h2>
-		<h3 i18n:translate="">For a selected analysis and date range, report Analysis Requests</h3>
-
+		<h3 i18n:translate="">For a selected analysis and date range, report Cases</h3>
+			
 		<!-- Summary -->
 		<table class="bika-report-parms" summary="Parameters">
 			<tr tal:repeat="line parameters">
@@ -99,19 +99,19 @@
 				<td tal:content="python:line['value']"></td>
 			</tr>
 		</table>
-
-		<!-- Results -->
+		
+		<!-- Results -->		
 		<metal:block tal:repeat="period python:datalines.keys()">
-			<h4 tal:content="period"
+			<h4 tal:content="period" 
 				tal:define="global numars python:numars + len(datalines[period]);"
 				tal:condition="python:len(period)>0">
-			</h4>
-
+			</h4>		
+			
 			<table class="bika-report-table" summary="Cases">
 				<thead>
 					<tr>
-						<th i18n:translate="">Analysis Request</th>
-						<th i18n:translate="">Hospital</th>
+						<th i18n:translate="">Case</th>
+						<th i18n:translate="">Hospital</th>					
 						<th i18n:translate="">Sample Type</th>
 						<th i18n:translate="">Result</th>
 						<th i18n:translate="">Provisional diagnosis</th>
@@ -119,11 +119,11 @@
 						<th i18n:translate="">Additional Notes</th>
 					</tr>
 				</thead>
-				<tbody>
+				<tbody>					
 					<metal:block tal:repeat="line python:datalines[period].values()">
 					<tr>
-						<td tal:content="python:line['AnalysisRequestID']"></td>
-						<td tal:content="python:line['Hospital']"></td>
+						<td tal:content="python:line['CaseID']"></td>
+						<td tal:content="python:line['Hospital']"></td>	
 						<td tal:content="python:line['SampleType']"></td>
 						<td tal:content="python:line['Result']"></td>
 						<td>
@@ -141,19 +141,19 @@
 							</metal:block>
 						</td>
 						<td tal:content="python:line['CaseAdditionalNotes']"></td>
-					</tr>
+					</tr>	
 					</metal:block> <!-- End ARs -->
 				</tbody>
 				<tfoot tal:condition="python:len(period)>0">
 					<tr>
-						<td class='total_label' i18n:translate="" align="right" style="border-bottom:none;">Num of ARs</td>
+						<td class='total_label' i18n:translate="" align="right" style="border-bottom:none;">Num of Cases</td>
 						<td tal:content="python:len(datalines[period])" colspan="6" style="border-bottom:none;"></td>
 					</tr>
-				</tfoot>
+				</tfoot>			
 			</table>
 		</metal:block>
 		<div style="margin-top:20px;border-tpop:1px solid #DCDCDC;">
-			<span class='total_label' i18n:translate="">Total Num of ARs</span>:&nbsp;&nbsp;
+			<span class='total_label' i18n:translate="">Total Num of Cases</span>:&nbsp;&nbsp;
 			<span class='total_label' tal:content="python:numars"></span>
 		</div>
 	</body>

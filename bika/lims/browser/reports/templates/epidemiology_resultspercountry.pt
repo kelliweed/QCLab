@@ -1,0 +1,162 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:tal="http://xml.zope.org/namespaces/tal"
+	xmlns:metal="http://xml.zope.org/namespaces/metal"
+	xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+	i18n:domain="bika"
+	tal:define="portal_url nocall:context/portal_url;
+				portal portal_url/getPortalObject;">
+	
+	<head>
+		<link rel="stylesheet" type="text/css" media="all" href=""
+	    	tal:attributes="href string:$portal_url/reports.css" />
+	</head>
+
+	<body tal:define="
+		report_data view/report_data;
+        parameters python:report_data.has_key('parameters') and report_data['parameters'] or [];
+        resultkeys python:report_data.has_key('resultkeys') and report_data['resultkeys'] or [];
+        datalines python:report_data.has_key('datalines') and report_data['datalines'] or {};
+        footlines python:report_data.has_key('footlines') and report_data['footlines'] or {};">
+        <!--
+        
+        Report customization notes
+        ==========================================================================
+        Available attributes:
+        	
+       	parameters[]
+       	
+       	resultkeys[]
+       	
+       	datalines {
+       		<group>: { 
+       			<country>: {
+	       			 Country,
+	       			 Results { <result>: Count},
+	       			 NumAnalyses,
+	       			 NumPatients,
+	       			 NumCases,
+	       			 NumARs,
+	      			 NumSamples 
+      			}   	     			 	
+   			}
+   		}
+   		
+   		footlines {
+   			<group>: {
+   				Results { <result>: Count},
+   				NumAnalyses,
+   				NumPatients,
+   				NumCases,
+   				NumARs,
+   				NumSamples
+   			}
+   			Total: {
+   				Results { <result>: Count},
+   				NumAnalyses,
+   				NumPatients,
+   				NumCases,
+   				NumARs,
+   				NumSamples
+  			}
+   		}   		
+     			
+   		Where:
+   		- dict key <group> is the period grouping name (year, monthyear, yearweek)
+   		- dict key <country> is the name of the country (to group by)
+   		- dict key <result> is the result of the analysis (1, 0, etc.)
+   		- Count is the number of analysis for that group, country and with result=<result>
+   		
+   		
+   		Default structure:
+   		
+   		Jan 2012 (grouping period - if grouping selected)   
+   		[COUNTRY]		[Patients]	[Cases]	[ARs]	[Samples]	[Analyses]	[Result-1]	[Result-2]	···	[Result-n]
+   		==========================================================================================================================
+   		South-Africa 	18			23		43		54			54			34			20				?								
+   		Spain			20			20		20		20			20			 5			15				?	
+		--------------------------------------------------------------------------------------------------------------------------
+		Jan 2012		38			43		63		74			74			39			35				?
+		
+		TOTAL			38			43		63		74			74			39			35				?
+
+        -->
+        
+		<h2 i18n:translate="">Results summary per country</h2>
+		<h3 i18n:translate="">Total counts of Cases, Analyses, etc splitted by result types, broken down by country</h3>
+			
+		<!-- Summary -->
+		<table class="bika-report-parms" summary="Parameters">
+			<tr tal:repeat="line parameters">
+				<td tal:content="python:line['title']"></td>
+				<td tal:content="python:line['value']"></td>
+			</tr>
+		</table>
+		
+		<!-- Results -->	
+		<table class="bika-report-table" summary="Results"
+			tal:define='global numres python:6'>
+			<thead>
+				<tr>
+					<th i18n:translate="">Country</th>
+					<th i18n:translate="">Patients</th>					
+					<th i18n:translate="">Cases</th>
+					<th i18n:translate="">ARs</th>
+					<th i18n:translate="">Samples</th>
+					<th i18n:translate="">Analyses</th>
+					<metal:block tal:repeat="reskey python:resultkeys">
+					<th tal:content="python:reskey" tal:define='global numres python:+1'></th>
+					</metal:block>						
+				</tr>
+			</thead>
+			<tbody>				
+				<metal:block tal:repeat="period python:datalines.keys()">	
+					<tr tal:condition="python:len(period)>0" 
+						style="background-color:#efefef;">
+						<td class='total_label'
+							tal:attributes="colspan python:len(resultkeys)+6;"
+							tal:content="python:period"></td>
+					</tr>
+					<metal:block tal:repeat="line python:datalines[period].values()">
+					<tr>
+						<td tal:content="python:line['Country']"></td>
+						<td tal:content="python:line['NumPatients']"></td>	
+						<td tal:content="python:line['NumCases']"></td>
+						<td tal:content="python:line['NumARs']"></td>
+						<td tal:content="python:line['NumSamples']"></td>
+						<td tal:content="python:line['NumAnalyses']"></td>
+						<metal:block tal:repeat="reskey python:resultkeys">
+						<td tal:content="python:line['Results'][reskey]"></td>
+						</metal:block>
+					</tr>	
+					</metal:block>		
+					<tr tal:condition="python:len(period)>0" 
+						style="background-color:#efefef;">
+						<td class='total_label' tal:content="python:'Total '+period"></td>
+						<td class='total_label' tal:content="python:footlines[period]['NumPatients']"></td>	
+						<td class='total_label' tal:content="python:footlines[period]['NumCases']"></td>
+						<td class='total_label' tal:content="python:footlines[period]['NumARs']"></td>
+						<td class='total_label' tal:content="python:footlines[period]['NumSamples']"></td>
+						<td class='total_label' tal:content="python:footlines[period]['NumAnalyses']"></td>
+						<metal:block tal:repeat="reskey python:resultkeys">
+						<td class='total_label' tal:content="python:footlines[period]['Results'][reskey]"></td>
+						</metal:block>
+					</tr>
+								
+				</metal:block>	
+			</tbody>
+			<tfoot>
+				<tr style='font-size:1.2em;'>
+					<td class='total_label' i18n:translate="" style='border-bottom:none;padding-top:5px;'>Total</td>
+					<td class='total_label' style='border-bottom:none;padding-top:5px;' tal:content="python:footlines['Total']['NumPatients']"></td>	
+					<td class='total_label' style='border-bottom:none;padding-top:5px;' tal:content="python:footlines['Total']['NumCases']"></td>
+					<td class='total_label' style='border-bottom:none;padding-top:5px;' tal:content="python:footlines['Total']['NumARs']"></td>
+					<td class='total_label' style='border-bottom:none;padding-top:5px;' tal:content="python:footlines['Total']['NumSamples']"></td>
+					<td class='total_label' style='border-bottom:none;padding-top:5px;' tal:content="python:footlines['Total']['NumAnalyses']"></td>
+					<metal:block tal:repeat="reskey python:resultkeys">
+					<td class='total_label' style='border-bottom:none;padding-top:5px;' tal:content="python:footlines['Total']['Results'][reskey]"></td>
+					</metal:block>
+				</tr>
+			</tfoot>		
+		</table>	
+	</body>
+</html>

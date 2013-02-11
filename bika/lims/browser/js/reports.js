@@ -120,7 +120,36 @@ $(document).ready(function(){
 		$("#epiddetailsperanalysis").toggle(true);
 	});
 
-
+	$("#epiddetailspercase_selector").click(function(event){
+		$(".criteria").toggle(false);
+		event.preventDefault();
+		$("#epiddetailspercase").toggle(true);
+	});
+	
+	$("#aagentspercountry_selector").click(function(event){
+		$(".criteria").toggle(false);
+		event.preventDefault();
+		$("#aagentspercountry").toggle(true);
+	});
+	
+	$("#numcasespercountry_selector").click(function(event){
+		$(".criteria").toggle(false);
+		event.preventDefault();
+		$("#numcasespercountry").toggle(true);
+	});
+	
+	$("#casesperanalysis_selector").click(function(event){
+		$(".criteria").toggle(false);
+		event.preventDefault();
+		$("#casesperanalysis").toggle(true);
+	});
+	
+	$("#resultspercountry_selector").click(function(event){
+		$(".criteria").toggle(false);
+		event.preventDefault();
+		$("#resultspercountry").toggle(true);
+	});
+	
 	// AJAX: Set ReferenceSamples dropdown when Supplier is selected
 	$("#ReferenceSupplierUID").change(function(){
 		val = $(this).val();

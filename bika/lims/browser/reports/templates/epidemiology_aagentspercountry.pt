@@ -1,0 +1,176 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:tal="http://xml.zope.org/namespaces/tal"
+	xmlns:metal="http://xml.zope.org/namespaces/metal"
+	xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+	i18n:domain="bika"
+	tal:define="portal_url nocall:context/portal_url;
+				portal portal_url/getPortalObject;">
+	
+	<head>
+		<link rel="stylesheet" type="text/css" media="all" href=""
+	    	tal:attributes="href string:$portal_url/reports.css" />
+	</head>
+
+	<body tal:define="
+		report_data view/report_data;
+        parameters python:report_data.has_key('parameters') and report_data['parameters'] or [];
+        datalines python:report_data.has_key('datalines') and report_data['datalines'] or {};
+        totalnum python:0">
+        <!--
+        
+        Report customization notes
+        ==========================================================================
+        Available attributes:
+        	
+       	parameters[]
+       	
+       	datalines {
+       		<group>: { 
+       			 <country>: [
+       			 		{AetiologicAgent
+	       			 	 Subtype,
+	       			 	 Country,
+	       			 	 State
+	       			 	 Gender,
+	       			 	 Period,
+	       			 	 Count
+	       			 	}	   
+		       		]    			 
+       			 }    			      			 	
+   			}
+   		}
+     			
+   		Where:
+   		- dict key <group> is the period grouping name (year, monthyear, yearweek)
+   		- dict key <country> is name of the country of the patient
+   		- AetiologicAgent: Name of the aetiologic agent
+   		- Subtype: Aetiologic agent subtype
+   		- Country: Country of the patient
+   		- State: State of the patient
+   		- Gender: The gender of the patient
+   		- Period: Grouping period keyword
+   		- Count: Number of aetiologic agents for the period, country and subtype
+   		
+   		
+   		Default structure:
+   		
+   		Jan 2012 (grouping period - if grouping selected)   
+   		Spain
+   		[AetiologicAgent]	[Subtype]							[State]		[Gender]	[Count]		
+   		=======================================================================================
+   		Salmonella spp.		Salmonella Aarhus 18:z4,z23:z64		Catalonia	Male		2
+   		Salmonella spp.		Salmonella Abony 4,5,12: b:  e,n,x	Madrid		Female		1
+   		---------------------------------------------------------------------------------------
+   		Spain Total Count: 3
+   		
+   		South Africa
+   		[AetiologicAgent]	[Subtype]							[State]		[Gender]	[Count]		
+   		=======================================================================================
+   		Salmonella spp.		Salmonella Aarhus 18:z4,z23:z64		Gauteng 	Male		4
+   		Salmonella spp.		Salmonella Abony 4,5,12: b:  e,n,x	Free state 	Female		2
+   		---------------------------------------------------------------------------------------
+   		Spain Total Count: 6
+   		
+   		Jan 2012 Total Count: 9
+   		
+   		
+   		Feb 2012 (grouping period - if grouping selected)   
+   		Spain
+   		[AetiologicAgent]	[Subtype]							[State]		[Gender]	[Count]		
+   		=======================================================================================
+   		Salmonella spp.		Salmonella Aarhus 18:z4,z23:z64		Catalonia	Male		2
+   		Salmonella spp.		Salmonella Abony 4,5,12: b:  e,n,x	Madrid		Female		1
+   		---------------------------------------------------------------------------------------
+   		Spain Total Count: 3
+   		
+   		South Africa
+   		[AetiologicAgent]	[Subtype]							[State]		[Gender]	[Count]		
+   		=======================================================================================
+   		Salmonella spp.		Salmonella Aarhus 18:z4,z23:z64		Gauteng 	Male		4
+   		Salmonella spp.		Salmonella Abony 4,5,12: b:  e,n,x	Free state 	Female		2
+   		---------------------------------------------------------------------------------------
+   		Spain Total Count: 6
+   		
+   		Feb 2012 Total Count: 9
+   		
+   		
+   		TOTAL COUNT: 18
+   		
+        -->
+        
+		<h2 i18n:translate="">Aetiologic agent prevalent species per country</h2>
+		<h3 i18n:translate="">Report the prevalent species from a selected aetiologic agent, and subtypes serotype, AMR, PT, PFGE type etc.</h3>
+			
+		<!-- Summary -->
+		<table class="bika-report-parms" summary="Parameters">
+			<tr tal:repeat="line parameters">
+				<td tal:content="python:line['title']"></td>
+				<td tal:content="python:line['value']"></td>
+			</tr>
+		</table>
+		
+		<!-- Results -->		
+		<metal:block tal:repeat="period python:datalines.keys()">
+			<h4 tal:content="period" 
+				tal:condition="python:len(period)>0"
+				tal:define="global numperiod python:0;">
+			</h4>
+			
+			<metal:block tal:repeat="country python:datalines[period].keys()">
+				<h4 tal:content="country" 
+					tal:define="global numcountry python:0;"
+					tal:condition="python:len(period)==0">
+				</h4>	
+				<h5 tal:content="country" 
+					tal:define="global numcountry python:0;"
+					tal:condition="python:len(period)>0">
+				</h5>			
+				
+				<table class="bika-report-table" summary="Cases">
+					<thead>
+						<tr>
+							<th i18n:translate="">Aetiologic Agent</th>
+							<th i18n:translate="">Subtype</th>					
+							<th i18n:translate="">Country</th>
+							<th i18n:translate="">State</th>
+							<th i18n:translate="">Gender</th>
+							<th i18n:translate="">Count</th>
+						</tr>
+					</thead>
+					<tbody>					
+						<metal:block tal:repeat="line python:datalines[period][country]">
+						<tr tal:define="global numcountry python:numcountry+line['Count'];
+										global numperiod python:numperiod+line['Count'];
+										global totalnum python:totalnum+line['Count'];">
+							<td tal:content="python:line['AetiologicAgent']"></td>
+							<td tal:content="python:line['Subtype']"></td>	
+							<td tal:content="python:line['Country']"></td>
+							<td tal:content="python:line['State']"></td>
+							<td tal:content="python:line['Gender']"></td>
+							<td tal:content="python:line['Count']"></td>
+						</tr>	
+						</metal:block>
+					</tbody>
+					<tfoot>
+						<tr>
+							<td class='total_label' i18n:translate="" align="right" style="border-bottom:none;">								
+								<span i18n:translate="">Count</span>&nbsp;
+								(<span tal:content='python:country'></span>)
+							</td>
+							<td tal:content="python:numcountry" colspan="6" style="border-bottom:none;"></td>
+						</tr>
+					</tfoot>			
+				</table>
+			</metal:block>
+			<div tal:condition="python:len(period)>0">
+				<span class='total_label' i18n:translate="">Total Count</span>&nbsp;
+				(<span class='total_label' tal:content="python:period"></span>):&nbsp;&nbsp;
+				<span class='total_label' tal:content="python:numperiod"></span>
+			</div>
+		</metal:block>
+		<div style="margin-top:20px;border-tpop:1px solid #DCDCDC;">
+			<span class='total_label' i18n:translate="">Total Count</span>:&nbsp;&nbsp;
+			<span class='total_label' tal:content="python:totalnum"></span>
+		</div>
+	</body>
+</html>

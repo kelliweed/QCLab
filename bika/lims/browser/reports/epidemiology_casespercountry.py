@@ -41,10 +41,11 @@ class Report(BrowserView):
         batchlines = {}
         datalines = {}
         footlines = {}
+                
+        groupby = self.request.form.get('GroupingPeriod', '')
+        if (groupby != ''):
+            parms.append({"title": _("Grouping period"), "value": _(groupby)})
         
-        groupby = ('GroupingPeriod' in self.request.form) and self.request.form['GroupingPeriod'] or 'Day'   
-        parms.append({"title": _("Grouping period"), "value": _(groupby)})
-             
         for batch in batches:
             
             countryline = {'Country':'',
@@ -88,7 +89,7 @@ class Report(BrowserView):
             elif groupby == 'Year':
                 group = datecreated.strftime("%Y")
             else :
-                group = self.ulocalized_time(datecreated)
+                group = ''
             
             groupline['Group'] = group
             if group in datalines:

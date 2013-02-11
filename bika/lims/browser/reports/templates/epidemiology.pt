@@ -91,7 +91,8 @@
 				        <tal:x content="structure python:view.selection_macros.select_daterange(
 					                                          field_id='getDateCreated',
 					                                          field_title='Date Created')"/>
-					    <tal:x content="structure python:view.selection_macros.select_groupingperiod()"/>
+					    <tal:x content="structure python:view.selection_macros.select_groupingperiod(
+					    						allow_blank=True)"/>
 				    </fieldset>
 				    <input tabindex=""
 				        class="searchButton allowMultiSubmit"
@@ -116,6 +117,8 @@
 				        <tal:x content="structure python:view.selection_macros.select_daterange(
 					                                          field_id='getDateCreated',
 					                                          field_title='Date Created')"/>
+					    <tal:x content="structure python:view.selection_macros.select_groupingperiod(
+					    						allow_blank=True)"/>
 				    </fieldset>
 				    <input tabindex=""
 				        class="searchButton allowMultiSubmit"
@@ -125,7 +128,35 @@
 				        i18n:attributes="value"/>
 				</form>
 			</div>
-		</li> 		
+		</li> 
+		<li>
+    		<a href="#" id="casesperanalysis_selector" 
+    		i18n:translate="">Cases per analysis</a><br/>
+    		<span i18n:translate="">
+    			Cases for a selected analysis and any given period of time
+    		</span>
+    		<div id="casesperanalysis" style="display:none" class="criteria">
+				<form action="createreport" method="post" name="epidemiology_casesperanalysis">
+				    <input type="hidden" name="report_id" value="epidemiology_casesperanalysis" />
+				    <fieldset>
+				    	<tal:x content="structure python:view.selection_macros.select_analysisservice(
+                                               allow_blank=False,
+                                               multiselect=False)"/>
+				        <tal:x content="structure python:view.selection_macros.select_daterange(
+					                                          field_id='getDateCreated',
+					                                          field_title='Date Created')"/>
+   					    <tal:x content="structure python:view.selection_macros.select_groupingperiod(
+					    						allow_blank=True)"/>
+				    </fieldset>
+				    <input tabindex=""
+				        class="searchButton allowMultiSubmit"
+				        type="submit"
+				        name="submit"
+				        value="Generate report"
+				        i18n:attributes="value"/>
+				</form>
+			</div>
+		</li>		
 	</ul>
 	
 	<h2 i18n:translate="">Analyses related reports</h2>    
@@ -156,10 +187,10 @@
 		</li> 
 		<li>
     		<a href="#" id="epiddetailsperanalysis_selector" 
-    		i18n:translate="">Epid details per analysis</a><br/>
+    		i18n:translate="">Epid details per analysis and requests</a><br/>
     		<span i18n:translate="">
-    			For a selected analysis (ej. <i>Influenzae</i>) and date range, report Analysis Requests, alernatively Cases, 
-    			showing the hospital, sample type, fever (Y/N), pain (Y/N), provisional diagnosis, etc.
+    			For a selected analysis (ej. <i>Influenzae</i>) and date range, report Analysis Requests, 
+    			showing the hospital, provisional diagnosis, etc.
     		</span>
     		<div id="epiddetailsperanalysis" style="display:none" class="criteria">
 				<form action="createreport" method="post" name="epidemiology_epiddetailsperanalysis">
@@ -171,7 +202,8 @@
 				        <tal:x content="structure python:view.selection_macros.select_daterange(
 					                                          field_id='getDateCreated',
 					                                          field_title='Date Created')"/>
-					    <tal:x content="structure python:view.selection_macros.select_groupingperiod()"/>
+					    <tal:x content="structure python:view.selection_macros.select_groupingperiod(
+					    						allow_blank=True)"/>
 				    </fieldset>
 				    <input tabindex=""
 				        class="searchButton allowMultiSubmit"
@@ -183,19 +215,53 @@
 			</div>
 		</li> 
 		<li>
-    		<a href="#" id="positiveresultspercountry_selector" 
-    		i18n:translate="">Positive results per country</a><br/>
+    		<a href="#" id="epiddetailspercase_selector" 
+    		i18n:translate="">Epid details per analysis and cases</a><br/>
     		<span i18n:translate="">
-    			Total counts of Cases with positive test results, broken down by country, e.g. 3 Dengue positive cases, 
-    			1 Dengue positive type 2 case, etc.
+    			For a selected analysis (ej. <i>Influenzae</i>) and date range, report Cases, 
+    			showing the hospital, provisional diagnosis, etc.
     		</span>
-    		<div id="positiveresultspercountry" style="display:none" class="criteria">
-				<form action="createreport" method="post" name="epidemiology_positiveresultspercountry">
-				    <input type="hidden" name="report_id" value="epidemiology_positiveresultspercountry" />
+    		<div id="epiddetailspercase" style="display:none" class="criteria">
+				<form action="createreport" method="post" name="epidemiology_epiddetailspercase">
+				    <input type="hidden" name="report_id" value="epidemiology_epiddetailspercase" />				    
 				    <fieldset>
+		            	<tal:x content="structure python:view.selection_macros.select_analysisservice(
+                                               allow_blank=False,
+                                               multiselect=False)"/>
 				        <tal:x content="structure python:view.selection_macros.select_daterange(
 					                                          field_id='getDateCreated',
 					                                          field_title='Date Created')"/>
+					    <tal:x content="structure python:view.selection_macros.select_groupingperiod(
+					    						allow_blank=True)"/>
+				    </fieldset>
+				    <input tabindex=""
+				        class="searchButton allowMultiSubmit"
+				        type="submit"
+				        name="submit"
+				        value="Generate report"
+				        i18n:attributes="value"/>
+				</form>
+			</div>
+		</li> 
+		<li>
+    		<a href="#" id="resultspercountry_selector" 
+    		i18n:translate="">Results summary per country</a><br/>
+    		<span i18n:translate="">
+    			Total counts of Cases with different type test results, broken down by country, e.g. 3 Dengue positive cases, 
+    			1 Dengue positive type 2 case, etc.
+    		</span>
+    		<div id="resultspercountry" style="display:none" class="criteria">
+				<form action="createreport" method="post" name="epidemiology_resultspercountry">
+				    <input type="hidden" name="report_id" value="epidemiology_resultspercountry" />
+				    <fieldset>
+				    	<tal:x content="structure python:view.selection_macros.select_analysisservice(
+                                               allow_blank=False,
+                                               multiselect=False)"/>
+				        <tal:x content="structure python:view.selection_macros.select_daterange(
+					                                          field_id='getOnsetDate',
+					                                          field_title='Onset Date')"/>
+					    <tal:x content="structure python:view.selection_macros.select_groupingperiod(
+					    						allow_blank=True)"/>
 				    </fieldset>
 				    <input tabindex=""
 				        class="searchButton allowMultiSubmit"
@@ -208,44 +274,26 @@
 		</li> 
     </ul>
     
-    <h2 i18n:translate="">Analyses-specific reports</h2>    
+    <h2 i18n:translate="">Other reports</h2>    
     <ul id="toc-reports">
     	<li>
-    		<a href="#" id="salmonellasp_selector" 
-    		i18n:translate=""><i>Salmonella</i> prevalent species</a><br/>
+    		<a href="#" id="aagentspercountry_selector" 
+    		i18n:translate="">Aetiologic agent prevalent species per country</a><br/>
     		<span i18n:translate="">
-    			Report the prevalent <i>Salmonella</i> species, and subtypes serotype, AMR, PT, PFGE type etc.
+    			Report the prevalent species from a selected aetiologic agent (ex.<i>Salmonella</i>), and subtypes serotype, AMR, PT, PFGE type etc.
     		</span>
-    		<div id="dengue" style="display:none" class="criteria">
-				<form action="createreport" method="post" name="salmonellasp_dengue">
-				    <input type="hidden" name="report_id" value="salmonellasp_dengue" />
+    		<div id="aagentspercountry" style="display:none" class="criteria">
+				<form action="createreport" method="post" name="epidemiology_aagentspercountry">
+				    <input type="hidden" name="report_id" value="epidemiology_aagentspercountry" />
 				    <fieldset>
+				    	<tal:x content="structure python:view.selection_macros.select_aetiologicagent(
+                                               allow_blank=False,
+                                               multiselect=False)"/>
 				        <tal:x content="structure python:view.selection_macros.select_daterange(
 					                                          field_id='getDateCreated',
 					                                          field_title='Date Created')"/>
-				    </fieldset>
-				    <input tabindex=""
-				        class="searchButton allowMultiSubmit"
-				        type="submit"
-				        name="submit"
-				        value="Generate report"
-				        i18n:attributes="value"/>
-				</form>
-			</div>
-		</li>
-    	<li>
-    		<a href="#" id="dengue_selector" 
-    		i18n:translate="">Dengue report</a><br/>
-    		<span i18n:translate="">
-    			Dengue cases for any given period of time
-    		</span>
-    		<div id="dengue" style="display:none" class="criteria">
-				<form action="createreport" method="post" name="epidemiology_dengue">
-				    <input type="hidden" name="report_id" value="epidemiology_dengue" />
-				    <fieldset>
-				        <tal:x content="structure python:view.selection_macros.select_daterange(
-					                                          field_id='getDateCreated',
-					                                          field_title='Date Created')"/>
+  					    <tal:x content="structure python:view.selection_macros.select_groupingperiod(
+					    						allow_blank=True)"/>
 				    </fieldset>
 				    <input tabindex=""
 				        class="searchButton allowMultiSubmit"
