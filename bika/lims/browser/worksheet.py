@@ -22,7 +22,6 @@ from bika.lims.utils import getUsers, isActive
 from operator import itemgetter
 from plone.app.content.browser.interfaces import IFolderContentsView
 from plone.app.layout.globals.interfaces import IViewView
-from zope.app.component.hooks import getSite
 from zope.component import getMultiAdapter
 from zope.interface import implements
 import plone, json
@@ -201,6 +200,8 @@ class WorksheetAnalysesView(AnalysesView):
         self.show_select_row = False
         self.show_sort_column = False
         self.allow_edit = True
+        self.show_categories = False
+        self.expand_all_categories = False
 
         self.columns = {
             'Pos': {'title': _('Position')},
@@ -379,7 +380,8 @@ class WorksheetAnalysesView(AnalysesView):
             if obj.portal_type == 'Analysis':
                 deviation = obj.aq_parent.getSample().getSamplingDeviation()
                 if deviation:
-                    pos_text += "<tr><td>"
+                    pos_text += "<tr><td>&nbsp;</td>"
+                    pos_text += "<td colspan='2'>"
                     pos_text += deviation.Title()
                     pos_text += "</td></tr>"
 

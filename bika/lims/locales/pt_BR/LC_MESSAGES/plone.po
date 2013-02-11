@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Bika-LIMS\n"
-"POT-Creation-Date: 2012-10-20 09:21+0000\n"
+"POT-Creation-Date: 2012-01-01 23:11+0000\n"
 "PO-Revision-Date: 2013-01-21 09:42+0000\n"
 "Last-Translator: campbell_bika <campbell@bikalabs.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -56,6 +56,22 @@ msgstr ""
 
 # File: ../profiles/default/types/ReportFolder.xml, line: -1
 msgid "Administration"
+msgstr ""
+
+# 
+# File: ../profiles/default/types/AetiologicAgent.xml, line: -1
+msgid "Aetiologic Agent"
+msgstr ""
+
+# 
+# File: ../profiles/default/controlpanel.xml, line: -1
+# File: ../profiles/default/types/AetiologicAgents.xml, line: -1
+msgid "Aetiologic Agents"
+msgstr ""
+
+# 
+# File: ../profiles/default/types/Patient.xml, line: -1
+msgid "Allergies"
 msgstr ""
 
 # File: ../profiles/default/types/ReferenceSample.xml, line: -1
@@ -158,6 +174,10 @@ msgstr ""
 msgid "Batch"
 msgstr ""
 
+# 
+msgid "Batch ID"
+msgstr "Case ID"
+
 # File: ../profiles/default/types/BatchLabel.xml, line: -1
 msgid "Batch Label"
 msgstr ""
@@ -165,6 +185,10 @@ msgstr ""
 # File: ../profiles/default/types/BatchLabels.xml, line: -1
 msgid "Batch Labels"
 msgstr ""
+
+# 
+msgid "Batch label"
+msgstr "Case Syndrome Classification"
 
 # File: ../profiles/default/controlpanel.xml, line: -1
 msgid "Batch labels"
@@ -194,9 +218,35 @@ msgstr ""
 msgid "Cancelled"
 msgstr ""
 
+# 
+# File: ../profiles/default/types/CaseOutcome.xml, line: -1
+msgid "Case Outcome"
+msgstr ""
+
+# 
+# File: ../profiles/default/controlpanel.xml, line: -1
+# File: ../profiles/default/types/CaseOutcomes.xml, line: -1
+msgid "Case Outcomes"
+msgstr ""
+
+# 
+# File: ../profiles/default/types/CaseStatus.xml, line: -1
+msgid "Case Status"
+msgstr ""
+
+# 
+# File: ../profiles/default/controlpanel.xml, line: -1
+# File: ../profiles/default/types/CaseStatuses.xml, line: -1
+msgid "Case Statuses"
+msgstr ""
+
 # File: ../profiles/default/types/Client.xml, line: -1
 msgid "Client"
 msgstr "Cliente"
+
+# 
+msgid "Client ID"
+msgstr "Referring Institution ID"
 
 # File: ../profiles/default/actions.xml, line: -1
 # File: ../profiles/default/types/ClientFolder.xml, line: -1
@@ -254,6 +304,17 @@ msgstr ""
 msgid "Departments"
 msgstr ""
 
+# 
+# File: ../profiles/default/types/Disease.xml, line: -1
+msgid "Disease"
+msgstr ""
+
+# 
+# File: ../profiles/default/controlpanel.xml, line: -1
+# File: ../profiles/default/types/Diseases.xml, line: -1
+msgid "Diseases"
+msgstr ""
+
 # File: ../profiles/default/workflows/bika_order_workflow/definition.xml,
 # line: -1
 msgid "Dispatched"
@@ -267,12 +328,66 @@ msgstr "Despachado"
 msgid "Disposed"
 msgstr ""
 
+# 
+# File: ../profiles/default/types/Doctor.xml, line: -1
+msgid "Doctor"
+msgstr ""
+
+# 
+# File: ../profiles/default/types/Doctors.xml, line: -1
+msgid "Doctors"
+msgstr ""
+
+# 
+# File: ../profiles/default/types/Drug.xml, line: -1
+msgid "Drug"
+msgstr ""
+
+# 
+# File: ../profiles/default/types/Batch.xml, line: -1
+# File: ../profiles/default/types/Patient.xml, line: -1
+msgid "Drug History"
+msgstr ""
+
+# 
+# File: ../profiles/default/types/DrugProhibition.xml, line: -1
+msgid "Drug Prohibition Explanation"
+msgstr ""
+
+# 
+# File: ../profiles/default/controlpanel.xml, line: -1
+# File: ../profiles/default/types/DrugProhibitions.xml, line: -1
+msgid "Drug Prohibition Explanations"
+msgstr ""
+
+# 
+# File: ../profiles/default/controlpanel.xml, line: -1
+# File: ../profiles/default/types/Drugs.xml, line: -1
+msgid "Drugs"
+msgstr ""
+
 # File: ../profiles/default/types/DuplicateAnalysis.xml, line: -1
 msgid "Duplicate Analysis"
 msgstr ""
 
 # File: ../profiles/default/types/Pricelist.xml, line: -1
 msgid "Email pricelist"
+msgstr ""
+
+# 
+# File: ../profiles/default/types/EpidemiologicalYear.xml, line: -1
+msgid "Epidemiological Year"
+msgstr ""
+
+# 
+# File: ../profiles/default/controlpanel.xml, line: -1
+# File: ../profiles/default/types/EpidemiologicalYears.xml, line: -1
+msgid "Epidemiological Years"
+msgstr ""
+
+# 
+# File: ../profiles/default/types/ReportFolder.xml, line: -1
+msgid "Epidemiology"
 msgstr ""
 
 # File:
@@ -293,6 +408,34 @@ msgstr ""
 
 # File: ../profiles/default/actions.xml, line: -1
 msgid "Extracts"
+msgstr ""
+
+# 
+# File: ../profiles/default/types/IdentifierType.xml, line: -1
+msgid "Identifier Type"
+msgstr ""
+
+# 
+# File: ../profiles/default/controlpanel.xml, line: -1
+# File: ../profiles/default/types/IdentifierTypes.xml, line: -1
+msgid "Identifier Types"
+msgstr ""
+
+# 
+# File: ../profiles/default/types/Immunization.xml, line: -1
+msgid "Immunization"
+msgstr ""
+
+# 
+# File: ../profiles/default/types/Batch.xml, line: -1
+# File: ../profiles/default/types/Patient.xml, line: -1
+msgid "Immunization History"
+msgstr ""
+
+# 
+# File: ../profiles/default/controlpanel.xml, line: -1
+# File: ../profiles/default/types/Immunizations.xml, line: -1
+msgid "Immunizations"
 msgstr ""
 
 # File: ../profiles/default/workflows/bika_arimport_workflow/definition.xml,
@@ -416,6 +559,28 @@ msgstr ""
 # File: ../profiles/default/actions.xml, line: -1
 # File: ../profiles/default/types/Client.xml, line: -1
 msgid "Orders"
+msgstr ""
+
+# 
+# File: ../profiles/default/types/Batch.xml, line: -1
+# File: ../profiles/default/types/Patient.xml, line: -1
+msgid "Past Medical History"
+msgstr ""
+
+# 
+# File: ../profiles/default/types/Patient.xml, line: -1
+msgid "Patient"
+msgstr ""
+
+# 
+# File: ../profiles/default/controlpanel.xml, line: -1
+msgid "Patient Symptoms and Conditions"
+msgstr ""
+
+# 
+# File: ../profiles/default/types/Client.xml, line: -1
+# File: ../profiles/default/types/Patients.xml, line: -1
+msgid "Patients"
 msgstr ""
 
 # File: ../profiles/default/types/Preservation.xml, line: -1
@@ -567,6 +732,17 @@ msgstr ""
 msgid "Sample Matrix"
 msgstr ""
 
+# 
+# File: ../profiles/default/types/SampleOrigin.xml, line: -1
+msgid "Sample Origin"
+msgstr ""
+
+# 
+# File: ../profiles/default/controlpanel.xml, line: -1
+# File: ../profiles/default/types/SampleOrigins.xml, line: -1
+msgid "Sample Origins"
+msgstr ""
+
 # File: ../profiles/default/types/SamplePartition.xml, line: -1
 msgid "Sample Partition"
 msgstr ""
@@ -655,6 +831,16 @@ msgstr ""
 msgid "Supply Order"
 msgstr ""
 
+# 
+# File: ../profiles/default/types/Symptom.xml, line: -1
+msgid "Symptom"
+msgstr ""
+
+# 
+# File: ../profiles/default/types/Symptoms.xml, line: -1
+msgid "Symptoms"
+msgstr ""
+
 # File: ../profiles/default/workflows/bika_analysis_workflow/definition.xml,
 # line: -1
 # File: ../profiles/default/workflows/bika_ar_workflow/definition.xml, line:
@@ -701,6 +887,23 @@ msgstr ""
 msgid "To be verified"
 msgstr "A verificar"
 
+# 
+# File: ../profiles/default/types/Batch.xml, line: -1
+# File: ../profiles/default/types/Patient.xml, line: -1
+msgid "Travel History"
+msgstr ""
+
+# 
+# File: ../profiles/default/types/Treatment.xml, line: -1
+msgid "Treatment"
+msgstr ""
+
+# 
+# File: ../profiles/default/controlpanel.xml, line: -1
+# File: ../profiles/default/types/Treatments.xml, line: -1
+msgid "Treatments"
+msgstr ""
+
 # File:
 # ../profiles/default/workflows/bika_duplicateanalysis_workflow/definition.xml,
 # line: -1
@@ -717,6 +920,21 @@ msgstr ""
 # ../profiles/default/workflows/bika_publication_workflow/definition.xml,
 # line: -1
 msgid "Unpublished"
+msgstr ""
+
+# 
+# File: ../profiles/default/controlpanel.xml, line: -1
+msgid "Vaccination Centers"
+msgstr ""
+
+# 
+# File: ../profiles/default/types/VaccinationCenter.xml, line: -1
+msgid "Vaccination center"
+msgstr ""
+
+# 
+# File: ../profiles/default/types/VaccinationCenters.xml, line: -1
+msgid "Vaccination centers"
 msgstr ""
 
 # File: ../profiles/default/workflows/bika_analysis_workflow/definition.xml,
