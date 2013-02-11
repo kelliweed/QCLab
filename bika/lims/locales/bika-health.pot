@@ -11,13 +11,13 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 msgid "Client"
-msgstr "Hospital"
+msgstr "Referring Institution"
 
 msgid "Client ID"
-msgstr "Hospital ID"
+msgstr "Referring Institution ID"
 
 msgid "Clients"
-msgstr "Hospitals"
+msgstr "Referring Institutions"
 
 msgid "Batch"
 msgstr "Case"

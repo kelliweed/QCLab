@@ -12,13 +12,13 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 #
 msgid "Client"
-msgstr "Hospital"
+msgstr "Referring Institution"
 #
 msgid "Client ID"
-msgstr "Hospital ID"
+msgstr "Referring Institution ID"
 #
 msgid "Clients"
-msgstr "Hospitals"
+msgstr "Referring Institutions"
 #
 msgid "Batch"
 msgstr "Case"
@@ -33,7 +33,7 @@ msgid "Batch labels"
 msgstr "Case Syndrome Classifications"
 #
 msgid "Batch label"
-msgstr "Syndrome Classification"
+msgstr "Case Syndrome Classification"
 #
 msgid "label_schema_Accounting"
 msgstr "Accounting"
@@ -96,7 +96,7 @@ msgid "label_schema_Uncertainties"
 msgstr "Uncertainties"
 #
 msgid "label_schema_Sample Partitions"
-msgstr "Sample Partitions"
+msgstr "Sample Aliquots"
 #
 msgid "label_schema_Analyses"
 msgstr "Analyses"
@@ -237,7 +237,7 @@ msgstr "Save analyses"
 #
 #. Default: "Save partitions"
 msgid "save_partitions_button_transition_title"
-msgstr "Save partitions"
+msgstr "Save aliquots"
 #
 #. Default: "Save selection"
 msgid "save_selection_button_transition_title"
@@ -303,6 +303,15 @@ msgstr ""
 #
 # File: ../profiles/default/types/ReportFolder.xml, line: -1
 msgid "Administration"
+msgstr ""
+#
+# File: ../profiles/default/types/AetiologicAgent.xml, line: -1
+msgid "Aetiologic Agent"
+msgstr ""
+#
+# File: ../profiles/default/controlpanel.xml, line: -1
+# File: ../profiles/default/types/AetiologicAgents.xml, line: -1
+msgid "Aetiologic Agents"
 msgstr ""
 #
 # File: ../profiles/default/types/Patient.xml, line: -1
@@ -438,11 +447,6 @@ msgstr ""
 msgid "Case Statuses"
 msgstr ""
 #
-# File: ../profiles/default/types/Batch.xml, line: -1
-# File: ../profiles/default/types/Patient.xml, line: -1
-msgid "Chronic Conditions"
-msgstr ""
-#
 # File: ../profiles/default/workflows/bika_batch_workflow/definition.xml, line: -1
 msgid "Closed"
 msgstr ""
@@ -519,6 +523,11 @@ msgstr ""
 msgid "Drug"
 msgstr ""
 #
+# File: ../profiles/default/types/Batch.xml, line: -1
+# File: ../profiles/default/types/Patient.xml, line: -1
+msgid "Drug History"
+msgstr ""
+#
 # File: ../profiles/default/types/DrugProhibition.xml, line: -1
 msgid "Drug Prohibition Explanation"
 msgstr ""
@@ -541,6 +550,19 @@ msgstr ""
 msgid "Email pricelist"
 msgstr ""
 #
+# File: ../profiles/default/types/EpidemiologicalYear.xml, line: -1
+msgid "Epidemiological Year"
+msgstr ""
+#
+# File: ../profiles/default/controlpanel.xml, line: -1
+# File: ../profiles/default/types/EpidemiologicalYears.xml, line: -1
+msgid "Epidemiological Years"
+msgstr ""
+#
+# File: ../profiles/default/types/ReportFolder.xml, line: -1
+msgid "Epidemiology"
+msgstr ""
+#
 # File: ../profiles/default/workflows/bika_referencesample_workflow/definition.xml, line: -1
 # File: ../profiles/default/workflows/bika_sample_workflow/definition.xml, line: -1
 msgid "Expired"
@@ -556,6 +578,15 @@ msgstr ""
 #
 # File: ../profiles/default/actions.xml, line: -1
 msgid "Extracts"
+msgstr ""
+#
+# File: ../profiles/default/types/IdentifierType.xml, line: -1
+msgid "Identifier Type"
+msgstr ""
+#
+# File: ../profiles/default/controlpanel.xml, line: -1
+# File: ../profiles/default/types/IdentifierTypes.xml, line: -1
+msgid "Identifier Types"
 msgstr ""
 #
 # File: ../profiles/default/types/Immunization.xml, line: -1
@@ -648,10 +679,6 @@ msgstr ""
 msgid "Log"
 msgstr ""
 #
-# File: ../profiles/default/types/LogEntry.xml, line: -1
-msgid "Log entry"
-msgstr ""
-#
 # File: ../profiles/default/types/Contact.xml, line: -1
 # File: ../profiles/default/types/Doctor.xml, line: -1
 # File: ../profiles/default/types/LabContact.xml, line: -1
@@ -692,6 +719,11 @@ msgstr ""
 # File: ../profiles/default/actions.xml, line: -1
 # File: ../profiles/default/types/Client.xml, line: -1
 msgid "Orders"
+msgstr ""
+#
+# File: ../profiles/default/types/Batch.xml, line: -1
+# File: ../profiles/default/types/Patient.xml, line: -1
+msgid "Past Medical History"
 msgstr ""
 #
 # File: ../profiles/default/types/Patient.xml, line: -1
@@ -848,6 +880,15 @@ msgstr ""
 msgid "Sample Matrix"
 msgstr ""
 #
+# File: ../profiles/default/types/SampleOrigin.xml, line: -1
+msgid "Sample Origin"
+msgstr ""
+#
+# File: ../profiles/default/controlpanel.xml, line: -1
+# File: ../profiles/default/types/SampleOrigins.xml, line: -1
+msgid "Sample Origins"
+msgstr ""
+#
 # File: ../profiles/default/types/SamplePartition.xml, line: -1
 msgid "Sample Partition"
 msgstr ""
@@ -874,6 +915,7 @@ msgstr ""
 msgid "Sample Types"
 msgstr ""
 #
+# File: ../profiles/default/workflows/bika_batch_workflow/definition.xml, line: -1
 # File: ../profiles/default/workflows/bika_sample_workflow/definition.xml, line: -1
 msgid "Sample received"
 msgstr ""
@@ -962,8 +1004,8 @@ msgid "To Be Sampled"
 msgstr ""
 #
 # File: ../profiles/default/workflows/bika_ar_workflow/definition.xml, line: -1
+# File: ../profiles/default/workflows/bika_batch_workflow/definition.xml, line: -1
 # File: ../profiles/default/workflows/bika_duplicateanalysis_workflow/definition.xml, line: -1
-# File: ../profiles/default/workflows/bika_referenceanalysis_workflow/definition.xml, line: -1
 msgid "To be verified"
 msgstr ""
 #
@@ -976,11 +1018,6 @@ msgstr ""
 msgid "Treatment"
 msgstr ""
 #
-# File: ../profiles/default/types/Batch.xml, line: -1
-# File: ../profiles/default/types/Patient.xml, line: -1
-msgid "Treatment History"
-msgstr ""
-#
 # File: ../profiles/default/controlpanel.xml, line: -1
 # File: ../profiles/default/types/Treatments.xml, line: -1
 msgid "Treatments"
@@ -990,6 +1027,10 @@ msgstr ""
 # File: ../profiles/default/workflows/bika_referenceanalysis_workflow/definition.xml, line: -1
 # File: ../profiles/default/workflows/bika_worksheetanalysis_workflow/definition.xml, line: -1
 msgid "Unassigned"
+msgstr ""
+#
+# File: ../profiles/default/workflows/bika_publication_workflow/definition.xml, line: -1
+msgid "Unpublished"
 msgstr ""
 #
 # File: ../profiles/default/controlpanel.xml, line: -1
@@ -1006,7 +1047,7 @@ msgstr ""
 #
 # File: ../profiles/default/workflows/bika_analysis_workflow/definition.xml, line: -1
 # File: ../profiles/default/workflows/bika_ar_workflow/definition.xml, line: -1
-# File: ../profiles/default/workflows/bika_duplicateanalysis_workflow/definition.xml, line: -1
+# File: ../profiles/default/workflows/bika_batch_workflow/definition.xml, line: -1
 msgid "Verified"
 msgstr ""
 #

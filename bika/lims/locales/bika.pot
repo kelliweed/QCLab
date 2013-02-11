@@ -12,13 +12,13 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 #
 msgid "Client"
-msgstr "Hospital"
+msgstr "Referring Institution"
 #
 msgid "Client ID"
-msgstr "Hospital ID"
+msgstr "Referring Institution ID"
 #
 msgid "Clients"
-msgstr "Hospitals"
+msgstr "Referring Institutions"
 #
 msgid "Batch"
 msgstr "Case"
@@ -33,7 +33,7 @@ msgid "Batch labels"
 msgstr "Case Syndrome Classifications"
 #
 msgid "Batch label"
-msgstr "Syndrome Classification"
+msgstr "Case Syndrome Classification"
 #
 #. The variables used here are the same as used in the strftime formating.
 #. Supported are ${A}, ${a}, ${B}, ${b}, ${H}, ${I}, ${m}, ${d}, ${M}, ${p},
@@ -116,7 +116,7 @@ msgid ""
 "forgotten a contact can request a new password from the login form."
 msgstr ""
 #
-# File: ../browser/analysisrequest.py, line: 1537
+# File: ../browser/analysisrequest.py, line: 1593
 msgid "${id} is not a valid sample ID"
 msgstr ""
 #
@@ -124,7 +124,7 @@ msgstr ""
 msgid "${items} are waiting for preservation."
 msgstr ""
 #
-# File: ../browser/analysisrequest.py, line: 179
+# File: ../browser/analysisrequest.py, line: 180
 # File: ../browser/client.py, line: 121
 msgid "${items} are waiting to be received."
 msgstr ""
@@ -141,7 +141,7 @@ msgstr ""
 msgid "${item} is waiting for preservation."
 msgstr ""
 #
-# File: ../browser/analysisrequest.py, line: 184
+# File: ../browser/analysisrequest.py, line: 185
 # File: ../browser/client.py, line: 130
 msgid "${item} is waiting to be received."
 msgstr ""
@@ -161,31 +161,45 @@ msgid ""
 "${labcountry}. "
 msgstr ""
 #
-# File: ../browser/analysisrequest.py, line: 633
+# File: ../browser/analysisrequest.py, line: 635
 # File: ../browser/sample.py, line: 480
 # File: ../content/artemplate.py, line: 177
 msgid "${samplepoint} is not a valid sample point"
 msgstr ""
 #
-# File: ../browser/analysisrequest.py, line: 626
+# File: ../browser/analysisrequest.py, line: 628
 # File: ../browser/sample.py, line: 473
 # File: ../content/artemplate.py, line: 153
 msgid "${sampletype} is not a valid sample type"
 msgstr ""
 #
-# File: ../browser/analysisrequest.py, line: 1564
+# File: ../browser/analysisrequest.py, line: 1620
 msgid "${value} is not a valid doctor"
 msgstr ""
 #
-# File: ../browser/analysisrequest.py, line: 1557
+# File: ../browser/analysisrequest.py, line: 1613
 msgid "${value} is not a valid patient ID"
 msgstr ""
 #
-# File: ../content/analysisspec.py, line: 72
+# File: ../browser/reports/templates/productivity_samplereceivedvsreported.pt, line: 39
+msgid "%"
+msgstr ""
+#
+# File: ../content/analysisspec.py, line: 73
 msgid "% Error"
 msgstr ""
 #
-# File: ../content/bikasetup.py, line: 190
+# File: ../browser/reports/templates/productivity_analysesperdepartment.pt, line: 99
+# File: ../browser/reports/templates/productivity_analysesperformedpertotal.pt, line: 99
+msgid "% Performed"
+msgstr ""
+#
+# File: ../browser/reports/templates/productivity_analysesperdepartment.pt, line: 101
+# File: ../browser/reports/templates/productivity_analysesperformedpertotal.pt, line: 101
+msgid "% Published"
+msgstr ""
+#
+# File: ../content/bikasetup.py, line: 197
 msgid ""
 "'Classic' indicates importing analysis requests per sample and analysis "
 "service selection. With 'Profiles', analysis profile keywords are used to "
@@ -209,108 +223,158 @@ msgstr ""
 msgid "(Hazardous)"
 msgstr ""
 #
-# File: ../browser/templates/immunizationhistory.pt, line: 14
 # File: ../browser/templates/login_details.pt, line: 51
 msgid "(Required)"
 msgstr ""
 #
-# File: ../browser/analyses.py, line: 60
+# File: ../browser/analyses.py, line: 53
 # File: ../browser/referencesample.py, line: 63
-# File: ../browser/worksheet.py, line: 214
+# File: ../browser/worksheet.py, line: 215
 msgid "+-"
 msgstr ""
 #
-# File: ../content/patient.py, line: 115
+# File: ../browser/templates/analysisrequests.pt, line: 32
+msgid "1"
+msgstr ""
+#
+# File: ../browser/templates/analysisrequests.pt, line: 41
+msgid "10"
+msgstr ""
+#
+# File: ../browser/templates/analysisrequests.pt, line: 33
+msgid "2"
+msgstr ""
+#
+# File: ../browser/templates/analysisrequests.pt, line: 34
+msgid "3"
+msgstr ""
+#
+# File: ../browser/templates/analysisrequests.pt, line: 35
+msgid "4"
+msgstr ""
+#
+# File: ../browser/templates/analysisrequests.pt, line: 36
+msgid "5"
+msgstr ""
+#
+# File: ../browser/templates/analysisrequests.pt, line: 37
+msgid "6"
+msgstr ""
+#
+# File: ../browser/templates/analysisrequests.pt, line: 38
+msgid "7"
+msgstr ""
+#
+# File: ../browser/templates/analysisrequests.pt, line: 39
+msgid "8"
+msgstr ""
+#
+# File: ../browser/templates/analysisrequests.pt, line: 40
+msgid "9"
+msgstr ""
+#
+# File: ../browser/reports/templates/epidemiology.pt, line: 214
+msgid "<i>Salmonella</i> prevalent species"
+msgstr ""
+#
+# File: ../content/aetiologicagent.py, line: 20
+msgid "A list of aetiologic agent subtypes."
+msgstr ""
+#
+# File: ../content/patient.py, line: 153
 msgid "A list of immunizations administered to the patient."
 msgstr ""
 #
-# File: ../content/patient.py, line: 88
+# File: ../content/patient.py, line: 126
 msgid "A list of patient treatments and drugs administered."
 msgstr ""
 #
-# File: ../content/patient.py, line: 135
+# File: ../content/patient.py, line: 173
 msgid "A list of places visited by the patient."
-msgstr ""
-#
-# File: ../content/patient.py, line: 147
-msgid "A list of this patient's chronic conditions."
 msgstr ""
 #
 # File: ../browser/queries/analysisrequests.py, line: 112
 msgid "AR"
 msgstr ""
 #
-# File: ../content/bikasetup.py, line: 200
+# File: ../content/bikasetup.py, line: 207
 msgid "AR Attachment Option"
 msgstr ""
 #
-# File: ../content/bikasetup.py, line: 297
+# File: ../content/bikasetup.py, line: 305
 msgid "AR ID Padding"
 msgstr ""
 #
-# File: ../browser/client.py, line: 325
+# File: ../browser/client.py, line: 324
 msgid "AR Import"
 msgstr ""
 #
-# File: ../content/bikasetup.py, line: 189
+# File: ../content/bikasetup.py, line: 196
 msgid "AR Import options"
 msgstr ""
 #
-# File: ../browser/client.py, line: 468
+# File: ../browser/client.py, line: 467
 # File: ../controlpanel/bika_artemplates.py, line: 33
 msgid "AR Templates"
 msgstr ""
 #
-# File: ../content/organisation.py, line: 72
+# File: ../content/organisation.py, line: 73
 msgid "Account Name"
 msgstr ""
 #
-# File: ../content/organisation.py, line: 78
+# File: ../content/organisation.py, line: 79
 msgid "Account Number"
 msgstr ""
 #
-# File: ../content/organisation.py, line: 66
+# File: ../content/organisation.py, line: 67
 msgid "Account Type"
 msgstr ""
 #
 # File: ../browser/accreditation.py, line: 16
-# File: ../content/laboratory.py, line: 68
+# File: ../content/laboratory.py, line: 69
 msgid "Accreditation"
 msgstr ""
 #
-# File: ../content/laboratory.py, line: 43
+# File: ../content/laboratory.py, line: 44
 msgid "Accreditation Body"
 msgstr ""
 #
-# File: ../content/laboratory.py, line: 52
+# File: ../content/laboratory.py, line: 53
 msgid "Accreditation Body Abbreviation"
 msgstr ""
 #
-# File: ../content/laboratory.py, line: 60
+# File: ../content/laboratory.py, line: 61
 msgid "Accreditation Body URL"
 msgstr ""
 #
-# File: ../content/laboratory.py, line: 83
+# File: ../content/laboratory.py, line: 84
 msgid "Accreditation Logo"
 msgstr ""
 #
-# File: ../content/laboratory.py, line: 76
+# File: ../content/laboratory.py, line: 77
 msgid "Accreditation Reference"
 msgstr ""
 #
-# File: ../browser/analysisrequest.py, line: 1145
-# File: ../browser/widgets/analysisprofileanalyseswidget.py, line: 98
-# File: ../browser/widgets/analysisspecificationwidget.py, line: 85
+# File: ../browser/analysisrequest.py, line: 1167
+# File: ../browser/widgets/analysisprofileanalyseswidget.py, line: 100
+# File: ../browser/widgets/analysisspecificationwidget.py, line: 87
 msgid "Accredited"
 msgstr ""
 #
 # File: ../browser/log.py, line: 43
+# File: ../browser/reports/templates/administration_usershistory.pt, line: 76
+# File: ../browser/templates/analysisservice_popup.pt, line: 289
 msgid "Action"
 msgstr ""
 #
-# File: ../browser/analysisrequest.py, line: 1928
-# File: ../browser/client.py, line: 414
-# File: ../browser/clientfolder.py, line: 46
+# File: ../browser/reports/templates/administration.pt, line: 121
+# File: ../browser/reports/templates/administration_usershistory.pt, line: 59
+msgid "Actions performed by users (or specific user) between a period of time"
+msgstr ""
+#
+# File: ../browser/analysisrequest.py, line: 2001
+# File: ../browser/client.py, line: 413
+# File: ../browser/clientfolder.py, line: 47
 msgid "Active"
 msgstr ""
 #
@@ -322,31 +386,30 @@ msgstr ""
 msgid "Active treatment"
 msgstr ""
 #
-# File: ../browser/analysisrequest.py, line: 588
-# File: ../browser/sample.py, line: 377
-# File: ../browser/templates/ar_add.pt, line: 545
+# File: ../browser/sample.py, line: 631
+# File: ../content/sample.py, line: 208
 msgid "Ad-Hoc"
 msgstr ""
 #
-# File: ../browser/batchfolder.py, line: 85
+# File: ../browser/batchfolder.py, line: 95
 # File: ../browser/client.py, line: 249
-# File: ../browser/clientfolder.py, line: 77
+# File: ../browser/clientfolder.py, line: 81
 msgid "Add"
 msgstr ""
 #
-# File: ../browser/worksheet.py, line: 506
+# File: ../browser/worksheet.py, line: 508
 msgid "Add Analyses"
 msgstr ""
 #
-# File: ../browser/worksheet.py, line: 667
+# File: ../browser/worksheet.py, line: 669
 msgid "Add Blank Reference"
 msgstr ""
 #
-# File: ../browser/worksheet.py, line: 711
+# File: ../browser/worksheet.py, line: 713
 msgid "Add Control Reference"
 msgstr ""
 #
-# File: ../browser/worksheet.py, line: 754
+# File: ../browser/worksheet.py, line: 756
 msgid "Add Duplicate"
 msgstr ""
 #
@@ -358,31 +421,60 @@ msgstr ""
 msgid "Add Template"
 msgstr ""
 #
+# File: ../content/bikasetup.py, line: 175
+msgid "Add a remarks field to all analyses"
+msgstr ""
+#
+# File: ../browser/batch.py, line: 47
+msgid "Add new"
+msgstr ""
+#
+# File: ../browser/reports/templates/epidemiology_epiddetailsperanalysis.pt, line: 118
+msgid "Additional Notes"
+msgstr ""
+#
 # File: ../controlpanel/bika_symptoms.py, line: 30
-msgid ""
-"Additional Symptoms and chronic conditions not covered by ICD codes, can be "
-"entered here."
+msgid "Additional Symptoms not covered by ICD codes, can be entered here."
+msgstr ""
+#
+# File: ../content/patient.py, line: 102
+msgid "Additional identifiers"
+msgstr ""
+#
+# File: ../browser/reports/templates/epidemiology_analysisrequestspercountry.pt, line: 147
+# File: ../content/batch.py, line: 121
+msgid "Additional notes"
 msgstr ""
 #
 # File: ../skins/bika/bika_widgets/addresswidget.pt, line: 121
 msgid "Address"
 msgstr ""
 #
-# File: ../content/bikasetup.py, line: 280
+# File: ../content/bikasetup.py, line: 288
 msgid "Adds a two-digit year after the ID prefix"
 msgstr ""
 #
-# File: ../browser/reports/templates/administration.pt, line: 11
+# File: ../browser/reports/templates/administration.pt, line: 70
 msgid "Administrative Reports"
 msgstr ""
 #
-# File: ../content/patient.py, line: 53
+# File: ../content/batch.py, line: 151
+# File: ../controlpanel/bika_aetiologicagents.py, line: 23
+msgid "Aetiologic Agents"
+msgstr ""
+#
+# File: ../browser/widgets/case_aetiologicagents.pt, line: 12
+msgid "Aetiologic agent"
+msgstr ""
+#
+# File: ../content/patient.py, line: 62
+# File: ../content/patients.py, line: 51
 msgid "Age"
 msgstr ""
 #
 # File: ../browser/accreditation.py, line: 62
-# File: ../browser/analyses.py, line: 78
-# File: ../browser/analysisrequest.py, line: 1042
+# File: ../browser/analyses.py, line: 71
+# File: ../browser/analysisrequest.py, line: 1065
 msgid "All"
 msgstr ""
 #
@@ -390,11 +482,11 @@ msgstr ""
 msgid "All Accredited analysis services are listed here."
 msgstr ""
 #
-# File: ../browser/analysisrequest.py, line: 1334
+# File: ../browser/analysisrequest.py, line: 1373
 msgid "All Samples"
 msgstr ""
 #
-# File: ../browser/analysisrequest.py, line: 2297
+# File: ../browser/analysisrequest.py, line: 2395
 msgid "All analyses assigned"
 msgstr ""
 #
@@ -406,7 +498,11 @@ msgstr ""
 msgid "All reference samples in the system are displayed here."
 msgstr ""
 #
-# File: ../content/client.py, line: 64
+# File: ../browser/templates/patient_allergies.pt, line: 20
+msgid "Allergic reaction"
+msgstr ""
+#
+# File: ../content/client.py, line: 65
 msgid "Always expand the selected categories in client views"
 msgstr ""
 #
@@ -414,19 +510,18 @@ msgstr ""
 msgid "Amount"
 msgstr ""
 #
+# File: ../browser/reports/templates/productivity_dataentrydaybook.pt, line: 97
 # File: ../browser/templates/analysisrequest_analyses.pt, line: 94
 # File: ../browser/templates/analysisrequest_manage_results.pt, line: 85
-# File: ../browser/templates/sample.pt, line: 70
 msgid "Analyses"
 msgstr ""
 #
-# File: ../browser/reports/qualitycontrol_referenceanalysisqc.py, line: 210
 # File: ../browser/reports/qualitycontrol_resultspersamplepoint.py, line: 337
 msgid "Analyses in error shoulder range"
 msgstr ""
 #
 # File: ../browser/reports/qualitycontrol_analysesoutofrange.py, line: 29
-# File: ../browser/reports/qualitycontrol_referenceanalysisqc.py, line: 205
+# File: ../browser/reports/qualitycontrol_referenceanalysisqc.py, line: 206
 # File: ../browser/reports/qualitycontrol_resultspersamplepoint.py, line: 332
 msgid "Analyses out of range"
 msgstr ""
@@ -438,12 +533,27 @@ msgid "Analyses per analysis service"
 msgstr ""
 #
 # File: ../browser/reports/productivity_analysespersampletype.py, line: 34
-# File: ../browser/reports/templates/productivity.pt, line: 40
+# File: ../browser/reports/templates/productivity.pt, line: 179
 msgid "Analyses per sample type"
 msgstr ""
 #
-# File: ../browser/reports/templates/productivity.pt, line: 29
+# File: ../browser/reports/templates/productivity.pt, line: 138
 msgid "Analyses per service"
+msgstr ""
+#
+# File: ../browser/reports/templates/productivity.pt, line: 356
+# File: ../browser/reports/templates/productivity_analysesperformedpertotal.pt, line: 79
+msgid "Analyses performed and published as % of total"
+msgstr ""
+#
+# File: ../browser/reports/productivity_analysesperformedpertotal.py, line: 136
+msgid "Analyses performed as % of total"
+msgstr ""
+#
+# File: ../browser/reports/templates/administration.pt, line: 81
+# File: ../browser/reports/templates/epidemiology.pt, line: 131
+# File: ../browser/reports/templates/productivity.pt, line: 133
+msgid "Analyses related reports"
 msgstr ""
 #
 # File: ../browser/reports/templates/qualitycontrol.pt, line: 38
@@ -458,13 +568,23 @@ msgstr ""
 msgid "Analyses retested"
 msgstr ""
 #
+# File: ../browser/reports/productivity_analysesperdepartment.py, line: 146
+# File: ../browser/reports/templates/productivity.pt, line: 325
+# File: ../browser/reports/templates/productivity_analysesperdepartment.pt, line: 79
+msgid "Analyses summary per department"
+msgstr ""
+#
 # File: ../browser/reports/qualitycontrol_analysesrepeated.py, line: 30
 msgid "Analyses which have been retested"
 msgstr ""
 #
-# File: ../browser/analyses.py, line: 46
-# File: ../browser/late_analyses.py, line: 39
-# File: ../browser/reports/productivity_analysestats.py, line: 142
+# File: ../browser/reports/templates/epidemiology.pt, line: 211
+msgid "Analyses-specific reports"
+msgstr ""
+#
+# File: ../browser/analyses.py, line: 39
+# File: ../browser/late_analyses.py, line: 38
+# File: ../browser/reports/epidemiology_epiddetailsperanalysis.py, line: 40
 msgid "Analysis"
 msgstr ""
 #
@@ -480,7 +600,7 @@ msgstr ""
 msgid "Analysis ${service} at slot ${slot}: OK"
 msgstr ""
 #
-# File: ../content/bikasetup.py, line: 211
+# File: ../content/bikasetup.py, line: 218
 msgid "Analysis Attachment Option"
 msgstr ""
 #
@@ -488,41 +608,53 @@ msgstr ""
 msgid "Analysis Categories"
 msgstr ""
 #
-# File: ../content/analysisservice.py, line: 333
+# File: ../content/analysisservice.py, line: 339
 msgid "Analysis Category"
 msgstr ""
 #
-# File: ../content/analysisservice.py, line: 211
+# File: ../content/analysisservice.py, line: 209
 msgid "Analysis Keyword"
 msgstr ""
 #
-# File: ../content/arimportitem.py, line: 60
+# File: ../content/arimportitem.py, line: 61
 # File: ../content/artemplate.py, line: 95
 msgid "Analysis Profile"
 msgstr ""
 #
-# File: ../browser/client.py, line: 401
+# File: ../browser/client.py, line: 400
 # File: ../controlpanel/bika_analysisprofiles.py, line: 34
 msgid "Analysis Profiles"
 msgstr ""
 #
+# File: ../browser/reports/templates/epidemiology_epiddetailsperanalysis.pt, line: 112
+msgid "Analysis Request"
+msgstr ""
+#
+# File: ../browser/reports/templates/epidemiology_analysisrequestspercountry.pt, line: 100
+# File: ../browser/reports/templates/epidemiology_casespercountry.pt, line: 152
 # File: ../config.py, line: 68
 msgid "Analysis Request ID"
 msgstr ""
 #
-# File: ../browser/client.py, line: 335
+# File: ../browser/client.py, line: 334
 msgid "Analysis Request Imports"
 msgstr ""
 #
-# File: ../browser/analysisrequest.py, line: 1856
-# File: ../browser/batchfolder.py, line: 39
+# File: ../browser/analysisrequest.py, line: 1927
 # File: ../browser/queries/analysisrequests.py, line: 50
+# File: ../skins/bika/portlet_to_be_verified.pt, line: 68
 msgid "Analysis Requests"
 msgstr ""
 #
+# File: ../browser/reports/epidemiology_analysisrequestspercountry.py, line: 122
+# File: ../browser/reports/templates/epidemiology.pt, line: 134
+# File: ../browser/reports/templates/epidemiology_analysisrequestspercountry.pt, line: 83
+msgid "Analysis Requests per country"
+msgstr ""
+#
+# File: ../browser/batch.py, line: 343
 # File: ../browser/fields/referenceresultsfield.py, line: 19
 # File: ../browser/reports/productivity_analysestats_overtime.py, line: 49
-# File: ../browser/reports/qualitycontrol_referenceanalysisqc.py, line: 72
 msgid "Analysis Service"
 msgstr ""
 #
@@ -531,9 +663,13 @@ msgstr ""
 msgid "Analysis Services"
 msgstr ""
 #
-# File: ../browser/client.py, line: 604
+# File: ../browser/client.py, line: 603
 # File: ../controlpanel/bika_analysisspecs.py, line: 29
 msgid "Analysis Specifications"
+msgstr ""
+#
+# File: ../browser/reports/productivity_analysesperdepartment.py, line: 37
+msgid "Analysis State"
 msgstr ""
 #
 # File: ../content/worksheettemplate.py, line: 24
@@ -552,7 +688,7 @@ msgstr ""
 msgid "Analysis parent UID ${parent_uid} not found"
 msgstr ""
 #
-# File: ../browser/analysisrequest.py, line: 1805
+# File: ../browser/analysisrequest.py, line: 1876
 msgid "Analysis request ${AR} was successfully created."
 msgstr ""
 #
@@ -564,22 +700,22 @@ msgstr ""
 msgid "Analysis requests"
 msgstr ""
 #
-# File: ../browser/analysisrequest.py, line: 1800
+# File: ../browser/analysisrequest.py, line: 1871
 msgid "Analysis requests ${ARs} were successfully created."
 msgstr ""
 #
 # File: ../browser/reports/productivity_analysesperclient.py, line: 38
-# File: ../browser/reports/templates/productivity.pt, line: 51
+# File: ../browser/reports/templates/productivity.pt, line: 217
 msgid "Analysis requests and analyses"
 msgstr ""
 #
 # File: ../browser/reports/productivity_analysesperclient.py, line: 41
-# File: ../browser/reports/templates/productivity.pt, line: 63
+# File: ../browser/reports/templates/productivity.pt, line: 226
 msgid "Analysis requests and analyses per client"
 msgstr ""
 #
 # File: ../browser/reports/administration_arsnotinvoiced.py, line: 30
-# File: ../browser/reports/templates/administration.pt, line: 26
+# File: ../browser/reports/templates/administration.pt, line: 84
 msgid "Analysis requests not invoiced"
 msgstr ""
 #
@@ -597,7 +733,7 @@ msgid ""
 "take several minutes"
 msgstr ""
 #
-# File: ../browser/mailtemplates/analysisrequest_results.pt, line: 410
+# File: ../browser/mailtemplates/analysisrequest_results.pt, line: 435
 msgid "Analysis results relate only to the samples tested"
 msgstr ""
 #
@@ -611,15 +747,15 @@ msgstr ""
 msgid "Analysis specification"
 msgstr ""
 #
-# File: ../browser/client.py, line: 683
+# File: ../browser/client.py, line: 682
 msgid "Analysis specifications reset to lab defaults."
 msgstr ""
 #
-# File: ../browser/reports/templates/productivity.pt, line: 74
+# File: ../browser/reports/templates/productivity.pt, line: 264
 msgid "Analysis turnaround time"
 msgstr ""
 #
-# File: ../browser/reports/templates/productivity.pt, line: 84
+# File: ../browser/reports/templates/productivity.pt, line: 294
 msgid "Analysis turnaround time over time"
 msgstr ""
 #
@@ -631,18 +767,18 @@ msgstr ""
 msgid "Analysis turnaround times over time"
 msgstr ""
 #
+# File: ../browser/batch.py, line: 346
 # File: ../browser/queries/analysisrequests.py, line: 257
 # File: ../browser/reports/productivity_analysestats_overtime.py, line: 60
-# File: ../browser/reports/qualitycontrol_referenceanalysisqc.py, line: 115
 msgid "Analyst"
 msgstr ""
 #
 # File: ../browser/templates/worksheet_add_analyses.pt, line: 70
-# File: ../content/analysisservice.py, line: 52
+# File: ../content/analysisservice.py, line: 50
 msgid "Any"
 msgstr ""
 #
-# File: ../browser/client.py, line: 361
+# File: ../browser/client.py, line: 360
 msgid "Applied"
 msgstr ""
 #
@@ -654,7 +790,11 @@ msgstr ""
 msgid "Appropriate doses and dosage"
 msgstr ""
 #
-# File: ../browser/analysisrequest.py, line: 2141
+# File: ../config.py, line: 75
+msgid "Asian"
+msgstr ""
+#
+# File: ../browser/analysisrequest.py, line: 2221
 msgid "Assigned"
 msgstr ""
 #
@@ -664,7 +804,7 @@ msgstr ""
 msgid "Assigned to worksheet"
 msgstr ""
 #
-# File: ../browser/analyses.py, line: 358
+# File: ../browser/analyses.py, line: 366
 msgid "Assigned to: ${worksheet_id}"
 msgstr ""
 #
@@ -672,21 +812,21 @@ msgstr ""
 msgid "Attach to"
 msgstr ""
 #
-# File: ../content/attachment.py, line: 24
+# File: ../content/attachment.py, line: 25
 # File: ../skins/bika/attachments.pt, line: 12
 msgid "Attachment"
 msgstr ""
 #
-# File: ../content/attachment.py, line: 38
+# File: ../content/attachment.py, line: 39
 msgid "Attachment Keys"
 msgstr ""
 #
-# File: ../content/analysisservice.py, line: 199
+# File: ../content/analysisservice.py, line: 197
 msgid "Attachment Option"
 msgstr ""
 #
-# File: ../browser/client.py, line: 710
-# File: ../content/attachment.py, line: 32
+# File: ../browser/client.py, line: 709
+# File: ../content/attachment.py, line: 33
 # File: ../controlpanel/bika_attachmenttypes.py, line: 35
 msgid "Attachment Type"
 msgstr ""
@@ -695,15 +835,15 @@ msgstr ""
 msgid "Attachment Types"
 msgstr ""
 #
-# File: ../browser/analysisrequest.py, line: 1163
-# File: ../browser/widgets/analysisprofileanalyseswidget.py, line: 113
-# File: ../browser/widgets/analysisspecificationwidget.py, line: 100
+# File: ../browser/analysisrequest.py, line: 1185
+# File: ../browser/widgets/analysisprofileanalyseswidget.py, line: 115
+# File: ../browser/widgets/analysisspecificationwidget.py, line: 102
 msgid "Attachment not permitted"
 msgstr ""
 #
-# File: ../browser/analysisrequest.py, line: 1157
-# File: ../browser/widgets/analysisprofileanalyseswidget.py, line: 108
-# File: ../browser/widgets/analysisspecificationwidget.py, line: 95
+# File: ../browser/analysisrequest.py, line: 1179
+# File: ../browser/widgets/analysisprofileanalyseswidget.py, line: 110
+# File: ../browser/widgets/analysisspecificationwidget.py, line: 97
 msgid "Attachment required"
 msgstr ""
 #
@@ -711,17 +851,17 @@ msgstr ""
 msgid "Attachment type"
 msgstr ""
 #
-# File: ../browser/analyses.py, line: 66
-# File: ../browser/client.py, line: 704
-# File: ../browser/mailtemplates/analysisrequest_results.pt, line: 293
+# File: ../browser/analyses.py, line: 59
+# File: ../browser/client.py, line: 703
+# File: ../browser/mailtemplates/analysisrequest_results.pt, line: 318
 msgid "Attachments"
 msgstr ""
 #
-# File: ../content/contact.py, line: 28
+# File: ../content/contact.py, line: 29
 msgid "Attachments Permitted"
 msgstr ""
 #
-# File: ../content/bikasetup.py, line: 233
+# File: ../content/bikasetup.py, line: 240
 msgid "Automatic label printing"
 msgstr ""
 #
@@ -733,24 +873,24 @@ msgstr ""
 msgid "Average TAT"
 msgstr ""
 #
-# File: ../browser/reports/productivity_analysestats.py, line: 148
+# File: ../browser/reports/productivity_analysestats.py, line: 142
 msgid "Average early"
 msgstr ""
 #
-# File: ../browser/reports/productivity_analysestats.py, line: 146
+# File: ../browser/reports/productivity_analysestats.py, line: 140
 msgid "Average late"
 msgstr ""
 #
-# File: ../browser/templates/sample_sticker_large.pt, line: 140
-# File: ../browser/templates/sample_sticker_small.pt, line: 86
+# File: ../browser/templates/sample_sticker_large.pt, line: 141
+# File: ../browser/templates/sample_sticker_small.pt, line: 87
 msgid "Back to list"
 msgstr ""
 #
-# File: ../content/organisation.py, line: 90
+# File: ../content/organisation.py, line: 91
 msgid "Bank branch"
 msgstr ""
 #
-# File: ../content/organisation.py, line: 84
+# File: ../content/organisation.py, line: 85
 msgid "Bank name"
 msgstr ""
 #
@@ -771,24 +911,32 @@ msgid "Bearing"
 msgstr ""
 #
 # File: ../controlpanel/overview.py, line: 10
-msgid "Bika Health Configuration"
+msgid "Bika Epidemiology Configuration"
 msgstr ""
 #
-# File: ../config.py, line: 83
-# File: ../content/organisation.py, line: 60
+# File: ../config.py, line: 90
+# File: ../content/organisation.py, line: 61
 msgid "Billing address"
 msgstr ""
 #
-# File: ../content/patient.py, line: 59
+# File: ../content/patient.py, line: 70
 msgid "Birth date"
 msgstr ""
 #
-# File: ../content/patient.py, line: 65
+# File: ../content/patient.py, line: 76
 msgid "Birth date is estimated"
 msgstr ""
 #
-# File: ../content/patient.py, line: 153
+# File: ../content/patient.py, line: 191
 msgid "Birth place"
+msgstr ""
+#
+# File: ../content/patients.py, line: 55
+msgid "BirthDate"
+msgstr ""
+#
+# File: ../config.py, line: 76
+msgid "Black"
 msgstr ""
 #
 # File: ../browser/referencesupplier.py, line: 113
@@ -802,22 +950,22 @@ msgstr ""
 msgid "Brand"
 msgstr ""
 #
-# File: ../content/client.py, line: 34
+# File: ../content/client.py, line: 35
 # File: ../content/pricelist.py, line: 23
 msgid "Bulk discount applies"
 msgstr ""
 #
-# File: ../content/analysisservice.py, line: 349
+# File: ../content/analysisservice.py, line: 355
 msgid "Bulk price (excluding VAT)"
 msgstr ""
 #
-# File: ../browser/analysisrequest.py, line: 1245
-# File: ../browser/client.py, line: 853
-# File: ../browser/doctors.py, line: 29
+# File: ../browser/analysisrequest.py, line: 1284
+# File: ../browser/client.py, line: 852
+# File: ../browser/doctors.py, line: 30
 msgid "Business Phone"
 msgstr ""
 #
-# File: ../browser/reports/__init__.py, line: 93
+# File: ../browser/reports/__init__.py, line: 103
 msgid "By"
 msgstr ""
 #
@@ -826,18 +974,18 @@ msgid "CC"
 msgstr ""
 #
 # File: ../browser/templates/ar_add.pt, line: 135
-# File: ../content/analysisrequest.py, line: 127
-# File: ../content/arimport.py, line: 97
+# File: ../content/analysisrequest.py, line: 135
+# File: ../content/arimport.py, line: 98
 msgid "CC Emails"
 msgstr ""
 #
-# File: ../browser/templates/sample_sticker_large.pt, line: 81
+# File: ../browser/templates/sample_sticker_large.pt, line: 82
 msgid "CSID"
 msgstr ""
 #
 # File: ../browser/accreditation.py, line: 57
-# File: ../browser/widgets/serviceswidget.py, line: 39
-# File: ../content/analysisservice.py, line: 264
+# File: ../browser/widgets/serviceswidget.py, line: 40
+# File: ../content/analysisservice.py, line: 262
 msgid "Calculation"
 msgstr ""
 #
@@ -845,17 +993,17 @@ msgstr ""
 msgid "Calculation Formula"
 msgstr ""
 #
-# File: ../content/analysis.py, line: 50
+# File: ../content/analysis.py, line: 51
+# File: ../content/analysisservice.py, line: 284
 # File: ../content/calculation.py, line: 24
-# File: ../content/referenceanalysis.py, line: 43
 msgid "Calculation Interim Fields"
 msgstr ""
 #
-# File: ../browser/templates/analysisservice_popup.pt, line: 141
+# File: ../browser/templates/analysisservice_popup.pt, line: 142
 msgid "Calculation: ${calc_name}"
 msgstr ""
 #
-# File: ../browser/templates/analysisservice_popup.pt, line: 197
+# File: ../browser/templates/analysisservice_popup.pt, line: 198
 msgid "Calculation: None"
 msgstr ""
 #
@@ -871,14 +1019,14 @@ msgstr ""
 msgid "Calibration Expiry Date"
 msgstr ""
 #
-# File: ../browser/analysisrequest.py, line: 1151
-# File: ../browser/templates/analysisservice_popup.pt, line: 66
-# File: ../browser/templates/ar_add.pt, line: 763
+# File: ../browser/analysisrequest.py, line: 1173
+# File: ../browser/templates/analysisservice_popup.pt, line: 67
+# File: ../browser/templates/ar_add.pt, line: 960
 msgid "Can be reported as dry matter"
 msgstr ""
 #
-# File: ../browser/analysisrequest.py, line: 2107
-# File: ../browser/batchfolder.py, line: 62
+# File: ../browser/analysisrequest.py, line: 2186
+# File: ../browser/batchfolder.py, line: 68
 # File: ../browser/menu.py, line: 63
 msgid "Cancelled"
 msgstr ""
@@ -889,7 +1037,7 @@ msgid ""
 "inactive: ${inactive_services}"
 msgstr ""
 #
-# File: ../content/patients.py, line: 67
+# File: ../content/patients.py, line: 89
 msgid "Cannot create patients without any system clients configured."
 msgstr ""
 #
@@ -904,10 +1052,14 @@ msgstr ""
 msgid "Capacity"
 msgstr ""
 #
-# File: ../browser/analyses.py, line: 68
+# File: ../browser/analyses.py, line: 61
 # File: ../browser/referencesample.py, line: 62
-# File: ../browser/reports/qualitycontrol_referenceanalysisqc.py, line: 116
+# File: ../browser/reports/qualitycontrol_referenceanalysisqc.py, line: 112
 msgid "Captured"
+msgstr ""
+#
+# File: ../browser/reports/templates/epidemiology_casespercountry.pt, line: 115
+msgid "Case ID"
 msgstr ""
 #
 # File: ../controlpanel/bika_caseoutcomes.py, line: 23
@@ -918,12 +1070,25 @@ msgstr ""
 msgid "Case Statuses"
 msgstr ""
 #
-# File: ../content/batch.py, line: 85
+# File: ../browser/reports/templates/epidemiology_analysisrequestspercountry.pt, line: 112
+msgid "Case onset date"
+msgstr ""
+#
+# File: ../content/batch.py, line: 135
 msgid "Case outcome"
 msgstr ""
 #
-# File: ../content/batch.py, line: 78
+# File: ../content/batch.py, line: 128
 msgid "Case status"
+msgstr ""
+#
+# File: ../browser/reports/templates/epidemiology.pt, line: 82
+msgid "Cases per country"
+msgstr ""
+#
+# File: ../browser/reports/epidemiology_casespercountry.py, line: 126
+# File: ../browser/reports/templates/epidemiology_casespercountry.pt, line: 98
+msgid "Cases summary per country"
 msgstr ""
 #
 # File: ../browser/templates/referencesample_view.pt, line: 65
@@ -949,13 +1114,21 @@ msgstr ""
 msgid "Causal treatment"
 msgstr ""
 #
-# File: ../content/analysisservice.py, line: 305
+# File: ../browser/templates/patient_allergies.pt, line: 23
+msgid "Causative agent"
+msgstr ""
+#
+# File: ../skins/bika/validate_integrity.cpy, line: 24
+msgid "Changes saved."
+msgstr ""
+#
+# File: ../content/analysisservice.py, line: 311
 msgid ""
 "Check this box if the analysis service is included in the laboratory's "
 "schedule of accredited analyses"
 msgstr ""
 #
-# File: ../content/samplepoint.py, line: 70
+# File: ../content/samplepoint.py, line: 71
 msgid ""
 "Check this box if the samples taken at this point are 'composite' and put "
 "together from more than one sub sample, e.g. several surface samples from a "
@@ -970,23 +1143,24 @@ msgid ""
 "container."
 msgstr ""
 #
-# File: ../content/laboratory.py, line: 35
+# File: ../content/laboratory.py, line: 36
 msgid "Check this box if your laboratory is accredited"
 msgstr ""
 #
-# File: ../content/analysisservice.py, line: 456
+# File: ../content/analysisservice.py, line: 462
 msgid ""
 "Check this box to ensure a separate sample container is used for this "
 "analysis service"
 msgstr ""
 #
-# File: ../content/bikasetup.py, line: 306
+# File: ../content/bikasetup.py, line: 314
 msgid ""
 "Check this if you want to use a separate ID server. Prefixes are "
 "configurable separately in each Bika site"
 msgstr ""
 #
-# File: ../content/patient.py, line: 165
+# File: ../content/patient.py, line: 204
+# File: ../content/patients.py, line: 59
 msgid "Citizenship"
 msgstr ""
 #
@@ -994,7 +1168,7 @@ msgstr ""
 msgid "City"
 msgstr ""
 #
-# File: ../content/patient.py, line: 175
+# File: ../content/patient.py, line: 214
 msgid "Civil status"
 msgstr ""
 #
@@ -1003,7 +1177,7 @@ msgid "Classic"
 msgstr ""
 #
 # File: ../browser/referencesample.py, line: 109
-# File: ../content/analysisspec.py, line: 76
+# File: ../content/analysisspec.py, line: 77
 # File: ../content/referencedefinition.py, line: 28
 msgid ""
 "Click on Analysis Categories (against shaded background) to see Analysis "
@@ -1015,37 +1189,41 @@ msgid ""
 "severe alert."
 msgstr ""
 #
-# File: ../browser/analysisrequest.py, line: 1290
+# File: ../browser/analysisrequest.py, line: 1329
 msgid "Click on a sample to create a secondary AR"
 msgstr ""
 #
-# File: ../browser/templates/analysisservice_popup.pt, line: 108
+# File: ../browser/templates/analysisservice_popup.pt, line: 109
 msgid "Click to download"
 msgstr ""
 #
-# File: ../content/arimport.py, line: 47
+# File: ../content/arimport.py, line: 48
 msgid "Client Address"
 msgstr ""
 #
-# File: ../content/arimport.py, line: 52
+# File: ../content/batch.py, line: 42
+msgid "Client Batch ID"
+msgstr ""
+#
+# File: ../content/arimport.py, line: 53
 msgid "Client City"
 msgstr ""
 #
-# File: ../content/arimport.py, line: 85
+# File: ../content/arimport.py, line: 86
 msgid "Client Email"
 msgstr ""
 #
-# File: ../content/arimport.py, line: 42
+# File: ../content/arimport.py, line: 43
 msgid "Client Fax"
 msgstr ""
 #
-# File: ../content/arimport.py, line: 32
+# File: ../content/arimport.py, line: 33
 msgid "Client Name"
 msgstr ""
 #
-# File: ../browser/analysisrequest.py, line: 499
-# File: ../browser/mailtemplates/analysisrequest_results.pt, line: 85
-# File: ../browser/templates/ar_add.pt, line: 360
+# File: ../browser/analysisrequest.py, line: 1941
+# File: ../browser/templates/ar_add.pt, line: 538
+# File: ../content/analysisrequest.py, line: 116
 msgid "Client Order"
 msgstr ""
 #
@@ -1053,28 +1231,27 @@ msgstr ""
 msgid "Client Order ID"
 msgstr ""
 #
-# File: ../content/arimport.py, line: 37
+# File: ../content/arimport.py, line: 38
 msgid "Client Phone"
 msgstr ""
 #
-# File: ../browser/analysisrequest.py, line: 1884
 # File: ../browser/sample.py, line: 618
-# File: ../content/arimportitem.py, line: 20
+# File: ../content/arimportitem.py, line: 21
 msgid "Client Ref"
 msgstr ""
 #
-# File: ../browser/analysisrequest.py, line: 493
-# File: ../browser/mailtemplates/analysisrequest_results.pt, line: 92
+# File: ../browser/analysisrequest.py, line: 1356
 # File: ../browser/queries/queries_query.pt, line: 88
+# File: ../browser/templates/ar_add.pt, line: 559
 msgid "Client Reference"
 msgstr ""
 #
-# File: ../content/arimportitem.py, line: 25
+# File: ../content/arimportitem.py, line: 26
 msgid "Client Remarks"
 msgstr ""
 #
-# File: ../browser/analysisrequest.py, line: 487
-# File: ../browser/mailtemplates/analysisrequest_results.pt, line: 99
+# File: ../browser/analysisrequest.py, line: 489
+# File: ../browser/mailtemplates/analysisrequest_results.pt, line: 145
 # File: ../browser/sample.py, line: 334
 msgid "Client SID"
 msgstr ""
@@ -1083,7 +1260,7 @@ msgstr ""
 msgid "Client Sample ID"
 msgstr ""
 #
-# File: ../browser/client.py, line: 293
+# File: ../browser/client.py, line: 292
 msgid "Client contact required before request may be submitted"
 msgstr ""
 #
@@ -1099,12 +1276,17 @@ msgstr ""
 msgid "Client sample ID"
 msgstr ""
 #
-# File: ../browser/batchfolder.py, line: 55
+# File: ../browser/reports/templates/epidemiology_casespercountry.pt, line: 116
+msgid "Client's Case ID"
+msgstr ""
+#
+# File: ../browser/batchfolder.py, line: 59
 msgid "Closed"
 msgstr ""
 #
-# File: ../browser/templates/patient_chronicconditions.pt, line: 20
-# File: ../browser/widgets/case_symptoms.pt, line: 16
+# File: ../browser/reports/templates/epidemiology_analysisrequestspercountry.pt, line: 165
+# File: ../browser/widgets/case_provisionaldiagnosis.pt, line: 12
+# File: ../browser/widgets/case_symptoms.pt, line: 13
 msgid "Code"
 msgstr ""
 #
@@ -1112,13 +1294,17 @@ msgstr ""
 msgid "Collectives at risk"
 msgstr ""
 #
-# File: ../browser/analysisrequest.py, line: 582
-# File: ../browser/sample.py, line: 371
-# File: ../browser/templates/ar_add.pt, line: 567
+# File: ../browser/reports/templates/administration_usershistory.pt, line: 79
+msgid "Comments"
+msgstr ""
+#
+# File: ../browser/templates/sample_sticker_large.pt, line: 91
+# File: ../content/sample.py, line: 184
+# File: ../content/samplepoint.py, line: 70
 msgid "Composite"
 msgstr ""
 #
-# File: ../content/laboratory.py, line: 25
+# File: ../content/laboratory.py, line: 26
 msgid "Confidence Level %"
 msgstr ""
 #
@@ -1136,43 +1322,43 @@ msgstr ""
 msgid "Conservative treatment"
 msgstr ""
 #
-# File: ../browser/late_analyses.py, line: 44
+# File: ../browser/analysisrequest.py, line: 1961
+# File: ../browser/late_analyses.py, line: 43
 # File: ../browser/queries/analysisrequests.py, line: 87
-# File: ../browser/reports/selection_macros/select_contact.pt, line: 3
 msgid "Contact"
 msgstr ""
 #
-# File: ../content/arimport.py, line: 63
+# File: ../content/arimport.py, line: 64
 msgid "Contact ID"
 msgstr ""
 #
-# File: ../content/arimport.py, line: 68
+# File: ../content/arimport.py, line: 69
 msgid "Contact Name"
 msgstr ""
 #
-# File: ../browser/analysisrequest.py, line: 463
+# File: ../browser/analysisrequest.py, line: 465
 # File: ../browser/templates/ar_add.pt, line: 85
 msgid "Contact Person"
 msgstr ""
 #
-# File: ../browser/client.py, line: 845
+# File: ../browser/client.py, line: 844
 # File: ../browser/referencesupplier.py, line: 142
 # File: ../browser/vaccinationcenter.py, line: 28
 msgid "Contacts"
 msgstr ""
 #
-# File: ../browser/analysisrequest.py, line: 1221
-# File: ../content/contact.py, line: 39
+# File: ../browser/analysisrequest.py, line: 1244
+# File: ../content/contact.py, line: 40
 msgid "Contacts to CC"
 msgstr ""
 #
 # File: ../browser/sample.py, line: 48
-# File: ../browser/templates/sample_sticker_large.pt, line: 95
+# File: ../browser/templates/sample_sticker_large.pt, line: 96
 # File: ../browser/widgets/artemplatepartitionswidget.py, line: 34
 msgid "Container"
 msgstr ""
 #
-# File: ../content/analysisservice.py, line: 80
+# File: ../content/analysisservice.py, line: 78
 # File: ../content/container.py, line: 21
 # File: ../controlpanel/bika_containers.py, line: 42
 msgid "Container Type"
@@ -1182,12 +1368,12 @@ msgstr ""
 msgid "Container Types"
 msgstr ""
 #
-# File: ../browser/templates/analysisservice_popup.pt, line: 263
+# File: ../browser/templates/analysisservice_popup.pt, line: 264
 # File: ../controlpanel/bika_containers.py, line: 28
 msgid "Containers"
 msgstr ""
 #
-# File: ../browser/client.py, line: 711
+# File: ../browser/client.py, line: 710
 msgid "Content Type"
 msgstr ""
 #
@@ -1199,27 +1385,37 @@ msgstr ""
 msgid "Control"
 msgstr ""
 #
-# File: ../skins/bika/bika_widgets/addresswidget.pt, line: 44
+# File: ../skins/bika/bika_widgets/addresswidget.pt, line: 46
 msgid "Copy from"
 msgstr ""
 #
-# File: ../browser/reports/productivity_analysestats.py, line: 143
+# File: ../browser/reports/productivity_analysestats.py, line: 137
 msgid "Count"
 msgstr ""
 #
-# File: ../browser/templates/travelhistory.pt, line: 34
-# File: ../content/patient.py, line: 125
-# File: ../skins/bika/bika_widgets/addresswidget.pt, line: 28
+# File: ../browser/reports/templates/epidemiology_analysisrequestspercountry.pt, line: 99
+# File: ../browser/reports/templates/epidemiology_casespercountry.pt, line: 114
+# File: ../browser/reports/templates/productivity_dailysamplesreceived.pt, line: 75
 msgid "Country"
 msgstr ""
 #
-# File: ../browser/reports/__init__.py, line: 92
+# File: ../content/patient.py, line: 87
+msgid "Country and state"
+msgstr ""
+#
+# File: ../browser/reports/__init__.py, line: 102
+# File: ../browser/reports/administration_usershistory.py, line: 100
+# File: ../browser/reports/templates/productivity_dataentrydaybook.pt, line: 88
 msgid "Created"
 msgstr ""
 #
 # File: ../browser/mailtemplates/analysisrequest_results.pt, line: 64
 # File: ../browser/reports/templates/report_frame.pt, line: 40
 msgid "Created by:"
+msgstr ""
+#
+# File: ../browser/reports/templates/productivity_dataentrydaybook.pt, line: 99
+msgid "Creator"
 msgstr ""
 #
 # File: ../content/bikasetup.py, line: 76
@@ -1231,6 +1427,12 @@ msgstr ""
 msgid "Current"
 msgstr ""
 #
+# File: ../browser/reports/productivity_dailysamplesreceived.py, line: 89
+# File: ../browser/reports/templates/productivity.pt, line: 82
+# File: ../browser/reports/templates/productivity_dailysamplesreceived.pt, line: 60
+msgid "Daily samples received"
+msgstr ""
+#
 # File: ../content/instrument.py, line: 55
 msgid "Data Interface"
 msgstr ""
@@ -1239,35 +1441,47 @@ msgstr ""
 msgid "Data Interface Options"
 msgstr ""
 #
+# File: ../browser/reports/productivity_dataentrydaybook.py, line: 111
+# File: ../browser/reports/templates/productivity.pt, line: 410
+# File: ../browser/reports/templates/productivity_dataentrydaybook.pt, line: 71
+msgid "Data entry day book"
+msgstr ""
+#
 # File: ../browser/log.py, line: 41
 # File: ../browser/reports/productivity_analysestats_overtime.py, line: 140
-# File: ../browser/templates/immunizationhistory.pt, line: 42
+# File: ../browser/reports/templates/administration_usershistory.pt, line: 73
 msgid "Date"
 msgstr ""
 #
-# File: ../browser/client.py, line: 783
-# File: ../content/supplyorder.py, line: 50
+# File: ../browser/reports/administration_usershistory.py, line: 65
+# File: ../browser/reports/epidemiology_analysisrequestspercountry.py, line: 28
+# File: ../browser/reports/epidemiology_casespercountry.py, line: 28
+msgid "Date Created"
+msgstr ""
+#
+# File: ../browser/client.py, line: 782
+# File: ../content/supplyorder.py, line: 51
 msgid "Date Dispatched"
 msgstr ""
 #
 # File: ../browser/sample.py, line: 445
 # File: ../content/referencesample.py, line: 123
-# File: ../content/sample.py, line: 200
+# File: ../content/sample.py, line: 201
 msgid "Date Disposed"
 msgstr ""
 #
 # File: ../browser/sample.py, line: 431
 # File: ../content/referencesample.py, line: 116
-# File: ../content/sample.py, line: 188
+# File: ../content/sample.py, line: 189
 msgid "Date Expired"
 msgstr ""
 #
-# File: ../browser/client.py, line: 340
+# File: ../browser/client.py, line: 339
 msgid "Date Imported"
 msgstr ""
 #
-# File: ../browser/client.py, line: 713
-# File: ../content/attachment.py, line: 45
+# File: ../browser/client.py, line: 712
+# File: ../content/attachment.py, line: 46
 msgid "Date Loaded"
 msgstr ""
 #
@@ -1277,71 +1491,82 @@ msgstr ""
 msgid "Date Opened"
 msgstr ""
 #
-# File: ../browser/analysisrequest.py, line: 1910
+# File: ../browser/analysisrequest.py, line: 1983
 # File: ../browser/sample.py, line: 60
 msgid "Date Preserved"
 msgstr ""
 #
-# File: ../browser/analysisrequest.py, line: 1920
-# File: ../browser/mailtemplates/analysisrequest_results.pt, line: 173
-# File: ../content/analysis.py, line: 74
+# File: ../browser/analysisrequest.py, line: 1993
+# File: ../browser/mailtemplates/analysisrequest_results.pt, line: 184
+# File: ../content/analysis.py, line: 75
 msgid "Date Published"
 msgstr ""
 #
-# File: ../browser/analysisrequest.py, line: 575
-# File: ../browser/late_analyses.py, line: 45
-# File: ../browser/mailtemplates/analysisrequest_results.pt, line: 165
+# File: ../browser/analysisrequest.py, line: 577
+# File: ../browser/late_analyses.py, line: 44
+# File: ../browser/mailtemplates/analysisrequest_results.pt, line: 176
 msgid "Date Received"
 msgstr ""
 #
-# File: ../browser/worksheet.py, line: 808
+# File: ../browser/batch.py, line: 340
+# File: ../browser/reports/productivity_analysesperdepartment.py, line: 28
+# File: ../browser/reports/productivity_analysesperformedpertotal.py, line: 28
 msgid "Date Requested"
 msgstr ""
 #
-# File: ../browser/analysisrequest.py, line: 547
+# File: ../browser/analysisrequest.py, line: 549
 # File: ../browser/referencesample.py, line: 213
 # File: ../browser/referencesupplier.py, line: 30
 msgid "Date Sampled"
 msgstr ""
 #
-# File: ../browser/client.py, line: 342
+# File: ../browser/client.py, line: 341
 msgid "Date Submitted"
 msgstr ""
 #
-# File: ../content/batch.py, line: 56
-msgid "Onset Date"
+# File: ../browser/reports/templates/epidemiology_analysisrequestspercountry.pt, line: 111
+# File: ../browser/reports/templates/productivity_dailysamplesreceived.pt, line: 79
+msgid "Date received"
+msgstr ""
+#
+# File: ../browser/reports/templates/epidemiology_analysisrequestspercountry.pt, line: 110
+msgid "Date sampled"
 msgstr ""
 #
 # File: ../browser/fields/durationfield.py, line: 19
 msgid "Days"
 msgstr ""
 #
-# File: ../content/analysisservice.py, line: 487
+# File: ../browser/reports/administration_usershistory.py, line: 104
+msgid "Deactivated"
+msgstr ""
+#
+# File: ../content/analysisservice.py, line: 493
 msgid "Default Container"
 msgstr ""
 #
-# File: ../browser/templates/ar_add.pt, line: 511
-# File: ../content/sampletype.py, line: 67
+# File: ../browser/templates/ar_add.pt, line: 698
+# File: ../content/sampletype.py, line: 68
 msgid "Default Container Type"
 msgstr ""
 #
-# File: ../content/analysisservice.py, line: 470
+# File: ../content/analysisservice.py, line: 476
 msgid "Default Preservation"
 msgstr ""
 #
-# File: ../content/client.py, line: 63
+# File: ../content/client.py, line: 64
 msgid "Default categories"
 msgstr ""
 #
-# File: ../browser/templates/analysisservice_popup.pt, line: 230
+# File: ../browser/templates/analysisservice_popup.pt, line: 231
 msgid "Default containers: ${container_list}"
 msgstr ""
 #
-# File: ../browser/templates/analysisservice_popup.pt, line: 242
+# File: ../browser/templates/analysisservice_popup.pt, line: 243
 msgid "Default preservations: ${preservation_list}"
 msgstr ""
 #
-# File: ../content/bikasetup.py, line: 222
+# File: ../content/bikasetup.py, line: 229
 msgid "Default sample retention period"
 msgstr ""
 #
@@ -1356,11 +1581,11 @@ msgid ""
 "column headers and field descriptors where the interim fields are displayed"
 msgstr ""
 #
-# File: ../content/analysisservice.py, line: 183
+# File: ../content/analysisservice.py, line: 181
 msgid "Define the number of decimals to be used for this result"
 msgstr ""
 #
-# File: ../content/bikasetup.py, line: 265
+# File: ../content/bikasetup.py, line: 273
 msgid ""
 "Define the prefixes for the unique sequential IDs the system issues for "
 "objects. In the 'Padding' field, indicate with how many leading zeros the "
@@ -1375,9 +1600,9 @@ msgstr ""
 msgid "Degrees"
 msgstr ""
 #
-# File: ../browser/templates/allergies.pt, line: 71
-# File: ../browser/templates/immunizationhistory.pt, line: 93
-# File: ../browser/templates/travelhistory.pt, line: 94
+# File: ../browser/templates/patient_allergies.pt, line: 67
+# File: ../browser/templates/patient_chronicconditions.pt, line: 99
+# File: ../browser/templates/patient_immunizationhistory.pt, line: 95
 msgid "Delete all"
 msgstr ""
 #
@@ -1385,19 +1610,27 @@ msgstr ""
 msgid "Delete attachment"
 msgstr ""
 #
-# File: ../browser/templates/allergies.pt, line: 68
-# File: ../browser/templates/immunizationhistory.pt, line: 90
-# File: ../browser/templates/travelhistory.pt, line: 91
+# File: ../browser/templates/patient_allergies.pt, line: 64
+# File: ../browser/templates/patient_chronicconditions.pt, line: 96
+# File: ../browser/templates/patient_immunizationhistory.pt, line: 92
 msgid "Delete selected"
 msgstr ""
 #
+# File: ../browser/reports/templates/epidemiology.pt, line: 239
+msgid "Dengue cases for any given period of time"
+msgstr ""
+#
+# File: ../browser/reports/templates/epidemiology.pt, line: 237
+msgid "Dengue report"
+msgstr ""
+#
 # File: ../browser/accreditation.py, line: 51
+# File: ../browser/reports/templates/productivity_analysesperdepartment.pt, line: 96
 # File: ../content/analysiscategory.py, line: 26
-# File: ../content/analysisservice.py, line: 399
 msgid "Department"
 msgstr ""
 #
-# File: ../browser/templates/analysisservice_popup.pt, line: 153
+# File: ../browser/templates/analysisservice_popup.pt, line: 154
 # File: ../content/calculation.py, line: 42
 msgid "Dependent Analyses"
 msgstr ""
@@ -1408,17 +1641,17 @@ msgid ""
 "lab clients"
 msgstr ""
 #
-# File: ../browser/batchfolder.py, line: 38
-# File: ../browser/client.py, line: 407
+# File: ../browser/client.py, line: 406
 # File: ../browser/log.py, line: 44
+# File: ../browser/reports/templates/epidemiology_analysisrequestspercountry.pt, line: 167
 msgid "Description"
 msgstr ""
 #
-# File: ../browser/templates/sample_sticker_large.pt, line: 88
+# File: ../browser/templates/sample_sticker_large.pt, line: 89
 msgid "Deviation"
 msgstr ""
 #
-# File: ../browser/templates/ar_add.pt, line: 680
+# File: ../browser/templates/ar_add.pt, line: 877
 msgid "Discount"
 msgstr ""
 #
@@ -1426,6 +1659,7 @@ msgstr ""
 msgid "Discount %"
 msgstr ""
 #
+# File: ../browser/templates/patient_chronicconditions.pt, line: 25
 # File: ../controlpanel/bika_diseases.py, line: 37
 msgid "Disease"
 msgstr ""
@@ -1434,11 +1668,11 @@ msgstr ""
 msgid "Diseases"
 msgstr ""
 #
-# File: ../browser/client.py, line: 801
+# File: ../browser/client.py, line: 800
 msgid "Dispatched"
 msgstr ""
 #
-# File: ../content/analysisservice.py, line: 438
+# File: ../content/analysisservice.py, line: 444
 msgid "Display Value"
 msgstr ""
 #
@@ -1456,13 +1690,14 @@ msgstr ""
 msgid "District"
 msgstr ""
 #
-# File: ../browser/analysisrequest.py, line: 456
+# File: ../browser/analysisrequest.py, line: 458
+# File: ../browser/batchfolder.py, line: 40
 # File: ../browser/sample.py, line: 328
-# File: ../browser/templates/ar_add.pt, line: 225
 msgid "Doctor"
 msgstr ""
 #
-# File: ../content/doctor.py, line: 20
+# File: ../browser/doctors.py, line: 26
+# File: ../content/doctor.py, line: 21
 msgid "Doctor ID"
 msgstr ""
 #
@@ -1470,19 +1705,19 @@ msgstr ""
 msgid "Doctors"
 msgstr ""
 #
-# File: ../config.py, line: 77
+# File: ../config.py, line: 84
 msgid "Don't Know"
 msgstr ""
 #
-# File: ../browser/client.py, line: 419
-# File: ../browser/clientfolder.py, line: 54
-# File: ../browser/doctors.py, line: 71
+# File: ../browser/client.py, line: 418
+# File: ../browser/clientfolder.py, line: 56
+# File: ../browser/doctors.py, line: 75
 msgid "Dormant"
 msgstr ""
 #
-# File: ../browser/templates/allergies.pt, line: 26
-# File: ../browser/templates/treatmenthistory.pt, line: 26
-# File: ../content/patient.py, line: 83
+# File: ../browser/templates/patient_treatmenthistory.pt, line: 21
+# File: ../content/patient.py, line: 121
+# File: ../controlpanel/bika_drugs.py, line: 37
 msgid "Drug"
 msgstr ""
 #
@@ -1490,8 +1725,7 @@ msgstr ""
 msgid "Drug Prohibition"
 msgstr ""
 #
-# File: ../browser/templates/allergies.pt, line: 21
-# File: ../content/patient.py, line: 96
+# File: ../content/patient.py, line: 134
 msgid "Drug Prohibition Explanation"
 msgstr ""
 #
@@ -1523,26 +1757,26 @@ msgstr ""
 msgid "Drugs"
 msgstr ""
 #
-# File: ../browser/analyses.py, line: 58
-# File: ../browser/worksheet.py, line: 215
+# File: ../browser/analyses.py, line: 51
+# File: ../browser/worksheet.py, line: 216
 msgid "Dry"
 msgstr ""
 #
-# File: ../browser/mailtemplates/analysisrequest_results.pt, line: 209
+# File: ../browser/mailtemplates/analysisrequest_results.pt, line: 227
 msgid "Dry Result"
 msgstr ""
 #
-# File: ../content/bikasetup.py, line: 180
+# File: ../content/bikasetup.py, line: 187
 msgid "Dry matter analysis"
 msgstr ""
 #
-# File: ../browser/analysisrequest.py, line: 1965
+# File: ../browser/analysisrequest.py, line: 2039
 # File: ../browser/sample.py, line: 681
 msgid "Due"
 msgstr ""
 #
-# File: ../browser/analyses.py, line: 71
-# File: ../browser/late_analyses.py, line: 47
+# File: ../browser/analyses.py, line: 64
+# File: ../browser/late_analyses.py, line: 46
 # File: ../browser/referencesample.py, line: 64
 msgid "Due Date"
 msgstr ""
@@ -1552,13 +1786,13 @@ msgid "Due Date for next calibration"
 msgstr ""
 #
 # File: ../browser/accreditation.py, line: 56
-# File: ../controlpanel/bika_analysisservices.py, line: 123
+# File: ../controlpanel/bika_analysisservices.py, line: 130
 msgid "Dup Var"
 msgstr ""
 #
-# File: ../browser/worksheet.py, line: 345
+# File: ../browser/worksheet.py, line: 346
 # File: ../config.py, line: 51
-# File: ../controlpanel/bika_analysisservices.py, line: 145
+# File: ../controlpanel/bika_analysisservices.py, line: 152
 msgid "Duplicate"
 msgstr ""
 #
@@ -1566,7 +1800,7 @@ msgstr ""
 msgid "Duplicate Of"
 msgstr ""
 #
-# File: ../content/analysisservice.py, line: 294
+# File: ../content/analysisservice.py, line: 300
 msgid "Duplicate Variation %"
 msgstr ""
 #
@@ -1582,28 +1816,28 @@ msgstr ""
 msgid "Duplicate analysis quality control graphs"
 msgstr ""
 #
-# File: ../content/analysis.py, line: 84
+# File: ../content/analysis.py, line: 85
 msgid "Duration"
 msgstr ""
 #
-# File: ../content/laboratory.py, line: 53
+# File: ../content/laboratory.py, line: 54
 msgid "E.g. SANAS, APLAC, etc."
 msgstr ""
 #
-# File: ../browser/templates/immunizationhistory.pt, line: 13
-# File: ../content/patient.py, line: 109
+# File: ../browser/templates/patient_immunizationhistory.pt, line: 13
+# File: ../content/patient.py, line: 147
 msgid "EPI Number"
 msgstr ""
 #
-# File: ../content/analysis.py, line: 89
+# File: ../content/analysis.py, line: 90
 msgid "Earliness"
 msgstr ""
 #
-# File: ../browser/reports/productivity_analysestats.py, line: 147
+# File: ../browser/reports/productivity_analysestats.py, line: 141
 msgid "Early"
 msgstr ""
 #
-# File: ../content/samplepoint.py, line: 40
+# File: ../content/samplepoint.py, line: 41
 msgid "Elevation"
 msgstr ""
 #
@@ -1613,13 +1847,13 @@ msgstr ""
 msgid "Email"
 msgstr ""
 #
-# File: ../browser/analysisrequest.py, line: 1244
-# File: ../browser/client.py, line: 852
-# File: ../browser/clientfolder.py, line: 37
+# File: ../browser/analysisrequest.py, line: 1283
+# File: ../browser/client.py, line: 851
+# File: ../browser/clientfolder.py, line: 38
 msgid "Email Address"
 msgstr ""
 #
-# File: ../content/client.py, line: 50
+# File: ../content/client.py, line: 51
 msgid "Email subject line"
 msgstr ""
 #
@@ -1631,9 +1865,14 @@ msgstr ""
 msgid "Enable the Sampling workflow"
 msgstr ""
 #
-# File: ../browser/templates/treatmenthistory.pt, line: 32
-# File: ../content/patient.py, line: 84
+# File: ../browser/templates/patient_chronicconditions.pt, line: 38
+# File: ../browser/templates/patient_treatmenthistory.pt, line: 23
+# File: ../content/patient.py, line: 122
 msgid "End"
+msgstr ""
+#
+# File: ../controlpanel/bika_epidemiologicalyears.py, line: 38
+msgid "End Date"
 msgstr ""
 #
 # File: ../browser/templates/login_details.pt, line: 54
@@ -1654,7 +1893,7 @@ msgstr ""
 msgid "Enter discount percentage value"
 msgstr ""
 #
-# File: ../content/analysisservice.py, line: 374
+# File: ../content/analysisservice.py, line: 380
 # File: ../content/labproduct.py, line: 25
 msgid "Enter percentage value eg. 14.0"
 msgstr ""
@@ -1665,32 +1904,61 @@ msgid ""
 "can be overwrittem on individual items"
 msgstr ""
 #
-# File: ../content/analysisrequest.py, line: 187
+# File: ../content/analysisrequest.py, line: 195
 msgid "Enter percentage value eg. 33.0"
 msgstr ""
 #
-# File: ../content/samplepoint.py, line: 25
+# File: ../content/samplepoint.py, line: 26
 msgid ""
 "Enter the Sample Point's latitude in degrees 0-90, minutes 0-59, seconds "
 "0-59 and N/S indicator"
 msgstr ""
 #
-# File: ../content/samplepoint.py, line: 33
+# File: ../content/samplepoint.py, line: 34
 msgid ""
 "Enter the Sample Point's longitude in degrees 0-180, minutes 0-59, seconds "
 "0-59 and E/W indicator"
 msgstr ""
 #
-# File: ../content/patient.py, line: 159
+# File: ../browser/reports/templates/administration_usershistory.pt, line: 78
+msgid "Entity"
+msgstr ""
+#
+# File: ../browser/reports/epidemiology_epiddetailsperanalysis.py, line: 104
+# File: ../browser/reports/templates/epidemiology.pt, line: 158
+# File: ../browser/reports/templates/epidemiology_epiddetailsperanalysis.pt, line: 92
+msgid "Epid details per analysis"
+msgstr ""
+#
+# File: ../controlpanel/bika_epidemiologicalyears.py, line: 23
+msgid "Epidemiological Years"
+msgstr ""
+#
+# File: ../controlpanel/bika_epidemiologicalyears.py, line: 25
+msgid "Epidemiological year calendars"
+msgstr ""
+#
+# File: ../content/epidemiologicalyear.py, line: 23
+msgid "Epidemiological year end date"
+msgstr ""
+#
+# File: ../content/epidemiologicalyear.py, line: 16
+msgid "Epidemiological year start date"
+msgstr ""
+#
+# File: ../browser/reports/templates/epidemiology.pt, line: 69
+msgid "Epidemiology Reports"
+msgstr ""
+#
+# File: ../content/patient.py, line: 198
 msgid "Ethnicity"
 msgstr ""
 #
-# File: ../content/patient.py, line: 160
+# File: ../content/patient.py, line: 199
 msgid "Ethnicity eg. Asian, African, etc."
 msgstr ""
 #
-# File: ../browser/analysisrequest.py, line: 2306
-# File: ../browser/templates/ar_add.pt, line: 612
+# File: ../browser/analysisrequest.py, line: 2404
 msgid "Exclude from invoice"
 msgstr ""
 #
@@ -1699,7 +1967,7 @@ msgid "Expectant/Symptomatic treatment"
 msgstr ""
 #
 # File: ../browser/fields/referenceresultsfield.py, line: 20
-# File: ../browser/widgets/referenceresultswidget.py, line: 39
+# File: ../browser/widgets/referenceresultswidget.py, line: 41
 msgid "Expected Result"
 msgstr ""
 #
@@ -1719,7 +1987,7 @@ msgstr ""
 msgid "Expiry Date"
 msgstr ""
 #
-# File: ../browser/clientfolder.py, line: 39
+# File: ../browser/clientfolder.py, line: 40
 # File: ../browser/referencesupplier.py, line: 149
 # File: ../browser/vaccinationcenter.py, line: 35
 msgid "Fax"
@@ -1729,11 +1997,11 @@ msgstr ""
 msgid "Fax (business)"
 msgstr ""
 #
-# File: ../content/patient.py, line: 186
+# File: ../content/patient.py, line: 225
 msgid "Feature"
 msgstr ""
 #
-# File: ../config.py, line: 76
+# File: ../config.py, line: 83
 msgid "Female"
 msgstr ""
 #
@@ -1741,7 +2009,7 @@ msgstr ""
 msgid "Field"
 msgstr ""
 #
-# File: ../browser/templates/sample_sticker_large.pt, line: 112
+# File: ../browser/templates/sample_sticker_large.pt, line: 113
 # File: ../config.py, line: 28
 msgid "Field Analyses"
 msgstr ""
@@ -1754,13 +2022,13 @@ msgstr ""
 msgid "Field Title"
 msgstr ""
 #
-# File: ../browser/client.py, line: 709
+# File: ../browser/client.py, line: 708
 # File: ../browser/reports/productivity_analysesattachments.py, line: 71
 # File: ../config.py, line: 21
 msgid "File"
 msgstr ""
 #
-# File: ../content/arimport.py, line: 26
+# File: ../content/arimport.py, line: 27
 msgid "Filename"
 msgstr ""
 #
@@ -1768,28 +2036,45 @@ msgstr ""
 msgid "Firstname"
 msgstr ""
 #
+# File: ../browser/reports/templates/epidemiology.pt, line: 160
+msgid ""
+"For a selected analysis (ej. <i>Influenzae</i>) and date range, report "
+"Analysis Requests, alernatively Cases, showing the hospital, sample type, "
+"fever (Y/N), pain (Y/N), provisional diagnosis, etc."
+msgstr ""
+#
+# File: ../browser/reports/templates/epidemiology_epiddetailsperanalysis.pt, line: 93
+msgid "For a selected analysis and date range, report Analysis Requests"
+msgstr ""
+#
 # File: ../controlpanel/bika_calculations.py, line: 42
 msgid "Formula"
 msgstr ""
 #
-# File: ../browser/reports/selection_macros/__init__.py, line: 111
+# File: ../browser/reports/selection_macros/__init__.py, line: 116
 # File: ../browser/reports/selection_macros/select_daterange.pt, line: 9
 msgid "From"
 msgstr ""
 #
-# File: ../browser/analysisrequest.py, line: 1242
-# File: ../browser/client.py, line: 849
-# File: ../browser/doctors.py, line: 26
+# File: ../browser/analysisrequest.py, line: 1281
+# File: ../browser/client.py, line: 848
+# File: ../browser/doctors.py, line: 27
 msgid "Full Name"
 msgstr ""
 #
-# File: ../browser/analysisrequest.py, line: 2303
-# File: ../browser/sample.py, line: 895
+# File: ../browser/analysisrequest.py, line: 2401
+# File: ../browser/sample.py, line: 908
 msgid "Future dated sample"
 msgstr ""
 #
-# File: ../content/patient.py, line: 48
+# File: ../content/patient.py, line: 57
+# File: ../content/patients.py, line: 47
 msgid "Gender"
+msgstr ""
+#
+# File: ../browser/reports/templates/epidemiology.pt, line: 96
+# File: ../browser/reports/templates/productivity.pt, line: 95
+msgid "Generate report"
 msgstr ""
 #
 # File: ../content/immunization.py, line: 45
@@ -1812,48 +2097,93 @@ msgid ""
 "list is long"
 msgstr ""
 #
-# File: ../browser/analysisrequest.py, line: 1380
+# File: ../browser/reports/selection_macros/select_groupingperiod.pt, line: 4
+msgid "Group by"
+msgstr ""
+#
+# File: ../browser/reports/epidemiology_analysisrequestspercountry.py, line: 46
+# File: ../browser/reports/epidemiology_casespercountry.py, line: 46
+# File: ../browser/reports/epidemiology_epiddetailsperanalysis.py, line: 53
+msgid "Grouping period"
+msgstr ""
+#
+# File: ../browser/analysisrequest.py, line: 1419
 # File: ../browser/referencesupplier.py, line: 119
-# File: ../browser/sample.py, line: 890
+# File: ../browser/sample.py, line: 903
 msgid "Hazardous"
+msgstr ""
+#
+# File: ../browser/fields/interimfieldsfield.py, line: 18
+msgid "Hidden Field"
+msgstr ""
+#
+# File: ../config.py, line: 79
+msgid "Hispanic or Latino"
+msgstr ""
+#
+# File: ../browser/reports/templates/epidemiology_epiddetailsperanalysis.pt, line: 113
+msgid "Hospital"
+msgstr ""
+#
+# File: ../browser/reports/templates/epidemiology_analysisrequestspercountry.pt, line: 108
+msgid "Hospital AR ID"
 msgstr ""
 #
 # File: ../browser/fields/durationfield.py, line: 20
 msgid "Hours"
 msgstr ""
 #
+# File: ../browser/templates/patient_chronicconditions.pt, line: 21
 # File: ../content/disease.py, line: 17
 msgid "ICD Code"
 msgstr ""
 #
-# File: ../browser/bika_listing.py, line: 200
+# File: ../browser/bika_listing.py, line: 214
 # File: ../browser/referencesample.py, line: 57
 # File: ../browser/referencesupplier.py, line: 26
 msgid "ID"
 msgstr ""
 #
-# File: ../content/bikasetup.py, line: 313
+# File: ../content/bikasetup.py, line: 321
 msgid "ID Server URL"
 msgstr ""
 #
-# File: ../controlpanel/bika_idserver.py, line: 52
+# File: ../controlpanel/bika_idserver.py, line: 57
 # File: ../idserver.py, line: 45
 msgid "ID Server unavailable"
 msgstr ""
 #
-# File: ../content/samplepoint.py, line: 48
+# File: ../browser/widgets/patient_identifiers.pt, line: 15
+# File: ../content/patient.py, line: 99
+msgid "Identifier"
+msgstr ""
+#
+# File: ../browser/widgets/patient_identifiers.pt, line: 17
+# File: ../content/patient.py, line: 99
+msgid "Identifier Type"
+msgstr ""
+#
+# File: ../browser/widgets/patient_identifiers.pt, line: 19
+msgid "Identifier Type Description"
+msgstr ""
+#
+# File: ../controlpanel/bika_identifiertypes.py, line: 23
+msgid "Identifier Types"
+msgstr ""
+#
+# File: ../content/samplepoint.py, line: 49
 msgid ""
 "If a sample is taken periodically at this sample point,  enter frequency "
 "here, e.g. weekly"
 msgstr ""
 #
-# File: ../content/analysisservice.py, line: 265
+# File: ../content/analysisservice.py, line: 263
 msgid ""
 "If required, select a calculation for the analysis here. Calculations can be "
 "configured under the calculations item in the LIMS set-up"
 msgstr ""
 #
-# File: ../content/analysisspec.py, line: 39
+# File: ../content/analysisspec.py, line: 40
 msgid ""
 "If the sample type you are looking for is not listed here, a specification "
 "for it has been created already. To edit existing, specifications, navigate "
@@ -1867,8 +2197,8 @@ msgid ""
 "selected here."
 msgstr ""
 #
-# File: ../browser/templates/immunizationhistory.pt, line: 34
-# File: ../content/patient.py, line: 109
+# File: ../browser/templates/patient_immunizationhistory.pt, line: 36
+# File: ../content/patient.py, line: 147
 # File: ../controlpanel/bika_immunizations.py, line: 37
 msgid "Immunization"
 msgstr ""
@@ -1882,16 +2212,16 @@ msgstr ""
 msgid "Immunizations"
 msgstr ""
 #
-# File: ../browser/client.py, line: 339
+# File: ../browser/client.py, line: 338
 # File: ../exportimport/import.py, line: 24
 msgid "Import"
 msgstr ""
 #
-# File: ../content/arimport.py, line: 20
+# File: ../content/arimport.py, line: 21
 msgid "Import Option"
 msgstr ""
 #
-# File: ../browser/client.py, line: 355
+# File: ../browser/client.py, line: 354
 msgid "Imported"
 msgstr ""
 #
@@ -1905,28 +2235,28 @@ msgstr ""
 msgid "Include descriptions"
 msgstr ""
 #
-# File: ../content/bikasetup.py, line: 279
+# File: ../content/bikasetup.py, line: 287
 msgid "Include year in ID prefix"
 msgstr ""
 #
-# File: ../browser/analyses.py, line: 270
-# File: ../browser/calcs.py, line: 144
+# File: ../browser/analyses.py, line: 273
+# File: ../browser/calcs.py, line: 167
 msgid "Indet"
 msgstr ""
 #
-# File: ../browser/analyses.py, line: 273
-# File: ../browser/calcs.py, line: 43
+# File: ../browser/analyses.py, line: 276
+# File: ../browser/calcs.py, line: 44
 msgid "Indeterminate result"
 msgstr ""
 #
-# File: ../content/analysisservice.py, line: 200
+# File: ../content/analysisservice.py, line: 198
 msgid ""
 "Indicates whether file attachments, e.g. microscope images, are required for "
 "this analysis and whether file upload function will be available for it on "
 "data capturing screens"
 msgstr ""
 #
-# File: ../browser/fields/historyawarereferencefield.py, line: 89
+# File: ../browser/fields/historyawarereferencefield.py, line: 88
 # File: ../skins/bika/update_version_before_edit.cpy, line: 22
 msgid "Initial revision"
 msgstr ""
@@ -1941,11 +2271,11 @@ msgstr ""
 msgid "Instrument Import"
 msgstr ""
 #
-# File: ../browser/worksheet.py, line: 1044
+# File: ../browser/worksheet.py, line: 1046
 msgid "Instrument exporter not found"
 msgstr ""
 #
-# File: ../browser/worksheet.py, line: 1032
+# File: ../browser/worksheet.py, line: 1034
 msgid "Instrument has no data interface selected"
 msgstr ""
 #
@@ -1957,17 +2287,11 @@ msgstr ""
 msgid "Instruments"
 msgstr ""
 #
-# File: ../browser/analyses.py, line: 280
-# File: ../browser/calcs.py, line: 152
-msgid "Invalid result"
-msgstr ""
-#
-# File: ../browser/analysisrequest.py, line: 594
-# File: ../content/analysisrequest.py, line: 149
+# File: ../content/analysisrequest.py, line: 157
 msgid "Invoice Exclude"
 msgstr ""
 #
-# File: ../content/invoice.py, line: 19
+# File: ../content/invoice.py, line: 20
 msgid "Invoice number"
 msgstr ""
 #
@@ -1975,16 +2299,16 @@ msgstr ""
 msgid "Invoices"
 msgstr ""
 #
-# File: ../browser/analysisrequest.py, line: 256
-# File: ../browser/bika_listing.py, line: 97
+# File: ../browser/analysisrequest.py, line: 257
+# File: ../browser/bika_listing.py, line: 110
 msgid "Item is inactive."
 msgstr ""
 #
-# File: ../browser/templates/bika_listing_table.pt, line: 659
+# File: ../browser/templates/bika_listing_table.pt, line: 706
 msgid "Items per page"
 msgstr ""
 #
-# File: ../content/client.py, line: 49
+# File: ../content/client.py, line: 50
 msgid "Items to be included in email subject lines"
 msgstr ""
 #
@@ -1998,7 +2322,7 @@ msgstr ""
 #
 # File: ../browser/accreditation.py, line: 49
 # File: ../browser/fields/interimfieldsfield.py, line: 14
-# File: ../browser/templates/analysisservice_popup.pt, line: 162
+# File: ../browser/reports/templates/epidemiology_casespercountry.pt, line: 153
 msgid "Keyword"
 msgstr ""
 #
@@ -2006,7 +2330,7 @@ msgstr ""
 msgid "Keywords"
 msgstr ""
 #
-# File: ../content/patient.py, line: 101
+# File: ../content/patient.py, line: 139
 msgid ""
 "Known Patient allergies to keep information that can aid drug reaction "
 "interpretation"
@@ -2016,7 +2340,7 @@ msgstr ""
 msgid "Known undesirable effects of the drug"
 msgstr ""
 #
-# File: ../browser/analysisrequest.py, line: 722
+# File: ../browser/analysisrequest.py, line: 731
 # File: ../browser/reports/qualitycontrol_resultspersamplepoint.py, line: 47
 # File: ../browser/templates/analysisrequest_manage_results.pt, line: 65
 msgid "Lab"
@@ -2030,7 +2354,7 @@ msgstr ""
 msgid "Lab Contacts"
 msgstr ""
 #
-# File: ../controlpanel/bika_departments.py, line: 28
+# File: ../controlpanel/bika_departments.py, line: 29
 msgid "Lab Departments"
 msgstr ""
 #
@@ -2043,7 +2367,7 @@ msgstr ""
 msgid "Lab Products"
 msgstr ""
 #
-# File: ../content/laboratory.py, line: 18
+# File: ../content/laboratory.py, line: 19
 msgid "Lab URL"
 msgstr ""
 #
@@ -2051,45 +2375,63 @@ msgstr ""
 msgid "Label"
 msgstr ""
 #
-# File: ../content/bikasetup.py, line: 244
+# File: ../content/bikasetup.py, line: 251
 msgid "Label sizes"
 msgstr ""
 #
-# File: ../content/laboratory.py, line: 108
-# File: ../setuphandlers.py, line: 95
+# File: ../content/laboratory.py, line: 109
+# File: ../setuphandlers.py, line: 101
 msgid "Laboratory"
 msgstr ""
 #
-# File: ../content/laboratory.py, line: 34
+# File: ../content/laboratory.py, line: 35
 msgid "Laboratory Accredited"
 msgstr ""
 #
-# File: ../browser/bika_listing.py, line: 202
+# File: ../browser/bika_listing.py, line: 216
 msgid "Last modified"
 msgstr ""
 #
-# File: ../browser/late_analyses.py, line: 49
-# File: ../browser/reports/productivity_analysestats.py, line: 145
+# File: ../browser/late_analyses.py, line: 48
+# File: ../browser/reports/productivity_analysestats.py, line: 139
 msgid "Late"
 msgstr ""
 #
-# File: ../browser/analysisrequest.py, line: 2300
-# File: ../browser/late_analyses.py, line: 27
+# File: ../browser/analysisrequest.py, line: 2398
+# File: ../browser/late_analyses.py, line: 26
 # File: ../skins/bika/portlet_late_analyses.pt, line: 31
 msgid "Late Analyses"
 msgstr ""
 #
-# File: ../browser/analyses.py, line: 331
-# File: ../browser/worksheet.py, line: 613
+# File: ../browser/analyses.py, line: 335
+# File: ../browser/worksheet.py, line: 615
 msgid "Late Analysis"
 msgstr ""
 #
-# File: ../content/samplepoint.py, line: 24
+# File: ../content/samplepoint.py, line: 25
 msgid "Latitude"
 msgstr ""
 #
-# File: ../content/sample.py, line: 84
+# File: ../content/sample.py, line: 85
 msgid "Linked Sample"
+msgstr ""
+#
+# File: ../controlpanel/bika_identifiertypes.py, line: 25
+msgid "List of types of identifiers for multiple identifier records"
+msgstr ""
+#
+# File: ../browser/reports/templates/epidemiology.pt, line: 136
+# File: ../browser/reports/templates/epidemiology_analysisrequestspercountry.pt, line: 84
+msgid "Lists all Analysis Requests for a date range grouped by countries"
+msgstr ""
+#
+# File: ../browser/reports/templates/epidemiology.pt, line: 84
+# File: ../browser/reports/templates/epidemiology_casespercountry.pt, line: 99
+msgid "Lists all cases for a date range grouped by countries"
+msgstr ""
+#
+# File: ../browser/reports/templates/productivity.pt, line: 84
+msgid "Lists all samples received for a date range"
 msgstr ""
 #
 # File: ../exportimport/import.pt, line: 46
@@ -2104,12 +2446,13 @@ msgstr ""
 msgid "Loaded"
 msgstr ""
 #
-# File: ../browser/templates/travelhistory.pt, line: 39
-# File: ../content/patient.py, line: 126
+# File: ../browser/templates/patient_travelhistory.pt, line: 38
+# File: ../content/patient.py, line: 164
 msgid "Location"
 msgstr ""
 #
 # File: ../browser/log.py, line: 36
+# File: ../browser/templates/analysisservice_popup.pt, line: 283
 msgid "Log"
 msgstr ""
 #
@@ -2129,7 +2472,7 @@ msgid ""
 "caps lock is not enabled."
 msgstr ""
 #
-# File: ../content/samplepoint.py, line: 32
+# File: ../content/samplepoint.py, line: 33
 msgid "Longitude"
 msgstr ""
 #
@@ -2139,24 +2482,24 @@ msgstr ""
 msgid "Lot Number"
 msgstr ""
 #
-# File: ../config.py, line: 82
+# File: ../config.py, line: 89
 msgid "Mailing address"
 msgstr ""
 #
-# File: ../config.py, line: 75
+# File: ../config.py, line: 82
 msgid "Male"
 msgstr ""
 #
 # File: ../content/department.py, line: 22
-# File: ../controlpanel/bika_departments.py, line: 42
+# File: ../controlpanel/bika_departments.py, line: 43
 msgid "Manager"
 msgstr ""
 #
-# File: ../controlpanel/bika_departments.py, line: 48
+# File: ../controlpanel/bika_departments.py, line: 49
 msgid "Manager Email"
 msgstr ""
 #
-# File: ../controlpanel/bika_departments.py, line: 45
+# File: ../controlpanel/bika_departments.py, line: 46
 msgid "Manager Phone"
 msgstr ""
 #
@@ -2173,7 +2516,7 @@ msgid "Max"
 msgstr ""
 #
 # File: ../browser/accreditation.py, line: 55
-# File: ../controlpanel/bika_analysisservices.py, line: 121
+# File: ../controlpanel/bika_analysisservices.py, line: 128
 msgid "Max Time"
 msgstr ""
 #
@@ -2185,34 +2528,34 @@ msgstr ""
 msgid "Maximum possible size or volume of samples."
 msgstr ""
 #
-# File: ../content/analysis.py, line: 68
-# File: ../content/analysisservice.py, line: 287
+# File: ../content/analysis.py, line: 69
+# File: ../content/analysisservice.py, line: 293
 msgid ""
 "Maximum time allowed for completion of the analysis. A late analysis alert "
 "is raised when this period elapses"
 msgstr ""
 #
-# File: ../content/analysis.py, line: 67
-# File: ../content/analysisservice.py, line: 286
+# File: ../content/analysis.py, line: 68
+# File: ../content/analysisservice.py, line: 292
 msgid "Maximum turn-around time"
 msgstr ""
 #
-# File: ../content/analysisrequest.py, line: 186
+# File: ../content/analysisrequest.py, line: 194
 # File: ../content/bikasetup.py, line: 85
 msgid "Member discount %"
 msgstr ""
 #
-# File: ../content/client.py, line: 41
+# File: ../content/client.py, line: 42
 msgid "Member discount applies"
 msgstr ""
 #
-# File: ../browser/analyses.py, line: 50
-# File: ../browser/templates/analysisservice_popup.pt, line: 163
-# File: ../browser/widgets/serviceswidget.py, line: 38
+# File: ../browser/analyses.py, line: 43
+# File: ../browser/batch.py, line: 344
+# File: ../browser/templates/analysisservice_popup.pt, line: 164
 msgid "Method"
 msgstr ""
 #
-# File: ../browser/templates/analysisservice_popup.pt, line: 104
+# File: ../browser/templates/analysisservice_popup.pt, line: 105
 # File: ../content/method.py, line: 26
 msgid "Method Document"
 msgstr ""
@@ -2222,11 +2565,11 @@ msgstr ""
 msgid "Method Instructions"
 msgstr ""
 #
-# File: ../browser/templates/analysisservice_popup.pt, line: 79
+# File: ../browser/templates/analysisservice_popup.pt, line: 80
 msgid "Method: ${method_name}"
 msgstr ""
 #
-# File: ../browser/templates/analysisservice_popup.pt, line: 126
+# File: ../browser/templates/analysisservice_popup.pt, line: 127
 msgid "Method: None"
 msgstr ""
 #
@@ -2234,14 +2577,14 @@ msgstr ""
 msgid "Methods"
 msgstr ""
 #
-# File: ../browser/mailtemplates/analysisrequest_results.pt, line: 400
-# File: ../browser/templates/ar_add.pt, line: 772
+# File: ../browser/mailtemplates/analysisrequest_results.pt, line: 425
+# File: ../browser/templates/ar_add.pt, line: 969
 msgid ""
 "Methods included in the ${accreditation_body} schedule of Accreditation for "
 "this Laboratory. Analysis remarks are not accredited"
 msgstr ""
 #
-# File: ../browser/mailtemplates/analysisrequest_results.pt, line: 437
+# File: ../browser/mailtemplates/analysisrequest_results.pt, line: 462
 msgid "Methods of analysis available by clicking on the 'Request' link"
 msgstr ""
 #
@@ -2259,8 +2602,8 @@ msgstr ""
 msgid "Minimum 5 characters."
 msgstr ""
 #
-# File: ../content/sampletype.py, line: 56
-# File: ../controlpanel/bika_sampletypes.py, line: 50
+# File: ../content/sampletype.py, line: 57
+# File: ../controlpanel/bika_sampletypes.py, line: 51
 msgid "Minimum Volume"
 msgstr ""
 #
@@ -2273,9 +2616,9 @@ msgstr ""
 msgid "Minutes"
 msgstr ""
 #
-# File: ../browser/analysisrequest.py, line: 1246
-# File: ../browser/client.py, line: 854
-# File: ../browser/doctors.py, line: 30
+# File: ../browser/analysisrequest.py, line: 1285
+# File: ../browser/client.py, line: 853
+# File: ../browser/doctors.py, line: 31
 msgid "Mobile Phone"
 msgstr ""
 #
@@ -2290,14 +2633,22 @@ msgstr ""
 msgid "More"
 msgstr ""
 #
-# File: ../content/patient.py, line: 170
+# File: ../content/patient.py, line: 209
 msgid "Mothers name"
 msgstr ""
 #
 # File: ../browser/clientfolder.py, line: 36
-# File: ../content/organisation.py, line: 20
+# File: ../content/organisation.py, line: 21
 # File: ../controlpanel/bika_labcontacts.py, line: 37
 msgid "Name"
+msgstr ""
+#
+# File: ../config.py, line: 74
+msgid "Native American"
+msgstr ""
+#
+# File: ../config.py, line: 77
+msgid "Native Hawaiian or Other Pacific Islander"
 msgstr ""
 #
 # File: ../browser/templates/worksheet_add_control.pt, line: 43
@@ -2305,16 +2656,25 @@ msgstr ""
 msgid "New"
 msgstr ""
 #
-# File: ../browser/analysisservice.py, line: 92
+# File: ../browser/analysisservice.py, line: 104
 msgid "No"
 msgstr ""
 #
-# File: ../browser/analysisrequest.py, line: 117
+# File: ../browser/reports/productivity_dataentrydaybook.py, line: 38
+msgid "No Analysis Requests matched your query"
+msgstr ""
+#
+# File: ../browser/reports/epidemiology_epiddetailsperanalysis.py, line: 97
+msgid "No analyses found"
+msgstr ""
+#
+# File: ../browser/analysisrequest.py, line: 118
 msgid "No analyses have been selected"
 msgstr ""
 #
-# File: ../browser/reports/qualitycontrol_referenceanalysisqc.py, line: 87
-# File: ../browser/reports/qualitycontrol_resultspersamplepoint.py, line: 106
+# File: ../browser/reports/productivity_analysesperdepartment.py, line: 47
+# File: ../browser/reports/productivity_analysesperformedpertotal.py, line: 37
+# File: ../browser/reports/qualitycontrol_referenceanalysisqc.py, line: 75
 msgid "No analyses matched your query"
 msgstr ""
 #
@@ -2322,51 +2682,74 @@ msgstr ""
 msgid "No analyses were added"
 msgstr ""
 #
-# File: ../browser/worksheet.py, line: 586
+# File: ../browser/worksheet.py, line: 588
 msgid "No analyses were added to this worksheet."
 msgstr ""
 #
-# File: ../browser/reports/qualitycontrol_referenceanalysisqc.py, line: 59
+# File: ../browser/reports/epidemiology_analysisrequestspercountry.py, line: 37
+# File: ../browser/reports/epidemiology_epiddetailsperanalysis.py, line: 45
+msgid "No analysis requests matched your query"
+msgstr ""
+#
+# File: ../browser/reports/epidemiology_epiddetailsperanalysis.py, line: 37
+# File: ../browser/reports/qualitycontrol_referenceanalysisqc.py, line: 55
 # File: ../browser/reports/qualitycontrol_resultspersamplepoint.py, line: 77
 msgid "No analysis services were selected."
 msgstr ""
 #
-# File: ../browser/analysisrequest.py, line: 189
+# File: ../browser/reports/epidemiology_casespercountry.py, line: 37
+msgid "No batches matched your query"
+msgstr ""
+#
+# File: ../browser/analysisrequest.py, line: 190
 # File: ../browser/client.py, line: 135
 msgid "No changes made."
 msgstr ""
 #
-# File: ../browser/worksheet.py, line: 1012
+# File: ../browser/worksheet.py, line: 1014
 msgid "No control type specified"
 msgstr ""
 #
-# File: ../browser/analysisrequest.py, line: 1500
+# File: ../browser/analysisrequest.py, line: 1554
 msgid "No data was entered"
 msgstr ""
 #
-# File: ../browser/templates/analysisservice_popup.pt, line: 234
+# File: ../browser/templates/analysisservice_popup.pt, line: 235
 msgid "No default containers specified for this service"
 msgstr ""
 #
-# File: ../browser/templates/analysisservice_popup.pt, line: 246
+# File: ../browser/templates/analysisservice_popup.pt, line: 247
 msgid "No default preservations specified for this service"
 msgstr ""
 #
-# File: ../browser/analysisrequest.py, line: 96
+# File: ../browser/reports/administration_usershistory.py, line: 85
+msgid "No historical actions matched your query"
+msgstr ""
+#
+# File: ../browser/widgets/patientidentifierswidget.py, line: 59
+msgid "No identifier entered"
+msgstr ""
+#
+# File: ../browser/analysisrequest.py, line: 97
 msgid "No items have been selected"
 msgstr ""
 #
-# File: ../browser/analysisrequest.py, line: 366
+# File: ../browser/analysisrequest.py, line: 371
 # File: ../browser/client.py, line: 229
 msgid "No items were published"
 msgstr ""
 #
-# File: ../content/arimportitem.py, line: 45
+# File: ../content/arimportitem.py, line: 46
 msgid "No of containers"
 msgstr ""
 #
-# File: ../browser/reports/qualitycontrol_referenceanalysisqc.py, line: 50
+# File: ../browser/reports/qualitycontrol_referenceanalysisqc.py, line: 45
 msgid "No reference sample was selected."
+msgstr ""
+#
+# File: ../browser/reports/productivity_dailysamplesreceived.py, line: 38
+# File: ../browser/reports/productivity_samplereceivedvsreported.py, line: 38
+msgid "No samples matched your query"
 msgstr ""
 #
 # File: ../browser/templates/login_details.pt, line: 26
@@ -2388,8 +2771,27 @@ msgstr ""
 msgid "Not Permitted"
 msgstr ""
 #
-# File: ../browser/mailtemplates/analysisrequest_results.pt, line: 393
+# File: ../browser/mailtemplates/analysisrequest_results.pt, line: 418
 msgid "Not invoiced"
+msgstr ""
+#
+# File: ../browser/reports/templates/epidemiology_analysisrequestspercountry.pt, line: 215
+# File: ../browser/reports/templates/epidemiology_epiddetailsperanalysis.pt, line: 148
+msgid "Num of ARs"
+msgstr ""
+#
+# File: ../browser/reports/templates/epidemiology_casespercountry.pt, line: 174
+msgid "Num of Cases"
+msgstr ""
+#
+# File: ../browser/reports/templates/epidemiology_analysisrequestspercountry.pt, line: 224
+# File: ../browser/reports/templates/epidemiology_casespercountry.pt, line: 183
+msgid "Num of Countries"
+msgstr ""
+#
+# File: ../browser/reports/templates/productivity_dataentrydaybook.pt, line: 72
+msgid ""
+"Number of Analysis Requests and totals submitted between a period of time"
 msgstr ""
 #
 # File: ../browser/reports/productivity_analysesperclient.py, line: 39
@@ -2402,12 +2804,18 @@ msgstr ""
 #
 # File: ../browser/queries/invoices.py, line: 117
 # File: ../browser/queries/orders.py, line: 117
-# File: ../browser/reports/productivity_analysesperclient.py, line: 99
+# File: ../browser/reports/productivity_analysesperclient.py, line: 81
 msgid "Number of analyses"
 msgstr ""
 #
 # File: ../browser/reports/qualitycontrol_analysesoutofrange.py, line: 221
 msgid "Number of analyses out of range for period"
+msgstr ""
+#
+# File: ../browser/reports/templates/productivity_analysesperformedpertotal.pt, line: 80
+msgid ""
+"Number of analyses published and expressed as a percentage of all analyses "
+"performed"
 msgstr ""
 #
 # File: ../browser/queries/invoices.py, line: 34
@@ -2425,11 +2833,22 @@ msgstr ""
 msgid "Number of analyses retested for period"
 msgstr ""
 #
-# File: ../browser/reports/productivity_analysesperclient.py, line: 98
+# File: ../browser/reports/templates/productivity.pt, line: 327
+# File: ../browser/reports/templates/productivity_analysesperdepartment.pt, line: 80
+msgid ""
+"Number of analysis requested and published per department and expresed as a "
+"percentage of all analyses performed"
+msgstr ""
+#
+# File: ../browser/reports/templates/epidemiology.pt, line: 107
+msgid "Number of cases per country"
+msgstr ""
+#
+# File: ../browser/reports/productivity_analysesperclient.py, line: 80
 msgid "Number of requests"
 msgstr ""
 #
-# File: ../content/arimport.py, line: 143
+# File: ../content/arimport.py, line: 144
 msgid "Number of samples"
 msgstr ""
 #
@@ -2443,39 +2862,54 @@ msgid ""
 "not specified, the sample type retention period will be used."
 msgstr ""
 #
-# File: ../browser/templates/patient_chronicconditions.pt, line: 33
-# File: ../browser/widgets/case_symptoms.pt, line: 29
+# File: ../browser/reports/templates/epidemiology_analysisrequestspercountry.pt, line: 168
+# File: ../browser/templates/patient_chronicconditions.pt, line: 34
+# File: ../browser/widgets/case_provisionaldiagnosis.pt, line: 15
 msgid "Onset"
 msgstr ""
 #
-# File: ../browser/batchfolder.py, line: 47
+# File: ../browser/batchfolder.py, line: 38
+# File: ../browser/reports/templates/epidemiology_casespercountry.pt, line: 117
+# File: ../content/batch.py, line: 87
+msgid "Onset Date"
+msgstr ""
+#
+# File: ../content/batch.py, line: 103
+msgid "Onset Date Estimated"
+msgstr ""
+#
+# File: ../browser/batchfolder.py, line: 49
 # File: ../browser/worksheetfolder.py, line: 177
 msgid "Open"
 msgstr ""
 #
-# File: ../browser/templates/sample_sticker_large.pt, line: 83
-# File: ../browser/worksheet.py, line: 528
+# File: ../browser/templates/sample_sticker_large.pt, line: 84
+# File: ../browser/worksheet.py, line: 530
 msgid "Order"
 msgstr ""
 #
-# File: ../browser/client.py, line: 782
+# File: ../browser/client.py, line: 781
 msgid "Order Date"
 msgstr ""
 #
 # File: ../config.py, line: 69
-# File: ../content/arimport.py, line: 103
+# File: ../content/arimport.py, line: 104
 msgid "Order ID"
 msgstr ""
 #
-# File: ../browser/client.py, line: 781
+# File: ../browser/client.py, line: 780
 # File: ../content/invoicelineitem.py, line: 29
-# File: ../content/supplyorder.py, line: 32
+# File: ../content/supplyorder.py, line: 33
 msgid "Order Number"
 msgstr ""
 #
-# File: ../browser/client.py, line: 778
+# File: ../browser/client.py, line: 777
 # File: ../browser/queries/queries_query.pt, line: 39
 msgid "Orders"
+msgstr ""
+#
+# File: ../browser/reports/templates/productivity.pt, line: 383
+msgid "Other productivity reports"
 msgstr ""
 #
 # File: ../config.py, line: 22
@@ -2494,13 +2928,13 @@ msgstr ""
 msgid "Parameters undefined"
 msgstr ""
 #
-# File: ../browser/analyses.py, line: 48
-# File: ../browser/analysisrequest.py, line: 1036
+# File: ../browser/analyses.py, line: 41
+# File: ../browser/analysisrequest.py, line: 1059
 # File: ../browser/sample.py, line: 46
 msgid "Partition"
 msgstr ""
 #
-# File: ../browser/templates/analysisservice_popup.pt, line: 212
+# File: ../browser/templates/analysisservice_popup.pt, line: 213
 msgid "Partition Setup"
 msgstr ""
 #
@@ -2522,22 +2956,59 @@ msgstr ""
 msgid "Password lifetime"
 msgstr ""
 #
-# File: ../browser/analysisrequest.py, line: 450
-# File: ../browser/sample.py, line: 322
-# File: ../browser/templates/ar_add.pt, line: 186
+# File: ../browser/analysisrequest.py, line: 452
+# File: ../browser/batchfolder.py, line: 39
+# File: ../browser/mailtemplates/analysisrequest_results.pt, line: 127
 msgid "Patient"
 msgstr ""
 #
-# File: ../content/patient.py, line: 25
-# File: ../content/patients.py, line: 39
+# File: ../browser/reports/templates/epidemiology_analysisrequestspercountry.pt, line: 104
+# File: ../browser/reports/templates/epidemiology_casespercountry.pt, line: 119
+msgid "Patient Age (years)"
+msgstr ""
+#
+# File: ../content/batch.py, line: 97
+msgid "Patient Age at Case Onset Date"
+msgstr ""
+#
+# File: ../browser/reports/templates/epidemiology_analysisrequestspercountry.pt, line: 102
+msgid "Patient First name"
+msgstr ""
+#
+# File: ../browser/reports/templates/epidemiology_analysisrequestspercountry.pt, line: 107
+# File: ../browser/reports/templates/epidemiology_casespercountry.pt, line: 122
+msgid "Patient Gender"
+msgstr ""
+#
+# File: ../browser/reports/templates/epidemiology_analysisrequestspercountry.pt, line: 101
+# File: ../content/patient.py, line: 33
+# File: ../content/patients.py, line: 44
 msgid "Patient ID"
 msgstr ""
 #
-# File: ../content/patients.py, line: 30
+# File: ../browser/widgets/patientidentifierswidget.py, line: 88
+# File: ../content/patient.py, line: 103
+msgid "Patient additional identifiers"
+msgstr ""
+#
+# File: ../browser/widgets/patientidentifierswidget.py, line: 87
+msgid "Patient identifiers"
+msgstr ""
+#
+# File: ../browser/reports/templates/epidemiology_analysisrequestspercountry.pt, line: 240
+# File: ../browser/reports/templates/epidemiology_casespercountry.pt, line: 199
+msgid "Patient's age when case's onset date"
+msgstr ""
+#
+# File: ../content/patient.py, line: 185
+msgid "Patient's past medical history."
+msgstr ""
+#
+# File: ../content/patients.py, line: 31
 msgid "Patients"
 msgstr ""
 #
-# File: ../browser/client.py, line: 796
+# File: ../browser/client.py, line: 795
 msgid "Pending"
 msgstr ""
 #
@@ -2545,7 +3016,14 @@ msgstr ""
 msgid "Pending orders"
 msgstr ""
 #
+# File: ../browser/reports/templates/productivity_analysesperdepartment.pt, line: 98
+# File: ../browser/reports/templates/productivity_analysesperformedpertotal.pt, line: 98
+msgid "Performed"
+msgstr ""
+#
 # File: ../browser/reports/selection_macros/select_period.pt, line: 5
+# File: ../browser/reports/templates/epidemiology_analysisrequestspercountry.pt, line: 98
+# File: ../browser/reports/templates/epidemiology_casespercountry.pt, line: 113
 msgid "Period"
 msgstr ""
 #
@@ -2554,14 +3032,14 @@ msgid "Permitted"
 msgstr ""
 #
 # File: ../browser/fields/referenceresultsfield.py, line: 21
-# File: ../browser/widgets/analysisspecificationwidget.py, line: 39
-# File: ../browser/widgets/referenceresultswidget.py, line: 40
+# File: ../browser/widgets/analysisspecificationwidget.py, line: 41
+# File: ../browser/widgets/referenceresultswidget.py, line: 42
 msgid "Permitted Error %"
 msgstr ""
 #
-# File: ../browser/clientfolder.py, line: 38
-# File: ../content/organisation.py, line: 30
-# File: ../controlpanel/bika_labcontacts.py, line: 42
+# File: ../browser/clientfolder.py, line: 39
+# File: ../browser/templates/batch_publish.pt, line: 68
+# File: ../content/organisation.py, line: 31
 msgid "Phone"
 msgstr ""
 #
@@ -2577,49 +3055,57 @@ msgstr ""
 msgid "Phone (mobile)"
 msgstr ""
 #
-# File: ../content/patient.py, line: 180
+# File: ../content/patient.py, line: 219
 msgid "Photo"
 msgstr ""
 #
-# File: ../config.py, line: 81
-# File: ../content/organisation.py, line: 48
+# File: ../config.py, line: 88
+# File: ../content/organisation.py, line: 49
 # File: ../content/person.py, line: 91
 msgid "Physical address"
 msgstr ""
 #
-# File: ../content/arimportitem.py, line: 50
+# File: ../content/arimportitem.py, line: 51
 msgid "Picking Slip"
 msgstr ""
 #
-# File: ../content/analysisservice.py, line: 445
+# File: ../skins/bika/validate_integrity.cpy, line: 20
+msgid "Please correct the indicated errors."
+msgstr ""
+#
+# File: ../content/analysisservice.py, line: 451
 msgid ""
 "Please list all options for the analysis result if you want to restrict it "
 "to specific options only, e.g. 'Positive', 'Negative' and 'Indeterminable'.  "
 "The option's result value must be a number"
 msgstr ""
 #
-# File: ../content/analysisservice.py, line: 499
+# File: ../content/analysisservice.py, line: 505
 msgid ""
 "Please specify preservations that differ from the analysis service's default "
 "preservation per sample type here."
 msgstr ""
 #
-# File: ../content/laboratory.py, line: 84
+# File: ../content/laboratory.py, line: 85
 msgid ""
 "Please upload the logo you are authorised to use on your website and results "
 "reports by your accreditation body. Maximum size is 175 x 175 pixels."
 msgstr ""
 #
-# File: ../content/analysisservice.py, line: 316
+# File: ../content/analysisservice.py, line: 322
 msgid "Point of Capture"
 msgstr ""
 #
-# File: ../browser/worksheet.py, line: 206
+# File: ../browser/worksheet.py, line: 207
 # File: ../content/worksheettemplate.py, line: 23
 msgid "Position"
 msgstr ""
 #
-# File: ../content/organisation.py, line: 54
+# File: ../browser/reports/templates/epidemiology.pt, line: 186
+msgid "Positive results per country"
+msgstr ""
+#
+# File: ../content/organisation.py, line: 55
 # File: ../content/person.py, line: 97
 msgid "Postal address"
 msgstr ""
@@ -2633,20 +3119,20 @@ msgstr ""
 msgid "Pre-preserved"
 msgstr ""
 #
-# File: ../content/analysisservice.py, line: 182
+# File: ../content/analysisservice.py, line: 180
 msgid "Precision as number of decimals"
 msgstr ""
 #
-# File: ../controlpanel/bika_sampletypes.py, line: 48
+# File: ../controlpanel/bika_sampletypes.py, line: 49
 msgid "Prefix"
 msgstr ""
 #
-# File: ../content/bikasetup.py, line: 264
+# File: ../content/bikasetup.py, line: 272
 msgid "Prefixes"
 msgstr ""
 #
 # File: ../browser/sample.py, line: 50
-# File: ../browser/templates/sample_sticker_large.pt, line: 97
+# File: ../browser/templates/sample_sticker_large.pt, line: 98
 # File: ../browser/widgets/artemplatepartitionswidget.py, line: 36
 msgid "Preservation"
 msgstr ""
@@ -2655,12 +3141,12 @@ msgstr ""
 msgid "Preservation Category"
 msgstr ""
 #
-# File: ../browser/templates/analysisservice_popup.pt, line: 262
+# File: ../browser/templates/analysisservice_popup.pt, line: 263
 # File: ../controlpanel/bika_preservations.py, line: 28
 msgid "Preservations"
 msgstr ""
 #
-# File: ../browser/analysisrequest.py, line: 1915
+# File: ../browser/analysisrequest.py, line: 1988
 # File: ../browser/sample.py, line: 58
 msgid "Preserver"
 msgstr ""
@@ -2674,12 +3160,12 @@ msgid "Preventive/Prophylactic treatment"
 msgstr ""
 #
 # File: ../browser/accreditation.py, line: 54
-# File: ../browser/analysisrequest.py, line: 1034
-# File: ../browser/templates/analysisservice_popup.pt, line: 164
+# File: ../browser/analysisrequest.py, line: 1057
+# File: ../browser/templates/analysisservice_popup.pt, line: 165
 msgid "Price"
 msgstr ""
 #
-# File: ../content/analysisservice.py, line: 341
+# File: ../content/analysisservice.py, line: 347
 msgid "Price (excluding VAT)"
 msgstr ""
 #
@@ -2691,7 +3177,8 @@ msgstr ""
 msgid "Pricelist for"
 msgstr ""
 #
-# File: ../content/patient.py, line: 35
+# File: ../content/patient.py, line: 44
+# File: ../content/patients.py, line: 63
 msgid "Primary Referrer"
 msgstr ""
 #
@@ -2700,14 +3187,15 @@ msgid "Print"
 msgstr ""
 #
 # File: ../browser/reports/templates/report_frame.pt, line: 36
+# File: ../browser/templates/batch_publish.pt, line: 124
 msgid "Print date:"
 msgstr ""
 #
-# File: ../content/supplyorderitem.py, line: 19
+# File: ../content/supplyorderitem.py, line: 20
 msgid "Product"
 msgstr ""
 #
-# File: ../browser/reports/templates/productivity.pt, line: 10
+# File: ../browser/reports/templates/productivity.pt, line: 69
 msgid "Productivity Reports"
 msgstr ""
 #
@@ -2721,7 +3209,7 @@ msgstr ""
 msgid "Profile Analyses"
 msgstr ""
 #
-# File: ../browser/client.py, line: 409
+# File: ../browser/client.py, line: 408
 # File: ../controlpanel/bika_analysisprofiles.py, line: 44
 msgid "Profile Key"
 msgstr ""
@@ -2734,15 +3222,24 @@ msgstr ""
 msgid "Profiles"
 msgstr ""
 #
-# File: ../content/batch.py, line: 64
-msgid "Provisional Diagnosis and additional notes"
+# File: ../browser/reports/templates/epidemiology_analysisrequestspercountry.pt, line: 162
+# File: ../browser/widgets/case_provisionaldiagnosis.pt, line: 13
+msgid "Provisional Diagnosis"
 msgstr ""
 #
-# File: ../content/contact.py, line: 21
+# File: ../browser/reports/templates/epidemiology_epiddetailsperanalysis.pt, line: 116
+msgid "Provisional diagnosis"
+msgstr ""
+#
+# File: ../browser/reports/templates/productivity_dataentrydaybook.pt, line: 92
+msgid "Public. Lag"
+msgstr ""
+#
+# File: ../content/contact.py, line: 22
 msgid "Publication preference"
 msgstr ""
 #
-# File: ../browser/analysisrequest.py, line: 2081
+# File: ../browser/analysisrequest.py, line: 2159
 # File: ../browser/queries/analysisrequests.py, line: 219
 # File: ../browser/queries/invoices.py, line: 73
 msgid "Published"
@@ -2760,7 +3257,7 @@ msgstr ""
 msgid "Quality Control Reports"
 msgstr ""
 #
-# File: ../content/supplyorderitem.py, line: 26
+# File: ../content/supplyorderitem.py, line: 27
 msgid "Quantity"
 msgstr ""
 #
@@ -2784,7 +3281,7 @@ msgstr ""
 msgid "Query orders on client, order data, product and status"
 msgstr ""
 #
-# File: ../content/arimport.py, line: 109
+# File: ../content/arimport.py, line: 110
 msgid "QuoteID"
 msgstr ""
 #
@@ -2795,12 +3292,12 @@ msgid "Range Specification"
 msgstr ""
 #
 # File: ../browser/reports/qualitycontrol_resultspersamplepoint.py, line: 283
-# File: ../content/analysisservice.py, line: 420
+# File: ../content/analysisservice.py, line: 426
 msgid "Range max"
 msgstr ""
 #
 # File: ../browser/reports/qualitycontrol_resultspersamplepoint.py, line: 282
-# File: ../content/analysisservice.py, line: 419
+# File: ../content/analysisservice.py, line: 425
 msgid "Range min"
 msgstr ""
 #
@@ -2824,10 +3321,14 @@ msgstr ""
 msgid "Receive"
 msgstr ""
 #
-# File: ../browser/analysisrequest.py, line: 1997
+# File: ../browser/analysisrequest.py, line: 2072
 # File: ../browser/queries/analysisrequests.py, line: 207
 # File: ../browser/reports/productivity_analysestats.py, line: 63
 msgid "Received"
+msgstr ""
+#
+# File: ../browser/reports/templates/productivity_dataentrydaybook.pt, line: 91
+msgid "Recept. Lag"
 msgstr ""
 #
 # File: ../browser/templates/referencesample_sticker.pt, line: 46
@@ -2854,7 +3355,7 @@ msgstr ""
 msgid "Reference Results"
 msgstr ""
 #
-# File: ../browser/reports/qualitycontrol_referenceanalysisqc.py, line: 53
+# File: ../browser/reports/qualitycontrol_referenceanalysisqc.py, line: 49
 # File: ../browser/reports/selection_macros/select_reference_sample.pt, line: 5
 msgid "Reference Sample"
 msgstr ""
@@ -2872,11 +3373,11 @@ msgstr ""
 msgid "Reference Suppliers"
 msgstr ""
 #
-# File: ../content/referenceanalysis.py, line: 29
+# File: ../content/referenceanalysis.py, line: 30
 msgid "Reference Type"
 msgstr ""
 #
-# File: ../browser/reports/qualitycontrol_referenceanalysisqc.py, line: 37
+# File: ../browser/reports/qualitycontrol_referenceanalysisqc.py, line: 31
 # File: ../browser/reports/templates/qualitycontrol.pt, line: 58
 msgid "Reference analysis QC"
 msgstr ""
@@ -2885,11 +3386,11 @@ msgstr ""
 msgid "Reference analysis quality control graphs"
 msgstr ""
 #
-# File: ../browser/reports/qualitycontrol_referenceanalysisqc.py, line: 38
+# File: ../browser/reports/qualitycontrol_referenceanalysisqc.py, line: 32
 msgid "Reference analysis quality control graphs "
 msgstr ""
 #
-# File: ../browser/worksheet.py, line: 998
+# File: ../browser/worksheet.py, line: 1000
 msgid "Reference sample"
 msgstr ""
 #
@@ -2912,9 +3413,9 @@ msgstr ""
 msgid "Relevant Facts"
 msgstr ""
 #
-# File: ../browser/mailtemplates/analysisrequest_results.pt, line: 279
-# File: ../content/analysisprofile.py, line: 46
-# File: ../content/analysisrequest.py, line: 179
+# File: ../browser/batch.py, line: 368
+# File: ../browser/mailtemplates/analysisrequest_results.pt, line: 304
+# File: ../browser/templates/bika_listing_table.pt, line: 571
 msgid "Remarks"
 msgstr ""
 #
@@ -2922,36 +3423,60 @@ msgstr ""
 msgid "Repeated analyses"
 msgstr ""
 #
-# File: ../browser/reports/templates/administration.pt, line: 24
-# File: ../browser/reports/templates/productivity.pt, line: 27
+# File: ../browser/reports/templates/administration.pt, line: 105
 # File: ../browser/reports/templates/qualitycontrol.pt, line: 24
+# File: ../content/report.py, line: 18
 msgid "Report"
 msgstr ""
 #
-# File: ../browser/reports/__init__.py, line: 110
+# File: ../browser/reports/__init__.py, line: 120
 # File: ../content/report.py, line: 23
 msgid "Report Type"
 msgstr ""
 #
-# File: ../browser/analysisrequest.py, line: 600
-# File: ../browser/templates/ar_add.pt, line: 590
-# File: ../content/analysisrequest.py, line: 156
+# File: ../browser/analysisrequest.py, line: 602
+# File: ../browser/templates/ar_add.pt, line: 782
+# File: ../content/analysisrequest.py, line: 164
 msgid "Report as Dry Matter"
 msgstr ""
 #
-# File: ../browser/reports/templates/administration.pt, line: 30
+# File: ../browser/reports/templates/administration.pt, line: 86
 msgid "Report of published analysis requests which have not been invoiced"
+msgstr ""
+#
+# File: ../browser/reports/templates/productivity.pt, line: 358
+msgid ""
+"Report tables between a period of time the number of analyses published and "
+"expressed as a percentage of all analyses performed."
+msgstr ""
+#
+# File: ../browser/reports/templates/productivity.pt, line: 109
+msgid ""
+"Report tables between a period of time the number of samples received and "
+"results reported for them with differences between the two"
+msgstr ""
+#
+# File: ../browser/reports/templates/productivity.pt, line: 412
+msgid ""
+"Report tables of Analysis Requests and totals submitted between a period of "
+"time"
+msgstr ""
+#
+# File: ../browser/reports/templates/epidemiology.pt, line: 216
+msgid ""
+"Report the prevalent <i>Salmonella</i> species, and subtypes serotype, AMR, "
+"PT, PFGE type etc."
 msgstr ""
 #
 # File: ../content/report.py, line: 24
 msgid "Report type"
 msgstr ""
 #
-# File: ../browser/mailtemplates/analysisrequest_results.pt, line: 388
+# File: ../browser/mailtemplates/analysisrequest_results.pt, line: 413
 msgid "Reported as dry matter"
 msgstr ""
 #
-# File: ../browser/reports/__init__.py, line: 75
+# File: ../browser/reports/__init__.py, line: 85
 msgid "Reports"
 msgstr ""
 #
@@ -2961,9 +3486,9 @@ msgstr ""
 msgid "Request"
 msgstr ""
 #
-# File: ../browser/analysisrequest.py, line: 1866
-# File: ../browser/client.py, line: 708
-# File: ../browser/late_analyses.py, line: 41
+# File: ../browser/analysisrequest.py, line: 1937
+# File: ../browser/batch.py, line: 339
+# File: ../browser/client.py, line: 707
 msgid "Request ID"
 msgstr ""
 #
@@ -2981,23 +3506,22 @@ msgstr ""
 msgid "Requests"
 msgstr ""
 #
-# File: ../browser/templates/immunizationhistory.pt, line: 14
 # File: ../browser/templates/login_details.pt, line: 51
 # File: ../config.py, line: 58
 msgid "Required"
 msgstr ""
 #
-# File: ../content/analysisservice.py, line: 112
+# File: ../content/analysisservice.py, line: 110
 msgid "Required Volume"
 msgstr ""
 #
-# File: ../content/client.py, line: 78
+# File: ../content/client.py, line: 79
 msgid "Restrict categories"
 msgstr ""
 #
-# File: ../browser/analyses.py, line: 54
-# File: ../browser/mailtemplates/analysisrequest_results.pt, line: 208
-# File: ../browser/referencesample.py, line: 61
+# File: ../browser/analyses.py, line: 47
+# File: ../browser/batch.py, line: 345
+# File: ../browser/mailtemplates/analysisrequest_results.pt, line: 226
 msgid "Result"
 msgstr ""
 #
@@ -3005,19 +3529,19 @@ msgstr ""
 msgid "Result Footer"
 msgstr ""
 #
-# File: ../content/analysisservice.py, line: 444
+# File: ../content/analysisservice.py, line: 450
 msgid "Result Options"
 msgstr ""
 #
-# File: ../content/analysisservice.py, line: 437
+# File: ../content/analysisservice.py, line: 443
 msgid "Result Value"
 msgstr ""
 #
-# File: ../browser/mailtemplates/analysisrequest_results.pt, line: 381
+# File: ../browser/mailtemplates/analysisrequest_results.pt, line: 406
 msgid "Result out of ${spec} specified range"
 msgstr ""
 #
-# File: ../browser/calcs.py, line: 240
+# File: ../browser/calcs.py, line: 264
 msgid "Result out of range"
 msgstr ""
 #
@@ -3031,12 +3555,12 @@ msgid "Results per samplepoint and analysis service"
 msgstr ""
 #
 # File: ../content/preservation.py, line: 23
-# File: ../content/sampletype.py, line: 24
+# File: ../content/sampletype.py, line: 25
 msgid "Retention Period"
 msgstr ""
 #
-# File: ../browser/analyses.py, line: 63
-# File: ../browser/mailtemplates/analysisrequest_results.pt, line: 249
+# File: ../browser/analyses.py, line: 56
+# File: ../browser/mailtemplates/analysisrequest_results.pt, line: 269
 # File: ../browser/referencesample.py, line: 67
 msgid "Retested"
 msgstr ""
@@ -3050,33 +3574,34 @@ msgstr ""
 msgid "Salutation"
 msgstr ""
 #
-# File: ../content/bikasetup.py, line: 212
+# File: ../content/bikasetup.py, line: 219
 msgid ""
 "Same as the above, but sets the default on analysis services. This setting "
 "can be set per individual analysis on its own configuration"
 msgstr ""
 #
-# File: ../browser/analysisrequest.py, line: 1879
-# File: ../content/arimportitem.py, line: 15
+# File: ../browser/analysisrequest.py, line: 1950
+# File: ../browser/reports/templates/productivity_dataentrydaybook.pt, line: 95
+# File: ../content/arimportitem.py, line: 16
 msgid "Sample"
 msgstr ""
 #
-# File: ../content/arimportitem.py, line: 40
+# File: ../content/arimportitem.py, line: 41
 msgid "Sample Date"
 msgstr ""
 #
-# File: ../browser/analysisrequest.py, line: 1343
+# File: ../browser/analysisrequest.py, line: 1382
 # File: ../skins/bika/portlet_sample_due.pt, line: 22
 msgid "Sample Due"
 msgstr ""
 #
-# File: ../browser/analysisrequest.py, line: 481
-# File: ../browser/mailtemplates/analysisrequest_results.pt, line: 130
-# File: ../browser/sample.py, line: 603
+# File: ../browser/analysisrequest.py, line: 483
+# File: ../browser/mailtemplates/analysisrequest_results.pt, line: 134
+# File: ../browser/reports/templates/productivity_dailysamplesreceived.pt, line: 77
 msgid "Sample ID"
 msgstr ""
 #
-# File: ../content/bikasetup.py, line: 288
+# File: ../content/bikasetup.py, line: 296
 msgid "Sample ID Padding"
 msgstr ""
 #
@@ -3084,10 +3609,19 @@ msgstr ""
 msgid "Sample Matrices"
 msgstr ""
 #
-# File: ../browser/analysisrequest.py, line: 512
-# File: ../browser/sample.py, line: 353
-# File: ../content/sampletype.py, line: 44
+# File: ../content/sampletype.py, line: 45
+# File: ../controlpanel/bika_samplematrices.py, line: 40
 msgid "Sample Matrix"
+msgstr ""
+#
+# File: ../controlpanel/bika_sampleorigins.py, line: 25
+msgid ""
+"Sample Origin, indicates whether a Sample is e.g. Animal, Environmental, "
+"Human or form a Validation study."
+msgstr ""
+#
+# File: ../controlpanel/bika_sampleorigins.py, line: 23
+msgid "Sample Origins"
 msgstr ""
 #
 # File: ../browser/sample.py, line: 33
@@ -3096,32 +3630,36 @@ msgstr ""
 msgid "Sample Partitions"
 msgstr ""
 #
-# File: ../browser/analysisrequest.py, line: 518
-# File: ../browser/mailtemplates/analysisrequest_results.pt, line: 155
-# File: ../browser/reports/selection_macros/__init__.py, line: 184
+# File: ../browser/analysisrequest.py, line: 520
+# File: ../browser/batch.py, line: 342
+# File: ../browser/mailtemplates/analysisrequest_results.pt, line: 166
 msgid "Sample Point"
 msgstr ""
 #
-# File: ../browser/client.py, line: 534
-# File: ../content/sampletype.py, line: 82
-# File: ../controlpanel/bika_samplepoints.py, line: 32
+# File: ../browser/client.py, line: 533
+# File: ../content/sampletype.py, line: 83
+# File: ../controlpanel/bika_samplepoints.py, line: 33
 msgid "Sample Points"
 msgstr ""
 #
-# File: ../browser/analysisrequest.py, line: 505
-# File: ../browser/client.py, line: 607
-# File: ../browser/mailtemplates/analysisrequest_results.pt, line: 148
+# File: ../browser/analysisrequest.py, line: 507
+# File: ../browser/batch.py, line: 341
+# File: ../browser/client.py, line: 606
 msgid "Sample Type"
 msgstr ""
 #
-# File: ../content/sampletype.py, line: 50
+# File: ../content/sampletype.py, line: 51
 msgid "Sample Type Prefix"
 msgstr ""
 #
-# File: ../browser/templates/analysisservice_popup.pt, line: 253
+# File: ../browser/templates/analysisservice_popup.pt, line: 254
 # File: ../browser/worksheetfolder.py, line: 122
-# File: ../content/samplepoint.py, line: 60
+# File: ../content/samplepoint.py, line: 61
 msgid "Sample Types"
+msgstr ""
+#
+# File: ../browser/reports/templates/epidemiology.pt, line: 78
+msgid "Sample and Case related reports"
 msgstr ""
 #
 # File: ../browser/queries/analysisrequests.py, line: 171
@@ -3130,8 +3668,12 @@ msgstr ""
 msgid "Sample point"
 msgstr ""
 #
-# File: ../browser/analysisrequest.py, line: 1352
+# File: ../browser/analysisrequest.py, line: 1391
 msgid "Sample received"
+msgstr ""
+#
+# File: ../browser/reports/templates/productivity.pt, line: 78
+msgid "Sample related reports"
 msgstr ""
 #
 # File: ../browser/queries/analysisrequests.py, line: 158
@@ -3144,9 +3686,9 @@ msgstr ""
 msgid "Sampled"
 msgstr ""
 #
-# File: ../browser/analysisrequest.py, line: 558
+# File: ../browser/analysisrequest.py, line: 560
 # File: ../browser/sample.py, line: 407
-# File: ../browser/templates/sample_sticker_large.pt, line: 76
+# File: ../browser/templates/sample_sticker_large.pt, line: 77
 msgid "Sampler"
 msgstr ""
 #
@@ -3156,19 +3698,32 @@ msgstr ""
 #
 # File: ../content/referencedefinition.py, line: 52
 # File: ../content/referencesample.py, line: 49
-# File: ../content/sampletype.py, line: 33
+# File: ../content/sampletype.py, line: 34
 msgid "Samples of this type should be treated as hazardous"
 msgstr ""
 #
-# File: ../browser/analysisrequest.py, line: 537
+# File: ../browser/reports/templates/productivity_dailysamplesreceived.pt, line: 61
+msgid "Samples received for a date range and grouped by countries"
+msgstr ""
+#
+# File: ../browser/reports/productivity_samplereceivedvsreported.py, line: 92
+# File: ../browser/reports/templates/productivity_samplereceivedvsreported.pt, line: 20
+msgid "Samples received vs. reported"
+msgstr ""
+#
+# File: ../browser/reports/templates/productivity.pt, line: 107
+msgid "Samples received vs. samples reported"
+msgstr ""
+#
+# File: ../browser/analysisrequest.py, line: 539
 # File: ../browser/sample.py, line: 390
-# File: ../browser/templates/ar_add.pt, line: 418
+# File: ../browser/templates/ar_add.pt, line: 600
 msgid "Sampling Date"
 msgstr ""
 #
-# File: ../browser/analysisrequest.py, line: 567
-# File: ../browser/mailtemplates/analysisrequest_results.pt, line: 106
-# File: ../browser/sample.py, line: 416
+# File: ../browser/mailtemplates/analysisrequest_results.pt, line: 192
+# File: ../browser/sample.py, line: 629
+# File: ../browser/templates/ar_add.pt, line: 662
 msgid "Sampling Deviation"
 msgstr ""
 #
@@ -3176,38 +3731,38 @@ msgstr ""
 msgid "Sampling Deviations"
 msgstr ""
 #
-# File: ../content/samplepoint.py, line: 47
+# File: ../content/samplepoint.py, line: 48
 msgid "Sampling Frequency"
 msgstr ""
 #
-# File: ../browser/analysisrequest.py, line: 606
+# File: ../browser/analysisrequest.py, line: 608
 # File: ../browser/sample.py, line: 88
-# File: ../browser/templates/ar_add.pt, line: 751
+# File: ../browser/templates/ar_add.pt, line: 948
 msgid "Save"
 msgstr ""
 #
-# File: ../browser/templates/allergies.pt, line: 81
+# File: ../browser/templates/patient_allergies.pt, line: 77
 msgid "Save allergies"
 msgstr ""
 #
-# File: ../browser/templates/patient_chronicconditions.pt, line: 77
-msgid "Save chronic conditions"
+# File: ../browser/templates/patient_treatmenthistory.pt, line: 69
+msgid "Save drug history"
 msgstr ""
 #
-# File: ../browser/templates/immunizationhistory.pt, line: 103
+# File: ../browser/templates/patient_immunizationhistory.pt, line: 105
 msgid "Save immunization history"
+msgstr ""
+#
+# File: ../browser/templates/patient_chronicconditions.pt, line: 109
+msgid "Save past medical history"
 msgstr ""
 #
 # File: ../skins/bika/bika_widgets/remarks.pt, line: 69
 msgid "Save remarks"
 msgstr ""
 #
-# File: ../browser/templates/travelhistory.pt, line: 104
+# File: ../browser/templates/patient_travelhistory.pt, line: 103
 msgid "Save travel history"
-msgstr ""
-#
-# File: ../browser/templates/treatmenthistory.pt, line: 98
-msgid "Save treatment history"
 msgstr ""
 #
 # File: ../browser/templates/worksheet_add_analyses.pt, line: 109
@@ -3218,7 +3773,7 @@ msgstr ""
 msgid "Search results"
 msgstr ""
 #
-# File: ../browser/templates/ar_add.pt, line: 330
+# File: ../browser/templates/ar_add.pt, line: 507
 msgid "Secondary AR"
 msgstr ""
 #
@@ -3226,15 +3781,15 @@ msgstr ""
 msgid "Seconds"
 msgstr ""
 #
-# File: ../content/bikasetup.py, line: 234
+# File: ../content/bikasetup.py, line: 241
 msgid ""
 "Select 'Register' if you want labels to be automatically printed when new "
 "ARs or sample records are created. Select 'Receive' to print labels when ARs "
 "or Samples are received. Select 'None' to disable automatic printing"
 msgstr ""
 #
-# File: ../browser/analysisrequest.py, line: 1289
-# File: ../browser/templates/ar_add.pt, line: 337
+# File: ../browser/analysisrequest.py, line: 1328
+# File: ../browser/templates/ar_add.pt, line: 514
 msgid "Select Sample"
 msgstr ""
 #
@@ -3242,14 +3797,14 @@ msgstr ""
 msgid "Select a data interface"
 msgstr ""
 #
-# File: ../content/analysisservice.py, line: 471
+# File: ../content/analysisservice.py, line: 477
 msgid ""
 "Select a default preservation for this analysis service. If the preservation "
 "depends on the sample type combination, specify a preservation per sample "
 "type in the table below"
 msgstr ""
 #
-# File: ../browser/worksheet.py, line: 755
+# File: ../browser/worksheet.py, line: 757
 msgid "Select a destinaton position and the AR to duplicate."
 msgstr ""
 #
@@ -3287,7 +3842,7 @@ msgstr ""
 msgid "Select analyses to include in this template"
 msgstr ""
 #
-# File: ../content/analysisservice.py, line: 230
+# File: ../content/analysisservice.py, line: 228
 msgid "Select analysis method"
 msgstr ""
 #
@@ -3295,7 +3850,7 @@ msgstr ""
 msgid "Select analyst"
 msgstr ""
 #
-# File: ../content/analysisrequest.py, line: 150
+# File: ../content/analysisrequest.py, line: 158
 msgid "Select if analyses to be excluded from invoice"
 msgstr ""
 #
@@ -3307,7 +3862,7 @@ msgstr ""
 msgid "Select instrument"
 msgstr ""
 #
-# File: ../browser/worksheet.py, line: 668
+# File: ../browser/worksheet.py, line: 670
 msgid ""
 "Select services in the left column to locate reference samples. Select a "
 "reference by clicking it. "
@@ -3318,7 +3873,7 @@ msgstr ""
 msgid "Select template"
 msgstr ""
 #
-# File: ../browser/analysisrequest.py, line: 1222
+# File: ../browser/analysisrequest.py, line: 1245
 msgid ""
 "Select the contacts that will receive analysis results for this request."
 msgstr ""
@@ -3327,19 +3882,19 @@ msgstr ""
 msgid "Select the currency the site will use to display prices."
 msgstr ""
 #
-# File: ../content/analysisservice.py, line: 488
+# File: ../content/analysisservice.py, line: 494
 msgid ""
 "Select the default container to be used for this analysis service. If the "
 "container to be used depends on the sample type and preservation "
 "combination, specify the container in the sample type table below"
 msgstr ""
 #
-# File: ../content/analysisservice.py, line: 245
+# File: ../content/analysisservice.py, line: 243
 # File: ../content/worksheettemplate.py, line: 60
 msgid "Select the preferred instrument"
 msgstr ""
 #
-# File: ../content/bikasetup.py, line: 245
+# File: ../content/bikasetup.py, line: 252
 msgid ""
 "Select the which label to print when automatic label printing is enabled"
 msgstr ""
@@ -3357,15 +3912,14 @@ msgid "Selected on the following criteria"
 msgstr ""
 #
 # File: ../browser/queries/queries_query.pt, line: 70
-# File: ../browser/reports/templates/administration.pt, line: 40
 msgid "Selection criteria"
 msgstr ""
 #
-# File: ../browser/templates/analysisservice_popup.pt, line: 261
+# File: ../browser/templates/analysisservice_popup.pt, line: 262
 msgid "Separate"
 msgstr ""
 #
-# File: ../content/analysisservice.py, line: 109
+# File: ../content/analysisservice.py, line: 107
 msgid "Separate Container"
 msgstr ""
 #
@@ -3374,12 +3928,12 @@ msgid "Serial No"
 msgstr ""
 #
 # File: ../browser/accreditation.py, line: 48
-# File: ../browser/analysisrequest.py, line: 1031
+# File: ../browser/analysisrequest.py, line: 1054
 # File: ../browser/referencesample.py, line: 59
 msgid "Service"
 msgstr ""
 #
-# File: ../browser/templates/analysisservice_popup.pt, line: 57
+# File: ../browser/templates/analysisservice_popup.pt, line: 58
 msgid "Service is included in the ${accreditation_body_abbrev}"
 msgstr ""
 #
@@ -3388,7 +3942,7 @@ msgid "Service keyword ${keyword} not found"
 msgstr ""
 #
 # File: ../browser/reports/selection_macros/__init__.py, line: 55
-# File: ../browser/worksheet.py, line: 961
+# File: ../browser/worksheet.py, line: 963
 # File: ../browser/worksheetfolder.py, line: 119
 msgid "Services"
 msgstr ""
@@ -3404,7 +3958,7 @@ msgid ""
 "results per email"
 msgstr ""
 #
-# File: ../browser/client.py, line: 636
+# File: ../browser/client.py, line: 635
 msgid "Set to lab defaults"
 msgstr ""
 #
@@ -3412,7 +3966,7 @@ msgstr ""
 msgid "Set up the laboratory analysis service results specifications"
 msgstr ""
 #
-# File: ../config.py, line: 84
+# File: ../config.py, line: 91
 msgid "Shipping address"
 msgstr ""
 #
@@ -3420,16 +3974,22 @@ msgstr ""
 msgid "Shock treatment"
 msgstr ""
 #
-# File: ../content/client.py, line: 79
+# File: ../content/client.py, line: 80
 msgid "Show only selected categories in client views"
 msgstr ""
 #
-# File: ../content/labcontact.py, line: 19
+# File: ../content/labcontact.py, line: 20
 msgid "Signature"
 msgstr ""
 #
-# File: ../browser/client.py, line: 712
-# File: ../browser/reports/__init__.py, line: 91
+# File: ../browser/reports/templates/epidemiology_analysisrequestspercountry.pt, line: 190
+# File: ../browser/reports/templates/epidemiology_epiddetailsperanalysis.pt, line: 117
+# File: ../content/batch.py, line: 143
+msgid "Signs and Symptoms"
+msgstr ""
+#
+# File: ../browser/client.py, line: 711
+# File: ../browser/reports/__init__.py, line: 101
 # File: ../browser/reports/productivity_analysesattachments.py, line: 74
 msgid "Size"
 msgstr ""
@@ -3450,7 +4010,7 @@ msgstr ""
 msgid "Specification"
 msgstr ""
 #
-# File: ../content/analysisspec.py, line: 75
+# File: ../content/analysisspec.py, line: 76
 msgid "Specifications"
 msgstr ""
 #
@@ -3463,7 +4023,7 @@ msgid ""
 "position it should be a duplicate of"
 msgstr ""
 #
-# File: ../content/analysisservice.py, line: 425
+# File: ../content/analysisservice.py, line: 431
 msgid ""
 "Specify the uncertainty value for a given range, e.g. for results in a range "
 "with minimum of 0 and maximum of 10, the uncertainty value is 0.5 - a result "
@@ -3472,18 +4032,22 @@ msgid ""
 "etc."
 msgstr ""
 #
-# File: ../browser/templates/treatmenthistory.pt, line: 29
-# File: ../content/patient.py, line: 83
+# File: ../browser/templates/patient_treatmenthistory.pt, line: 22
+# File: ../content/patient.py, line: 121
 msgid "Start"
 msgstr ""
 #
-# File: ../browser/analysisrequest.py, line: 1327
-# File: ../browser/batchfolder.py, line: 40
-# File: ../browser/bika_listing.py, line: 203
+# File: ../controlpanel/bika_epidemiologicalyears.py, line: 35
+msgid "Start Date"
+msgstr ""
+#
+# File: ../browser/analysisrequest.py, line: 1366
+# File: ../browser/batchfolder.py, line: 42
+# File: ../browser/bika_listing.py, line: 217
 msgid "State"
 msgstr ""
 #
-# File: ../browser/analyses.py, line: 52
+# File: ../browser/analyses.py, line: 45
 # File: ../browser/queries/analysisrequests.py, line: 269
 # File: ../browser/queries/invoices.py, line: 86
 msgid "Status"
@@ -3497,10 +4061,19 @@ msgstr ""
 msgid "Submit"
 msgstr ""
 #
-# File: ../browser/templates/ar_add.pt, line: 695
-# File: ../content/invoice.py, line: 49
-# File: ../content/invoicelineitem.py, line: 37
+# File: ../browser/reports/templates/productivity_analysesperdepartment.pt, line: 121
+# File: ../browser/reports/templates/productivity_analysesperformedpertotal.pt, line: 121
+# File: ../browser/reports/templates/productivity_dailysamplesreceived.pt, line: 97
 msgid "Subtotal"
+msgstr ""
+#
+# File: ../browser/widgets/case_aetiologicagents.pt, line: 14
+# File: ../content/aetiologicagent.py, line: 14
+msgid "Subtype"
+msgstr ""
+#
+# File: ../browser/reports/templates/epidemiology.pt, line: 109
+msgid "Summary of number of cases per country for a date range"
 msgstr ""
 #
 # File: ../browser/referencesample.py, line: 207
@@ -3515,8 +4088,7 @@ msgstr ""
 msgid "Surname"
 msgstr ""
 #
-# File: ../browser/templates/patient_chronicconditions.pt, line: 24
-# File: ../browser/widgets/case_symptoms.pt, line: 20
+# File: ../browser/widgets/case_symptoms.pt, line: 14
 # File: ../controlpanel/bika_symptoms.py, line: 37
 msgid "Symptom"
 msgstr ""
@@ -3534,37 +4106,45 @@ msgstr ""
 msgid "Technical description and instructions intended for analysts"
 msgstr ""
 #
-# File: ../content/arimport.py, line: 126
+# File: ../content/arimport.py, line: 127
 msgid "Temperature"
 msgstr ""
 #
-# File: ../browser/templates/ar_add.pt, line: 263
+# File: ../browser/templates/ar_add.pt, line: 438
 # File: ../browser/worksheetfolder.py, line: 117
 # File: ../controlpanel/bika_artemplates.py, line: 40
 msgid "Template"
 msgstr ""
 #
-# File: ../browser/mailtemplates/analysisrequest_results.pt, line: 430
+# File: ../browser/mailtemplates/analysisrequest_results.pt, line: 455
 msgid "Test results are at a ${lab_confidence} % confidence level"
+msgstr ""
+#
+# File: ../browser/widgets/caseaetiologicagentswidget.py, line: 68
+msgid "The Aetiologic agent '%s' is not valid"
+msgstr ""
+#
+# File: ../browser/widgets/caseaetiologicagentswidget.py, line: 84
+msgid "The Aetiologic agent subtype '%s' is not valid"
 msgstr ""
 #
 # File: ../content/artemplate.py, line: 96
 msgid "The Analysis Profile selection for this template"
 msgstr ""
 #
-# File: ../content/analysisrequest.py, line: 41
+# File: ../content/analysisrequest.py, line: 49
 msgid "The ID assigned to the client's request by the lab"
 msgstr ""
 #
-# File: ../content/sample.py, line: 33
+# File: ../content/sample.py, line: 34
 msgid "The ID assigned to the client's sample by the lab"
 msgstr ""
 #
-# File: ../content/laboratory.py, line: 19
+# File: ../content/laboratory.py, line: 20
 msgid "The Laboratory's web address"
 msgstr ""
 #
-# File: ../content/laboratory.py, line: 69
+# File: ../content/laboratory.py, line: 70
 msgid "The accreditation standard that applies, e.g. ISO 17025"
 msgstr ""
 #
@@ -3572,16 +4152,16 @@ msgstr ""
 msgid "The analyses included in this profile, grouped per category"
 msgstr ""
 #
-# File: ../content/bikasetup.py, line: 181
+# File: ../content/bikasetup.py, line: 188
 msgid "The analysis to be used for determining dry matter."
 msgstr ""
 #
 # File: ../browser/reports/productivity_analysesattachments.py, line: 35
-# File: ../browser/reports/templates/productivity.pt, line: 98
+# File: ../browser/reports/templates/productivity.pt, line: 388
 msgid "The attachments linked to analysis requests and analyses"
 msgstr ""
 #
-# File: ../content/analysisservice.py, line: 334
+# File: ../content/analysisservice.py, line: 340
 msgid "The category the analysis service belongs to"
 msgstr ""
 #
@@ -3589,7 +4169,7 @@ msgstr ""
 msgid "The commercial 'make' of the instrument"
 msgstr ""
 #
-# File: ../content/sampletype.py, line: 68
+# File: ../content/sampletype.py, line: 69
 msgid ""
 "The default container type. New sample partitions are automatically assigned "
 "a container of this type, unless it has been specified in more details per "
@@ -3603,11 +4183,15 @@ msgid ""
 "of this discount"
 msgstr ""
 #
-# File: ../content/bikasetup.py, line: 314
+# File: ../browser/patient.py, line: 271
+msgid "The disease '%s' is not valid"
+msgstr ""
+#
+# File: ../content/bikasetup.py, line: 322
 msgid "The full URL: http://URL/path:port"
 msgstr ""
 #
-# File: ../content/samplepoint.py, line: 41
+# File: ../content/samplepoint.py, line: 42
 msgid "The height or depth at which the sample has to be taken"
 msgstr ""
 #
@@ -3624,52 +4208,52 @@ msgid "The lab is not accredited, or accreditation has not been configured. "
 msgstr ""
 #
 # File: ../content/analysiscategory.py, line: 27
-# File: ../content/analysisservice.py, line: 400
-# File: ../content/labcontact.py, line: 34
+# File: ../content/analysisservice.py, line: 406
+# File: ../content/labcontact.py, line: 35
 msgid "The laboratory department"
 msgstr ""
 #
-# File: ../content/bikasetup.py, line: 289
+# File: ../content/bikasetup.py, line: 297
 msgid "The length of the zero-padding for Sample IDs"
 msgstr ""
 #
-# File: ../content/bikasetup.py, line: 298
+# File: ../content/bikasetup.py, line: 306
 msgid "The length of the zero-padding for the AR number in AR IDs"
 msgstr ""
 #
-# File: ../content/sampletype.py, line: 83
+# File: ../content/sampletype.py, line: 84
 msgid ""
 "The list of sample points from which this sample type can be collected.  If "
 "no sample points are selected, then all sample points are available."
 msgstr ""
 #
-# File: ../content/samplepoint.py, line: 61
+# File: ../content/samplepoint.py, line: 62
 msgid ""
 "The list of sample types that can be collected at this sample point.  If no "
 "sample types are selected, then all sample types are available."
 msgstr ""
 #
-# File: ../content/analysisservice.py, line: 175
+# File: ../content/analysisservice.py, line: 173
 msgid ""
 "The measurement units for this analysis service' results, e.g. mg/l, ppm, "
 "dB, mV, etc."
 msgstr ""
 #
-# File: ../content/sampletype.py, line: 57
+# File: ../content/sampletype.py, line: 58
 msgid "The minimum sample volume required for analysis eg. '10 ml' or '1 kg'."
 msgstr ""
 #
-# File: ../content/laboratory.py, line: 44
+# File: ../content/laboratory.py, line: 45
 msgid ""
 "The name of the accreditation body corresponding to the abbreviation above, "
 "e.g. South African National Accreditation Service for SANAS"
 msgstr ""
 #
-# File: ../browser/reports/templates/productivity.pt, line: 33
+# File: ../browser/reports/templates/productivity.pt, line: 140
 msgid "The number of analyses requested per analysis service"
 msgstr ""
 #
-# File: ../browser/reports/templates/productivity.pt, line: 44
+# File: ../browser/reports/templates/productivity.pt, line: 181
 msgid "The number of analyses requested per sample type"
 msgstr ""
 #
@@ -3678,7 +4262,7 @@ msgid ""
 "The number of days before a password expires. 0 disables password expiry"
 msgstr ""
 #
-# File: ../content/bikasetup.py, line: 223
+# File: ../content/bikasetup.py, line: 230
 msgid ""
 "The number of days before a sample expires and cannot be analysed any more. "
 "This setting can be overwritten per individual sample type in the sample "
@@ -3691,21 +4275,21 @@ msgid ""
 "automatic log-off"
 msgstr ""
 #
-# File: ../browser/reports/templates/productivity.pt, line: 55
+# File: ../browser/reports/templates/productivity.pt, line: 219
 msgid "The number of requests and analyses"
 msgstr ""
 #
-# File: ../browser/reports/templates/productivity.pt, line: 67
+# File: ../browser/reports/templates/productivity.pt, line: 228
 msgid "The number of requests and analyses per client"
 msgstr ""
 #
-# File: ../content/sampletype.py, line: 25
+# File: ../content/sampletype.py, line: 26
 msgid ""
 "The period for which un-preserved samples of this type can be kept before "
 "they expire and cannot be analysed any further"
 msgstr ""
 #
-# File: ../content/analysisservice.py, line: 350
+# File: ../content/analysisservice.py, line: 356
 msgid ""
 "The price charged per analysis for clients who qualify for bulk discounts"
 msgstr ""
@@ -3717,11 +4301,11 @@ msgid ""
 "field ID."
 msgstr ""
 #
-# File: ../content/laboratory.py, line: 77
+# File: ../content/laboratory.py, line: 78
 msgid "The reference code issued to the lab by the accreditation body"
 msgstr ""
 #
-# File: ../content/analysisservice.py, line: 317
+# File: ../content/analysisservice.py, line: 323
 msgid ""
 "The results of field analyses are captured during sampling at the sample "
 "point, e.g. the temperature of a water sample in the river where it is "
@@ -3732,7 +4316,7 @@ msgstr ""
 msgid "The serial number that uniquely identifies the instrument"
 msgstr ""
 #
-# File: ../content/bikasetup.py, line: 201
+# File: ../content/bikasetup.py, line: 208
 msgid ""
 "The system wide default configuration to indicate whether file attachments "
 "are required, permitted or not per analysis request"
@@ -3746,15 +4330,15 @@ msgstr ""
 msgid "The turnaround time of analyses plotted over time"
 msgstr ""
 #
-# File: ../browser/reports/templates/productivity.pt, line: 78
+# File: ../browser/reports/templates/productivity.pt, line: 266
 msgid "The turnaround times of analyses"
 msgstr ""
 #
-# File: ../browser/reports/templates/productivity.pt, line: 88
+# File: ../browser/reports/templates/productivity.pt, line: 296
 msgid "The turnaround times of analyses plotted over time"
 msgstr ""
 #
-# File: ../content/analysisservice.py, line: 212
+# File: ../content/analysisservice.py, line: 210
 msgid ""
 "The unique keyword used to identify the analysis service in import files of "
 "bulk AR requests and results imports from instruments. It is also used to "
@@ -3777,23 +4361,23 @@ msgid ""
 "calculations list it as a dependency"
 msgstr ""
 #
-# File: ../browser/mailtemplates/analysisrequest_results.pt, line: 421
+# File: ../browser/mailtemplates/analysisrequest_results.pt, line: 446
 msgid ""
 "This document shall not be reproduced except in full, without the written "
 "approval of ${name_lab}"
 msgstr ""
 #
-# File: ../content/analysisrequest.py, line: 157
-# File: ../content/analysisservice.py, line: 191
+# File: ../content/analysisrequest.py, line: 165
+# File: ../content/analysisservice.py, line: 189
 # File: ../content/artemplate.py, line: 54
 msgid "This result can be reported as dry matter"
 msgstr ""
 #
-# File: ../browser/templates/analysisservice_popup.pt, line: 222
+# File: ../browser/templates/analysisservice_popup.pt, line: 223
 msgid "This service does not require a separate partition"
 msgstr ""
 #
-# File: ../browser/templates/analysisservice_popup.pt, line: 219
+# File: ../browser/templates/analysisservice_popup.pt, line: 220
 msgid "This service requires a separate container."
 msgstr ""
 #
@@ -3801,12 +4385,12 @@ msgstr ""
 msgid "This text will be appended to results reports."
 msgstr ""
 #
-# File: ../content/laboratory.py, line: 26
+# File: ../content/laboratory.py, line: 27
 msgid "This value is reported at the bottom of all published results"
 msgstr ""
 #
-# File: ../browser/bika_listing.py, line: 201
-# File: ../browser/client.py, line: 405
+# File: ../browser/bika_listing.py, line: 215
+# File: ../browser/client.py, line: 404
 # File: ../browser/referencesample.py, line: 203
 msgid "Title"
 msgstr ""
@@ -3819,7 +4403,7 @@ msgstr ""
 msgid "To Be Sampled"
 msgstr ""
 #
-# File: ../browser/analysisrequest.py, line: 2025
+# File: ../browser/analysisrequest.py, line: 2101
 # File: ../browser/worksheetfolder.py, line: 193
 # File: ../skins/bika/portlet_to_be_verified.pt, line: 31
 msgid "To be verified"
@@ -3831,31 +4415,57 @@ msgstr ""
 msgid "Total"
 msgstr ""
 #
+# File: ../browser/reports/templates/productivity_dataentrydaybook.pt, line: 93
+msgid "Total Lag"
+msgstr ""
+#
+# File: ../browser/reports/templates/epidemiology_analysisrequestspercountry.pt, line: 231
+# File: ../browser/reports/templates/epidemiology_epiddetailsperanalysis.pt, line: 155
+msgid "Total Num of ARs"
+msgstr ""
+#
+# File: ../browser/reports/templates/epidemiology_casespercountry.pt, line: 190
+msgid "Total Num of Cases"
+msgstr ""
+#
 # File: ../controlpanel/bika_labproducts.py, line: 53
 msgid "Total Price"
 msgstr ""
 #
-# File: ../browser/reports/qualitycontrol_referenceanalysisqc.py, line: 123
+# File: ../browser/reports/qualitycontrol_referenceanalysisqc.py, line: 126
 # File: ../browser/reports/qualitycontrol_resultspersamplepoint.py, line: 182
 msgid "Total analyses"
+msgstr ""
+#
+# File: ../browser/reports/templates/epidemiology.pt, line: 188
+msgid ""
+"Total counts of Cases with positive test results, broken down by country, e."
+"g. 3 Dengue positive cases, 1 Dengue positive type 2 case, etc."
 msgstr ""
 #
 # File: ../browser/reports/productivity_analysestats_overtime.py, line: 166
 msgid "Total data points"
 msgstr ""
 #
-# File: ../content/analysisservice.py, line: 365
+# File: ../content/analysisservice.py, line: 371
 # File: ../content/labproduct.py, line: 43
 msgid "Total price"
+msgstr ""
+#
+# File: ../browser/reports/templates/productivity_dailysamplesreceived.pt, line: 106
+msgid "Total:"
+msgstr ""
+#
+# File: ../browser/reports/templates/administration.pt, line: 116
+msgid "Traceability"
 msgstr ""
 #
 # File: ../content/immunization.py, line: 55
 msgid "Transmission"
 msgstr ""
 #
-# File: ../browser/templates/treatmenthistory.pt, line: 21
 # File: ../content/immunization.py, line: 82
-# File: ../content/patient.py, line: 83
+# File: ../controlpanel/bika_treatments.py, line: 37
 msgid "Treatment"
 msgstr ""
 #
@@ -3882,20 +4492,20 @@ msgid "Treatments"
 msgstr ""
 #
 #. Default: "End date"
-# File: ../content/patient.py, line: 124
+# File: ../content/patient.py, line: 162
 msgid "Trip End Date"
 msgstr ""
 #
 #. Default: "Start date"
-# File: ../content/patient.py, line: 123
+# File: ../content/patient.py, line: 161
 msgid "Trip Start Date"
 msgstr ""
 #
-# File: ../browser/templates/travelhistory.pt, line: 29
+# File: ../browser/templates/patient_travelhistory.pt, line: 28
 msgid "Trip end date"
 msgstr ""
 #
-# File: ../browser/templates/travelhistory.pt, line: 23
+# File: ../browser/templates/patient_travelhistory.pt, line: 23
 msgid "Trip start date"
 msgstr ""
 #
@@ -3903,24 +4513,25 @@ msgstr ""
 msgid "Turnaround time (h)"
 msgstr ""
 #
-# File: ../browser/bika_listing.py, line: 199
+# File: ../browser/bika_listing.py, line: 213
+# File: ../browser/reports/templates/administration_usershistory.pt, line: 77
 # File: ../controlpanel/bika_instruments.py, line: 40
 msgid "Type"
 msgstr ""
 #
-# File: ../browser/analysisrequest.py, line: 2179
+# File: ../browser/analysisrequest.py, line: 2260
 msgid "Unassigned"
 msgstr ""
 #
-# File: ../content/analysisservice.py, line: 424
+# File: ../content/analysisservice.py, line: 430
 msgid "Uncertainty"
 msgstr ""
 #
-# File: ../content/analysisservice.py, line: 421
+# File: ../content/analysisservice.py, line: 427
 msgid "Uncertainty value"
 msgstr ""
 #
-# File: ../browser/reports/productivity_analysestats.py, line: 144
+# File: ../browser/reports/productivity_analysestats.py, line: 138
 msgid "Undefined"
 msgstr ""
 #
@@ -3930,17 +4541,27 @@ msgstr ""
 msgid "Unit"
 msgstr ""
 #
-# File: ../content/supplyorderitem.py, line: 32
+# File: ../content/supplyorderitem.py, line: 33
 msgid "Unit price"
 msgstr ""
 #
-# File: ../content/labcontact.py, line: 20
+# File: ../browser/reports/epidemiology_analysisrequestspercountry.py, line: 76
+# File: ../browser/reports/epidemiology_casespercountry.py, line: 71
+# File: ../browser/reports/productivity_dailysamplesreceived.py, line: 50
+msgid "Unknown"
+msgstr ""
+#
+# File: ../browser/reports/templates/productivity_samplereceivedvsreported.pt, line: 38
+msgid "Unpublished"
+msgstr ""
+#
+# File: ../content/labcontact.py, line: 21
 msgid ""
 "Upload a scanned signature to be used on printed analysis results reports. "
 "Ideal size is 250 pixels wide by 150 high"
 msgstr ""
 #
-# File: ../content/bikasetup.py, line: 305
+# File: ../content/bikasetup.py, line: 313
 msgid "Use external ID server"
 msgstr ""
 #
@@ -3950,12 +4571,27 @@ msgid ""
 msgstr ""
 #
 # File: ../browser/log.py, line: 42
+# File: ../browser/reports/administration_usershistory.py, line: 78
+# File: ../browser/reports/selection_macros/select_user.pt, line: 4
 msgid "User"
 msgstr ""
 #
-# File: ../browser/client.py, line: 851
+# File: ../browser/client.py, line: 850
 # File: ../browser/templates/login_details.pt, line: 50
 msgid "User Name"
+msgstr ""
+#
+# File: ../browser/reports/templates/administration.pt, line: 119
+msgid "User history"
+msgstr ""
+#
+# File: ../browser/reports/templates/administration_usershistory.pt, line: 74
+msgid "UserID"
+msgstr ""
+#
+# File: ../browser/reports/administration_usershistory.py, line: 157
+# File: ../browser/reports/templates/administration_usershistory.pt, line: 58
+msgid "Users history"
 msgstr ""
 #
 # File: ../content/bikasetup.py, line: 106
@@ -3964,15 +4600,15 @@ msgid ""
 "minimum number of results before QC statistics will be calculated and plotted"
 msgstr ""
 #
-# File: ../browser/templates/ar_add.pt, line: 713
-# File: ../content/analysisservice.py, line: 357
+# File: ../browser/templates/ar_add.pt, line: 910
+# File: ../content/analysisservice.py, line: 363
 # File: ../content/invoicelineitem.py, line: 44
 msgid "VAT"
 msgstr ""
 #
-# File: ../content/analysisservice.py, line: 373
+# File: ../content/analysisservice.py, line: 379
 # File: ../content/bikasetup.py, line: 95
-# File: ../content/invoice.py, line: 56
+# File: ../content/invoice.py, line: 57
 msgid "VAT %"
 msgstr ""
 #
@@ -3980,20 +4616,17 @@ msgstr ""
 msgid "VAT Amount"
 msgstr ""
 #
-# File: ../content/organisation.py, line: 25
+# File: ../content/organisation.py, line: 26
 msgid "VAT number"
 msgstr ""
 #
-# File: ../content/patient.py, line: 110
+# File: ../browser/templates/patient_immunizationhistory.pt, line: 42
+# File: ../content/patient.py, line: 148
 msgid "Vaccination Center"
 msgstr ""
 #
 # File: ../controlpanel/bika_vaccinationcenters.py, line: 31
 msgid "Vaccination Centers"
-msgstr ""
-#
-# File: ../browser/templates/immunizationhistory.pt, line: 40
-msgid "VaccinationCenter"
 msgstr ""
 #
 # File: ../content/pricelist.py, line: 44
@@ -4153,7 +4786,7 @@ msgstr ""
 msgid "Validation failed: title is required"
 msgstr ""
 #
-# File: ../browser/client.py, line: 341
+# File: ../browser/client.py, line: 340
 msgid "Validity"
 msgstr ""
 #
@@ -4161,13 +4794,19 @@ msgstr ""
 msgid "Value"
 msgstr ""
 #
-# File: ../browser/analysisrequest.py, line: 2055
+# File: ../content/analysisservice.py, line: 285
+msgid ""
+"Values can be entered here which will override the defaults specified in the "
+"Calculation Interim Fields."
+msgstr ""
+#
+# File: ../browser/analysisrequest.py, line: 2132
 # File: ../browser/worksheetfolder.py, line: 211
 # File: ../skins/bika/portlet_verified.pt, line: 22
 msgid "Verified"
 msgstr ""
 #
-# File: ../browser/mailtemplates/analysisrequest_results.pt, line: 181
+# File: ../browser/mailtemplates/analysisrequest_results.pt, line: 199
 msgid "Verified by"
 msgstr ""
 #
@@ -4179,20 +4818,24 @@ msgstr ""
 msgid "Versioning for this file has been disabled because it is too large"
 msgstr ""
 #
-# File: ../browser/templates/analysisservice_popup.pt, line: 264
+# File: ../browser/templates/analysisservice_popup.pt, line: 265
 # File: ../content/labproduct.py, line: 13
 # File: ../controlpanel/bika_labproducts.py, line: 41
 msgid "Volume"
 msgstr ""
 #
-# File: ../content/laboratory.py, line: 61
+# File: ../content/laboratory.py, line: 62
 msgid "Web address for the accreditation body"
 msgstr ""
 #
-# File: ../content/analysisservice.py, line: 295
+# File: ../content/analysisservice.py, line: 301
 msgid ""
 "When the results of duplicate analyses on worksheets, carried out on the "
 "same sample, differ with more than this percentage, an alert is raised"
+msgstr ""
+#
+# File: ../config.py, line: 78
+msgid "White"
 msgstr ""
 #
 # File: ../browser/referencesample.py, line: 60
@@ -4213,12 +4856,16 @@ msgstr ""
 msgid "Worksheets"
 msgstr ""
 #
-# File: ../browser/analysisservice.py, line: 92
+# File: ../browser/analysisservice.py, line: 104
 msgid "Yes"
 msgstr ""
 #
-# File: ../browser/worksheet.py, line: 1025
+# File: ../browser/worksheet.py, line: 1027
 msgid "You must select an instrument"
+msgstr ""
+#
+# File: ../browser/reports/administration_usershistory.py, line: 106
+msgid "action"
 msgstr ""
 #
 # File: ../browser/templates/referencesample_view.pt, line: 142
@@ -4234,11 +4881,19 @@ msgstr ""
 msgid "client"
 msgstr ""
 #
+# File: ../browser/reports/administration_usershistory.py, line: 130
+msgid "comment"
+msgstr ""
+#
+# File: ../browser/batch.py, line: 374
+msgid "datalines"
+msgstr ""
+#
 # File: ../browser/templates/referencesample_view.pt, line: 135
 msgid "deactivate"
 msgstr ""
 #
-# File: ../browser/calcs.py, line: 246
+# File: ../browser/calcs.py, line: 270
 msgid "error"
 msgstr ""
 #
@@ -4256,11 +4911,11 @@ msgstr ""
 msgid "label_specification"
 msgstr ""
 #
-# File: ../browser/calcs.py, line: 236
+# File: ../browser/calcs.py, line: 260
 msgid "max"
 msgstr ""
 #
-# File: ../browser/calcs.py, line: 235
+# File: ../browser/calcs.py, line: 259
 msgid "min"
 msgstr ""
 #
@@ -4280,16 +4935,16 @@ msgid "summary_content_listing"
 msgstr ""
 #
 #. Default: "Move item down"
-# File: ../browser/templates/bika_listing_table.pt, line: 233
+# File: ../browser/templates/bika_listing_table.pt, line: 235
 msgid "title_move_item_down"
 msgstr ""
 #
 #. Default: "Move item up"
-# File: ../browser/templates/bika_listing_table.pt, line: 227
+# File: ../browser/templates/bika_listing_table.pt, line: 229
 msgid "title_move_item_up"
 msgstr ""
 #
-# File: ../browser/reports/selection_macros/__init__.py, line: 113
+# File: ../browser/reports/selection_macros/__init__.py, line: 118
 # File: ../browser/reports/selection_macros/select_daterange.pt, line: 28
 msgid "to"
 msgstr ""

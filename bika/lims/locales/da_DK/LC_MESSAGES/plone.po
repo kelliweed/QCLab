@@ -46,6 +46,17 @@ msgid "Administration"
 msgstr ""
 
 # 
+# File: ../profiles/default/types/AetiologicAgent.xml, line: -1
+msgid "Aetiologic Agent"
+msgstr ""
+
+# 
+# File: ../profiles/default/controlpanel.xml, line: -1
+# File: ../profiles/default/types/AetiologicAgents.xml, line: -1
+msgid "Aetiologic Agents"
+msgstr ""
+
+# 
 # File: ../profiles/default/types/Patient.xml, line: -1
 msgid "Allergies"
 msgstr ""
@@ -167,11 +178,6 @@ msgstr ""
 msgid "Case Statuses"
 msgstr ""
 
-# 
-# File: ../profiles/default/types/Patient.xml, line: -1
-msgid "Chronic Conditions"
-msgstr ""
-
 msgid "Client"
 msgstr ""
 
@@ -245,6 +251,12 @@ msgid "Drug"
 msgstr ""
 
 # 
+# File: ../profiles/default/types/Batch.xml, line: -1
+# File: ../profiles/default/types/Patient.xml, line: -1
+msgid "Drug History"
+msgstr ""
+
+# 
 # File: ../profiles/default/types/DrugProhibition.xml, line: -1
 msgid "Drug Prohibition Explanation"
 msgstr ""
@@ -267,6 +279,22 @@ msgstr ""
 msgid "Email pricelist"
 msgstr ""
 
+# 
+# File: ../profiles/default/types/EpidemiologicalYear.xml, line: -1
+msgid "Epidemiological Year"
+msgstr ""
+
+# 
+# File: ../profiles/default/controlpanel.xml, line: -1
+# File: ../profiles/default/types/EpidemiologicalYears.xml, line: -1
+msgid "Epidemiological Years"
+msgstr ""
+
+# 
+# File: ../profiles/default/types/ReportFolder.xml, line: -1
+msgid "Epidemiology"
+msgstr ""
+
 msgid "Expired"
 msgstr ""
 
@@ -277,6 +305,17 @@ msgid "Export batch"
 msgstr ""
 
 msgid "Extracts"
+msgstr ""
+
+# 
+# File: ../profiles/default/types/IdentifierType.xml, line: -1
+msgid "Identifier Type"
+msgstr ""
+
+# 
+# File: ../profiles/default/controlpanel.xml, line: -1
+# File: ../profiles/default/types/IdentifierTypes.xml, line: -1
+msgid "Identifier Types"
 msgstr ""
 
 # 
@@ -346,9 +385,6 @@ msgstr ""
 msgid "Log"
 msgstr ""
 
-msgid "Log entry"
-msgstr ""
-
 msgid "Login details"
 msgstr ""
 
@@ -374,6 +410,12 @@ msgid "Order pending"
 msgstr ""
 
 msgid "Orders"
+msgstr ""
+
+# 
+# File: ../profiles/default/types/Batch.xml, line: -1
+# File: ../profiles/default/types/Patient.xml, line: -1
+msgid "Past Medical History"
 msgstr ""
 
 # 
@@ -488,6 +530,17 @@ msgstr ""
 msgid "Sample Matrix"
 msgstr ""
 
+# 
+# File: ../profiles/default/types/SampleOrigin.xml, line: -1
+msgid "Sample Origin"
+msgstr ""
+
+# 
+# File: ../profiles/default/controlpanel.xml, line: -1
+# File: ../profiles/default/types/SampleOrigins.xml, line: -1
+msgid "Sample Origins"
+msgstr ""
+
 msgid "Sample Partition"
 msgstr ""
 
@@ -578,17 +631,17 @@ msgid "Treatment"
 msgstr ""
 
 # 
-# File: ../profiles/default/types/Patient.xml, line: -1
-msgid "Treatment History"
-msgstr ""
-
-# 
 # File: ../profiles/default/controlpanel.xml, line: -1
 # File: ../profiles/default/types/Treatments.xml, line: -1
 msgid "Treatments"
 msgstr ""
 
 msgid "Unassigned"
+msgstr ""
+
+# 
+# File: ../profiles/default/workflows/bika_publication_workflow/definition.xml, line: -1
+msgid "Unpublished"
 msgstr ""
 
 # 
