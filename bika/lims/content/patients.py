@@ -45,23 +45,18 @@ class PatientsView(BikaListingView):
                              'index': 'getPatientID'},
 
             'getGender': {'title': _('Gender'),
-                       'index': 'getGender',
                        'toggle': True},
 
             'getAgeSplittedStr': {'title': _('Age'),
-                   'index': 'getAgeSplittedStr',
                    'toggle': True},
 
             'getBirthDate': {'title': _('BirthDate'),
-                            'index':'getBirthDate',
                             'toggle': True},
 
             'getCitizenship': {'title': _('Citizenship'),
-                          'index':'getCitizenship',
                           'toggle': True},
 
             'getPrimaryReferrer' : {'title': _('Primary Referrer'),
-                                    'index': 'getPrimaryReferrer',
                                     'toggle': True},
 
         }
