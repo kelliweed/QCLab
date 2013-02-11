@@ -15,6 +15,10 @@ msgstr ""
 "Domain: DOMAIN\n"
 
 # 
+msgid "AR"
+msgstr "TR"
+
+# 
 # File: ../profiles/default/types/ARTemplate.xml, line: -1
 msgid "AR Template"
 msgstr ""
@@ -109,16 +113,12 @@ msgid "Analysis Profiles"
 msgstr ""
 
 # 
-# File: ../profiles/default/types/AnalysisRequest.xml, line: -1
 msgid "Analysis Request"
-msgstr ""
+msgstr "Test Request"
 
 # 
-# File: ../profiles/default/actions.xml, line: -1
-# File: ../profiles/default/types/AnalysisRequestsFolder.xml, line: -1
-# File: ../profiles/default/types/Batch.xml, line: -1
 msgid "Analysis Requests"
-msgstr ""
+msgstr "Test Requests"
 
 # 
 # File: ../profiles/default/types/AnalysisService.xml, line: -1
@@ -187,22 +187,17 @@ msgid "Batch ID"
 msgstr "Case ID"
 
 # 
-# File: ../profiles/default/types/BatchLabel.xml, line: -1
 msgid "Batch Label"
-msgstr ""
+msgstr "Additional Signs or Symptom not Covered by ICD"
 
 # 
-# File: ../profiles/default/types/BatchLabels.xml, line: -1
 msgid "Batch Labels"
-msgstr ""
+msgstr "Additional Signs and Symptoms not Covered by ICD"
 
 # 
-msgid "Batch label"
-msgstr "Case Syndrome Classification"
-
-# 
+# File: ../profiles/default/controlpanel.xml, line: -1
 msgid "Batch labels"
-msgstr "Case Syndrome Classifications"
+msgstr ""
 
 # 
 msgid "Batches"
@@ -256,8 +251,16 @@ msgid "Client"
 msgstr "Referring Institution"
 
 # 
+msgid "Client Batch ID"
+msgstr "Referring Institution Case ID"
+
+# 
 msgid "Client ID"
 msgstr "Referring Institution ID"
+
+# 
+msgid "Client Patient ID"
+msgstr "Referring Institution Patient ID"
 
 # 
 msgid "Clients"
@@ -430,6 +433,10 @@ msgstr ""
 # File: ../profiles/default/types/IdentifierType.xml, line: -1
 msgid "Identifier Type"
 msgstr ""
+
+# 
+msgid "Identifier Type Description"
+msgstr "Description"
 
 # 
 # File: ../profiles/default/controlpanel.xml, line: -1

@@ -21,6 +21,10 @@ msgstr ""
 "Report-Msgid-Bugs-To: http://github.com/bikalabs/Bika-LIMS/issues\n"
 "Language: af\n"
 
+# 
+msgid "AR"
+msgstr "TR"
+
 msgid "AR Template"
 msgstr ""
 
@@ -133,10 +137,6 @@ msgid "Batch Labels"
 msgstr ""
 
 # 
-msgid "Batch label"
-msgstr "Syndrome Classification"
-
-# 
 # File: ../profiles/default/controlpanel.xml, line: -1
 msgid "Batch labels"
 msgstr ""
@@ -182,8 +182,16 @@ msgid "Client"
 msgstr ""
 
 # 
+msgid "Client Batch ID"
+msgstr "Referring Institution Case ID"
+
+# 
 msgid "Client ID"
 msgstr "Hospital ID"
+
+# 
+msgid "Client Patient ID"
+msgstr "Referring Institution Patient ID"
 
 msgid "Clients"
 msgstr ""
@@ -311,6 +319,10 @@ msgstr ""
 # File: ../profiles/default/types/IdentifierType.xml, line: -1
 msgid "Identifier Type"
 msgstr ""
+
+# 
+msgid "Identifier Type Description"
+msgstr "Description"
 
 # 
 # File: ../profiles/default/controlpanel.xml, line: -1

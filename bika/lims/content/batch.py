@@ -118,21 +118,21 @@ schema = BikaSchema.copy() + Schema((
         allowable_content_types=('text/x-web-intelligent',),
         default_output_type="text/html",
         widget=TextAreaWidget(
-            label=_('Additional notes'),
+            label=_('Additional Notes'),
         ),
     ),
     StringField('CaseStatus',
         vocabulary='getCaseStatuses',
         widget=MultiSelectionWidget(
             format='checkbox',
-            label=_("Case status")
+            label=_("Case Status")
         ),
     ),
     StringField('CaseOutcome',
         vocabulary='getCaseOutcomes',
         widget=MultiSelectionWidget(
             format='checkbox',
-            label=_("Case outcome")
+            label=_("Case Outcome")
         ),
     ),
     RecordsField('Symptoms',
@@ -320,7 +320,7 @@ class Batch(BaseContent):
             patient = self.getPatient()
             pr = patient and patient.getPrimaryReferrer() or None
             return DisplayList(pr and pr.getCCContacts() or [])
-    
+
     def getClientName(self):
         pc = getToolByName(self, 'portal_catalog')
         client = pc(portal_type='Client', UID=self.getClientUID())
@@ -518,27 +518,27 @@ class Batch(BaseContent):
             return {'year':'',
                     'month':'',
                     'day':''}
-            
+
     def getPatientCountry(self):
         bpc = getToolByName(self, 'bika_patient_catalog')
         patient = bpc(UID=self.getPatientUID())
         if patient:
             patient = patient[0].getObject()
             return patient.getCountryState()['country']
-    
+
     def getPatientGender(self):
         bpc = getToolByName(self, 'bika_patient_catalog')
         patient = bpc(UID=self.getPatientUID())
         if patient:
             patient = patient[0].getObject()
             return patient.getGender()
-    
+
     def getPatientFirstname(self):
         bpc = getToolByName(self, 'bika_patient_catalog')
         patient = bpc(UID=self.getPatientUID())
         if patient:
             patient = patient[0].getObject()
-            return patient.getFirstname()      
+            return patient.getFirstname()
 
     def workflow_guard_receive(self):
         """Permitted when all Samples are > sample_received

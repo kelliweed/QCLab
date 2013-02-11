@@ -355,24 +355,14 @@ msgid "Add new"
 msgstr ""
 
 # 
-# File: ../browser/reports/templates/epidemiology_epiddetailsperanalysis.pt, line: 118
+# File: ../browser/reports/templates/epidemiology_analysisrequestspercountry.pt, line: 147
+# File: ../content/batch.py, line: 121
 msgid "Additional Notes"
 msgstr ""
 
 # 
 # File: ../controlpanel/bika_symptoms.py, line: 30
 msgid "Additional Symptoms not covered by ICD codes, can be entered here."
-msgstr ""
-
-# 
-# File: ../content/patient.py, line: 102
-msgid "Additional identifiers"
-msgstr ""
-
-# 
-# File: ../browser/reports/templates/epidemiology_analysisrequestspercountry.pt, line: 147
-# File: ../content/batch.py, line: 121
-msgid "Additional notes"
 msgstr ""
 
 # File: ../skins/bika/bika_widgets/addresswidget.pt, line: 121
@@ -846,6 +836,10 @@ msgstr ""
 msgid "Batch ID"
 msgstr ""
 
+# 
+msgid "Batch Label"
+msgstr "Additional Signs or Symptom not Covered by ICD"
+
 # File: ../controlpanel/bika_batchlabels.py, line: 23
 msgid "Batch Labels"
 msgstr ""
@@ -853,10 +847,6 @@ msgstr ""
 # File: ../content/invoicebatch.py, line: 25
 msgid "Batch end date"
 msgstr "Datum konce dávky"
-
-# 
-msgid "Batch label"
-msgstr "Case Syndrome Classification"
 
 # File: ../content/batch.py, line: 42
 msgid "Batch labels"
@@ -1031,8 +1021,18 @@ msgid "Case ID"
 msgstr ""
 
 # 
+# File: ../content/batch.py, line: 135
+msgid "Case Outcome"
+msgstr ""
+
+# 
 # File: ../controlpanel/bika_caseoutcomes.py, line: 23
 msgid "Case Outcomes"
+msgstr ""
+
+# 
+# File: ../content/batch.py, line: 128
+msgid "Case Status"
 msgstr ""
 
 # 
@@ -1043,16 +1043,6 @@ msgstr ""
 # 
 # File: ../browser/reports/templates/epidemiology_analysisrequestspercountry.pt, line: 112
 msgid "Case onset date"
-msgstr ""
-
-# 
-# File: ../content/batch.py, line: 135
-msgid "Case outcome"
-msgstr ""
-
-# 
-# File: ../content/batch.py, line: 128
-msgid "Case status"
 msgstr ""
 
 # 
@@ -1201,6 +1191,10 @@ msgstr "Objednávka zákazníka"
 # File: ../browser/queries/queries_query.pt, line: 83
 msgid "Client Order ID"
 msgstr ""
+
+# 
+msgid "Client Patient ID"
+msgstr "Referring Institution Patient ID"
 
 # File: ../content/arimport.py, line: 38
 msgid "Client Phone"
@@ -3433,6 +3427,11 @@ msgstr ""
 
 # File: ../controlpanel/bika_referencedefinitions.py, line: 30
 msgid "ReferenceDefinition represents a Reference Definition or sample type used for quality control testing"
+msgstr ""
+
+# 
+# File: ../content/patient.py, line: 102
+msgid "Referring Institution Patient ID(s)"
 msgstr ""
 
 # File: ../content/bikasetup.py, line: 41

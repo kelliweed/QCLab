@@ -99,7 +99,7 @@ schema=Person.schema.copy()+Schema((
         subfield_labels={'IdentifierType':_('Identifier Type'),'Identifier': _('Identifier')},
         subfield_sizes={'Identifier': 15,'Identifier Type': 25},
         widget=PatientIdentifiersWidget(
-            label=_('Additional identifiers'),
+            label=_('Referring Institution Patient ID(s)'),
             description=_('Patient additional identifiers')
         ),
     ),

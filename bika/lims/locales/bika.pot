@@ -11,6 +11,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 #
+msgid "Identifier Type Description"
+msgstr "Description"
+#
 msgid "Client"
 msgstr "Referring Institution"
 #
@@ -29,11 +32,26 @@ msgstr "Case ID"
 msgid "Batches"
 msgstr "Cases"
 #
-msgid "Batch labels"
-msgstr "Case Syndrome Classifications"
+msgid "Batch Labels"
+msgstr "Additional Signs and Symptoms not Covered by ICD"
 #
-msgid "Batch label"
-msgstr "Case Syndrome Classification"
+msgid "Batch Label"
+msgstr "Additional Signs or Symptom not Covered by ICD"
+#
+msgid "Analysis Request"
+msgstr "Test Request"
+#
+msgid "Analysis Requests"
+msgstr "Test Requests"
+#
+msgid "AR"
+msgstr "TR"
+#
+msgid "Client Batch ID"
+msgstr "Referring Institution Case ID"
+#
+msgid "Client Patient ID"
+msgstr "Referring Institution Patient ID"
 #
 #. The variables used here are the same as used in the strftime formating.
 #. Supported are ${A}, ${a}, ${B}, ${b}, ${H}, ${I}, ${m}, ${d}, ${M}, ${p},
@@ -293,10 +311,6 @@ msgstr ""
 msgid "A list of places visited by the patient."
 msgstr ""
 #
-# File: ../browser/queries/analysisrequests.py, line: 112
-msgid "AR"
-msgstr ""
-#
 # File: ../content/bikasetup.py, line: 207
 msgid "AR Attachment Option"
 msgstr ""
@@ -429,21 +443,14 @@ msgstr ""
 msgid "Add new"
 msgstr ""
 #
+# File: ../browser/reports/templates/epidemiology_analysisrequestspercountry.pt, line: 147
 # File: ../browser/reports/templates/epidemiology_epiddetailsperanalysis.pt, line: 118
+# File: ../content/batch.py, line: 121
 msgid "Additional Notes"
 msgstr ""
 #
 # File: ../controlpanel/bika_symptoms.py, line: 30
 msgid "Additional Symptoms not covered by ICD codes, can be entered here."
-msgstr ""
-#
-# File: ../content/patient.py, line: 102
-msgid "Additional identifiers"
-msgstr ""
-#
-# File: ../browser/reports/templates/epidemiology_analysisrequestspercountry.pt, line: 147
-# File: ../content/batch.py, line: 121
-msgid "Additional notes"
 msgstr ""
 #
 # File: ../skins/bika/bika_widgets/addresswidget.pt, line: 121
@@ -626,10 +633,6 @@ msgstr ""
 msgid "Analysis Profiles"
 msgstr ""
 #
-# File: ../browser/reports/templates/epidemiology_epiddetailsperanalysis.pt, line: 112
-msgid "Analysis Request"
-msgstr ""
-#
 # File: ../browser/reports/templates/epidemiology_analysisrequestspercountry.pt, line: 100
 # File: ../browser/reports/templates/epidemiology_casespercountry.pt, line: 152
 # File: ../config.py, line: 68
@@ -638,12 +641,6 @@ msgstr ""
 #
 # File: ../browser/client.py, line: 334
 msgid "Analysis Request Imports"
-msgstr ""
-#
-# File: ../browser/analysisrequest.py, line: 1927
-# File: ../browser/queries/analysisrequests.py, line: 50
-# File: ../skins/bika/portlet_to_be_verified.pt, line: 68
-msgid "Analysis Requests"
 msgstr ""
 #
 # File: ../browser/reports/epidemiology_analysisrequestspercountry.py, line: 122
@@ -894,12 +891,12 @@ msgstr ""
 msgid "Bank name"
 msgstr ""
 #
-# File: ../controlpanel/bika_batchlabels.py, line: 23
-msgid "Batch Labels"
-msgstr ""
-#
 # File: ../content/invoicebatch.py, line: 25
 msgid "Batch end date"
+msgstr ""
+#
+# File: ../content/batch.py, line: 48
+msgid "Batch labels"
 msgstr ""
 #
 # File: ../content/invoicebatch.py, line: 18
@@ -1062,8 +1059,16 @@ msgstr ""
 msgid "Case ID"
 msgstr ""
 #
+# File: ../content/batch.py, line: 135
+msgid "Case Outcome"
+msgstr ""
+#
 # File: ../controlpanel/bika_caseoutcomes.py, line: 23
 msgid "Case Outcomes"
+msgstr ""
+#
+# File: ../content/batch.py, line: 128
+msgid "Case Status"
 msgstr ""
 #
 # File: ../controlpanel/bika_casestatuses.py, line: 23
@@ -1072,14 +1077,6 @@ msgstr ""
 #
 # File: ../browser/reports/templates/epidemiology_analysisrequestspercountry.pt, line: 112
 msgid "Case onset date"
-msgstr ""
-#
-# File: ../content/batch.py, line: 135
-msgid "Case outcome"
-msgstr ""
-#
-# File: ../content/batch.py, line: 128
-msgid "Case status"
 msgstr ""
 #
 # File: ../browser/reports/templates/epidemiology.pt, line: 82
@@ -1199,10 +1196,6 @@ msgstr ""
 #
 # File: ../content/arimport.py, line: 48
 msgid "Client Address"
-msgstr ""
-#
-# File: ../content/batch.py, line: 42
-msgid "Client Batch ID"
 msgstr ""
 #
 # File: ../content/arimport.py, line: 53
@@ -2161,10 +2154,6 @@ msgstr ""
 # File: ../browser/widgets/patient_identifiers.pt, line: 17
 # File: ../content/patient.py, line: 99
 msgid "Identifier Type"
-msgstr ""
-#
-# File: ../browser/widgets/patient_identifiers.pt, line: 19
-msgid "Identifier Type Description"
 msgstr ""
 #
 # File: ../controlpanel/bika_identifiertypes.py, line: 23
@@ -3403,6 +3392,10 @@ msgstr ""
 msgid ""
 "ReferenceDefinition represents a Reference Definition or sample type used "
 "for quality control testing"
+msgstr ""
+#
+# File: ../content/patient.py, line: 102
+msgid "Referring Institution Patient ID(s)"
 msgstr ""
 #
 # File: ../content/bikasetup.py, line: 41

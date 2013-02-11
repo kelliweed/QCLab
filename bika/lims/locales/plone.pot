@@ -11,6 +11,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 #
+msgid "Identifier Type Description"
+msgstr "Description"
+#
 msgid "Client"
 msgstr "Referring Institution"
 #
@@ -29,11 +32,26 @@ msgstr "Case ID"
 msgid "Batches"
 msgstr "Cases"
 #
-msgid "Batch labels"
-msgstr "Case Syndrome Classifications"
+msgid "Batch Labels"
+msgstr "Additional Signs and Symptoms not Covered by ICD"
 #
-msgid "Batch label"
-msgstr "Case Syndrome Classification"
+msgid "Batch Label"
+msgstr "Additional Signs or Symptom not Covered by ICD"
+#
+msgid "Analysis Request"
+msgstr "Test Request"
+#
+msgid "Analysis Requests"
+msgstr "Test Requests"
+#
+msgid "AR"
+msgstr "TR"
+#
+msgid "Client Batch ID"
+msgstr "Referring Institution Case ID"
+#
+msgid "Client Patient ID"
+msgstr "Referring Institution Patient ID"
 #
 msgid "label_schema_Accounting"
 msgstr "Accounting"
@@ -346,16 +364,6 @@ msgstr ""
 msgid "Analysis Profiles"
 msgstr ""
 #
-# File: ../profiles/default/types/AnalysisRequest.xml, line: -1
-msgid "Analysis Request"
-msgstr ""
-#
-# File: ../profiles/default/actions.xml, line: -1
-# File: ../profiles/default/types/AnalysisRequestsFolder.xml, line: -1
-# File: ../profiles/default/types/Batch.xml, line: -1
-msgid "Analysis Requests"
-msgstr ""
-#
 # File: ../profiles/default/types/AnalysisService.xml, line: -1
 msgid "Analysis Service"
 msgstr ""
@@ -404,12 +412,8 @@ msgstr ""
 msgid "Attachments"
 msgstr ""
 #
-# File: ../profiles/default/types/BatchLabel.xml, line: -1
-msgid "Batch Label"
-msgstr ""
-#
-# File: ../profiles/default/types/BatchLabels.xml, line: -1
-msgid "Batch Labels"
+# File: ../profiles/default/controlpanel.xml, line: -1
+msgid "Batch labels"
 msgstr ""
 #
 # File: ../profiles/default/types/BikaSetup.xml, line: -1

@@ -303,24 +303,14 @@ msgid "Add new"
 msgstr ""
 
 # 
-# File: ../browser/reports/templates/epidemiology_epiddetailsperanalysis.pt, line: 118
+# File: ../browser/reports/templates/epidemiology_analysisrequestspercountry.pt, line: 147
+# File: ../content/batch.py, line: 121
 msgid "Additional Notes"
 msgstr ""
 
 # 
 # File: ../controlpanel/bika_symptoms.py, line: 30
 msgid "Additional Symptoms not covered by ICD codes, can be entered here."
-msgstr ""
-
-# 
-# File: ../content/patient.py, line: 102
-msgid "Additional identifiers"
-msgstr ""
-
-# 
-# File: ../browser/reports/templates/epidemiology_analysisrequestspercountry.pt, line: 147
-# File: ../content/batch.py, line: 121
-msgid "Additional notes"
 msgstr ""
 
 msgid "Address"
@@ -663,16 +653,16 @@ msgid "Batch ID"
 msgstr ""
 
 # 
+msgid "Batch Label"
+msgstr "Additional Signs or Symptom not Covered by ICD"
+
+# 
 # File: ../controlpanel/bika_batchlabels.py, line: 23
 msgid "Batch Labels"
 msgstr ""
 
 msgid "Batch end date"
 msgstr "批量处理完成时间"
-
-# 
-msgid "Batch label"
-msgstr "Syndrome Classification"
 
 # 
 msgid "Batch labels"
@@ -800,8 +790,18 @@ msgid "Case ID"
 msgstr ""
 
 # 
+# File: ../content/batch.py, line: 84
+msgid "Case Outcome"
+msgstr ""
+
+# 
 # File: ../controlpanel/bika_caseoutcomes.py, line: 23
 msgid "Case Outcomes"
+msgstr ""
+
+# 
+# File: ../content/batch.py, line: 77
+msgid "Case Status"
 msgstr ""
 
 # 
@@ -812,16 +812,6 @@ msgstr ""
 # 
 # File: ../browser/reports/templates/epidemiology_analysisrequestspercountry.pt, line: 112
 msgid "Case onset date"
-msgstr ""
-
-# 
-# File: ../content/batch.py, line: 84
-msgid "Case outcome"
-msgstr ""
-
-# 
-# File: ../content/batch.py, line: 77
-msgid "Case status"
 msgstr ""
 
 # 
@@ -936,6 +926,10 @@ msgstr "客户订单"
 
 msgid "Client Order ID"
 msgstr ""
+
+# 
+msgid "Client Patient ID"
+msgstr "Referring Institution Patient ID"
 
 msgid "Client Phone"
 msgstr "客户手机"
@@ -2634,6 +2628,11 @@ msgid "Reference sample values are zero or 'blank'"
 msgstr ""
 
 msgid "ReferenceDefinition represents a Reference Definition or sample type used for quality control testing"
+msgstr ""
+
+# 
+# File: ../content/patient.py, line: 102
+msgid "Referring Institution Patient ID(s)"
 msgstr ""
 
 msgid "Register"
