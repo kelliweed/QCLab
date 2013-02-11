@@ -244,19 +244,24 @@
 			</div>
 		</li> 
 		<li>
-    		<a href="#" id="positiveresultspercountry_selector" 
-    		i18n:translate="">Positive results per country</a><br/>
+    		<a href="#" id="resultspercountry_selector" 
+    		i18n:translate="">Results summary per country</a><br/>
     		<span i18n:translate="">
-    			Total counts of Cases with positive test results, broken down by country, e.g. 3 Dengue positive cases, 
+    			Total counts of Cases with different type test results, broken down by country, e.g. 3 Dengue positive cases, 
     			1 Dengue positive type 2 case, etc.
     		</span>
-    		<div id="positiveresultspercountry" style="display:none" class="criteria">
-				<form action="createreport" method="post" name="epidemiology_positiveresultspercountry">
-				    <input type="hidden" name="report_id" value="epidemiology_positiveresultspercountry" />
+    		<div id="resultspercountry" style="display:none" class="criteria">
+				<form action="createreport" method="post" name="epidemiology_resultspercountry">
+				    <input type="hidden" name="report_id" value="epidemiology_resultspercountry" />
 				    <fieldset>
+				    	<tal:x content="structure python:view.selection_macros.select_analysisservice(
+                                               allow_blank=False,
+                                               multiselect=False)"/>
 				        <tal:x content="structure python:view.selection_macros.select_daterange(
-					                                          field_id='getDateCreated',
-					                                          field_title='Date Created')"/>
+					                                          field_id='getOnsetDate',
+					                                          field_title='Onset Date')"/>
+					    <tal:x content="structure python:view.selection_macros.select_groupingperiod(
+					    						allow_blank=True)"/>
 				    </fieldset>
 				    <input tabindex=""
 				        class="searchButton allowMultiSubmit"
