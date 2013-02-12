@@ -42,13 +42,6 @@ schema = BikaSchema.copy() + Schema((
             label=_("Client Batch ID")
         )
     ),
-    LinesField('BatchLabels',
-        vocabulary = "BatchLabelVocabulary",
-        widget=MultiSelectionWidget(
-            label=_("Batch labels"),
-            format="checkbox",
-        )
-    ),
     StringField('ClientID',
         required=1,
         widget=StringWidget(
@@ -103,7 +96,6 @@ schema = BikaSchema.copy() + Schema((
             label = _("Onset Date Estimated"),
         ),
     ),
-
     RecordsField('ProvisionalDiagnosis',
         type='provisionaldiagnosis',
         subfields=('Code', 'Title', 'Description', 'Onset', 'Remarks'),
@@ -112,14 +104,20 @@ schema = BikaSchema.copy() + Schema((
             label='Provisional diagnosis',
         ),
     ),
-
-    TextField('AdditionalNotes',
-        default_content_type='text/x-web-intelligent',
-        allowable_content_types=('text/x-web-intelligent',),
-        default_output_type="text/html",
-        widget=TextAreaWidget(
-            label=_('Additional Notes'),
+    RecordsField('Symptoms',
+        type='symptoms',
+        subfields=('Code', 'Title', 'Description', 'Onset', 'Remarks'),
+        subfield_sizes={'Code': 7, 'Title': 15, 'Description': 25, 'Onset': 10, 'Remarks': 25},
+        widget=CaseSymptomsWidget(
+            label=_('Signs and Symptoms'),
         ),
+    ),
+    LinesField('BatchLabels',
+        vocabulary = "BatchLabelVocabulary",
+        widget=MultiSelectionWidget(
+            label=_("Additional Signs and Symptoms"),
+            format="checkbox",
+        )
     ),
     StringField('CaseStatus',
         vocabulary='getCaseStatuses',
@@ -135,20 +133,20 @@ schema = BikaSchema.copy() + Schema((
             label=_("Case outcome")
         ),
     ),
-    RecordsField('Symptoms',
-        type='symptoms',
-        subfields=('Code', 'Title', 'Description', 'Onset', 'Remarks'),
-        subfield_sizes={'Code': 7, 'Title': 15, 'Description': 25, 'Onset': 10, 'Remarks': 25},
-        widget=CaseSymptomsWidget(
-            label=_('Signs and Symptoms'),
-        ),
-    ),
     RecordsField('AetiologicAgents',
         type='aetiologicagents',
         subfields=('Code', 'Title', 'Description', 'Onset', 'Remarks'),
         subfield_sizes={'Title': 15, 'Description': 25, 'Subtype': 10, 'Remarks': 25},
         widget=CaseAetiologicAgentsWidget(
             label=_('Aetiologic Agents'),
+        ),
+    ),
+    TextField('AdditionalNotes',
+        default_content_type='text/x-web-intelligent',
+        allowable_content_types=('text/x-web-intelligent',),
+        default_output_type="text/html",
+        widget=TextAreaWidget(
+            label=_('Additional Notes'),
         ),
     ),
     TextField('Remarks',
@@ -167,7 +165,7 @@ schema = BikaSchema.copy() + Schema((
 
 schema['title'].required = False
 schema['title'].widget.visible = False
-schema.moveField('BatchLabels', after='AdditionalNotes')
+schema.moveField('BatchLabels', after='Symptoms')
 schema.moveField('PatientID', after='BatchID')
 
 class Batch(BaseContent):
