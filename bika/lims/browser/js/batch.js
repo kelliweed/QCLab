@@ -111,9 +111,12 @@ $(document).ready(function(){
             data: {'_authenticator': $('input[name="_authenticator"]').val()},
             dataType: "json",
 	        success: function(data){
-				$("#ClientID").val(data["clientid"]);
-				$(".jsClientTitle").remove();
-				$("#archetypes-fieldname-ClientID").append("<span class='jsClientTitle'>"+data["clientname"]+"</span>");
+                // If there was no value, don't re-set the input
+                if(data["clientid"] != ''){
+    				$("#ClientID").val(data["clientid"]);
+    				$(".jsClientTitle").remove();
+    				$("#archetypes-fieldname-ClientID").append("<span class='jsClientTitle'>"+data["clientname"]+"</span>");
+                }
 			},
         });
 	});
