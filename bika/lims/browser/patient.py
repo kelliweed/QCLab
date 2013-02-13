@@ -626,27 +626,17 @@ class ajaxGetSymptoms(BrowserView):
                                         or p.Description.lower().find(searchTerm)>-1]
         for p in brains:
             p=p.getObject()
-            if (len(title) > 0 and p.Title() == title):
-                rows.append({'Code': p.getCode(),
-                         'Title': p.Title(),
-                         'Description': p.Description()})
-            elif len(title)==0:
-                rows.append({'Code': p.getCode(),
+            rows.append({'Code': p.getCode(),
                          'Title': p.Title(),
                          'Description': p.Description()})
 
         # lookup objects from ICD code list
-        for icd9 in icd9_codes['R']:
-            if icd9['code'].find(searchTerm)>-1 \
-               or icd9['short'].lower().find(searchTerm)>-1 \
-               or icd9['long'].lower().find(searchTerm)>-1:
-
-                if (len(title) > 0 and icd9['short'] == title):
-                    rows.append({'Code': icd9['code'],
-                                 'Title': icd9['short'],
-                                 'Description': icd9['long']})
-                elif len(title)==0:
-                    rows.append({'Code': icd9['code'],
+        for icdprefix in icd9_codes.keys():
+            for icd9 in icd9_codes[icdprefix]:
+                if (str(icdprefix) + str(icd9['code'])).lower().find(searchTerm)>-1 \
+                   or icd9['short'].lower().find(searchTerm)>-1 \
+                   or icd9['long'].lower().find(searchTerm)>-1:
+                    rows.append({'Code': str(icdprefix) + str(icd9['code']),
                                  'Title': icd9['short'],
                                  'Description': icd9['long']})
 
