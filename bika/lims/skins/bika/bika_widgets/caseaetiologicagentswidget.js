@@ -75,7 +75,7 @@ $(document).ready(function(){
             	success: function(data, textStatus, $XHR){
             		if (data == null || data['rows'].length < 1) {
             			//Aetiologic agent doesn't exist
-            			$(".template-caseaetiologicagents #Title").focus();
+            			//$(".template-caseaetiologicagents #Title").focus();
             		}
     			},
     			error: function(){
