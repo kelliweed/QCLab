@@ -208,7 +208,7 @@ class doPublish(BrowserView):
 ##                        self.request.RESPONSE.write(pdf_data)
 
                 else:
-                    raise Exception, "XXX pub_pref %s" % self.pub_pref
+                    raise Exception, "XXX pub_pref %s" % (self.pub_pref,)
 
         return [ar.RequestID for ar in self.analysis_requests]
 
