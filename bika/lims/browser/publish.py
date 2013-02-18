@@ -156,17 +156,7 @@ class doPublish(BrowserView):
                     if debug_mode:
                         open(join(Globals.INSTANCE_HOME,'var', out_fn + ".html"),
                              "w").write(ar_results)
-
-                    pisa.showLogging()
-                    ramdisk = StringIO()
-                    pdf = pisa.CreatePDF(ar_results, ramdisk)
-                    pdf_data = ramdisk.getvalue()
-                    ramdisk.close()
-
-                    if debug_mode:
-                        open(join(Globals.INSTANCE_HOME,'var', out_fn + ".pdf"),
-                             "wb").write(pdf_data)
-
+                    
                     mime_msg = MIMEMultipart('related')
                     mime_msg['Subject'] = self.get_mail_subject()
                     mime_msg['From'] = formataddr(
@@ -178,12 +168,24 @@ class doPublish(BrowserView):
                     mime_msg.preamble = 'This is a multi-part MIME message.'
                     msg_txt = MIMEText(ar_results, _subtype='html')
                     mime_msg.attach(msg_txt)
-                    if not pdf.err:
-                        part = MIMEBase('application', "application/pdf")
-                        part.add_header('Content-Disposition', 'attachment; filename="%s.pdf"' % out_fn)
-                        part.set_payload( pdf_data )
-                        Encoders.encode_base64(part)
-                        mime_msg.attach(part)
+                    
+                    if 'pdf' in self.pub_pref:
+                        pisa.showLogging()
+                        ramdisk = StringIO()
+                        pdf = pisa.CreatePDF(ar_results, ramdisk)
+                        pdf_data = ramdisk.getvalue()
+                        ramdisk.close()
+    
+                        if debug_mode:
+                            open(join(Globals.INSTANCE_HOME,'var', out_fn + ".pdf"),
+                                 "wb").write(pdf_data)
+
+                        if not pdf.err:
+                            part = MIMEBase('application', "application/pdf")
+                            part.add_header('Content-Disposition', 'attachment; filename="%s.pdf"' % out_fn)
+                            part.set_payload( pdf_data )
+                            Encoders.encode_base64(part)
+                            mime_msg.attach(part)
 
                     try:
                         host = getToolByName(self.context, 'MailHost')
@@ -208,7 +210,7 @@ class doPublish(BrowserView):
 ##                        self.request.RESPONSE.write(pdf_data)
 
                 else:
-                    raise Exception, "XXX pub_pref %s" % self.pub_pref
+                    raise Exception, "XXX pub_pref %s" % (self.pub_pref,)
 
         return [ar.RequestID for ar in self.analysis_requests]
 
