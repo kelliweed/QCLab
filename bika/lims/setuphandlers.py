@@ -786,6 +786,7 @@ class BikaGenerator:
         addIndex(bpc, 'getObjPositionInParent', 'GopipIndex')
         addIndex(bpc, 'sortable_title', 'FieldIndex')
         addIndex(bpc, 'review_state', 'FieldIndex')
+        addIndex(bsc, 'inactive_state', 'FieldIndex')
         addIndex(bpc, 'getPatientID', 'FieldIndex')
         addIndex(bpc, 'getPrimaryReferrerUID', 'FieldIndex')
 
@@ -799,6 +800,7 @@ class BikaGenerator:
         addColumn(bpc, 'getPatientID')
         addColumn(bpc, 'getPrimaryReferrerUID')
         addColumn(bpc, 'review_state')
+        addColumn(bpc, 'inactive_state')
 
 def setupVarious(context):
     """
