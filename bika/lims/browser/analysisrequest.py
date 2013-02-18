@@ -451,7 +451,7 @@ class AnalysisRequestViewView(BrowserView):
             {'id': 'Patient',
              'title': _('Patient'),
              'allow_edit': False,
-             'value': patient and "<a href='%s'>%s %s</a>"%(patient.absolute_url(),patient.getPatientID(),patient.Title()) or '',
+             'value': patient and "<a href='%s'>%s</a>"%(patient.absolute_url(),patient.Title()) or '',
              'condition':True,
              'type': 'text'},
             {'id': 'Doctor',
@@ -1658,8 +1658,8 @@ class ajaxAnalysisRequestSubmit():
                 patient = bpc(getPatientID=values['PatientID'])[0].getObject()
 
             doctor = None
-            if values.has_key('DoctorUID') and values['DoctorUID']:
-                doctor = uc(UID=values['DoctorUID'])[0].getObject()
+            if values.get('DoctorID', ''):
+                doctor = pc(getDoctorID=values['DoctorID'])[0].getObject()
 
             if self.context.portal_type == 'Client':
                 client = self.context
@@ -1743,6 +1743,8 @@ class ajaxAnalysisRequestSubmit():
                 CCEmails = form['CCEmails'],
                 Sample = sample_uid,
                 Profile = profile,
+                Patient = patient,
+                Doctor = doctor,
                 **dict(values)
             )
 
@@ -1937,6 +1939,8 @@ class AnalysisRequestsView(BikaListingView):
             'getRequestID': {'title': _('Request ID'),
                              'index': 'getRequestID'},
             'getPatient': {'title': _('Patient')},
+            'getPatientID': {'title': _('Patient ID'),
+                             'toggle': True},
             'getDoctor': {'title': _('Doctor')},
             'getClientOrderNumber': {'title': _('Client Order'),
                                      'index': 'getClientOrderNumber',
@@ -2013,6 +2017,7 @@ class AnalysisRequestsView(BikaListingView):
                              {'id':'cancel'},
                              {'id':'reinstate'}],
              'columns':['getRequestID',
+                        'getPatientID',
                         'getPatient',
                         'getDoctor',
                         'getSample',
@@ -2048,6 +2053,7 @@ class AnalysisRequestsView(BikaListingView):
                              {'id':'cancel'},
                              {'id':'reinstate'}],
              'columns':['getRequestID',
+                        'getPatientID',
                         'getPatient',
                         'getDoctor',
                         'getSample',
@@ -2077,6 +2083,7 @@ class AnalysisRequestsView(BikaListingView):
                              {'id':'cancel'},
                              {'id':'reinstate'}],
              'columns':['getRequestID',
+                        'getPatientID',
                         'getPatient',
                         'getDoctor',
                         'getSample',
@@ -2108,6 +2115,7 @@ class AnalysisRequestsView(BikaListingView):
                              {'id':'cancel'},
                              {'id':'reinstate'}],
              'columns':['getRequestID',
+                        'getPatientID',
                         'getPatient',
                         'getDoctor',
                         'getSample',
@@ -2135,6 +2143,7 @@ class AnalysisRequestsView(BikaListingView):
                                'sort_order': 'reverse'},
              'transitions': [{'id':'publish'}],
              'columns':['getRequestID',
+                        'getPatientID',
                         'getPatient',
                         'getDoctor',
                         'getSample',
@@ -2161,6 +2170,7 @@ class AnalysisRequestsView(BikaListingView):
                                'sort_on':'created',
                                'sort_order': 'reverse'},
              'columns':['getRequestID',
+                        'getPatientID',
                         'getPatient',
                         'getDoctor',
                         'getSample',
@@ -2193,6 +2203,7 @@ class AnalysisRequestsView(BikaListingView):
                                'sort_order': 'reverse'},
              'transitions': [{'id':'reinstate'}],
              'columns':['getRequestID',
+                        'getPatientID',
                         'getPatient',
                         'getDoctor',
                         'getSample',
@@ -2233,6 +2244,7 @@ class AnalysisRequestsView(BikaListingView):
                              {'id':'cancel'},
                              {'id':'reinstate'}],
              'columns':['getRequestID',
+                        'getPatientID',
                         'getPatient',
                         'getDoctor',
                         'getSample',
@@ -2273,6 +2285,7 @@ class AnalysisRequestsView(BikaListingView):
                              {'id':'cancel'},
                              {'id':'reinstate'}],
              'columns':['getRequestID',
+                        'getPatientID',
                         'getPatient',
                         'getDoctor',
                         'getSample',
@@ -2362,14 +2375,15 @@ class AnalysisRequestsView(BikaListingView):
             else:
                 items[x]['BatchID'] = ''
 
-
             patient = obj.getPatient()
             if patient:
-                items[x]['getPatient'] = patient and patient.getPatientID() or ''
+                items[x]['getPatientID'] = patient.getPatientID()
+                items[x]['getPatient'] = patient.Title()
                 items[x]['replace']['getPatient'] = "<a href='%s'>%s</a>" % \
-                     (patient.absolute_url(), patient.getPatientID())
+                     (patient.absolute_url(), patient.Title())
             else:
                 items[x]['getPatient'] = ''
+                items[x]['getPatientID'] = ''
 
             doctor = obj.getDoctor()
             if doctor:
