@@ -627,7 +627,8 @@ class LoadSetupData(BrowserView):
                             'email': _c(row['EmailAddress']),
                             'fullname': _c(Fullname)})
                 except Exception, msg:
-                    print "Error creating {}: {}".format(row['Username'], msg)
+                    print "Error creating {0}: {1}".format(
+                        row['Username'], msg)
                     member = self.portal_membership.getMemberById(
                         row['Username'])
 
@@ -645,7 +646,7 @@ class LoadSetupData(BrowserView):
                     try:
                         member._addRole(role_id)
                     except Exception, msg:
-                        print "Error setting role for {}: {} {}".format(
+                        print "Error setting role for {0}: {1} {2}".format(
                             member, role_id, msg)
 
                 # If user is in LabManagers, add Owner local role on clients
