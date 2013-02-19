@@ -1364,7 +1364,7 @@ class LoadSetupData(BrowserView):
                 _id = folder.invokeFactory('AnalysisSpec', id='tmp')
                 obj = folder[_id]
                 obj.edit(
-                    _c(title=sampletype.Title()),
+                    title=_c(sampletype.Title()),
                     ResultsRange=resultsrange)
                 obj.setSampleType(sampletype.UID())
                 obj.unmarkCreationFlag()
