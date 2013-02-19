@@ -77,7 +77,7 @@ class LabContact(Person):
         o = self.getDepartment()
         if o and o.UID() not in [i[0] for i in items]:
             items.append((o.UID(), o.Title()))
-        items.sort(lambda x,y: cmp(x[1], y[1]))
+        items.sort(lambda x,y: cmp(x[1].lower(), y[1].lower()))
         return DisplayList(list(items))
 
 registerType(LabContact, PROJECTNAME)

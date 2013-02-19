@@ -140,7 +140,7 @@ class AnalysisSpecificationView(BikaListingView):
             }
             items.append(item)
 
-        self.categories.sort()
+        self.categories.sort(lambda x, y: cmp(x.lower(), y.lower()))
         for i in range(len(items)):
             items[i]['table_row_class'] = "even"
 

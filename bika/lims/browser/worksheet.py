@@ -495,7 +495,7 @@ class ManageResultsView(BrowserView):
         o = self.context.getInstrument()
         if o and o.UID() not in [i[0] for i in items]:
             items.append((o.UID(), o.Title()))
-        items.sort(lambda x, y: cmp(x[1], y[1]))
+        items.sort(lambda x, y: cmp(x[1].lower(), y[1].lower()))
         return DisplayList(list(items))
 
 class AddAnalysesView(BikaListingView):
@@ -934,7 +934,7 @@ class WorksheetServicesView(BikaListingView):
             items.append(item)
 
         items = sorted(items, key = itemgetter('Service'))
-        self.categories.sort()
+        self.categories.sort(lambda x, y: cmp(x.lower(), y.lower()))
 
         return items
 
@@ -991,7 +991,7 @@ class ajaxGetWorksheetReferences(ReferenceSamplesView):
                 services = [rs.Title() for rs in ws_ref_services]
                 items[x]['nr_services'] = len(services)
                 items[x]['Definition'] = obj.getReferenceDefinition().Title()
-                services.sort()
+                services.sort(lambda x, y: cmp(x.lower(), y.lower()))
                 items[x]['Services'] = ", ".join(services)
                 items[x]['replace'] = {}
 

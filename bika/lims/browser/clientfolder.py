@@ -103,7 +103,7 @@ class ClientFolderContentsView(BikaListingView):
                 if self.review_state == 'inactive' and state != 'inactive':
                     continue
             clients.append(client)
-        clients.sort(lambda x,y: cmp(x.Title(),y.Title()))
+        clients.sort(lambda x, y: cmp(x.Title().lower(), y.Title().lower()))
         return clients
 
     def folderitems(self):

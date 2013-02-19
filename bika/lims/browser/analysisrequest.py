@@ -723,14 +723,14 @@ class AnalysisRequestViewView(BrowserView):
         for profile in client.objectValues("AnalysisProfile"):
             if isActive(profile):
                 profiles.append((profile.Title(), profile))
-        profiles.sort(lambda x,y:cmp(x[0], y[0]))
+        profiles.sort(lambda x,y:cmp(x[0].lower(), y[0].lower()))
         res += profiles
         profiles = []
         for profile in self.context.bika_setup.bika_analysisprofiles.objectValues("AnalysisProfile"):
             if isActive(profile):
                 profiles.append(("%s: %s" % (self.context.translate(_('Lab')), profile.Title().decode('utf-8')),
                                   profile))
-        profiles.sort(lambda x,y:cmp(x[0], y[0]))
+        profiles.sort(lambda x,y:cmp(x[0].lower(), y[0].lower()))
         res += profiles
         return res
 
@@ -744,14 +744,14 @@ class AnalysisRequestViewView(BrowserView):
         for template in client.objectValues("ARTemplate"):
             if isActive(template):
                 templates.append((template.Title(), template))
-        templates.sort(lambda x,y:cmp(x[0], y[0]))
+        templates.sort(lambda x,y:cmp(x[0].lower(), y[0].lower()))
         res += templates
         templates = []
         for template in self.context.bika_setup.bika_artemplates.objectValues("ARTemplate"):
             if isActive(template):
                 templates.append(("%s: %s" % (self.context.translate(_('Lab')), template.Title().decode('utf-8')),
                                   template))
-        templates.sort(lambda x,y:cmp(x[0], y[0]))
+        templates.sort(lambda x,y:cmp(x[0].lower(), y[0].lower()))
         res += templates
         return res
 
@@ -762,7 +762,7 @@ class AnalysisRequestViewView(BrowserView):
         res = [(sd.getObject().Title(), sd.getObject()) \
                for sd in bsc(portal_type = 'SamplingDeviation',
                              inactive_state = 'active')]
-        res.sort(lambda x,y:cmp(x[0], y[0]))
+        res.sort(lambda x,y:cmp(x[0].lower(), y[0].lower()))
         return res
 
     def containertypes(self):
@@ -771,7 +771,7 @@ class AnalysisRequestViewView(BrowserView):
         bsc = getToolByName(self.context, 'bika_setup_catalog')
         res = [(o.getObject().Title(), o.getObject()) \
                for o in bsc(portal_type = 'ContainerType')]
-        res.sort(lambda x,y:cmp(x[0], y[0]))
+        res.sort(lambda x,y:cmp(x[0].lower(), y[0].lower()))
         return res
 
     def SelectedServices(self):
@@ -1186,7 +1186,7 @@ class AnalysisRequestAnalysesView(BikaListingView):
             if after_icons:
                 items[x]['after']['Title'] = after_icons
 
-        self.categories.sort()
+        self.categories.sort(lambda x, y: cmp(x.lower(), y.lower()))
         return items
 
 class AnalysisRequestManageResultsView(AnalysisRequestViewView):

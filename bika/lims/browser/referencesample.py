@@ -34,7 +34,7 @@ class ViewView(BrowserView):
             r['service'] = service
             self.results[cat].append(r)
         self.categories = self.results.keys()
-        self.categories.sort()
+        self.categories.sort(lambda x, y: cmp(x.lower(), y.lower()))
         return self.template()
 
 class ReferenceAnalysesView(AnalysesView):
