@@ -50,6 +50,7 @@ schema=Person.schema.copy()+Schema((
         ),
     ),
     StringField('Gender',
+        default='dk',
         vocabulary=GENDERS,
         index='FieldIndex',
         widget=SelectionWidget(

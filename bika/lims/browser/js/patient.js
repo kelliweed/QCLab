@@ -5,6 +5,21 @@ $(document).ready(function(){
 	PMF = jarn.i18n.MessageFactory('plone');
 	dateFormat = _("date_format_short_datepicker");
 
+	// Mr or Mrs auto-fills the Gender selection
+	$("#Salutation").change(function() {
+		var val = $(this).val();
+		if(val == 'Mrs' || val == 'mrs') {
+			$("select#Gender option").each(function() {
+				this.selected = (this.text == 'Female');
+			});
+		}
+		if(val == 'Mr' || val == 'mr') {
+			$("select#Gender option").each(function() {
+				this.selected = (this.text == 'Male');
+			});
+		}
+	});
+
 	// Add Patient popup
 	if($(".portaltype-patient").length == 0 &&
 	   window.location.href.search('portal_factory/Patient') == -1){
