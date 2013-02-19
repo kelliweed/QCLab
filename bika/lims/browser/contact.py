@@ -1,10 +1,9 @@
-from Acquisition import aq_parent, aq_inner, aq_base
-from Products.CMFCore.utils import getToolByName
-from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
-from Products.Archetypes.utils import DisplayList
-from bika.lims import PMF, bikaMessageFactory as _
+from Acquisition import aq_base
+from bika.lims import bikaMessageFactory as _
 from bika.lims.browser import BrowserView
-import json
+from Products.Archetypes import PloneMessageFactory as _p
+from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
+
 
 class ContactLoginDetailsView(BrowserView):
     """ The contact login details edit
@@ -13,7 +12,7 @@ class ContactLoginDetailsView(BrowserView):
 
     def __call__(self):
 
-        if self.request.form.has_key("submitted"):
+        if "submitted" in self.request.form:
 
             def error(field, message):
                 if field:
@@ -30,10 +29,11 @@ class ContactLoginDetailsView(BrowserView):
             email = form.get('email', '')
 
             if not username:
-                return error('username', PMF("Input is required but not given."))
+                return error('username',
+                             _p("Input is required but not given."))
 
             if not email:
-                return error('email', PMF("Input is required but not given."))
+                return error('email', _p("Input is required but not given."))
 
             reg_tool = self.context.portal_registration
             properties = self.context.portal_properties.site_properties
@@ -41,22 +41,26 @@ class ContactLoginDetailsView(BrowserView):
 ##            if properties.validate_email:
 ##                password = reg_tool.generatePassword()
 ##            else:
-            if password!=confirm:
-                return error('password', PMF("Passwords do not match."))
+            if password != confirm:
+                return error('password',
+                             _p("Passwords do not match."))
 
             if not password:
-                return error('password', PMF("Input is required but not given."))
+                return error('password',
+                             _p("Input is required but not given."))
 
             if not confirm:
-                return error('password', PMF("Passwords do not match."))
+                return error('password',
+                             _p("Passwords do not match."))
 
             if len(password) < 5:
-                return error('password', PMF("Passwords must contain at least 5 letters."))
+                return error('password',
+                             _p("Passwords must contain at least 5 letters."))
 
             try:
                 reg_tool.addMember(username,
                                    password,
-                                   properties = {
+                                   properties={
                                        'username': username,
                                        'email': email,
                                        'fullname': username})
@@ -69,20 +73,21 @@ class ContactLoginDetailsView(BrowserView):
             # If we're being created in a Client context, then give
             # the contact an Owner local role on client.
             if contact.aq_parent.portal_type == 'Client':
-                contact.aq_parent.manage_setLocalRoles( username, ['Owner',] )
-                if hasattr(aq_base(contact.aq_parent), 'reindexObjectSecurity'):
+                contact.aq_parent.manage_setLocalRoles(username, ['Owner', ])
+                if hasattr(aq_base(contact.aq_parent),
+                           'reindexObjectSecurity'):
                     contact.aq_parent.reindexObjectSecurity()
 
                 # add user to Clients group
-                group=self.context.portal_groups.getGroupById('Clients')
+                group = self.context.portal_groups.getGroupById('Clients')
                 group.addMember(username)
 
             # Additional groups for LabContact users.
             # not required (not available for client Contact)
             if 'groups' in self.request and self.request['groups']:
                 groups = self.request['groups']
-                if not type(groups) in (list,tuple):
-                    groups = [groups,]
+                if not type(groups) in (list, tuple):
+                    groups = [groups, ]
                 for group in groups:
                     group = self.portal_groups.getGroupById(group)
                     group.addMember(username)
@@ -96,9 +101,9 @@ class ContactLoginDetailsView(BrowserView):
                     import transaction
                     transaction.abort()
                     return error(
-                        None, PMF("SMTP server disconnected."))
+                        None, _p("SMTP server disconnected."))
 
-            message = PMF("Member registered.")
+            message = _p("Member registered.")
             self.context.plone_utils.addPortalMessage(message, 'info')
             return self.template()
         else:
