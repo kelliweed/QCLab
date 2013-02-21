@@ -77,6 +77,11 @@ class ContactLoginDetailsView(BrowserView):
                 group=self.context.portal_groups.getGroupById('Clients')
                 group.addMember(username)
 
+            # Doctor gets Doctor Role
+            if contact.portal_type == 'Doctor':
+                group=self.context.portal_groups.getGroupById('Doctors')
+                group.addMember(username)
+
             # Additional groups for LabContact users.
             # not required (not available for client Contact)
             if 'groups' in self.request and self.request['groups']:
