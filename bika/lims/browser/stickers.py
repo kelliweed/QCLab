@@ -2,6 +2,7 @@ from Products.CMFCore.utils import getToolByName
 from bika.lims.browser import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
+
 class Sticker(BrowserView):
     """ Invoked via URL on an object, we render a sticker for that object.
         Used manually with a list of objects, renders stickers for all
@@ -9,7 +10,14 @@ class Sticker(BrowserView):
     """
     sample_small = ViewPageTemplateFile("templates/sample_sticker_small.pt")
     sample_large = ViewPageTemplateFile("templates/sample_sticker_large.pt")
-    referencesample_sticker = ViewPageTemplateFile("templates/referencesample_sticker.pt")
+    referencesample_sticker = ViewPageTemplateFile(
+        "templates/referencesample_sticker.pt")
+
+    def back_to_list_url(self):
+        if self.context.portal_type == 'Client':
+            return self.context.absolute_url() + "/analysisrequests"
+        else:
+            return self.context.absolute_url()
 
     def __call__(self):
         bc = getToolByName(self.context, 'bika_catalog')
@@ -17,7 +25,7 @@ class Sticker(BrowserView):
         if items:
             self.items = [o.getObject() for o in bc(id=items.split(","))]
         else:
-            self.items = [self.context,]
+            self.items = [self.context, ]
 
         # ARs get labels for their respective samples.
         new_items = []

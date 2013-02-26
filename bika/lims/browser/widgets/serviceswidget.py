@@ -101,8 +101,7 @@ class ServicesView(BikaListingView):
                     service_title
             items.append(item)
 
-
-        self.categories.sort()
+        self.categories.sort(lambda x, y: cmp(x.lower(), y.lower()))
 
         return items
 

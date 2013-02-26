@@ -364,7 +364,7 @@ class BikaSetup(folder.ATFolder):
         items = [('','')] + [(o.UID, o.Title) for o in
                                bsc(portal_type='AnalysisService',
                                    inactive_state = 'active')]
-        items.sort(lambda x,y: cmp(x[1], y[1]))
+        items.sort(lambda x, y: cmp(x[1].lower(), y[1].lower()))
         return DisplayList(list(items))
 
     def getPrefixFor(self, portal_type):

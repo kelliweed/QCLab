@@ -115,7 +115,7 @@ class AnalysisProfileAnalysesView(BikaListingView):
                               _('Attachment not permitted'))
             if after_icons:
                 items[x]['after']['Title'] = after_icons
-        self.categories.sort()
+        self.categories.sort(lambda x, y: cmp(x.lower(), y.lower()))
         return items
 
 class AnalysisProfileAnalysesWidget(TypesWidget):

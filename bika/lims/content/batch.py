@@ -302,7 +302,7 @@ class Batch(BaseContent):
         for contact in pc(portal_type = 'LabContact', inactive_state = 'active'):
             pairs.append((contact.UID, contact.Title))
         # sort the list by the second item
-        pairs.sort(lambda x, y:cmp(x[1], y[1]))
+        pairs.sort(lambda x, y:cmp(x[1].lower(), y[1].lower()))
         return DisplayList(pairs)
 
     # This is copied from Contact (In contact, it refers to the parent's
@@ -318,7 +318,7 @@ class Batch(BaseContent):
             patient = self.getPatient()
             pr = patient and patient.getPrimaryReferrer() or None
             return DisplayList(pr and pr.getCCContacts() or [])
-    
+
     def getClientName(self):
         pc = getToolByName(self, 'portal_catalog')
         client = pc(portal_type='Client', UID=self.getClientUID())
@@ -516,32 +516,32 @@ class Batch(BaseContent):
             return {'year':'',
                     'month':'',
                     'day':''}
-    
+
     def getPatientCountryState(self):
         bpc = getToolByName(self, 'bika_patient_catalog')
         patient = bpc(UID=self.getPatientUID())
         if patient:
             patient = patient[0].getObject()
             return patient.getCountryState()
-        
+
     def getPatientCountry(self):
         countrystate = self.getPatientCountryState()
         if countrystate:
             return countrystate['country']
-    
+
     def getPatientGender(self):
         bpc = getToolByName(self, 'bika_patient_catalog')
         patient = bpc(UID=self.getPatientUID())
         if patient:
             patient = patient[0].getObject()
             return patient.getGender()
-    
+
     def getPatientFirstname(self):
         bpc = getToolByName(self, 'bika_patient_catalog')
         patient = bpc(UID=self.getPatientUID())
         if patient:
             patient = patient[0].getObject()
-            return patient.getFirstname()      
+            return patient.getFirstname()
 
     def workflow_guard_receive(self):
         """Permitted when all Samples are > sample_received

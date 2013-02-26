@@ -67,7 +67,7 @@ def getUsers(context, roles, allow_empty=True):
         if fullname is None:
             fullname = uid
         pairs.append((uid, fullname))
-    pairs.sort(lambda x, y: cmp(x[1], y[1]))
+    pairs.sort(lambda x, y: cmp(x[1].lower(), y[1].lower()))
     return DisplayList(pairs)
 
 def isActive(obj):

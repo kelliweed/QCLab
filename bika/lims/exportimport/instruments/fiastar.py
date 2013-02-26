@@ -76,7 +76,7 @@ class Export(BrowserView):
                             options['dilute_factor'],
                             ""])
             ARs_exported.append(p_uid)
-        tmprows.sort(lambda a,b:cmp(a[1], b[1]))
+        tmprows.sort(lambda a, b: cmp(a[1].lower(), b[1].lower()))
         rows += tmprows
 
         ramdisk = StringIO()

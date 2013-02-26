@@ -93,12 +93,12 @@ class WorksheetFolderListingView(BikaListingView):
                                     inactive_state = 'active')]
 
         self.templates = [(t.UID, t.Title) for t in templates]
-        self.templates.sort(lambda x, y: cmp(x[1], y[1]))
+        self.templates.sort(lambda x, y: cmp(x[1].lower(), y[1].lower()))
 
         self.instruments = [(i.UID, i.Title) for i in
                             bsc(portal_type = 'Instrument',
                                 inactive_state = 'active')]
-        self.instruments.sort(lambda x, y: cmp(x[1], y[1]))
+        self.instruments.sort(lambda x, y: cmp(x[1].lower(), y[1].lower()))
 
         self.templateinstruments = {}
         for t in templates:
@@ -316,7 +316,7 @@ class WorksheetFolderListingView(BikaListingView):
                     ws_services[title] = "<a href='%s'>%s,</a>" % \
                         (service.absolute_url(), title)
             keys = list(ws_services.keys())
-            keys.sort()
+            keys.sort(lambda x, y: cmp(x.lower(), y.lower()))
             services = []
             for key in keys:
                 services.append(ws_services[key])
@@ -349,11 +349,11 @@ class WorksheetFolderListingView(BikaListingView):
                            (container.absolute_url(),
                             container.Title())] = 1
             sampletypes = list(sampletypes.keys())
-            sampletypes.sort()
+            sampletypes.sort(lambda x, y: cmp(x.lower(), y.lower()))
             blanks = list(blanks.keys())
-            blanks.sort()
+            blanks.sort(lambda x, y: cmp(x.lower(), y.lower()))
             controls = list(controls.keys())
-            controls.sort()
+            controls.sort(lambda x, y: cmp(x.lower(), y.lower()))
 
             # remove trailing commas
             if sampletypes:

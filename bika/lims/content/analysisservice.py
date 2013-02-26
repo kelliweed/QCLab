@@ -604,7 +604,7 @@ class AnalysisService(BaseContent, HistoryAwareMixin):
         o = self.getCategory()
         if o and o.UID() not in [i[0] for i in items]:
             items.append((o.UID(), o.Title()))
-        items.sort(lambda x,y: cmp(x[1], y[1]))
+        items.sort(lambda x, y: cmp(x[1].lower(), y[1].lower()))
         return DisplayList(list(items))
 
     def getMethods(self):
@@ -615,7 +615,7 @@ class AnalysisService(BaseContent, HistoryAwareMixin):
         o = self.getMethod()
         if o and o.UID() not in [i[0] for i in items]:
             items.append((o.UID(), o.Title()))
-        items.sort(lambda x,y: cmp(x[1], y[1]))
+        items.sort(lambda x,y: cmp(x[1].lower(), y[1].lower()))
         return DisplayList(list(items))
 
     def getInstruments(self):
@@ -626,7 +626,7 @@ class AnalysisService(BaseContent, HistoryAwareMixin):
         o = self.getInstrument()
         if o and o.UID() not in [i[0] for i in items]:
             items.append((o.UID(), o.Title()))
-        items.sort(lambda x,y: cmp(x[1], y[1]))
+        items.sort(lambda x,y: cmp(x[1].lower(), y[1].lower()))
         return DisplayList(list(items))
 
     def getCalculations(self):
@@ -637,7 +637,7 @@ class AnalysisService(BaseContent, HistoryAwareMixin):
         o = self.getCalculation()
         if o and o.UID() not in [i[0] for i in items]:
             items.append((o.UID(), o.Title()))
-        items.sort(lambda x,y: cmp(x[1], y[1]))
+        items.sort(lambda x,y: cmp(x[1].lower(), y[1].lower()))
         return DisplayList(list(items))
 
     def getDepartments(self):
@@ -648,7 +648,7 @@ class AnalysisService(BaseContent, HistoryAwareMixin):
         o = self.getDepartment()
         if o and o.UID() not in [i[0] for i in items]:
             items.append((o.UID(), o.Title()))
-        items.sort(lambda x,y: cmp(x[1], y[1]))
+        items.sort(lambda x,y: cmp(x[1].lower(), y[1].lower()))
         return DisplayList(list(items))
 
     def getUncertainty(self, result=None):
@@ -689,7 +689,7 @@ class AnalysisService(BaseContent, HistoryAwareMixin):
         items = [(o.UID, o.Title) for o in
                  bsc(portal_type='Preservation',
                      inactive_state = 'active')]
-        items.sort(lambda x,y: cmp(x[1], y[1]))
+        items.sort(lambda x,y: cmp(x[1].lower(), y[1].lower()))
         return DisplayList(list(items))
 
 registerType(AnalysisService, PROJECTNAME)

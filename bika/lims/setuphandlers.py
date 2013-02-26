@@ -788,7 +788,7 @@ class BikaGenerator:
         addIndex(bpc, 'getObjPositionInParent', 'GopipIndex')
         addIndex(bpc, 'sortable_title', 'FieldIndex')
         addIndex(bpc, 'review_state', 'FieldIndex')
-        addIndex(bsc, 'inactive_state', 'FieldIndex')
+        addIndex(bpc, 'inactive_state', 'FieldIndex')
         addIndex(bpc, 'getPatientID', 'FieldIndex')
         addIndex(bpc, 'getPrimaryReferrerUID', 'FieldIndex')
 

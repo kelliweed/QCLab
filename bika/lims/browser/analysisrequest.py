@@ -451,7 +451,7 @@ class AnalysisRequestViewView(BrowserView):
             {'id': 'Patient',
              'title': _('Patient'),
              'allow_edit': False,
-             'value': patient and "<a href='%s'>%s %s</a>"%(patient.absolute_url(),patient.getPatientID(),patient.Title()) or '',
+             'value': patient and "<a href='%s'>%s</a>"%(patient.absolute_url(),patient.Title()) or '',
              'condition':True,
              'type': 'text'},
             {'id': 'Doctor',
@@ -723,14 +723,14 @@ class AnalysisRequestViewView(BrowserView):
         for profile in client.objectValues("AnalysisProfile"):
             if isActive(profile):
                 profiles.append((profile.Title(), profile))
-        profiles.sort(lambda x,y:cmp(x[0], y[0]))
+        profiles.sort(lambda x,y:cmp(x[0].lower(), y[0].lower()))
         res += profiles
         profiles = []
         for profile in self.context.bika_setup.bika_analysisprofiles.objectValues("AnalysisProfile"):
             if isActive(profile):
                 profiles.append(("%s: %s" % (self.context.translate(_('Lab')), profile.Title().decode('utf-8')),
                                   profile))
-        profiles.sort(lambda x,y:cmp(x[0], y[0]))
+        profiles.sort(lambda x,y:cmp(x[0].lower(), y[0].lower()))
         res += profiles
         return res
 
@@ -744,14 +744,14 @@ class AnalysisRequestViewView(BrowserView):
         for template in client.objectValues("ARTemplate"):
             if isActive(template):
                 templates.append((template.Title(), template))
-        templates.sort(lambda x,y:cmp(x[0], y[0]))
+        templates.sort(lambda x,y:cmp(x[0].lower(), y[0].lower()))
         res += templates
         templates = []
         for template in self.context.bika_setup.bika_artemplates.objectValues("ARTemplate"):
             if isActive(template):
                 templates.append(("%s: %s" % (self.context.translate(_('Lab')), template.Title().decode('utf-8')),
                                   template))
-        templates.sort(lambda x,y:cmp(x[0], y[0]))
+        templates.sort(lambda x,y:cmp(x[0].lower(), y[0].lower()))
         res += templates
         return res
 
@@ -762,7 +762,7 @@ class AnalysisRequestViewView(BrowserView):
         res = [(sd.getObject().Title(), sd.getObject()) \
                for sd in bsc(portal_type = 'SamplingDeviation',
                              inactive_state = 'active')]
-        res.sort(lambda x,y:cmp(x[0], y[0]))
+        res.sort(lambda x,y:cmp(x[0].lower(), y[0].lower()))
         return res
 
     def containertypes(self):
@@ -771,7 +771,7 @@ class AnalysisRequestViewView(BrowserView):
         bsc = getToolByName(self.context, 'bika_setup_catalog')
         res = [(o.getObject().Title(), o.getObject()) \
                for o in bsc(portal_type = 'ContainerType')]
-        res.sort(lambda x,y:cmp(x[0], y[0]))
+        res.sort(lambda x,y:cmp(x[0].lower(), y[0].lower()))
         return res
 
     def SelectedServices(self):
@@ -1186,7 +1186,7 @@ class AnalysisRequestAnalysesView(BikaListingView):
             if after_icons:
                 items[x]['after']['Title'] = after_icons
 
-        self.categories.sort()
+        self.categories.sort(lambda x, y: cmp(x.lower(), y.lower()))
         return items
 
 class AnalysisRequestManageResultsView(AnalysisRequestViewView):
@@ -1658,8 +1658,8 @@ class ajaxAnalysisRequestSubmit():
                 patient = bpc(getPatientID=values['PatientID'])[0].getObject()
 
             doctor = None
-            if values.has_key('DoctorUID') and values['DoctorUID']:
-                doctor = uc(UID=values['DoctorUID'])[0].getObject()
+            if values.get('DoctorID', ''):
+                doctor = pc(getDoctorID=values['DoctorID'])[0].getObject()
 
             if self.context.portal_type == 'Client':
                 client = self.context
@@ -1743,6 +1743,8 @@ class ajaxAnalysisRequestSubmit():
                 CCEmails = form['CCEmails'],
                 Sample = sample_uid,
                 Profile = profile,
+                Patient = patient,
+                Doctor = doctor,
                 **dict(values)
             )
 
@@ -1937,6 +1939,8 @@ class AnalysisRequestsView(BikaListingView):
             'getRequestID': {'title': _('Request ID'),
                              'index': 'getRequestID'},
             'getPatient': {'title': _('Patient')},
+            'getPatientID': {'title': _('Patient ID'),
+                             'toggle': True},
             'getDoctor': {'title': _('Doctor')},
             'getClientOrderNumber': {'title': _('Client Order'),
                                      'index': 'getClientOrderNumber',
@@ -2013,6 +2017,7 @@ class AnalysisRequestsView(BikaListingView):
                              {'id':'cancel'},
                              {'id':'reinstate'}],
              'columns':['getRequestID',
+                        'getPatientID',
                         'getPatient',
                         'getDoctor',
                         'getSample',
@@ -2048,6 +2053,7 @@ class AnalysisRequestsView(BikaListingView):
                              {'id':'cancel'},
                              {'id':'reinstate'}],
              'columns':['getRequestID',
+                        'getPatientID',
                         'getPatient',
                         'getDoctor',
                         'getSample',
@@ -2077,6 +2083,7 @@ class AnalysisRequestsView(BikaListingView):
                              {'id':'cancel'},
                              {'id':'reinstate'}],
              'columns':['getRequestID',
+                        'getPatientID',
                         'getPatient',
                         'getDoctor',
                         'getSample',
@@ -2108,6 +2115,7 @@ class AnalysisRequestsView(BikaListingView):
                              {'id':'cancel'},
                              {'id':'reinstate'}],
              'columns':['getRequestID',
+                        'getPatientID',
                         'getPatient',
                         'getDoctor',
                         'getSample',
@@ -2135,6 +2143,7 @@ class AnalysisRequestsView(BikaListingView):
                                'sort_order': 'reverse'},
              'transitions': [{'id':'publish'}],
              'columns':['getRequestID',
+                        'getPatientID',
                         'getPatient',
                         'getDoctor',
                         'getSample',
@@ -2161,6 +2170,7 @@ class AnalysisRequestsView(BikaListingView):
                                'sort_on':'created',
                                'sort_order': 'reverse'},
              'columns':['getRequestID',
+                        'getPatientID',
                         'getPatient',
                         'getDoctor',
                         'getSample',
@@ -2193,6 +2203,7 @@ class AnalysisRequestsView(BikaListingView):
                                'sort_order': 'reverse'},
              'transitions': [{'id':'reinstate'}],
              'columns':['getRequestID',
+                        'getPatientID',
                         'getPatient',
                         'getDoctor',
                         'getSample',
@@ -2233,6 +2244,7 @@ class AnalysisRequestsView(BikaListingView):
                              {'id':'cancel'},
                              {'id':'reinstate'}],
              'columns':['getRequestID',
+                        'getPatientID',
                         'getPatient',
                         'getDoctor',
                         'getSample',
@@ -2273,6 +2285,7 @@ class AnalysisRequestsView(BikaListingView):
                              {'id':'cancel'},
                              {'id':'reinstate'}],
              'columns':['getRequestID',
+                        'getPatientID',
                         'getPatient',
                         'getDoctor',
                         'getSample',
@@ -2362,14 +2375,15 @@ class AnalysisRequestsView(BikaListingView):
             else:
                 items[x]['BatchID'] = ''
 
-
             patient = obj.getPatient()
             if patient:
-                items[x]['getPatient'] = patient and patient.getPatientID() or ''
+                items[x]['getPatientID'] = patient.getPatientID()
+                items[x]['getPatient'] = patient.Title()
                 items[x]['replace']['getPatient'] = "<a href='%s'>%s</a>" % \
-                     (patient.absolute_url(), patient.getPatientID())
+                     (patient.absolute_url(), patient.Title())
             else:
                 items[x]['getPatient'] = ''
+                items[x]['getPatientID'] = ''
 
             doctor = obj.getDoctor()
             if doctor:

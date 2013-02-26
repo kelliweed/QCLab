@@ -321,7 +321,7 @@ class SampleEdit(BrowserView):
             {'id': 'Patient',
              'title': _('Patient'),
              'allow_edit': False,
-             'value': patient and "<a href='%s'>%s %s</a>"%(patient.absolute_url(),patient.getPatientID(),patient.Title()) or '',
+             'value': patient and "<a href='%s'>%s %s</a>"%(patient.absolute_url(),patient.Title()) or '',
              'condition':True,
              'type': 'text'},
             {'id': 'Doctor',
@@ -603,6 +603,7 @@ class SamplesView(BikaListingView):
             'getSampleID': {'title': _('Sample ID'),
                             'index':'getSampleID'},
             'getPatient': {'title': _('Patient')},
+            'getPatientID': {'title': _('Patient')},
             'getDoctor': {'title': _('Doctor')},
             'Client': {'title': _("Client"),
                        'toggle': True,},
@@ -658,6 +659,7 @@ class SamplesView(BikaListingView):
              'contentFilter':{'cancellation_state':'active',
                                'sort_on':'created'},
              'columns': ['getSampleID',
+                         'getPatientID',
                          'getPatient',
                          'getDoctor',
                          'Client',
@@ -685,6 +687,7 @@ class SamplesView(BikaListingView):
                                'sort_on':'created',
                                'sort_order': 'reverse'},
              'columns': ['getSampleID',
+                         'getPatientID',
                          'getPatient',
                          'getDoctor',
                          'Client',
@@ -709,6 +712,7 @@ class SamplesView(BikaListingView):
                               'sort_order': 'reverse',
                               'sort_on':'created'},
              'columns': ['getSampleID',
+                         'getPatientID',
                          'getPatient',
                          'getDoctor',
                          'Client',
@@ -733,6 +737,7 @@ class SamplesView(BikaListingView):
                               'sort_order': 'reverse',
                               'sort_on':'created'},
              'columns': ['getSampleID',
+                         'getPatientID',
                          'getPatient',
                          'getDoctor',
                          'Client',
@@ -757,6 +762,7 @@ class SamplesView(BikaListingView):
                               'sort_order': 'reverse',
                               'sort_on':'created'},
              'columns': ['getSampleID',
+                         'getPatientID',
                          'getPatient',
                          'getDoctor',
                          'Client',
@@ -782,6 +788,7 @@ class SamplesView(BikaListingView):
                                'sort_on':'created'},
              'transitions': [{'id':'reinstate'}, ],
              'columns': ['getSampleID',
+                         'getPatientID',
                          'getPatient',
                          'getDoctor',
                          'Client',
@@ -851,11 +858,13 @@ class SamplesView(BikaListingView):
 
             patient = obj.getPatient()
             if patient:
-                items[x]['getPatient'] = patient and patient.getPatientID() or ''
+                items[x]['getPatientID'] = patient.getPatientID()
+                items[x]['getPatient'] = patient.Title()
                 items[x]['replace']['getPatient'] = "<a href='%s'>%s</a>" % \
-                     (patient.absolute_url(), patient.getPatientID())
+                     (patient.absolute_url(), patient.Title())
             else:
                 items[x]['getPatient'] = ''
+                items[x]['getPatientID'] = ''
 
             doctor = obj.getDoctor()
             if doctor:

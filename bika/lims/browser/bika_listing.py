@@ -383,7 +383,7 @@ class BikaListingView(BrowserView):
                 if idx.meta_type in('ZCTextIndex', 'FieldIndex'):
                     self.And.append(MatchRegexp(index, value))
                 elif idx.meta_type == 'DateIndex':
-                    logger.error("Unhandled DateIndex search on '%s'"%index)
+                    logger.warning("Unhandled DateIndex search on '%s'"%index)
                     continue
                 else:
                     self.Or.append(Generic(index, value))
@@ -409,13 +409,13 @@ class BikaListingView(BrowserView):
                         try:
                             lohi = [DateTime(x) for x in value.split(":")]
                         except:
-                            logger.error("Error (And, DateIndex='%s', term='%s')"%(index,value))
+                            logger.warning("Error (And, DateIndex='%s', term='%s')"%(index,value))
                         self.Or.append(Between(index, lohi[0], lohi[1]))
                     else:
                         try:
                             self.Or.append(Eq(index, DateTime(value)))
                         except:
-                            logger.error("Error (Or, DateIndex='%s', term='%s')"%(index,value))
+                            logger.warning("Error (Or, DateIndex='%s', term='%s')"%(index,value))
                 else:
                     self.Or.append(Generic(index, value))
             self.Or.append(MatchRegexp('review_state', value))
@@ -691,8 +691,9 @@ class BikaListingTable(tableview.Table):
             psi = psi and psi or 0
             # We do a sort of the current page using self.manual_sort_on, here
             page = folderitems[psi:psi+self.bika_listing.pagesize]
-            page.sort(lambda x,y:cmp(x.get(self.bika_listing.manual_sort_on, ''),
-                                     y.get(self.bika_listing.manual_sort_on, '')))
+            so = self.bika_listing.manual_sort_on
+            page.sort(lambda x,y:cmp(x.get(so, '').lower(),
+                                     y.get(so, '').lower()))
 
             if self.bika_listing.sort_order[0] in ['d','r']:
                 page.reverse()
