@@ -321,7 +321,7 @@ class SampleEdit(BrowserView):
             {'id': 'Patient',
              'title': _('Patient'),
              'allow_edit': False,
-             'value': patient and "<a href='%s'>%s %s</a>"%(patient.absolute_url(),patient.Title()) or '',
+             'value': patient and "<a href='%s'>%s</a>"%(patient.absolute_url(),patient.Title()) or '',
              'condition':True,
              'type': 'text'},
             {'id': 'Doctor',
