@@ -352,10 +352,13 @@ class bika_browserdata(BrowserView):
             ## Get partition setup records for this service
             separate = service.getSeparate()
             containers = service.getContainer()
-            containers.sort(lambda a,b:cmp(
-                int((hasattr(a, 'getJSCapacity') and a.getJSCapacity() and a.getJSCapacity().split(" ")[0]) or '0'),
-                int((hasattr(b, 'getJSCapacity') and b.getJSCapacity() and b.getJSCapacity().split(" ")[0]) or '0')
-            ))
+            try:
+                containers.sort(lambda a,b:cmp(
+                    int((hasattr(a, 'getJSCapacity') and a.getJSCapacity() and a.getJSCapacity().split(" ")[0]) or '0'),
+                    int((hasattr(b, 'getJSCapacity') and b.getJSCapacity() and b.getJSCapacity().split(" ")[0]) or '0')
+                ))
+            except:
+                pass
             preservations = service.getPreservation()
             partsetup = service.getPartitionSetup()
 
