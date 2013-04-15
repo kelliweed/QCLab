@@ -344,7 +344,7 @@ class WorksheetAnalysesView(AnalysesView):
                 pos_text += "<td class='pos_top'><a href='%s'>%s</a></td>" % \
                     (client.absolute_url(), client.Title())
             elif obj.portal_type == 'ReferenceAnalysis':
-                pos_text += "<td class='pos_top'><a href='%s'>%s</a></td></td>" % \
+                pos_text += "<td class='pos_top'><a href='%s'>%s</a></td>" % \
                     (obj.aq_parent.absolute_url(), obj.aq_parent.id)
             else:
                 pos_text += "<td class='pos_top'>&nbsp;</td>"
