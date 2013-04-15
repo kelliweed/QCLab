@@ -353,8 +353,8 @@ class bika_browserdata(BrowserView):
             separate = service.getSeparate()
             containers = service.getContainer()
             containers.sort(lambda a,b:cmp(
-                int(a.getJSCapacity() and a.getJSCapacity().split(" ")[0] or '0'),
-                int(b.getJSCapacity() and b.getJSCapacity().split(" ")[0] or '0')
+                int((hasattr(a, 'getJSCapacity') and a.getJSCapacity() and a.getJSCapacity().split(" ")[0]) or '0'),
+                int((hasattr(b, 'getJSCapacity') and b.getJSCapacity() and b.getJSCapacity().split(" ")[0]) or '0')
             ))
             preservations = service.getPreservation()
             partsetup = service.getPartitionSetup()
