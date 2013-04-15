@@ -1043,7 +1043,7 @@ class LoadSetupData(BrowserView):
             _id = folder.invokeFactory('AnalysisService', id='tmp')
             obj = folder[_id]
             MTA = {'days': int(row['MaxTimeAllowed_days'] and row['MaxTimeAllowed_days'] or 0),
-                   'hours': int(row['MaxTimeAllowed_days'] and row['MaxTimeAllowed_days'] or 0),
+                   'hours': int(row['MaxTimeAllowed_hours'] and row['MaxTimeAllowed_hours'] or 0),
                    'minutes': int(row['MaxTimeAllowed_minutes'] and row['MaxTimeAllowed_minutes'] or 0),
                    }
             obj.edit(
