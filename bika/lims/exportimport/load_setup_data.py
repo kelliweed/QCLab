@@ -1434,14 +1434,21 @@ class LoadSetupData(BrowserView):
             if not row['ReferenceSupplier_Name']:
                 continue
             folder = self.ref_suppliers[row['ReferenceSupplier_Name']]
-            if (len(folder) > 0):
-                folder = folder[0].getObject()
+            if (folder):
+                addresses = {}
+                for add_type in ['Physical', 'Postal']:
+                    addresses[add_type] = {}
+                    for key in ['Address', 'City', 'State', 'Zip', 'Country']:
+                        addresses[add_type][key.lower()] = _c(row.get("%s_%s" % (add_type, key), ""))
+
                 _id = folder.invokeFactory('SupplierContact', id='tmp')
                 obj = folder[_id]
                 obj.edit(
                     Firstname=_c(row['Firstname']),
                     Surname=_c(row['Surname']),
-                    EmailAddress=_c(row['EmailAddress']))
+                    EmailAddress=_c(row['EmailAddress']),
+                    PhysicalAddress=addresses['Physical'],
+                    PostalAddress=addresses['Postal'])
                 obj.unmarkCreationFlag()
                 renameAfterCreation(obj)
 
