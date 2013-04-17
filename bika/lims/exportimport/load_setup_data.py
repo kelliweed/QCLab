@@ -244,9 +244,6 @@ class LoadSetupData(BrowserView):
             self.load_aetiological_agents_subtypes(
                 sheets['Aetiological Agents Subtypes'])
 
-        if 'Identifier Types' in sheets:
-            self.load_identifier_types(sheets['Identifier Types'])
-
 #        if 'Reference Sample Results' in sheets:
 #            self.load_reference_sample_results(sheets['Reference Sample Results'])
 #        if 'Reference Samples' in sheets:
@@ -536,7 +533,7 @@ class LoadSetupData(BrowserView):
         for add_type in ['Physical', 'Postal', 'Billing']:
             addresses[add_type] = {}
             for key in ['Address', 'City', 'State', 'Zip', 'Country']:
-                addresses[add_type][key] = values["%s_%s" % (add_type, key)]
+                addresses[add_type][key.lower()] = values["%s_%s" % (add_type, key)]
 
         if values['AccreditationBodyLogo']:
             file_title = sortable_title(obj, values['AccreditationBodyLogo'])
@@ -592,6 +589,14 @@ class LoadSetupData(BrowserView):
             obj.unmarkCreationFlag()
             renameAfterCreation(obj)
             Fullname = _c(row['Firstname']) + " " + _c(row['Surname'])
+
+            addresses = {}
+            for add_type in ['Physical', 'Postal']:
+                addresses[add_type] = {}
+                for key in ['Address', 'City', 'State', 'Zip', 'Country']:
+                    addresses[add_type][key.lower()] = \
+                        row["%s_%s" % (add_type, key)]
+
             obj.edit(
                 title=_c(Fullname),
                 Salutation=_c(row['Salutation']),
@@ -602,6 +607,8 @@ class LoadSetupData(BrowserView):
                 BusinessFax=_c(row['BusinessFax']),
                 HomePhone=_c(row['HomePhone']),
                 MobilePhone=_c(row['MobilePhone']),
+                PhysicalAddress=addresses['Physical'],
+                PostalAddress=addresses['Postal'],
                 JobTitle=_c(row['JobTitle']),
                 Username=_c(row['Username']),
                 Signature=file_data
@@ -701,8 +708,8 @@ class LoadSetupData(BrowserView):
             for add_type in ['Physical', 'Postal', 'Billing']:
                 addresses[add_type] = {}
                 for key in ['Address', 'City', 'State', 'Zip', 'Country']:
-                    addresses[add_type][key] = _c(row[
-                                                  "%s_%s" % (add_type, key)])
+                    addresses[add_type][key.lower()] = \
+                         _c(row["%s_%s" % (add_type, key)])
 
             _id = folder.invokeFactory('Client', id='tmp')
             obj = folder[_id]
@@ -746,12 +753,14 @@ class LoadSetupData(BrowserView):
             _id = client.invokeFactory('Contact', id='tmp')
             contact = client[_id]
             fullname = "%(Firstname)s %(Surname)s" % row
+
             addresses = {}
             for add_type in ['Physical', 'Postal']:
                 addresses[add_type] = {}
                 for key in ['Address', 'City', 'State', 'Zip', 'Country']:
-                    addresses[add_type][key] = _c(row[
+                    addresses[add_type][key.lower()] = _c(row[
                                                   "%s_%s" % (add_type, key)])
+
             contact.edit(Salutation=_c(row['Salutation']),
                          Firstname=_c(row['Firstname']),
                          Surname=_c(row['Surname']),
@@ -1405,17 +1414,27 @@ class LoadSetupData(BrowserView):
                 for key in ['Address', 'City', 'State', 'Zip', 'Country']:
                     addresses[add_type][key.lower()] = _c(row.get("%s_%s" % (add_type, key), ""))
             _id = folder.invokeFactory('ReferenceSupplier', id='tmp')
+
+            addresses = {}
+            for add_type in ['Physical', 'Postal', 'Billing']:
+                addresses[add_type] = {}
+                for key in ['Address', 'City', 'State', 'Zip', 'Country']:
+                    addresses[add_type][key.lower()] = row["%s_%s" % (add_type, key)]
+
             obj = folder[_id]
             obj.edit(AccountNumber=_c(row['AccountNumber']),
                      Name=_c(row['Name']),
                      EmailAddress=_c(row['EmailAddress']),
                      Phone=_c(row['Phone']),
                      Fax=_c(row['Fax']),
+<<<<<<< HEAD
+=======
                      TaxNumber=_c(row['TaxNumber']),
                      AccountName=_c(row.get('AccountName', '')),
                      AccountType=_c(row.get('AccountType','')),
                      BankName=_c(row.get('BankName','')),
                      BankBranch=_c(row.get('BankBranch','')),
+>>>>>>> b7dd5dba98e0dcb347b06200a673a82187e679c9
                      PhysicalAddress=addresses['Physical'],
                      PostalAddress=addresses['Postal'],
                      BillingAddress=addresses['Billing'])
@@ -1433,6 +1452,13 @@ class LoadSetupData(BrowserView):
             row = dict(zip(fields, row))
             if not row['ReferenceSupplier_Name']:
                 continue
+
+            addresses = {}
+            for add_type in ['Physical', 'Postal', 'Billing']:
+                addresses[add_type] = {}
+                for key in ['Address', 'City', 'State', 'Zip', 'Country']:
+                    addresses[add_type][key.lower()] = row["%s_%s" % (add_type, key)]
+
             folder = self.ref_suppliers[row['ReferenceSupplier_Name']]
             if (folder):
                 addresses = {}
@@ -1446,9 +1472,15 @@ class LoadSetupData(BrowserView):
                 obj.edit(
                     Firstname=_c(row['Firstname']),
                     Surname=_c(row['Surname']),
+<<<<<<< HEAD
+                    PhysicalAddress=addresses['Physical'],
+                    PostalAddress=addresses['Postal'],
+                    EmailAddress=_c(row['EmailAddress']))
+=======
                     EmailAddress=_c(row['EmailAddress']),
                     PhysicalAddress=addresses['Physical'],
                     PostalAddress=addresses['Postal'])
+>>>>>>> b7dd5dba98e0dcb347b06200a673a82187e679c9
                 obj.unmarkCreationFlag()
                 renameAfterCreation(obj)
 
@@ -2021,18 +2053,3 @@ class LoadSetupData(BrowserView):
             obj.unmarkCreationFlag()
             renameAfterCreation(obj)
 
-    def load_identifier_types(self, sheet):
-        nr_rows = sheet.get_highest_row()
-        nr_cols = sheet.get_highest_column()
-        rows = [[sheet.cell(row=row_nr, column=col_nr).value for col_nr in range(
-            nr_cols)] for row_nr in range(nr_rows)]
-        fields = rows[0]
-        folder = self.context.bika_setup.bika_identifiertypes
-        for row in rows[3:]:
-            row = dict(zip(fields, row))
-            _id = folder.invokeFactory('IdentifierType', id='tmp')
-            obj = folder[_id]
-            obj.edit(title=row.get('title', ''),
-                     description=row.get('description', ''))
-            obj.unmarkCreationFlag()
-            renameAfterCreation(obj)
