@@ -71,6 +71,7 @@ EMAIL_SUBJECT_OPTIONS = DisplayList((
     ('cs', _('Client SID')),
 ))
 ETHNICITIES = DisplayList((
+    ('',''),
     ('Native American', _('Native American')),
     ('Asian', _('Asian')),
     ('Black', _('Black')),
