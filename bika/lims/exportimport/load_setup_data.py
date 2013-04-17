@@ -1399,13 +1399,26 @@ class LoadSetupData(BrowserView):
         self.ref_suppliers = {}
         for row in rows[3:]:
             row = dict(zip(fields, row))
+            addresses = {}
+            for add_type in ['Physical', 'Postal', 'Billing']:
+                addresses[add_type] = {}
+                for key in ['Address', 'City', 'State', 'Zip', 'Country']:
+                    addresses[add_type][key.lower()] = _c(row.get("%s_%s" % (add_type, key), ""))
             _id = folder.invokeFactory('ReferenceSupplier', id='tmp')
             obj = folder[_id]
             obj.edit(AccountNumber=_c(row['AccountNumber']),
                      Name=_c(row['Name']),
                      EmailAddress=_c(row['EmailAddress']),
                      Phone=_c(row['Phone']),
-                     Fax=_c(row['Fax']))
+                     Fax=_c(row['Fax']),
+                     TaxNumber=_c(row['TaxNumber']),
+                     AccountName=_c(row.get('AccountName', '')),
+                     AccountType=_c(row.get('AccountType','')),
+                     BankName=_c(row.get('BankName','')),
+                     BankBranch=_c(row.get('BankBranch','')),
+                     PhysicalAddress=addresses['Physical'],
+                     PostalAddress=addresses['Postal'],
+                     BillingAddress=addresses['Billing'])
             obj.unmarkCreationFlag()
             self.ref_suppliers[row['Name']] = obj
             renameAfterCreation(obj)
