@@ -1427,14 +1427,11 @@ class LoadSetupData(BrowserView):
                      EmailAddress=_c(row['EmailAddress']),
                      Phone=_c(row['Phone']),
                      Fax=_c(row['Fax']),
-<<<<<<< HEAD
-=======
                      TaxNumber=_c(row['TaxNumber']),
                      AccountName=_c(row.get('AccountName', '')),
                      AccountType=_c(row.get('AccountType','')),
                      BankName=_c(row.get('BankName','')),
                      BankBranch=_c(row.get('BankBranch','')),
->>>>>>> b7dd5dba98e0dcb347b06200a673a82187e679c9
                      PhysicalAddress=addresses['Physical'],
                      PostalAddress=addresses['Postal'],
                      BillingAddress=addresses['Billing'])
@@ -1453,12 +1450,6 @@ class LoadSetupData(BrowserView):
             if not row['ReferenceSupplier_Name']:
                 continue
 
-            addresses = {}
-            for add_type in ['Physical', 'Postal', 'Billing']:
-                addresses[add_type] = {}
-                for key in ['Address', 'City', 'State', 'Zip', 'Country']:
-                    addresses[add_type][key.lower()] = row["%s_%s" % (add_type, key)]
-
             folder = self.ref_suppliers[row['ReferenceSupplier_Name']]
             if (folder):
                 addresses = {}
@@ -1472,15 +1463,9 @@ class LoadSetupData(BrowserView):
                 obj.edit(
                     Firstname=_c(row['Firstname']),
                     Surname=_c(row['Surname']),
-<<<<<<< HEAD
                     PhysicalAddress=addresses['Physical'],
                     PostalAddress=addresses['Postal'],
                     EmailAddress=_c(row['EmailAddress']))
-=======
-                    EmailAddress=_c(row['EmailAddress']),
-                    PhysicalAddress=addresses['Physical'],
-                    PostalAddress=addresses['Postal'])
->>>>>>> b7dd5dba98e0dcb347b06200a673a82187e679c9
                 obj.unmarkCreationFlag()
                 renameAfterCreation(obj)
 
