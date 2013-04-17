@@ -1415,12 +1415,6 @@ class LoadSetupData(BrowserView):
                     addresses[add_type][key.lower()] = _c(row.get("%s_%s" % (add_type, key), ""))
             _id = folder.invokeFactory('ReferenceSupplier', id='tmp')
 
-            addresses = {}
-            for add_type in ['Physical', 'Postal', 'Billing']:
-                addresses[add_type] = {}
-                for key in ['Address', 'City', 'State', 'Zip', 'Country']:
-                    addresses[add_type][key.lower()] = row["%s_%s" % (add_type, key)]
-
             obj = folder[_id]
             obj.edit(AccountNumber=_c(row['AccountNumber']),
                      Name=_c(row['Name']),
