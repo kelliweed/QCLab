@@ -149,8 +149,9 @@ class AnalysesView(BikaListingView):
             except AttributeError:
                 items[i]['Partition'] = ''
             if obj.portal_type == "ReferenceAnalysis":
-                items[i]['DueDate'] = ''
-                items[i]['CaptureDate'] = ''
+                items[i]['DueDate'] = self.ulocalized_time(obj.aq_parent.getExpiryDate(), long_format=0)
+                items[i]['CaptureDate'] = obj.aq_parent.getDateSampled() \
+                    and self.ulocalized_time(obj.aq_parent.getDateSampled(), long_format=0) or ''
             else:
                 items[i]['DueDate'] = self.ulocalized_time(obj.getDueDate(), long_format=1)
                 cd = obj.getResultCaptureDate()
@@ -353,18 +354,21 @@ class AnalysesView(BikaListingView):
                     items[i]['table_row_class'] = "state-submitted-by-current-user"
 
             # add icon for assigned analyses in AR views
-            state = workflow.getInfoFor(
-                items[i]['obj'], 'worksheetanalysis_review_state')
-            if self.context.portal_type == 'AnalysisRequest' \
-            and state == 'assigned':
-                brefs = items[i]['obj'].getBackReferences('WorksheetAnalysis')
-                if brefs:
-                    ws = brefs[0]
-                    items[i]['after']['state_title'] = \
-                        "<a href='%s'><img src='++resource++bika.lims.images/worksheet.png' title='%s'/></a>" % \
-                        (ws.absolute_url(), self.context.translate(
-                         _("Assigned to: ${worksheet_id}",
-                           mapping={'worksheet_id': ws.id})))
+            if 'obj' in items[i] \
+                and items[i]['obj'] \
+                and items[i]['obj'].portal_type not in ['ReferenceAnalysis', 'DuplicateAnalysis']:
+                state = workflow.getInfoFor(
+                    items[i]['obj'], 'worksheetanalysis_review_state')
+                if self.context.portal_type == 'AnalysisRequest' \
+                and state == 'assigned':
+                    brefs = items[i]['obj'].getBackReferences('WorksheetAnalysis')
+                    if brefs:
+                        ws = brefs[0]
+                        items[i]['after']['state_title'] = \
+                            "<a href='%s'><img src='++resource++bika.lims.images/worksheet.png' title='%s'/></a>" % \
+                            (ws.absolute_url(), self.context.translate(
+                             _("Assigned to: ${worksheet_id}",
+                               mapping={'worksheet_id': ws.id})))
 
         # the TAL requires values for all interim fields on all
         # items, so we set blank values in unused cells

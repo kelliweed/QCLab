@@ -259,7 +259,7 @@ class WorksheetAnalysesView(AnalysesView):
             items[x]['class']['Service'] = 'service_title'
             items[x]['Category'] = service.getCategory().Title()
             if obj.portal_type == "ReferenceAnalysis":
-                items[x]['DueDate'] = ''
+                items[x]['DueDate'] = self.ulocalized_time(obj.aq_parent.getExpiryDate(), long_format=0)
             else:
                 items[x]['DueDate'] = self.ulocalized_time(obj.getDueDate())
 
@@ -339,8 +339,16 @@ class WorksheetAnalysesView(AnalysesView):
                 client = parent.aq_parent
             pos_text = "<table class='worksheet-position' width='100%%' cellpadding='0' cellspacing='0' style='padding-bottom:5px;'><tr>" + \
                        "<td class='pos' rowspan='3'>%s</td>" % pos
-            pos_text += "<td class='pos_top'><a href='%s'>%s</a></td>" % \
-                (client.absolute_url(), client.Title())
+
+            if client:
+                pos_text += "<td class='pos_top'><a href='%s'>%s</a></td>" % \
+                    (client.absolute_url(), client.Title())
+            elif obj.portal_type == 'ReferenceAnalysis':
+                pos_text += "<td class='pos_top'><a href='%s'>%s</a></td>" % \
+                    (obj.aq_parent.absolute_url(), obj.aq_parent.id)
+            else:
+                pos_text += "<td class='pos_top'>&nbsp;</td>"
+
             pos_text += "<td class='pos_top_icons' rowspan='3'>"
             if obj.portal_type == 'DuplicateAnalysis':
                 pos_text += "<img title='%s' src='%s/++resource++bika.lims.images/duplicate.png'/>" % (_("Duplicate"), self.context.absolute_url())
@@ -990,7 +998,7 @@ class ajaxGetWorksheetReferences(ReferenceSamplesView):
             if ws_ref_services:
                 services = [rs.Title() for rs in ws_ref_services]
                 items[x]['nr_services'] = len(services)
-                items[x]['Definition'] = obj.getReferenceDefinition().Title()
+                items[x]['Definition'] = (obj.getReferenceDefinition() and obj.getReferenceDefinition().Title()) or '' 
                 services.sort(lambda x, y: cmp(x.lower(), y.lower()))
                 items[x]['Services'] = ", ".join(services)
                 items[x]['replace'] = {}

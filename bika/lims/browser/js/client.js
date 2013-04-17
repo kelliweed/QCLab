@@ -71,7 +71,7 @@ $(document).ready(function(){
         select: function( event, ui ) {
             $(this).val(ui.item.ClientID);
             col = this.id.split("_")[1];
-            $(this).parents('tr').find('#ar\\_'++'\\_ClientUID]').val(ui.item.UID);
+            $(this).parents('tr').find('#ar\\_'+col+'\\_ClientUID]').val(ui.item.UID);
             $(this).change();
             if($(".portaltype-batch").length > 0 && $(".template-base_edit").length > 0) {
                 $(".jsClientTitle").remove();

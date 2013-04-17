@@ -283,7 +283,7 @@ class Patient(Person):
         ## Only show clients to which we have Manage AR rights.
         mtool=getToolByName(self,'portal_membership')
         clientfolder=self.clients
-        clients=[]
+        clients=[('','')]
         for client in clientfolder.objectValues("Client"):
             if not mtool.checkPermission(ManageAnalysisRequests,client):
                 continue

@@ -1055,7 +1055,7 @@ class LoadSetupData(BrowserView):
             _id = folder.invokeFactory('AnalysisService', id='tmp')
             obj = folder[_id]
             MTA = {'days': int(row['MaxTimeAllowed_days'] and row['MaxTimeAllowed_days'] or 0),
-                   'hours': int(row['MaxTimeAllowed_days'] and row['MaxTimeAllowed_days'] or 0),
+                   'hours': int(row['MaxTimeAllowed_hours'] and row['MaxTimeAllowed_hours'] or 0),
                    'minutes': int(row['MaxTimeAllowed_minutes'] and row['MaxTimeAllowed_minutes'] or 0),
                    }
             obj.edit(
@@ -1411,6 +1411,11 @@ class LoadSetupData(BrowserView):
         self.ref_suppliers = {}
         for row in rows[3:]:
             row = dict(zip(fields, row))
+            addresses = {}
+            for add_type in ['Physical', 'Postal', 'Billing']:
+                addresses[add_type] = {}
+                for key in ['Address', 'City', 'State', 'Zip', 'Country']:
+                    addresses[add_type][key.lower()] = _c(row.get("%s_%s" % (add_type, key), ""))
             _id = folder.invokeFactory('ReferenceSupplier', id='tmp')
 
             addresses = {}
@@ -1425,6 +1430,14 @@ class LoadSetupData(BrowserView):
                      EmailAddress=_c(row['EmailAddress']),
                      Phone=_c(row['Phone']),
                      Fax=_c(row['Fax']),
+<<<<<<< HEAD
+=======
+                     TaxNumber=_c(row['TaxNumber']),
+                     AccountName=_c(row.get('AccountName', '')),
+                     AccountType=_c(row.get('AccountType','')),
+                     BankName=_c(row.get('BankName','')),
+                     BankBranch=_c(row.get('BankBranch','')),
+>>>>>>> b7dd5dba98e0dcb347b06200a673a82187e679c9
                      PhysicalAddress=addresses['Physical'],
                      PostalAddress=addresses['Postal'],
                      BillingAddress=addresses['Billing'])
@@ -1450,16 +1463,27 @@ class LoadSetupData(BrowserView):
                     addresses[add_type][key.lower()] = row["%s_%s" % (add_type, key)]
 
             folder = self.ref_suppliers[row['ReferenceSupplier_Name']]
-            if (len(folder) > 0):
-                folder = folder[0].getObject()
+            if (folder):
+                addresses = {}
+                for add_type in ['Physical', 'Postal']:
+                    addresses[add_type] = {}
+                    for key in ['Address', 'City', 'State', 'Zip', 'Country']:
+                        addresses[add_type][key.lower()] = _c(row.get("%s_%s" % (add_type, key), ""))
+
                 _id = folder.invokeFactory('SupplierContact', id='tmp')
                 obj = folder[_id]
                 obj.edit(
                     Firstname=_c(row['Firstname']),
                     Surname=_c(row['Surname']),
+<<<<<<< HEAD
                     PhysicalAddress=addresses['Physical'],
                     PostalAddress=addresses['Postal'],
                     EmailAddress=_c(row['EmailAddress']))
+=======
+                    EmailAddress=_c(row['EmailAddress']),
+                    PhysicalAddress=addresses['Physical'],
+                    PostalAddress=addresses['Postal'])
+>>>>>>> b7dd5dba98e0dcb347b06200a673a82187e679c9
                 obj.unmarkCreationFlag()
                 renameAfterCreation(obj)
 
