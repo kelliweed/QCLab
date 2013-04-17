@@ -65,7 +65,7 @@ schema = BikaSchema.copy() + Schema((
         ),
     ),
     StringField('PatientID',
-        required = 1,
+        required = 0,
         widget=StringWidget(
             label=_('Patient'),
         ),
