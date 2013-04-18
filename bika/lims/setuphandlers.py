@@ -277,6 +277,7 @@ class BikaGenerator:
         mp = portal.clients.manage_permission
         mp(permissions.ListFolderContents, ['Manager', 'LabManager', 'Member', 'LabClerk', 'Doctor', 'Analyst', 'Sampler', 'Preserver'], 0)
         mp(permissions.View, ['Manager', 'LabManager', 'LabClerk', 'Doctor', 'Member', 'Analyst', 'Sampler', 'Preserver'], 0)
+        mp('Add portal content', ['Analyst'], 1)
         mp('Access contents information', ['Manager', 'LabManager', 'Member', 'LabClerk', 'Doctor', 'Analyst', 'Sampler', 'Preserver', 'Owner'], 0)
         mp(ManageClients, ['Manager', 'LabManager', 'LabClerk', 'Owner'], 0)
         mp(permissions.ModifyPortalContent, ['Manager', 'LabManager', 'Owner'], 0) # epid branch removes 'LabClerk', 'Analyst',  from the list
