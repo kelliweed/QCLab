@@ -3,6 +3,36 @@ $(document).ready(function(){
 
     _ = jarn.i18n.MessageFactory('bika');
     PMF = jarn.i18n.MessageFactory('plone');
+   
+    // Hide patient additional tabs if no patient
+    if($(".portaltype-batch").length > 0 && $(".template-base_edit").length == 0) {
+        $.ajax({
+            url: window.location.href
+                       .split("?")[0]
+                       .replace("/base_edit", "")
+                       .replace("/samples", "")
+                       .replace("/chronicconditions", "")
+                       .replace("/log", "")
+                       .replace("/edit", "") + "/getBatchInfo",
+            type: 'POST',
+            data: {'_authenticator': $('input[name="_authenticator"]').val()},
+            dataType: "json",
+            success: function(data, textStatus, $XHR){
+            	patientid = data['Patient'];
+            	if (patientid && patientid.length > 0) {
+            		$("li[id=contentview-chronicconditions]").show();
+            		$("li[id=contentview-immunizationhistory]").show();
+            		$("li[id=contentview-treatmenthistory]").show();
+            		$("li[id=contentview-travelhistory]").show();
+            	} else {
+            		$("li[id=contentview-chronicconditions]").hide();
+            		$("li[id=contentview-immunizationhistory]").hide();
+            		$("li[id=contentview-treatmenthistory]").hide();
+            		$("li[id=contentview-travelhistory]").hide();
+            	}
+            }
+        });
+    }
 
      if($(".portaltype-batch").length == 0 &&
        window.location.href.search('portal_factory/Batch') == -1){
@@ -65,6 +95,9 @@ $(document).ready(function(){
                 $("#archetypes-fieldname-PatientID").append("<span class='jsPatientTitle'>"+data['Patient']+"</span>");
                 $(".jsDoctorTitle").remove();
                 $("#archetypes-fieldname-DoctorID").append("<span class='jsDoctorTitle'>"+data['Doctor']+"</span>");
+                if (!data['Patient'] || data['Patient'].length == 0) {
+                	$("#archetypes-fieldname-PatientAgeAtCaseOnsetDate").hide();
+                }
             }
         });
     }
@@ -119,6 +152,13 @@ $(document).ready(function(){
                 }
 			},
         });
+		// If no patient selected, hide additional patient data tabs
+		if (!$("#PatientID").val() || $("#PatientID").val().length == 0) {
+			$(".jsPatientTitle").remove();
+			$("#archetypes-fieldname-PatientAgeAtCaseOnsetDate").hide();
+		} else {
+			$("#archetypes-fieldname-PatientAgeAtCaseOnsetDate").show();
+		}
 	});
 
 	function setPatientAgeAtCaseOnsetDate() {
