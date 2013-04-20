@@ -389,6 +389,8 @@ class Batch(BaseContent):
             if type(value) == str:
                 value = bpc(portal_type='Patient', getPatientID=value)[0].getObject()
             return self.setPatientUID(value.UID())
+        else:
+            return self.setPatientUID(None);
 
     def setChronicConditions(self, value):
         bpc = getToolByName(self, 'bika_patient_catalog')

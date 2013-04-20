@@ -63,18 +63,19 @@ class CaseSymptomsWidget(TypesWidget):
                 O = form['CSY_SymptomOnset'][i]
 
                 # Create new Symptom entry if none exists (check ICD9 and setup)
-                Slist = bsc(portal_type='Symptom', title=S)
-                ISlist = [x for x in icd9_codes['R']
-                          if x['code'] == C
-                          and x['short'] == S
-                          and x['long'] == D]
-                if not Slist and not ISlist:
-                    folder = instance.bika_setup.bika_symptoms
-                    _id = folder.invokeFactory('Symptom', id='tmp')
-                    obj = folder[_id]
-                    obj.edit(title=S, description=D, Code=C)
-                    obj.unmarkCreationFlag()
-                    renameAfterCreation(obj)
+                # https://github.com/bikalabs/Bika-LIMS/issues/744
+#                Slist = bsc(portal_type='Symptom', title=S)
+#                ISlist = [x for x in icd9_codes['R']
+#                          if x['code'] == C
+#                          and x['short'] == S
+#                          and x['long'] == D]
+#                if not Slist and not ISlist:
+#                    folder = instance.bika_setup.bika_symptoms
+#                    _id = folder.invokeFactory('Symptom', id='tmp')
+#                    obj = folder[_id]
+#                    obj.edit(title=S, description=D, Code=C)
+#                    obj.unmarkCreationFlag()
+#                    renameAfterCreation(obj)
                 value.append({'Code': C, 'Title': S, 'Description': D, 'Onset': O})
         return value, {}
 
