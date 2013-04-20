@@ -290,7 +290,7 @@ class BikaListingView(BrowserView):
         states = [r for r in self.review_states if r['id'] == selected_state]
         review_state = states and states[0] or self.review_states[0]
         # set selected review_state ('default'?) to request
-        self.request['review_state'] = review_state['id']
+        self.review_state = self.request['review_state'] = review_state['id']
 
         # contentFilter is expected in every review_state.
         for k, v in review_state['contentFilter'].items():

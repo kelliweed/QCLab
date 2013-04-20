@@ -73,20 +73,6 @@ class PatientsView(BikaListingView):
     def __call__(self):
         mtool = getToolByName(self.context, 'portal_membership')
         addPortalMessage = self.context.plone_utils.addPortalMessage
-        if mtool.checkPermission(AddPatient, self.context):
-            clients = self.context.clients.objectIds()
-            if clients:
-                self.context_actions[_('Add')] = {
-                    'url': 'createObject?type_name=Patient',
-                    'icon': '++resource++bika.lims.images/add.png'
-                }
-            else:
-                msg = _("Cannot create patients without any system clients configured.")
-                addPortalMessage(self.context.translate(msg))
-        return super(PatientsView, self).__call__()
-
-    def folderitems(self):
-        mtool = getToolByName(self.context, 'portal_membership')
         if mtool.checkPermission(ManagePatients, self.context):
             del self.review_states[0]['transitions']
             self.show_select_column = True
@@ -104,6 +90,19 @@ class PatientsView(BikaListingView):
                  'transitions': [{'id':'activate'}, ],
                  'columns': ['getPatientID', 'Title', 'getGender', 'getAgeSplittedStr',
                              'getBirthDate', 'getCitizenship', 'getPrimaryReferrer']})
+        if mtool.checkPermission(AddPatient, self.context):
+            clients = self.context.clients.objectIds()
+            if clients:
+                self.context_actions[_('Add')] = {
+                    'url': 'createObject?type_name=Patient',
+                    'icon': '++resource++bika.lims.images/add.png'
+                }
+            else:
+                msg = _("Cannot create patients without any system clients configured.")
+                addPortalMessage(self.context.translate(msg))
+        return super(PatientsView, self).__call__()
+
+    def folderitems(self):
 
         items = BikaListingView.folderitems(self)
         for x in range(len(items)):
