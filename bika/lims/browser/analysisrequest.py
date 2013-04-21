@@ -537,17 +537,17 @@ class AnalysisRequestViewView(BrowserView):
              'condition':True,
              'class': 'datepicker',
              'type': 'text'},
-            {'id': 'DateSampled',
-             'title': _('Date Sampled'),
-             'allow_edit': allow_sample_edit,
-             'value': sample.getDateSampled() and self.ulocalized_time(
-                sample.getDateSampled()) or '',
-             'formatted_value': sample.getDateSampled() and self.ulocalized_time(
-                sample.getDateSampled()) or '',
-             'condition':SamplingWorkflowEnabled,
-             'class': 'datepicker',
-             'type': 'text',
-             'required': True},
+            # {'id': 'DateSampled',
+            #  'title': _('Date Sampled'),
+            #  'allow_edit': allow_sample_edit,
+            #  'value': sample.getDateSampled() and self.ulocalized_time(
+            #     sample.getDateSampled()) or '',
+            #  'formatted_value': sample.getDateSampled() and self.ulocalized_time(
+            #     sample.getDateSampled()) or '',
+            #  'condition':SamplingWorkflowEnabled,
+            #  'class': 'datepicker',
+            #  'type': 'text',
+            #  'required': True},
             {'id': 'Sampler',
              'title': _('Sampler'),
              'allow_edit': allow_sample_edit,
