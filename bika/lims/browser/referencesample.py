@@ -55,7 +55,7 @@ class ReferenceAnalysesView(AnalysesView):
 
         self.columns = {
             'id': {'title': _('ID')},
-            'Category': {'title': _('Category'), 'toggle':True},
+            'category': {'title': _('Category'), 'toggle':True},
             'Service': {'title': _('Service'), 'toggle':True},
             'Worksheet': {'title': _('Worksheet'), 'toggle':True},
             'Result': {'title': _('Result'), 'toggle':True},
@@ -73,7 +73,7 @@ class ReferenceAnalysesView(AnalysesView):
              'contentFilter':{},
              'transitions': [],
              'columns':['id',
-                        'Category',
+                        'category',
                         'Service',
                         'Worksheet',
                         'Result',
