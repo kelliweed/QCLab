@@ -340,12 +340,14 @@ class WorksheetAnalysesView(AnalysesView):
             pos_text = "<table class='worksheet-position' width='100%%' cellpadding='0' cellspacing='0' style='padding-bottom:5px;'><tr>" + \
                        "<td class='pos' rowspan='3'>%s</td>" % pos
 
-            if client:
-                pos_text += "<td class='pos_top'><a href='%s'>%s</a></td>" % \
-                    (client.absolute_url(), client.Title())
-            elif obj.portal_type == 'ReferenceAnalysis':
+            if obj.portal_type == 'ReferenceAnalysis' or \
+                (obj.portal_type == 'DuplicateAnalysis' and \
+                 obj.getAnalysis().portal_type == 'ReferenceAnalysis'):
                 pos_text += "<td class='pos_top'><a href='%s'>%s</a></td>" % \
                     (obj.aq_parent.absolute_url(), obj.aq_parent.id)
+            elif client:
+                pos_text += "<td class='pos_top'><a href='%s'>%s</a></td>" % \
+                    (client.absolute_url(), client.Title())
             else:
                 pos_text += "<td class='pos_top'>&nbsp;</td>"
 
@@ -378,7 +380,9 @@ class WorksheetAnalysesView(AnalysesView):
             pos_text += "<tr><td>"
             if obj.portal_type == 'Analysis':
                 pos_text += obj.aq_parent.getSample().getSampleType().Title()
-            elif obj.portal_type == 'ReferenceAnalysis':
+            elif obj.portal_type == 'ReferenceAnalysis' or \
+                (obj.portal_type == 'DuplicateAnalysis' and \
+                 obj.getAnalysis().portal_type == 'ReferenceAnalysis'):
                 pos_text += "" #obj.aq_parent.getReferenceDefinition().Title()
             elif obj.portal_type == 'DuplicateAnalysis':
                 pos_text += obj.getAnalysis().aq_parent.getSample().getSampleType().Title()
