@@ -504,7 +504,7 @@ class AnalysisRequest(BaseFolder):
             self.setAttachment(attachments)
 
         RESPONSE.redirect(
-                '%s/manage_results' % self.absolute_url())
+                '%s' % self.absolute_url())
 
     def delARAttachment(self, REQUEST=None, RESPONSE=None):
         """ delete the attachment """
@@ -529,7 +529,7 @@ class AnalysisRequest(BaseFolder):
         BaseFolder.manage_delObjects(client, ids, REQUEST)
 
         RESPONSE.redirect(
-                '%s/manage_results' % self.absolute_url())
+                '%s' % self.absolute_url())
 
     security.declarePublic('get_verifier')
     def get_verifier(self):

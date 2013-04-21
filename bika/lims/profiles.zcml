@@ -72,4 +72,13 @@
         sortkey="1"
         profile="bika.lims:default"/>
 
+ <genericsetup:upgradeStep
+        title="Fix #757: fix default permissions"
+        description=""
+        source="1102"
+        destination="1103"
+        handler="bika.lims.upgrade.to1103.upgrade"
+        sortkey="1"
+        profile="bika.lims:default"/>
+
 </configure>

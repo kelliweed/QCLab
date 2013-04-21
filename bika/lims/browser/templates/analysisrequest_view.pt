@@ -40,8 +40,7 @@
 		attachments_allowed here/bika_setup/getAttachmentsPermitted;
 		attachments here/getAttachment | nothing;
 		delete_attachments python:True;
-		update_attachments python:context.portal_membership.checkPermission('EditResults', context) or
-		                          context.portal_membership.checkPermission('EditFieldResults', context)">
+		update_attachments python:context.portal_membership.checkPermission('Add portal content', context)">
 
     <div
         tal:condition="update_attachments"
