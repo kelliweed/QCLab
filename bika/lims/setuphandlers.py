@@ -344,6 +344,15 @@ class BikaGenerator:
         mp(permissions.DeleteObjects, ['Manager', 'LabManager', 'Owner'], 0)
         portal.referencesamples.reindexObject()
 
+        # /referencesuppliers : allow adding reference sample
+        mp = portal.bika_setup.bika_referencesuppliers.manage_permission
+        mp(CancelAndReinstate, ['Manager', 'LabManager', 'LabClerk'], 1)
+        mp(permissions.ListFolderContents, ['Manager', 'LabManager', 'LabClerk', 'Analyst', 'Sampler'], 1)
+        mp(permissions.AddPortalContent, ['Manager', 'LabManager', 'LabClerk', 'Analyst'], 1)
+        mp(permissions.View, ['Manager', 'LabManager', 'LabClerk', 'Analyst'], 1)
+        mp('Access contents information', ['Manager', 'LabManager', 'LabClerk', 'Analyst'], 1)
+        portal.bika_setup.bika_referencesuppliers.reindexObject()
+
         # /samples folder permissions
         mp = portal.samples.manage_permission
         mp(CancelAndReinstate, ['Manager', 'LabManager', 'LabClerk'], 0)

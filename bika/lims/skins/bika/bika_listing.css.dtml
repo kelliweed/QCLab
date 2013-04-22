@@ -32,6 +32,16 @@
   font-size:100%;
 }
 
+.refsample_add_controls {
+  position:relative;
+  top:-0.2em;
+  margin-right: .5em;
+  font-size: 60%;
+  vertical-align: middle;
+  /*font-size:90%;*/
+  margin-bottom:0.25em;
+}
+
 .context_action_dropdown {
   margin:none;
   border:none !important;

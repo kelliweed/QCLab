@@ -176,17 +176,21 @@ class ReferenceResultsView(BikaListingView):
 class ReferenceSamplesView(BikaListingView):
     """Main reference samples folder view
     """
+
+    template = ViewPageTemplateFile("templates/referencesamples.pt")
+
     def __init__(self, context, request):
         super(ReferenceSamplesView, self).__init__(context, request)
-        portal = getToolByName(context, 'portal_url').getPortalObject()
-        self.icon = self.portal_url + "/++resource++bika.lims.images/referencesample_big.png"
+        self.icon = self.portal_url + \
+            "/++resource++bika.lims.images/referencesample_big.png"
         self.title = _("Reference Samples")
-        self.description = _("All reference samples in the system are displayed here.")
+        self.description = _("All reference samples in the system are "
+                             "displayed here.")
         self.catalog = 'bika_catalog'
         self.contentFilter = {'portal_type': 'ReferenceSample',
-                              'sort_on':'id',
+                              'sort_on': 'id',
                               'sort_order': 'reverse',
-                              'path':{"query": ["/"], "level" : 0 }, }
+                              'path': {"query": ["/"], "level": 0 }}
         self.context_actions = {}
         self.show_sort_column = False
         self.show_select_row = False
@@ -202,33 +206,33 @@ class ReferenceSamplesView(BikaListingView):
             'Title': {
                 'title': _('Title'),
                 'index': 'sortable_title',
-                'toggle':True},
+                'toggle': True},
             'Supplier': {
                 'title': _('Supplier'),
-                'toggle':True},
+                'toggle': True},
             'Definition': {
                 'title': _('Reference Definition'),
-                'toggle':True},
+                'toggle': True},
             'DateSampled': {
                 'title': _('Date Sampled'),
                 'index': 'getDateSampled',
-                'toggle':True},
+                'toggle': True},
             'DateReceived': {
                 'title': _('Date Received'),
                 'index': 'getDateReceived',
-                'toggle':True},
+                'toggle': True},
             'ExpiryDate': {
                 'title': _('Expiry Date'),
                 'index': 'getExpiryDate',
-                'toggle':True},
+                'toggle': True},
             'state_title': {
                 'title': _('State'),
-                'toggle':True},
+                'toggle': True},
         }
         self.review_states = [
-            {'id':'default',
+            {'id': 'default',
              'title': _('Current'),
-             'contentFilter':{'review_state':'current'},
+             'contentFilter': {'review_state': 'current'},
              'columns': ['ID',
                          'Title',
                          'Supplier',
@@ -236,9 +240,9 @@ class ReferenceSamplesView(BikaListingView):
                          'DateSampled',
                          'DateReceived',
                          'ExpiryDate']},
-            {'id':'expired',
+            {'id': 'expired',
              'title': _('Expired'),
-             'contentFilter':{'review_state':'expired'},
+             'contentFilter': {'review_state': 'expired'},
              'columns': ['ID',
                          'Title',
                          'Supplier',
@@ -246,9 +250,9 @@ class ReferenceSamplesView(BikaListingView):
                          'DateSampled',
                          'DateReceived',
                          'ExpiryDate']},
-            {'id':'disposed',
+            {'id': 'disposed',
              'title': _('Disposed'),
-             'contentFilter':{'review_state':'disposed'},
+             'contentFilter': {'review_state': 'disposed'},
              'columns': ['ID',
                          'Title',
                          'Supplier',
@@ -256,9 +260,9 @@ class ReferenceSamplesView(BikaListingView):
                          'DateSampled',
                          'DateReceived',
                          'ExpiryDate']},
-            {'id':'all',
+            {'id': 'all',
              'title': _('All'),
-             'contentFilter':{},
+             'contentFilter': {},
              'columns': ['ID',
                          'Title',
                          'Supplier',
@@ -269,30 +273,57 @@ class ReferenceSamplesView(BikaListingView):
                          'state_title']},
         ]
 
+    def __call__(self):
+        self.context_actions = {}
+        mtool = getToolByName(self.context, 'portal_membership')
+        if (mtool.checkPermission("BIKA: Add ReferenceSample", self.context)):
+            self.context_actions[_('Add')] = \
+                {'url': 'createObject?type_name=ReferenceSample',
+                 'icon': '++resource++bika.lims.images/add.png'}
+        return super(ReferenceSamplesView, self).__call__()
+
+    def suppliers(self):
+        pc = getToolByName(self.context, 'portal_catalog')
+        ret = []
+        for p in pc(portal_type='ReferenceSupplier',
+                    inactive_state='active'):
+            ret.append({'id': p.id,
+                        'title': p.Title})
+        return ret
+
     def folderitems(self):
         items = super(ReferenceSamplesView, self).folderitems()
         for x in range(len(items)):
-            if not items[x].has_key('obj'): continue
+            if 'obj' not in items[x]:
+                continue
             obj = items[x]['obj']
             items[x]['ID'] = obj.id
             items[x]['replace']['Supplier'] = "<a href='%s'>%s</a>" % \
                 (obj.aq_parent.absolute_url(), obj.aq_parent.Title())
             if obj.getReferenceDefinition():
                 items[x]['replace']['Definition'] = "<a href='%s'>%s</a>" % \
-                 (obj.getReferenceDefinition().absolute_url(), obj.getReferenceDefinition().Title())
+                    (obj.getReferenceDefinition().absolute_url(),
+                    obj.getReferenceDefinition().Title())
             else:
                 items[x]['Definition'] = ' '
 
-            items[x]['DateSampled'] = self.ulocalized_time(obj.getDateSampled())
-            items[x]['DateReceived'] = self.ulocalized_time(obj.getDateReceived())
-            items[x]['ExpiryDate'] = self.ulocalized_time(obj.getExpiryDate())
+            items[x]['DateSampled'] = \
+                self.ulocalized_time(obj.getDateSampled())
+            items[x]['DateReceived'] = \
+                self.ulocalized_time(obj.getDateReceived())
+            items[x]['ExpiryDate'] = \
+                self.ulocalized_time(obj.getExpiryDate())
 
             after_icons = ''
             if obj.getBlank():
-                after_icons += "<img src='++resource++bika.lims.images/blank.png' title='Blank'>"
+                after_icons += \
+                    "<img src='++resource++bika.lims.images/blank.png'" + \
+                    " title='Blank'>"
             if obj.getHazardous():
-                after_icons += "<img src='++resource++bika.lims.images/hazardous.png' title='Hazardous'>"
+                after_icons += \
+                    "<img src='++resource++bika.lims.images/hazardous.png'" + \
+                    " title='Hazardous'>"
             items[x]['replace']['ID'] = "<a href='%s'>%s</a>&nbsp;%s" % \
-                 (items[x]['url'], items[x]['ID'], after_icons)
+                (items[x]['url'], items[x]['ID'], after_icons)
 
         return items
