@@ -34,6 +34,7 @@ AddImmunization = 'BIKA: Add Immunization'
 AddVaccinationCenter = 'BIKA: Add VaccinationCenter'
 AddSymptom = 'BIKA: Add Symptom'
 AddDrugProhibition = 'BIKA: Add DrugProhibition'
+AddReferenceSample = 'BIKA: Add ReferenceSample'
 
 # Default Archetypes Add Permission
 ADD_CONTENT_PERMISSION = AddPortalContent
@@ -60,6 +61,7 @@ ADD_CONTENT_PERMISSIONS = {
     'VaccinationCenter': AddVaccinationCenter,
     'Symptom': AddSymptom,
     'DrugProhibition': AddDrugProhibition,
+    'ReferenceSample': AddReferenceSample,
 }
 
 # Very Old permissions:

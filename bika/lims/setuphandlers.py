@@ -192,6 +192,7 @@ class BikaGenerator:
         mp(AddMethod, ['Manager', 'LabManager'], 1)
         mp(AddSample, ['Manager', 'Owner', 'LabManager', 'LabClerk', 'Doctor', 'Sampler'], 1)
         mp(AddSamplePartition, ['Manager', 'Owner', 'LabManager', 'LabClerk', 'Doctor', 'Sampler'], 1)
+        mp(AddReferenceSample, ['Manager', 'Owner', 'LabManager', 'LabClerk', 'Analyst'], 1)
         mp(AddDoctor, ['Manager', 'Owner', 'LabManager', 'LabClerk'], 1)
         mp(AddPatient, ['Manager', 'Owner', 'LabManager', 'LabClerk'], 1)
         mp(AddAetiologicAgent, ['Manager', 'Owner', 'LabManager', 'LabClerk', 'Doctor'], 1)
@@ -391,7 +392,6 @@ class BikaGenerator:
         mp(permissions.View, ['Manager', 'Member', 'Authenticated', 'Anonymous'], 1)
         mp('Access contents information', ['Manager', 'Member', 'Authenticated', 'Anonymous'], 1)
         portal.methods.reindexObject()
-
 
     def setupVersioning(self, portal):
         portal_repository = getToolByName(portal, 'portal_repository')
