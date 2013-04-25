@@ -189,20 +189,62 @@ $(document).ready(function(){
 		calculateAge();
 	});
 
-	$("#CountryState.country").live('change', function(){
-		$("#PhysicalAddress.country").val($(this).val());
+	// Cargo from addresswidget.js
+	function populate_state_select(field){
+		$.ajax({
+			type: 'POST',
+			url: portal_url + "/getGeoStates",
+			data: {'country': $("[id='"+field+"\\.country']").val(),
+				   '_authenticator': $('input[name="_authenticator"]').val()},
+			success: function(data,textStatus,$XHR){
+				target = $("[id='"+field+"\\.state']");
+				$(target).empty();
+				$(target).append("<option value=''></option>");
+				$.each(data, function(i,v){
+					$(target).append('<option value="'+v[2]+'">'+v[2]+'</option>');
+				});
+				$("[id='"+field+"\\.district']").empty();
+			},
+			dataType: "json"
+		});
+	}
+	function populate_district_select(field){
+		$.ajax({
+			type: 'POST',
+			url: portal_url + "/getGeoDistricts",
+			data: {'country': $("[id='"+field+"\\.country']").val(),
+				  'state': $("[id='"+field+"\\.state']").val(),
+				   '_authenticator': $('input[name="_authenticator"]').val()},
+			success: function(data,textStatus,$XHR){
+				target = $("[id='"+field+"\\.district']");
+				$(target).empty();
+				$(target).append("<option value=''></option>");
+				$.each(data, function(i,v){
+					$(target).append('<option value="'+v[2]+'">'+v[2]+'</option>');
+				});
+			},
+			dataType: "json"
+		});
+	}
+
+	$("#CountryState\\.country").live('change', function(){
+		value = $(this).children().filter(":selected").val();
+		$('#PhysicalAddress\\.country option[value="'+value+'"]').attr("selected", "selected");
 		populate_state_select("PhysicalAddress")
 	});
-	$("#CountryState.state").live('change', function(){
-		$("#PhysicalAddress.state").val($(this).val());
-		populate_state_select("PhysicalAddress")
+	$("#CountryState\\.state").live('change', function(){
+		value = $(this).children().filter(":selected").val();
+		$('#PhysicalAddress\\.state option[value="'+value+'"]').attr("selected", "selected");
+		populate_district_select("PhysicalAddress")
 	});
-	$("#PhysicalAddress.country").live('change', function(){
-		$("#CountryState.country").val($(this).val());
-		populate_district_select("CountryState")
+	$("#PhysicalAddress\\.country").live('change', function(){
+		value = $(this).children().filter(":selected").val();
+		$('#CountryState\\.country option[value="'+value+'"]').attr("selected", "selected");
+		populate_state_select("CountryState")
 	});
-	$("#PhysicalAddress.state").live('change', function(){
-		$("#CountryState.state").val($(this).val());
+	$("#PhysicalAddress\\.state").live('change', function(){
+		value = $(this).children().filter(":selected").val();
+		$('#CountryState\\.state option[value="'+value+'"]').attr("selected", "selected");
 		populate_district_select("CountryState")
 	});
 
