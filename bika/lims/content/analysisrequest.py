@@ -319,6 +319,7 @@ class AnalysisRequest(BaseFolder):
             manager_id = manager.getId()
             if not managers.has_key(manager_id):
                 managers[manager_id] = {}
+                managers[manager_id]['department'] = department.Title()
                 managers[manager_id]['name'] = manager.getFullname()
                 managers[manager_id]['email'] = manager.getEmailAddress()
                 managers[manager_id]['phone'] = manager.getBusinessPhone()

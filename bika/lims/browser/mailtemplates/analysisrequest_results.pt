@@ -380,15 +380,19 @@
     <img
       tal:condition="signature"
       tal:define="signature python:managers[manager]['signature']"
-      tal:attributes="src string:${signature}">
+      tal:attributes="src string:${signature}"
+      style="height:75px">
     <br>
+    <span i18n:translate="">Department:</span>
+    <span tal:content="python:managers[manager]['department']">Chemistry</span>
+    &nbsp;&nbsp;
     <span tal:content="python:managers[manager]['name']">Joe Blogs</span>
-    <span tal:condition="phone">&nbsp&nbsp</span>
+    <span tal:condition="phone">&nbsp;&nbsp;</span>
     <img
       tal:condition="phone"
       tal:attributes="src string:${portal/absolute_url}/images/telephone.jpg">
     <span tal:content="phone">011 555 1112</span>
-    <span tal:condition="email">&nbsp&nbsp</span>
+    <span tal:condition="email">&nbsp;&nbsp;</span>
     <img
       tal:condition="email"
       tal:attributes="src string:${portal/absolute_url}/images/email.jpg">
