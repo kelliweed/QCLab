@@ -68,10 +68,12 @@
                tal:content="email"
                tal:attributes="href string:mailto:${email}"/>)
         </tal:email>
-        <tal:signature tal:condition="view/reporter_signature">
+<!--
+         <tal:signature tal:condition="view/reporter_signature">
             <br/>
             <img tal:attributes="src view/reporter_signature"/>
         </tal:signature>
+ -->
     </tal:reporter>
 </div>
 
