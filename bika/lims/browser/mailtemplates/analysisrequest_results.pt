@@ -384,12 +384,12 @@
     <span tal:condition="phone">&nbsp&nbsp</span>
     <img
       tal:condition="phone"
-      tal:attributes="src string:${portal/absolute_url}/telephone.png">
+      tal:attributes="src string:${portal/absolute_url}/images/telephone.jpg">
     <span tal:content="phone">011 555 1112</span>
     <span tal:condition="email">&nbsp&nbsp</span>
     <img
       tal:condition="email"
-      tal:attributes="src string:${portal/absolute_url}/email.png">
+      tal:attributes="src string:${portal/absolute_url}/images/email.jpg">
     <a tal:attributes="href string:mailto:${email}"
       tal:content="email">a@b.com</a>
   </tal:manager>
