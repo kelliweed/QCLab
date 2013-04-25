@@ -54,6 +54,7 @@ class doPublish(BrowserView):
             result = str('%%.%sf' % precision)%float(result)
         except:
             return result
+        return result
 
     def __call__(self):
 
