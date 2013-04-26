@@ -152,6 +152,18 @@
         tal:attributes="colspan python:ar.getReportDryMatter() and 2 or 1"
         tal:content="python:ar.getPatient() and ar.getPatient().getGender() or ''">Gender</td>
     </tr>
+    <tr>
+      <th i18n:translate="">Country</th>
+      <td tal:repeat="ar view/batch"
+        tal:attributes="colspan python:ar.getReportDryMatter() and 2 or 1"
+        tal:content="python:ar.getPatient() and ar.getPatient().getCountryState()['country'] or ''">State</td>
+    </tr>
+    <tr>
+      <th i18n:translate="">State</th>
+      <td tal:repeat="ar view/batch"
+        tal:attributes="colspan python:ar.getReportDryMatter() and 2 or 1"
+        tal:content="python:ar.getPatient() and ar.getPatient().getCountryState()['country'] or ''">State</td>
+    </tr>
 
     <tr>
       <th i18n:translate="">Doctor</th>
