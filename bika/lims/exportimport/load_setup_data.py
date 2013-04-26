@@ -444,8 +444,8 @@ class LoadSetupData(BrowserView):
             row = dict(zip(fields, row))
             _id = folder.invokeFactory('SampleOrigin', id='tmp')
             obj = folder[_id]
-            obj.edit(title=unicode(row['title']),
-                     description=unicode(row['description']))
+            obj.edit(title=_c(row['title']),
+                     description=_c(row['description']))
             obj.unmarkCreationFlag()
             renameAfterCreation(obj)
 
@@ -460,8 +460,8 @@ class LoadSetupData(BrowserView):
             row = dict(zip(fields, row))
             _id = folder.invokeFactory('IdentifierType', id='tmp')
             obj = folder[_id]
-            obj.edit(title=unicode(row['title']),
-                     description=unicode(row['description']))
+            obj.edit(title=_c(row['title']),
+                     description=_c(row['description']))
             obj.unmarkCreationFlag()
             renameAfterCreation(obj)
 
@@ -1986,8 +1986,8 @@ class LoadSetupData(BrowserView):
             _id = folder.invokeFactory('AetiologicAgent', id='tmp')
             obj = folder[_id]
 
-            obj.edit(title=unicode(row['title']),
-                     description=unicode(row['description']))
+            obj.edit(title=_c(row['title']),
+                     description=_c(row['description']))
             obj.unmarkCreationFlag()
             renameAfterCreation(obj)
             self.aetiologicagents[row['title']] = obj
@@ -2018,17 +2018,17 @@ class LoadSetupData(BrowserView):
             row = dict(zip(fields, row))
             _id = folder.invokeFactory('Immunization', id='tmp')
             obj = folder[_id]
-            obj.edit(title=unicode(row['title']),
-                     description=unicode(row['description']),
-                     Form=unicode(row['Form']),
-                     RelevantFacts=unicode(row['RelevantFacts']),
+            obj.edit(title=_c(row['title']),
+                     description=_c(row['description']),
+                     Form=_c(row['Form']),
+                     RelevantFacts=_c(row['RelevantFacts']),
                      GeographicalDistribution=unicode(
                          row['GeographicalDistribution']),
-                     Transmission=unicode(row['Transmission']),
-                     Symptoms=unicode(row['Symptoms']),
-                     Risk=unicode(row['Risk']),
-                     Treatment=unicode(row['Treatment']),
-                     Prevention=unicode(row['Prevention']))
+                     Transmission=_c(row['Transmission']),
+                     Symptoms=_c(row['Symptoms']),
+                     Risk=_c(row['Risk']),
+                     Treatment=_c(row['Treatment']),
+                     Prevention=_c(row['Prevention']))
             obj.unmarkCreationFlag()
             renameAfterCreation(obj)
 
