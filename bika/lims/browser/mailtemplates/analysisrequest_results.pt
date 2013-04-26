@@ -263,9 +263,7 @@
             keyword python:service.getKeyword();
             analysis_found python:keyword in ar;
             analysis python:analysis_found and ar[keyword];
-            result analysis/getResult|nothing;
-            precision python:analysis.getService().getPrecision();
-            result python: view.formattedResult(result, precision);
+            result python: view.formattedResult(analysis);
             uncertainty analysis/getUncertainty|nothing">
             <tal:result
               tal:condition="analysis_found"

@@ -47,9 +47,19 @@ class doPublish(BrowserView):
                         ARs_to_publish.append(ar)
         self.analysis_requests = ARs_to_publish
 
-    def formattedResult(self, result, precision=2):
+    def formattedResult(self, analysis):
+        result = analysis.getResult()
         if not result:
             return ''
+        choices = analysis.getService().getResultOptions()
+        if choices:
+            match = [x['ResultText']
+                     for x in choices
+                     if str(x['ResultValue']) == str(result)]
+            if match:
+                return match[0]
+        if choices and result in choices:
+            return choices[result]
         try:
             result = str('%%.%sf' % precision)%float(result)
         except:
@@ -157,7 +167,7 @@ class doPublish(BrowserView):
                     if debug_mode:
                         open(join(Globals.INSTANCE_HOME,'var', out_fn + ".html"),
                              "w").write(ar_results)
-                    
+
                     mime_msg = MIMEMultipart('related')
                     mime_msg['Subject'] = self.get_mail_subject()
                     mime_msg['From'] = formataddr(
@@ -169,14 +179,14 @@ class doPublish(BrowserView):
                     mime_msg.preamble = 'This is a multi-part MIME message.'
                     msg_txt = MIMEText(ar_results, _subtype='html')
                     mime_msg.attach(msg_txt)
-                    
+
                     if 'pdf' in self.pub_pref:
                         pisa.showLogging()
                         ramdisk = StringIO()
                         pdf = pisa.CreatePDF(ar_results, ramdisk)
                         pdf_data = ramdisk.getvalue()
                         ramdisk.close()
-    
+
                         if debug_mode:
                             open(join(Globals.INSTANCE_HOME,'var', out_fn + ".pdf"),
                                  "wb").write(pdf_data)
