@@ -129,7 +129,19 @@
       <th i18n:translate="">Patient</th>
       <td tal:repeat="ar view/batch"
         tal:attributes="colspan python:ar.getReportDryMatter() and 2 or 1"
-        tal:content="python:ar.getPatient() and ar.getPatient().getPatientID() or ''">Patient ID</td>
+        tal:content="python:ar.getPatient() and ar.getPatient().Title() or ''">Patient</td>
+    </tr>
+    <tr>
+      <th i18n:translate="">Age</th>
+      <td tal:repeat="ar view/batch"
+        tal:attributes="colspan python:ar.getReportDryMatter() and 2 or 1"
+        tal:content="python:ar.getPatient() and ar.getPatient().getAge() or ''">Age</td>
+    </tr>
+    <tr>
+      <th i18n:translate="">Gender</th>
+      <td tal:repeat="ar view/batch"
+        tal:attributes="colspan python:ar.getReportDryMatter() and 2 or 1"
+        tal:content="python:ar.getPatient() and ar.getPatient().getGender() or ''">Gender</td>
     </tr>
 
     <tr>
@@ -163,7 +175,7 @@
         tal:attributes="colspan python:ar.getReportDryMatter() and 2 or 1"
         tal:content="python:ar.getSample().getSampleType().Title()">SampleType</td>
     </tr>
-
+<!--
     <tr>
       <th i18n:translate="">Sample Point</th>
       <td tal:repeat="ar view/batch"
@@ -173,6 +185,7 @@
           tal:content="samplepoint/Title|nothing">SamplePoint</span>
       </td>
     </tr>
+ -->
 
     <tr>
       <th i18n:translate="">Date Received</th>
@@ -189,7 +202,7 @@
         tal:content="python:view.ulocalized_time(ar.getDatePublished(), long_format=1)"
         >2005-01-01 10:00</td>
     </tr>
-
+<!--
     <tr>
       <th i18n:translate="">Sampling Deviation</th>
       <td tal:repeat="ar view/batch"
@@ -206,7 +219,7 @@
           tal:content="verifier"/>
       </td>
     </tr>
-
+ -->
   </thead>
 
   <tbody>
