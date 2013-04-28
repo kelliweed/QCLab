@@ -301,6 +301,7 @@
                 <span tal:condition="python:not in_range[0]">
                   <img tal:condition="python:not in_range[0]"
                     tal:attributes="src string:${portal/absolute_url}/++resource++bika.lims.images/exclamation.png"/>
+                    &nbsp;&nbsp;
                   <br/>
                   <span tal:replace="python:in_range[0] and '' or 'valid range min: %(min)s, max: %(max)s'%(in_range[1])"/>
                 </span>
@@ -361,6 +362,7 @@
           icon file/getBestIcon | nothing">
           <img tal:condition="icon"
             tal:attributes="src string:${here/portal_url}/$icon"/>
+            &nbsp;&nbsp;
           <a title="Click to download"
             tal:attributes="href string:${attachment/absolute_url}/at_download/AttachmentFile"
             tal:content=filename>Filename</a>
@@ -383,6 +385,7 @@
               icon file/getBestIcon | nothing">
               <img tal:condition="icon"
                 tal:attributes="src string:${here/portal_url}/$icon"/>
+              &nbsp;&nbsp;
               <a title="Click to download"
                 tal:attributes="href string:${attachment/absolute_url}/at_download/AttachmentFile"
                 tal:content=filename>Filename</a>
@@ -418,14 +421,17 @@
     <img
       tal:condition="phone"
       tal:attributes="src string:${portal/absolute_url}/images/telephone.jpg">
+      &nbsp;&nbsp;
     <span tal:content="phone">011 555 1112</span>
     <span tal:condition="email">&nbsp;&nbsp;</span>
     <img
       tal:condition="email"
       tal:attributes="src string:${portal/absolute_url}/images/email.jpg">
+      &nbsp;&nbsp;
     <a tal:attributes="href string:mailto:${email}"
       tal:content="email">a@b.com</a>
-  </tal:manager>
+  &nbsp;
+</tal:manager>
 </div>
 
 <hr/>
