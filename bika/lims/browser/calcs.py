@@ -147,6 +147,7 @@ class ajaxCalculateAnalysisEntry():
             # convert formula to a valid python string, ready for interpolation
             formula = calculation.getFormula()
             formula = formula.replace('[', '%(').replace(']', ')f')
+            formula = formula.replace('\r', '').replace('\n', ' ')
 
             try:
                 formula = eval("'%s'%%mapping" % formula,
