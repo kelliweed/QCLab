@@ -1,30 +1,29 @@
-from DateTime import DateTime
-from Products.Archetypes.config import REFERENCE_CATALOG
-from Products.CMFCore.WorkflowCore import WorkflowException
-from Products.CMFCore.utils import getToolByName
-from Products.CMFPlone.utils import safe_unicode
-from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from bika.lims.browser import BrowserView
 from bika.lims.config import POINTS_OF_CAPTURE
-from bika.lims.utils import sendmail, encode_header
+from bika.lims.utils import encode_header
 from cStringIO import StringIO
-from email.Utils import formataddr
-from email.mime.image import MIMEImage
-from email.MIMEBase import MIMEBase
+from email import Encoders
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-from email import Encoders
+from email.MIMEBase import MIMEBase
+from email.Utils import formataddr
 from os.path import join
+from Products.CMFCore.utils import getToolByName
+from Products.CMFCore.WorkflowCore import WorkflowException
+from Products.CMFPlone.utils import safe_unicode
+from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from smtplib import SMTPRecipientsRefused
 from smtplib import SMTPServerDisconnected
+
 import App
 import Globals
-import re
 import xhtml2pdf.pisa as pisa
+
 
 class doPublish(BrowserView):
     """Pre/Re/Publish analysis requests"""
-    ar_results = ViewPageTemplateFile("mailtemplates/analysisrequest_results.pt")
+    ar_results = \
+        ViewPageTemplateFile("mailtemplates/analysisrequest_results.pt")
 
     def __init__(self, context, request, action, analysis_requests):
         self.context = context
@@ -37,7 +36,8 @@ class doPublish(BrowserView):
         workflow = getToolByName(self.context, 'portal_workflow')
         ARs_to_publish = []
         for ar in analysis_requests:
-            if workflow.getInfoFor(ar, 'review_state') in ['verified', 'published']:
+            state = workflow.getInfoFor(ar, 'review_state')
+            if state in ['verified', 'published']:
                 ARs_to_publish.append(ar)
             else:
                 if ar.getAnalyses(review_state='verified'):
@@ -48,32 +48,36 @@ class doPublish(BrowserView):
         self.analysis_requests = ARs_to_publish
 
     def formattedResult(self, analysis):
+        """Formatted result:
+        1. Print ResultText of matching ResulOptions
+        2. If the result is floatable, render it to the correct precision
+        """
         result = analysis.getResult()
-        if not result:
-            return ''
-        choices = analysis.getService().getResultOptions()
-        if choices:
-            match = [x['ResultText']
-                     for x in choices
-                     if str(x['ResultValue']) == str(result)]
-            if match:
-                return match[0]
-        if choices and result in choices:
-            return choices[result]
+        service = analysis.getService()
+        choices = service.getResultOptions()
+
+        # 1. Print ResultText of mathching ResulOptions
+        match = [x['ResultText'] for x in choices
+                 if str(x['ResultValue']) == str(result)]
+        if match:
+            return match[0]
+
+        # 2. If the result is floatable, render it to the correct precision
+        precision = service.getPrecision()
+        if not precision:
+            precision == ''
         try:
-            result = str('%%.%sf' % precision)%float(result)
+            result = str("%%.%sf" % precision) % float(result)
         except:
-            return result
+            pass
+
         return result
 
     def __call__(self):
-
-        rc = getToolByName(self.context, REFERENCE_CATALOG)
         workflow = getToolByName(self.context, 'portal_workflow')
-
         BatchEmail = self.context.bika_setup.getBatchEmail()
-
-        username = self.context.portal_membership.getAuthenticatedMember().getUserName()
+        member = self.context.portal_membership.getAuthenticatedMember()
+        username = member.getUserName()
         self.reporter = self.user_fullname(username)
         self.reporter_email = self.user_email(username)
 
@@ -119,8 +123,10 @@ class doPublish(BrowserView):
                 or self.contact.getPhysicalAddress()
             if client_address:
                 _keys = ['address', 'city', 'state', 'zip', 'country']
-                _list = [client_address.get(v) for v in _keys if client_address.get(v)]
-                self.client_address = "<br/>".join(_list).replace("\n", "<br/>")
+                _list = [client_address.get(v) for v in _keys
+                         if client_address.get(v)]
+                addr = "<br/>".join(_list).replace("\n", "<br/>")
+                self.client_address = addr
             else:
                 self.client_address = None
 
@@ -145,7 +151,8 @@ class doPublish(BrowserView):
                     for analysis in ar.getAnalyses(full_objects=True,
                                                    review_state=states):
                         service = analysis.getService()
-                        poc = POINTS_OF_CAPTURE.getValue(service.getPointOfCapture())
+                        poc = service.getPointOfCapture()
+                        poc = POINTS_OF_CAPTURE.getValue(poc)
                         cat = service.getCategoryTitle()
                         if poc not in self.services:
                             self.services[poc] = {}
@@ -165,7 +172,8 @@ class doPublish(BrowserView):
 
                     debug_mode = App.config.getConfiguration().debug_mode
                     if debug_mode:
-                        open(join(Globals.INSTANCE_HOME,'var', out_fn + ".html"),
+                        out_path = join(Globals.INSTANCE_HOME, 'var')
+                        open(join(out_path, out_fn + ".html"),
                              "w").write(ar_results)
 
                     mime_msg = MIMEMultipart('related')
@@ -188,15 +196,24 @@ class doPublish(BrowserView):
                         ramdisk.close()
 
                         if debug_mode:
-                            open(join(Globals.INSTANCE_HOME,'var', out_fn + ".pdf"),
+                            out_path = join(Globals.INSTANCE_HOME, 'var')
+                            open(join(out_path, out_fn + ".pdf"),
                                  "wb").write(pdf_data)
 
                         if not pdf.err:
                             part = MIMEBase('application', "application/pdf")
-                            part.add_header('Content-Disposition', 'attachment; filename="%s.pdf"' % out_fn)
-                            part.set_payload( pdf_data )
+                            part.add_header('Content-Disposition',
+                                'attachment; filename="%s.pdf"' % out_fn)
+                            part.set_payload(pdf_data)
                             Encoders.encode_base64(part)
                             mime_msg.attach(part)
+
+                           # To start download in browser:
+                           # setheader = self.request.RESPONSE.setHeader
+                           # setheader('Content-Type', 'application/pdf')
+                           # setheader("Content-Disposition",
+                           #     "attachment;filename=\"%s.pdf\"" % out_fn)
+                           # self.request.RESPONSE.write(pdf_data)
 
                     try:
                         host = getToolByName(self.context, 'MailHost')
@@ -214,29 +231,13 @@ class doPublish(BrowserView):
                             except WorkflowException:
                                 pass
 
-##                    if not pdf.err:
-##                        setheader = self.request.RESPONSE.setHeader
-##                        setheader('Content-Type', 'application/pdf')
-##                        setheader("Content-Disposition", "attachment;filename=\"%s.pdf\"" % out_fn)
-##                        self.request.RESPONSE.write(pdf_data)
-
                 else:
-                    raise Exception, "XXX pub_pref %s" % (self.pub_pref,)
+                    raise Exception("XXX pub_pref %s" % (self.pub_pref,))
 
         return [ar.RequestID for ar in self.analysis_requests]
 
     def get_managers_from_requests(self):
-        ## Script (Python) "get_managers_from_requests"
-        ##bind container=container
-        ##bind context=context
-        ##bind namespace=
-        ##bind script=script
-        ##bind subpath=traverse_subpath
-        ##parameters=batch
-        ##title=Get services from requests
-        ##
-        managers = {'ids': [],
-                    'dict': {}}
+        managers = {'ids': [], 'dict': {}}
         departments = {}
         for ar in self.batch:
             ar_mngrs = ar.getResponsible()
@@ -261,7 +262,6 @@ class doPublish(BrowserView):
             managers['dict'][mngr]['dept'] = final_depts
 
         return managers
-
 
     def get_mail_subject(self):
         client = self.batch[0].aq_parent
@@ -333,4 +333,3 @@ class doPublish(BrowserView):
         else:
             subject = 'Analysis results'
         return subject
-
