@@ -312,7 +312,7 @@
               </td>
               <tal:remarks tal:condition="python:view.context.bika_setup.getEnableAnalysisRemarks()">
                 <td tal:attributes="colspan python:ar.getReportDryMatter() and '2'or '1'"
-                  tal:content="analysis/getRemarks">
+                  tal:content="structure analysis/getRemarks">
                 </td>
               </tal:remarks>
             </tal:result>
@@ -338,7 +338,7 @@
           tal:condition="remarks">
           <td width="10%"
               tal:content="string:${ar/getRequestID}:">AR:</td>
-          <td tal:content="remarks">Remarks</td>
+          <td tal:content="structure remarks">Remarks</td>
       </tr>
   </tal:repeat>
 </table>
