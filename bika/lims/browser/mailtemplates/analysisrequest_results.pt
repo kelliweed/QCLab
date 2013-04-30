@@ -162,7 +162,7 @@
       <th i18n:translate="">State</th>
       <td tal:repeat="ar view/batch"
         tal:attributes="colspan python:ar.getReportDryMatter() and 2 or 1"
-        tal:content="python:ar.getPatient() and ar.getPatient().getCountryState()['country'] or ''">State</td>
+        tal:content="python:ar.getPatient() and ar.getPatient().getCountryState()['state'] or ''">State</td>
     </tr>
 
     <tr>
