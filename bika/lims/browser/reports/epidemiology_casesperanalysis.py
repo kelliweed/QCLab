@@ -60,7 +60,7 @@ class Report(BrowserView):
         for ar in ars:            
             ar = ar.getObject()            
             batch = ar.getBatch()
-            if not batch:
+            if batch is None:
                 continue
             
             datecreated = batch.created()
