@@ -57,6 +57,9 @@ class Report(BrowserView):
             arid = ar.getRequestID()
             datecreated = ar.created()
             batch = ar.getBatch()
+            if batch is None:
+                continue
+            
             caseid = batch.getBatchID()
             
             analyses = ar.getAnalyses()
