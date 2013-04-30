@@ -277,9 +277,9 @@ $(document).ready(function(){
         return false;
     });
 
-    $('#casesymptomswidget [name="delete"], #casesymptomswidget [name="clear"]').click(function(event){
+    $('#casesymptomswidget [name="CSY_delete"], #casesymptomswidget [name="CSY_clear"]').click(function(event){
         event.preventDefault();
-        if($(this).attr('name') == 'clear') {
+        if($(this).attr('name') == 'CSY_clear') {
             checked = $(this).parents('table').children('tbody').find(':checkbox');
         } else {
             checked = $(this).parents('table').children('tbody').find(':checked');
