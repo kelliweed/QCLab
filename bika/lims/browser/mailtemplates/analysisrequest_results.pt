@@ -161,11 +161,35 @@
         tal:attributes="colspan python:ar.getReportDryMatter() and 2 or 1"
         tal:content="python:ar.getPatient() and ar.getPatient().Title() or ''">Patient</td>
     </tr>
+    <tal:x define="rows python:ar.getPatient() and ar.getPatient().getPatientIdentifiers() or [];"
+           condition="rows">
+      <tr>
+        <td class="parameter_label" i18n:translate="">Patient additional identifiers</td>
+        <td
+          tal:attributes="colspan python:ar.getReportDryMatter() and 2 or 1">
+          <tal:y repeat="row rows">
+            <span tal:content="python:row.get('IdentifierType', '')"/>
+            <span tal:content="python:row.get('Identifier', '')"/>
+            <br/>
+          </tal:y>
+        </td>
+      </tr>
+    </tal:x>
+    <tal:x define="value python:ar.getBatch() and ar.getBatch().getClientBatchID() or '';"
+           condition="value">
+      <tr>
+        <td class="parameter_label" i18n:translate="">Referrer Case ID</td>
+        <td
+          tal:attributes="colspan python:ar.getReportDryMatter() and 2 or 1"
+          tal:content="value"/>
+      </tr>
+    </tal:x>
     <tr>
       <td class="parameter_label" i18n:translate="">Birth date</td>
-      <td
-        tal:attributes="colspan python:ar.getReportDryMatter() and 2 or 1"
-        tal:content="python:ar.getPatient() and view.ulocalized_time(ar.getPatient().getBirthDate(), long_format=0) or ''">Birth date</td>
+      <td tal:attributes="colspan python:ar.getReportDryMatter() and 2 or 1">
+        <span tal:content="python:ar.getPatient() and view.ulocalized_time(ar.getPatient().getBirthDate(), long_format=0) or ''">Birth date</span>
+        <span tal:condition="python:ar.getPatient() and ar.getPatient().getBirthDateEstimated() or ''">(estimated)</span>
+      </td>
     </tr>
     <tr>
       <td class="parameter_label" i18n:translate="">Gender</td>

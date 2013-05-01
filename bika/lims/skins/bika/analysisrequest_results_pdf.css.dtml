@@ -89,12 +89,14 @@ h4 {
 }
 
 .main-table tr {
+    line-height: 40%;
     padding:1px 10px 0px 0px;
     margin:0px;
     height:80%;
 }
 
 .main-table th {
+    line-height: 40%;
     color: &dtml-tableHeaderTextColor;;
     background-color: &dtml-tableHeaderBackgroundColor;;
     padding:0px 4px 0px 0px;
@@ -106,6 +108,7 @@ h4 {
 }
 
 .main-table td {
+    line-height: 40%;
     font-size: &dtml-fontSmallSize; !important;
     vertical-align: middle !important;
     text-align:left !important;
