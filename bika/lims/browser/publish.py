@@ -158,9 +158,11 @@ class doPublish(BrowserView):
 
                 mime_msg = MIMEMultipart('related')
                 mime_msg['Subject'] = self.get_mail_subject()
-                mime_msg['From'] = formataddr(
+                from_address = formataddr(
                     (encode_header(laboratory.getName()),
                      laboratory.getEmailAddress()))
+                mime_msg['From'] = from_address
+                mime_msg['Sender'] = from_address
                 mime_msg['To'] = formataddr(
                     (encode_header(self.contact.getFullname()),
                      self.contact.getEmailAddress()))
