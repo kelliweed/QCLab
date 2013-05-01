@@ -1411,6 +1411,8 @@ class AnalysisRequestSelectSampleView(BikaListingView):
                                    self.context.translate(_("Hazardous")))
             items[x]['SampleTypeTitle'] = obj.getSampleTypeTitle()
             items[x]['SamplePointTitle'] = obj.getSamplePointTitle()
+            ar = obj.getAnalysisRequests()
+            ar = ar[0] if ar else None
             items[x]['row_data'] = json.dumps({
                 'SampleID': items[x]['title'],
                 'ClientReference': items[x]['ClientReference'],
@@ -1423,6 +1425,12 @@ class AnalysisRequestSelectSampleView(BikaListingView):
                 'SampleType': items[x]['SampleTypeTitle'],
                 'SamplePoint': items[x]['SamplePointTitle'],
                 'Composite': obj.getComposite(),
+                'BatchID': ar.getBatch().getId()
+                           if ar and ar.getBatch() else '',
+                'PatientID': ar.getPatient().getPatientID()
+                             if ar and ar.getPatient() else '',
+                'DoctorID': ar.getDoctor().getDoctorID()
+                             if ar and ar.getDoctor() else '',
                 'AdHoc': obj.getAdHoc(),
                 'SamplingDeviation': obj.getSamplingDeviation() and \
                                      obj.getSamplingDeviation().UID() or '',

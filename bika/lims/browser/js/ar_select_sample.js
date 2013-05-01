@@ -17,6 +17,9 @@ $(document).ready(function(){
 			.removeClass('hasDatepicker')
 			.removeData('datepicker')
 			.unbind();
+		window.opener.$("#ar_"+column+"_BatchID").val(row_data['BatchID']).attr('readonly', true);
+		window.opener.$("#ar_"+column+"_PatientID").val(row_data['PatientID']).attr('readonly', true);
+		window.opener.$("#ar_"+column+"_DoctorID").val(row_data['DoctorID']).attr('readonly', true);
 		window.opener.$("#ar_"+column+"_ClientReference").val(row_data['ClientReference']).attr('readonly', true);
 		window.opener.$("#ar_"+column+"_ClientSampleID").val(row_data['ClientSampleID']).attr('readonly', true);
 		window.opener.$("#ar_"+column+"_SampleType").val(row_data['SampleType']).attr('readonly', true);

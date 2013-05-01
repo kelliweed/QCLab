@@ -91,6 +91,9 @@ function deleteSampleButton(){
 		})
 		.click(function(){$(this).attr('value', '');})
 		.attr('value', '');
+	$("#ar_"+column+"_BatchID").val('').removeAttr("readonly");
+	$("#ar_"+column+"_PatientID").val('').removeAttr("readonly");
+	$("#ar_"+column+"_DoctorID").val('').removeAttr("readonly");
 	$("#ar_"+column+"_ClientSampleID").val('').removeAttr("readonly");
 	$("#ar_"+column+"_SamplePoint").val('').removeAttr("readonly");
 	$("#ar_"+column+"_SampleType").val('').removeAttr("readonly");
