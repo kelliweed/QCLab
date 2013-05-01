@@ -6,7 +6,7 @@ body {
     font-family: &dtml-fontFamily;;
     background-color: &dtml-backgroundColor;;
     color: &dtml-fontColor;;
-    font-size: &dtml-fontBaseSize;;
+    font-size: 8pt;
 }
 
 @page {
@@ -81,7 +81,7 @@ h4 {
 
 .main-table {
     border-collapse: collapse;
-    margin-bottom: 15px !important;
+    margin-bottom: 5px !important;
 }
 
 .main-table a {
@@ -89,21 +89,26 @@ h4 {
 }
 
 .main-table tr {
-    padding:1px 10px;
+    line-height: 80%;
+    padding:1px 10px 0px 0px;
+    margin:0px;
+    height:80%;
 }
 
 .main-table th {
+    line-height: 80%;
     color: &dtml-tableHeaderTextColor;;
     background-color: &dtml-tableHeaderBackgroundColor;;
-    padding:0px 4px;
+    padding:0px 4px 0px 0px;
     font-size: &dtml-tableHeaderFontBaseSize; !important;
-    text-align:left;
+    text-align:left !important;
     vertical-align: middle !important;
     border-top: 1px solid &dtml-tableHeaderBorderColor;;
     border-bottom: 1px solid &dtml-tableHeaderBorderColor;;
 }
 
 .main-table td {
+    line-height: 80%;
     font-size: &dtml-fontSmallSize; !important;
     vertical-align: middle !important;
     text-align:left !important;
@@ -118,6 +123,22 @@ h4 {
 .main-table td.Title,
 .main-table td.ID {
     white-space:nowrap !important;
+}
+
+.analysis_remarks {
+  font-size:80%;
+  font-color: #ccc;
+  font-style: italic;
+}
+.service_title {
+  font-color: #aaa;
+}
+.parameter_label {
+  font-color: #000;
+}
+
+.discreeter{
+  font-size:70%;
 }
 
 /* </dtml-with> */
