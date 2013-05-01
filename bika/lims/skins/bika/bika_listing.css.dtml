@@ -164,7 +164,7 @@ table.bika-listing-table,
   background-color:#FFFFFF;
   color:#555555;
 }
-.bika-listing-table tbody tr td input:not([type='checkbox'],[type='submit'],[type='button']), 
+.bika-listing-table tbody tr td input:not([type='checkbox'],[type='submit'],[type='button']),
 .bika-listing-table tbody tr td input:not([type='checkbox'],[type='submit'],[type='button']):focus {
 	-moz-appearance: textfield;
     -moz-user-select: text;
@@ -407,6 +407,8 @@ td.review_state_selector{
 .pagesize_selector {
   text-align:right;
   vertical-align:top !important;
+  padding-left:50px;
+  position:relative;
 }
 
 /* Specification selector */
