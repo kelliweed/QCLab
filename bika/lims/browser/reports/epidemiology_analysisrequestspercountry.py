@@ -72,22 +72,22 @@ class Report(BrowserView):
             arid = ar.getRequestID()  
             datecreated = ar.created()     
             batch = ar.getBatch()       
-            country = batch.getPatientCountry()
-            country = len(country) > 0 and country or _("Unknown")
+            country = batch and batch.getPatientCountry() or _("Unknown")
+            country = (country and len(country) > 0) and country or _("Unknown")
             countryline['Country'] = country
             arline['AnalysisRequestID'] = arid
-            arline['PatientID'] = batch.getPatientID()
-            arline['PatientFirstName'] = batch.getPatientFirstname()
-            arline['PatientAge'] = batch.getPatientAgeAtCaseOnsetDate()['year']
-            arline['PatientGender'] = batch.getPatientGender()
+            arline['PatientID'] = batch and batch.getPatientID() or ''
+            arline['PatientFirstName'] = batch and batch.getPatientFirstname() or ''
+            arline['PatientAge'] = (batch and batch.getPatientAgeAtCaseOnsetDate()) and batch.getPatientAgeAtCaseOnsetDate().get('year','') or ''
+            arline['PatientGender'] = batch and batch.getPatientGender() or ''
             arline['HospitalAnalysisRequestID'] = ar.getClientSampleID()
             arline['SampleType'] = ar.getSampleTypeTitle()
             arline['DateSampled'] = self.ulocalized_time(ar.getSamplingDate())
             arline['DateReceived'] = self.ulocalized_time(ar.getDateReceived())
-            arline['CaseOnsetDate'] = self.ulocalized_time(batch.getOnsetDate())
-            arline['AdditionalNotes'] = batch.getAdditionalNotes()
-            arline['ProvisionalDiagnosis'] = batch.getProvisionalDiagnosis()
-            arline['SignsAndSymptoms'] = batch.getSymptoms()
+            arline['CaseOnsetDate'] = (batch and batch.getOnsetDate()) and self.ulocalized_time(batch.getOnsetDate()) or ''
+            arline['AdditionalNotes'] = batch and batch.getAdditionalNotes() or []
+            arline['ProvisionalDiagnosis'] = batch and batch.getProvisionalDiagnosis() or []
+            arline['SignsAndSymptoms'] = batch and batch.getSymptoms() or []
             
             group = ''
             if groupby == 'Day':

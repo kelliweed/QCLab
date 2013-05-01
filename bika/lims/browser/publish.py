@@ -47,6 +47,9 @@ class doPublish(BrowserView):
         1. Print ResultText of matching ResulOptions
         2. If the result is floatable, render it to the correct precision
         """
+        if analysis is None:
+            return ''
+
         result = analysis.getResult()
         service = analysis.getService()
         choices = service.getResultOptions()

@@ -58,8 +58,11 @@ class Report(BrowserView):
             parms.append({"title": _("Grouping period"), "value": _(groupby)})
             
         for ar in ars:            
-            ar = ar.getObject()
+            ar = ar.getObject()            
             batch = ar.getBatch()
+            if batch is None:
+                continue
+            
             datecreated = batch.created()
             caseid = batch.getBatchID()
             

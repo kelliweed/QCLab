@@ -66,10 +66,12 @@ class Report(BrowserView):
             caseid = batch.getBatchID()
             patientid = batch.getPatientID()
             country = batch.getPatientCountry()
-            country = len(country) > 0 and country or _("Unknown")
-            
+            country = (country and len(country) > 0) and country or _("Unknown")
+
             group = ''
-            if groupby == 'Day':
+            if onsetdate is None:
+                group =  _("Unknown")
+            elif groupby == 'Day':
                 group = self.ulocalized_time(onsetdate)                 
             elif groupby == 'Week':
                 group = onsetdate.strftime("%Y") + ", " + onsetdate.strftime("%U")                                
