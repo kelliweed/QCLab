@@ -1067,8 +1067,7 @@ class LoadSetupData(BrowserView):
                 ReportDryMatter=row['ReportDryMatter'] and True or False,
                 AttachmentOption=row['Attachment'][0].lower(),
                 Unit=row['Unit'] and _c(row['Unit']) or None,
-                Precision=row['Precision'] and _c(str(
-                    row['Precision'])) or '2',
+                Precision=_c(str(row['Precision'])) if row['Precision'] is not None else '2',
                 MaxTimeAllowed=MTA,
                 Price=row['Price'] and "%02f" % (float(
                     row['Price'])) or "0,00",
