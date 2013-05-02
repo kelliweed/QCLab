@@ -125,7 +125,7 @@
 						<td tal:content="python:line['NumSamples']"></td>
 						<td tal:content="python:line['NumAnalyses']"></td>
 						<metal:block tal:repeat="reskey python:resultkeys">
-						<td tal:content="python:line['Results'][reskey]"></td>
+						<td tal:content="python:line['Results'].get(reskey,'')"></td>
 						</metal:block>
 					</tr>	
 					</metal:block>		
@@ -138,7 +138,7 @@
 						<td class='total_label' tal:content="python:footlines[period]['NumSamples']"></td>
 						<td class='total_label' tal:content="python:footlines[period]['NumAnalyses']"></td>
 						<metal:block tal:repeat="reskey python:resultkeys">
-						<td class='total_label' tal:content="python:footlines[period]['Results'][reskey]"></td>
+						<td class='total_label' tal:content="python:footlines[period]['Results'].get(reskey,'0')"></td>
 						</metal:block>
 					</tr>
 								
@@ -153,7 +153,7 @@
 					<td class='total_label' style='border-bottom:none;padding-top:5px;' tal:content="python:footlines['Total']['NumSamples']"></td>
 					<td class='total_label' style='border-bottom:none;padding-top:5px;' tal:content="python:footlines['Total']['NumAnalyses']"></td>
 					<metal:block tal:repeat="reskey python:resultkeys">
-					<td class='total_label' style='border-bottom:none;padding-top:5px;' tal:content="python:footlines['Total']['Results'][reskey]"></td>
+					<td class='total_label' style='border-bottom:none;padding-top:5px;' tal:content="python:footlines['Total']['Results'].get(reskey,'0')"></td>
 					</metal:block>
 				</tr>
 			</tfoot>		

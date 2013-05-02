@@ -70,7 +70,7 @@ class Report(BrowserView):
 
             group = ''
             if onsetdate is None:
-                group =  _("Unknown")
+                group = _("Unknown")
             elif groupby == 'Day':
                 group = self.ulocalized_time(onsetdate)                 
             elif groupby == 'Week':
@@ -79,7 +79,7 @@ class Report(BrowserView):
                 group = onsetdate.strftime("%B") + " " + onsetdate.strftime("%Y")            
             elif groupby == 'Year':
                 group = onsetdate.strftime("%Y")
-            else :
+            else:
                 group = ''
             
             countryline = {'Country': country,
@@ -117,13 +117,18 @@ class Report(BrowserView):
                             countryline['Samples'].append(sample)
                         if anuid not in countryline['Analyses']:
                             countryline['Analyses'].append(anuid)
-                                       
-                        result = an.getResult()                        
+
+                        result = an.getResult()
+                        choices = service.getResultOptions()
+                        if choices:
+                            result = [r['ResultText'] for r in choices if str(r['ResultValue']) == str(an.getResult())]
+                            result = len(result) > 0 and result[0] or _("Unknown")
+
                         if result not in resultkeys:
                             resultkeys.append(result)
-                            
+
                         countryline['Results'][result] = result in countryline['Results'].keys() and countryline['Results'][result]+1 or 1      
-                        
+
                         if group not in footlines:
                             footlines[group] = {'Results':{},
                                                 'NumAnalyses':0,
