@@ -298,5 +298,13 @@ class Analysis(BaseContent):
         else:
             return True, None
         return False, spec[keyword]
-
+    
+    def getResultText(self):
+        result = str(self.getResult())
+        choices = self.getService().getResultOptions()
+        if choices:
+            result = [r['ResultText'] for r in choices if str(r['ResultValue']) == str(self.getResult())]
+            result = len(result) > 0 and result[0] or _("Unknown")
+        return result
+    
 atapi.registerType(Analysis, PROJECTNAME)

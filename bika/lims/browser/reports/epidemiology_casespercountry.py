@@ -75,7 +75,7 @@ class Report(BrowserView):
             batchline['ClientBatchID'] = batch.getClientBatchID()
             batchline['OnsetDate'] = self.ulocalized_time(batch.getOnsetDate())
             batchline['PatientAge'] = batch.getPatientAgeAtCaseOnsetDate()['year']
-            batchline['PatientGender'] = batch.getPatientGender()
+            batchline['PatientGender'] = batch.getPatientGenderText()
             batchline['PatientCountry'] = country
             batchline['DateCreated'] = datecreated
             
@@ -96,10 +96,10 @@ class Report(BrowserView):
                 groupline = datalines[group]
                 if country in groupline['Countries']:
                     countryline = groupline['Countries'][country]
-                                
-            if batchid in batches:
-                batchline = batches[batchid]
-            
+
+            if batchid in batchlines:
+                batchline = batchlines[batchid]
+
             ars = batch.getAnalysisRequests()            
             for ar in ars:
                 arid = ar.getRequestID()                
@@ -111,7 +111,7 @@ class Report(BrowserView):
                     anline = {'Keyword': keyword,
                               'AnalysisRequest': arid,
                               'ServiceTitle': an.getServiceTitle(),
-                              'Result': an.getResult()}
+                              'Result': an.getResultText()}
                     batchline['Analyses'][arid+"."+keyword] = anline
             
             

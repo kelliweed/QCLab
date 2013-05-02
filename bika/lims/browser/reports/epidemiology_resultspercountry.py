@@ -118,11 +118,7 @@ class Report(BrowserView):
                         if anuid not in countryline['Analyses']:
                             countryline['Analyses'].append(anuid)
 
-                        result = an.getResult()
-                        choices = service.getResultOptions()
-                        if choices:
-                            result = [r['ResultText'] for r in choices if str(r['ResultValue']) == str(an.getResult())]
-                            result = len(result) > 0 and result[0] or _("Unknown")
+                        result = an.getResultText()
 
                         if result not in resultkeys:
                             resultkeys.append(result)

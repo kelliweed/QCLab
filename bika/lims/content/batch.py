@@ -13,7 +13,7 @@ from bika.lims.browser.widgets import CaseSymptomsWidget
 from bika.lims.browser.widgets import DateTimeWidget
 from bika.lims.browser.widgets import PatientIdentifiersWidget
 from bika.lims.browser.widgets import SplittedDateWidget
-from bika.lims.config import PROJECTNAME
+from bika.lims.config import PROJECTNAME, GENDERS
 from bika.lims.content.bikaschema import BikaSchema
 from bika.lims.interfaces import IBatch
 from bika.lims.utils import isActive
@@ -531,12 +531,19 @@ class Batch(BaseContent):
         if countrystate:
             return countrystate['country']
 
+    def getPatientCountryText(self):
+        country = self.getPatientCountry()
+        return (country and len(country) > 0) and country or _("Unknown")
+
     def getPatientGender(self):
         bpc = getToolByName(self, 'bika_patient_catalog')
         patient = bpc(UID=self.getPatientUID())
         if patient:
             patient = patient[0].getObject()
             return patient.getGender()
+
+    def getPatientGenderText(self):
+        return GENDERS.getValue(self.getPatientGender() or 'dk', _("Unknown"))
 
     def getPatientFirstname(self):
         bpc = getToolByName(self, 'bika_patient_catalog')
