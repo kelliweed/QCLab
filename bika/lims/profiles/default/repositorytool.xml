@@ -29,5 +29,141 @@
             <policy name="at_edit_autoversion"/>
             <policy name="version_on_revert"/>
         </type>
+        <type name="Department">
+            <policy name="at_edit_autoversion"/>
+            <policy name="version_on_revert"/>
+        </type>
+        <type name="Analysis">
+            <policy name="at_edit_autoversion"/>
+            <policy name="version_on_revert"/>
+        </type>
+        <type name="AnalysisCategory">
+            <policy name="at_edit_autoversion"/>
+            <policy name="version_on_revert"/>
+        </type>
+        <type name="AnalysisProfile">
+            <policy name="at_edit_autoversion"/>
+            <policy name="version_on_revert"/>
+        </type>
+        <type name="AnalysisRequest">
+            <policy name="at_edit_autoversion"/>
+            <policy name="version_on_revert"/>
+        </type>
+        <type name="AnalysisService">
+            <policy name="at_edit_autoversion"/>
+            <policy name="version_on_revert"/>
+        </type>
+        <type name="AnalysisSpec">
+            <policy name="at_edit_autoversion"/>
+            <policy name="version_on_revert"/>
+        </type>
+        <type name="ARTemplate">
+            <policy name="at_edit_autoversion"/>
+            <policy name="version_on_revert"/>
+        </type>
+        <type name="Batch">
+            <policy name="at_edit_autoversion"/>
+            <policy name="version_on_revert"/>
+        </type>
+        <type name="Client">
+            <policy name="at_edit_autoversion"/>
+            <policy name="version_on_revert"/>
+        </type>
+        <type name="Contact">
+            <policy name="at_edit_autoversion"/>
+            <policy name="version_on_revert"/>
+        </type>
+        <type name="Container">
+            <policy name="at_edit_autoversion"/>
+            <policy name="version_on_revert"/>
+        </type>
+        <type name="Instrument">
+            <policy name="at_edit_autoversion"/>
+            <policy name="version_on_revert"/>
+        </type>
+        <type name="Preservation">
+            <policy name="at_edit_autoversion"/>
+            <policy name="version_on_revert"/>
+        </type>
+        <type name="PriceList">
+            <policy name="at_edit_autoversion"/>
+            <policy name="version_on_revert"/>
+        </type>
+        <type name="ReferenceAnalysis">
+            <policy name="at_edit_autoversion"/>
+            <policy name="version_on_revert"/>
+        </type>
+        <type name="ReferenceDefinition">
+            <policy name="at_edit_autoversion"/>
+            <policy name="version_on_revert"/>
+        </type>
+        <type name="ReferenceManufacturer">
+            <policy name="at_edit_autoversion"/>
+            <policy name="version_on_revert"/>
+        </type>
+        <type name="ReferenceSample">
+            <policy name="at_edit_autoversion"/>
+            <policy name="version_on_revert"/>
+        </type>
+        <type name="ReferenceSupplier">
+            <policy name="at_edit_autoversion"/>
+            <policy name="version_on_revert"/>
+        </type>
+        <type name="Sample">
+            <policy name="at_edit_autoversion"/>
+            <policy name="version_on_revert"/>
+        </type>
+        <type name="SampleMatrix">
+            <policy name="at_edit_autoversion"/>
+            <policy name="version_on_revert"/>
+        </type>
+        <type name="SupplierContact">
+            <policy name="at_edit_autoversion"/>
+            <policy name="version_on_revert"/>
+        </type>
+        <type name="Worksheet">
+            <policy name="at_edit_autoversion"/>
+            <policy name="version_on_revert"/>
+        </type>
+        <type name="Disease">
+            <policy name="at_edit_autoversion"/>
+            <policy name="version_on_revert"/>
+        </type>
+        <type name="Doctor">
+            <policy name="at_edit_autoversion"/>
+            <policy name="version_on_revert"/>
+        </type>
+        <type name="Drug">
+            <policy name="at_edit_autoversion"/>
+            <policy name="version_on_revert"/>
+        </type>
+        <type name="Patient">
+            <policy name="at_edit_autoversion"/>
+            <policy name="version_on_revert"/>
+        </type>
+        <type name="Symptom">
+            <policy name="at_edit_autoversion"/>
+            <policy name="version_on_revert"/>
+        </type>
+        <type name="Treatment">
+            <policy name="at_edit_autoversion"/>
+            <policy name="version_on_revert"/>
+        </type>
+        <type name="VaccinationCenter">
+            <policy name="at_edit_autoversion"/>
+            <policy name="version_on_revert"/>
+        </type>
+        <type name="Preservation">
+            <policy name="at_edit_autoversion"/>
+            <policy name="version_on_revert"/>
+        </type>
+        <type name="IdentifierType">
+            <policy name="at_edit_autoversion"/>
+            <policy name="version_on_revert"/>
+        </type>
+        <type name="ContainerType">
+            <policy name="at_edit_autoversion"/>
+            <policy name="version_on_revert"/>
+        </type>
     </policymap>
 </repositorytool>
