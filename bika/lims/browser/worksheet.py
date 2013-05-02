@@ -264,10 +264,6 @@ class WorksheetAnalysesView(AnalysesView):
             else:
                 items[x]['DueDate'] = self.ulocalized_time(obj.getDueDate())
 
-            can_edit = getSecurityManager().checkPermission(EditResults, obj)
-            if not can_edit:
-                items[x]['allow_edit'] = []
-
             items[x]['Order'] = ''
 
         # insert placeholder row items in the gaps
