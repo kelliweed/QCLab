@@ -73,7 +73,7 @@ class Report(BrowserView):
                             'SampleType': ar.getSampleTypeTitle(), 
                             'Keyword': an.getKeyword(),
                             'ServiceTitle': an.getServiceTitle(),
-                            'Result': an.getResult(),
+                            'Result': an.getResultText(),
                             'CaseAdditionalNotes': batch.getAdditionalNotes(),
                             'CaseProvisionalDiagnosis': batch.getProvisionalDiagnosis(),
                             'CaseSignsAndSymptoms': batch.getSymptoms()}

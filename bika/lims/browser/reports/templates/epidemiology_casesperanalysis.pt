@@ -127,11 +127,11 @@
 					</tr>
 					<tr>
 						<td class='total_label' i18n:translate="" align="right" style="border-bottom:none;">Num of Patients</td>
-						<td tal:content="python:datalines[period]['NumPatients']" colspan="8" style="border-bottom:none;"></td>
+						<td tal:content="python:footlines[period]['NumPatients']" colspan="8" style="border-bottom:none;"></td>
 					</tr>
 					<tr>
 						<td class='total_label' i18n:translate="" align="right" style="border-bottom:none;">Num of Cases</td>
-						<td tal:content="python:datalines[period]['NumCases']" colspan="8" style="border-bottom:none;"></td>
+						<td tal:content="python:footlines[period]['NumCases']" colspan="8" style="border-bottom:none;"></td>
 					</tr>
 				</tfoot>			
 			</table>

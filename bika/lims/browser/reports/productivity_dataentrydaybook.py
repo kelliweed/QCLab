@@ -65,11 +65,11 @@ class Report(BrowserView):
                         "ReceptionLag": receptionlag,
                         "PublicationLag": publicationlag,
                         "TotalLag": receptionlag + publicationlag,
-                        "BatchID": ar.getBatch(),
+                        "BatchID": ar.getBatch() and ar.getBatch().getBatchID() or '',
                         "SampleID": ar.getSample().Title(),
                         "SampleType": ar.getSampleTypeTitle(),
                         "NumAnalyses": anlcount,
-                        "ClientID": ar.aq_parent.id,
+                        "ClientID": ar.aq_parent.Title(),
                         "Creator": ar.Creator(),
                         "Remarks": ar.getRemarks()
                         }

@@ -64,15 +64,15 @@ class Report(BrowserView):
                 if (an.getServiceUID() == service_uid):
                     line = {'AnalysisUID': an.UID(),
                             'AnalysisRequestID': arid,
-                            'HospitalAnalysisRequestID': batch.getClientBatchID(),
-                            'Hospital': batch.getClientName(),
+                            'HospitalAnalysisRequestID': batch and batch.getClientBatchID() or '',
+                            'Hospital': (batch and batch.getClientName()) and batch.getClientName() or _('Unknown'),
                             'SampleType': ar.getSampleTypeTitle(), 
                             'Keyword': an.getKeyword(),
                             'ServiceTitle': an.getServiceTitle(),
-                            'Result': an.getResult(),
-                            'CaseAdditionalNotes': batch.getAdditionalNotes(),
-                            'CaseProvisionalDiagnosis': batch.getProvisionalDiagnosis(),
-                            'CaseSignsAndSymptoms': batch.getSymptoms()}
+                            'Result': an.getResultText(),
+                            'CaseAdditionalNotes': batch and batch.getAdditionalNotes() or '',
+                            'CaseProvisionalDiagnosis': batch and batch.getProvisionalDiagnosis() or [],
+                            'CaseSignsAndSymptoms': batch and batch.getSymptoms() or []}
                     
                     group = ''
                     if groupby == 'Day':

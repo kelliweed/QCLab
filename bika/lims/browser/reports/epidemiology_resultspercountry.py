@@ -65,8 +65,7 @@ class Report(BrowserView):
             onsetdate = batch.getOnsetDate()
             caseid = batch.getBatchID()
             patientid = batch.getPatientID()
-            country = batch.getPatientCountry()
-            country = (country and len(country) > 0) and country or _("Unknown")
+            country = batch.getPatientCountryText()
 
             group = ''
             if onsetdate is None:

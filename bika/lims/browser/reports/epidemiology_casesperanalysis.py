@@ -78,11 +78,11 @@ class Report(BrowserView):
                               'CaseID':caseid,
                               'PatientID':batch.getPatientID(),
                               'PatientAge':batch.getPatientAgeAtCaseOnsetDate()['year'],
-                              'PatientGender':batch.getPatientGender(),
+                              'PatientGender':batch.getPatientGenderText(),
                               'Onset':self.ulocalized_time(batch.getOnsetDate()),
                               'Received':self.ulocalized_time(an.getDateReceived()),
                               'Comments':batch.getAdditionalNotes(),
-                              'Result':an.getResult()}
+                              'Result':an.getResultText()}
                     
                     group = ''
                     if groupby == 'Day':

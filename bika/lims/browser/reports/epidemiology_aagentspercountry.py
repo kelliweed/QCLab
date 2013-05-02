@@ -56,8 +56,7 @@ class Report(BrowserView):
         for batch in batches:
             batch = batch.getObject()
             datecreated = batch.created()
-            gender = batch.getPatientGender()
-            gender = gender and _(gender) or _('Unknown')
+            gender = batch.getPatientGenderText()
             countrystate = batch.getPatientCountryState()
             country = _('Unknown')
             state = _('Unknown')

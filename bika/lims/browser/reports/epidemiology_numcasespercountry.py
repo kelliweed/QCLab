@@ -20,7 +20,7 @@ class Report(BrowserView):
         
         parms = []
         titles = []
-        
+
         # Apply filters
         self.contentFilter = {'portal_type': 'Batch'}
         val = self.selection_macros.parse_daterange(self.request,
@@ -30,27 +30,26 @@ class Report(BrowserView):
             self.contentFilter[val['contentFilter'][0]] = val['contentFilter'][1]
             parms.append(val['parms'])
             titles.append(val['titles'])           
-            
+
         # Query the catalog and store results in a dictionary             
         batches = self.bika_catalog(self.contentFilter)
         if not batches:
             message = _("No cases found")
             self.context.plone_utils.addPortalMessage(message, "error")
             return self.default_template()
-                
+
         groupby = self.request.form.get('GroupingPeriod', '')
         if (groupby != ''):
             parms.append({"title": _("Grouping period"), "value": _(groupby)})
-           
-        templines = {}
-        counts = {'Total':0}
-        
+
+        datalines = {}
+        counts = {'Total': 0}
+
         for batch in batches:
             batch = batch.getObject()
             datecreated = batch.created()
-            country = batch.getPatientCountry();
-            country = country and country or _('Unknown')
-            
+            country = batch.getPatientCountryText();
+
             group = ''
             if groupby == 'Day':
                 group = self.ulocalized_time(datecreated)                 
@@ -60,39 +59,30 @@ class Report(BrowserView):
                 group = datecreated.strftime("%B") + " " + datecreated.strftime("%Y")            
             elif groupby == 'Year':
                 group = datecreated.strftime("%Y")
-            else :
+            else:
                 group = ''
-            
-            countryline = {"Count": 0 }
-            dataline = {}
-            if group in templines:
-                dataline = templines[group]
-                if country in dataline:
-                    countryline = dataline[country]                    
-            
-            countryline["Count"]+=1
-            dataline[country] = countryline
-            templines[group] = dataline       
-                        
+
             counts["Total"] += 1
-            counts[country] = country in counts and counts[country]+1 or 1
-            counts[group] = group in counts and counts[group]+1 or 1
-        
-        datalines = {}
-        
+            counts[country] = counts.get(country, 0) + 1
+            counts[group] = counts.get(group, 0) + 1
+
+            countryline = {"Count": 0}
+            dataline = datalines.get(group, {})
+            countryline = dataline.get(country, {"Count":0})
+            countryline["Count"] += 1
+            dataline[country] = countryline
+            datalines[group] = dataline
+
         # Percentage calculations
-        for period, countries in templines.iteritems():
-            for country, values in countries.iteritems():
-                countryline = values;                
-                countryline['RatioGroup'] = values['Count']/counts[period]
-                countryline['RatioTotal'] = values['Count']/counts['Total']
+        for group in datalines.keys():
+            countrylines = datalines[group]
+            for country in countrylines.keys():
+                countryline = countrylines[country]
+                countryline['RatioGroup'] = float(countryline['Count']) / float(counts[group])
+                countryline['RatioTotal'] = float(countryline['Count']) / float(counts['Total'])
                 countryline['PercentageGroup'] = ('{0:.0f}'.format(countryline['RatioGroup']*100))+"%"
                 countryline['PercentageTotal'] = ('{0:.0f}'.format(countryline['RatioTotal']*100))+"%"
-                if period in datalines:
-                    dataline = datalines[period]
-                dataline[country] = countryline
-                datalines[period] = dataline
-        
+
         self.report_data = {'parameters': parms,
                             'datalines': datalines}
                     
