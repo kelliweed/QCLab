@@ -1,6 +1,6 @@
 from bika.lims.browser import BrowserView
 from bika.lims.config import POINTS_OF_CAPTURE
-from bika.lims.utils import encode_header
+from bika.lims.utils import encode_header, html_escape
 from cStringIO import StringIO
 from email import Encoders
 from email.mime.multipart import MIMEMultipart
@@ -150,7 +150,7 @@ class doPublish(BrowserView):
 
                 # render template
                 ar_results = safe_unicode(self.ar_results()).encode('utf-8')
-
+                ar_results = html_escape(ar_results)
                 if debug_mode:
                     out_path = join(Globals.INSTANCE_HOME, 'var')
                     open(join(out_path, out_fn + ".html"),
