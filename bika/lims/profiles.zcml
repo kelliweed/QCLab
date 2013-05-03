@@ -98,13 +98,22 @@
         handler="bika.lims.upgrade.to1105.upgrade"
         sortkey="1"
         profile="bika.lims:default"/>
-        
+
  <genericsetup:upgradeStep
         title="New policy maps for entities versioning"
         description=""
         source="1105"
         destination="1106"
         handler="bika.lims.upgrade.to1106.upgrade"
+        sortkey="1"
+        profile="bika.lims:default"/>
+
+ <genericsetup:upgradeStep
+        title="Add 'Edit Analysis Remarks' permission"
+        description=""
+        source="1106"
+        destination="1107"
+        handler="bika.lims.upgrade.to1107.upgrade"
         sortkey="1"
         profile="bika.lims:default"/>
 

@@ -90,6 +90,7 @@
 # ------
 <permission id="bika.lims.ViewResults" title="BIKA: View Results"/>
 <permission id="bika.lims.EditResults" title="BIKA: Edit Results"/>
+<permission id="bika.lims.EditAnalysisRemarks" title="BIKA: Edit Analysis Remarks"/>
 # Sampling workflow - allows editing field results while in sample_due state
 <permission id="bika.lims.EditFieldResults" title="BIKA: Edit Field Results"/>
 
