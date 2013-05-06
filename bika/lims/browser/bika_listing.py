@@ -681,8 +681,12 @@ class BikaListingTable(tableview.Table):
             # We do a sort of the current page using self.manual_sort_on, here
             page = folderitems[psi:psi+self.bika_listing.pagesize]
             so = self.bika_listing.manual_sort_on
-            page.sort(lambda x,y:cmp(x.get(so, '').lower(),
-                                     y.get(so, '').lower()))
+            if page and isinstance(page[0].get(so), DateTime):
+                page.sort(lambda x,y:cmp(x.get(so, ''),
+                                         y.get(so, '')))
+            else:
+                page.sort(lambda x,y:cmp(x.get(so, '').lower(),
+                                         y.get(so, '').lower()))
 
             if self.bika_listing.sort_order[0] in ['d','r']:
                 page.reverse()
