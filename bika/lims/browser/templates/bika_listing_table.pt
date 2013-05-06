@@ -561,7 +561,7 @@ Table cells for each column from in review_state's column list.
 		tal:define="allow_edit python:sm.checkPermission('BIKA: Edit Analysis Remarks', item['obj']);
 		            keyword python:item.has_key('Keyword') and item['Keyword'] or '';
 					remarks python:item.get('Remarks', '');"
-		tal:condition="python:item['category'] == cat
+		tal:condition="python:item.get('category', 'None') == cat
 		                      and item['obj'].portal_type == 'Analysis'
 		                      and view.context.bika_setup.getEnableAnalysisRemarks()">
 			<tr tal:condition="python:allow_edit or (remarks and not allow_edit) or context.portal_type == 'Worksheet'"
