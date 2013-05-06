@@ -1319,16 +1319,24 @@ class AnalysisRequestSelectSampleView(BikaListingView):
         self.icon = self.portal_url + "/++resource++bika.lims.images/sample_big.png"
         self.title = _("Select Sample")
         self.description = _("Click on a sample to create a secondary AR")
-        c = context.portal_type == 'AnalysisRequest' and context.aq_parent or context
+
+        if context.portal_type == 'AnalysisRequest':
+            self.client = context.aq_parent
+        if context.portal_type == 'Batch':
+            proxy = self.portal_catalog(UID=context.getClientUID())
+            if proxy:
+                self.client = proxy[0].getObject()
+            else:
+                # a poor default; shouldn't happen
+                client = {'UID':''}
+        if context.portal_type == 'Client':
+            self.client = context
+
         self.catalog = "bika_catalog"
         self.contentFilter = {'portal_type': 'Sample',
                               'sort_on':'id',
                               'sort_order': 'reverse',
-                              'review_state': ['to_be_sampled', 'to_be_preserved',
-                                               'sample_due', 'sample_received'],
-                              'cancellation_state': 'active',
-                              'path': {"query": "/".join(c.getPhysicalPath()),
-                                       "level" : 0 }
+                              'cancellation_state': 'active'
                               }
         self.show_sort_column = False
         self.show_select_row = False
@@ -1361,7 +1369,10 @@ class AnalysisRequestSelectSampleView(BikaListingView):
 
         self.review_states = [
             {'id':'default',
-             'contentFilter':{},
+             'contentFilter':{'review_state': ['to_be_sampled',
+                                               'to_be_preserved',
+                                               'sample_due',
+                                               'sample_received']},
              'title': _('All Samples'),
              'columns': ['SampleID',
                          # 'ClientReference',
@@ -1372,7 +1383,9 @@ class AnalysisRequestSelectSampleView(BikaListingView):
                          'state_title']},
             {'id':'due',
              'title': _('Sample Due'),
-             'contentFilter': {'review_state': 'sample_due'},
+             'contentFilter':{'review_state': ['to_be_sampled',
+                                               'to_be_preserved',
+                                               'sample_due']},
              'columns': ['SampleID',
                          # 'ClientReference',
                          'ClientSampleID',
@@ -1381,7 +1394,7 @@ class AnalysisRequestSelectSampleView(BikaListingView):
                          'SamplingDate']},
             {'id':'sample_received',
              'title': _('Sample received'),
-             'contentFilter': {'review_state': 'sample_received'},
+             'contentFilter':{'review_state': ['sample_received']},
              'columns': ['SampleID',
                          # 'ClientReference',
                          'ClientSampleID',
@@ -1390,6 +1403,14 @@ class AnalysisRequestSelectSampleView(BikaListingView):
                          'SamplingDate',
                          'DateReceived']},
         ]
+
+    def __call__(self):
+        client_uid = self.request.get('client_uid', '')
+        if not client_uid and hasattr(self, 'client'):
+            client_uid = self.client.UID()
+        self.contentFilter['getClientUID'] = client_uid
+        print self.contentFilter
+        return BikaListingView.__call__(self)
 
     def folderitems(self, full_objects = False):
         items = BikaListingView.folderitems(self)
