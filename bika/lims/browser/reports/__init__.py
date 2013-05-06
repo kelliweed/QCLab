@@ -7,7 +7,7 @@ from bika.lims.browser import BrowserView
 from bika.lims.browser.bika_listing import BikaListingView
 from bika.lims.browser.reports.selection_macros import SelectionMacrosView
 from bika.lims.interfaces import IReportFolder
-from bika.lims.utils import getUsers, logged_in_client
+from bika.lims.utils import getUsers, logged_in_client, html_escape
 from cStringIO import StringIO
 from plone.app.content.browser.interfaces import IFolderContentsView
 from plone.app.layout.globals.interfaces import IViewView
@@ -248,6 +248,7 @@ class SubmitForm(BrowserView):
         ## The report output gets pulled through report_frame.pt
         self.reportout = output['report_data']
         framed_output = self.frame_template()
+        framed_output = html_escape(framed_output)
 
         # this is the good part
         pisa.showLogging()
