@@ -1870,16 +1870,18 @@ class ajaxAnalysisRequestSubmit():
                 doActionFor(ar, lowest_state)
 
             # receive secondary AR
-            if values.has_key('SampleID'):
-                if wftool.getInfoFor(sample, 'review_state') == 'sampled':
-                    wftool.doActionFor(ar, 'sample_due')
-                if wftool.getInfoFor(sample, 'review_state') == 'sample_due':
-                    wftool.doActionFor(ar, 'receive')
+            if 'SampleID' in values:
+                sample_state = wftool.getInfoFor(sample, 'review_state')
+                if sample_state in ('sample_registered', 'to_be_sampled',
+                                    'to_be_preserved', 'preserved',
+                                    'sample_due'):
+                    changeWorkflowState(ar, "bika_ar_workflow",
+                        "sample_due")
+                else:
+                    changeWorkflowState(ar, "bika_ar_workflow",
+                        "sample_received")
                 for analysis in ar.getAnalyses(full_objects=1):
-                    if wftool.getInfoFor(analysis, 'review_state') == 'sampled':
-                        wftool.doActionFor(analysis, 'sample_due')
-                    if wftool.getInfoFor(analysis, 'review_state') == 'sample_due':
-                        wftool.doActionFor(analysis, 'receive')
+                    changeWorkflowState(ar, "bika_ar_workflow", sample_state)
 
             # Transition pre-preserved partitions.
             for p in parts:
