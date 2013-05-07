@@ -558,8 +558,10 @@ Table cells for each column from in review_state's column list.
 		<!-- Row Remarks field (for Analyses) -->
 	</tal:comment>
 	<tal:remarks
-		tal:define="allow_edit python:sm.checkPermission('BIKA: Edit Analysis Remarks', item['obj']);
-		            keyword python:item.has_key('Keyword') and item['Keyword'] or '';
+		tal:define="url request/URL|nothing;
+					allow_edit python:sm.checkPermission('BIKA: Edit Analysis Remarks', item['obj']);
+					allow_edit python:True if (allow_edit and url.find('add_analyses') == -1) else False;
+					keyword python:item.has_key('Keyword') and item['Keyword'] or '';
 					remarks python:item.get('Remarks', '');"
 		tal:condition="python:item.get('category', 'None') == cat
 		                      and item['obj'].portal_type == 'Analysis'
