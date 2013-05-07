@@ -195,7 +195,8 @@
       <td class="parameter_label" i18n:translate="">Gender</td>
       <td
         tal:attributes="colspan python:ar.getReportDryMatter() and 2 or 1"
-        tal:content="python:ar.getPatient() and ar.getPatient().getGender() or ''">Gender</td>
+        tal:define="GENDERS python:modules['bika.lims.config'].GENDERS"
+        tal:content="python:ar.getPatient() and GENDERS.getValue(ar.getPatient().getGender()) or ''">Gender</td>
     </tr>
 
     <tal:x define="value python:ar.getPatient() and ar.getPatient().getHomePhone() or '';"
@@ -387,14 +388,14 @@
     <tal:category tal:repeat="cat python:view.services[poc].keys()">
       <tr class="category_heading">
         <th
-          tal:content="string:${poc} - ${cat}"/>
+          tal:content="string:${cat}"/>
 <!--         <tal:results tal:repeat="ar view/batch"> -->
           <tal:drymatter tal:condition="ar/getReportDryMatter">
-            <th i18n:translate="">Result</th>
-            <th i18n:translate="">Dry Result</th>
+            <th i18n:translate="" class='analysis_results_header'>Result</th>
+            <th i18n:translate="" class='analysis_results_header'>Dry Result</th>
           </tal:drymatter>
           <tal:notdrymatter tal:condition="not:ar/getReportDryMatter">
-            <th i18n:translate="">Result</th>
+            <th i18n:translate="" class='analysis_results_header'>Result</th>
           </tal:notdrymatter>
         <!-- </tal:results> -->
       </tr>

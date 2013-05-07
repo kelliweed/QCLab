@@ -110,7 +110,7 @@ h4 {
 .main-table td {
     line-height: 40%;
     font-size: &dtml-fontSmallSize; !important;
-    vertical-align: middle !important;
+    vertical-align: left !important;
     text-align:left !important;
     padding:1px 4px;
     border-bottom: 1px solid &dtml-tableCellBackgroundColor;;
@@ -125,6 +125,14 @@ h4 {
     white-space:nowrap !important;
 }
 
+.main-table th.analysis_results_header {
+  text-align:right !important;
+  padding-right:5px;
+}
+.main-table td.analysis_result {
+  text-align:right !important;
+  padding-right:5px;
+}
 .analysis_remarks {
   font-size:80%;
   font-color: #ccc;
