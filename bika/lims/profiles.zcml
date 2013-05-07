@@ -117,4 +117,13 @@
         sortkey="1"
         profile="bika.lims:default"/>
 
+ <genericsetup:upgradeStep
+        title="Modify 'Retract' permission"
+        description=""
+        source="1107"
+        destination="1108"
+        handler="bika.lims.upgrade.to1108.upgrade"
+        sortkey="1"
+        profile="bika.lims:default"/>
+
 </configure>
