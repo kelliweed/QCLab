@@ -621,7 +621,7 @@ class LoadSetupData(BrowserView):
                      'src_field': 'Department',
                      'dest_catalog': 'bika_setup_catalog',
                      'dest_query': {'portal_type': 'Department',
-                                    'title': row['Department_title']}})
+                                    'title': _c(row['Department_title']).encode('utf-8')}})
 
             ## Create Plone user
             if(row['Username']):
@@ -787,11 +787,13 @@ class LoadSetupData(BrowserView):
             # CC Contacts
             if row['CCContacts']:
                 for _fullname in row['CCContacts'].split(","):
-                    self.deferred.append({'src_obj': contact,
-                                          'src_field': 'CCContact',
-                                          'dest_catalog': 'portal_catalog',
-                                          'dest_query': {'portal_type': 'Contact',
-                                                         'getFullname': _fullname}})
+                    self.deferred.append({
+                        'src_obj': contact,
+                        'src_field': 'CCContact',
+                        'dest_catalog': 'portal_catalog',
+                        'dest_query': {
+                            'portal_type': 'Contact',
+                            'getFullname': unicode(_fullname).encode('utf-8')}})
 
             ## Create Plone user
             if(row['Username']):
@@ -831,8 +833,7 @@ class LoadSetupData(BrowserView):
                      Brand=_c(row['Brand']),
                      Model=_c(str(row['Model'])),
                      SerialNo=_c(str(row['SerialNo'])),
-                     CalibrationCertificate=_c(
-                         row['CalibrationCertificate']),
+                     CalibrationCertificate=_c(str(row['CalibrationCertificate'])),
                      CalibrationExpiryDate=row['CalibrationExpiryDate'],
                      DataInterface=row['DataInterface'])
             self.instruments[row.get('title', '')] = obj
