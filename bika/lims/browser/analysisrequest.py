@@ -1871,17 +1871,18 @@ class ajaxAnalysisRequestSubmit():
 
             # receive secondary AR
             if 'SampleID' in values:
+                doActionFor(ar, 'sampled')
+                doActionFor(ar, 'sample_due')
+                not_receive = ['to_be_sampled', 'sample_due', 'sampled',
+                               'to_be_preserved']
                 sample_state = wftool.getInfoFor(sample, 'review_state')
-                if sample_state in ('sample_registered', 'to_be_sampled',
-                                    'to_be_preserved', 'preserved',
-                                    'sample_due'):
-                    changeWorkflowState(ar, "bika_ar_workflow",
-                        "sample_due")
-                else:
-                    changeWorkflowState(ar, "bika_ar_workflow",
-                        "sample_received")
+                if sample_state not in not_receive:
+                    doActionFor(ar, 'receive')
                 for analysis in ar.getAnalyses(full_objects=1):
-                    changeWorkflowState(ar, "bika_ar_workflow", sample_state)
+                    doActionFor(analysis, 'sampled')
+                    doActionFor(analysis, 'sample_due')
+                    if sample_state not in not_receive:
+                        doActionFor(analysis, 'receive')
 
             # Transition pre-preserved partitions.
             for p in parts:
