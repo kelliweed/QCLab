@@ -4,7 +4,7 @@
 
 /* General Bika Report Table */
 @page {
-    size: A4;
+    size: A4 landscape;
     margin: 1cm;
     @frame header {
         -pdf-frame-content: headerContent;
