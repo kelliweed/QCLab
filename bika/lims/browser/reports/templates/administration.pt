@@ -113,6 +113,10 @@
 		</li>
  	</ul>
  	
+ <!--
+    Please hide User History report 
+    https://github.com/bikalabs/Bika-LIMS/issues/823      
+    
  	<h2 i18n:translate="">Traceability</h2>    
     <ul id="toc-reports">      
 		<li>
@@ -140,6 +144,7 @@
 			</div>
 		</li>
  	</ul>
+ -->
 </fieldset> 
 </div>
 </metal:content-core>
