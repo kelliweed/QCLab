@@ -1056,6 +1056,12 @@ class LoadSetupData(BrowserView):
                    'hours': int(row['MaxTimeAllowed_hours'] and row['MaxTimeAllowed_hours'] or 0),
                    'minutes': int(row['MaxTimeAllowed_minutes'] and row['MaxTimeAllowed_minutes'] or 0),
                    }
+            container = self.containers.get(row['Container_title'], None) \
+                if 'Container_title' in row \
+                else None
+            preservation = self.preservations.get(row['Preservation_title'], None) \
+                if 'Preservation_title' in row \
+                else None
             obj.edit(
                 title=_c(row.get('title', '')),
                 description=row['description'] and _c(
@@ -1084,7 +1090,10 @@ class LoadSetupData(BrowserView):
                 DuplicateVariation="%02f" % float(row['DuplicateVariation']),
                 Accredited=row['Accredited'] and True or False,
                 InterimFields=hasattr(
-                    self, 'service_interims') and self.service_interims.get(row['title'], []) or []
+                    self, 'service_interims') and self.service_interims.get(row['title'], []) or [],
+                Separate=bool(row.get('Separate', '')),
+                Container=container,
+                Preservation=preservation
             )
             service_obj = obj
             self.services[row['title']] = obj
