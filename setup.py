@@ -38,6 +38,7 @@ setup(name='bika.lims',
           'magnitude',
           'gpw',
           'jarn.jsi18n==0.3',
+          'collective.wtf',
       ],
       extras_require = {
           'test': [
