@@ -206,7 +206,7 @@ Table data rows start here
 						tmpstyle python:(cat != 'None' and not cat in selected_cats) and 'display:none;;' or '';
 						tmpstyle python:view.context.bika_setup.getEnableAnalysisRemarks()
 						                and (sm.checkPermission('BIKA: Edit Analysis Remarks', item['obj'])
-						                     or item['obj'].getRemarks()) and tmpstyle + 'border-bottom:0 !important;;' or tmpstyle;"
+						                     or (hasattr(item['obj'], 'getRemarks') and item['obj'].getRemarks() or '') ) and tmpstyle + 'border-bottom:0 !important;;' or tmpstyle;"
 			tal:attributes="
 			     style tmpstyle;
 				cat cat;
