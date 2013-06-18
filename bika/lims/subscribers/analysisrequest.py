@@ -22,7 +22,16 @@ def AfterTransitionEventHandler(instance, event):
 
     workflow = getToolByName(instance, 'portal_workflow')
 
-    if action_id == "attach":
+    if action_id in('sampling_workflow', 'no_sampling_workflow'):
+        # Possibly "open" the AR's batch (retraction of batch state)
+        batch = instance.getBatch()
+        if batch:
+            try:
+                workflow.doActionFor(batch, 'open')
+            except:
+                pass
+
+    elif action_id == "attach":
         instance.reindexObject(idxs = ["review_state", ])
         # Don't cascade. Shouldn't be attaching ARs for now (if ever).
         return

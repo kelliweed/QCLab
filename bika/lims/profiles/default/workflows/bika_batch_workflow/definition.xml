@@ -10,6 +10,7 @@
  <permission>View</permission>
  <permission>Modify portal content</permission>
  <permission>BIKA: Publish</permission>
+ <permission>BIKA: Add Analysis Request</permission>
 
  <state state_id="open" title="Open" i18n:attributes="title">
     <description i18n:translate=""></description>
@@ -29,6 +30,11 @@
         <permission-role>Owner</permission-role>
     </permission-map>
     <permission-map name="BIKA: Publish" acquired="False">
+    </permission-map>
+    <permission-map name="BIKA: Add Analysis Request" acquired="False">
+        <permission-role>Manager</permission-role>
+        <permission-role>LabManager</permission-role>
+        <permission-role>LabClerk</permission-role>
     </permission-map>
  </state>
 
@@ -52,6 +58,11 @@
     </permission-map>
     <permission-map name="BIKA: Publish" acquired="False">
     </permission-map>
+    <permission-map name="BIKA: Add Analysis Request" acquired="False">
+        <permission-role>Manager</permission-role>
+        <permission-role>LabManager</permission-role>
+        <permission-role>LabClerk</permission-role>
+    </permission-map>
  </state>
 
  <state state_id="to_be_verified" title="To be verified" i18n:attributes="title">
@@ -72,6 +83,11 @@
         <permission-role>LabClerk</permission-role>
     </permission-map>
     <permission-map name="BIKA: Publish" acquired="False">
+    </permission-map>
+    <permission-map name="BIKA: Add Analysis Request" acquired="False">
+        <permission-role>Manager</permission-role>
+        <permission-role>LabManager</permission-role>
+        <permission-role>LabClerk</permission-role>
     </permission-map>
  </state>
 
@@ -95,6 +111,8 @@
         <permission-role>LabManager</permission-role>
         <permission-role>Publisher</permission-role>
     </permission-map>
+    <permission-map name="BIKA: Add Analysis Request" acquired="False">
+    </permission-map>
  </state>
 
  <state state_id="closed" title="Closed" i18n:attributes="title">
@@ -115,6 +133,8 @@
         <permission-role>Manager</permission-role>
         <permission-role>LabManager</permission-role>
         <permission-role>Publisher</permission-role>
+    </permission-map>
+    <permission-map name="BIKA: Add Analysis Request" acquired="False">
     </permission-map>
    </state>
 

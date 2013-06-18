@@ -7,7 +7,8 @@
 <body
 	tal:define="
 		form_id view/form_id;
-		table_only python:hasattr(view, 'table_only') and view.table_only or view.request.get('table_only','') == form_id;"
+		table_only python:hasattr(view, 'table_only') and view.table_only or view.request.get('table_only','') == form_id;
+		checkPermission nocall: context/portal_membership/checkPermission;"
 	tal:omit-tag="python:table_only">
 
 <metal:content-title fill-slot="content-title"
@@ -28,6 +29,7 @@
 			</a>
 		</tal:add_actions>
 		<select name="col_count"
+			tal:condition="python:checkPermission('BIKA: Add Analysis Request', context)"
 			class='col_count' style="vertical-align:top !important">
 			<option value='1' i18n:translate="">1</option>
 			<option value='2' i18n:translate="">2</option>

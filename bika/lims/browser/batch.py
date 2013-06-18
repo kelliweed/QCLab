@@ -43,7 +43,7 @@ class BatchAnalysisRequestsView(AnalysisRequestsView, AnalysisRequestAddView):
         mtool = getToolByName(self.context, 'portal_membership')
         addPortalMessage = self.context.plone_utils.addPortalMessage
         if isActive(self.context):
-            if mtool.checkPermission(AddAnalysisRequest, self.portal):
+            if mtool.checkPermission(AddAnalysisRequest, self.context):
                 self.context_actions[self.context.translate(_('Add new'))] = {
                     'url':self.context.absolute_url() + '/ar_add?col_count=1',
                     'icon': '++resource++bika.lims.images/add.png'}

@@ -597,8 +597,14 @@ class Batch(BaseContent):
             return True
         else:
             # from t_b_v, we want to make sure at least one AR < t_b_v
+            states = ['sample_registered',
+                      'to_be_sampled',
+                      'sampled',
+                      'to_be_preserved',
+                      'sample_due',
+                      'sample_received']
             for o in self.getAnalysisRequests():
-                if wf.getInfoFor(o, 'review_state') == 'sample_received':
+                if wf.getInfoFor(o, 'review_state') in states:
                     return True
 
     def workflow_script_receive(self, state_info):
