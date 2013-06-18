@@ -361,7 +361,8 @@ class Batch(BaseContent):
         bc = getToolByName(self, 'bika_catalog')
         uid = self.UID()
         return [b.getObject() for b in bc(portal_type='AnalysisRequest',
-                                          getBatchUID=uid)]
+                                          getBatchUID=uid,
+                                          cancellation_state='active')]
 
     def getCaseStatuses(self):
         """ return all Case Statuses from site setup """
