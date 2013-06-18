@@ -312,9 +312,7 @@ class BatchPublishView(BrowserView):
         self.accredited = self.laboratory.getLaboratoryAccredited()
         lab_address = self.laboratory.getPrintAddress()
         if lab_address:
-            _keys = ['address', 'city', 'state', 'zip', 'country']
-            _list = [lab_address.get(v) for v in _keys if lab_address.get(v)]
-            self.lab_address = "<br/>".join(_list).replace("\n", "<br/>")
+            self.lab_address = "<br/>".join(lab_address).replace("\n", "<br/>")
             if self.lab_address.endswith("<br/>"):
                 self.lab_address = self.lab_address[:-5]
         else:

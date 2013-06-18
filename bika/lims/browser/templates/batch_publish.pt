@@ -110,7 +110,7 @@
           </tal:x>
         </tr>
         <tr tal:condition="python:view.context.bika_setup.getEnableAnalysisRemarks()">
-          <td tal:content="analysis['Remarks']"/>
+          <td tal:content="python:analysis['Remarks']"/>
         </tr>
       </tal:analyses>
     </tbody>
