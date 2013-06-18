@@ -737,6 +737,6 @@ class bika_browserdata(BrowserView):
                 'uid':p.UID(),
             }
 
-        data['prefixes'] = dict([(p['portal_type'], p['prefix']) for p in self.context.bika_setup.getPrefixes()])
+        data['prefixes'] = dict([(p.get('portal_type', ''), p.get('prefix', '')) for p in self.context.bika_setup.getPrefixes()])
 
         return json.dumps(data)

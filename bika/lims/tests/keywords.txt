@@ -1,0 +1,41 @@
+*** Settings ***
+
+Documentation    Generally useful keywords for Bika tests.
+...              To include this file, use this:
+...              *** settings ***
+...              Resource  keywords.txt
+
+*** Keywords ***
+
+Log in
+    [Arguments]  ${userid}  ${password}
+
+    Go to                       http://localhost:55001/plone/login_form
+    Page should contain element  __ac_name
+    Page should contain element  __ac_password
+    Page should contain button   Log in
+    Input text                   __ac_name      ${userid}
+    Input text                   __ac_password  ${password}
+    Click Button  Log in
+
+
+Log out
+    Go to                          http://localhost:55001/plone/logout
+    Wait until page contains       You are now logged out
+
+
+Select from dropdown
+    [Arguments]        ${locator}
+    ...                ${search_text}=
+    ...                ${item_number}=1
+    Input text         ${locator}  ${search_text}
+    sleep              1
+    Click Element      xpath=//div[contains(@class,'cg-DivItem')][${item_number}]
+
+
+Select from datepicker
+    [Documentation]    this doesn't do any tricks yet, just clicks the link.
+    [Arguments]        ${locator}
+    ...                ${number}
+    Click Element      ${locator}
+    Click link         ${number}

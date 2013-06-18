@@ -75,7 +75,7 @@ def generateUniqueId(context):
 
     # Sample Partition IDs
     if context.portal_type == "SamplePartition":
-        matches = [p for p in prefixes if p['portal_type'] == 'SamplePartition']
+        matches = [p for p in prefixes if p.get('portal_type', '') == 'SamplePartition']
         prefix = matches and matches[0]['prefix'] or 'samplepartition'
         padding = int(matches and matches[0]['padding'] or '0')
         # at this time the part exists, so +1 would be 1 too many
