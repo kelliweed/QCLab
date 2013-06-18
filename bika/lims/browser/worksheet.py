@@ -334,7 +334,8 @@ class WorksheetAnalysesView(AnalysesView):
                 isanalysis = subitem['obj'].portal_type == 'Analysis'
                 hasremarks = True if subitem.get('Remarks', '') else False
                 remarksedit = remarksenabled and sm.checkPermission('BIKA: Edit Analysis Remarks', subitem['obj'])
-                if isanalysis and (hasremarks or remarksedit):
+                addanalysis = self.context.absolute_url().find('add_analyses') != -1
+                if not addanalysis and isanalysis and (hasremarks or remarksedit):
                     rowspan += 1
             items[x]['rowspan'] = {'Pos': rowspan}
 
