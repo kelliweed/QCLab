@@ -586,9 +586,9 @@ class Batch(BaseContent):
         """
         wf = getToolByName(self, 'portal_workflow')
         state = wf.getInfoFor(self, 'review_state')
-        # receive originates from either 'sample_due' or 'to_be_verified'.
-        if state == 'sample_due':
-            # from sample_due, we want to make sure all ARs are > sample_due:
+        # receive originates from different states
+        if state == 'open':
+            # we want to make sure all ARs are > sample_due:
             states = ['sample_registered',
                       'to_be_sampled',
                       'sampled',
@@ -598,8 +598,8 @@ class Batch(BaseContent):
                 if wf.getInfoFor(o, 'review_state') in states:
                     return False
             return True
-        else:
-            # from t_b_v, we want to make sure at least one AR < t_b_v
+        elif state == 'to_be_verified':
+            # we want to make sure at least one AR < t_b_v
             states = ['sample_registered',
                       'to_be_sampled',
                       'sampled',
