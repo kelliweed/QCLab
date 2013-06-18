@@ -84,7 +84,6 @@ def AfterTransitionEventHandler(instance, event):
 
         # Possibly receive the AR's batch
         batch = instance.getBatch()
-        import pdb; pdb.set_trace()
         if batch:
             try:
                 workflow.doActionFor(batch, action_id)
