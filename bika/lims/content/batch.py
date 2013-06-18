@@ -11,137 +11,154 @@ from bika.lims.browser.widgets import CaseAetiologicAgentsWidget
 from bika.lims.browser.widgets import CaseProvisionalDiagnosisWidget
 from bika.lims.browser.widgets import CaseSymptomsWidget
 from bika.lims.browser.widgets import DateTimeWidget
-from bika.lims.browser.widgets import PatientIdentifiersWidget
 from bika.lims.browser.widgets import SplittedDateWidget
 from bika.lims.config import PROJECTNAME, GENDERS
 from bika.lims.content.bikaschema import BikaSchema
 from bika.lims.interfaces import IBatch
 from bika.lims.utils import isActive
-from calendar import monthrange
-from datetime import datetime, timedelta
-from bika.lims.workflow import doActionFor
 from bika.lims.workflow import skip
 from zope.interface import implements
 import json
-import plone
 
 schema = BikaSchema.copy() + Schema((
-    StringField('BatchID',
+    StringField(
+        'BatchID',
         searchable=True,
         required=0,
         validators=('uniquefieldvalidator',),
         widget=StringWidget(
-            visible = False,
+            visible=False,
             label=_("Batch ID"),
         )
     ),
-    StringField('ClientBatchID',
+    StringField(
+        'ClientBatchID',
         searchable=True,
         required=0,
         widget=StringWidget(
             label=_("Client Batch ID")
         )
     ),
-    StringField('ClientID',
+    StringField(
+        'ClientID',
         required=1,
         widget=StringWidget(
             label=_("Client"),
         )
     ),
-    StringField('ClientUID',
+    StringField(
+        'ClientUID',
         widget=StringWidget(
             visible=False,
         ),
     ),
-    StringField('DoctorID',
+    StringField(
+        'DoctorID',
         required=0,
         widget=StringWidget(
             label=_("Doctor"),
         )
     ),
-    StringField('DoctorUID',
+    StringField(
+        'DoctorUID',
         widget=StringWidget(
             visible=False,
         ),
     ),
-    StringField('PatientID',
-        required = 0,
+    StringField(
+        'PatientID',
+        required=0,
         widget=StringWidget(
             label=_('Patient'),
         ),
     ),
-    StringField('PatientUID',
+    StringField(
+        'PatientUID',
         widget=StringWidget(
             visible=False,
         ),
     ),
-    DateTimeField('OnsetDate',
-          widget=DateTimeWidget(
-              label=_('Onset Date'),
-          ),
+    DateTimeField(
+        'OnsetDate',
+        widget=DateTimeWidget(
+            label=_('Onset Date'),
+        ),
     ),
-    StringField('PatientBirthDate',
-          widget=StringWidget(
-              visible={'view': 'hidden', 'edit': 'hidden' },
-          ),
+    StringField(
+        'PatientBirthDate',
+        widget=StringWidget(
+            visible={'view': 'hidden', 'edit': 'hidden'},
+        ),
     ),
-    RecordsField('PatientAgeAtCaseOnsetDate',
+    RecordsField(
+        'PatientAgeAtCaseOnsetDate',
         widget=SplittedDateWidget(
             label=_('Patient Age at Case Onset Date'),
         ),
     ),
-    BooleanField('OnsetDateEstimated',
+    BooleanField(
+        'OnsetDateEstimated',
         default=False,
         widget=BooleanWidget(
-            label = _("Onset Date Estimated"),
+            label=_("Onset Date Estimated"),
         ),
     ),
-    RecordsField('ProvisionalDiagnosis',
+    RecordsField(
+        'ProvisionalDiagnosis',
         type='provisionaldiagnosis',
         subfields=('Code', 'Title', 'Description', 'Onset', 'Remarks'),
-        subfield_sizes={'Code': 7, 'Title': 15, 'Description': 25, 'Onset': 10, 'Remarks': 25},
+        subfield_sizes={'Code': 7, 'Title': 15,
+                        'Description': 25, 'Onset': 10, 'Remarks': 25},
         widget=CaseProvisionalDiagnosisWidget(
             label='Provisional diagnosis',
         ),
     ),
-    RecordsField('Symptoms',
+    RecordsField(
+        'Symptoms',
         type='symptoms',
         subfields=('Code', 'Title', 'Description', 'Onset', 'Remarks'),
-        subfield_sizes={'Code': 7, 'Title': 15, 'Description': 25, 'Onset': 10, 'Remarks': 25},
+        subfield_sizes={'Code': 7, 'Title': 15,
+                        'Description': 25, 'Onset': 10, 'Remarks': 25},
         widget=CaseSymptomsWidget(
             label=_('Signs and Symptoms'),
         ),
     ),
-    LinesField('BatchLabels',
-        vocabulary = "BatchLabelVocabulary",
+    LinesField(
+        'BatchLabels',
+        vocabulary="BatchLabelVocabulary",
         widget=MultiSelectionWidget(
             label=_("Additional Signs and Symptoms"),
             format="checkbox",
         )
     ),
-    StringField('CaseStatus',
+    StringField(
+        'CaseStatus',
         vocabulary='getCaseStatuses',
         widget=MultiSelectionWidget(
             format='checkbox',
             label=_("Case status")
         ),
     ),
-    StringField('CaseOutcome',
+    StringField(
+        'CaseOutcome',
         vocabulary='getCaseOutcomes',
         widget=MultiSelectionWidget(
             format='checkbox',
             label=_("Case outcome")
         ),
     ),
-    RecordsField('AetiologicAgents',
+    RecordsField(
+        'AetiologicAgents',
         type='aetiologicagents',
         subfields=('Code', 'Title', 'Description', 'Onset', 'Remarks'),
-        subfield_sizes={'Title': 15, 'Description': 25, 'Subtype': 10, 'Remarks': 25},
+        subfield_sizes={
+            'Title': 15, 'Description': 25, 'Subtype': 10, 'Remarks': 25},
         widget=CaseAetiologicAgentsWidget(
             label=_('Aetiologic Agents'),
         ),
     ),
-    TextField('AdditionalNotes',
+    TextField(
+        'AdditionalNotes',
         default_content_type='text/x-web-intelligent',
         allowable_content_types=('text/x-web-intelligent',),
         default_output_type="text/html",
@@ -149,7 +166,8 @@ schema = BikaSchema.copy() + Schema((
             label=_('Additional Notes'),
         ),
     ),
-    TextField('Remarks',
+    TextField(
+        'Remarks',
         searchable=True,
         default_content_type='text/x-web-intelligent',
         allowable_content_types=('text/x-web-intelligent',),
@@ -167,6 +185,7 @@ schema['title'].required = False
 schema['title'].widget.visible = False
 schema.moveField('BatchLabels', after='Symptoms')
 schema.moveField('PatientID', after='BatchID')
+
 
 class Batch(BaseContent):
     implements(IBatch)
@@ -196,12 +215,12 @@ class Batch(BaseContent):
         return safe_unicode(res).encode('utf-8')
 
     security.declarePublic('getBatchID')
+
     def getBatchID(self):
         return self.getId()
 
     def getContacts(self, dl=True):
         pc = getToolByName(self, 'portal_catalog')
-        bc = getToolByName(self, 'bika_catalog')
         bsc = getToolByName(self, 'bika_setup_catalog')
         bpc = getToolByName(self, 'bika_patient_catalog')
         pairs = []
@@ -229,12 +248,12 @@ class Batch(BaseContent):
                             if not dl:
                                 objects.append(contact)
         if pairs:
-            pairs.sort(lambda x, y:cmp(x[1].lower(), y[1].lower()))
+            pairs.sort(lambda x, y: cmp(x[1].lower(), y[1].lower()))
             return dl and DisplayList(pairs) or objects
         # fallback to LabContacts
-        for contact in bsc(portal_type = 'LabContact',
-                           inactive_state = 'active',
-                           sort_on = 'sortable_title'):
+        for contact in bsc(portal_type='LabContact',
+                           inactive_state='active',
+                           sort_on='sortable_title'):
             pairs.append((contact.UID, contact.Title))
             if not dl:
                 objects.append(contact.getObject())
@@ -249,11 +268,11 @@ class Batch(BaseContent):
                 for cc in contact.getCCContact():
                     if isActive(cc):
                         ccs.append({'title': cc.Title(),
-                                    'uid': cc.UID(),})
+                                    'uid': cc.UID(), })
             item['ccs_json'] = json.dumps(ccs)
             item['ccs'] = ccs
             items.append(item)
-        items.sort(lambda x, y:cmp(x['title'].lower(), y['title'].lower()))
+        items.sort(lambda x, y: cmp(x['title'].lower(), y['title'].lower()))
         return items
 
     def getOnsetDate(self):
@@ -289,27 +308,30 @@ class Batch(BaseContent):
 
     # This is copied from Client (Contact acquires it, but we do not)
     security.declarePublic('getContactsDisplayList')
+
     def getContactsDisplayList(self):
         pc = getToolByName(self, 'portal_catalog')
         pairs = []
-        for contact in pc(portal_type = 'Doctor', inactive_state = 'active'):
+        for contact in pc(portal_type='Doctor', inactive_state='active'):
             pairs.append((contact.UID, contact.Title))
         patient = self.getPatient()
         pr = patient and patient.getPrimaryReferrer() or None
         if pr:
-            for contact in pc(portal_type = 'Contact', inactive_state = 'active', getClientUID = pr):
+            for contact in pc(portal_type='Contact',
+                              inactive_state='active',
+                              getClientUID=pr):
                 pairs.append((contact.UID, contact.Title))
-        for contact in pc(portal_type = 'LabContact', inactive_state = 'active'):
+        for contact in pc(portal_type='LabContact', inactive_state='active'):
             pairs.append((contact.UID, contact.Title))
         # sort the list by the second item
-        pairs.sort(lambda x, y:cmp(x[1].lower(), y[1].lower()))
+        pairs.sort(lambda x, y: cmp(x[1].lower(), y[1].lower()))
         return DisplayList(pairs)
 
     # This is copied from Contact (In contact, it refers to the parent's
     # getContactsDisplayList, while we define our own (our client's)
     security.declarePublic('getCCContactsDisplayList')
+
     def getCCContactsDisplayList(self):
-        contacts = []
         pc = getToolByName(self, 'portal_catalog')
         client = pc(portal_type='Client', UID=self.getClientUID())
         if client:
@@ -329,16 +351,17 @@ class Batch(BaseContent):
         """ return all batch labels """
         bsc = getToolByName(self, 'bika_setup_catalog')
         ret = []
-        for p in bsc(portal_type = 'BatchLabel',
-                      inactive_state = 'active',
-                      sort_on = 'sortable_title'):
+        for p in bsc(portal_type='BatchLabel',
+                     inactive_state='active',
+                     sort_on='sortable_title'):
             ret.append((p.UID, p.Title))
         return DisplayList(ret)
 
     def getAnalysisRequests(self):
         bc = getToolByName(self, 'bika_catalog')
         uid = self.UID()
-        return [b.getObject() for b in bc(portal_type='AnalysisRequest', getBatchUID=uid)]
+        return [b.getObject() for b in bc(portal_type='AnalysisRequest',
+                                          getBatchUID=uid)]
 
     def getCaseStatuses(self):
         """ return all Case Statuses from site setup """
@@ -367,7 +390,8 @@ class Batch(BaseContent):
             value = value[0]
         if value:
             if type(value) == str:
-                value = pc(portal_type='Client', getClientID=value)[0].getObject()
+                value = pc(portal_type='Client', getClientID=value)[
+                    0].getObject()
             return self.setClientUID(value.UID())
 
     def setDoctorID(self, value):
@@ -377,7 +401,8 @@ class Batch(BaseContent):
             value = value[0]
         if value:
             if type(value) == str:
-                value = pc(portal_type='Doctor', getDoctorID=value)[0].getObject()
+                value = pc(portal_type='Doctor', getDoctorID=value)[
+                    0].getObject()
             return self.setDoctorUID(value.UID())
 
     def setPatientID(self, value):
@@ -387,10 +412,11 @@ class Batch(BaseContent):
             value = value[0]
         if value:
             if type(value) == str:
-                value = bpc(portal_type='Patient', getPatientID=value)[0].getObject()
+                value = bpc(portal_type='Patient', getPatientID=value)[
+                    0].getObject()
             return self.setPatientUID(value.UID())
         else:
-            return self.setPatientUID(None);
+            return self.setPatientUID(None)
 
     def setChronicConditions(self, value):
         bpc = getToolByName(self, 'bika_patient_catalog')
@@ -482,42 +508,42 @@ class Batch(BaseContent):
             birthday = dob.day
             birthmonth = dob.month
             birthyear = dob.year
-            ageday = currentday-birthday
+            ageday = currentday - birthday
             agemonth = 0
             ageyear = 0
-            months31days = [1,3,5,7,8,10,12]
+            months31days = [1, 3, 5, 7, 8, 10, 12]
 
             if (ageday < 0):
-                currentmonth-=1
+                currentmonth -= 1
                 if (currentmonth < 1):
-                    currentyear-=1
-                    currentmonth = currentmonth + 12;
+                    currentyear -= 1
+                    currentmonth = currentmonth + 12
 
-                dayspermonth = 30;
+                dayspermonth = 30
                 if currentmonth in months31days:
-                    dayspermonth = 31;
+                    dayspermonth = 31
                 elif currentmonth == 2:
                     dayspermonth = 28
                     if(currentyear % 4 == 0
-                       and (currentyear % 100 > 0 or currentyear % 400==0)):
+                       and (currentyear % 100 > 0 or currentyear % 400 == 0)):
                         dayspermonth += 1
 
                 ageday = ageday + dayspermonth
 
             agemonth = currentmonth - birthmonth
             if (agemonth < 0):
-                currentyear-=1
+                currentyear -= 1
                 agemonth = agemonth + 12
 
             ageyear = currentyear - birthyear
 
-            return {'year':ageyear,
-                    'month':agemonth,
-                    'day':ageday}
+            return {'year': ageyear,
+                    'month': agemonth,
+                    'day': ageday}
         else:
-            return {'year':'',
-                    'month':'',
-                    'day':''}
+            return {'year': '',
+                    'month': '',
+                    'day': ''}
 
     def getPatientCountryState(self):
         bpc = getToolByName(self, 'bika_patient_catalog')
@@ -556,11 +582,24 @@ class Batch(BaseContent):
         """Permitted when all Samples are > sample_received
         """
         wf = getToolByName(self, 'portal_workflow')
-        states = ['sample_registered', 'to_be_sampled', 'sampled', 'to_be_preserved', 'sample_due']
-        for o in self.getAnalysisRequests():
-            if wf.getInfoFor(o, 'review_state') in states:
-                return False
-        return True
+        state = wf.getInfoFor(self, 'review_state')
+        # receive originates from either 'sample_due' or 'to_be_verified'.
+        if state == 'sample_due':
+            # from sample_due, we want to make sure all ARs are > sample_due:
+            states = ['sample_registered',
+                      'to_be_sampled',
+                      'sampled',
+                      'to_be_preserved',
+                      'sample_due']
+            for o in self.getAnalysisRequests():
+                if wf.getInfoFor(o, 'review_state') in states:
+                    return False
+            return True
+        else:
+            # from t_b_v, we want to make sure at least one AR < t_b_v
+            for o in self.getAnalysisRequests():
+                if wf.getInfoFor(o, 'review_state') == 'sample_received':
+                    return True
 
     def workflow_script_receive(self, state_info):
         skip(self, 'receive')
@@ -569,7 +608,11 @@ class Batch(BaseContent):
         """Permitted when at least one sample is < sample_received
         """
         wf = getToolByName(self, 'portal_workflow')
-        states = ['sample_registered', 'to_be_sampled', 'sampled', 'to_be_preserved', 'sample_due']
+        states = ['sample_registered',
+                  'to_be_sampled',
+                  'sampled',
+                  'to_be_preserved',
+                  'sample_due']
         for o in self.getAnalysisRequests():
             if wf.getInfoFor(o, 'review_state') in states:
                 return True
@@ -579,40 +622,64 @@ class Batch(BaseContent):
         skip(self, 'open')
         # reset everything and return to open state
         self.setDateReceived(None)
-        self.reindexObject(idxs = ["getDateReceived", ])
+        self.reindexObject(idxs=["getDateReceived", ])
 
     def workflow_guard_submit(self):
-        """Permitted when all samples >= to_be_verified
+        """Permitted when all ars >= to_be_verified
         """
         wf = getToolByName(self, 'portal_workflow')
-        states = ['sample_registered', 'to_be_sampled', 'sampled', 'to_be_preserved', 'sample_due', 'sample_received']
+        states = ['sample_registered',
+                  'to_be_sampled',
+                  'sampled',
+                  'to_be_preserved',
+                  'sample_due',
+                  'sample_received']
         for o in self.getAnalysisRequests():
             if wf.getInfoFor(o, 'review_state') in states:
                 return False
         return True
 
-    # def workflow_script_submit(self, state_info):
-    #     skip(self, 'open')
+    def workflow_script_submit(self, state_info):
+        skip(self, 'open')
 
     def workflow_guard_verify(self):
-        """Permitted when all samples >= verified
+        """Permitted when all ars >= verified
         """
         wf = getToolByName(self, 'portal_workflow')
-        states = ['sample_registered', 'to_be_sampled', 'sampled', 'to_be_preserved', 'sample_due', 'sample_received',
+        states = ['sample_registered',
+                  'to_be_sampled',
+                  'sampled',
+                  'to_be_preserved',
+                  'sample_due',
+                  'sample_received',
                   'to_be_verified']
         for o in self.getAnalysisRequests():
             if wf.getInfoFor(o, 'review_state') in states:
                 return False
         return True
 
-    # def workflow_script_verify(self, state_info):
-    #     skip(self, 'open')
+    def workflow_script_verify(self, state_info):
+        skip(self, 'open')
 
-    # def workflow_guard_close(self):
-    #     return True
+    def workflow_guard_close(self):
+        """Permitted when all ars >= verified
+        """
+        wf = getToolByName(self, 'portal_workflow')
+        states = ['sample_registered',
+                  'to_be_sampled',
+                  'sampled',
+                  'to_be_preserved',
+                  'sample_due',
+                  'sample_received',
+                  'to_be_verified',
+                  'verified']
+        for o in self.getAnalysisRequests():
+            if wf.getInfoFor(o, 'review_state') in states:
+                return False
+        return True
 
-    # def workflow_script_close(self, state_info):
-    #     skip(self, 'open')
+    def workflow_script_close(self, state_info):
+        skip(self, 'open')
 
     def workflow_guard_publish(self):
         return True
@@ -627,7 +694,6 @@ class Batch(BaseContent):
     # bika_publication_workflow republish action currently goes to "/publish"
     # def workflow_script_republish(self, state_info):
     #     self.workflow_script_publish(state_info)
-
 
 
 registerType(Batch, PROJECTNAME)

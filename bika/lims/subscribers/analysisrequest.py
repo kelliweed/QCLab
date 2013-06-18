@@ -84,6 +84,7 @@ def AfterTransitionEventHandler(instance, event):
 
         # Possibly receive the AR's batch
         batch = instance.getBatch()
+        import pdb; pdb.set_trace()
         if batch:
             try:
                 workflow.doActionFor(batch, action_id)
@@ -109,6 +110,13 @@ def AfterTransitionEventHandler(instance, event):
             analyses = instance.getAnalyses(review_state = ('attachment_due', 'to_be_verified',))
             for analysis in analyses:
                 doActionFor(analysis.getObject(), 'retract')
+        # Pull the Batch state back to Received
+        batch = instance.getBatch()
+        if batch:
+            try:
+                workflow.doActionFor(batch, 'receive')
+            except:
+                pass
 
     elif action_id == "verify":
         instance.reindexObject(idxs = ["review_state", ])
