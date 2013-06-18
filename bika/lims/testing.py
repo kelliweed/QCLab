@@ -85,7 +85,7 @@ class BikaTestLayer(PloneSandboxLayer):
                     portal.clients.manage_setLocalRoles(username, ['Owner', ])
 
         self.request.form['setupexisting'] = 1
-        self.request.form['existing'] = "test"
+        self.request.form['existing'] = "epid"
         lsd = LoadSetupData(portal, self.request)
         lsd()
 
@@ -96,4 +96,4 @@ class BikaTestLayer(PloneSandboxLayer):
 BIKA_FIXTURE = BikaTestLayer()
 BIKA_INTEGRATION_TESTING = IntegrationTesting(bases=(BIKA_FIXTURE,), name="BikaIntegrationTesting")
 BIKA_FUNCTIONAL_TESTING = FunctionalTesting(bases=(BIKA_FIXTURE,), name="BikaFunctionalTesting")
-BIKA_ROBOT_TESTING = FunctionalTesting(bases=(BIKA_WINE_FIXTURE, z2.ZSERVER_FIXTURE), name="BikaTestingLayer:Robot")
+BIKA_ROBOT_TESTING = FunctionalTesting(bases=(BIKA_FIXTURE, z2.ZSERVER_FIXTURE), name="BikaTestingLayer:Robot")

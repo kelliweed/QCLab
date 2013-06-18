@@ -779,7 +779,10 @@ class BikaGenerator:
         addColumn(bsc, 'getVolume')
 
         bpc = getToolByName(portal, 'bika_patient_catalog', None)
-        bpc.manage_addProduct['ZCTextIndex'].manage_addLexicon('Lexicon', 'Lexicon', elem)
+        try:
+            bpc.manage_addProduct['ZCTextIndex'].manage_addLexicon('Lexicon', 'Lexicon', elem)
+        except:
+            pass
         at = getToolByName(portal, 'archetype_tool')
         at.setCatalogsByType('Patient', ['bika_patient_catalog', 'portal_catalog'])
 

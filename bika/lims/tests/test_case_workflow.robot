@@ -1,94 +1,46 @@
 *** Settings ***
 
-Library  Selenium2Library  timeout=10  implicit_wait=5
+Library   Selenium2Library  timeout=20  implicit_wait=0
+Resource  plone/app/robotframework/annotate.robot
+Resource  keywords.txt
 
-Suite Setup  Start browser
+Suite Setup     Start browser
 #Suite Teardown  Close All Browsers
 
 *** Test Cases ***
 
-Test AR new changed and removed fields
-    Log in         test_labmanager  test_labmanager
-    ## Add Batch
-    Go to          http://localhost:55001/plone/batches
-    Click Link     Add
-    Input Text     title           First Batch
-    Input Text     description     Nothing to see here...
-    Input Text     WorksOrderID    woid1
-    Input Text     LabelAlcohol    15%
-    Click element  BatchDate
-    Click Link     1
-    Click Button   Save
-    ## Add Requests in Batch
-    Select from list   col_count  2
-    click Link         Add new
-    ### Check that field defaults were filled correctly
-    ${batch_name} =    Get value         ar_0_Batch
-    Should be equal    ${batch_name}     First Batch        Batch should be "First Batch" in this batch's context
-    ${batch_name} =    Get value         ar_1_Batch
-    Should be equal    ${batch_name}     First Batch        Batch should be "First Batch" in this batch's context
-    ### Add a new client
-    Go to              http://localhost:55001/plone/clients
-    Click link         Add
-    Input Text         Name              Second Client
-    Input Text         ClientID          SecondClient
-    Click Button       Save
-    Wait until page contains             Changes saved.
-    Go to              http://localhost:55001/plone/clients
-    Click Link         Second Client
-    Click Link         Contacts
-    Click Link         Add
-    Input Text         Firstname         Andrew
-    Input Text         Surname           Dobbs
-    Click Button       Save
-    ### Add Requests in Client
-    Click Link         Second Client
-    Click Link         Add
-    ### Check that field defaults were filled correctly
-    ${batch_name} =    Get value         ar_0_Batch
-    Should be equal    ${batch_name}     \               Batch should be empty in Client context
-    ${batch_name} =    Get value         ar_1_Batch
-    Should be equal    ${batch_name}     \
-    ${client_name} =   Get value         ar_0_Client
-    Should be equal    ${client_name}    Second Client   Client should be "Second Client" in this client's context
-    ${client_name} =   Get value         ar_1_Client
-    Should be equal    ${client_name}    Second Client
+Test Batch-AR workflow dependencies
+    Log in  test_labmanager  test_labmanager
 
-Test SampleType fields
-    Go to                  http://localhost:55001/plone/bika_setup/bika_sampletypes
-    ### SampleType Translated to Products
-    Click link             Red Wine
-    Click link             Wine
-    ### Set values
-    Input text             WineType                  Red Wine
-    Select first option in dropdown
-    Input text             Vintage                   a_vintage
-    Input text             Varietal                  a_varietal
-    Input text             Region                    north-west
-    Select first option in dropdown
-    Input Text             LabelAlcohol              15%
-    Select checkbox        TransportConditions_1
-    Select checkbox        StorageConditions_1
-    Input text             ShelfLifeType             shelflife_type
-    Input text             ShelfLife                 3
-    Click button           Save
-    Page should contain    Changes saved
-    ### Check values saved correctly
-    Click link             Wine
-    ${value} =             Get Value    WineType
-    Should be equal        ${value}     Red Wine
-    ${value} =             Get Value    Vintage
-    Should be equal        ${value}     a_vintage
-    ${value} =             Get Value    Varietal
-    Should be equal        ${value}     a_varietal
-    ${value} =             Get Value    Region
-    Should Contain         ${value}     North-West
-    ${value} =             Get Value    LabelAlcohol
-    Should be equal        ${value}     15
-    Checkbox should be selected      TransportConditions_1
-    Checkbox should be selected      StorageConditions_1
-    Checkbox should not be selected  StorageConditions_2
-
+    Add Batch
+    Batch state should be  open
+    Add AR
+    Batch state should be  open
+    Receive AR  FN-0001-R01
+    Batch state should be  sample_received
+    Add AR
+    Batch state should be  open
+    Receive AR  FN-0002-R01
+    Batch state should be  sample_received
+    Submit AR  FN-0001-R01
+    Submit AR  FN-0002-R01
+    Batch state should be  to_be_verified
+    Add AR
+    Batch state should be  open
+    Receive AR  FN-0003-R01
+    Batch state should be  sample_received
+    Submit AR  FN-0003-R01
+    Batch state should be  to_be_verified
+    Retract AR  FN-0001-R01
+    Batch state should be  sample_received
+    Submit AR  FN-0001-R01
+    Batch state should be  to_be_verified
+    Log out
+    Log in  test_labmanager1  test_labmanager1
+    Verify AR  FN-0001-R01
+    Verify AR  FN-0002-R01
+    Verify AR  FN-0003-R01
+    Batch state should be  verified
 
 
 *** Keywords ***
@@ -97,17 +49,66 @@ Start browser
     Open browser         http://localhost:55001/plone/
     Set selenium speed   0
 
-Log in
-    [Arguments]  ${userid}  ${password}
+Add Batch
+    Go to                        http://localhost:55001/plone/batches
+    Wait until page contains     Add
+    Click Link                   Add
+    Wait until page contains     Add Case
+    Select from dropdown         ClientID   Happy    1
+    Click Button                 xpath=//input[@value="Save"]
+    Wait until page contains     saved
 
-    Go to  http://localhost:55001/plone/login_form
-    Page should contain element  __ac_name
-    Page should contain element  __ac_password
-    Page should contain button  Log in
-    Input text  __ac_name  ${userid}
-    Input text  __ac_password  ${password}
-    Click Button  Log in
+Batch state should be
+    [Arguments]   ${state_id}
+    Go to                        http://localhost:55001/plone/batches/C-01
+    Wait until page contains     Test Requests
+    Page should contain element  css=span.state-${state_id}
 
-Select First Option in Dropdown
-    sleep  0.5
-    Click Element  xpath=//div[contains(@class,'cg-DivItem')]
+Add AR
+    Go to                        http://localhost:55001/plone/batches/C-01
+    Wait until page contains     Add new
+    Select from list             col_count  1
+    click Link                   Add new
+    Wait until page contains     Request new analyses
+    Input text                   ar_0_SampleType              Fingernails
+    Select from list             ar_0_AnalysisProfile         Lab: Micro-Bio Counts
+    Select from datepicker       ar_0_SamplingDate            1
+    Click Button                 Save
+    Wait until page contains     created
+
+Receive AR
+    [Arguments]   ${ar_id}
+    Go to                        http://localhost:55001/plone/batches/C-01
+    Wait until page contains     ${ar_id}
+    Select checkbox              xpath=//input[@item_title="${ar_id}"]
+    Click button                 xpath=//input[@value="Receive sample"]
+    Wait until page contains     saved
+
+Submit AR
+    [Arguments]   ${ar_id}
+    Go to                        http://localhost:55001/plone/batches/C-01
+    Wait until page contains     Add new
+    Click link                   ${ar_id}
+    Wait until page contains     Results not requested
+    Select from list             xpath=//tr[@keyword='Clos']//select         Negative
+    Select from list             xpath=//tr[@keyword='Ecoli']//select        Negative
+    Select from list             xpath=//tr[@keyword='Entero']//select       Negative
+    Select from list             xpath=//tr[@keyword='Salmon']//select       Negative
+    Click button                 xpath=//input[@value="Submit for verification"]
+    Wait until page contains     saved
+
+Retract AR
+    [Arguments]   ${ar_id}
+    Go to                        http://localhost:55001/plone/batches/C-01
+    Wait until page contains     ${ar_id}
+    Select checkbox              xpath=//input[@item_title="${ar_id}"]
+    Click button                 xpath=//input[@value="Retract"]
+    Wait until page contains     saved
+
+Verify AR
+    [Arguments]   ${ar_id}
+    Go to                        http://localhost:55001/plone/batches/C-01
+    Wait until page contains     ${ar_id}
+    Select checkbox              xpath=//input[@item_title="${ar_id}"]
+    Click button                 xpath=//input[@value="Verify"]
+    Wait until page contains     saved
