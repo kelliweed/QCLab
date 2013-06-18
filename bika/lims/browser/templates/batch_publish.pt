@@ -16,6 +16,8 @@
     </style>
     <style type="text/css">
 
+     body {font-size:80%;}
+
      td {padding-top:2px;}
 
      .ars_table td {
