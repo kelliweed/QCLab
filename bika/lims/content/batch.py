@@ -357,12 +357,14 @@ class Batch(BaseContent):
             ret.append((p.UID, p.Title))
         return DisplayList(ret)
 
-    def getAnalysisRequests(self):
+    def getAnalysisRequests(self, show_all=False):
         bc = getToolByName(self, 'bika_catalog')
         uid = self.UID()
-        return [b.getObject() for b in bc(portal_type='AnalysisRequest',
-                                          getBatchUID=uid,
-                                          cancellation_state='active')]
+        contentFilter = {'portal_type': 'AnalysisRequest',
+                         'getBatchUID': uid}
+        if not show_all:
+            contentFilter.update({'cancellation_state': 'active'})
+        return [b.getObject() for b in bc(contentFilter)]
 
     def getCaseStatuses(self):
         """ return all Case Statuses from site setup """

@@ -91,11 +91,3 @@ div.cg-DivItem {
 	text-align:left;
 }
 /* </dtml-with> */
-
-/* By default, hide additional patient tabs in batch view */
-.portaltype-batch #contentview-chronicconditions,
-.portaltype-batch #contentview-immunizationhistory,
-.portaltype-batch #contentview-treatmenthistory,
-.portaltype-batch #contentview-travelhistory {
-    display: none;
-}
