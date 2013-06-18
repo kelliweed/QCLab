@@ -558,47 +558,47 @@ Table cells for each column from in review_state's column list.
 		<!-- Row Remarks field (for Analyses) -->
 	</tal:comment>
 	<tal:remarks
-		tal:define="url request/URL|nothing;
-					allow_edit python:sm.checkPermission('BIKA: Edit Analysis Remarks', item['obj']);
-					allow_edit python:True if (allow_edit and url.find('add_analyses') == -1) else False;
-					keyword python:item.has_key('Keyword') and item['Keyword'] or '';
-					remarks python:item.get('Remarks', '');"
-		tal:condition="python:item.get('category', 'None') == cat
-		                      and item['obj'].portal_type == 'Analysis'
-		                      and view.context.bika_setup.getEnableAnalysisRemarks()">
-			<tr tal:condition="python:allow_edit or (remarks and not allow_edit) or context.portal_type == 'Worksheet'"
-				tal:attributes="
-				cat cat;
-				class item/table_row_class;
-				id string:folder-contents-item-${item/uid};
-				uid item/uid;
-				keyword keyword;">
-				<td tal:condition="python:view.bika_listing.show_select_column">&nbsp;</td>
-				<td tal:condition="python:view.bika_listing.show_sort_column">&nbsp;</td>
-				<td tal:attributes="colspan python:len(review_state['columns']);">
-					&nbsp;
-					<input
-						type="text" style="font-size: 90%"
-						autocomplete="off"
-						style="width:95%"
-						tal:condition="python:allow_edit"
-						tal:attributes="
-							class python:'listing_remarks';
-							tabindex tabindex/next;
-							uid string:${item/uid};
-							st_uid string:${item/st_uid|nothing};
-							objectId string:${item/id};
-							name string:Remarks.${item/uid}:records;
-							value python:item.get('Remarks', '');"/>
-					<span
-						style="font-size: 90%"
-						autocomplete="off"
-						tal:condition="python:not allow_edit"
-						tal:content="remarks"/>
-				</td>
-			</tr>
-    </tal:remarks>
+     	tal:define="remarksenabled python:view.context.bika_setup.getEnableAnalysisRemarks();
+     	            isanalysis python:item['obj'].portal_type == 'Analysis';
+     	            hasremarks python:True if item.get('Remarks','') else False;
+     	            remarksedit python: remarksenabled and sm.checkPermission('BIKA: Edit Analysis Remarks', item['obj']);
+     	            showremarks python:isanalysis and (hasremarks or remarksedit);">
 
+		<tr	tal:condition="showremarks"
+			tal:define="keyword python:item.has_key('Keyword') and item['Keyword'] or '';"
+			tal:attributes="cat cat;
+						class item/table_row_class;
+						id string:folder-contents-item-${item/uid};
+						uid item/uid;
+						keyword keyword;">
+
+			<td tal:condition="python:view.bika_listing.show_select_column">&nbsp;</td>
+			<td tal:condition="python:view.bika_listing.show_sort_column">&nbsp;</td>
+
+			<td tal:attributes="colspan python:int(nr_cols)-1;"
+			     style="padding-right:10px;padding-bottom:5px;">
+			    &nbsp;
+				<input
+					style="font-size: 0.9em;color:#3f3f3f;width:100%;display:block;"
+					autocomplete="off"
+					rows="1"
+					tal:condition="python:remarksedit==True"
+					tal:attributes="
+						class python:'listing_remarks';
+						tabindex tabindex/next;
+						uid string:${item/uid};
+						st_uid string:${item/st_uid|nothing};
+						objectId string:${item/id};
+						name string:Remarks.${item/uid}:records;
+						value python:item.get('Remarks', '');"/>
+				<span
+					style="font-size: 0.9em;color:#3f3f3f;"
+					autocomplete="off"
+					tal:condition="python:remarksedit==False"
+					tal:content="python:item.get('Remarks', '')"/>
+			</td>
+		</tr>
+	</tal:remarks>
 	</tal:items>
 </tal:cats>
 </tbody>

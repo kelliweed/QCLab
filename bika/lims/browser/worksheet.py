@@ -322,16 +322,23 @@ class WorksheetAnalysesView(AnalysesView):
             if pos in empties:
                 continue
 
-            obj = items[x]['obj']
             # set Pos column for this row, to have a rowspan
-            # It gets doubled if we have Remarks rows enabled
-            # Analysis remarks only allowed for Analysis types
-            if self.context.bika_setup.getEnableAnalysisRemarks() \
-                and obj.portal_type == 'Analysis':
-                rowspan = len(pos_items) * 2
-            else:
-                rowspan = len(pos_items)
+            # Analysis Remarks only allowed for Analysis types
+            # Needs to look inside all slot analyses, cause some of them can
+            # have remarks entered and can have different analysis statuses
+            rowspan = len(pos_items)
+            remarksenabled = self.context.bika_setup.getEnableAnalysisRemarks()
+            sm = getSecurityManager()
+            for pos_subitem in pos_items:
+                subitem = items[pos_subitem]
+                isanalysis = subitem['obj'].portal_type == 'Analysis'
+                hasremarks = True if subitem.get('Remarks', '') else False
+                remarksedit = remarksenabled and sm.checkPermission('BIKA: Edit Analysis Remarks', subitem['obj'])
+                if isanalysis and (hasremarks or remarksedit):
+                    rowspan += 1
             items[x]['rowspan'] = {'Pos': rowspan}
+
+            obj = items[x]['obj']
 
             # fill the rowspan with a little table
             # parent is either an AR, a Worksheet, or a
