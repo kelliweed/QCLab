@@ -111,7 +111,6 @@ function deleteSampleButton(){
 function showSelectSample(){
 	column = this.id.split("_")[1];
 	client_uid = $("#ar_"+column+"_ClientUID").val();
-	debugger
 	url = window.location.href.split("?")[0].replace("/ar_add", "").replace("/analysisrequests","")
 	window.open(url+'/ar_select_sample?column=' + column + '&client_uid=' + client_uid,
 		'ar_select_sample','toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=600,height=550');
