@@ -4,14 +4,14 @@
     xmlns:i18n="http://xml.zope.org/namespaces/i18n"
     metal:use-macro="here/main_template/macros/master"
     i18n:domain="bika">
-    
+
 <head>
     <metal:block fill-slot="head_slot">
 	    <style media="screen" type="text/css">
 	    	h2 {
 	    		font-size:1.1em;
 	    		margin:15px 0px;
-	    	}  
+	    	}
 	    	#content-core div fieldset {
 	    		border-style:none;
 	    	}
@@ -26,12 +26,12 @@
 	    	#toc-reports li span {
 	    		font-size:0.9em;
 	    		color:#666;
-	    	}  	
+	    	}
 	    	#toc-reports li div {
 	    		margin-top:5px;
 	    		border-radius: 5px 5px 5px 5px;
 	    		margin-bottom: 5px;
-	    		overflow:hidden;    		
+	    		overflow:hidden;
 	    		padding:10px 10px 15px 15px;
 	    		background-color:#efefef;
 	    	}
@@ -75,11 +75,11 @@
 
 <div>
 <fieldset>
-    <h2 i18n:translate="">Sample and Case related reports</h2>    
-    <ul id="toc-reports">  
-    	
+    <h2 i18n:translate="">Sample and Case related reports</h2>
+    <ul id="toc-reports">
+
 		<li>
-    		<a href="#" id="casespercountry_selector" 
+    		<a href="#" id="casespercountry_selector"
     		i18n:translate="">Cases per country</a><br/>
     		<span i18n:translate="">
     			Lists all cases for a date range grouped by countries
@@ -102,10 +102,10 @@
 				        i18n:attributes="value"/>
 				</form>
 			</div>
-		</li> 
-		
+		</li>
+
 		<li>
-    		<a href="#" id="numcasespercountry_selector" 
+    		<a href="#" id="numcasespercountry_selector"
     		i18n:translate="">Number of cases per country</a><br/>
     		<span i18n:translate="">
     			Summary of number of cases per country for a date range
@@ -128,9 +128,9 @@
 				        i18n:attributes="value"/>
 				</form>
 			</div>
-		</li> 
+		</li>
 		<li>
-    		<a href="#" id="casesperanalysis_selector" 
+    		<a href="#" id="casesperanalysis_selector"
     		i18n:translate="">Cases per analysis</a><br/>
     		<span i18n:translate="">
     			Cases for a selected analysis and any given period of time
@@ -156,13 +156,13 @@
 				        i18n:attributes="value"/>
 				</form>
 			</div>
-		</li>		
+		</li>
 	</ul>
-	
-	<h2 i18n:translate="">Analyses related reports</h2>    
+
+	<h2 i18n:translate="">Analyses related reports</h2>
     <ul id="toc-reports">
     	<li>
-    		<a href="#" id="arspercountry_selector" 
+    		<a href="#" id="arspercountry_selector"
     		i18n:translate="">Analysis Requests per country</a><br/>
     		<span i18n:translate="">
     			Lists all Analysis Requests for a date range grouped by countries
@@ -184,17 +184,17 @@
 				        i18n:attributes="value"/>
 				</form>
 			</div>
-		</li> 
+		</li>
 		<li>
-    		<a href="#" id="epiddetailsperanalysis_selector" 
+    		<a href="#" id="epiddetailsperanalysis_selector"
     		i18n:translate="">Epid details per analysis and requests</a><br/>
     		<span i18n:translate="">
-    			For a selected analysis (ej. <i>Influenzae</i>) and date range, report Analysis Requests, 
-    			showing the hospital, provisional diagnosis, etc.
+    			For a selected analysis (ej. <i>Influenzae</i>) and date range, report Analysis Requests,
+    			showing the hospital, Provisional diagnosis, etc.
     		</span>
     		<div id="epiddetailsperanalysis" style="display:none" class="criteria">
 				<form action="createreport" method="post" name="epidemiology_epiddetailsperanalysis">
-				    <input type="hidden" name="report_id" value="epidemiology_epiddetailsperanalysis" />				    
+				    <input type="hidden" name="report_id" value="epidemiology_epiddetailsperanalysis" />
 				    <fieldset>
 		            	<tal:x content="structure python:view.selection_macros.select_analysisservice(
                                                allow_blank=False,
@@ -213,17 +213,17 @@
 				        i18n:attributes="value"/>
 				</form>
 			</div>
-		</li> 
+		</li>
 		<li>
-    		<a href="#" id="epiddetailspercase_selector" 
+    		<a href="#" id="epiddetailspercase_selector"
     		i18n:translate="">Epid details per analysis and cases</a><br/>
     		<span i18n:translate="">
-    			For a selected analysis (ej. <i>Influenzae</i>) and date range, report Cases, 
-    			showing the hospital, provisional diagnosis, etc.
+    			For a selected analysis (ej. <i>Influenzae</i>) and date range, report Cases,
+    			showing the hospital, Provisional diagnosis, etc.
     		</span>
     		<div id="epiddetailspercase" style="display:none" class="criteria">
 				<form action="createreport" method="post" name="epidemiology_epiddetailspercase">
-				    <input type="hidden" name="report_id" value="epidemiology_epiddetailspercase" />				    
+				    <input type="hidden" name="report_id" value="epidemiology_epiddetailspercase" />
 				    <fieldset>
 		            	<tal:x content="structure python:view.selection_macros.select_analysisservice(
                                                allow_blank=False,
@@ -242,12 +242,12 @@
 				        i18n:attributes="value"/>
 				</form>
 			</div>
-		</li> 
+		</li>
 		<li>
-    		<a href="#" id="resultspercountry_selector" 
+    		<a href="#" id="resultspercountry_selector"
     		i18n:translate="">Results summary per country</a><br/>
     		<span i18n:translate="">
-    			Total counts of Cases with different type test results, broken down by country, e.g. 3 Dengue positive cases, 
+    			Total counts of Cases with different type test results, broken down by country, e.g. 3 Dengue positive cases,
     			1 Dengue positive type 2 case, etc.
     		</span>
     		<div id="resultspercountry" style="display:none" class="criteria">
@@ -271,13 +271,13 @@
 				        i18n:attributes="value"/>
 				</form>
 			</div>
-		</li> 
+		</li>
     </ul>
-    
-    <h2 i18n:translate="">Other reports</h2>    
+
+    <h2 i18n:translate="">Other reports</h2>
     <ul id="toc-reports">
     	<li>
-    		<a href="#" id="aagentspercountry_selector" 
+    		<a href="#" id="aagentspercountry_selector"
     		i18n:translate="">Aetiologic agent prevalent species per country</a><br/>
     		<span i18n:translate="">
     			Report the prevalent species from a selected aetiologic agent (ex.<i>Salmonella</i>), and subtypes serotype, AMR, PT, PFGE type etc.

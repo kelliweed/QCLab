@@ -70,7 +70,7 @@
    		- DateReceived: Date when the AR was received
    		- CaseOnSetDate: AR's Batch/Case onset date
    		- AdditionalNotes: AR's Batch/Case additional notes
-   		- ProvisionalDiagnosis: AR's Batch/Case provisional diagnosis
+   		- ProvisionalDiagnosis: AR's Batch/Case Provisional diagnosis
    		- SignsAndSymptoms: AR's Batch/Case signs and symptoms
 
 		From datalines:
@@ -159,7 +159,7 @@
 						<table class="bika-report-table" style="font-size:11px;" summary="Results">
 							<thead>
 								<tr>
-									<th i18n:translate="" style="border-bottom:0px;" colspan="4">Provisional Diagnosis</th>
+									<th i18n:translate="" style="border-bottom:0px;" colspan="4">Provisional diagnosis</th>
 								</tr>
 								<tr>
 									<th i18n:translate="">Code</th>
@@ -176,7 +176,7 @@
 									<td tal:content="python:pd['Description']"></td>
 									<td tal:content="python:pd['Onset']"></td>
 								</tr>
-								</metal:block> <!-- End Period/Country/AR/Provisional Diagnosis Group -->
+								</metal:block> <!-- End Period/Country/AR/Provisional diagnosis Group -->
 							</tbody>
 						</table>
 					</td>

@@ -22,24 +22,24 @@ $(document).ready(function(){
             }
         });
     }
-    
-    function load() {    	
-    	
+
+    function load() {
+
     	$(".template-caseprovisionaldiagnosis #Code").attr('readonly', true);
 		$(".template-caseprovisionaldiagnosis #Code").attr('disabled', true);
 		$(".template-caseprovisionaldiagnosis #Description").attr('readonly', true);
 		$(".template-caseprovisionaldiagnosis #Description").attr('disabled', true);
 		$(".template-caseprovisionaldiagnosis #add_row").attr('disabled', true);
-    	
+
     	$(".template-caseprovisionaldiagnosis #Title").focus(function(event){
         	$(".template-caseprovisionaldiagnosis #Code").val('');
             $(".template-caseprovisionaldiagnosis #Description").val('');
         	$(this).val('');
         });
-    	
+
     	// When symptom value changes it must be validated against ZopeDB
     	// If no exists, the code and description input elements will be setted
-    	// up in editable mode, for further creation of the new Symptom 
+    	// up in editable mode, for further creation of the new Symptom
     	$(".template-caseprovisionaldiagnosis #Title").change(function(event){
     		$.ajax({
                 type: 'POST',
@@ -47,7 +47,7 @@ $(document).ready(function(){
                 data: {'_authenticator': $('input[name="_authenticator"]').val(),
                        'title': $(this).val()},
         		dataType: "json",
-            	success: function(data, textStatus, $XHR){   
+            	success: function(data, textStatus, $XHR){
             		if (data == null || data['rows'].length < 1) {
             			$(".template-caseprovisionaldiagnosis #Code").attr('readonly', false);
             			$(".template-caseprovisionaldiagnosis #Code").attr('disabled', false);
@@ -62,7 +62,7 @@ $(document).ready(function(){
             			$(".template-caseprovisionaldiagnosis #Description").attr('disabled', true);
             			$(".template-caseprovisionaldiagnosis #add_row").removeAttr('disabled');
             			$(".template-caseprovisionaldiagnosis #Onset").focus();
-            		}        		
+            		}
     			},
     			error: function(){
     				//Error while searching
@@ -75,7 +75,7 @@ $(document).ready(function(){
     			}
             });
     	});
-    	    	
+
 	    $(".template-caseprovisionaldiagnosis #add_row").click(function(event){
 	        event.preventDefault();
 	        C = $(".template-caseprovisionaldiagnosis #Code").val();
@@ -85,7 +85,7 @@ $(document).ready(function(){
 	        if (T == ''){
 	            return false;
 	        }
-	        
+
 	        // Check if there's already an entry saved
             codrows = $("input[name='CPD_SCode:list']");
             for(i=0; i<codrows.length; i++){
@@ -101,7 +101,7 @@ $(document).ready(function(){
             		}
             	}
     		}
-            
+
             // Check if there¡s already an entry added
             codrows = $("input[name='CPD_Code:list']");
             for(i=0; i<codrows.length; i++){
@@ -117,10 +117,10 @@ $(document).ready(function(){
             		}
             	}
     		}
-	
+
 	        // Avoids datewidget unload after adding new row without postback
 	        $(".template-caseprovisionaldiagnosis #Onset").attr('class', 'datepicker_nofuture');
-	
+
 	        newrow = $(".template-caseprovisionaldiagnosis tr#new").clone();
 	        $(".template-caseprovisionaldiagnosis tr#new").removeAttr('id');
 	        $(".template-caseprovisionaldiagnosis #Code").parent().append(C);
@@ -144,10 +144,10 @@ $(document).ready(function(){
 	        load();
 	        return false;
 	    });
-	    
+
 	    loadSymptomsCombo();
     }
-    
+
     load();
 
 });

@@ -10,7 +10,7 @@
                 <tr>
             		<th class="minwidth"></th>
                     <th i18n:translate="">Code</th>
-                    <th i18n:translate="" class="fieldRequired">Provisional Diagnosis</th>
+                    <th i18n:translate="" class="fieldRequired">Provisional diagnosis</th>
                     <th i18n:translate="">Description</th>
                     <th i18n:translate="">Onset</th>
                 </tr>

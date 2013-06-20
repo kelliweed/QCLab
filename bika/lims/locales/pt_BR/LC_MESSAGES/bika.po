@@ -1,4 +1,4 @@
-# 
+#
 # Translators:
 # <cesar@brod.com.br>, 2012.
 # <cesar@brod.com.br>, 2012.
@@ -78,12 +78,12 @@ msgstr "${samplepoint} não é um local válido de amostragem"
 msgid "${sampletype} is not a valid sample type"
 msgstr "${sampletype} não é um tipo válido de amostra"
 
-# 
+#
 # File: ../browser/analysisrequest.py, line: 1620
 msgid "${value} is not a valid doctor"
 msgstr ""
 
-# 
+#
 # File: ../browser/analysisrequest.py, line: 1613
 msgid "${value} is not a valid patient ID"
 msgstr ""
@@ -184,7 +184,7 @@ msgstr ""
 msgid "9"
 msgstr ""
 
-# 
+#
 # File: ../browser/reports/templates/epidemiology.pt, line: 214
 msgid "<i>Salmonella</i> prevalent species"
 msgstr ""
@@ -195,22 +195,22 @@ msgstr "<p>${service} exige a seleção dos seguintes serviços:</p><br/><p>${de
 msgid "<p>The following services depend on ${service}, and will be unselected if you continue:</p><br/><p>${deps}</p><br/><p>Do you want to remove these selections now?</p>"
 msgstr "<p>Os seguintes serviços dependem de ${service}, e serão removidos se você continuar:</p><br/><p>${deps}</p><br/><p>Você deseja remover estas seleções agora?</p>"
 
-# 
+#
 # File: ../content/aetiologicagent.py, line: 20
 msgid "A list of aetiologic agent subtypes."
 msgstr ""
 
-# 
+#
 # File: ../content/patient.py, line: 153
 msgid "A list of immunizations administered to the patient."
 msgstr ""
 
-# 
+#
 # File: ../content/patient.py, line: 126
 msgid "A list of patient treatments and drugs administered."
 msgstr ""
 
-# 
+#
 # File: ../content/patient.py, line: 173
 msgid "A list of places visited by the patient."
 msgstr ""
@@ -300,12 +300,12 @@ msgstr ""
 msgid "Active"
 msgstr "Ativo"
 
-# 
+#
 # File: ../content/immunization.py, line: 110
 msgid "Active immunization"
 msgstr ""
 
-# 
+#
 # File: ../content/treatment.py, line: 78
 msgid "Active treatment"
 msgstr ""
@@ -354,13 +354,13 @@ msgstr ""
 msgid "Add new"
 msgstr ""
 
-# 
+#
 # File: ../browser/reports/templates/epidemiology_analysisrequestspercountry.pt, line: 147
 # File: ../content/batch.py, line: 121
 msgid "Additional Notes"
 msgstr ""
 
-# 
+#
 # File: ../controlpanel/bika_symptoms.py, line: 30
 msgid "Additional Symptoms not covered by ICD codes, can be entered here."
 msgstr ""
@@ -377,18 +377,18 @@ msgstr "Adiciona os dois últimos dígitos do ano ao prefixo do ID"
 msgid "Administrative Reports"
 msgstr "Relatórios Administrativos"
 
-# 
+#
 # File: ../content/batch.py, line: 151
 # File: ../controlpanel/bika_aetiologicagents.py, line: 23
 msgid "Aetiologic Agents"
 msgstr ""
 
-# 
+#
 # File: ../browser/widgets/case_aetiologicagents.pt, line: 12
 msgid "Aetiologic agent"
 msgstr ""
 
-# 
+#
 # File: ../content/patient.py, line: 62
 # File: ../content/patients.py, line: 51
 msgid "Age"
@@ -420,7 +420,7 @@ msgstr "Todas as análises do tipo"
 msgid "All reference samples in the system are displayed here."
 msgstr "Todas as amostras de referência do sistema são exibidas aqui."
 
-# 
+#
 # File: ../browser/templates/patient_allergies.pt, line: 20
 msgid "Allergic reaction"
 msgstr ""
@@ -506,7 +506,7 @@ msgstr ""
 msgid "Analyses which have been retested"
 msgstr "Análises que foram retestadas"
 
-# 
+#
 # File: ../browser/reports/templates/epidemiology.pt, line: 211
 msgid "Analyses-specific reports"
 msgstr ""
@@ -555,7 +555,7 @@ msgstr "Perfil de Análise"
 msgid "Analysis Profiles"
 msgstr "Perfis de Análises"
 
-# 
+#
 # File: ../browser/reports/templates/epidemiology_epiddetailsperanalysis.pt, line: 112
 msgid "Analysis Request"
 msgstr ""
@@ -574,7 +574,7 @@ msgstr "Importação de Pedidos de Análise"
 msgid "Analysis Requests"
 msgstr "Pedidos de Análise"
 
-# 
+#
 # File: ../browser/reports/epidemiology_analysisrequestspercountry.py, line: 122
 # File: ../browser/reports/templates/epidemiology.pt, line: 134
 # File: ../browser/reports/templates/epidemiology_analysisrequestspercountry.pt, line: 83
@@ -714,12 +714,12 @@ msgstr "Submetido"
 msgid "Apply template"
 msgstr "Aplicar modelo"
 
-# 
+#
 # File: ../content/drug.py, line: 39
 msgid "Appropriate doses and dosage"
 msgstr ""
 
-# 
+#
 # File: ../config.py, line: 75
 msgid "Asian"
 msgstr ""
@@ -836,7 +836,7 @@ msgstr "Lote"
 msgid "Batch ID"
 msgstr "ID do Lote"
 
-# 
+#
 msgid "Batch Label"
 msgstr "Additional Signs or Symptom not Covered by ICD"
 
@@ -864,7 +864,7 @@ msgstr "Lotes"
 msgid "Bearing"
 msgstr "Direção"
 
-# 
+#
 # File: ../controlpanel/overview.py, line: 10
 msgid "Bika Epidemiology Configuration"
 msgstr ""
@@ -874,27 +874,27 @@ msgstr ""
 msgid "Billing address"
 msgstr "Endereço de cobrança"
 
-# 
+#
 # File: ../content/patient.py, line: 70
 msgid "Birth date"
 msgstr ""
 
-# 
+#
 # File: ../content/patient.py, line: 76
 msgid "Birth date is estimated"
 msgstr ""
 
-# 
+#
 # File: ../content/patient.py, line: 191
 msgid "Birth place"
 msgstr ""
 
-# 
+#
 # File: ../content/patients.py, line: 55
 msgid "BirthDate"
 msgstr ""
 
-# 
+#
 # File: ../config.py, line: 76
 msgid "Black"
 msgstr ""
@@ -995,7 +995,7 @@ msgstr "Cancelado"
 msgid "Cannot activate calculation, because the following service dependencies are inactive: ${inactive_services}"
 msgstr "Impossível ativar o cálculo pois as seguintes dependências de serviços estão inativas: ${inactive_services}"
 
-# 
+#
 # File: ../content/patients.py, line: 89
 msgid "Cannot create patients without any system clients configured."
 msgstr ""
@@ -1015,42 +1015,42 @@ msgstr "Capacidade"
 msgid "Captured"
 msgstr "Capturado"
 
-# 
+#
 # File: ../browser/reports/templates/epidemiology_casespercountry.pt, line: 115
 msgid "Case ID"
 msgstr ""
 
-# 
+#
 # File: ../content/batch.py, line: 135
 msgid "Case Outcome"
 msgstr ""
 
-# 
+#
 # File: ../controlpanel/bika_caseoutcomes.py, line: 23
 msgid "Case Outcomes"
 msgstr ""
 
-# 
+#
 # File: ../content/batch.py, line: 128
 msgid "Case Status"
 msgstr ""
 
-# 
+#
 # File: ../controlpanel/bika_casestatuses.py, line: 23
 msgid "Case Statuses"
 msgstr ""
 
-# 
+#
 # File: ../browser/reports/templates/epidemiology_analysisrequestspercountry.pt, line: 112
 msgid "Case onset date"
 msgstr ""
 
-# 
+#
 # File: ../browser/reports/templates/epidemiology.pt, line: 82
 msgid "Cases per country"
 msgstr ""
 
-# 
+#
 # File: ../browser/reports/epidemiology_casespercountry.py, line: 126
 # File: ../browser/reports/templates/epidemiology_casespercountry.pt, line: 98
 msgid "Cases summary per country"
@@ -1075,17 +1075,17 @@ msgstr "Categoria"
 msgid "Category cannot be deactivated because it contains Analysis Services"
 msgstr "A categoria não pode ser desativada pois contém Serviços de Análises"
 
-# 
+#
 # File: ../content/treatment.py, line: 79
 msgid "Causal treatment"
 msgstr ""
 
-# 
+#
 # File: ../browser/templates/patient_allergies.pt, line: 23
 msgid "Causative agent"
 msgstr ""
 
-# 
+#
 # File: ../skins/bika/validate_integrity.cpy, line: 24
 msgid "Changes saved."
 msgstr ""
@@ -1114,7 +1114,7 @@ msgstr "Selecione esta caixa para garantir que um recipiente separado para a amo
 msgid "Check this if you want to use a separate ID server. Prefixes are configurable separately in each Bika site"
 msgstr "Selecione aqui caso você deseje usar um servidor de ID diferente. Os prefixos são configuráveis separadamente em cada site Bika"
 
-# 
+#
 # File: ../content/patient.py, line: 204
 # File: ../content/patients.py, line: 59
 msgid "Citizenship"
@@ -1124,7 +1124,7 @@ msgstr ""
 msgid "City"
 msgstr "Cidade"
 
-# 
+#
 # File: ../content/patient.py, line: 214
 msgid "Civil status"
 msgstr ""
@@ -1192,7 +1192,7 @@ msgstr "Pedido de Cliente"
 msgid "Client Order ID"
 msgstr "ID do Pedido do Cliente"
 
-# 
+#
 msgid "Client Patient ID"
 msgstr "Referring Institution Patient ID"
 
@@ -1242,7 +1242,7 @@ msgstr "Referência do cliente"
 msgid "Client sample ID"
 msgstr "ID da amostra do Cliente"
 
-# 
+#
 # File: ../browser/reports/templates/epidemiology_casespercountry.pt, line: 116
 msgid "Client's Case ID"
 msgstr ""
@@ -1255,14 +1255,14 @@ msgstr "Clientes"
 msgid "Closed"
 msgstr "Fechado"
 
-# 
+#
 # File: ../browser/reports/templates/epidemiology_analysisrequestspercountry.pt, line: 165
 # File: ../browser/widgets/case_provisionaldiagnosis.pt, line: 12
 # File: ../browser/widgets/case_symptoms.pt, line: 13
 msgid "Code"
 msgstr ""
 
-# 
+#
 # File: ../content/immunization.py, line: 73
 msgid "Collectives at risk"
 msgstr ""
@@ -1289,7 +1289,7 @@ msgstr "Configure as partições de amostra e preservações para este modelo. D
 msgid "Confirm password"
 msgstr "Confirme a senha"
 
-# 
+#
 # File: ../content/treatment.py, line: 80
 msgid "Conservative treatment"
 msgstr ""
@@ -1368,7 +1368,7 @@ msgstr "Conta"
 msgid "Country"
 msgstr "País"
 
-# 
+#
 # File: ../content/patient.py, line: 87
 msgid "Country and state"
 msgstr ""
@@ -1502,7 +1502,7 @@ msgstr "Data de Envio"
 msgid "Date received"
 msgstr ""
 
-# 
+#
 # File: ../browser/reports/templates/epidemiology_analysisrequestspercountry.pt, line: 110
 msgid "Date sampled"
 msgstr ""
@@ -1567,7 +1567,7 @@ msgstr "Defina os prefixos para os IDs sequenciais únicos que o sistema gera pa
 msgid "Degrees"
 msgstr "Graus"
 
-# 
+#
 # File: ../browser/templates/patient_allergies.pt, line: 67
 # File: ../browser/templates/patient_chronicconditions.pt, line: 99
 # File: ../browser/templates/patient_immunizationhistory.pt, line: 95
@@ -1578,19 +1578,19 @@ msgstr ""
 msgid "Delete attachment"
 msgstr "Apagar anexo"
 
-# 
+#
 # File: ../browser/templates/patient_allergies.pt, line: 64
 # File: ../browser/templates/patient_chronicconditions.pt, line: 96
 # File: ../browser/templates/patient_immunizationhistory.pt, line: 92
 msgid "Delete selected"
 msgstr ""
 
-# 
+#
 # File: ../browser/reports/templates/epidemiology.pt, line: 239
 msgid "Dengue cases for any given period of time"
 msgstr ""
 
-# 
+#
 # File: ../browser/reports/templates/epidemiology.pt, line: 237
 msgid "Dengue report"
 msgstr ""
@@ -1629,13 +1629,13 @@ msgstr "Desconto"
 msgid "Discount %"
 msgstr "Desconto %"
 
-# 
+#
 # File: ../browser/templates/patient_chronicconditions.pt, line: 25
 # File: ../controlpanel/bika_diseases.py, line: 37
 msgid "Disease"
 msgstr ""
 
-# 
+#
 # File: ../controlpanel/bika_diseases.py, line: 28
 msgid "Diseases"
 msgstr ""
@@ -1662,25 +1662,25 @@ msgstr "Descarte"
 msgid "District"
 msgstr "Distrito"
 
-# 
+#
 # File: ../browser/analysisrequest.py, line: 458
 # File: ../browser/batchfolder.py, line: 40
 # File: ../browser/sample.py, line: 328
 msgid "Doctor"
 msgstr ""
 
-# 
+#
 # File: ../browser/doctors.py, line: 26
 # File: ../content/doctor.py, line: 21
 msgid "Doctor ID"
 msgstr ""
 
-# 
+#
 # File: ../browser/doctors.py, line: 17
 msgid "Doctors"
 msgstr ""
 
-# 
+#
 # File: ../config.py, line: 84
 msgid "Don't Know"
 msgstr ""
@@ -1691,53 +1691,53 @@ msgstr ""
 msgid "Dormant"
 msgstr "Dormente"
 
-# 
+#
 # File: ../browser/templates/patient_treatmenthistory.pt, line: 21
 # File: ../content/patient.py, line: 121
 # File: ../controlpanel/bika_drugs.py, line: 37
 msgid "Drug"
 msgstr ""
 
-# 
+#
 # File: ../controlpanel/bika_drugprohibitions.py, line: 37
 msgid "Drug Prohibition"
 msgstr ""
 
-# 
+#
 # File: ../content/patient.py, line: 134
 msgid "Drug Prohibition Explanation"
 msgstr ""
 
-# 
+#
 # File: ../controlpanel/bika_drugprohibitions.py, line: 28
 msgid "Drug Prohibition Explanations"
 msgstr ""
 
-# 
+#
 # File: ../content/drug.py, line: 26
 #. Default: "Indications"
 msgid "Drug indications"
 msgstr ""
 
-# 
+#
 # File: ../content/drug.py, line: 37
 #. Default: "Posology"
 msgid "Drug posology"
 msgstr ""
 
-# 
+#
 # File: ../content/drug.py, line: 59
 #. Default: "Preservation"
 msgid "Drug preservation"
 msgstr ""
 
-# 
+#
 # File: ../content/drug.py, line: 48
 #. Default: "Side effects"
 msgid "Drug side effects"
 msgstr ""
 
-# 
+#
 # File: ../controlpanel/bika_drugs.py, line: 28
 msgid "Drugs"
 msgstr ""
@@ -1809,7 +1809,7 @@ msgstr "Duração"
 msgid "E.g. SANAS, APLAC, etc."
 msgstr "Por exemplo, SANAS, APLAC, etc."
 
-# 
+#
 # File: ../browser/templates/patient_immunizationhistory.pt, line: 13
 # File: ../content/patient.py, line: 147
 msgid "EPI Number"
@@ -1843,7 +1843,7 @@ msgstr "Endereço de Email"
 msgid "Email subject line"
 msgstr "Linha de assunto do email"
 
-# 
+#
 # File: ../content/treatment.py, line: 81
 msgid "Empirical treatment"
 msgstr ""
@@ -1852,14 +1852,14 @@ msgstr ""
 msgid "Enable the Sampling workflow"
 msgstr "Habilitar o processo (workflow) de Amostragem"
 
-# 
+#
 # File: ../browser/templates/patient_chronicconditions.pt, line: 38
 # File: ../browser/templates/patient_treatmenthistory.pt, line: 23
 # File: ../content/patient.py, line: 122
 msgid "End"
 msgstr ""
 
-# 
+#
 # File: ../controlpanel/bika_epidemiologicalyears.py, line: 38
 msgid "End Date"
 msgstr ""
@@ -1901,44 +1901,44 @@ msgstr "Entre a longitude do Local de Amostragem em graus 0-90, minutos 0-59, se
 msgid "Entity"
 msgstr ""
 
-# 
+#
 # File: ../browser/reports/epidemiology_epiddetailsperanalysis.py, line: 104
 # File: ../browser/reports/templates/epidemiology.pt, line: 158
 # File: ../browser/reports/templates/epidemiology_epiddetailsperanalysis.pt, line: 92
 msgid "Epid details per analysis"
 msgstr ""
 
-# 
+#
 # File: ../controlpanel/bika_epidemiologicalyears.py, line: 23
 msgid "Epidemiological Years"
 msgstr ""
 
-# 
+#
 # File: ../controlpanel/bika_epidemiologicalyears.py, line: 25
 msgid "Epidemiological year calendars"
 msgstr ""
 
-# 
+#
 # File: ../content/epidemiologicalyear.py, line: 23
 msgid "Epidemiological year end date"
 msgstr ""
 
-# 
+#
 # File: ../content/epidemiologicalyear.py, line: 16
 msgid "Epidemiological year start date"
 msgstr ""
 
-# 
+#
 # File: ../browser/reports/templates/epidemiology.pt, line: 69
 msgid "Epidemiology Reports"
 msgstr ""
 
-# 
+#
 # File: ../content/patient.py, line: 198
 msgid "Ethnicity"
 msgstr ""
 
-# 
+#
 # File: ../content/patient.py, line: 199
 msgid "Ethnicity eg. Asian, African, etc."
 msgstr ""
@@ -1948,7 +1948,7 @@ msgstr ""
 msgid "Exclude from invoice"
 msgstr "Excluir da fatura"
 
-# 
+#
 # File: ../content/treatment.py, line: 82
 msgid "Expectant/Symptomatic treatment"
 msgstr ""
@@ -1991,7 +1991,7 @@ msgstr "Fax"
 msgid "Fax (business)"
 msgstr "Fax comercial"
 
-# 
+#
 # File: ../content/patient.py, line: 225
 msgid "Feature"
 msgstr ""
@@ -2031,12 +2031,12 @@ msgstr "Nome do arquivo"
 msgid "Firstname"
 msgstr "Primeiro Nome"
 
-# 
+#
 # File: ../browser/reports/templates/epidemiology.pt, line: 160
-msgid "For a selected analysis (ej. <i>Influenzae</i>) and date range, report Analysis Requests, alernatively Cases, showing the hospital, sample type, fever (Y/N), pain (Y/N), provisional diagnosis, etc."
+msgid "For a selected analysis (ej. <i>Influenzae</i>) and date range, report Analysis Requests, alernatively Cases, showing the hospital, sample type, fever (Y/N), pain (Y/N), Provisional diagnosis, etc."
 msgstr ""
 
-# 
+#
 # File: ../browser/reports/templates/epidemiology_epiddetailsperanalysis.pt, line: 93
 msgid "For a selected analysis and date range, report Analysis Requests"
 msgstr ""
@@ -2061,7 +2061,7 @@ msgstr "Nome Completo"
 msgid "Future dated sample"
 msgstr "Amostra datada no futuro"
 
-# 
+#
 # File: ../content/patient.py, line: 57
 # File: ../content/patients.py, line: 47
 msgid "Gender"
@@ -2071,12 +2071,12 @@ msgstr ""
 msgid "Generate report"
 msgstr ""
 
-# 
+#
 # File: ../content/immunization.py, line: 45
 msgid "Geographical areas can be characterized as having high, intermediate or low levels of infection."
 msgstr ""
 
-# 
+#
 # File: ../content/immunization.py, line: 44
 msgid "Geographical distribution"
 msgstr ""
@@ -2093,7 +2093,7 @@ msgstr "Agrupe os serviços de análise por categoria na configuração do LIMS,
 msgid "Group by"
 msgstr ""
 
-# 
+#
 # File: ../browser/reports/epidemiology_analysisrequestspercountry.py, line: 46
 # File: ../browser/reports/epidemiology_casespercountry.py, line: 46
 # File: ../browser/reports/epidemiology_epiddetailsperanalysis.py, line: 53
@@ -2110,17 +2110,17 @@ msgstr "Perigoso"
 msgid "Hidden Field"
 msgstr ""
 
-# 
+#
 # File: ../config.py, line: 79
 msgid "Hispanic or Latino"
 msgstr ""
 
-# 
+#
 # File: ../browser/reports/templates/epidemiology_epiddetailsperanalysis.pt, line: 113
 msgid "Hospital"
 msgstr ""
 
-# 
+#
 # File: ../browser/reports/templates/epidemiology_analysisrequestspercountry.pt, line: 108
 msgid "Hospital AR ID"
 msgstr ""
@@ -2129,7 +2129,7 @@ msgstr ""
 msgid "Hours"
 msgstr "Horas"
 
-# 
+#
 # File: ../browser/templates/patient_chronicconditions.pt, line: 21
 # File: ../content/disease.py, line: 17
 msgid "ICD Code"
@@ -2150,24 +2150,24 @@ msgstr "URL do Servidor de ID"
 msgid "ID Server unavailable"
 msgstr "Servidor de ID indisponível"
 
-# 
+#
 # File: ../browser/widgets/patient_identifiers.pt, line: 15
 # File: ../content/patient.py, line: 99
 msgid "Identifier"
 msgstr ""
 
-# 
+#
 # File: ../browser/widgets/patient_identifiers.pt, line: 17
 # File: ../content/patient.py, line: 99
 msgid "Identifier Type"
 msgstr ""
 
-# 
+#
 # File: ../browser/widgets/patient_identifiers.pt, line: 19
 msgid "Identifier Type Description"
 msgstr ""
 
-# 
+#
 # File: ../controlpanel/bika_identifiertypes.py, line: 23
 msgid "Identifier Types"
 msgstr ""
@@ -2188,20 +2188,20 @@ msgstr "Caso o tipo de amostra que você procura não está listado aqui, uma es
 msgid "If this container is pre-preserved, then the preservation method could be selected here."
 msgstr "Caso este recipiente seja pré-preservado, o método de preservação pode ser selecionado aqui."
 
-# 
+#
 # File: ../browser/templates/patient_immunizationhistory.pt, line: 36
 # File: ../content/patient.py, line: 147
 # File: ../controlpanel/bika_immunizations.py, line: 37
 msgid "Immunization"
 msgstr ""
 
-# 
+#
 # File: ../content/immunization.py, line: 17
 #. Default: "Type"
 msgid "Immunization form"
 msgstr ""
 
-# 
+#
 # File: ../controlpanel/bika_immunizations.py, line: 28
 msgid "Immunizations"
 msgstr ""
@@ -2322,12 +2322,12 @@ msgstr "Palavra-chave"
 msgid "Keywords"
 msgstr "Palavras-chave"
 
-# 
+#
 # File: ../content/patient.py, line: 139
 msgid "Known Patient allergies to keep information that can aid drug reaction interpretation"
 msgstr ""
 
-# 
+#
 # File: ../content/drug.py, line: 50
 msgid "Known undesirable effects of the drug"
 msgstr ""
@@ -2408,18 +2408,18 @@ msgstr "Latitude"
 msgid "Linked Sample"
 msgstr "Amostra Associada"
 
-# 
+#
 # File: ../controlpanel/bika_identifiertypes.py, line: 25
 msgid "List of types of identifiers for multiple identifier records"
 msgstr ""
 
-# 
+#
 # File: ../browser/reports/templates/epidemiology.pt, line: 136
 # File: ../browser/reports/templates/epidemiology_analysisrequestspercountry.pt, line: 84
 msgid "Lists all Analysis Requests for a date range grouped by countries"
 msgstr ""
 
-# 
+#
 # File: ../browser/reports/templates/epidemiology.pt, line: 84
 # File: ../browser/reports/templates/epidemiology_casespercountry.pt, line: 99
 msgid "Lists all cases for a date range grouped by countries"
@@ -2441,7 +2441,7 @@ msgstr "Carregar os documentos descrevendo o método"
 msgid "Loaded"
 msgstr "Carregado"
 
-# 
+#
 # File: ../browser/templates/patient_travelhistory.pt, line: 38
 # File: ../content/patient.py, line: 164
 msgid "Location"
@@ -2621,7 +2621,7 @@ msgstr "Modelo"
 msgid "More"
 msgstr "Mais"
 
-# 
+#
 # File: ../content/patient.py, line: 209
 msgid "Mothers name"
 msgstr ""
@@ -2632,12 +2632,12 @@ msgstr ""
 msgid "Name"
 msgstr "Nome"
 
-# 
+#
 # File: ../config.py, line: 74
 msgid "Native American"
 msgstr ""
 
-# 
+#
 # File: ../config.py, line: 77
 msgid "Native Hawaiian or Other Pacific Islander"
 msgstr ""
@@ -2655,7 +2655,7 @@ msgstr "Não"
 msgid "No Analysis Requests matched your query"
 msgstr ""
 
-# 
+#
 # File: ../browser/reports/epidemiology_epiddetailsperanalysis.py, line: 97
 msgid "No analyses found"
 msgstr ""
@@ -2678,7 +2678,7 @@ msgstr "Nenhuma análise foi adicionada"
 msgid "No analyses were added to this worksheet."
 msgstr "Nenhuma análise foi adicionada para esta planilha."
 
-# 
+#
 # File: ../browser/reports/epidemiology_analysisrequestspercountry.py, line: 37
 # File: ../browser/reports/epidemiology_epiddetailsperanalysis.py, line: 45
 msgid "No analysis requests matched your query"
@@ -2689,7 +2689,7 @@ msgstr ""
 msgid "No analysis services were selected."
 msgstr "Nenhum serviço de análise foi selecionado"
 
-# 
+#
 # File: ../browser/reports/epidemiology_casespercountry.py, line: 37
 msgid "No batches matched your query"
 msgstr ""
@@ -2719,7 +2719,7 @@ msgstr "Nenhuma preservação padrão especificada para este serviço"
 msgid "No historical actions matched your query"
 msgstr ""
 
-# 
+#
 # File: ../browser/widgets/patientidentifierswidget.py, line: 59
 msgid "No identifier entered"
 msgstr ""
@@ -2767,18 +2767,18 @@ msgstr "Não Permitido"
 msgid "Not invoiced"
 msgstr "Não faturado"
 
-# 
+#
 # File: ../browser/reports/templates/epidemiology_analysisrequestspercountry.pt, line: 215
 # File: ../browser/reports/templates/epidemiology_epiddetailsperanalysis.pt, line: 148
 msgid "Num of ARs"
 msgstr ""
 
-# 
+#
 # File: ../browser/reports/templates/epidemiology_casespercountry.pt, line: 174
 msgid "Num of Cases"
 msgstr ""
 
-# 
+#
 # File: ../browser/reports/templates/epidemiology_analysisrequestspercountry.pt, line: 224
 # File: ../browser/reports/templates/epidemiology_casespercountry.pt, line: 183
 msgid "Num of Countries"
@@ -2834,7 +2834,7 @@ msgstr "Número de análises retestadas para o período"
 msgid "Number of analysis requested and published per department and expresed as a percentage of all analyses performed"
 msgstr ""
 
-# 
+#
 # File: ../browser/reports/templates/epidemiology.pt, line: 107
 msgid "Number of cases per country"
 msgstr ""
@@ -2847,7 +2847,7 @@ msgstr "Número de requisições"
 msgid "Number of samples"
 msgstr "Número de amostras"
 
-# 
+#
 # File: ../content/treatment.py, line: 58
 msgid "Objective clinical findings"
 msgstr ""
@@ -2856,21 +2856,21 @@ msgstr ""
 msgid "Once preserved, the sample must be disposed of within this time period.  If not specified, the sample type retention period will be used."
 msgstr "Uma vez preservada, a amostra deve ser descartada dentro do mesmo período de tempo. Caso não especificado, o tempo de retenção da amostra exemplo será utilizado."
 
-# 
+#
 # File: ../browser/reports/templates/epidemiology_analysisrequestspercountry.pt, line: 168
 # File: ../browser/templates/patient_chronicconditions.pt, line: 34
 # File: ../browser/widgets/case_provisionaldiagnosis.pt, line: 15
 msgid "Onset"
 msgstr ""
 
-# 
+#
 # File: ../browser/batchfolder.py, line: 38
 # File: ../browser/reports/templates/epidemiology_casespercountry.pt, line: 117
 # File: ../content/batch.py, line: 87
 msgid "Onset Date"
 msgstr ""
 
-# 
+#
 # File: ../content/batch.py, line: 103
 msgid "Onset Date Estimated"
 msgstr ""
@@ -2913,7 +2913,7 @@ msgstr ""
 msgid "PDF"
 msgstr "PDF"
 
-# 
+#
 # File: ../content/treatment.py, line: 83
 msgid "Palliative treatment"
 msgstr ""
@@ -2945,7 +2945,7 @@ msgstr "Configuração de Particionamento"
 msgid "Partitions"
 msgstr "Partições"
 
-# 
+#
 # File: ../content/immunization.py, line: 111
 msgid "Passive immunization"
 msgstr ""
@@ -2958,65 +2958,65 @@ msgstr "Senha"
 msgid "Password lifetime"
 msgstr "Tempo de vida da senha"
 
-# 
+#
 # File: ../browser/analysisrequest.py, line: 452
 # File: ../browser/batchfolder.py, line: 39
 # File: ../browser/mailtemplates/analysisrequest_results.pt, line: 127
 msgid "Patient"
 msgstr ""
 
-# 
+#
 # File: ../browser/reports/templates/epidemiology_analysisrequestspercountry.pt, line: 104
 # File: ../browser/reports/templates/epidemiology_casespercountry.pt, line: 119
 msgid "Patient Age (years)"
 msgstr ""
 
-# 
+#
 # File: ../content/batch.py, line: 97
 msgid "Patient Age at Case Onset Date"
 msgstr ""
 
-# 
+#
 # File: ../browser/reports/templates/epidemiology_analysisrequestspercountry.pt, line: 102
 msgid "Patient First name"
 msgstr ""
 
-# 
+#
 # File: ../browser/reports/templates/epidemiology_analysisrequestspercountry.pt, line: 107
 # File: ../browser/reports/templates/epidemiology_casespercountry.pt, line: 122
 msgid "Patient Gender"
 msgstr ""
 
-# 
+#
 # File: ../browser/reports/templates/epidemiology_analysisrequestspercountry.pt, line: 101
 # File: ../content/patient.py, line: 33
 # File: ../content/patients.py, line: 44
 msgid "Patient ID"
 msgstr ""
 
-# 
+#
 # File: ../browser/widgets/patientidentifierswidget.py, line: 88
 # File: ../content/patient.py, line: 103
 msgid "Patient additional identifiers"
 msgstr ""
 
-# 
+#
 # File: ../browser/widgets/patientidentifierswidget.py, line: 87
 msgid "Patient identifiers"
 msgstr ""
 
-# 
+#
 # File: ../browser/reports/templates/epidemiology_analysisrequestspercountry.pt, line: 240
 # File: ../browser/reports/templates/epidemiology_casespercountry.pt, line: 199
 msgid "Patient's age when case's onset date"
 msgstr ""
 
-# 
+#
 # File: ../content/patient.py, line: 185
 msgid "Patient's past medical history."
 msgstr ""
 
-# 
+#
 # File: ../content/patients.py, line: 31
 msgid "Patients"
 msgstr ""
@@ -3074,7 +3074,7 @@ msgstr "Telefone Residencial"
 msgid "Phone (mobile)"
 msgstr "Celular"
 
-# 
+#
 # File: ../content/patient.py, line: 219
 msgid "Photo"
 msgstr ""
@@ -3089,7 +3089,7 @@ msgstr "Endereço físico"
 msgid "Picking Slip"
 msgstr ""
 
-# 
+#
 # File: ../skins/bika/validate_integrity.cpy, line: 20
 msgid "Please correct the indicated errors."
 msgstr ""
@@ -3115,7 +3115,7 @@ msgstr "Local de Captura"
 msgid "Position"
 msgstr "Posição"
 
-# 
+#
 # File: ../browser/reports/templates/epidemiology.pt, line: 186
 msgid "Positive results per country"
 msgstr ""
@@ -3166,12 +3166,12 @@ msgstr "Preservações"
 msgid "Preserver"
 msgstr "Preservador"
 
-# 
+#
 # File: ../content/immunization.py, line: 91
 msgid "Prevention"
 msgstr ""
 
-# 
+#
 # File: ../content/treatment.py, line: 84
 msgid "Preventive/Prophylactic treatment"
 msgstr ""
@@ -3194,7 +3194,7 @@ msgstr "Preço excluindo impostos"
 msgid "Pricelist for"
 msgstr "Lista de preços"
 
-# 
+#
 # File: ../content/patient.py, line: 44
 # File: ../content/patients.py, line: 63
 msgid "Primary Referrer"
@@ -3240,13 +3240,13 @@ msgstr "Palavra-chave de Perfil"
 msgid "Profiles"
 msgstr "Perfis"
 
-# 
+#
 # File: ../browser/reports/templates/epidemiology_analysisrequestspercountry.pt, line: 162
 # File: ../browser/widgets/case_provisionaldiagnosis.pt, line: 13
-msgid "Provisional Diagnosis"
+msgid "Provisional diagnosis"
 msgstr ""
 
-# 
+#
 # File: ../browser/reports/templates/epidemiology_epiddetailsperanalysis.pt, line: 116
 msgid "Provisional diagnosis"
 msgstr ""
@@ -3327,7 +3327,7 @@ msgstr "Variação mínima"
 msgid "Range spec"
 msgstr "Especificação da variação"
 
-# 
+#
 # File: ../content/treatment.py, line: 85
 msgid "Rational treatment"
 msgstr ""
@@ -3429,7 +3429,7 @@ msgstr "Valores de referência da amostra são brancos ou nulos"
 msgid "ReferenceDefinition represents a Reference Definition or sample type used for quality control testing"
 msgstr "DefiniçãoReferência representa a Definição de Referência ou tipo de amostra utilizada para o teste de controle de qualidade."
 
-# 
+#
 # File: ../content/patient.py, line: 102
 msgid "Referring Institution Patient ID(s)"
 msgstr ""
@@ -3438,7 +3438,7 @@ msgstr ""
 msgid "Register"
 msgstr "Registro"
 
-# 
+#
 # File: ../content/immunization.py, line: 35
 msgid "Relevant Facts"
 msgstr ""
@@ -3486,7 +3486,7 @@ msgstr ""
 msgid "Report tables of Analysis Requests and totals submitted between a period of time"
 msgstr ""
 
-# 
+#
 # File: ../browser/reports/templates/epidemiology.pt, line: 216
 msgid "Report the prevalent <i>Salmonella</i> species, and subtypes serotype, AMR, PT, PFGE type etc."
 msgstr ""
@@ -3638,12 +3638,12 @@ msgstr "Matrizes de Amostras"
 msgid "Sample Matrix"
 msgstr "Matriz de Amostras"
 
-# 
+#
 # File: ../controlpanel/bika_sampleorigins.py, line: 25
 msgid "Sample Origin, indicates whether a Sample is e.g. Animal, Environmental, Human or form a Validation study."
 msgstr ""
 
-# 
+#
 # File: ../controlpanel/bika_sampleorigins.py, line: 23
 msgid "Sample Origins"
 msgstr ""
@@ -3682,7 +3682,7 @@ msgstr "Prefixo do Tipo de Amostra"
 msgid "Sample Types"
 msgstr "Tipos de Amostra"
 
-# 
+#
 # File: ../browser/reports/templates/epidemiology.pt, line: 78
 msgid "Sample and Case related reports"
 msgstr ""
@@ -3727,7 +3727,7 @@ msgstr "Amostras"
 msgid "Samples of this type should be treated as hazardous"
 msgstr "Amostras deste tipo devem ser tratadas como perigosas"
 
-# 
+#
 # File: ../browser/reports/templates/productivity_dailysamplesreceived.pt, line: 61
 msgid "Samples received for a date range and grouped by countries"
 msgstr ""
@@ -3768,22 +3768,22 @@ msgstr "Frequência de Amostragem"
 msgid "Save"
 msgstr "Salvar"
 
-# 
+#
 # File: ../browser/templates/patient_allergies.pt, line: 77
 msgid "Save allergies"
 msgstr ""
 
-# 
+#
 # File: ../browser/templates/patient_treatmenthistory.pt, line: 69
 msgid "Save drug history"
 msgstr ""
 
-# 
+#
 # File: ../browser/templates/patient_immunizationhistory.pt, line: 105
 msgid "Save immunization history"
 msgstr ""
 
-# 
+#
 # File: ../browser/templates/patient_chronicconditions.pt, line: 109
 msgid "Save past medical history"
 msgstr ""
@@ -3792,7 +3792,7 @@ msgstr ""
 msgid "Save remarks"
 msgstr "Salvar comentários"
 
-# 
+#
 # File: ../browser/templates/patient_travelhistory.pt, line: 103
 msgid "Save travel history"
 msgstr ""
@@ -3838,12 +3838,12 @@ msgstr "Selecione uma posição de destino e RA a ser duplicada."
 msgid "Select a manager from the available personnel configured under the 'lab contacts' setup item. Departmental managers are referenced on analysis results reports containing analyses by their department."
 msgstr "Selecione um gerente a partir da equipe disponível configurada no item 'contatos do laboratório'. Gerentes departamentais são referenciados em relatórios de resultados de análises contendo dados de seus departamentos."
 
-# 
+#
 # File: ../content/immunization.py, line: 19
 msgid "Select a type of immunization. <br/>Active immunization entails the introduction of a foreign molecule into the body, which causes the body itself to generate immunity against the target. Vaccination is an active form of immunization<br/>Passive immunization is where pre-synthesized elements of the immune system are transferred to a person so that the body does not need to produce these elements itself. Currently, antibodies can be used for passive immunization"
 msgstr ""
 
-# 
+#
 # File: ../content/treatment.py, line: 21
 msgid "Select a type of treatment."
 msgstr ""
@@ -3983,7 +3983,7 @@ msgstr "Configurar as especificações de resultado do serviço de análise do l
 msgid "Shipping address"
 msgstr "Endereço de entrega"
 
-# 
+#
 # File: ../content/treatment.py, line: 86
 msgid "Shock treatment"
 msgstr ""
@@ -3996,7 +3996,7 @@ msgstr "Mostre apenas as categorias selecionadas em visualizações do cliente"
 msgid "Signature"
 msgstr "Assinatura"
 
-# 
+#
 # File: ../browser/reports/templates/epidemiology_analysisrequestspercountry.pt, line: 190
 # File: ../browser/reports/templates/epidemiology_epiddetailsperanalysis.pt, line: 117
 # File: ../content/batch.py, line: 143
@@ -4021,7 +4021,7 @@ msgstr "Pequeno"
 msgid "Special"
 msgstr "Especial"
 
-# 
+#
 # File: ../content/treatment.py, line: 87
 msgid "Specific treatment"
 msgstr ""
@@ -4042,13 +4042,13 @@ msgstr "Especifique o tamanho da Planilha, por exemplo, em correspondência com 
 msgid "Specify the uncertainty value for a given range, e.g. for results in a range with minimum of 0 and maximum of 10, the uncertainty value is 0.5 - a result of 6.67 will be reported as 6.67 +- 0.5. Please ensure successive ranges are continuous, e.g. 0.00 - 10.00 is followed by 10.01 - 20.00, 20.01 - 30 .00 etc."
 msgstr "Especifique um valor de incerteza para uma determinada variação, por exemplo, em uma variação de 0 a 10, o valor de incerteza é 0.5 - um resultado de 6.67 será reportado como 6.67 +- 0.5. Por favor, certifique-se de que variações sucessivas são contínuas, por exemplo 0.00 - 10.00 é seguido de 10.01 - 10.00, 20.01 - 30.00 e assim por diante."
 
-# 
+#
 # File: ../browser/templates/patient_treatmenthistory.pt, line: 22
 # File: ../content/patient.py, line: 121
 msgid "Start"
 msgstr ""
 
-# 
+#
 # File: ../controlpanel/bika_epidemiologicalyears.py, line: 35
 msgid "Start Date"
 msgstr ""
@@ -4065,7 +4065,7 @@ msgstr "Estado"
 msgid "Status"
 msgstr "Estado"
 
-# 
+#
 # File: ../content/treatment.py, line: 49
 msgid "Subjective clinical findings"
 msgstr ""
@@ -4083,13 +4083,13 @@ msgstr "Submeter"
 msgid "Subtotal"
 msgstr "Subtotal"
 
-# 
+#
 # File: ../browser/widgets/case_aetiologicagents.pt, line: 14
 # File: ../content/aetiologicagent.py, line: 14
 msgid "Subtype"
 msgstr ""
 
-# 
+#
 # File: ../browser/reports/templates/epidemiology.pt, line: 109
 msgid "Summary of number of cases per country for a date range"
 msgstr ""
@@ -4098,7 +4098,7 @@ msgstr ""
 msgid "Supplier"
 msgstr "Fornecedor"
 
-# 
+#
 # File: ../content/treatment.py, line: 88
 msgid "Supporting treatment"
 msgstr ""
@@ -4107,19 +4107,19 @@ msgstr ""
 msgid "Surname"
 msgstr "Sobrenome"
 
-# 
+#
 # File: ../browser/widgets/case_symptoms.pt, line: 14
 # File: ../controlpanel/bika_symptoms.py, line: 37
 msgid "Symptom"
 msgstr ""
 
-# 
+#
 # File: ../content/immunization.py, line: 64
 # File: ../controlpanel/bika_symptoms.py, line: 28
 msgid "Symptoms"
 msgstr ""
 
-# 
+#
 # File: ../content/drug.py, line: 28
 msgid "Symptoms or the like for which the drug is suitable"
 msgstr ""
@@ -4142,12 +4142,12 @@ msgstr "Modelo"
 msgid "Test results are at a ${lab_confidence} % confidence level"
 msgstr "Resultados estão em ${lab_confidence} % do nível de certeza"
 
-# 
+#
 # File: ../browser/widgets/caseaetiologicagentswidget.py, line: 68
 msgid "The Aetiologic agent '%s' is not valid"
 msgstr ""
 
-# 
+#
 # File: ../browser/widgets/caseaetiologicagentswidget.py, line: 84
 msgid "The Aetiologic agent subtype '%s' is not valid"
 msgstr ""
@@ -4201,7 +4201,7 @@ msgstr "O tipo padrão de recipiente. Novas partições de amostra receberão, a
 msgid "The discount percentage entered here, is applied to the prices for clients flagged as 'members', normally co-operative members or associates deserving of this discount"
 msgstr "O percentual de desconto digitado aqui é aplicado aos preços para os clientes identificados como 'associados', normalmente membros cooperados e parceiros merecedores deste desconto."
 
-# 
+#
 # File: ../browser/patient.py, line: 271
 msgid "The disease '%s' is not valid"
 msgstr ""
@@ -4410,13 +4410,13 @@ msgstr "Total"
 msgid "Total Lag"
 msgstr ""
 
-# 
+#
 # File: ../browser/reports/templates/epidemiology_analysisrequestspercountry.pt, line: 231
 # File: ../browser/reports/templates/epidemiology_epiddetailsperanalysis.pt, line: 155
 msgid "Total Num of ARs"
 msgstr ""
 
-# 
+#
 # File: ../browser/reports/templates/epidemiology_casespercountry.pt, line: 190
 msgid "Total Num of Cases"
 msgstr ""
@@ -4430,7 +4430,7 @@ msgstr "Preço Total"
 msgid "Total analyses"
 msgstr "Total de análises"
 
-# 
+#
 # File: ../browser/reports/templates/epidemiology.pt, line: 188
 msgid "Total counts of Cases with positive test results, broken down by country, e.g. 3 Dengue positive cases, 1 Dengue positive type 2 case, etc."
 msgstr ""
@@ -4453,62 +4453,62 @@ msgstr ""
 msgid "Traceability"
 msgstr ""
 
-# 
+#
 # File: ../content/immunization.py, line: 55
 msgid "Transmission"
 msgstr ""
 
-# 
+#
 # File: ../content/immunization.py, line: 82
 # File: ../controlpanel/bika_treatments.py, line: 37
 msgid "Treatment"
 msgstr ""
 
-# 
+#
 # File: ../content/treatment.py, line: 64
 msgid "Treatment Document"
 msgstr ""
 
-# 
+#
 # File: ../content/treatment.py, line: 40
 msgid "Treatment care"
 msgstr ""
 
-# 
+#
 # File: ../content/treatment.py, line: 30
 #. Default: "Procedure"
 msgid "Treatment procedure"
 msgstr ""
 
-# 
+#
 # File: ../content/treatment.py, line: 19
 #. Default: "Type"
 msgid "Treatment type"
 msgstr ""
 
-# 
+#
 # File: ../controlpanel/bika_treatments.py, line: 28
 msgid "Treatments"
 msgstr ""
 
-# 
+#
 # File: ../content/patient.py, line: 162
 #. Default: "End date"
 msgid "Trip End Date"
 msgstr ""
 
-# 
+#
 # File: ../content/patient.py, line: 161
 #. Default: "Start date"
 msgid "Trip Start Date"
 msgstr ""
 
-# 
+#
 # File: ../browser/templates/patient_travelhistory.pt, line: 28
 msgid "Trip end date"
 msgstr ""
 
-# 
+#
 # File: ../browser/templates/patient_travelhistory.pt, line: 23
 msgid "Trip start date"
 msgstr ""
@@ -4550,7 +4550,7 @@ msgstr "Unidade"
 msgid "Unit price"
 msgstr "Preço unitário"
 
-# 
+#
 # File: ../browser/reports/epidemiology_analysisrequestspercountry.py, line: 76
 # File: ../browser/reports/epidemiology_casespercountry.py, line: 71
 # File: ../browser/reports/productivity_dailysamplesreceived.py, line: 50
@@ -4622,13 +4622,13 @@ msgstr "Valor do IVA"
 msgid "VAT number"
 msgstr "Número do IVA"
 
-# 
+#
 # File: ../browser/templates/patient_immunizationhistory.pt, line: 42
 # File: ../content/patient.py, line: 148
 msgid "Vaccination Center"
 msgstr ""
 
-# 
+#
 # File: ../controlpanel/bika_vaccinationcenters.py, line: 31
 msgid "Vaccination Centers"
 msgstr ""
@@ -4789,7 +4789,7 @@ msgstr "Validade"
 msgid "Value"
 msgstr "Valor"
 
-# 
+#
 # File: ../content/analysisservice.py, line: 285
 msgid "Values can be entered here which will override the defaults specified in the Calculation Interim Fields."
 msgstr ""
@@ -4826,7 +4826,7 @@ msgstr "Endereço web para o órgão de certificação"
 msgid "When the results of duplicate analyses on worksheets, carried out on the same sample, differ with more than this percentage, an alert is raised"
 msgstr "Quando os resultados de uma análise duplicada em planilhas, feitas a partir de uma mesma amostra, diferirem em mais do que este percentual, um alerta será gerado"
 
-# 
+#
 # File: ../config.py, line: 78
 msgid "White"
 msgstr ""
@@ -4948,7 +4948,7 @@ msgstr "máximo"
 msgid "min"
 msgstr "mínimo"
 
-# 
+#
 # File: ../content/drug.py, line: 61
 msgid "preservation"
 msgstr ""

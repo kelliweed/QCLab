@@ -23,7 +23,7 @@ class CaseProvisionalDiagnosisView(BrowserView):
 
     def __call__(self):
         return self.template()
-    
+
     def hasProvisionalDiagnosis(self):
         return len(self.context.getProvisionalDiagnosis())>0
 
@@ -43,14 +43,14 @@ class CaseProvisionalDiagnosisWidget(TypesWidget):
         value = len(instance.getProvisionalDiagnosis())>0 and instance.getProvisionalDiagnosis() or []
         if 'CPD_clear' in form:
             value = []
-            
+
         elif 'CPD_delete' in form:
             valueout = []
             for i in range(len(value)):
                 if not ('CPD-SelectItem-%s'%i in form):
                     valueout.append(value[i])
             value = valueout
-            
+
         elif 'CPD_submitted' in form:
             bsc = getToolByName(instance, 'bika_setup_catalog')
             for i in range(len(form.get('CPD_Title', []))):
@@ -86,6 +86,6 @@ class CaseProvisionalDiagnosisWidget(TypesWidget):
         return view()
 
 registerWidget(CaseProvisionalDiagnosisWidget,
-               title='Case provisional diagnosis',
-               description='Case provisional diagnosis',
+               title='Case Provisional diagnosis',
+               description='Case Provisional diagnosis',
                )

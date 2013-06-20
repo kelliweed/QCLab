@@ -2033,7 +2033,7 @@ msgstr ""
 msgid ""
 "For a selected analysis (ej. <i>Influenzae</i>) and date range, report "
 "Analysis Requests, alernatively Cases, showing the hospital, sample type, "
-"fever (Y/N), pain (Y/N), provisional diagnosis, etc."
+"fever (Y/N), pain (Y/N), Provisional diagnosis, etc."
 msgstr ""
 #
 # File: ../browser/reports/templates/epidemiology_epiddetailsperanalysis.pt, line: 93
@@ -3213,7 +3213,7 @@ msgstr ""
 #
 # File: ../browser/reports/templates/epidemiology_analysisrequestspercountry.pt, line: 162
 # File: ../browser/widgets/case_provisionaldiagnosis.pt, line: 13
-msgid "Provisional Diagnosis"
+msgid "Provisional diagnosis"
 msgstr ""
 #
 # File: ../browser/reports/templates/epidemiology_epiddetailsperanalysis.pt, line: 116
