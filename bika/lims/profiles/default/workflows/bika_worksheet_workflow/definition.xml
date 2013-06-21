@@ -7,6 +7,8 @@
              initial_state="open">
 
  <permission>BIKA: Edit Worksheet</permission>
+ <permission>BIKA: Assign analyses</permission>
+ <permission>BIKA: Unassign analyses</permission>
 
  <state state_id="open" title="Open" i18n:attributes="title">
   <description i18n:translate=""></description>
@@ -15,6 +17,16 @@
    <permission-role>Manager</permission-role>
    <permission-role>LabManager</permission-role>
    <permission-role>Analyst</permission-role>
+   <permission-role>LabClerk</permission-role>
+  </permission-map>
+  <permission-map name="BIKA: Assign analyses" acquired="False">
+   <permission-role>Manager</permission-role>
+   <permission-role>LabManager</permission-role>
+   <permission-role>LabClerk</permission-role>
+  </permission-map>
+  <permission-map name="BIKA: Unassign analyses" acquired="False">
+   <permission-role>Manager</permission-role>
+   <permission-role>LabManager</permission-role>
    <permission-role>LabClerk</permission-role>
   </permission-map>
  </state>
@@ -30,6 +42,16 @@
    <permission-role>Analyst</permission-role>
    <permission-role>LabClerk</permission-role>
   </permission-map>
+  <permission-map name="BIKA: Assign analyses" acquired="False">
+   <permission-role>Manager</permission-role>
+   <permission-role>LabManager</permission-role>
+   <permission-role>LabClerk</permission-role>
+  </permission-map>
+  <permission-map name="BIKA: Unassign analyses" acquired="False">
+   <permission-role>Manager</permission-role>
+   <permission-role>LabManager</permission-role>
+   <permission-role>LabClerk</permission-role>
+  </permission-map>
  </state>
 
  <state state_id="to_be_verified" title="To be verified" i18n:attributes="title">
@@ -43,6 +65,16 @@
    <permission-role>Analyst</permission-role>
    <permission-role>LabClerk</permission-role>
   </permission-map>
+  <permission-map name="BIKA: Assign analyses" acquired="False">
+   <permission-role>Manager</permission-role>
+   <permission-role>LabManager</permission-role>
+   <permission-role>LabClerk</permission-role>
+  </permission-map>
+  <permission-map name="BIKA: Unassign analyses" acquired="False">
+   <permission-role>Manager</permission-role>
+   <permission-role>LabManager</permission-role>
+   <permission-role>LabClerk</permission-role>
+  </permission-map>
  </state>
 
  <state state_id="verified" title="Verified" i18n:attributes="title">
@@ -52,6 +84,10 @@
    <permission-role>LabManager</permission-role>
    <permission-role>Analyst</permission-role>
    <permission-role>LabClerk</permission-role>
+  </permission-map>
+  <permission-map name="BIKA: Assign analyses" acquired="False">
+  </permission-map>
+  <permission-map name="BIKA: Unassign analyses" acquired="False">
   </permission-map>
  </state>
 

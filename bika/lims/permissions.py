@@ -112,3 +112,7 @@ CancelAndReinstate = 'BIKA: Cancel and reinstate'
 
 # For adding login credentials to Contacts.
 ManageLoginDetails = 'BIKA: Manage Login Details'
+
+# Allow analyses to be assigned or unassigned from worksheets
+Assign = 'BIKA: Assign analyses'
+Unassign = 'BIKA: Unassign analyses'
