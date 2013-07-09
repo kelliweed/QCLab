@@ -113,7 +113,6 @@ class BatchFolderContentsView(BikaListingView):
         for x in range(len(items)):
             if 'obj' not in items[x]:
                 items[x]['OnsetDate'] = 'zzz'
-                items[x]['replace']['OnsetDate'] = '&nbsp;'
                 continue
             obj = items[x]['obj']
 
