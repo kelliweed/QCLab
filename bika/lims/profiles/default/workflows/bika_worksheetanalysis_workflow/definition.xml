@@ -7,12 +7,29 @@
              initial_state="unassigned"
              manager_bypass="False">
 
+ <permission>BIKA: Assign analyses</permission>
+ <permission>BIKA: Unassign analyses</permission>
+
  <state state_id="assigned" title="Assigned" i18n:attributes="title">
   <exit-transition transition_id="unassign"/>
+  <permission-map name="BIKA: Assign analyses" acquired="False">
+  </permission-map>
+  <permission-map name="BIKA: Unassign analyses" acquired="False">
+   <permission-role>Manager</permission-role>
+   <permission-role>LabManager</permission-role>
+   <permission-role>LabClerk</permission-role>
+  </permission-map>
  </state>
 
  <state state_id="unassigned" title="Unassigned" i18n:attributes="title">
   <exit-transition transition_id="assign"/>
+  <permission-map name="BIKA: Assign analyses" acquired="False">
+   <permission-role>Manager</permission-role>
+   <permission-role>LabManager</permission-role>
+   <permission-role>LabClerk</permission-role>
+  </permission-map>
+  <permission-map name="BIKA: Unassign analyses" acquired="False">
+  </permission-map>
  </state>
 
  <transition transition_id="assign"
