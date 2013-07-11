@@ -17,7 +17,7 @@ if workflow.getInfoFor(context, 'cancellation_state', '') == "cancelled":
 if context.portal_type != 'AnalysisRequest':
     # Check analysis permission against parent
     mtool = context.portal_membership
-    if mtool.checkPermission("BIKA: Unssign analyses", context.aq_parent):
+    if mtool.checkPermission("BIKA: Assign analyses", context.aq_parent):
         return True
     return False
 
