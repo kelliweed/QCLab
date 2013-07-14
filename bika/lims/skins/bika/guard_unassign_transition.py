@@ -10,11 +10,7 @@
 
 
 if context.portal_type != 'AnalysisRequest':
-    # Check analysis permission against parent
-    mtool = context.portal_membership
-    if mtool.checkPermission("BIKA: Unassign analyses", context.aq_parent):
-        return True
-    return False
+    return True
 
 if context.getAnalyses(worksheetanalysis_review_state = 'unassigned'):
     return True
