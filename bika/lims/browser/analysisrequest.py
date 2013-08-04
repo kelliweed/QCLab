@@ -1041,6 +1041,7 @@ class AnalysisRequestAnalysesView(BikaListingView):
         analyses = self.context.getAnalyses(full_objects=True)
         self.analyses = dict([(a.getServiceUID(), a) for a in analyses])
         self.selected = [a.getServiceUID() for a in analyses]
+        self.show_categories = True
 
         self.columns = {
             'Title': {'title': _('Service'),
