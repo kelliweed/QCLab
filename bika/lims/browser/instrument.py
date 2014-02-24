@@ -452,68 +452,68 @@ class InstrumentReferenceAnalysesView(AnalysesView):
                               'sort_on': 'sortable_title'}
         self.anjson = {}
 
+    def folderitem(self, obj, item, index):
+        imgtype = ""
+        if obj.portal_type == 'ReferenceAnalysis':
+            antype = QCANALYSIS_TYPES.getValue(obj.getReferenceType())
+            if obj.getReferenceType() == 'c':
+                imgtype = "<img title='%s' src='%s/++resource++bika.lims.images/control.png'/>&nbsp;" % (antype, self.context.absolute_url())
+            if obj.getReferenceType() == 'b':
+                imgtype = "<img title='%s' src='%s/++resource++bika.lims.images/blank.png'/>&nbsp;" % (antype, self.context.absolute_url())
+            item['replace']['Partition'] = "<a href='%s'>%s</a>" % (obj.aq_parent.absolute_url(), obj.aq_parent.id)
+        elif obj.portal_type == 'DuplicateAnalysis':
+            antype = QCANALYSIS_TYPES.getValue('d')
+            imgtype = "<img title='%s' src='%s/++resource++bika.lims.images/duplicate.png'/>&nbsp;" % (antype, self.context.absolute_url())
+            item['sortcode'] = '%s_%s' % (obj.getSample().id, obj.getService().getKeyword())
+        else:
+            item['sortcode'] = '%s_%s' % (obj.getSample().id, obj.getService().getKeyword())
+
+        item['before']['Service'] = imgtype
+        item['sortcode'] = '%s_%s' % (obj.getReferenceAnalysesGroupID(),
+                                          obj.getService().getKeyword())
+
+        # Create json
+        qcid = obj.aq_parent.id;
+        serviceref = "%s (%s)" % (item['Service'], item['Keyword'])
+        trows = self.anjson.get(serviceref, {});
+        anrows = trows.get(qcid, []);
+        anid = '%s.%s' % (item['getReferenceAnalysesGroupID'],
+                          item['id'])
+
+        rr = obj.aq_parent.getResultsRangeDict()
+        uid = obj.getServiceUID()
+        if uid in rr:
+            specs = rr[uid];
+            try:
+                smin  = float(specs.get('min', 0))
+                smax = float(specs.get('max', 0))
+                error  = float(specs.get('error', 0))
+                target = float(specs.get('result', 0))
+                result = float(item['Result'])
+                error_amount = ((target / 100) * error) if target > 0 else 0
+                upper  = smax + error_amount
+                lower   = smin - error_amount
+
+                anrow = { 'date': item['CaptureDate'],
+                          'min': smin,
+                          'max': smax,
+                          'target': target,
+                          'error': error,
+                          'erroramount': error_amount,
+                          'upper': upper,
+                          'lower': lower,
+                          'result': result,
+                          'unit': item['Unit'],
+                          'id': item['uid'] }
+                anrows.append(anrow);
+                trows[qcid] = anrows;
+                self.anjson[serviceref] = trows
+            except:
+                pass
+        return item
+
     def folderitems(self):
         items = AnalysesView.folderitems(self)
-        for i in range(len(items)):
-            obj = items[i]['obj']
-            imgtype = ""
-            if obj.portal_type == 'ReferenceAnalysis':
-                antype = QCANALYSIS_TYPES.getValue(obj.getReferenceType())
-                if obj.getReferenceType() == 'c':
-                    imgtype = "<img title='%s' src='%s/++resource++bika.lims.images/control.png'/>&nbsp;" % (antype, self.context.absolute_url())
-                if obj.getReferenceType() == 'b':
-                    imgtype = "<img title='%s' src='%s/++resource++bika.lims.images/blank.png'/>&nbsp;" % (antype, self.context.absolute_url())
-                items[i]['replace']['Partition'] = "<a href='%s'>%s</a>" % (obj.aq_parent.absolute_url(), obj.aq_parent.id)
-            elif obj.portal_type == 'DuplicateAnalysis':
-                antype = QCANALYSIS_TYPES.getValue('d')
-                imgtype = "<img title='%s' src='%s/++resource++bika.lims.images/duplicate.png'/>&nbsp;" % (antype, self.context.absolute_url())
-                items[i]['sortcode'] = '%s_%s' % (obj.getSample().id, obj.getService().getKeyword())
-            else:
-                items[i]['sortcode'] = '%s_%s' % (obj.getSample().id, obj.getService().getKeyword())
-
-            items[i]['before']['Service'] = imgtype
-            items[i]['sortcode'] = '%s_%s' % (obj.getReferenceAnalysesGroupID(),
-                                              obj.getService().getKeyword())
-
-            # Create json
-            qcid = obj.aq_parent.id;
-            serviceref = "%s (%s)" % (items[i]['Service'], items[i]['Keyword'])
-            trows = self.anjson.get(serviceref, {});
-            anrows = trows.get(qcid, []);
-            anid = '%s.%s' % (items[i]['getReferenceAnalysesGroupID'],
-                              items[i]['id'])
-
-            rr = obj.aq_parent.getResultsRangeDict()
-            uid = obj.getServiceUID()
-            if uid in rr:
-                specs = rr[uid];
-                try:
-                    smin  = float(specs.get('min', 0))
-                    smax = float(specs.get('max', 0))
-                    error  = float(specs.get('error', 0))
-                    target = float(specs.get('result', 0))
-                    result = float(items[i]['Result'])
-                    error_amount = ((target / 100) * error) if target > 0 else 0
-                    upper  = smax + error_amount
-                    lower   = smin - error_amount
-
-                    anrow = { 'date': items[i]['CaptureDate'],
-                              'min': smin,
-                              'max': smax,
-                              'target': target,
-                              'error': error,
-                              'erroramount': error_amount,
-                              'upper': upper,
-                              'lower': lower,
-                              'result': result,
-                              'unit': items[i]['Unit'],
-                              'id': items[i]['uid'] }
-                    anrows.append(anrow);
-                    trows[qcid] = anrows;
-                    self.anjson[serviceref] = trows
-                except:
-                    pass
-
         # Sort items
         items = sorted(items, key = itemgetter('sortcode'))
         return items

@@ -504,8 +504,22 @@ class BikaListingView(BrowserView):
                     cats.append(cat)
         return cats
 
-    def folderitems(self, full_objects = False):
+    def folderitem(self, obj, item, index):
+        """ Service triggered each time an item is iterated by
+            folderitems. This avoid extra-looping in child classes.
+            obj: the object instance itself
+            item: dict containing the properties of the object to be
+                used by the template
+            index: current index of the item
+            If the returned value is None, it will not be added to the
+            list of dictionaries by folderitems service. Otherwise, will
+            add the returned item
         """
+        return item
+
+    def folderitems(self, full_objects = False):
+        """ Use folderitem instead of folderitems if you want to modify
+            the items on child classes
         """
         #self.contentsMethod = self.context.getFolderContents
         if not hasattr(self, 'contentsMethod'):
@@ -548,6 +562,7 @@ class BikaListingView(BrowserView):
         else:
             brains = self.contentsMethod(self.contentFilter)
 
+        idx=0
         results = []
         self.page_start_index = ""
         for i, obj in enumerate(brains):
@@ -569,6 +584,9 @@ class BikaListingView(BrowserView):
 
             if hasattr(obj, 'getObject'):
                 obj = obj.getObject()
+
+            if not obj:
+                continue
 
             uid = obj.UID()
             title = obj.Title()
@@ -685,7 +703,11 @@ class BikaListingView(BrowserView):
                     if callable(value):
                         value = value()
                     results_dict[key] = value
-            results.append(results_dict)
+
+            item = self.folderitem(results_dict, obj, results_dict, idx)
+            if item:
+                results.append(item)
+                idx+=1
 
         return results
 

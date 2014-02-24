@@ -222,39 +222,346 @@ class AnalysesView(BikaListingView):
                         'ResultText': analysts.getValue(a)})
         return ret
 
+
+    self._wf = None
+    self._pm = None
+    self._rc = None
+    self._reportdm = None
+    self._chkperms = None
+    self._bsc = None
+    def _is_reportdrymatter(self):
+        if self._reportdm is None:
+            self._reportdm = hasattr(self.context, 'getReportDryMatter') and \
+                             self.context.getReportDryMatter()
+        return self._reportdm
+
+    def getReferenceCatalog(self):
+        self._rc = getToolByName(self.context, REFERENCE_CATALOG) \
+                   if self._rc is None else self._rc
+        return self._rc
+
+    def getPortalMembership(self):
+        self._pm = getToolByName(self.context, 'portal_membership') \
+                   if self._pm is None else self._pm
+        return self._pm
+
+    def getPortalWorkflow(self):
+        self._wf = getToolByName(self.context, 'portal_workflow') \
+                   if self._wf is None else self._wf
+        return self._wf
+
+    def getCheckPermission(self):
+        self._chkperms = self.getPortalMembership().checkPermission \
+                   if self._chkperms is None else self._chkperms
+        return self._chkperms
+
+    def getBikaSetupCatalog(self):
+        self._bsc = getToolByName(self.context, 'bika_setup_catalog') \
+                    if self._bsc is None else self._bsc
+        return self._bsc
+
+    def folderitem(self, obj, item, index):
+        bsc = self.getBikaSetupCatalog()
+        workflow = self.getPortalWorkflow()
+        checkPermission = self.getCheckPermission()
+
+        # Skim retracted analysis
+        if workflow.getInfoFor(obj, 'review_state') == 'retracted' \
+            and not checkPermission(ViewRetractedAnalyses, self.context)
+            return None
+
+        result = obj.getResult()
+        service = obj.getService()
+        calculation = service.getCalculation()
+        unit = service.getUnit()
+        keyword = service.getKeyword()
+        precision = service.getPrecision()
+
+        if self.show_categories:
+            cat = obj.getService().getCategoryTitle()
+            items['category'] = cat
+            if cat not in self.categories:
+                self.categories.append(cat)
+
+        # Check for InterimFields attribute on our object,
+        interim_fields = hasattr(obj, 'getInterimFields') \
+            and obj.getInterimFields() or []
+        self.interim_fields[obj.UID()] = interim_fields
+
+        item['Service'] = service.Title()
+        item['Keyword'] = keyword
+        item['Unit'] = unit and unit or ''
+        item['Result'] = ''
+        item['formatted_result'] = ''
+        item['interim_fields'] = interim_fields
+        item['Remarks'] = obj.getRemarks()
+        item['Uncertainty'] = ''
+        item['retested'] = obj.getRetested()
+        item['class']['retested'] = 'center'
+        item['result_captured'] = self.ulocalized_time(
+            obj.getResultCaptureDate(), long_format=0)
+        item['calculation'] = calculation and True or False
+        try:
+            item['Partition'] = obj.getSamplePartition().getId()
+        except AttributeError:
+            item['Partition'] = ''
+        if obj.portal_type == "ReferenceAnalysis":
+            item['DueDate'] = self.ulocalized_time(obj.aq_parent.getExpiryDate(), long_format=0)
+        else:
+            item['DueDate'] = self.ulocalized_time(obj.getDueDate(), long_format=1)
+        cd = obj.getResultCaptureDate()
+        item['CaptureDate'] = cd and self.ulocalized_time(cd, long_format=1) or ''
+        item['Attachments'] = ''
+
+        method = obj.getMethod() if hasattr(obj, 'getMethod') else None
+        if not method:
+            method = service.getMethod()
+        item['Method'] = method.Title() if method else ''
+        if method:
+            item['replace']['Method'] = "<a href='%s'>%s</a>" % \
+                (method.absolute_url(), method.Title())
+        item['choices']['Method'] = self.get_methods_vocabulary()
+
+        instrument = obj.getInstrument()
+        item['Instrument'] = instrument.Title() if instrument else ''
+        item['choices']['Instrument'] = self.get_instruments_vocabulary()
+
+        Analyst = obj.getAnalyst()
+        item['Analyst'] = Analyst
+        item['choices']['Analyst'] = self.getAnalysts()
+
+        if checkPermission(ManageBika, self.context):
+            service_uid = service.UID()
+            latest = rc.lookupObject(service_uid).version_id
+            item['Service'] = service.Title()
+            item['class']['Service'] = "service_title"
+
+        # Show version number of out-of-date objects
+        # No: This should be done in another column, if at all.
+        # The (vX) value confuses some more fragile forms.
+        #     if hasattr(obj, 'reference_versions') and \
+        #        service_uid in obj.reference_versions and \
+        #        latest != obj.reference_versions[service_uid]:
+        #         items[i]['after']['Service'] = "(v%s)" % \
+        #              (obj.reference_versions[service_uid])
+
+        # choices defined on Service apply to result fields.
+        choices = service.getResultOptions()
+        if choices:
+            items['choices'] = {'Result': choices}
+
+        # permission to view this item's results
+        can_view_result = \
+            getSecurityManager().checkPermission(ViewResults, obj)
+
+        # permission to edit this item's results
+        # Editing Field Results is possible while in Sample Due.
+        poc = self.contentFilter.get("getPointOfCapture", 'lab')
+        can_edit_analysis = self.allow_edit and context_active and \
+            ( (poc == 'field' and getSecurityManager().checkPermission(EditFieldResults, obj))
+              or
+              (poc != 'field' and getSecurityManager().checkPermission(EditResults, obj)) )
+
+        if can_edit_analysis:
+            items['allow_edit'] = ['Method',
+                                      'Instrument',
+                                      'Analyst',
+                                      'Result',
+                                      'Remarks', ]
+            # if the Result field is editable, our interim fields are too
+            for f in self.interim_fields[obj.UID()]:
+                item['allow_edit'].append(f['keyword'])
+
+            # if there isn't a calculation then result must be re-testable,
+            # and if there are interim fields, they too must be re-testable.
+            if not items['calculation'] or \
+               (item['calculation'] and self.interim_fields[obj.UID()]):
+                item['allow_edit'].append('retested')
+
+        # If the user can attach files to analyses, show the attachment col
+        can_add_attachment = \
+            getSecurityManager().checkPermission(AddAttachment, obj)
+        if can_add_attachment or can_view_result:
+            attachments = ""
+            if hasattr(obj, 'getAttachment'):
+                for attachment in obj.getAttachment():
+                    af = attachment.getAttachmentFile()
+                    icon = af.getBestIcon()
+                    attachments += "<span class='attachment' attachment_uid='%s'>" % (attachment.UID())
+                    if icon: attachments += "<img src='%s/%s'/>" % (self.portal_url, icon)
+                    attachments += '<a href="%s/at_download/AttachmentFile"/>%s</a>' % (attachment.absolute_url(), af.filename)
+                    if can_edit_analysis:
+                        attachments += "<img class='deleteAttachmentButton' attachment_uid='%s' src='%s'/>" % (attachment.UID(), "++resource++bika.lims.images/delete.png")
+                    attachments += "</br></span>"
+            item['replace']['Attachments'] = attachments[:-12] + "</span>"
+
+        # Only display data bearing fields if we have ViewResults
+        # permission, otherwise just put an icon in Result column.
+        if can_view_result:
+            item['Result'] = result
+            item['formatted_result'] = result
+            if result != '':
+                if 'Result' in item['choices'] and item['choices']['Result']:
+                    texts = [r['ResultText'] for r
+                             in item['choices']['Result']
+                             if str(r['ResultValue']) == str(result)]
+                    if texts:
+                        item['formatted_result'] = texts[0]
+                    else:
+                        item['formatted_result'] = result
+                else:
+                    try:
+                        item['formatted_result'] = precision and \
+                            str("%%.%sf" % precision) % float(result) or result
+                    except:
+                        item['formatted_result'] = result
+                        indet = self.context.translate(_('Indet'))
+                        if result == indet:
+                            # 'Indeterminate' results flag a specific error
+                            Indet = self.context.translate(_("Indeterminate result"))
+                            item['after']['Result'] = \
+                                '<img width="16" height="16" title="%s"' % Indet + \
+                                'src="%s/++resource++bika.lims.images/exclamation.png"/>' % \
+                                (self.portal_url)
+                        # result being unfloatable is no longer an error.
+                        # else:
+                        #     # result being un-floatable, is an error.
+                        #     msg = self.context.translate(_("Invalid result"))
+                        #     item['after']['Result'] = \
+                        #         '<img width="16" height="16" title="%s"' % msg + \
+                        #         'src="%s/++resource++bika.lims.images/exclamation.png"/>' % \
+                        #         (self.portal_url)
+            item['Uncertainty'] = obj.getUncertainty(result)
+
+            spec = self.get_active_spec_dict(obj)
+
+            if spec:
+                min_val = spec.get('min', '')
+                min_str = ">{0}".format(min_val) if min_val else ''
+                max_val = spec.get('max', '')
+                max_str = "<{0}".format(max_val) if max_val else ''
+                error_val = spec.get('error', '')
+                error_str = "{0}%".format(error_val) if error_val else ''
+                rngstr = ",".join([x for x in [min_str, max_str, error_str] if x])
+            else:
+                rngstr = ""
+
+            item['Specification'] = rngstr
+
+            for name, adapter in getAdapters((obj, ), IFieldIcons):
+                auid = obj.UID()
+                alerts = adapter(specification=spec)
+                if alerts:
+                    if auid in self.field_icons:
+                        self.field_icons[auid].extend(alerts[auid])
+                    else:
+                        self.field_icons[auid] = alerts[auid]
+        else:
+            if 'Result' in item['allow_edit']:
+                item['allow_edit'].remove('Result')
+            item['before']['Result'] = \
+                '<img width="16" height="16" ' + \
+                'src="%s/++resource++bika.lims.images/to_follow.png"/>' % \
+                (self.portal_url)
+
+        # Add this analysis' interim fields to the interim_columns list
+        for f in self.interim_fields[obj.UID()]:
+            if f['keyword'] not in self.interim_columns and not f.get('hidden', False):
+                self.interim_columns[f['keyword']] = f['title']
+            # and to the item itself
+            item[f['keyword']] = f
+            item['class'][f['keyword']] = 'interim'
+
+        # check if this analysis is late/overdue
+        resultdate = obj.aq_parent.getDateSampled() \
+            if obj.portal_type == 'ReferenceAnalysis' \
+            else obj.getResultCaptureDate()
+
+        duedate = obj.aq_parent.getExpiryDate() \
+            if obj.portal_type == 'ReferenceAnalysis' \
+            else obj.getDueDate()
+
+        item['replace']['DueDate'] = \
+            self.ulocalized_time(duedate, long_format=1)
+
+        if item['review_state'] not in ['to_be_sampled',
+                                        'to_be_preserved',
+                                        'sample_due',
+                                        'published']:
+
+            if (resultdate and resultdate > duedate) \
+                or (not resultdate and DateTime() > duedate):
+
+                item['replace']['DueDate'] = '%s <img width="16" height="16" src="%s/++resource++bika.lims.images/late.png" title="%s"/>' % \
+                    (self.ulocalized_time(duedate, long_format=1),
+                     self.portal_url,
+                     self.context.translate(_("Late Analysis")))
+
+        # Submitting user may not verify results (admin can though)
+        if item['review_state'] == 'to_be_verified' and \
+           not checkPermission(VerifyOwnResults, obj):
+            user_id = getSecurityManager().getUser().getId()
+            self_submitted = False
+            try:
+                review_history = list(workflow.getInfoFor(obj, 'review_history'))
+                review_history.reverse()
+                for event in review_history:
+                    if event.get('action') == 'submit':
+                        if event.get('actor') == user_id:
+                            self_submitted = True
+                        break
+                if self_submitted:
+                    item['after']['state_title'] = \
+                         "<img src='++resource++bika.lims.images/submitted-by-current-user.png' title='%s'/>" % \
+                         (self.context.translate(_("Cannot verify: Submitted by current user")))
+            except WorkflowException:
+                pass
+
+        # add icon for assigned analyses in AR views
+        if self.context.portal_type == 'AnalysisRequest':
+            if obj.portal_type in ['ReferenceAnalysis',
+                                   'DuplicateAnalysis'] or \
+               workflow.getInfoFor(obj, 'worksheetanalysis_review_state') == 'assigned':
+                br = obj.getBackReferences('WorksheetAnalysis')
+                if len(br) > 0:
+                    ws = br[0]
+                    item['after']['state_title'] = \
+                         "<a href='%s'><img src='++resource++bika.lims.images/worksheet.png' title='%s'/></a>" % \
+                         (ws.absolute_url(), self.context.translate(
+                             _("Assigned to: ${worksheet_id}",
+                               mapping={'worksheet_id': ws.id})))
+
+        # the TAL requires values for all interim fields on all
+        # items, so we set blank values in unused cells
+        for field in self.interim_columns:
+            item[field] = item.get(field,'')
+
+        if self._isreportdrymatter:
+            # if the item's Service supports ReportDryMatter, add getResultDM().
+            item['ResultDM'] = ''
+            if obj.getService().getReportDryMatter():
+                item['ResultDM'] = obj.getResultDM()
+                item['after']['ResultDM'] = "<em class='discreet'>%</em>"
+
     def folderitems(self):
-        rc = getToolByName(self.context, REFERENCE_CATALOG)
-        bsc = getToolByName(self.context, 'bika_setup_catalog')
-        workflow = getToolByName(self.context, 'portal_workflow')
+        self._rc = getToolByName(self.context, REFERENCE_CATALOG)
+        self._bsc = getToolByName(self.context, 'bika_setup_catalog')
+        self._wf = getToolByName(self.context, 'portal_workflow')
         mtool = getToolByName(self.context, 'portal_membership')
-        checkPermission = mtool.checkPermission
+        self._checkPermission = mtool.checkPermission
         if not self.allow_edit:
-            can_edit_analyses = False
+            self.can_edit_analyses = False
         else:
             if self.contentFilter.get('getPointOfCapture', '') == 'field':
-                can_edit_analyses = checkPermission(EditFieldResults, self.context)
+                self.can_edit_analyses = checkPermission(EditFieldResults, self.context)
             else:
-                can_edit_analyses = checkPermission(EditResults, self.context)
+                self.can_edit_analyses = checkPermission(EditResults, self.context)
             self.allow_edit = can_edit_analyses
         self.show_select_column = self.allow_edit
         context_active = isActive(self.context)
 
         items = super(AnalysesView, self).folderitems(full_objects = True)
 
-        # manually skim retracted analyses from the list
-        new_items = []
-        for i,item in enumerate(items):
-            # self.contentsMethod may return brains or objects.
-            if not ('obj' in items[i]):
-                continue
-            obj = hasattr(items[i]['obj'], 'getObject') and \
-                items[i]['obj'].getObject() or \
-                items[i]['obj']
-            if workflow.getInfoFor(obj, 'review_state') == 'retracted' \
-                and not checkPermission(ViewRetractedAnalyses, self.context):
-                continue
-            new_items.append(item)
-        items = new_items
 
         methods = self.get_methods_vocabulary()
 
@@ -262,6 +569,7 @@ class AnalysesView(BikaListingView):
         self.interim_columns = {}
         # self.specs = {}
         for i, item in enumerate(items):
+            """
             # self.contentsMethod may return brains or objects.
             obj = hasattr(items[i]['obj'], 'getObject') and \
                 items[i]['obj'].getObject() or \
@@ -276,6 +584,7 @@ class AnalysesView(BikaListingView):
             unit = service.getUnit()
             keyword = service.getKeyword()
             precision = service.getPrecision()
+
 
             if self.show_categories:
                 cat = obj.getService().getCategoryTitle()
@@ -539,7 +848,7 @@ class AnalysesView(BikaListingView):
             for field in self.interim_columns:
                 if field not in item:
                     item[field] = ''
-
+"""
         # XXX order the list of interim columns
         interim_keys = self.interim_columns.keys()
         interim_keys.reverse()
@@ -579,7 +888,7 @@ class AnalysesView(BikaListingView):
         if items and \
             (hasattr(self.context, 'getReportDryMatter') and \
              self.context.getReportDryMatter()):
-
+"""
             # look through all items
             # if the item's Service supports ReportDryMatter, add getResultDM().
             for item in items:
@@ -589,7 +898,7 @@ class AnalysesView(BikaListingView):
                     item['ResultDM'] = ''
                 if item['ResultDM']:
                     item['after']['ResultDM'] = "<em class='discreet'>%</em>"
-
+"""
             # modify the review_states list to include the ResultDM column
             new_states = []
             for state in self.review_states:
