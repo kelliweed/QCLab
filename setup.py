@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-version = '3.01a'
+version = '3.1'
 
 setup(name='bika.lims',
       version=version,
@@ -46,7 +46,8 @@ setup(name='bika.lims',
               'plone.app.testing',
               'robotsuite',
               'robotframework-selenium2library',
-              'plone.app.robotframework'
+              'plone.app.robotframework',
+              'robotframework-debuglibrary',
           ]
       },
       entry_points="""

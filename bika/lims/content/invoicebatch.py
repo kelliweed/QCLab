@@ -1,29 +1,34 @@
 """InvoiceBatch is a container for Invoice instances.
 """
-from DateTime import DateTime
 from AccessControl import ClassSecurityInfo
-from Products.Archetypes.public import *
-from Products.CMFCore  import permissions
+from Products.CMFPlone.utils import _createObjectByType
 from bika.lims import bikaMessageFactory as _
-from bika.lims.config import PostInvoiceBatch, ManageInvoices, PROJECTNAME
+from bika.lims.utils import t
+from bika.lims.config import ManageInvoices, PROJECTNAME
 from bika.lims.content.bikaschema import BikaSchema
+from bika.lims.content.invoice import InvoiceLineItem
 from bika.lims.interfaces import IInvoiceBatch
 from bika.lims.utils import get_invoice_item_description
+from DateTime import DateTime
+from Products.Archetypes.public import *
+from Products.CMFCore import permissions
+from bika.lims.workflow import isBasicTransitionAllowed
+from zope.container.contained import ContainerModifiedEvent
 from zope.interface import implements
 
 schema = BikaSchema.copy() + Schema((
     DateTimeField('BatchStartDate',
-        required = 1,
-        default_method = 'current_date',
-        widget = CalendarWidget(
-            label = _("Batch start date"),
+        required=1,
+        default_method='current_date',
+        widget=CalendarWidget(
+            label=_("Start Date"),
         ),
     ),
     DateTimeField('BatchEndDate',
-        required = 1,
-        default_method = 'current_date',
-        widget = CalendarWidget(
-            label = _("Batch end date"),
+        required=1,
+        default_method='current_date',
+        widget=CalendarWidget(
+            label=_("End Date"),
         ),
     ),
 ),
@@ -31,7 +36,9 @@ schema = BikaSchema.copy() + Schema((
 
 schema['title'].default = DateTime().strftime('%b %Y')
 
+
 class InvoiceBatch(BaseFolder):
+
     """ Container for Invoice instances """
     implements(IInvoiceBatch)
     security = ClassSecurityInfo()
@@ -77,25 +84,24 @@ class InvoiceBatch(BaseFolder):
     #         _message2 = ''
     #         _message3 = ''
 
-    #         items = invoice.objectValues('InvoiceLineItem')
+    # items = invoice.invoice_lineitems # objectValues('InvoiceLineItem')
     #         mixed = [(item.getClientOrderNumber(), item) for item in items]
     #         mixed.sort()
     #         lines = [t[1] for t in mixed]
 
-    #         #iterate through each invoice line
+    # iterate through each invoice line
     #         for line in lines:
     #             if new_invoice or line.getClientOrderNumber() != _ordNum:
     #                 new_invoice = False
     #                 _ordNum = line.getClientOrderNumber()
 
-    #                 #create header csv entry as a list
+    # create header csv entry as a list
     #                 header = [ \
     #                     "Header", _invNum, " ", " ", _clientNum, _periodNum, \
     #                     _invDate, _ordNum, "N", 0, _message1, _message2, \
     #                     _message3, "", "", "", "", "", "", 0, "", "", "", "", \
     #                     0, "", "", "N"]
     #                 rows.append(header)
-
 
     #             _quant = 1
     #             _unitp = line.getSubtotal()
@@ -108,33 +114,29 @@ class InvoiceBatch(BaseFolder):
     #                 _icode = "001"
     #             _ltype = "4"
     #             _ccode = ""
-
-    #             #create detail csv entry as a list
+    # create detail csv entry as a list
     #             detail = ["Detail", 0, _quant, _unitp, _inclp, \
     #                       "", "01", "0", "0", _icode, _desc, \
     #                       _ltype, _ccode, ""]
     #             rows.append(detail)
-
-    #     #convert lists to csv string
+    # convert lists to csv string
     #     ramdisk = StringIO()
     #     writer = csv.writer(ramdisk, delimiter = delimiter)
     #     assert(writer)
-
     #     writer.writerows(rows)
     #     result = ramdisk.getvalue()
     #     ramdisk.close()
-
-    #     #stream file to browser
+    # stream file to browser
     #     setheader = RESPONSE.setHeader
     #     setheader('Content-Length', len(result))
     #     setheader('Content-Type',
     #         'text/x-comma-separated-values')
     #     setheader('Content-Disposition', 'inline; filename=%s' % filename)
     #     RESPONSE.write(result)
-
     #     return
 
     security.declareProtected(ManageInvoices, 'invoices')
+
     def invoices(self):
         return self.objectValues('Invoice')
 
@@ -146,12 +148,69 @@ class InvoiceBatch(BaseFolder):
     #     if REQUEST:
     #         REQUEST.RESPONSE.redirect('invoicebatch_invoices')
 
-    security.declareProtected(ManageInvoices, 'create_batch')
-    def create_batch(self):
+    security.declareProtected(ManageInvoices, 'createInvoice')
+
+    def createInvoice(self, client_uid, items):
+        """ Creates and invoice for a client and a set of items
+        """
+        invoice_id = self.generateUniqueId('Invoice')
+        invoice = _createObjectByType("Invoice", self, invoice_id)
+        invoice.edit(
+            Client=client_uid,
+            InvoiceDate=DateTime(),
+        )
+        invoice.processForm()
+        invoice.invoice_lineitems = []
+        for item in items:
+            lineitem = InvoiceLineItem()
+            if item.portal_type == 'AnalysisRequest':
+                lineitem['ItemDate'] = item.getDatePublished()
+                lineitem['OrderNumber'] = item.getRequestID()
+                description = get_invoice_item_description(item)
+                lineitem['ItemDescription'] = description
+            elif item.portal_type == 'SupplyOrder':
+                lineitem['ItemDate'] = item.getDateDispatched()
+                lineitem['OrderNumber'] = item.getOrderNumber()
+                description = get_invoice_item_description(item)
+                lineitem['ItemDescription'] = description
+            lineitem['Subtotal'] = item.getSubtotal()
+            lineitem['VATAmount'] = item.getVATAmount()
+            lineitem['Total'] = item.getTotal()
+            invoice.invoice_lineitems.append(lineitem)
+        invoice.reindexObject()
+
+    security.declarePublic('current_date')
+
+    def current_date(self):
+        """ return current date """
+        return DateTime()
+
+    def guard_cancel_transition(self):
+        if not isBasicTransitionAllowed(self):
+            return False
+        return True
+
+    def guard_reinstate_transition(self):
+        if not isBasicTransitionAllowed(self):
+            return False
+        return True
+
+registerType(InvoiceBatch, PROJECTNAME)
+
+
+def ObjectModifiedEventHandler(instance, event):
+    """ Various types need automation on edit.
+    """
+    # if not hasattr(instance, 'portal_type'):
+    #     return
+
+    # if instance.portal_type == 'InvoiceBatch':
+
+    if not isinstance(event, ContainerModifiedEvent):
         """ Create batch invoices
         """
-        start = self.getBatchStartDate()
-        end = self.getBatchEndDate()
+        start = instance.getBatchStartDate()
+        end = instance.getBatchEndDate()
         # Query for ARs in date range
         query = {
             'portal_type': 'AnalysisRequest',
@@ -162,7 +221,7 @@ class InvoiceBatch(BaseFolder):
                 'query': [start, end]
             }
         }
-        ars = self.bika_catalog(query)
+        ars = instance.bika_catalog(query)
         # Query for Orders in date range
         query = {
             'portal_type': 'SupplyOrder',
@@ -172,7 +231,7 @@ class InvoiceBatch(BaseFolder):
                 'query': [start, end]
             }
         }
-        orders = self.portal_catalog(query)
+        orders = instance.portal_catalog(query)
         # Make list of clients from found ARs and Orders
         clients = {}
         for rs in (ars, orders):
@@ -186,57 +245,4 @@ class InvoiceBatch(BaseFolder):
                 clients[client_uid] = l
         # Create an invoice for each client
         for client_uid, items in clients.items():
-            self.createInvoice(client_uid, items)
-        # Redirect to the appropriate view
-        self.REQUEST.RESPONSE.redirect('invoices')
-
-
-    security.declareProtected(ManageInvoices, 'createInvoice')
-    def createInvoice(self, client_uid, items):
-        """ Creates and invoice for a client and a set of items
-        """
-        invoice_id = self.generateUniqueId('Invoice')
-        self.invokeFactory(id=invoice_id, type_name='Invoice')
-        invoice = self._getOb(invoice_id)
-        invoice.edit(
-            Client = client_uid,
-            InvoiceDate = DateTime(),
-        )
-        invoice.processForm()
-        for item in items:
-            lineitem_id = self.generateUniqueId('InvoiceLineItem')
-            invoice.invokeFactory(id=lineitem_id, type_name='InvoiceLineItem')
-            lineitem = invoice._getOb(lineitem_id)
-            if item.portal_type == 'AnalysisRequest':
-                lineitem.setItemDate(item.getDatePublished())
-                lineitem.setClientOrderNumber(item.getClientOrderNumber())
-                item_description = get_invoice_item_description(item)
-                l = [item.getRequestID(), item_description]
-                description = ' '.join(l)
-            elif item.portal_type == 'SupplyOrder':
-                lineitem.setItemDate(item.getDateDispatched())
-                description = item.getOrderNumber()
-            lineitem.setItemDescription(description)
-            lineitem.setSubtotal(str(item.getSubtotal()))
-            lineitem.setVATTotal(str(item.getVATTotal()))
-            lineitem.setTotal(str(item.getTotal()))
-            lineitem.reindexObject()
-            item.setInvoice(invoice)
-            lineitem.processForm()
-        invoice.reindexObject()
-
-    security.declareProtected(permissions.ModifyPortalContent, 'processForm')
-    def processForm(self, data = 1, metadata = 0, REQUEST = None, values = None):
-        """ Override BaseObject.processForm so that we can perform setup
-            task once the form is filled in
-        """
-        BaseFolder.processForm(self, data=data, metadata=metadata,
-            REQUEST=REQUEST, values=values)
-        self.create_batch()
-
-    security.declarePublic('current_date')
-    def current_date(self):
-        """ return current date """
-        return DateTime()
-
-registerType(InvoiceBatch, PROJECTNAME)
+            instance.createInvoice(client_uid, items)

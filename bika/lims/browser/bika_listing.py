@@ -13,18 +13,21 @@ from bika.lims.browser import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from bika.lims import PMF
 from bika.lims import bikaMessageFactory as _
+from bika.lims.utils import t
 from bika.lims import logger
+from bika.lims.interfaces import IFieldIcons
 from bika.lims.subscribers import doActionFor
 from bika.lims.subscribers import skip
-from bika.lims.utils import isActive
+from bika.lims.utils import isActive, getHiddenAttributesForClass
+from bika.lims.utils import to_utf8
 from operator import itemgetter
 from plone.app.content.browser import tableview
 from plone.app.content.browser.foldercontents import FolderContentsView, FolderContentsTable
 from plone.app.content.browser.interfaces import IFolderContentsView
 from plone.i18n.normalizer.interfaces import IIDNormalizer
+from zope.component import getAdapters
 from zope.component import getUtility
 from zope.component._api import getMultiAdapter
-from zope.i18n import translate
 from zope.i18nmessageid import MessageFactory
 from zope.interface import implements
 from zope.interface import Interface
@@ -51,11 +54,13 @@ class WorkflowAction:
     def __init__(self, context, request):
         self.destination_url = ""
         self.context = context
+
         self.request = request
         # Save context UID for benefit of event subscribers.
         self.request['context_uid'] = hasattr(self.context, 'UID') and \
             self.context.UID() or ''
         self.portal = getToolByName(self.context, 'portal_url').getPortalObject()
+
         self.portal_url = self.portal.absolute_url()
 
     def _get_form_workflow_action(self):
@@ -109,13 +114,13 @@ class WorkflowAction:
             if items:
                 trans, dest = self.submitTransition(action, came_from, items)
                 if trans:
-                    message = self.context.translate(PMF('Changes saved.'))
+                    message = PMF('Changes saved.')
                     self.context.plone_utils.addPortalMessage(message, 'info')
                 if dest:
                     self.request.response.redirect(dest)
                     return
             else:
-                message = self.context.translate(_('No items selected'))
+                message = _('No items selected')
                 self.context.plone_utils.addPortalMessage(message, 'warn')
 
         # Do nothing
@@ -140,14 +145,13 @@ class WorkflowAction:
             if not isActive(item) and action not in ('reinstate', 'activate'):
                 continue
             if not skip(item, action, peek=True):
-                allowed_transitions = [t['id'] for t in \
+                allowed_transitions = [it['id'] for it in \
                                        workflow.getTransitionsFor(item)]
                 if action in allowed_transitions:
                     success, message = doActionFor(item, action)
                     if success:
                         transitioned.append(item.id)
                     else:
-                        message = self.context.translate(message)
                         self.context.plone_utils.addPortalMessage(message, 'error')
         # automatic label printing
         if transitioned and action == 'receive' \
@@ -282,6 +286,7 @@ class BikaListingView(BrowserView):
         self.view_url = self.base_url
 
         self.translate = self.context.translate
+        self.show_all = False
 
     def _process_request(self):
         # Use this function from a template that is using bika_listing_table
@@ -424,6 +429,8 @@ class BikaListingView(BrowserView):
                             valroot = '%s-%s' % (valroot, vals[i])
                             self.Or.append(MatchRegexp(index, valroot+'-*'))
                 elif idx.meta_type == 'DateIndex':
+                    if type(value) in (list, tuple):
+                        value = value[0]
                     if value.find(":") > -1:
                         try:
                             lohi = [DateTime(x) for x in value.split(":")]
@@ -504,6 +511,11 @@ class BikaListingView(BrowserView):
                     cats.append(cat)
         return cats
 
+    def isItemAllowed(self, obj):
+        """ return if the item can be added to the items list.
+        """
+        return True
+
     def folderitem(self, obj, item, index):
         """ Service triggered each time an item is iterated by
             folderitems. This avoid extra-looping in child classes.
@@ -520,7 +532,21 @@ class BikaListingView(BrowserView):
     def folderitems(self, full_objects = False):
         """ Use folderitem instead of folderitems if you want to modify
             the items on child classes
+        >>> portal = layer['portal']
+        >>> portal_url = portal.absolute_url()
+        >>> from plone.app.testing import SITE_OWNER_NAME
+        >>> from plone.app.testing import SITE_OWNER_PASSWORD
+
+        Test page batching https://github.com/bikalabs/Bika-LIMS/issues/1276
+        When visiting the second page, the Water sampletype should be displayed:
+
+        >>> browser = layer['getBrowser'](portal, loggedIn=True, username=SITE_OWNER_NAME, password=SITE_OWNER_PASSWORD)
+        >>> browser.open(portal_url+"/bika_setup/bika_sampletypes/folder_view?",
+        ... "list_pagesize=10&list_review_state=default&list_pagenumber=2")
+        >>> browser.contents
+        '...Water...'
         """
+
         #self.contentsMethod = self.context.getFolderContents
         if not hasattr(self, 'contentsMethod'):
             self.contentsMethod = getToolByName(self.context, self.catalog)
@@ -534,7 +560,7 @@ class BikaListingView(BrowserView):
         workflow = getToolByName(context, 'portal_workflow')
         site_properties = portal_properties.site_properties
         norm = getUtility(IIDNormalizer).normalize
-        show_all = self.request.get('show_all', '').lower() == 'true'
+        show_all = self.request.get('show_all', '').lower() == 'true' or self.show_all==True
         pagenumber = int(self.request.get('pagenumber', 1) or 1)
         pagesize = self.pagesize
         start = (pagenumber - 1) * pagesize
@@ -564,8 +590,10 @@ class BikaListingView(BrowserView):
 
         idx=0
         results = []
-        self.page_start_index = ""
+        self.page_start_index = 0
+        current_index = 0
         for i, obj in enumerate(brains):
+            current_index += 1
             # we don't know yet if it's a brain or an object
             path = hasattr(obj, 'getPath') and obj.getPath() or \
                  "/".join(obj.getPhysicalPath())
@@ -579,8 +607,6 @@ class BikaListingView(BrowserView):
                     uid = obj.UID()
                 results.append(dict(path = path, uid = uid))
                 continue
-            if self.page_start_index == "":
-                self.page_start_index = i
 
             if hasattr(obj, 'getObject'):
                 obj = obj.getObject()
@@ -601,11 +627,10 @@ class BikaListingView(BrowserView):
             else:
                 type_title_msgid = obj.portal_type
 
-            url_href_title = u'%s at %s: %s' % \
-                (self.context.translate(type_title_msgid,
-                                        context = self.request),
-                 path,
-                 safe_unicode(description))
+            url_href_title = '%s at %s: %s' % (
+                t(type_title_msgid),
+                path,
+                to_utf8(description))
 
             modified = self.ulocalized_time(obj.modified()),
 
@@ -658,9 +683,9 @@ class BikaListingView(BrowserView):
             )
             try:
                 review_state = workflow.getInfoFor(obj, 'review_state')
-                state_title = self.context.translate(
-                    PMF(workflow.getTitleForStateOnType(review_state,
-                                                    obj.portal_type)))
+                state_title = workflow.getTitleForStateOnType(
+                    review_state, obj.portal_type)
+                state_title = t(PMF(state_title))
             except:
                 review_state = 'active'
                 state_title = None
@@ -673,24 +698,19 @@ class BikaListingView(BrowserView):
                 results_dict[state_var] = state
             results_dict['state_title'] = state_title
 
-# XXX add some kind of out-of-date indicator to bika listing
-##            if App.config.getConfiguration().debug_mode:
-##                from Products.CMFEditions.utilities import dereference
-##                pr = getToolByName(self.context, 'portal_repository')
-##                o = hasattr(obj, 'getObject') and obj.getObject() or obj
-##                if pr.isVersionable(o):
-##                    pa = getToolByName(self.context, 'portal_archivist')
-##                    history_id = str(dereference(o)[1])
-##                    version_id = hasattr(o, 'version_id') \
-##                               and str(o.version_id) or None
-##                    if not 'version_id' in self.columns.keys():
-##                        self.columns['version_id'] = {'title':'version'}
-##                        for x in range(len(self.review_states)):
-##                            self.review_states[x]['columns'].append('version_id')
-##                    results_dict['version_id'] = '%s/%s' % (version_id, history_id)
-
             # extra classes for individual fields on this item { field_id : "css classes" }
             results_dict['class'] = {}
+            for name, adapter in getAdapters((obj, ), IFieldIcons):
+                auid = obj.UID() if hasattr(obj, 'UID') and callable(obj.UID) else None
+                if not auid:
+                    continue
+                alerts = adapter()
+                # logger.info(str(alerts))
+                if alerts and auid in alerts:
+                    if auid in self.field_icons:
+                        self.field_icons[auid].extend(alerts[auid])
+                    else:
+                        self.field_icons[auid] = alerts[auid]
 
             # Search for values for all columns in obj
             for key in self.columns.keys():
@@ -745,8 +765,8 @@ class BikaListingView(BrowserView):
         actions = []
         for obj in [i.get('obj', '') for i in self.items]:
             obj = hasattr(obj, 'getObject') and obj.getObject() or obj
-            for t in workflow.getTransitionsFor(obj):
-                transitions[t['id']] = t
+            for it in workflow.getTransitionsFor(obj):
+                transitions[it['id']] = it
 
         # the list is restricted to and ordered by these transitions.
         if 'transitions' in review_state:
@@ -761,6 +781,12 @@ class BikaListingView(BrowserView):
             actions = [a for a in actions
                        if a['id'] not in review_state['hide_transitions']]
 
+        # cheat: until workflow_action is abolished, all URLs defined in
+        # GS workflow setup will be ignored, and the default will apply.
+        # (that means, WorkflowAction-bound URL is called).
+        for i, action in enumerate(actions):
+            actions[i]['url'] = ''
+
         # if there is a review_state['some_state']['custom_actions'] attribute
         # on the BikaListingView, add these actions to the list.
         if 'custom_actions' in review_state:
@@ -769,8 +795,16 @@ class BikaListingView(BrowserView):
 
         for a,action in enumerate(actions):
             actions[a]['title'] = \
-                self.translate(PMF(actions[a]['id'] + "_transition_title"))
+                t(PMF(actions[a]['id'] + "_transition_title"))
         return actions
+
+    def getPriorityIcon(self):
+        if hasattr(self.context, 'getPriority'):
+            priority = self.context.getPriority()
+            if priority:
+                icon = priority.getBigIcon()
+                if icon:
+                    return '/'.join(icon.getPhysicalPath())
 
 class BikaListingTable(tableview.Table):
 
@@ -783,6 +817,7 @@ class BikaListingTable(tableview.Table):
         self.pagesize = bika_listing.pagesize
         folderitems = bika_listing.folderitems()
         bika_listing.items = folderitems
+        self.hide_hidden_attributes()
 
         if hasattr(self.bika_listing, 'manual_sort_on') \
            and self.bika_listing.manual_sort_on:
@@ -812,6 +847,26 @@ class BikaListingTable(tableview.Table):
         self.request = bika_listing.request
         self.form_id = bika_listing.form_id
         self.items = folderitems
+
+    def hide_hidden_attributes(self):
+        """Use the bika_listing's contentFilter's portal_type
+        values, if any, to remove fields from review_states if they
+        are marked as hidden in the registry.
+        """
+        if 'portal_type' not in self.bika_listing.contentFilter:
+            return
+        ptlist = self.bika_listing.contentFilter['portal_type']
+        if isinstance(ptlist, basestring):
+            ptlist = [ptlist, ]
+        new_states = []
+        for portal_type in ptlist:
+            hiddenattributes = getHiddenAttributesForClass(portal_type)
+            for i, state in enumerate(self.bika_listing.review_states):
+                for field in state['columns']:
+                    if field in hiddenattributes:
+                        state['columns'].remove(field)
+                new_states.append(state)
+        self.bika_listing.review_states = new_states
 
     def tabindex(self):
         i = 0

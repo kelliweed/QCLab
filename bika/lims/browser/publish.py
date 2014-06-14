@@ -1,16 +1,19 @@
+from operator import itemgetter
 from bika.lims import bikaMessageFactory as _
+from bika.lims.utils import t
 from bika.lims.browser import BrowserView
 from bika.lims.config import POINTS_OF_CAPTURE
-from bika.lims.interfaces import IFieldIcons
+from bika.lims.interfaces import IResultOutOfRange
 from bika.lims.utils import encode_header, createPdf, attachPdf
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.Utils import formataddr
+from bika.lims.utils import to_utf8
 from os.path import join
 from pkg_resources import resource_filename
 from Products.CMFCore.utils import getToolByName
 from Products.CMFCore.WorkflowCore import WorkflowException
-from Products.CMFPlone.utils import safe_unicode
+from Products.CMFPlone.utils import safe_unicode, _createObjectByType
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from smtplib import SMTPRecipientsRefused
 from smtplib import SMTPServerDisconnected
@@ -21,7 +24,6 @@ import Globals
 
 
 class doPublish(BrowserView):
-
     """Pre/Re/Publish analysis requests"""
     template = ViewPageTemplateFile("mailtemplates/analysisrequest_results.pt")
 
@@ -31,6 +33,18 @@ class doPublish(BrowserView):
         self.field_icons = {}
         # the workflow transition that invoked us
         self.action = action
+
+        self.member = None
+        self.username = ""
+        self.reporter = ""
+        self.reporter_email = ""
+        self.reporter_signature = ""
+
+        self.check_previous = context.bika_setup.getIncludePreviousFromBatch()
+        self.previous_results = {}
+        self.prev_strings = {}
+        self.any_prev = False
+
         # the list of ARs that we will process.
         # Filter them here so we only publish those with verified analyses.
         workflow = getToolByName(self.context, 'portal_workflow')
@@ -42,32 +56,32 @@ class doPublish(BrowserView):
                 self.analysis_requests.append(ar)
 
     def get_active_spec_object(self):
-        # 1) pub spec first
-        # 2) AR spec attribute
-        # 3) None
+        """ Return the specification that should be used for this analysis' result
+            1. If the request contains PublicationSpecificaton (a UID)
+               it is used.
+            2. If there is a Specification field (on an AR at least there is),
+               we return it's result
+            3. None
+        """
         spec_uid = self.request.get('PublicationSpecification', '')
         bsc = getToolByName(self.context, 'bika_setup_catalog')
-        obj = None
-        if spec_uid:
-            brains = bsc(UID=spec_uid)
-            if brains:
-                obj = brains[0].getObject()
-        if hasattr(self.context, 'getSpecification') and not obj:
-            if self.context.getSpecification():
-                obj = self.context.getSpecification()
-        return obj
+        brains = bsc(UID=spec_uid) if spec_uid else None
+        spec = brains[0].getObject() if brains else None
+        if spec:
+            return spec
+        if hasattr(self.context, 'getSpecification'):
+            return self.context.getSpecification()
+        return None
 
     def get_active_spec_title(self):
         obj = self.get_active_spec_object()
         if obj:
-            return obj.Title()
+            return to_utf8(obj.Title())
         return ""
 
     def get_active_spec_dict(self, analysis):
-        # 1) pub/AR spec first
-        # 2) specs directly on the analysis
-        # 3) None
-
+        """ Return value of get_active_spec_object as a nice dict
+        """
         obj = self.get_active_spec_object()
         if obj:
             rr = obj.getResultsRangeDict()
@@ -80,18 +94,17 @@ class doPublish(BrowserView):
 
     def ResultOutOfRange(self, analysis):
         """ Template wants to know, is this analysis out of range?
-        We scan IFieldIcons adapters, and return True if any IAnalysis
+        We scan IResultOutOfRange adapters, and return True if any IAnalysis
         adapters trigger a result.
         """
-        adapters = getAdapters((analysis, ), IFieldIcons)
+        adapters = getAdapters((analysis, ), IResultOutOfRange)
         bsc = getToolByName(self.context, "bika_setup_catalog")
         spec = self.get_active_spec_dict(analysis)
         for name, adapter in adapters:
-            obj = self.get_active_spec_object()
             if not spec:
                 return False
-            alerts = adapter(specification=spec)
-            if alerts and analysis.UID() in alerts:
+            ret = adapter(specification=spec)
+            if ret and ret['out_of_range']:
                 return True
 
     def getAnalysisSpecsStr(self, spec):
@@ -104,138 +117,241 @@ class doPublish(BrowserView):
             specstr = '< %s' % spec['max']
         return specstr
 
-    def __call__(self):
-
-        debug_mode = App.config.getConfiguration().debug_mode
-        out_path = join(Globals.INSTANCE_HOME, 'var') if debug_mode else None
-        workflow = getToolByName(self.context, 'portal_workflow')
-        # reporting user
-        member = self.context.portal_membership.getAuthenticatedMember()
-        username = member.getUserName()
-        self.reporter = self.user_fullname(username)
-        self.reporter_email = self.user_email(username)
+    def _get_user_attributes(self):
+        self.member = self.context.portal_membership.getAuthenticatedMember()
+        self.username = self.member.getUserName()
+        self.reporter = to_utf8(self.user_fullname(self.username))
+        self.reporter_email = to_utf8(self.user_email(self.username))
         self.reporter_signature = ""
         c = [x for x in self.bika_setup_catalog(portal_type='LabContact')
-             if x.getObject().getUsername() == username]
+             if x.getObject().getUsername() == self.username]
         if c:
             sf = c[0].getObject().getSignature()
             if sf:
                 self.reporter_signature = sf.absolute_url() + "/Signature"
 
-        # lab address
-        # forced into a table for weasy-print.
-        self.laboratory = laboratory = self.context.bika_setup.laboratory
-        lab_address = laboratory.getPostalAddress() \
-            or laboratory.getBillingAddress() \
-            or laboratory.getPhysicalAddress()
+    def _get_lab_attributes(self):
+        lab = self.context.bika_setup.laboratory
+        lab_address = lab.getPostalAddress() \
+                      or lab.getBillingAddress() \
+                      or lab.getPhysicalAddress()
         if lab_address:
             _keys = ['address', 'city', 'state', 'zip', 'country']
-            _list = ["<div>%s</div>"%lab_address.get(v) for v in _keys
+            _list = ["<div>%s</div>" % lab_address.get(v) for v in _keys
                      if lab_address.get(v)]
-            self.lab_address = "".join(_list)
+            lab_address = "".join(_list)
         else:
-            self.lab_address = None
+            lab_address = ''
+        self.laboratory = {
+            'obj': lab,
+            'Title': to_utf8(lab.Title()),
+            'getLabURL': to_utf8(lab.getLabURL()),
+            'address': to_utf8(lab_address),
+            'getAccreditationBody': to_utf8(lab.getAccreditationBody()),
+        }
 
-        for ar in self.analysis_requests:
-            self.ar = ar
-            self.contact = ar.getContact()
-            self.pub_pref = self.contact.getPublicationPreference()
+    def _get_client_attribues(self, ar):
+        client = ar.aq_parent
+        client_address = client.getPostalAddress()
+        contact = ar.getContact()
+        if contact and not client_address:
+            client_address = contact.getBillingAddress()
+            if not client_address:
+                client_address = contact.getPhysicalAddress()
+        if client_address:
+            _keys = ['address', 'city', 'state', 'zip', 'country']
+            _list = ["<div>%s</div>" % client_address.get(v) for v in _keys
+                     if client_address.get(v)]
+            client_address = "".join(_list)
+        else:
+            client_address = ''
+        self.client = {
+            'obj': client,
+            'Name': to_utf8(client.getName()),
+            'getPhone': to_utf8(client.getPhone()),
+            'getFax': to_utf8(client.getFax()),
+            'address': to_utf8(client_address),
+        }
 
-            # client address
-            self.client = ar.aq_parent
-            client_address = self.client.getPostalAddress() \
-                or self.contact.getBillingAddress() \
-                or self.contact.getPhysicalAddress()
-            if client_address:
-                _keys = ['address', 'city', 'state', 'zip', 'country']
-                _list = ["<div>%s</div>"%client_address.get(v) for v in _keys
-                         if client_address.get(v)]
-                self.client_address = "".join(_list)
+    def _get_ar_attributes(self, ar):
+        self.ar = {
+            'obj': ar,
+            'getClientReference': to_utf8(ar.getClientReference()),
+        }
+
+    def _get_batch_attributes(self, ar):
+        # Batch attributes
+        batch = ar.getBatch()
+        self.batch = {
+            'obj': batch,
+            'getClientBatchID': to_utf8(batch.getClientBatchID()),
+            'getBatchLabels': batch.getBatchLabels(),
+        } if batch else {'obj': None}
+
+    def _get_sample_attributes(self, ar):
+        # Sample attributes
+        sample = ar.getSample()
+        self.sample = {
+            'obj': sample,
+            'getClientSampleID': to_utf8(sample.getClientSampleID()),
+            'sampletype_title': to_utf8(sample.getSampleType().Title()),
+        }
+
+    def _get_contact_attributes(self, ar):
+        # ## Primary contact attributes
+        contact = ar.getContact()
+        self.contact = {
+            'obj': contact,
+            'getFullname': to_utf8(contact.getFullname()),
+            'getEmailAddress': to_utf8(contact.getEmailAddress()),
+            'getPublicationPreference': contact.getPublicationPreference(),
+        } if contact else {
+            'obj': contact,
+            'getFullname': "",
+            'getEmailAddress': "",
+            'getPublicationPreference': "",
+        }
+
+    def get_previous_results(self, analysis):
+        # Collect all results for this AnalysisService, in the same batch.
+        # return a string of "result, result, result".
+        workflow = getToolByName(self.context, 'portal_workflow')
+        keyword = analysis.getKeyword()
+        analyses = []
+        batch = self.batch['obj']
+        if not batch:
+            return
+        batch_ars = self.batch['obj'].getAnalysisRequests()
+        result_visible_states = ['verified', 'published']
+        for ar in batch_ars:
+            if analysis.aq_parent == ar:
+                continue
+            if keyword not in ar:
+                continue
+            an = ar[keyword]
+            an_state = workflow.getInfoFor(an, 'review_state')
+            if an.getResult() and an_state in result_visible_states:
+                self.any_prev = True
+                analyses.append({"analysis": an,
+                                 "request_id": ar.getId(),
+                                 "spec": self.get_active_spec_dict(an),
+                                 "date": an.getResultCaptureDate(),
+                                 "result": an.getResult(),
+                                 "unit": an.getService().getUnit(),
+                                 "out_of_range": self.ResultOutOfRange(an)})
+        analyses = sorted(analyses, key=itemgetter("date"))
+        self.previous_results[analysis.getKeyword()] = analyses
+        self.prev_strings[analysis.getKeyword()] = \
+            ", ".join([self.formattedResult(p['analysis']) for p in analyses[-5:]])
+
+    def _get_categorized_services(self, ar):
+        self.any_accredited = False
+        self.services = {}
+        analyses = ar.getAnalyses(full_objects=True,
+            review_state=self.publish_states)
+        analyses.sort(lambda x, y: cmp(x.Title().lower(), y.Title().lower()))
+        for analysis in analyses:
+            service = analysis.getService()
+            poc = to_utf8(POINTS_OF_CAPTURE.getValue(service.getPointOfCapture()))
+            cat = to_utf8(service.getCategoryTitle())
+            if poc not in self.services:
+                self.services[poc] = {}
+            if cat not in self.services[poc]:
+                self.services[poc][cat] = []
+            if self.check_previous:
+                self.get_previous_results(analysis)
+            if service not in self.services[poc][cat]:
+                self.services[poc][cat].append(service)
+            if service.getAccredited():
+                self.any_accredited = True
+
+    def _get_categorized_qcservices(self, ar):
+        self.qcservices = {}
+        for qcanalysis in ar.getQCAnalyses():
+            service = qcanalysis.getService()
+            qctype = ''
+            if qcanalysis.portal_type == 'DuplicateAnalysis':
+                qctype = "d"
+            elif qcanalysis.portal_type == 'ReferenceAnalysis':
+                qctype = qcanalysis.getReferenceType()
             else:
-                self.client_address = None
+                continue
+            if qctype not in self.qcservices:
+                self.qcservices[qctype] = {}
+            poc = to_utf8(
+                POINTS_OF_CAPTURE.getValue(service.getPointOfCapture()))
+            if poc not in self.qcservices[qctype]:
+                self.qcservices[qctype][poc] = {}
+            cat = to_utf8(service.getCategoryTitle())
+            if cat not in self.qcservices[qctype][poc]:
+                self.qcservices[qctype][poc][cat] = []
+            # if service not in self.qcservices[qctype][poc][cat]:
+            self.qcservices[qctype][poc][cat].append(
+                {'service': service,
+                 'analysis': qcanalysis})
 
-            self.Footer = self.context.bika_setup.getResultFooter()
+    def __call__(self):
+        workflow = getToolByName(self.context, 'portal_workflow')
+        # SMTP errors are silently ignored if server is in debug mode
+        self.debug_mode = App.config.getConfiguration().debug_mode
+        # PDF and HTML files are written to disk if server is in debug mode
+        self.out_path = join(Globals.INSTANCE_HOME, 'var') if self.debug_mode \
+            else None
+        self._get_user_attributes()
+        self._get_lab_attributes()
 
+        # This for loop prints each AR individually to a PDF stored in the AR,
+        # and sends whatever publication is required
+        for ar_nr, ar in enumerate(self.analysis_requests):
             self.any_drymatter = ar.getReportDryMatter()
-            self.any_accredited = False
+            self._get_ar_attributes(ar)
+            self._get_client_attribues(ar)
+            self._get_batch_attributes(ar)
+            self._get_sample_attributes(ar)
+            self._get_contact_attributes(ar)
+            self._get_categorized_services(ar)
+            self._get_categorized_qcservices(ar)
+            self.Footer = to_utf8(self.context.bika_setup.getResultFooter())
+            out_fn = to_utf8(ar.Title())
 
-            out_fn = ar.Title()
-
-            analyses = ar.getAnalyses(full_objects=True,
-                                      review_state=self.publish_states)
-            analyses.sort(
-                lambda x, y: cmp(x.Title().lower(), y.Title().lower()))
-
-            self.services = {}
-            self.qcservices = {}
-
-            for analysis in analyses:
-
-                service = analysis.getService()
-                poc = POINTS_OF_CAPTURE.getValue(service.getPointOfCapture())
-                cat = service.getCategoryTitle()
-                if poc not in self.services:
-                    self.services[poc] = {}
-                if cat not in self.services[poc]:
-                    self.services[poc][cat] = []
-                if service not in self.services[poc][cat]:
-                    self.services[poc][cat].append(service)
-                if (service.getAccredited()):
-                    self.any_accredited = True
-
-            for qcanalysis in ar.getQCAnalyses():
-                service = qcanalysis.getService()
-                qctype = ''
-                if qcanalysis.portal_type == 'DuplicateAnalysis':
-                    qctype = "d"
-                elif qcanalysis.portal_type == 'ReferenceAnalysis':
-                    qctype = qcanalysis.getReferenceType()
-                else:
-                    continue
-
-                if qctype not in self.qcservices:
-                    self.qcservices[qctype] = {}
-                poc = POINTS_OF_CAPTURE.getValue(service.getPointOfCapture())
-                if poc not in self.qcservices[qctype]:
-                    self.qcservices[qctype][poc] = {}
-                cat = service.getCategoryTitle()
-                if cat not in self.qcservices[qctype][poc]:
-                    self.qcservices[qctype][poc][cat] = []
-                # if service not in self.qcservices[qctype][poc][cat]:
-                self.qcservices[qctype][poc][cat].append(
-                    {'service': service,
-                     'analysis': qcanalysis})
 
             # Create the html report
             ar_results = safe_unicode(self.template()).encode('utf-8')
-            if out_path:
-                open(join(out_path, out_fn + ".html"), "w").write(ar_results)
+            if self.out_path:
+                open(join(self.out_path, out_fn + ".html"), "w").write(ar_results)
 
             # Create the pdf report (will always be attached to the AR)
-            pdf_outfile = join(out_path, out_fn + ".pdf") if out_path else None
+            pdf_outfile = join(self.out_path,
+                out_fn + ".pdf") if self.out_path else None
             pdf_css = resource_filename(
                 "bika.lims", "skins/bika/analysisrequest_results_pdf.css")
             ar_css = join(self.portal_url, "analysisrequest_results.css")
             ar_results = ar_results.replace(ar_css, pdf_css)
             pdf_report = createPdf(ar_results, pdf_outfile, css=pdf_css)
 
+            if self.contact['obj']:
+                recipients = [{
+                    'UID': self.contact['obj'].UID(),
+                    'Username': to_utf8(self.contact['obj'].getUsername()),
+                    'Fullname': to_utf8(self.contact['obj'].getFullname()),
+                    'EmailAddress': to_utf8(self.contact['obj'].getEmailAddress()),
+                    'PublicationModes': self.contact['obj'].getPublicationPreference()
+                }]
+            else:
+                recipients = []
+
             if pdf_report:
-                reportid =  self.context.generateUniqueId('ARReport')
-                ar.invokeFactory(id=reportid, type_name="ARReport")
-                report = ar._getOb(reportid)
+                reportid = self.context.generateUniqueId('ARReport')
+                report = _createObjectByType("ARReport", ar, reportid)
                 report.edit(
                     AnalysisRequest=ar.UID(),
                     Pdf=pdf_report,
                     Html=ar_results,
-                    Recipients=[{'UID': self.contact.UID(),
-                                'Username': self.contact.getUsername(),
-                                'Fullname': self.contact.getFullname(),
-                                'EmailAddress': self.contact.getEmailAddress(),
-                                'PublicationModes': self.pub_pref
-                                 }]
+                    Recipients=recipients
                 )
                 report.unmarkCreationFlag()
                 from bika.lims.idserver import renameAfterCreation
+
                 renameAfterCreation(report)
 
                 # Set status to published
@@ -252,8 +368,8 @@ class doPublish(BrowserView):
                 mime_msg = MIMEMultipart('related')
                 mime_msg['Subject'] = self.get_mail_subject(ar)[0]
                 mime_msg['From'] = formataddr(
-                            (encode_header(laboratory.getName()),
-                             laboratory.getEmailAddress()))
+                    (encode_header(self.laboratory['obj'].getName()),
+                     self.laboratory['obj'].getEmailAddress()))
                 mime_msg.preamble = 'This is a multi-part MIME message.'
                 msg_txt = MIMEText(ar_results, _subtype='html')
                 mime_msg.attach(msg_txt)
@@ -275,7 +391,8 @@ class doPublish(BrowserView):
                         host = getToolByName(self.context, 'MailHost')
                         host.send(mime_msg.as_string(), immediate=True)
                     except SMTPServerDisconnected as msg:
-                        if not debug_mode:
+                        pass
+                        if not self.debug_mode:
                             raise SMTPServerDisconnected(msg)
                     except SMTPRecipientsRefused as msg:
                         raise WorkflowException(str(msg))
@@ -286,7 +403,7 @@ class doPublish(BrowserView):
                 recips = self.get_recipients(ar)
                 for recip in recips:
                     if 'email' not in recip.get('pubpref', []) \
-                        or not recip.get('email', ''):
+                            or not recip.get('email', ''):
                         continue
 
                     title = encode_header(recip.get('title', ''))
@@ -298,8 +415,8 @@ class doPublish(BrowserView):
                     mime_msg = MIMEMultipart('related')
                     mime_msg['Subject'] = self.get_mail_subject(ar)[0]
                     mime_msg['From'] = formataddr(
-                                (encode_header(laboratory.getName()),
-                                 laboratory.getEmailAddress()))
+                        (encode_header(self.laboratory['obj'].getName()),
+                         self.laboratory['obj'].getEmailAddress()))
                     mime_msg.preamble = 'This is a multi-part MIME message.'
                     msg_txt = MIMEText(ar_results, _subtype='html')
                     mime_msg.attach(msg_txt)
@@ -317,7 +434,7 @@ class doPublish(BrowserView):
                         host = getToolByName(self.context, 'MailHost')
                         host.send(mime_msg.as_string(), immediate=True)
                     except SMTPServerDisconnected as msg:
-                        if not debug_mode:
+                        if not self.debug_mode:
                             raise SMTPServerDisconnected(msg)
                     except SMTPRecipientsRefused as msg:
                         raise WorkflowException(str(msg))
@@ -458,7 +575,7 @@ class doPublish(BrowserView):
 
     def get_titles_for_uids(self, *uids):
         uc = getToolByName(self.context, 'uid_catalog')
-        return [p.getObject().Title() for p in uc(UID=uids)]
+        return [to_utf8(p.getObject().Title()) for p in uc(UID=uids)]
 
     def get_recipients(self, ar):
         """ Return an array with the recipients and all its publication prefs
@@ -467,11 +584,12 @@ class doPublish(BrowserView):
 
         # Contact and CC's
         contact = ar.getContact()
-        recips.append({'title': contact.Title(),
-                       'email': contact.getEmailAddress(),
-                       'pubpref': contact.getPublicationPreference()})
+        if contact:
+            recips.append({'title': to_utf8(contact.Title()),
+                           'email': contact.getEmailAddress(),
+                           'pubpref': contact.getPublicationPreference()})
         for cc in ar.getCCContact():
-            recips.append({'title': cc.Title(),
+            recips.append({'title': to_utf8(cc.Title()),
                            'email': cc.getEmailAddress(),
                            'pubpref': contact.getPublicationPreference()})
 

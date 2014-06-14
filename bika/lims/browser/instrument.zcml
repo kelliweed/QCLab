@@ -14,6 +14,14 @@
 
     <browser:page
       for="bika.lims.interfaces.IInstrument"
+      name="certifications"
+      class="bika.lims.browser.instrument.InstrumentCertificationsViewView"
+      permission="zope.Public"
+      layer="bika.lims.interfaces.IBikaLIMS"
+    />
+
+    <!--browser:page
+      for="bika.lims.interfaces.IInstrument"
       name="schedule"
       class="bika.lims.browser.instrument.InstrumentScheduleView"
       permission="zope.Public"
@@ -42,13 +50,22 @@
       class="bika.lims.browser.instrument.InstrumentCalibrationsView"
       permission="zope.Public"
       layer="bika.lims.interfaces.IBikaLIMS"
-    />
+    /-->
 
     <browser:page
-      for="bika.lims.interfaces.IInstrument"
-      name="certifications"
-      class="bika.lims.browser.instrument.InstrumentCertificationsView"
+      for="*"
+      name="get_instrument_method"
+      class="bika.lims.browser.instrument.ajaxGetInstrumentMethod"
       permission="zope.Public"
       layer="bika.lims.interfaces.IBikaLIMS"
     />
+
+    <browser:page
+      for="*"
+      name="get_instruments_alerts"
+      class="bika.lims.browser.instrument.ajaxGetInstrumentsAlerts"
+      permission="cmf.ModifyPortalContent"
+      layer="bika.lims.interfaces.IBikaLIMS"
+    />
+
 </configure>

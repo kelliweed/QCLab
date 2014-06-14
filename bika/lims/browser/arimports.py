@@ -10,9 +10,11 @@ from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.utils import transaction_note
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from Products.statusmessages.interfaces import IStatusMessage
+from Products.CMFPlone.utils import _createObjectByType
 from bika.lims import PMF, logger, bikaMessageFactory as _
 from bika.lims.browser import BrowserView
 from bika.lims.browser.bika_listing import BikaListingView
+from bika.lims.interfaces import IClient
 from bika.lims.permissions import *
 from bika.lims.utils import tmpID
 from plone.app.layout.globals.interfaces import IViewView
@@ -70,7 +72,9 @@ class GlobalARImportsView(BikaListingView):
                 'portal_type': 'ARImport',
                 'sort_on':'sortable_title',
                 }
-        self.context_actions = \
+        self.context_actions = {}
+        if IClient.providedBy(self.context):
+            self.context_actions = \
                 {_('AR Import'):
                            {'url': 'arimport_add',
                             'icon': '++resource++bika.lims.images/add.png'}}
@@ -160,9 +164,11 @@ class GlobalARImportsView(BikaListingView):
         return toggles
 
     def getAR(self):
-        import pdb; pdb.set_trace()
+        pass
+
 
 class ClientARImportsView(GlobalARImportsView):
+
     def __init__(self, context, request):
         super(ClientARImportsView, self).__init__(context, request)
         self.contentFilter = {
@@ -290,9 +296,8 @@ class ClientARImportAddView(BrowserView):
                 while title in [i.Title() for i in client.objectValues()]:
                     title = '%s-%s' % (filename, idx)
                     idx += 1
-                client.invokeFactory(
-                        id=arimport_id, type_name='ARImport', title=title)
-                arimport = client._getOb(arimport_id)
+                arimport = _createObjectByType("ARImport", client, arimport_id,
+                                               title=title)
                 arimport.unmarkCreationFlag()
                 continue
             elif row_count == 3:
@@ -334,8 +339,7 @@ class ClientARImportAddView(BrowserView):
                 analyses.append(sample_headers[(i-10)])
             if len(analyses) > 0:
                 aritem_id = '%s_%s' %('aritem', (str(next_num)))
-                arimport.invokeFactory(id=aritem_id, type_name='ARImportItem')
-                aritem = arimport._getOb(aritem_id)
+                aritem = _createObjectByType("ARImportItem", arimport, aritem_id)
                 aritem.edit(
                     SampleName=sample[0],
                     ClientRef=sample[1],

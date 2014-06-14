@@ -3,14 +3,17 @@ import time
 import transaction
 from AccessControl import ClassSecurityInfo
 from bika.lims import bikaMessageFactory as _
+from bika.lims.utils import t
 from bika.lims.browser.widgets import DateTimeWidget
 from bika.lims.content.bikaschema import BikaSchema
 from bika.lims.config import ManageBika, PROJECTNAME, ARIMPORT_OPTIONS
 from bika.lims.idserver import renameAfterCreation
 from bika.lims.interfaces import IARImport
+from bika.lims.permissions import *
 from bika.lims.jsonapi import resolve_request_lookup
 from bika.lims.workflow import doActionFor
 from bika.lims.utils import tmpID
+from bika.lims import logger
 from collective.progressbar.events import InitialiseProgressBar
 from collective.progressbar.events import ProgressBar
 from collective.progressbar.events import UpdateProgressEvent
@@ -23,7 +26,7 @@ from Products.Archetypes.references import HoldingReference
 from Products.ATContentTypes.content import schemata
 from Products.CMFCore import permissions
 from Products.CMFCore.utils import getToolByName
-from Products.CMFPlone.utils import safe_unicode
+from Products.CMFPlone.utils import safe_unicode, _createObjectByType
 from zope import event
 from zope.interface import implements
 
@@ -45,7 +48,7 @@ schema = BikaSchema.copy() + Schema((
         searchable = True,
         widget = FileWidget(
             label = _("Original File"),
-            visible={'edit': 'invisible', 
+            visible={'edit': 'invisible',
                      'view': 'visible', 'add': 'invisible'},
         ),
     ),
@@ -221,6 +224,27 @@ schema = BikaSchema.copy() + Schema((
             visible = False,
         ),
     ),
+    ReferenceField(
+        'Priority',
+        allowed_types=('ARPriority',),
+        referenceClass=HoldingReference,
+        relationship='AnalysisRequestPriority',
+        mode="rw",
+        read_permission=permissions.View,
+        write_permission=ManageARPriority,
+        widget=ReferenceWidget(
+            label=_("Priority"),
+            size=10,
+            render_own_label=True,
+            visible={'edit': 'visible',
+                     'view': 'visible',
+                     'add': 'visible',
+                     'secondary': 'invisible'},
+            catalog_name='bika_setup_catalog',
+            base_query={'review_state': 'published'},
+            showOn=True,
+        ),
+    ),
 ),
 )
 
@@ -339,8 +363,7 @@ class ARImport(BaseFolder):
                 sample_date = None
 
             sample_id = '%s-%s' % (prefix, tmpID())
-            client.invokeFactory(id = sample_id, type_name = 'Sample')
-            sample = client[sample_id]
+            sample = _createObjectByType("Sample", client, sample_id)
             sample.unmarkCreationFlag()
             sample.edit(
                 SampleID = sample_id,
@@ -348,6 +371,7 @@ class ARImport(BaseFolder):
                 ClientSampleID = aritem.getClientSid(),
                 SampleType = aritem.getSampleType(),
                 DateSampled = sample_date,
+                SamplingDate = sample_date,
                 DateReceived = DateTime(),
                 )
             sample._renameAfterCreation()
@@ -362,10 +386,17 @@ class ARImport(BaseFolder):
             samples.append(sample_id)
             aritem.setSample(sample_uid)
 
+            priorities = self.bika_setup_catalog(
+                portal_type = 'ARPriority',
+                sortable_title = aritem.Priority.lower(),
+                )
+            if len(priorities) < 1:
+                logger.warning(
+                    'Invalid Priority: validation should have prevented this')
+
             #Create AR
             ar_id = tmpID()
-            client.invokeFactory(id = ar_id, type_name = 'AnalysisRequest')
-            ar = client[ar_id]
+            ar = _createObjectByType("AnalysisRequest", client, ar_id)
             if aritem.getReportDryMatter().lower() == 'y':
                 report_dry_matter = True
             else:
@@ -378,7 +409,8 @@ class ARImport(BaseFolder):
                 CCEmails = self.getCCEmailsInvoice(),
                 ClientOrderNumber = self.getOrderID(),
                 ReportDryMatter = report_dry_matter,
-                Analyses = analyses
+                Analyses = analyses,
+                Priority = priorities[0].getObject(),
                 )
             ar.setSample(sample_uid)
             sample = ar.getSample()
@@ -533,8 +565,7 @@ class ARImport(BaseFolder):
                 sample_date = None
 
             sample_id = '%s-%s' % (prefix, tmpID())
-            client.invokeFactory(id = sample_id, type_name = 'Sample')
-            sample = client[sample_id]
+            sample = _createObjectByType("Sample", client, sample_id)
             sample.unmarkCreationFlag()
             sample.edit(
                 SampleID = sample_id,
@@ -542,6 +573,7 @@ class ARImport(BaseFolder):
                 ClientSampleID = aritem.getClientSid(),
                 SampleType = aritem.getSampleType(),
                 DateSampled = sample_date,
+                SamplingDate = sample_date,
                 DateReceived = DateTime(),
                 Remarks = aritem.getClientRemarks(),
                 )
@@ -554,9 +586,19 @@ class ARImport(BaseFolder):
             samples.append(sample_id)
             aritem.setSample(sample_uid)
 
+            priorities = self.bika_setup_catalog(
+                portal_type = 'ARPriority',
+                sortable_title = aritem.Priority.lower(),
+                )
+            if len(priorities) < 1:
+                logger.warning(
+                    'Invalid Priority: validation should have prevented this')
+                priority = ''
+            else:
+                priority = priorities[0].getObject()
+
             ar_id = tmpID()
-            client.invokeFactory(id = ar_id, type_name = 'AnalysisRequest')
-            ar = client[ar_id]
+            ar = _createObjectByType("AnalysisRequest", client, ar_id)
             report_dry_matter = False
 
             ar.unmarkCreationFlag()
@@ -570,6 +612,7 @@ class ARImport(BaseFolder):
                 Profile = ar_profile,
                 Analyses = analyses,
                 Remarks = aritem.getClientRemarks(),
+                Priority = priority,
                 )
             ar.setSample(sample_uid)
             sample = ar.getSample()
@@ -615,8 +658,7 @@ class ARImport(BaseFolder):
                 parts_and_services['%s%s' % (part_prefix, _i + 1)] = \
                         p['services']
             else:
-                _id = sample.invokeFactory('SamplePartition', id='tmp')
-                part = sample[_id]
+                part = _createObjectByType("SamplePartition", sample, tmpID())
                 parts[_i]['object'] = part
                 container = None
                 preservation = p['preservation']
@@ -724,7 +766,7 @@ class ARImport(BaseFolder):
         valid_batch = True
         uid = self.UID()
         batches = pc({
-                    'portal_type': 'ARImport', 
+                    'portal_type': 'ARImport',
                     'path': {'query': '/'.join(client.getPhysicalPath())},
                     })
         for brain in batches:
@@ -747,8 +789,8 @@ class ARImport(BaseFolder):
             valid_batch = False
 
         # validate contact
-        contact_found = False 
-        cc_contact_found = False 
+        contact_found = False
+        cc_contact_found = False
 
         if self.getContact():
             contact_found = True
@@ -785,7 +827,7 @@ class ARImport(BaseFolder):
         # validate sample point
         samplepoint = self.getSamplePoint()
         if samplepoint != None:
-            points = pc(portal_type='SamplePoint', 
+            points = pc(portal_type='SamplePoint',
                 Title=samplepoint)
 
         sampletypes = \
@@ -833,6 +875,26 @@ class ARImport(BaseFolder):
                 batch_remarks.append('\n' + '%s: Sample date %s invalid' %(aritem.getSampleName(), aritem.getSampleDate()))
                 item_remarks.append('\n' + 'Sample date %s invalid' %(aritem.getSampleDate()))
 
+            #validate Priority
+            invalid_priority = False
+            try:
+                priorities = self.bika_setup_catalog(
+                    portal_type = 'ARPriority',
+                    sortable_title = aritem.Priority.lower(),
+                    )
+                if len(priorities) < 1:
+                    invalid_priority = True
+            except:
+                invalid_priority = True
+
+            if invalid_priority:
+                valid_item = False
+                batch_remarks.append('\n' + '%s: Priority %s invalid' % (
+                    aritem.getSampleName(), aritem.Priority))
+                item_remarks.append('\n' + 'Priority %s invalid' % (
+                    aritem.Priority))
+
+            #Validate option specific fields
             if self.getImportOption() == 'c':
                 analyses = aritem.getAnalyses()
                 for analysis in analyses:
@@ -898,6 +960,7 @@ class ARImport(BaseFolder):
                             % (aritem.getSampleName(), analyses[0]))
 
             aritem.setRemarks(item_remarks)
+            #print item_remarks
             if not valid_item:
                 valid_batch = False
         if self.getNumberSamples() != len(aritems):
@@ -907,6 +970,7 @@ class ARImport(BaseFolder):
             Remarks=batch_remarks,
             Status=valid_batch)
 
+        #print batch_remarks
         return valid_batch
 
     def _findProfileKey(self, key):

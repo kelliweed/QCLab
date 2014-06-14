@@ -1,9 +1,14 @@
 jQuery( function($) {
 $(document).ready(function(){
 
+    window.jarn.i18n.loadCatalog("bika");
     _ = jarn.i18n.MessageFactory('bika');
+    window.jarn.i18n.loadCatalog("plone");
     PMF = jarn.i18n.MessageFactory('plone');
 	dateFormat = _('date_format_short_datepicker');
+    if (dateFormat == 'date_format_short_datepicker'){
+        dateFormat = 'yy-mm-dd';
+    }
 
     $('[datepicker="1"]').datepicker({
         dateFormat: dateFormat,

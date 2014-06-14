@@ -1,68 +1,26 @@
 from bika.lims.browser.bika_listing import BikaListingView
 from bika.lims.controlpanel.bika_instruments import InstrumentsView
 from bika.lims import bikaMessageFactory as _
+from bika.lims.utils import t
 from Products.CMFCore.utils import getToolByName
+from bika.lims.utils import to_utf8
 
 class SupplierInstrumentsView(InstrumentsView):
 
     def __init__(self, context, request):
         super(SupplierInstrumentsView, self).__init__(context, request)
-    
+
     def folderitems(self):
         items = InstrumentsView.folderitems(self)
         uidsup = self.context.UID()
         outitems = []
         for x in range(len(items)):
-            obj = items[x]['obj']
-            if obj.getSupplier().UID() == uidsup:
+            obj = items[x].get('obj', None)
+            if obj and hasattr(obj, 'getRawSupplier') \
+               and obj.getRawSupplier() == uidsup:
                 outitems.append(items[x])
         return outitems
 
-class ContactsView(BikaListingView):
-
-    def __init__(self, context, request):
-        super(ContactsView, self).__init__(context, request)
-        self.catalog = "portal_catalog"
-        self.contentFilter = {'portal_type': 'SupplierContact'}
-        self.context_actions = {_('Add'):
-            {'url': 'createObject?type_name=SupplierContact',
-             'icon': '++resource++bika.lims.images/add.png'}
-        }
-        self.show_table_only = False
-        self.show_sort_column = False
-        self.show_select_row = False
-        self.show_select_column = True
-        self.pagesize = 25
-        self.icon = "++resource++bika.lims.images/supplier_contact_big.png"
-        self.title = _("Contacts")
-
-        self.columns = {
-            'getFullname': {'title': _('Full Name')},
-            'getEmailAddress': {'title': _('Email Address')},
-            'getBusinessPhone': {'title': _('Business Phone')},
-            'getMobilePhone': {'title': _('Mobile Phone')},
-            'getFax': {'title': _('Fax')},
-        }
-
-        self.review_states = [
-            {'id':'default',
-             'title': _('All'),
-             'contentFilter':{},
-             'columns': ['getFullname',
-                         'getEmailAddress',
-                         'getBusinessPhone',
-                         'getMobilePhone',
-                         'getFax']},
-        ]
-
-    def folderitems(self):
-        items = BikaListingView.folderitems(self)
-        for x in range(len(items)):
-            if not items[x].has_key('obj'): continue
-            items[x]['replace']['getFullName'] = "<a href='%s'>%s</a>" % \
-                 (items[x]['url'], items[x]['obj'].getFullname())
-
-        return items
 
 class ReferenceSamplesView(BikaListingView):
 
@@ -185,15 +143,11 @@ class ReferenceSamplesView(BikaListingView):
             if obj.getBlank():
                 after_icons += "<img\
                 src='%s/++resource++bika.lims.images/blank.png' \
-                title='%s'>" % (self.portal_url,
-                                self.context.translate(
-                                    _('Blank')))
+                title='%s'>" % (self.portal_url, t(_('Blank')))
             if obj.getHazardous():
                 after_icons += "<img\
                 src='%s/++resource++bika.lims.images/hazardous.png' \
-                title='%s'>" % (self.portal_url,
-                                self.context.translate(
-                                _('Hazardous')))
+                title='%s'>" % (self.portal_url, t(_('Hazardous')))
             items[x]['replace']['ID'] = "<a href='%s/base_view'>%s</a>&nbsp;%s" % \
                  (items[x]['url'], items[x]['ID'], after_icons)
             outitems.append(items[x])
@@ -205,7 +159,11 @@ class ContactsView(BikaListingView):
     def __init__(self, context, request):
         super(ContactsView, self).__init__(context, request)
         self.catalog = "portal_catalog"
-        self.contentFilter = {'portal_type': 'SupplierContact'}
+        self.contentFilter = {
+            'portal_type': 'SupplierContact',
+            'path': {"query": "/".join(context.getPhysicalPath()),
+                     "level": 0}
+        }
         self.context_actions = {_('Add'):
             {'url': 'createObject?type_name=SupplierContact',
              'icon': '++resource++bika.lims.images/add.png'}
@@ -215,7 +173,7 @@ class ContactsView(BikaListingView):
         self.show_select_row = False
         self.show_select_column = True
         self.pagesize = 25
-        self.icon = self.portal_url + "/++resource++bika.lims.images/referencesupplier_contact_big.png"
+        self.icon = self.portal_url + "/++resource++bika.lims.images/contact_big.png"
         self.title = _("Contacts")
 
         self.columns = {
@@ -241,7 +199,7 @@ class ContactsView(BikaListingView):
         items = BikaListingView.folderitems(self)
         for x in range(len(items)):
             if not items[x].has_key('obj'): continue
-            items[x]['replace']['getFullName'] = "<a href='%s'>%s</a>" % \
+            items[x]['replace']['getFullname'] = "<a href='%s'>%s</a>" % \
                  (items[x]['url'], items[x]['obj'].getFullname())
 
         return items

@@ -6,6 +6,18 @@
     xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
     i18n_domain="bika">
 
+    <adapter name="BatchDate" factory=".batch.BatchDate" />
+    <adapter name="Priority" factory=".analysisrequest.Priority" />
+    <adapter name="BatchUID" factory=".analysisrequest.BatchUID" />
+    <adapter name="Priority" factory=".analysis.Priority" />
+    <adapter name="Priority" factory=".worksheet.Priority" />
+
+    <subscriber
+      for="bika.lims.interfaces.IPricelist
+           zope.lifecycleevent.interfaces.IObjectModifiedEvent"
+      handler="bika.lims.content.pricelist.ObjectModifiedEventHandler"
+    />
+
     <browser:page
       for="bika.lims.interfaces.IMethods"
       name="folder_view"

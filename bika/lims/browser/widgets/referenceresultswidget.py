@@ -4,6 +4,7 @@ from Products.Archetypes.Widget import TypesWidget
 from Products.CMFCore.utils import getToolByName
 from bika.lims.browser import BrowserView
 from bika.lims import bikaMessageFactory as _
+from bika.lims.utils import t
 from bika.lims.browser.bika_listing import BikaListingView
 
 
@@ -189,23 +190,26 @@ class ReferenceResultsWidget(TypesWidget):
         """ Return a list of dictionaries fit for ReferenceResultsField
             consumption.  Only services which have float()able entries in
             result,min and max field will be included.
-            Blank values are treated as "0".
+            If any of min, max, or result fields are blank, the row value
+            is ignored here.
         """
         value = []
         if 'service' in form:
             for uid, service in form['service'][0].items():
-
                 result = form['result'][0][uid]
-                result = result if result else "0"
+                result = result if result else False
                 Min = form['min'][0][uid]
-                Min = Min if Min else "0"
+                Min = Min if Min else False
                 Max = form['max'][0][uid]
-                Max = Max if Max else "0"
-
-                value.append({'uid': uid,
-                              'result': result,
-                              'min': Min,
-                              'max': Max})
+                Max = Max if Max else False
+                # big old false check because these could be zeroes
+                if Min is not False \
+                  and Max is not False \
+                  and result is not False:
+                    value.append({'uid': uid,
+                                  'result': result,
+                                  'min': Min,
+                                  'max': Max})
         return value, {}
 
     security.declarePublic('ReferenceResults')

@@ -1,5 +1,8 @@
+# coding=utf-8
 from AccessControl import getSecurityManager
+from Products.CMFPlone.utils import _createObjectByType
 from bika.lims import bikaMessageFactory as _
+from bika.lims.utils import t
 from bika.lims import EditResults, EditWorksheet, ManageWorksheets
 from bika.lims import PMF, logger
 from bika.lims.browser import BrowserView
@@ -12,6 +15,7 @@ from bika.lims.interfaces import IFieldIcons
 from bika.lims.interfaces import IWorksheet
 from bika.lims.subscribers import doActionFor
 from bika.lims.subscribers import skip
+from bika.lims.utils import to_utf8
 from bika.lims.utils import getUsers, isActive, tmpID
 from DateTime import DateTime
 from DocumentTemplate import sequence
@@ -26,10 +30,14 @@ from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from zope.component import adapts
 from zope.component import getAdapters
 from zope.component import getMultiAdapter
-from zope.i18n import translate
 from zope.interface import implements
+from bika.lims.browser.referenceanalysis import AnalysesRetractedListReport
+from DateTime import DateTime
+from Products.CMFPlone.i18nl10n import ulocalized_time
+from bika.lims.utils import to_utf8 as _c
 
 import plone
+import plone.protect
 import json
 
 
@@ -47,94 +55,15 @@ class WorksheetWorkflowAction(WorkflowAction):
         bac = getToolByName(self.context, 'bika_analysis_catalog')
         action, came_from = WorkflowAction._get_form_workflow_action(self)
 
-        # XXX combine data from multiple bika listing tables.
-        item_data = {}
-        if 'item_data' in form:
-            if type(form['item_data']) == list:
-                for i_d in form['item_data']:
-                    for i, d in json.loads(i_d).items():
-                        item_data[i] = d
-            else:
-                item_data = json.loads(form['item_data'])
 
-        if action == 'submit' and self.request.form.has_key("Result"):
-            selected_analyses = WorkflowAction._get_selected_items(self)
-            results = {}
-            hasInterims = {}
+        if action == 'submit':
 
-            # first save results for entire form
-            for uid, result in self.request.form['Result'][0].items():
-                if uid in selected_analyses:
-                    analysis = selected_analyses[uid]
-                else:
-                    analysis = rc.lookupObject(uid)
-                if not analysis:
-                    # ignore result if analysis object no longer exists
-                    continue
-                if not(getSecurityManager().checkPermission(EditResults, analysis)):
-                    # or changes no longer allowed
-                    continue
-                if not isActive(analysis):
-                    # or it's cancelled
-                    continue
-                results[uid] = result
-                interimFields = item_data[uid]
-                if len(interimFields) > 0:
-                    hasInterims[uid] = True
-                else:
-                    hasInterims[uid] = False
-                # Don't know why analysis.edit() doesn't works if
-                # logged in as analyst
-                # https://github.com/bikalabs/Bika-LIMS/issues/956
-                # https://github.com/bikalabs/Bika-LIMS/issues/965
-                retested = 'retested' in form and uid in form['retested']
-                remarks = form.get('Remarks', [{}, ])[0].get(uid, '')
-                analysis.setInterimFields(interimFields)
-                analysis.setRetested(retested)
-                analysis.setRemarks(remarks)
-                analysis.setResult(result)
+            # Submit the form. Saves the results, methods, etc.
+            self.submit()
 
-            # discover which items may be submitted
-            submissable = []
-            for uid, analysis in selected_analyses.items():
-                if uid not in results or not results[uid]:
-                    continue
-                can_submit = True
-                if hasattr(analysis, 'getDependencies'):
-                    dependencies = analysis.getDependencies()
-                    for dependency in dependencies:
-                        dep_state = workflow.getInfoFor(dependency, 'review_state')
-                        if hasInterims[uid]:
-                            if dep_state in ('to_be_sampled', 'to_be_preserved',
-                                             'sample_due', 'sample_received',
-                                             'attachment_due', 'to_be_verified',):
-                                can_submit = False
-                                break
-                        else:
-                            if dep_state in ('to_be_sampled', 'to_be_preserved',
-                                             'sample_due', 'sample_received',):
-                                can_submit = False
-                                break
-                    for dependency in dependencies:
-                        if workflow.getInfoFor(dependency, 'review_state') in \
-                           ('to_be_sampled', 'to_be_preserved',
-                            'sample_due', 'sample_received'):
-                            can_submit = False
-                if can_submit:
-                    submissable.append(analysis)
-
-            # and then submit them.
-            for analysis in submissable:
-                doActionFor(analysis, 'submit')
-
-            message = PMF("Changes saved.")
-            self.context.plone_utils.addPortalMessage(message, 'info')
-            self.destination_url = self.request.get_header("referer",
-                                   self.context.absolute_url())
-            self.request.response.redirect(self.destination_url)
         ## assign
         elif action == 'assign':
-            if not(getSecurityManager().checkPermission(EditWorksheet, self.context)):
+            if not self.context.checkUserManage():
                 self.request.response.redirect(self.context.absolute_url())
                 return
 
@@ -154,7 +83,7 @@ class WorksheetWorkflowAction(WorkflowAction):
             self.request.response.redirect(self.destination_url)
         ## unassign
         elif action == 'unassign':
-            if not(getSecurityManager().checkPermission(EditWorksheet, self.context)):
+            if not self.context.checkUserManage():
                 self.request.response.redirect(self.context.absolute_url())
                 return
 
@@ -185,6 +114,184 @@ class WorksheetWorkflowAction(WorkflowAction):
             # default bika_listing.py/WorkflowAction for other transitions
             WorkflowAction.__call__(self)
 
+    def submit(self):
+        """ Saves the form
+        """
+
+        form = self.request.form
+        remarks = form.get('Remarks', [{}])[0]
+        results = form.get('Result',[{}])[0]
+        retested = form.get('retested', {})
+        methods = form.get('Method', [{}])[0]
+        instruments = form.get('Instrument', [{}])[0]
+        analysts = self.request.form.get('Analyst', [{}])[0]
+        selected = WorkflowAction._get_selected_items(self)
+        workflow = getToolByName(self.context, 'portal_workflow')
+        rc = getToolByName(self.context, REFERENCE_CATALOG)
+        sm = getSecurityManager()
+
+        hasInterims = {}
+
+        # XXX combine data from multiple bika listing tables.
+        item_data = {}
+        if 'item_data' in form:
+            if type(form['item_data']) == list:
+                for i_d in form['item_data']:
+                    for i, d in json.loads(i_d).items():
+                        item_data[i] = d
+            else:
+                item_data = json.loads(form['item_data'])
+
+        # Iterate for each selected analysis and save its data as needed
+        for uid, analysis in selected.items():
+
+            allow_edit = sm.checkPermission(EditResults, analysis)
+            analysis_active = isActive(analysis)
+
+            # Need to save remarks?
+            if uid in remarks and allow_edit and analysis_active:
+                analysis.setRemarks(remarks[uid])
+
+            # Retested?
+            if uid in retested and allow_edit and analysis_active:
+                analysis.setRetested(retested[uid])
+
+            # Need to save the instrument?
+            if uid in instruments and analysis_active:
+                # TODO: Add SetAnalysisInstrument permission
+                # allow_setinstrument = sm.checkPermission(SetAnalysisInstrument)
+                allow_setinstrument = True
+                # ---8<-----
+                if allow_setinstrument == True:
+                    # The current analysis allows the instrument regards
+                    # to its analysis service and method?
+                    if (instruments[uid]==''):
+                        previnstr = analysis.getInstrument()
+                        if previnstr:
+                            previnstr.removeAnalysis(analysis)
+                        analysis.setInstrument(None);
+                    elif analysis.isInstrumentAllowed(instruments[uid]):
+                        previnstr = analysis.getInstrument()
+                        if previnstr:
+                            previnstr.removeAnalysis(analysis)
+                        analysis.setInstrument(instruments[uid])
+                        instrument = analysis.getInstrument()
+                        instrument.addAnalysis(analysis)
+
+            # Need to save the method?
+            if uid in methods and analysis_active:
+                # TODO: Add SetAnalysisMethod permission
+                # allow_setmethod = sm.checkPermission(SetAnalysisMethod)
+                allow_setmethod = True
+                # ---8<-----
+                if allow_setmethod == True and analysis.isMethodAllowed(methods[uid]):
+                    analysis.setMethod(methods[uid])
+
+            # Need to save the analyst?
+            if uid in analysts and analysis_active:
+                analysis.setAnalyst(analysts[uid]);
+
+            # Need to save results?
+            if uid in results and results[uid] and allow_edit \
+                and analysis_active:
+                interims = item_data.get(uid, [])
+                analysis.setInterimFields(interims)
+                analysis.setResult(results[uid])
+                analysis.reindexObject()
+
+                can_submit = True
+                deps = analysis.getDependencies() \
+                        if hasattr(analysis, 'getDependencies') else []
+                for dependency in deps:
+                    if workflow.getInfoFor(dependency, 'review_state') in \
+                       ('to_be_sampled', 'to_be_preserved',
+                        'sample_due', 'sample_received'):
+                        can_submit = False
+                        break
+                if can_submit:
+                    # doActionFor transitions the analysis to verif pending,
+                    # so must only be done when results are submitted.
+                    doActionFor(analysis, 'submit')
+
+        # Maybe some analyses need to be retracted due to a QC failure
+        # Done here because don't know if the last selected analysis is
+        # a valid QC for the instrument used in previous analyses.
+        # If we add this logic in subscribers.analyses, there's the
+        # possibility to retract analyses before the QC being reached.
+        self.retractInvalidAnalyses()
+
+        message = PMF("Changes saved.")
+        self.context.plone_utils.addPortalMessage(message, 'info')
+        self.destination_url = self.request.get_header("referer",
+                               self.context.absolute_url())
+        self.request.response.redirect(self.destination_url)
+
+    def retractInvalidAnalyses(self):
+        """ Retract the analyses with validation pending status for which
+            the instrument used failed a QC Test.
+        """
+        toretract = {}
+        instruments = {}
+        refs = []
+        rc = getToolByName(self.context, REFERENCE_CATALOG)
+        selected = WorkflowAction._get_selected_items(self)
+        for uid in selected.iterkeys():
+            # We need to do this instead of using the dict values
+            # directly because all these analyses have been saved before
+            # and don't know if they already had an instrument assigned
+            an = rc.lookupObject(uid)
+            if an.portal_type == 'ReferenceAnalysis':
+                refs.append(an)
+                instrument = an.getInstrument()
+                if instrument and instrument.UID() not in instruments:
+                    instruments[instrument.UID()] = instrument
+
+        for instr in instruments.itervalues():
+            analyses = instr.getAnalysesToRetract()
+            for a in analyses:
+                if a.UID() not in toretract:
+                    toretract[a.UID] = a
+
+        retracted = []
+        for analysis in toretract.itervalues():
+            try:
+                # add a remark to this analysis
+                failedtxt = ulocalized_time(DateTime(), long_format=0)
+                failedtxt = '%s: %s' % (failedtxt, _("Instrument failed reference test"))
+                analysis.setRemarks(failedtxt)
+
+                # retract the analysis
+                doActionFor(analysis, 'retract')
+                retracted.append(analysis)
+            except:
+                # Already retracted as a dependant from a previous one?
+                pass
+
+        if len(retracted) > 0:
+            # Create the Retracted Analyses List
+            rep = AnalysesRetractedListReport(self.context,
+                                               self.request,
+                                               self.portal_url,
+                                               'Retracted analyses',
+                                               retracted)
+
+            # Attach the pdf to the ReferenceAnalysis (accessible
+            # from Instrument's Internal Calibration Tests list
+            pdf = rep.toPdf()
+            for ref in refs:
+                ref.setRetractedAnalysesPdfReport(pdf)
+
+            # Send the email
+            try:
+                rep.sendEmail()
+            except:
+                pass
+
+            # TODO: mostra una finestra amb els resultats publicats d'AS
+            # que han utilitzat l'instrument des de la seva última
+            # calibració vàlida, amb els emails, telèfons dels
+            # contactes associats per a una intervenció manual
+            pass
 
 class ResultOutOfRange(object):
     """Return alerts for any analyses inside the context worksheet
@@ -207,7 +314,7 @@ class ResultOutOfRange(object):
                 continue
             adapters = getAdapters((obj, ), IFieldIcons)
             for name, adapter in adapters:
-                alerts = adapter(obj)
+                alerts = adapter()
                 if alerts:
                     if uid in field_icons:
                         field_icons[uid].extend(alerts[uid])
@@ -225,7 +332,37 @@ def getAnalystName(context):
     if analyst_member != None:
         return analyst_member.getProperty('fullname')
     else:
-        return ''
+        return analyst
+
+def checkUserAccess(context, request, redirect=True):
+    """ Checks if the current user has granted access to the worksheet.
+        If the user is an analyst without LabManager, LabClerk and
+        RegulatoryInspector roles and the option 'Allow analysts
+        only to access to the Worksheets on which they are assigned' is
+        ticked and the above condition is true, it will redirect to
+        the main Worksheets view.
+        Returns False if the user has no access, otherwise returns True
+    """
+    # Deny access to foreign analysts
+    allowed = context.checkUserAccess()
+    if allowed == False and redirect == True:
+        msg =  _('You do not have sufficient privileges to view '
+                 'the worksheet %s.') % context.Title()
+        context.plone_utils.addPortalMessage(msg, 'warning')
+        # Redirect to WS list
+        portal = getToolByName(context, 'portal_url').getPortalObject()
+        destination_url = portal.absolute_url() + "/worksheets"
+        request.response.redirect(destination_url)
+
+    return allowed
+
+def checkUserManage(context, request, redirect=True):
+    allowed = context.checkUserManage()
+    if allowed == False and redirect == True:
+        # Redirect to /manage_results view
+        destination_url = context.absolute_url() + "/manage_results"
+        request.response.redirect(destination_url)
+
 
 class WorksheetAnalysesView(AnalysesView):
     """ This renders the table for ManageResultsView.
@@ -248,6 +385,7 @@ class WorksheetAnalysesView(AnalysesView):
             'Pos': {'title': _('Position')},
             'DueDate': {'title': _('Due Date')},
             'Service': {'title': _('Analysis')},
+            'getPriority': {'title': _('Priority')},
             'Method': {'title': _('Method')},
             'Result': {'title': _('Result'),
                        'input_width': '6',
@@ -258,7 +396,9 @@ class WorksheetAnalysesView(AnalysesView):
             'retested': {'title': "<img src='++resource++bika.lims.images/retested.png' title='%s'/>" % _('Retested'),
                          'type':'boolean'},
             'Attachments': {'title': _('Attachments')},
+            'Instrument': {'title': _('Instrument')},
             'state_title': {'title': _('State')},
+            'Priority': { 'title': _('Priority'), 'index': 'Priority'},
         }
         self.review_states = [
             {'id':'default',
@@ -270,7 +410,9 @@ class WorksheetAnalysesView(AnalysesView):
                              {'id':'unassign'}],
              'columns':['Pos',
                         'Service',
+                        'Priority',
                         'Method',
+                        'Instrument',
                         'Result',
                         'Uncertainty',
                         'DueDate',
@@ -296,7 +438,8 @@ class WorksheetAnalysesView(AnalysesView):
             service = obj.getService()
             method = service.getMethod()
             items[x]['Service'] = service.Title()
-            items[x]['Method'] = method and method.Title() or ''
+            items[x]['Priority'] = ''
+            #items[x]['Method'] = method and method.Title() or ''
             items[x]['class']['Service'] = 'service_title'
             items[x]['Category'] = service.getCategory() and service.getCategory().Title() or ''
             if obj.portal_type == "ReferenceAnalysis":
@@ -305,6 +448,8 @@ class WorksheetAnalysesView(AnalysesView):
                 items[x]['DueDate'] = self.ulocalized_time(obj.getDueDate())
 
             items[x]['Order'] = ''
+            instrument = obj.getInstrument()
+            #items[x]['Instrument'] = instrument and instrument.Title() or ''
 
         # insert placeholder row items in the gaps
         empties = []
@@ -334,7 +479,7 @@ class WorksheetAnalysesView(AnalysesView):
                     'Pos': pos,
                     'Service': '',
                     'Attachments': '',
-                    'state_title': 's'})
+                    'state_title': 's',})
                 item['replace'] = {
                     'Pos': "<table width='100%' cellpadding='0' cellspacing='0'>" + \
                             "<tr><td class='pos'>%s</td>" % pos + \
@@ -464,6 +609,7 @@ class WorksheetAnalysesView(AnalysesView):
             pos_text += "</table>"
 
             items[x]['replace']['Pos'] = pos_text
+            items[x]['getPriority'] = '' #Icon get added by adapter
 
         for k,v in self.columns.items():
             self.columns[k]['sortable'] = False
@@ -478,6 +624,10 @@ class ManageResultsView(BrowserView):
         self.getAnalysts = getUsers(context, ['Manager', 'LabManager', 'Analyst'])
 
     def __call__(self):
+        # Deny access to foreign analysts
+        if checkUserAccess(self.context, self.request) == False:
+            return []
+
         self.icon = self.portal_url + "/++resource++bika.lims.images/worksheet_big.png"
 
         # Worksheet Attachmemts
@@ -497,8 +647,7 @@ class ManageResultsView(BrowserView):
             tool = getToolByName(self.context, REFERENCE_CATALOG)
             if analysis_uid:
                 analysis = tool.lookupObject(analysis_uid)
-                attachmentid = ws.invokeFactory("Attachment", id=tmpID())
-                attachment = ws._getOb(attachmentid)
+                attachment = _createObjectByType("Attachment", ws, tmpID())
                 attachment.edit(
                     AttachmentFile=this_file,
                     AttachmentType=self.request.get('AttachmentType', ''),
@@ -523,8 +672,7 @@ class ManageResultsView(BrowserView):
                     if not review_state in ['assigned', 'sample_received', 'to_be_verified']:
                         continue
 
-                    attachmentid = ws.invokeFactory("Attachment", id=tmpID())
-                    attachment = ws._getOb(attachmentid)
+                    attachment = _createObjectByType("Attachment", ws, tmpID())
                     attachment.edit(
                         AttachmentFile = this_file,
                         AttachmentType = self.request.get('AttachmentType', ''),
@@ -544,9 +692,13 @@ class ManageResultsView(BrowserView):
         self.analystname = getAnalystName(self.context)
         self.instrumenttitle = self.context.getInstrument() and self.context.getInstrument().Title() or ''
 
+        # Check if the instruments used are valid
+        self.checkInstrumentsValidity()
+
         return self.template()
 
     def getInstruments(self):
+        # TODO: Return only the allowed instruments for at least one contained analysis
         bsc = getToolByName(self, 'bika_setup_catalog')
         items = [('', '')] + [(o.UID, o.Title) for o in
                                bsc(portal_type = 'Instrument',
@@ -558,12 +710,11 @@ class ManageResultsView(BrowserView):
         return DisplayList(list(items))
 
     def isAssignmentAllowed(self):
-        checkPermission = self.context.portal_membership.checkPermission
         workflow = getToolByName(self.context, 'portal_workflow')
         review_state = workflow.getInfoFor(self.context, 'review_state', '')
         edit_states = ['open', 'attachment_due', 'to_be_verified']
         return review_state in edit_states \
-            and checkPermission(EditWorksheet, self.context)
+            and self.context.checkUserManage()
 
     def getWideInterims(self):
         """ Returns a dictionary with the analyses services from the current
@@ -616,6 +767,31 @@ class ManageResultsView(BrowserView):
                 outdict[service.getKeyword()] = andict
         return outdict
 
+    def checkInstrumentsValidity(self):
+        """ Checks the validity of the instruments used in the Analyses
+            If an analysis with an invalid instrument (out-of-date or
+            with calibration tests failed) is found, a warn message
+            will be displayed.
+        """
+        invalid = []
+        ans = [a for a in self.context.getAnalyses()]
+        for an in ans:
+            valid = an.isInstrumentValid()
+            if not valid:
+                inv = '%s (%s)' % (an.Title(), an.getInstrument().Title())
+                if inv not in invalid:
+                    invalid.append(inv)
+        if len(invalid) > 0:
+            message = _("Some analyses use out-of-date or uncalibrated instruments. Results edition not allowed")
+            message = "%s: %s" % (message, (', '.join(invalid)))
+            self.context.plone_utils.addPortalMessage(message, 'warn')
+
+    def getPriorityIcon(self):
+        priority = self.context.getPriority()
+        if priority:
+            icon = priority.getBigIcon()
+            if icon:
+                return '/'.join(icon.getPhysicalPath())
 
 class AddAnalysesView(BikaListingView):
     implements(IViewView)
@@ -651,6 +827,9 @@ class AddAnalysesView(BikaListingView):
             'getRequestID': {
                 'title': _('Request ID'),
                 'index': 'getRequestID'},
+            'Priority': {
+                'title': _('Priority'),
+                'index': 'Priority'},
             'CategoryTitle': {
                 'title': _('Category'),
                 'index':'getCategoryTitle'},
@@ -673,6 +852,7 @@ class AddAnalysesView(BikaListingView):
              'columns':['Client',
                         'getClientOrderNumber',
                         'getRequestID',
+                        'Priority',
                         'CategoryTitle',
                         'Title',
                         'getDateReceived',
@@ -684,6 +864,10 @@ class AddAnalysesView(BikaListingView):
         if not(getSecurityManager().checkPermission(EditWorksheet, self.context)):
             self.request.response.redirect(self.context.absolute_url())
             return
+
+        # Deny access to foreign analysts
+        if checkUserManage(self.context, self.request) == False:
+            return []
 
         translate = self.context.translate
 
@@ -698,13 +882,12 @@ class AddAnalysesView(BikaListingView):
                 self.context.applyWorksheetTemplate(wst)
                 if len(self.context.getLayout()) != len(layout):
                     self.context.plone_utils.addPortalMessage(
-                        self.context.translate(PMF("Changes saved.")))
+                        PMF("Changes saved."))
                     self.request.RESPONSE.redirect(self.context.absolute_url() +
                                                    "/manage_results")
                 else:
                     self.context.plone_utils.addPortalMessage(
-                        self.context.translate(
-                            _("No analyses were added to this worksheet.")))
+                        _("No analyses were added to this worksheet."))
                     self.request.RESPONSE.redirect(self.context.absolute_url() +
                                                    "/add_analyses")
 
@@ -733,13 +916,12 @@ class AddAnalysesView(BikaListingView):
             client = obj.aq_parent.aq_parent
             items[x]['getClientOrderNumber'] = obj.getClientOrderNumber()
             items[x]['getDateReceived'] = self.ulocalized_time(obj.getDateReceived())
-
             DueDate = obj.getDueDate()
             items[x]['getDueDate'] = self.ulocalized_time(DueDate)
             if DueDate < DateTime():
                 items[x]['after']['DueDate'] = '<img width="16" height="16" src="%s/++resource++bika.lims.images/late.png" title="%s"/>' % \
                     (self.context.absolute_url(),
-                     self.context.translate(_("Late Analysis")))
+                     t(_("Late Analysis")))
             items[x]['CategoryTitle'] = service.getCategory() and service.getCategory().Title() or ''
 
             if getSecurityManager().checkPermission(EditResults, obj.aq_parent):
@@ -749,11 +931,14 @@ class AddAnalysesView(BikaListingView):
             items[x]['getRequestID'] = obj.aq_parent.getRequestID()
             items[x]['replace']['getRequestID'] = "<a href='%s'>%s</a>" % \
                  (url, items[x]['getRequestID'])
+            items[x]['Priority'] = ''
+
 
             items[x]['Client'] = client.Title()
             if hideclientlink == False:
                 items[x]['replace']['Client'] = "<a href='%s'>%s</a>" % \
                     (client.absolute_url(), client.Title())
+
         return items
 
     def getServices(self):
@@ -787,6 +972,7 @@ class AddAnalysesView(BikaListingView):
                    inactive_state = 'active',
                    sort_on = 'sortable_title')]
 
+
 class AddBlankView(BrowserView):
     implements(IViewView)
     template = ViewPageTemplateFile("templates/worksheet_add_control.pt")
@@ -802,6 +988,10 @@ class AddBlankView(BrowserView):
         if not(getSecurityManager().checkPermission(EditWorksheet, self.context)):
             self.request.response.redirect(self.context.absolute_url())
             return
+
+        # Deny access to foreign analysts
+        if checkUserManage(self.context, self.request) == False:
+            return []
 
         form = self.request.form
         if 'submitted' in form:
@@ -831,6 +1021,13 @@ class AddBlankView(BrowserView):
             available_positions = []
         return available_positions
 
+    def getPriorityIcon(self):
+        priority = self.context.getPriority()
+        if priority:
+            icon = priority.getBigIcon()
+            if icon:
+                return '/'.join(icon.getPhysicalPath())
+
 class AddControlView(BrowserView):
     implements(IViewView)
     template = ViewPageTemplateFile("templates/worksheet_add_control.pt")
@@ -845,6 +1042,10 @@ class AddControlView(BrowserView):
         if not(getSecurityManager().checkPermission(EditWorksheet, self.context)):
             self.request.response.redirect(self.context.absolute_url())
             return
+
+        # Deny access to foreign analysts
+        if checkUserManage(self.context, self.request) == False:
+            return []
 
         form = self.request.form
         if 'submitted' in form:
@@ -874,6 +1075,13 @@ class AddControlView(BrowserView):
             available_positions = []
         return available_positions
 
+    def getPriorityIcon(self):
+        priority = self.context.getPriority()
+        if priority:
+            icon = priority.getBigIcon()
+            if icon:
+                return '/'.join(icon.getPhysicalPath())
+
 class AddDuplicateView(BrowserView):
     implements(IViewView)
     template = ViewPageTemplateFile("templates/worksheet_add_duplicate.pt")
@@ -888,6 +1096,10 @@ class AddDuplicateView(BrowserView):
         if not(getSecurityManager().checkPermission(EditWorksheet, self.context)):
             self.request.response.redirect(self.context.absolute_url())
             return
+
+        # Deny access to foreign analysts
+        if checkUserManage(self.context, self.request) == False:
+            return []
 
         form = self.request.form
         if 'submitted' in form:
@@ -913,6 +1125,13 @@ class AddDuplicateView(BrowserView):
         else:
             available_positions = []
         return available_positions
+
+    def getPriorityIcon(self):
+        priority = self.context.getPriority()
+        if priority:
+            icon = priority.getBigIcon()
+            if icon:
+                return '/'.join(icon.getPhysicalPath())
 
 
 class WorksheetARsView(BikaListingView):
@@ -1129,7 +1348,7 @@ class ajaxGetWorksheetReferences(ReferenceSamplesView):
 
                 after_icons = "<a href='%s' target='_blank'><img src='++resource++bika.lims.images/referencesample.png' title='%s: %s'></a>" % \
                     (obj.absolute_url(), \
-                     self.context.translate(_("Reference sample")), obj.Title())
+                     t(_("Reference sample")), obj.Title())
                 items[x]['before']['ID'] = after_icons
 
                 new_items.append(items[x])
@@ -1143,7 +1362,7 @@ class ajaxGetWorksheetReferences(ReferenceSamplesView):
         self.service_uids = self.request.get('service_uids', '').split(",")
         self.control_type = self.request.get('control_type', '')
         if not self.control_type:
-            return self.context.translate(_("No control type specified"))
+            return t(_("No control type specified"))
         return super(ajaxGetWorksheetReferences, self).contents_table()
 
 class ExportView(BrowserView):
@@ -1156,14 +1375,14 @@ class ExportView(BrowserView):
         instrument = self.context.getInstrument()
         if not instrument:
             self.context.plone_utils.addPortalMessage(
-                self.context.translate(_("You must select an instrument")), 'info')
+                _("You must select an instrument"), 'info')
             self.request.RESPONSE.redirect(self.context.absolute_url())
             return
 
         exim = instrument.getDataInterface()
         if not exim:
             self.context.plone_utils.addPortalMessage(
-                self.context.translate(_("Instrument has no data interface selected")), 'info')
+                _("Instrument has no data interface selected"), 'info')
             self.request.RESPONSE.redirect(self.context.absolute_url())
             return
 
@@ -1175,7 +1394,7 @@ class ExportView(BrowserView):
         # search instruments module for 'exim' module
         if not hasattr(instruments, exim):
             self.context.plone_utils.addPortalMessage(
-                self.context.translate(_("Instrument exporter not found")), 'error')
+                _("Instrument exporter not found"), 'error')
             self.request.RESPONSE.redirect(self.context.absolute_url())
             return
 
@@ -1278,7 +1497,7 @@ class ajaxSetAnalyst():
         mtool = getToolByName(self, 'portal_membership')
         plone.protect.CheckAuthenticator(self.request)
         plone.protect.PostOnly(self.request)
-        value = request.get('value', '')
+        value = self.request.get('value', '')
         if not value:
             return
         if not mtool.getMemberById(value):
@@ -1294,10 +1513,13 @@ class ajaxSetInstrument():
         self.request = request
 
     def __call__(self):
-        uc = getToolByName(self.context, 'uid_catalog')
+        rc = getToolByName(self.context, REFERENCE_CATALOG)
         plone.protect.CheckAuthenticator(self.request)
         plone.protect.PostOnly(self.request)
-        value = request.get('value', '')
-##        if not value:
-##            return
-        self.context.setInstrument(value)
+        value = self.request.get('value', '')
+        if not value:
+            raise Exception("Invalid instrument")
+        instrument = rc.lookupObject(value)
+        if not instrument:
+            raise Exception("Unable to lookup instrument")
+        self.context.setInstrument(instrument)

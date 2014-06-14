@@ -301,4 +301,57 @@
               expression=""
               inline="False"
               />
+  <javascript authenticated="False"
+              id="++resource++bika.lims.js/bika.lims.method.edit.js"
+              cacheable="True"
+              compression="safe"
+              conditionalcomment=""
+              cookable="True"
+              enabled="on"
+              expression=""
+              inline="False"
+              />
+  <javascript authenticated="False"
+              id="++resource++bika.lims.js/bika.lims.analysisservice.edit.js"
+              cacheable="True"
+              compression="safe"
+              conditionalcomment=""
+              cookable="True"
+              enabled="on"
+              expression=""
+              inline="False"
+              />
+ <javascript authenticated="False"
+              id="++resource++bika.lims.js/bika.lims.instrumentcertification.edit.js"
+              cacheable="True"
+              compression="safe"
+              conditionalcomment=""
+              cookable="True"
+              enabled="on"
+              expression=""
+              inline="False"
+              />
+
+ <javascript authenticated="False"
+              id="++resource++bika.lims.js/bika.lims.bikasetup.edit.js"
+              cacheable="True"
+              compression="safe"
+              conditionalcomment=""
+              cookable="True"
+              enabled="on"
+              expression=""
+              inline="False"
+              />
+
+  <!-- Add javascripts ALWAYS BEFORE this one -->
+  <javascript authenticated="False"
+              id="++resource++bika.lims.js/bika.lims.loader.js"
+              cacheable="True"
+              compression="safe"
+              conditionalcomment=""
+              cookable="True"
+              enabled="on"
+              expression=""
+              inline="False"
+              />
  </object>

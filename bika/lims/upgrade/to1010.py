@@ -27,7 +27,6 @@ def addBatches(tool):
     at.setCatalogsByType('Batch', ['bika_catalog', ])
     at.setCatalogsByType('BatchLabel', ['bika_setup_catalog', ])
     bc = getToolByName(portal, 'bika_catalog')
-    bc.addIndex('getBatchUID', 'FieldIndex')
 
     # Add the BatchFolder at /batches
     typestool.constructContent(type_name="BatchFolder",
@@ -42,7 +41,6 @@ def addBatches(tool):
     portal.moveObjectToPosition('batches', portal.objectIds().index('clients'))
 
     # add Batch to all AnalysisRequest objects.
-    # When the objects are reindexed, BatchUID will also be populated
     proxies = portal_catalog(portal_type="AnalysiRequest")
     ars = (proxy.getObject() for proxy in proxies)
     for ar in ars:

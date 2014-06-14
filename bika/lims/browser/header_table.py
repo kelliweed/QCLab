@@ -3,10 +3,14 @@ view and edit screens.
 """
 
 from bika.lims.browser import BrowserView
+from bika.lims.interfaces import IHeaderTableFieldRenderer
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from Products.CMFPlone import PloneMessageFactory as _p
+from bika.lims.utils import getHiddenAttributesForClass
 from zope.component import getAdapter
-
+from AccessControl import getSecurityManager
+from AccessControl.Permissions import view
+from zope.component.interfaces import ComponentLookupError
 
 class HeaderTableView(BrowserView):
 
@@ -39,7 +43,7 @@ class HeaderTableView(BrowserView):
 
         def _list_end(num):
             # Calculate the list end point given the list number
-            return (num == 2 and list_len or (num + 1) * sublist_len)
+            return num == 2 and list_len or (num + 1) * sublist_len
 
         # Generate only filled columns
         final = []
@@ -49,26 +53,84 @@ class HeaderTableView(BrowserView):
                 final.append(column)
         return final
 
-    def sublists(self, mode):
+    def render_field_view(self, fieldname):
+        field = self.context.Schema()[fieldname]
+        ret = {'fieldName': fieldname, 'mode': 'view'}
+        try:
+            adapter = getAdapter(self.context,
+                                 interface=IHeaderTableFieldRenderer,
+                                 name=fieldname)
+        except ComponentLookupError:
+            adapter = None
+        if adapter:
+            ret = {'fieldName': fieldname,
+                   'mode': 'structure',
+                   'html': adapter(field)}
+        else:
+            if field.getType().find("Reference") > -1:
+                # Prioritize method retrieval over schema's field
+                targets = None
+                if hasattr(self.context, 'get%s' % fieldname):
+                    fieldaccessor = getattr(self.context, 'get%s' % fieldname)
+                    if callable(fieldaccessor):
+                        targets = fieldaccessor()
+                if not targets:
+                    targets = field.get(self.context)
+
+                if targets:
+                    if not type(targets) == list:
+                        targets = [targets,]
+                    sm = getSecurityManager()
+                    if all([sm.checkPermission(view, t) for t in targets]):
+                        a = ["<a href='%s'>%s</a>" % (target.absolute_url(),
+                                                      target.Title())
+                             for target in targets]
+                        ret = {'fieldName': fieldname,
+                               'mode': 'structure',
+                               'html': ", ".join(a)}
+                    else:
+                        ret = {'fieldName': fieldname,
+                               'mode': 'structure',
+                               'html': ", ".join([t.Title() for t in targets])}
+                else:
+                    ret = {'fieldName': fieldname,
+                           'mode': 'structure',
+                           'html': ''}
+        return ret
+
+    def sublists(self):
         ret = []
         prominent = []
         adapter = getAdapter(self.context, name='getWidgetVisibility')
         wv = adapter()
-        edit = wv.get('edit', {}).get('visible', [])
-        view = wv.get('view', {}).get('visible', [])
-
-        fieldnames = wv.get('header_table', {}).get('prominent', [])
-        for fieldname in fieldnames:
-            if fieldname in view:
-                prominent.append({'fieldName': fieldname, 'mode': 'view'})
-            elif fieldname in edit:
-                prominent.append({'fieldName': fieldname, 'mode': 'edit'})
-
-        fieldnames = wv.get('header_table', {}).get('visible', [])
-        for fieldname in fieldnames:
-            if fieldname in edit:
-                ret.append({'fieldName': fieldname, 'mode': 'edit'})
-            elif fieldname in view:
-                ret.append({'fieldName': fieldname, 'mode': 'view'})
-
+        new_wv = {}
+        # respect schemaextender's re-ordering of fields, and
+        # remove hidden attributes.
+        hiddenattributes = getHiddenAttributesForClass(self.context.portal_type)
+        schema_fields = [f.getName() for f in self.context.Schema().fields()]
+        for mode, state_field_lists in wv.items():
+            new_wv[mode] = {}
+            for statename, state_fields in state_field_lists.items():
+                new_wv[mode][statename] = \
+                    [field for field in schema_fields
+                     if field in state_fields
+                     and field not in hiddenattributes]
+        edit_fields = new_wv.get("edit", {}).get('visible', [])
+        view_fields = new_wv.get("view", {}).get('visible', [])
+        # Prominent fields get appended
+        prominent_fieldnames = new_wv.get('header_table', {}).get('prominent', [])
+        for fieldname in prominent_fieldnames:
+            if fieldname in view_fields:
+                prominent.append(self.render_field_view(fieldname))
+            elif fieldname in edit_fields:
+                prominent.append({'fieldName': fieldname, 'mode': "edit"})
+        # Other visible fields get appended
+        visible_fieldnames = new_wv.get('header_table', {}).get('visible', [])
+        for fieldname in visible_fieldnames:
+            if fieldname in prominent_fieldnames:
+                continue
+            if fieldname in edit_fields:
+                ret.append({'fieldName': fieldname, 'mode': "edit"})
+            elif fieldname in view_fields:
+                ret.append(self.render_field_view(fieldname))
         return prominent, self.three_column_list(ret)

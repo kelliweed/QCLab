@@ -8,6 +8,7 @@ from Products.Archetypes.references import HoldingReference
 from bika.lims.content.bikaschema import BikaSchema
 from bika.lims.config import PROJECTNAME
 from bika.lims import bikaMessageFactory as _
+from bika.lims.utils import t
 
 schema = BikaSchema.copy() + Schema((
     ReferenceField('Product',
@@ -57,7 +58,7 @@ class SupplyOrderItem( BaseContent):
 
     security.declareProtected(View, 'getTotal')
     def getTotal(self):
-        """ compute total excluding VAT """
+        """ Compute total excluding VAT """
         price = self.getPrice()
         if price:
             return float(self.getPrice()) * self.getQuantity()

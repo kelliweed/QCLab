@@ -2,6 +2,7 @@ from AccessControl import getSecurityManager
 from DateTime import DateTime
 from Products.CMFCore.utils import getToolByName
 from bika.lims import bikaMessageFactory as _
+from bika.lims.utils import t
 from bika.lims.browser.bika_listing import BikaListingView
 from bika.lims.utils import isActive
 from zope.component import getMultiAdapter
@@ -89,8 +90,10 @@ class LateAnalysesView(BikaListingView):
                 items[x]['replace']['Client'] = "<a href='%s'>%s</a>" % \
                      (client.absolute_url(), client.Title())
             items[x]['Contact'] = ''
-            items[x]['replace']['Contact'] = "<a href='mailto:%s'>%s</a>" % \
-                 (contact.getEmailAddress(), contact.getFullname())
+            if contact:
+                items[x]['replace']['Contact'] = "<a href='mailto:%s'>%s</a>" % \
+                                                 (contact.getEmailAddress(),
+                                                  contact.getFullname())
             items[x]['DateReceived'] = self.ulocalized_time(sample.getDateReceived())
             items[x]['DueDate'] = self.ulocalized_time(obj.getDueDate())
 

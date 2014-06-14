@@ -1,4 +1,5 @@
 from bika.lims import bikaMessageFactory as _
+from bika.lims.utils import t
 from bika.lims.browser.bika_listing import BikaListingView
 from bika.lims.permissions import AddInvoice
 from bika.lims.permissions import ManageInvoices
@@ -26,22 +27,22 @@ class InvoiceFolderContentsView(BikaListingView):
         request.set('disable_border', 1)
         self.columns = {
             'title': {'title': _('Title')},
-            'start': {'title': _('Batch Start Date')},
-            'end': {'title': _('Batch End Date')},
+            'start': {'title': _('Start Date')},
+            'end': {'title': _('End Date')},
         }
         self.review_states = [
             {
                 'id': 'default',
-                'contentFilter': {'cancellation_state':'active'},
+                'contentFilter': {'cancellation_state': 'active'},
                 'title': _('Active'),
-                'transitions': [{'id':'cancel'}],
+                'transitions': [{'id': 'cancel'}],
                 'columns': ['title', 'start', 'end'],
             },
             {
                 'id': 'cancelled',
-                'contentFilter': {'cancellation_state':'cancelled'},
+                'contentFilter': {'cancellation_state': 'cancelled'},
                 'title': _('Cancelled'),
-                'transitions': [{'id':'reinstate'}],
+                'transitions': [{'id': 'reinstate'}],
                 'columns': ['title', 'start', 'end'],
             },
         ]
@@ -58,12 +59,18 @@ class InvoiceFolderContentsView(BikaListingView):
         return super(InvoiceFolderContentsView, self).__call__()
 
     def getInvoiceBatches(self, contentFilter={}):
-        return self.context.objectValues()
+        wf = getToolByName(self.context, 'portal_workflow')
+        desired_state = contentFilter.get('cancellation_state', 'active')
+        values = self.context.objectValues()
+        return [ib for ib in values if
+                wf.getInfoFor(ib, 'cancellation_state') == desired_state]
 
     def folderitems(self):
         self.contentsMethod = self.getInvoiceBatches
         items = BikaListingView.folderitems(self)
         for x, item in enumerate(items):
+            if 'obj' not in item:
+                continue
             obj = item['obj']
             title_link = "<a href='%s'>%s</a>" % (item['url'], item['title'])
             items[x]['replace']['title'] = title_link

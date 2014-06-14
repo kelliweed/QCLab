@@ -43,6 +43,7 @@ def initialize(context):
     from content.analysisspec import AnalysisSpec
     from content.arimport import ARImport
     from content.arimportitem import ARImportItem
+    from content.arpriority import ARPriority
     from content.analysisprofile import AnalysisProfile
     from content.arreport import ARReport
     from content.artemplate import ARTemplate
@@ -71,7 +72,6 @@ def initialize(context):
     from content.invoice import Invoice
     from content.invoicebatch import InvoiceBatch
     from content.invoicefolder import InvoiceFolder
-    from content.invoicelineitem import InvoiceLineItem
     from content.labcontact import LabContact
     from content.laboratory import Laboratory
     from content.labproduct import LabProduct
@@ -83,7 +83,6 @@ def initialize(context):
     from content.preservation import Preservation
     from content.pricelist import Pricelist
     from content.pricelistfolder import PricelistFolder
-    from content.pricelistlineitem import PricelistLineItem
     from content.queryfolder import QueryFolder
     from content.query import Query
     from content.referenceanalysis import ReferenceAnalysis
@@ -97,11 +96,15 @@ def initialize(context):
     from content.samplematrix import SampleMatrix
     from content.samplepartition import SamplePartition
     from content.samplepoint import SamplePoint
+    from content.storagelocation import StorageLocation
     from content.samplesfolder import SamplesFolder
     from content.sampletype import SampleType
     from content.samplingdeviation import SamplingDeviation
+    from content.srtemplate import SRTemplate
+    from content.subgroup import SubGroup
     from content.supplier import Supplier
     from content.suppliercontact import SupplierContact
+    from content.supplyorderfolder import SupplyOrderFolder
     from content.supplyorder import SupplyOrder
     from content.supplyorderitem import SupplyOrderItem
     from content.worksheet import Worksheet
@@ -113,6 +116,7 @@ def initialize(context):
     from controlpanel.bika_analysisspecs import AnalysisSpecs
     from controlpanel.bika_analysisprofiles import AnalysisProfiles
     from controlpanel.bika_artemplates import ARTemplates
+    from controlpanel.bika_arpriorities import ARPriorities
     from controlpanel.bika_attachmenttypes import AttachmentTypes
     from controlpanel.bika_batchlabels import BatchLabels
     from controlpanel.bika_calculations import Calculations
@@ -129,8 +133,11 @@ def initialize(context):
     from controlpanel.bika_sampleconditions import SampleConditions
     from controlpanel.bika_samplematrices import SampleMatrices
     from controlpanel.bika_samplepoints import SamplePoints
+    from controlpanel.bika_storagelocations import StorageLocations
     from controlpanel.bika_sampletypes import SampleTypes
     from controlpanel.bika_samplingdeviations import SamplingDeviations
+    from controlpanel.bika_srtemplates import SRTemplates
+    from controlpanel.bika_subgroups import SubGroups
     from controlpanel.bika_suppliers import Suppliers
     from controlpanel.bika_worksheettemplates import WorksheetTemplates
 

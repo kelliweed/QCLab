@@ -1,4 +1,4 @@
-"""	All permissions are defined here.
+""" All permissions are defined here.
     They are also defined in permissions.zcml.
     The two files must be kept in sync.
 
@@ -22,11 +22,16 @@ AddClient = 'BIKA: Add Client'
 AddClientFolder = 'BIKA: Add ClientFolder'
 AddInvoice = 'BIKA: Add Invoice'
 AddMethod = 'BIKA: Add Method'
+AddPricelist = 'BIKA: Add Pricelist'
+AddSupplyOrder = 'BIKA: Add SupplyOrder'
 AddSample = 'BIKA: Add Sample'
 AddSampleMatrix = 'BIKA: Add SampleMatrix'
 AddSamplePartition = 'BIKA: Add SamplePartition'
 AddSamplePoint = 'BIKA: Add SamplePoint'
+AddStorageLocation = 'BIKA: Add StorageLocation'
 AddSamplingDeviation = 'BIKA: Add SamplingDeviation'
+AddSRTemplate = 'BIKA: Add SRTemplate'
+AddSubGroup = 'BIKA: Add Sub-group'
 AddQuery = 'BIKA: Add Query'
 
 # Default Archetypes Add Permission
@@ -43,17 +48,18 @@ ADD_CONTENT_PERMISSIONS = {
     'Client': AddClient,
     'Invoice': AddInvoice,
     'Method': AddMethod,
+    'SupplyOrder': AddSupplyOrder,
     'Sample': AddSample,
     'SampleMatrix': AddSampleMatrix,
     'SamplePartition': AddSamplePartition,
     'SamplingDeviation': AddSamplingDeviation,
+    'SubGroup': AddSubGroup,
     'Query': AddQuery,
 }
 
 # Very Old permissions:
 # ---------------------
 ManageBika = 'BIKA: Manage Bika'
-ManageOrders = 'BIKA: Manage Orders'
 DispatchOrder = 'BIKA: Dispatch Order'
 ManageAnalysisRequests = 'BIKA: Manage Analysis Requests'
 ManageSamples = 'BIKA: Manage Samples'
@@ -137,7 +143,6 @@ EditSamplePartition = 'BIKA: Edit Sample Partition'
 # Allows access to 'Edit' and 'Contacts' tabs from Client View
 EditClient = 'BIKA: Edit Client'
 
-
 # Batch-specific permissions
 # ----------------------------------------------
 EditBatch = 'BIKA: Edit Batch'
@@ -147,3 +152,7 @@ ReopenBatch = 'BIKA: Reopen Batch'
 # Manage AR Imports
 # ----------------------------------------------
 ManageARImport = 'BIKA: Manage ARImport'
+
+# Manage AR Priorities
+# ----------------------------------------------
+ManageARPriority = 'BIKA: Manage ARPriority'

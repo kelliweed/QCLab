@@ -11,14 +11,18 @@ Documentation    Generally useful keywords for Bika tests.
 Log in
     [Arguments]  ${userid}  ${password}
 
-    Go to                       http://localhost:55001/plone/login_form
-    Page should contain element  __ac_name
-    Page should contain element  __ac_password
-    Page should contain button   Log in
-    Input text                   __ac_name      ${userid}
-    Input text                   __ac_password  ${password}
-    Click Button  Log in
+    Go to                          http://localhost:55001/plone/login_form
 
+    # cheeky but I want, so sneaked in here
+    Maximize Browser Window
+
+    Page should contain element     __ac_name
+    Page should contain element     __ac_password
+    Page should contain button      Log in
+    Input text                      __ac_name      ${userid}
+    Input text                      __ac_password  ${password}
+    Click Button  Log in
+    sleep     3
 
 Log out
     Go to                          http://localhost:55001/plone/logout
@@ -32,6 +36,7 @@ Select from dropdown
     Input text         ${locator}  ${search_text}
     sleep    1
     Click Element      xpath=//div[contains(@class,'cg-colItem')][${item_number}]
+    sleep    1
 
 
 SelectDate

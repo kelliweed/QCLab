@@ -2,6 +2,7 @@ from Products.CMFCore.utils import getToolByName
 from bika.lims.browser import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from bika.lims import bikaMessageFactory as _
+from bika.lims.utils import t
 from bika.lims.utils import formatDateQuery, formatDateParms, logged_in_client
 from plone.app.layout.globals.interfaces import IViewView
 from zope.interface import implements
@@ -24,7 +25,8 @@ class Report(BrowserView):
         parms = []
         headings = {}
         headings['header'] = _("Attachments")
-        headings['subheader'] = _("The attachments linked to analysis requests and analyses")
+        headings['subheader'] = _(
+            "The attachments linked to analysis requests and analyses")
 
         count_all = 0
         query = {'portal_type': 'Attachment'}
@@ -57,14 +59,14 @@ class Report(BrowserView):
         # and now lets do the actual report lines
         formats = {'columns': 6,
                    'col_heads': [_('Request'),
-                                  _('File'),
-                                  _('Attachment type'),
-                                  _('Content type'),
-                                  _('Size'),
-                                  _('Loaded'),
-                                  ],
+                                 _('File'),
+                                 _('Attachment type'),
+                                 _('Content type'),
+                                 _('Size'),
+                                 _('Loaded'),
+                   ],
                    'class': '',
-                  }
+        }
 
         datalines = []
         attachments = pc(query)
@@ -86,9 +88,11 @@ class Report(BrowserView):
             dataitem = {'value': filename,
                         'img_before': icon}
             dataline.append(dataitem)
-            dataitem = {'value': attachment.getAttachmentType().Title() if attachment.getAttachmentType() else ''}
+            dataitem = {
+            'value': attachment.getAttachmentType().Title() if attachment.getAttachmentType() else ''}
             dataline.append(dataitem)
-            dataitem = {'value': self.context.lookupMime(attachment_file.getContentType())}
+            dataitem = {
+            'value': self.context.lookupMime(attachment_file.getContentType())}
             dataline.append(dataitem)
             dataitem = {'value': '%s%s' % (filesize, sizeunit)}
             dataline.append(dataitem)
@@ -111,16 +115,17 @@ class Report(BrowserView):
         footlines.append(footline)
 
         self.report_content = {
-                'headings': headings,
-                'parms': parms,
-                'formats': formats,
-                'datalines': datalines,
-                'footings': footlines}
+            'headings': headings,
+            'parms': parms,
+            'formats': formats,
+            'datalines': datalines,
+            'footings': footlines}
 
         if self.request.get('output_format', '') == 'CSV':
             import csv
             import StringIO
             import datetime
+
             fieldnames = [
                 _('Request'),
                 _('File'),
@@ -140,8 +145,8 @@ class Report(BrowserView):
             setheader = self.request.RESPONSE.setHeader
             setheader('Content-Type', 'text/csv')
             setheader("Content-Disposition",
-                "attachment;filename=\"analysesattachments_%s.csv\"" % date)
+                      "attachment;filename=\"analysesattachments_%s.csv\"" % date)
             self.request.RESPONSE.write(report_data)
         else:
-            return {'report_title': self.context.translate(headings['header']),
+            return {'report_title': t(headings['header']),
                     'report_data': self.template()}

@@ -15,6 +15,7 @@ from bika.lims.browser.fields import DurationField
 from plone.app.folder import folder
 from zope.interface import implements
 import sys
+from bika.lims.locales import COUNTRIES
 
 class PrefixesField(RecordsField):
     """a list of prefixes per portal_type"""
@@ -68,6 +69,36 @@ schema = BikaFolderSchema.copy() + Schema((
         )
     ),
     BooleanField(
+        'AllowClerksToEditClients',
+        schemata="Security",
+        default=False,
+        widget=BooleanWidget(
+            label=_("Allow Lab Clerks to create and edit clients"),
+        )
+    ),
+    BooleanField(
+        'RestrictWorksheetUsersAccess',
+        schemata="Security",
+        default=True,
+        widget=BooleanWidget(
+            label=_("Allow access to worksheets only to assigned analysts"),
+            description=_("If unticked, analysts will have access to all worksheets.")
+        )
+    ),
+    BooleanField(
+        'RestrictWorksheetManagement',
+        schemata="Security",
+        default=True,
+        widget=BooleanWidget(
+            label=_("Only lab managers can create and manage worksheets"),
+            description=_("If unticked, analysts and lab clerks will "
+                          "be able to manage Worksheets, too. If the "
+                          "users have restricted access only to those "
+                          "worksheets for which they are assigned, "
+                          "this option will be ticked and readonly.")
+        )
+    ),
+    BooleanField(
         'ShowPrices',
         schemata="Accounting",
         default=True,
@@ -84,6 +115,17 @@ schema = BikaFolderSchema.copy() + Schema((
             label = _("Currency"),
             description = _("Select the currency the site will use to display "
                             "prices."),
+            format='select',
+        )
+    ),
+    StringField('DefaultCountry',
+        schemata = "Accounting",
+        required = 1,
+        vocabulary = 'getCountries',
+        default = '',
+        widget = SelectionWidget(
+            label = _("Country"),
+            description = _("Select the country the site will show by default"),
             format='select',
         )
     ),
@@ -115,6 +157,16 @@ schema = BikaFolderSchema.copy() + Schema((
             description = _("Using too few data points does not make statistical sense. "
                             "Set an acceptable minimum number of results before QC statistics "
                             "will be calculated and plotted"),
+        )
+    ),
+    BooleanField('IncludePreviousFromBatch',
+        schemata = "Results Reports",
+        default = False,
+        widget = BooleanWidget(
+            label = _("Include Previous Results From Batch"),
+            description = _("If there are previous results for a service in the "
+                            "same batch of Analysis Requests, they will be displayed "
+                            "in the report.")
         )
     ),
     IntegerField('BatchEmail',
@@ -302,6 +354,7 @@ schema = BikaFolderSchema.copy() + Schema((
                    {'portal_type': 'ReferenceSample', 'prefix': 'RS', 'padding': '4'},
                    {'portal_type': 'SupplyOrder', 'prefix': 'O', 'padding': '3'},
                    {'portal_type': 'Worksheet', 'prefix': 'WS', 'padding': '4'},
+                   {'portal_type': 'Pricelist', 'prefix': 'PL', 'padding': '4'},
                    ],
 #        fixedSize=8,
         widget=RecordsWidget(
@@ -412,6 +465,11 @@ class BikaSetup(folder.ATFolder):
             return prefix[0]['prefix']
         else:
             return portal_type
+
+    def getCountries(self):
+        items = [(x['ISO'], x['Country']) for x in COUNTRIES]
+        items.sort(lambda x,y: cmp(x[1], y[1]))
+        return items
 
 
 registerType(BikaSetup, PROJECTNAME)

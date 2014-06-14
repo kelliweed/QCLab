@@ -1,6 +1,8 @@
 from Products.Archetypes.config import TOOL_NAME
 from Products.CMFCore.utils import getToolByName
 from zExceptions import BadRequest
+import json
+import Missing
 
 
 def handle_errors(f):
@@ -12,10 +14,75 @@ def handle_errors(f):
     def decorator(*args, **kwargs):
         try:
             return f(*args, **kwargs)
-        except Exception, e:
+        except Exception:
             var = traceback.format_exc()
             return error(var)
+
     return decorator
+
+
+def get_include_fields(request):
+    """Retrieve include_fields values from the request
+    """
+    include_fields = []
+    rif = request.get("include_fields", "")
+    if "include_fields" in request:
+        include_fields = [x.strip()
+                          for x in rif.split(",")
+                          if x.strip()]
+    if "include_fields[]" in request:
+        include_fields = request['include_fields[]']
+    return include_fields
+
+
+def load_brain_metadata(proxy, include_fields):
+    """Load values from the catalog metadata into a list of dictionaries
+    """
+    ret = {}
+    for index in proxy.indexes():
+        if not index in proxy:
+            continue
+        if include_fields and index not in include_fields:
+            continue
+        val = getattr(proxy, index)
+        if val != Missing.Value:
+            try:
+                json.dumps(val)
+            except:
+                continue
+            ret[index] = val
+    return ret
+
+
+def load_field_values(instance, include_fields):
+    """Load values from an AT object schema fields into a list of dictionaries
+    """
+    schema = instance.Schema()
+    ret = {}
+    for field in schema.fields():
+        fieldname = field.getName()
+        if include_fields and fieldname not in include_fields:
+            continue
+        val = field.get(instance)
+        if val:
+            if field.type == "blob":
+                continue
+            # I put the UID of all references here in *_uid.
+            if field.type == 'reference':
+                if type(val) in (list, tuple):
+                    ret[fieldname + "_uid"] = [v.UID() for v in val]
+                    val = [v.Title() for v in val]
+                else:
+                    ret[fieldname + "_uid"] = val.UID()
+                    val = val.Title()
+            if field.type == 'boolean':
+                val = True if val else False
+        try:
+            json.dumps(val)
+        except:
+            val = str(val)
+        ret[fieldname] = val
+    return ret
 
 
 def resolve_request_lookup(context, request, fieldname):
@@ -24,7 +91,7 @@ def resolve_request_lookup(context, request, fieldname):
     brains = []
     at = getToolByName(context, TOOL_NAME, None)
     entries = request[fieldname] if type(request[fieldname]) in (list, tuple) \
-              else [request[fieldname], ]
+        else [request[fieldname], ]
     for entry in entries:
         contentFilter = {}
         for value in entry.split("|"):
@@ -55,6 +122,9 @@ def resolve_request_lookup(context, request, fieldname):
 def set_fields_from_request(obj, request):
     """Search request for keys that match field names in obj,
     and call field mutator with request value.
+
+    The list of fields for which schema mutators were found
+    is returned.
     """
     schema = obj.Schema()
     # fields contains all schema-valid field values from the request.
@@ -88,3 +158,4 @@ def set_fields_from_request(obj, request):
                 raise BadRequest(fieldname + ": Invalid JSON/Python variable")
         mutator = field.set(obj, value)
     obj.reindexObject()
+    return fields.keys()

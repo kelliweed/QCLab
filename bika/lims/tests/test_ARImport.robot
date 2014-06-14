@@ -1,6 +1,6 @@
 *** Settings ***
 
-Library          Selenium2Library  timeout=10  implicit_wait=0.2
+Library          Selenium2Library  timeout=5  implicit_wait=0.2
 Library          String
 Resource         keywords.txt
 Library          bika.lims.testing.Keywords
@@ -14,12 +14,12 @@ Suite Teardown   Close All Browsers
 *** Variables ***
 
 ${input_identifier} =  input#arimport_file
-${PATH_TO_TEST} =
 
 *** Test Cases ***
 
 Test AR Importing dependencies
     Log in                      test_labmanager  test_labmanager
+    Wait until page contains    You are now logged in
 
     Import Classic Valid AR
     Submit Valid AR Import
@@ -99,6 +99,7 @@ Import Profile AR File with errors
 Submit Valid AR Import
     Open Workflow Menu
     Click Link                  link=Submit ARImport
+    Sleep                       10s
     Wait until page contains    View
     Page Should Contain         Submitted
 

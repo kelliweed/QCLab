@@ -315,6 +315,14 @@ class ISamplePoints(Interface):
 
     ""
 
+class IStorageLocation(Interface):
+
+    ""
+
+class IStorageLocations(Interface):
+
+    ""
+
 
 class ISampleType(Interface):
 
@@ -326,6 +334,11 @@ class ISampleTypes(Interface):
     ""
 
 
+class ISRTemplates(Interface):
+
+    ""
+
+
 class ISupplier(Interface):
 
     ""
@@ -333,8 +346,20 @@ class ISupplier(Interface):
 
 class ISuppliers(Interface):
     ""
+
 class ISupplyOrder(Interface):
     ""
+
+class ISupplyOrderFolder(Interface):
+    ""
+
+
+class ISubGroups(Interface):
+    """Sub-groups configuration folder"""
+
+
+class ISubGroup(Interface):
+    """Sub-Group"""
 
 
 class IPreservations(Interface):
@@ -410,6 +435,27 @@ class IFieldIcons(Interface):
         w/ 'min', 'max', and 'error' keys.
         """
 
+class IResultOutOfRange(Interface):
+
+    """Any code which wants to check some condition and flag an Analysis as
+    out of range, uses this interface
+    """
+    def __call(result = None):
+        """The adapter must return a dictionary to indicate range out of bounds:
+        {
+         out_of_range: boolean - the result is out of bounds,
+         acceptable: boolean - the result is in acceptable error margin,
+         spec_values: dict - the min/max/error values for the failed specification
+        }
+
+        If the adapter returns a value that resolves to boolean False, the
+        analysis is assumed not to have triggered the out of range conditions
+
+        If a result is present in the request, it is passed here to be checked.
+        if result is None, the value from the database is checked.
+
+        """
+
 
 class IWidgetVisibility(Interface):
 
@@ -438,7 +484,8 @@ class IJSONReadExtender(Interface):
 
     def __call__(obj_data):
         """obj_data is the current python dictionary that will go to json.
-        it should be returned complete with modifications."""
+        it should be modified in place, there is no need to return a value.
+        """
 
 class ISetupDataImporter(Interface):
 
@@ -458,6 +505,11 @@ class IARImportItem(Interface):
 
     "Marker interface for an ARImport"
 
+class IPricelist(Interface):
+    "Folder view marker for Pricelist"
+
+class IPricelistFolder(Interface):
+    "Folder view marker for PricelistFolder instance"
 
 class IProductivityReport(Interface):
 
@@ -512,3 +564,47 @@ class IAdministrationReport(Interface):
     }
     """
 
+class IARPriorities(Interface):
+
+    "Marker interface for a folder that lists ARPriority's"
+
+class IARPriority(Interface):
+
+    "Marker interface for an ARPriority"
+
+class IHeaderTableFieldRenderer(Interface):
+    """
+    Allows an adapter to return the HTML content of the rendered field view,
+    in header_table listings. The adapter must be registered with
+    name=FieldName.
+
+    If the field is a Reference, and the user has View permission on the
+    target object, the field is rendered as <a href="absolute_url">Title</a>.
+
+    If no adapter is found, and the field is not a reference, it is rendered
+    with the normal AT field view machine.
+
+    In a ZCML somewhere:
+
+        <adapter
+          for="bika.lims.interfaces.IAnalysisRequest"
+          factory="package.module.spanner"
+          provides="bika.lims.interfaces.IHeaderTableFieldRenderer"
+          name="NameOfArchetypesField"
+        />
+
+    and the callable:
+
+        class spanner:
+            def __init__(self, context):
+                self.context = context
+            def __call__(self, field):
+                field_content = field.get(self.context)
+                return "<span>%"+field_content+"</span>"
+
+    """
+
+    def __call__(field):
+        """
+        Accepts an Archetypes Field, returns HTML.
+        """

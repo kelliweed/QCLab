@@ -5,7 +5,6 @@ from AccessControl import ClassSecurityInfo
 from Products.CMFPlone.i18nl10n import ulocalized_time
 from Products.Five.browser import BrowserView
 from bika.lims import logger
-from bika.lims import bikaMessageFactory as _
 from zope.i18n import translate
 from zope.cachedescriptors.property import Lazy as lazy_property
 
@@ -21,8 +20,12 @@ class BrowserView(BrowserView):
     security.declarePublic('ulocalized_time')
     def ulocalized_time(self, time, long_format=None, time_only=None):
         if time:
-            return ulocalized_time(time, long_format, time_only, self.context,
-                                   'bika', self.request)
+            # no printing times if they were not specified in inputs
+            if time.second() + time.minute() + time.hour() == 0:
+                long_format = False
+            time_str = ulocalized_time(time, long_format, time_only, self.context,
+                                       'bika', self.request)
+            return time_str
 
     @lazy_property
     def portal(self):
@@ -74,7 +77,7 @@ class BrowserView(BrowserView):
             return userid
         member_fullname = member.getProperty('fullname')
         c = self.portal_catalog(portal_type = 'Contact', getUsername = userid)
-        contact_fullname = c and c[0].getObject().getFullname() or None
+        contact_fullname = c[0].getObject().getFullname() if c else None
         return contact_fullname or member_fullname or userid
 
     def user_email(self, userid):
@@ -83,7 +86,7 @@ class BrowserView(BrowserView):
             return userid
         member_email = member.getProperty('email')
         c = self.portal_catalog(portal_type = 'Contact', getUsername = userid)
-        contact_email = c and c[0].getObject().getEmailAddress() or None
+        contact_email = c[0].getObject().getEmailAddress() if c else None
         return contact_email or member_email or ''
 
     def python_date_format(self, long_format=None, time_only=False):
@@ -133,4 +136,3 @@ class BrowserView(BrowserView):
         if fmt == "time_format":
             fmt = "%I:%M %p"
         return fmt
-

@@ -30,7 +30,6 @@
   <property name="metaTypesNotToList" type="lines">
     <element value="Contact"/>
     <element value="SupplierContact"/>
-    <element value="PricelistFolder"/>
     <element value="ATFile"/>
     <element value="Address"/>
     <element value="Analysis"/>
@@ -40,6 +39,7 @@
     <element value="AnalysisSpec"/>
     <element value="ARImport"/>
     <element value="ARImportItem"/>
+    <element value="ARPriority"/>
     <element value="AnalysisProfile"/>
     <element value="ARReport"/>
     <element value="ARTemplate"/>
@@ -55,12 +55,13 @@
     <element value="DuplicateAnalysis"/>
     <element value="Instrument"/>
     <element value="InstrumentCalibration"/>
-	  <element value="InstrumentCertification"/>
+	<element value="InstrumentCertification"/>
     <element value="InstrumentMaintenanceTask"/>
     <element value="InstrumentScheduledTask"/>
     <element value="InstrumentType"/>
     <element value="InstrumentValidation"/>
-    <element value="InvoiceLineItem"/>
+    <element value="Invoice"/>
+    <element value="InvoiceBatch"/>
     <element value="LabContact"/>
     <element value="LabProduct"/>
     <element value="LogEntry"/>
@@ -72,7 +73,6 @@
     <element value="SupplyOrder"/>
     <element value="SupplyOrderItem"/>
     <element value="Preservation"/>
-    <element value="PricelistLineItem"/>
     <element value="ReferenceAnalysis"/>
     <element value="ReferenceDefinition"/>
     <element value="ReferenceSample"/>
@@ -81,6 +81,7 @@
     <element value="Sample"/>
     <element value="SamplePartition"/>
     <element value="SamplePoint"/>
+    <element value="StorageLocation"/>
     <element value="SampleType"/>
     <element value="BatchLabel"/>
     <element value="Worksheet"/>

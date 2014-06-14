@@ -1,5 +1,7 @@
 from plone.app.portlets.portlets.navigation import Renderer
 from bika.lims import PMF
+from bika.lims.utils import t
+from bika.lims.utils import to_utf8
 
 
 def createNavTree(self):
@@ -14,7 +16,7 @@ def createNavTree(self):
         for i in range(len(eval(q[0]))):
             try:
                 exec("%s[%s]['Title'] = "
-                     "self.context.translate(PMF(%s[%s]['Title']))" % (
+                     "t(PMF(%s[%s]['Title']))" % (
                          q[0], i, q[0], i))
             except:
                 pass

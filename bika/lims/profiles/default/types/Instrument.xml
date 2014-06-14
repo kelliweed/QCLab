@@ -58,10 +58,19 @@
          i18n:attributes="title"
          i18n:domain="plone"
          visible="True">
-  <permission value="List folder contents"/>
+    <permission value="Modify portal content"/>
  </action>
 
-<!--
+ <action title="Certificates"
+         action_id="certifications"
+         category="object"
+         url_expr="string:${object_url}/certifications"
+         i18n:attributes="title"
+         i18n:domain="plone"
+         visible="True">
+    <permission value="Modify portal content"/>
+ </action>
+
  <action title="Maintenance"
         action_id="maintenance"
         category="object"
@@ -69,7 +78,7 @@
         icon_expr="string:${portal_url}/images/instrumentmaintenance.png"
         url_expr="string:${object_url}/maintenance"
         i18n:attributes="title"
-        visible="True">
+        visible="False">
     <permission value="Modify portal content"/>
  </action>
 
@@ -80,7 +89,7 @@
         icon_expr="string:${portal_url}/images/instrumentvalidation.png"
         url_expr="string:${object_url}/validations"
         i18n:attributes="title"
-        visible="True">
+        visible="False">
     <permission value="Modify portal content"/>
  </action>
 
@@ -91,20 +100,9 @@
         icon_expr="string:${portal_url}/images/instrumentcalibration.png"
         url_expr="string:${object_url}/calibrations"
         i18n:attributes="title"
-        visible="True">
+        visible="False">
     <permission value="Modify portal content"/>
  </action>
-
-  <action title="Certifications"
-        action_id="certification"
-        category="object"
-        condition_expr=""
-        icon_expr="string:${portal_url}/images/instrumentcertification.png"
-        url_expr="string:${object_url}/certifications"
-        i18n:attributes="title"
-        visible="True">
-    <permission value="Modify portal content"/>
-  </action>
 
   <action title="Validations"
         action_id="validation"
@@ -113,7 +111,7 @@
         icon_expr="string:${portal_url}/images/instrumentvalidation.png"
         url_expr="string:${object_url}/validations"
         i18n:attributes="title"
-        visible="True">
+        visible="False">
     <permission value="Modify portal content"/>
   </action>
 
@@ -124,8 +122,7 @@
         icon_expr="string:${portal_url}/images/instrumentschedule.png"
         url_expr="string:${object_url}/schedule"
         i18n:attributes="title"
-        visible="True">
+        visible="False">
     <permission value="Modify portal content"/>
   </action>
--->
 </object>

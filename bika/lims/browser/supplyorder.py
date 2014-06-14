@@ -1,4 +1,4 @@
-
+from Products.CMFPlone.utils import _createObjectByType
 from zope import event
 
 from Products.CMFCore.utils import getToolByName
@@ -6,6 +6,7 @@ from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
 from bika.lims import bikaMessageFactory as _
 from bika.lims.browser import BrowserView
+from bika.lims.utils import t
 
 
 class View(BrowserView):
@@ -21,11 +22,14 @@ class View(BrowserView):
         context.setConstrainTypesMode(1)
         context.setLocallyAllowedTypes(())
         # Collect general data
-        self.orderDate = context.getOrderDate()
-        self.contact = context.getContact().getFullname()
+        self.orderDate = self.ulocalized_time(context.getOrderDate())
+        self.contact = context.getContact()
+        self.contact = self.contact.getFullname() if self.contact else ''
         self.subtotal = '%.2f' % context.getSubtotal()
-        self.vat = '%.2f' % context.getVAT()
+        self.vat = '%.2f' % context.getVATAmount()
         self.total = '%.2f' % context.getTotal()
+        # Set the title
+        self.title = context.Title()
         # Collect order item data
         items = context.objectValues('SupplyOrderItem')
         self.items = []
@@ -37,7 +41,7 @@ class View(BrowserView):
                 'volume': product.getVolume(),
                 'unit': product.getUnit(),
                 'price': product.getPrice(),
-                'vat': '%s%%' % product.getVAT(),
+                'vat': '%s%%' % product.getVATAmount(),
                 'quantity': item.getQuantity(),
                 'totalprice': '%.2f' % item.getTotal(),
             })
@@ -67,12 +71,12 @@ class EditView(BrowserView):
             context.processForm()
             # Process the order item data
             for k, v in request.form.items():
-                if k.startswith('product_') and int(v) > 0:
+                if k.startswith('product_') and int(v) > -1:
                     k = k.replace('product_', '')
                     product = setup.bika_labproducts[k]
                     # Create a item if it doesn't yet exist
                     if k not in context:
-                        context.invokeFactory('SupplyOrderItem', k)
+                        _createObjectByType("SupplyOrderItem", context, k)
                     # Fetch and edit the item
                     obj = context[k]
                     obj.edit(
@@ -89,7 +93,7 @@ class EditView(BrowserView):
             self.orderDate = context.Schema()['OrderDate']
             self.contact = context.Schema()['Contact']
             self.subtotal = '%.2f' % context.getSubtotal()
-            self.vat = '%.2f' % context.getVAT()
+            self.vat = '%.2f' % context.getVATAmount()
             self.total = '%.2f' % context.getTotal()
             # Prepare the products
             items = context.objectValues('SupplyOrderItem')

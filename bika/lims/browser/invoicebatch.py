@@ -1,8 +1,10 @@
 from bika.lims.browser.bika_listing import BikaListingView
 from bika.lims import bikaMessageFactory as _
+from bika.lims.utils import t
 from Products.CMFPlone.utils import getToolByName
 from bika.lims.permissions import AddInvoice
 from bika.lims.permissions import ManageInvoices
+from bika.lims.utils import currency_format
 
 
 class InvoiceBatchInvoicesView(BikaListingView):
@@ -24,7 +26,7 @@ class InvoiceBatchInvoicesView(BikaListingView):
             'client': {'title': _('Client')},
             'invoicedate': {'title': _('Invoice Date')},
             'subtotal': {'title': _('Subtotal')},
-            'vattotal': {'title': _('VAT')},
+            'vatamount': {'title': _('VAT')},
             'total': {'title': _('Total')},
         }
         self.review_states = [
@@ -38,7 +40,7 @@ class InvoiceBatchInvoicesView(BikaListingView):
                     'client',
                     'invoicedate',
                     'subtotal',
-                    'vattotal',
+                    'vatamount',
                     'total',
                 ],
             },
@@ -47,18 +49,20 @@ class InvoiceBatchInvoicesView(BikaListingView):
     def getInvoices(self, contentFilter):
         return self.context.objectValues('Invoice')
 
-    def __call__(self):
-        mtool = getToolByName(self.context, 'portal_membership')
-        addPortalMessage = self.context.plone_utils.addPortalMessage
-        if mtool.checkPermission(AddInvoice, self.context):
-            clients = self.context.clients.objectIds()
-            if clients:
-                self.context_actions[_('Add')] = {
-                    'url': 'createObject?type_name=Patient',
-                    'icon': '++resource++bika.lims.images/add.png'
-                }
+    # def __call__(self):
+    #     mtool = getToolByName(self.context, 'portal_membership')
+    #     addPortalMessage = self.context.plone_utils.addPortalMessage
+    #     if mtool.checkPermission(AddInvoice, self.context):
+    #         clients = self.context.clients.objectIds()
+    #         if clients:
+    #             self.context_actions[_('Add')] = {
+    #                 'url': 'createObject?type_name=Invoice',
+    #                 'icon': '++resource++bika.lims.images/add.png'
+    #             }
+    #     return super(InvoiceBatchInvoicesView, self).__call__()
 
     def folderitems(self):
+        currency = currency_format(self.context, 'en')
         self.contentsMethod = self.getInvoices
         items = BikaListingView.folderitems(self)
         for item in items:
@@ -69,7 +73,7 @@ class InvoiceBatchInvoicesView(BikaListingView):
             item['replace']['id'] = number_link
             item['client'] = obj.getClient().Title()
             item['invoicedate'] = self.ulocalized_time(obj.getInvoiceDate())
-            item['subtotal'] = obj.getSubtotal()
-            item['vattotal'] = obj.getVATTotal()
-            item['total'] = obj.getTotal()
+            item['subtotal'] = currency(obj.getSubtotal())
+            item['vatamount'] = currency(obj.getVATAmount())
+            item['total'] = currency(obj.getTotal())
         return items

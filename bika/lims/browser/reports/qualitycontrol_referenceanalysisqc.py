@@ -1,23 +1,28 @@
+import json
+import tempfile
+
 from AccessControl import getSecurityManager
 from DateTime import DateTime
 from Products.CMFCore.utils import getToolByName
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from bika.lims import bikaMessageFactory as _
+from bika.lims.utils import t, isAttributeHidden
 from bika.lims.browser import BrowserView
 from bika.lims.browser.reports.selection_macros import SelectionMacrosView
 from gpw import plot
+from bika.lims.utils import to_utf8
 from plone.app.content.browser.interfaces import IFolderContentsView
 from plone.app.layout.globals.interfaces import IViewView
 from zope.interface import implements
-import json
 import os
 import plone
-import tempfile
+
 
 class Report(BrowserView):
     implements(IViewView)
 
-    template = ViewPageTemplateFile("templates/qualitycontrol_referenceanalysisqc.pt")
+    template = ViewPageTemplateFile(
+        "templates/qualitycontrol_referenceanalysisqc.pt")
     # if unsuccessful we return here:
     default_template = ViewPageTemplateFile("templates/qualitycontrol.pt")
 
@@ -33,8 +38,8 @@ class Report(BrowserView):
 
         MinimumResults = self.context.bika_setup.getMinimumResults()
 
-        warning_icon = "<img src='"+self.portal_url+"/++resource++bika.lims.images/warning.png' height='9' width='9'/>"
-        error_icon = "<img src='"+self.portal_url+"/++resource++bika.lims.images/exclamation.png' height='9' width='9'/>"
+        warning_icon = "<img src='" + self.portal_url + "/++resource++bika.lims.images/warning.png' height='9' width='9'/>"
+        error_icon = "<img src='" + self.portal_url + "/++resource++bika.lims.images/exclamation.png' height='9' width='9'/>"
 
         self.parms = []
         titles = []
@@ -46,7 +51,8 @@ class Report(BrowserView):
             self.context.plone_utils.addPortalMessage(message, 'error')
             return self.default_template()
 
-        self.parms.append({'title':_("Reference Sample"),'value':sample.Title()})
+        self.parms.append(
+            {'title': _("Reference Sample"), 'value': sample.Title()})
         titles.append(sample.Title())
 
         service_uid = self.request.form.get('ReferenceServiceUID', '')
@@ -58,13 +64,17 @@ class Report(BrowserView):
 
         self.contentFilter = {'portal_type': 'ReferenceAnalysis',
                               'review_state': ['verified', 'published'],
-                              'path': {"query": "/".join(sample.getPhysicalPath()),
-                                       "level" : 0 }}
+                              'path': {
+                              "query": "/".join(sample.getPhysicalPath()),
+                              "level": 0}}
 
-        self.parms.append({'title':_("Analysis Service"),'value':service.Title()})
+        self.parms.append(
+            {'title': _("Analysis Service"), 'value': service.Title()})
         titles.append(service.Title())
 
-        val = self.selection_macros.parse_daterange(self.request, 'getDateVerified', 'DateVerified')
+        val = self.selection_macros.parse_daterange(self.request,
+                                                    'getDateVerified',
+                                                    'DateVerified')
         if val:
             self.contentFilter[val['contentFilter'][0]] = val['contentFilter'][1]
             self.parms.append(val['parms'])
@@ -89,7 +99,9 @@ class Report(BrowserView):
         for analysis in proxies:
             analysis = analysis.getObject()
             service = analysis.getService()
-            resultsrange = [x for x in sample.getReferenceResults() if x['uid'] == service_uid][0]
+            resultsrange = \
+            [x for x in sample.getReferenceResults() if x['uid'] == service_uid][
+                0]
             try:
                 result = float(analysis.getResult())
                 results.append(result)
@@ -97,21 +109,28 @@ class Report(BrowserView):
                 result = analysis.getResult()
             capture_dates.append(analysis.getResultCaptureDate())
 
-            if result < float(resultsrange['min']) or result > float(resultsrange['max']):
+            if result < float(resultsrange['min']) or result > float(
+                    resultsrange['max']):
                 out_of_range_count += 1
 
-            try: precision = str(service.getPrecision())
-            except: precision = "2"
+            try:
+                precision = str(service.getPrecision())
+            except:
+                precision = "2"
 
-            try: formatted_result = str("%." + precision + "f")%result
-            except: formatted_result = result
+            try:
+                formatted_result = str("%." + precision + "f") % result
+            except:
+                formatted_result = result
 
             tabledata.append({_("Analysis"): analysis.getId(),
                               _("Result"): formatted_result,
                               _("Analyst"): analysis.getAnalyst(),
-                              _("Captured"): analysis.getResultCaptureDate().strftime(self.date_format_long)})
+                              _(
+                                  "Captured"): analysis.getResultCaptureDate().strftime(
+                                  self.date_format_long)})
 
-            plotdata += "%s\t%s\t%s\t%s\n"%(
+            plotdata += "%s\t%s\t%s\t%s\n" % (
                 analysis.getResultCaptureDate().strftime(self.date_format_long),
                 result,
                 resultsrange['min'],
@@ -126,7 +145,7 @@ class Report(BrowserView):
             {"title": _("Total analyses"), "value": len(proxies)},
         ]
 
-        ## This variable is output to the TAL
+        # # This variable is output to the TAL
         self.report_data = {
             'header': header,
             'subheader': subheader,
@@ -163,20 +182,23 @@ class Report(BrowserView):
                    '' using 1:3 smooth unique lc rgb '#aaaaaa' lw 2,\
                    '' using 1:4 with lines lc rgb '#000000' lw 1,\
                    '' using 1:5 with lines lc rgb '#000000' lw 1""" % \
-            {
-                'title': "",
-                'xlabel': "",
-                'ylabel': service.getUnit(),
-                'x_start': "%s" % min(result_dates).strftime(self.date_format_short),
-                'x_end': "%s" % max(result_dates).strftime(self.date_format_short),
-                'timefmt': r'%Y-%m-%d %H:%M',
-                'xformat': '%%Y-%%m-%%d\n%%H:%%M',
-            }
+                         {
+                             'title': "",
+                             'xlabel': "",
+                             'ylabel': service.getUnit(),
+                             'x_start': "%s" % min(result_dates).strftime(
+                                 self.date_format_short),
+                             'x_end': "%s" % max(result_dates).strftime(
+                                 self.date_format_short),
+                             'timefmt': r'%Y-%m-%d %H:%M',
+                             'xformat': '%%Y-%%m-%%d\n%%H:%%M',
+                         }
 
-            plot_png = plot(str(plotdata), plotscript=str(plotscript), usefifo=False)
+            plot_png = plot(str(plotdata), plotscript=str(plotscript),
+                            usefifo=False)
 
             # Temporary PNG data file
-            fh,data_fn = tempfile.mkstemp(suffix='.png')
+            fh, data_fn = tempfile.mkstemp(suffix='.png')
             os.write(fh, plot_png)
             plot_url = data_fn
             self.request['to_remove'].append(data_fn)
@@ -186,7 +208,7 @@ class Report(BrowserView):
 
         table = {
             'title': "%s: %s (%s)" % (
-                self.context.translate(_("Analysis Service")),
+                t(_("Analysis Service")),
                 service.Title(),
                 service.getKeyword()
             ),
@@ -194,28 +216,32 @@ class Report(BrowserView):
                         _('Result'),
                         _('Analyst'),
                         _('Captured')],
-            'parms':[],
+            'parms': [],
             'data': tabledata,
             'plot_url': plot_url,
         }
 
         self.report_data['tables'].append(table)
 
+        translate = self.context.translate
+
         ## footnotes
         if out_of_range_count:
             msgid = _("Analyses out of range")
-            translate = self.context.translate
             self.report_data['footnotes'].append(
-                "%s %s" % (error_icon, translate(msgid)))
+                "%s %s" % (error_icon, t(msgid)))
 
         self.report_data['parms'].append(
             {"title": _("Analyses out of range"),
              "value": out_of_range_count})
 
-        title = self.context.translate(header)
+        title = t(header)
         if titles:
             title += " (%s)" % " ".join(titles)
         return {
             'report_title': title,
             'report_data': self.template(),
         }
+
+    def isSamplePointHidden(self):
+        return isAttributeHidden('AnalysisRequest', 'SamplePoint')

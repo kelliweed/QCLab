@@ -2,10 +2,14 @@
 """
 from AccessControl import ClassSecurityInfo
 from bika.lims import bikaMessageFactory as _
+from bika.lims.utils import t
 from bika.lims.browser.widgets.datetimewidget import DateTimeWidget
 from bika.lims.config import PROJECTNAME
 from bika.lims.content.bikaschema import BikaSchema
 from bika.lims.interfaces import ISample
+from bika.lims.workflow import doActionFor, isBasicTransitionAllowed
+from bika.lims.workflow import skip
+from DateTime import DateTime
 from Products.Archetypes import atapi
 from Products.Archetypes.config import REFERENCE_CATALOG
 from Products.Archetypes.public import *
@@ -20,6 +24,7 @@ from zope.interface import implements
 from bika.lims.browser.widgets import ReferenceWidget
 
 import sys
+from bika.lims.utils import to_unicode
 
 schema = BikaSchema.copy() + Schema((
     StringField('SampleID',
@@ -85,7 +90,7 @@ schema = BikaSchema.copy() + Schema((
         widget=ReferenceWidget(
             label=_("Sample Type"),
             render_own_label=True,
-            visible={'edit': 'invisible',
+            visible={'edit': 'visible',
                      'view': 'visible',
                      'add': 'visible'},
             catalog_name='bika_setup_catalog',
@@ -111,7 +116,7 @@ schema = BikaSchema.copy() + Schema((
         widget=ReferenceWidget(
             label=_("Sample Point"),
             render_own_label=True,
-            visible={'edit': 'invisible',
+            visible={'edit': 'visible',
                      'view': 'visible',
                      'add': 'visible'},
             catalog_name='bika_setup_catalog',
@@ -124,6 +129,27 @@ schema = BikaSchema.copy() + Schema((
         expression = "here.getSamplePoint() and here.getSamplePoint().Title() or ''",
         widget = ComputedWidget(
             visible=False,
+        ),
+    ),
+    ReferenceField(
+        'StorageLocation',
+        allowed_types='StorageLocation',
+        relationship='AnalysisRequestStorageLocation',
+        mode="rw",
+        read_permission=permissions.View,
+        write_permission=permissions.ModifyPortalContent,
+        widget=ReferenceWidget(
+            label=_("Storage Location"),
+            description=_("Location where sample is kept"),
+            size=20,
+            render_own_label=True,
+            visible={'edit': 'visible',
+                     'view': 'visible',
+                     'add': 'visible',
+                     'secondary': 'invisible'},
+            catalog_name='bika_setup_catalog',
+            base_query={'inactive_state': 'active'},
+            showOn=True,
         ),
     ),
     BooleanField('SamplingWorkflowEnabled',
@@ -200,7 +226,7 @@ schema = BikaSchema.copy() + Schema((
         write_permission=permissions.ModifyPortalContent,
         widget = DateTimeWidget(
             label=_("Date Received"),
-            visible={'edit': 'invisible',
+            visible={'edit': 'visible',
                      'view': 'visible'},
             render_own_label=True,
         ),
@@ -291,6 +317,14 @@ schema = BikaSchema.copy() + Schema((
             append_only=True,
         ),
     ),
+    ###ComputedField('Priority',
+    ###    expression = 'context.getPriority() or None',
+    ###    widget = ComputedWidget(
+    ###        visible={'edit': 'visible',
+    ###                 'view': 'visible'},
+    ###        render_own_label=False,
+    ###    ),
+    ###),
 ))
 
 
@@ -373,7 +407,7 @@ class Sample(BaseFolder, HistoryAwareMixin):
             pass
         else:
             bsc = getToolByName(self, 'bika_setup_catalog')
-            sampletypes = bsc(portal_type='SampleType', title=value)
+            sampletypes = bsc(portal_type='SampleType', title=to_unicode(value))
             if sampletypes:
                 value = sampletypes[0].UID
             else:
@@ -396,7 +430,7 @@ class Sample(BaseFolder, HistoryAwareMixin):
             pass
         else:
             bsc = getToolByName(self, 'bika_setup_catalog')
-            sampletypes = bsc(portal_type='SamplePoint', title=value)
+            sampletypes = bsc(portal_type='SamplePoint', title=to_unicode(value))
             if sampletypes:
                 value = sampletypes[0].UID
             else:
@@ -486,5 +520,133 @@ class Sample(BaseFolder, HistoryAwareMixin):
         except:
             return 0
         return last_ar_number
+
+    def workflow_script_receive(self):
+        workflow = getToolByName(self, 'portal_workflow')
+        self.setDateReceived(DateTime())
+        self.reindexObject(idxs=["review_state", "getDateReceived"])
+        # Receive all self partitions that are still 'sample_due'
+        parts = self.objectValues('SamplePartition')
+        sample_due = [sp for sp in parts
+                      if workflow.getInfoFor(sp, 'review_state') == 'sample_due']
+        for sp in sample_due:
+            workflow.doActionFor(sp, 'receive')
+        # when a self is received, all associated
+        # AnalysisRequests are also transitioned
+        for ar in self.getAnalysisRequests():
+            doActionFor(ar, "receive")
+        #     q = "/sticker?size=%s&items=%s" % (size, self.getId())
+        #     self.REQUEST.RESPONSE.redirect(self.absolute_url() + q)
+
+    def workflow_script_preserve(self):
+        """This action can happen in the Sample UI, so we transition all
+        self partitions that are still 'to_be_preserved'
+        """
+        workflow = getToolByName(self, 'portal_workflow')
+        parts = self.objectValues("SamplePartition")
+        tbs = [sp for sp in parts
+               if workflow.getInfoFor(sp, 'review_state') == 'to_be_preserved']
+        for sp in tbs:
+            doActionFor(sp, "preserve")
+        # All associated AnalysisRequests are also transitioned
+        for ar in self.getAnalysisRequests():
+            doActionFor(ar, "preserve")
+            ar.reindexObject()
+
+    def workflow_script_expire(self):
+        self.setDateExpired(DateTime())
+        self.reindexObject(idxs=["review_state", "getDateExpired", ])
+
+    def workflow_script_sample(self):
+        if skip(self, "sample"):
+            return
+        workflow = getToolByName(self, 'portal_workflow')
+        parts = self.objectValues('SamplePartition')
+        # This action can happen in the Sample UI.  So we transition all
+        # partitions that are still 'to_be_sampled'
+        tbs = [sp for sp in parts
+               if workflow.getInfoFor(sp, 'review_state') == 'to_be_sampled']
+        for sp in tbs:
+            doActionFor(sp, "sample")
+        # All associated AnalysisRequests are also transitioned
+        for ar in self.getAnalysisRequests():
+            doActionFor(ar, "sample")
+            ar.reindexObject()
+
+    def workflow_script_to_be_preserved(self):
+        if skip(self, "to_be_preserved"):
+            return
+        workflow = getToolByName(self, 'portal_workflow')
+        parts = self.objectValues('SamplePartition')
+        # Transition our children
+        tbs = [sp for sp in parts
+               if workflow.getInfoFor(sp, 'review_state') == 'to_be_preserved']
+        for sp in tbs:
+            doActionFor(sp, "to_be_preserved")
+        # All associated AnalysisRequests are also transitioned
+        for ar in self.getAnalysisRequests():
+            doActionFor(ar, "to_be_preserved")
+            ar.reindexObject()
+
+    def workflow_script_sample_due(self):
+        if skip(self, "sample_due"):
+            return
+        # All associated AnalysisRequests are also transitioned
+        for ar in self.getAnalysisRequests():
+            doActionFor(ar, "sample_due")
+            ar.reindexObject()
+
+    def workflow_script_reinstate(self):
+        if skip(self, "reinstate"):
+            return
+        workflow = getToolByName(self, 'portal_workflow')
+        parts = self.objectValues('SamplePartition')
+        self.reindexObject(idxs=["cancellation_state", ])
+        # Re-instate all self partitions
+        for sp in [sp for sp in parts
+                   if workflow.getInfoFor(sp, 'cancellation_state') == 'cancelled']:
+            workflow.doActionFor(sp, 'reinstate')
+        # reinstate all ARs for this self.
+        ars = self.getAnalysisRequests()
+        for ar in ars:
+            if not skip(ar, "reinstate", peek=True):
+                ar_state = workflow.getInfoFor(ar, 'cancellation_state')
+                if ar_state == 'cancelled':
+                    workflow.doActionFor(ar, 'reinstate')
+
+    def workflow_script_cancel(self):
+        if skip(self, "cancel"):
+            return
+        workflow = getToolByName(self, 'portal_workflow')
+        parts = self.objectValues('SamplePartition')
+        self.reindexObject(idxs=["cancellation_state", ])
+        # Cancel all partitions
+        for sp in [sp for sp in parts
+                   if workflow.getInfoFor(sp, 'cancellation_state') == 'active']:
+            workflow.doActionFor(sp, 'cancel')
+        # cancel all ARs for this self.
+        ars = self.getAnalysisRequests()
+        for ar in ars:
+            if not skip(ar, "cancel", peek=True):
+                ar_state = workflow.getInfoFor(ar, 'cancellation_state')
+                if ar_state == 'active':
+                    workflow.doActionFor(ar, 'cancel')
+
+    def guard_receive_transition(self):
+        """Prevent the receive transition from being available:
+        - if object is cancelled
+        - if any related ARs have field analyses with no result.
+        """
+        # Can't do anything to the object if it's cancelled
+        if not isBasicTransitionAllowed(self):
+            return False
+        # check if any related ARs have field analyses with no result.
+        for ar in self.getAnalysisRequests():
+            field_analyses = ar.getAnalyses(getPointOfCapture='field',
+                                            full_objects=True)
+            no_results = [a for a in field_analyses if a.getResult() == '']
+            if no_results:
+                return False
+        return True
 
 atapi.registerType(Sample, PROJECTNAME)
