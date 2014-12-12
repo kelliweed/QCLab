@@ -1,9 +1,11 @@
 from AccessControl import ClassSecurityInfo
+from bika.lims import logger
 from bika.lims.browser.fields import DurationField
 from bika.lims.config import PROJECTNAME
 from bika.lims.content.bikaschema import BikaSchema
 from bika.lims.interfaces import ISamplePartition
-from bika.lims.workflow import doActionFor, isBasicTransitionAllowed
+from bika.lims.workflow import doActionFor, isBasicTransitionAllowed, is_transition_allowed, filter_by_state, Actions, \
+    StateFlow
 from bika.lims.workflow import skip
 from DateTime import DateTime
 from datetime import timedelta
@@ -120,117 +122,60 @@ class SamplePartition(BaseContent, HistoryAwareMixin):
             return True
         return False
 
-    def workflow_script_preserve(self):
-        workflow = getToolByName(self, 'portal_workflow')
-        sample = self.aq_parent
-        # Transition our analyses
+    def workflow_do_action(self, action, workflow_id='review_state', notify_parent=True):
+        """
+        Transitions the state of the Sample Partition and its analysis linked (children). If the partition transition
+        succeed, the method also notifies the action to the Sample (the parent) in order to escalate the action to
+        siblings and other objects not directly related with this partition but that might be transitioned too.
+        :param action: the transition id
+        :param workflow_id: the workflow identifier. By default 'review_state'
+        :param notify_parent: notify parent after the transition. By default, True.
+        :return: True if the the transition of the partition has succeed. Otherwise, return False.
+        """
+        if skip(self, action) or not is_transition_allowed(self, action, workflow_id):
+            return False
+
+        # 1. Transition partition's children (analyses)
         analyses = self.getBackReferences('AnalysisSamplePartition')
-        if analyses:
-            for analysis in analyses:
-                doActionFor(analysis, "preserve")
-        # if all our siblings are now up to date, promote sample and ARs.
-        parts = sample.objectValues("SamplePartition")
-        if parts:
-            lower_states = ['to_be_sampled', 'to_be_preserved', ]
-            escalate = True
-            for part in parts:
-                if workflow.getInfoFor(part, 'review_state') in lower_states:
-                    escalate = False
-            if escalate:
-                doActionFor(sample, "preserve")
-                for ar in sample.getAnalysisRequests():
-                    doActionFor(ar, "preserve")
+        analyses = [an for an in analyses if is_transition_allowed(an, action, workflow_id)]
+        for analysis in analyses:
+            doActionFor(analysis, action)
+
+        # 2. Transition the partition itself
+        performed, msg = doActionFor(self, action)
+        if not performed:
+            # Something went wrong. Abort.
+            return False
+
+        # 3. Notify partition's parent (Sample)
+        #    The parent is responsible of transitioning its own children. The sample partition must only be
+        #    responsible of transitioning itself and its own children, but not its siblings.
+        if notify_parent:
+            self.aq_parent.notify_transition(self, action)
+
+        return True
+
+
+    def workflow_script_preserve(self):
+        self.workflow_do_action(Actions.preserve)
 
     def workflow_transition_expire(self):
         self.setDateExpired(DateTime())
-        self.reindexObject(idxs=["review_state", "getDateExpired", ])
+        self.reindexObject(idxs=[StateFlow.review, "getDateExpired", ])
 
     def workflow_script_sample(self):
-        if skip(self, "sample"):
-            return
-        sample = self.aq_parent
-        workflow = getToolByName(self, 'portal_workflow')
-        # Transition our analyses
-        analyses = self.getBackReferences('AnalysisSamplePartition')
-        for analysis in analyses:
-            doActionFor(analysis, "sample")
-        # if all our siblings are now up to date, promote sample and ARs.
-        parts = sample.objectValues("SamplePartition")
-        if parts:
-            lower_states = ['to_be_sampled', ]
-            escalate = True
-            for part in parts:
-                pstate = workflow.getInfoFor(part, 'review_state')
-                if pstate in lower_states:
-                    escalate = False
-            if escalate:
-                doActionFor(sample, "sample")
-                for ar in sample.getAnalysisRequests():
-                    doActionFor(ar, "sample")
+        self.workflow_do_action(Actions.sample, StateFlow.sample)
 
     def workflow_script_to_be_preserved(self):
-        if skip(self, "to_be_preserved"):
-            return
-        sample = self.aq_parent
-        workflow = getToolByName(self, 'portal_workflow')
-        # Transition our analyses
-        analyses = self.getBackReferences('AnalysisSamplePartition')
-        for analysis in analyses:
-            doActionFor(analysis, "to_be_preserved")
-        # if all our siblings are now up to date, promote sample and ARs.
-        parts = sample.objectValues("SamplePartition")
-        if parts:
-            lower_states = ['to_be_sampled', 'to_be_preserved', ]
-            escalate = True
-            for part in parts:
-                if workflow.getInfoFor(part, 'review_state') in lower_states:
-                    escalate = False
-            if escalate:
-                doActionFor(sample, "to_be_preserved")
-                for ar in sample.getAnalysisRequests():
-                    doActionFor(ar, "to_be_preserved")
+        self.workflow_do_action(Actions.to_be_preserved, StateFlow.review)
 
     def workflow_script_sample_due(self):
-        if skip(self, "sample_due"):
-            return
-        sample = self.aq_parent
-        workflow = getToolByName(self, 'portal_workflow')
-        # Transition our analyses
-        analyses = self.getBackReferences('AnalysisSamplePartition')
-        for analysis in analyses:
-            doActionFor(analysis, "sample_due")
-        # if all our siblings are now up to date, promote sample and ARs.
-        parts = sample.objectValues("SamplePartition")
-        if parts:
-            lower_states = ['to_be_preserved', ]
-            escalate = True
-            for part in parts:
-                pstate = workflow.getInfoFor(part, 'review_state')
-                if pstate in lower_states:
-                    escalate = False
-            if escalate:
-                doActionFor(sample, "sample_due")
-                for ar in sample.getAnalysisRequests():
-                    doActionFor(ar, "sample_due")
+        self.workflow_do_action(Actions.sample_due, StateFlow.review)
 
     def workflow_script_receive(self):
-        if skip(self, "receive"):
-            return
-        sample = self.aq_parent
-        workflow = getToolByName(self, 'portal_workflow')
-        sample_state = workflow.getInfoFor(sample, 'review_state')
         self.setDateReceived(DateTime())
         self.reindexObject(idxs=["getDateReceived", ])
-        # Transition our analyses
-        analyses = self.getBackReferences('AnalysisSamplePartition')
-        for analysis in analyses:
-            doActionFor(analysis, "receive")
-        # if all sibling partitions are received, promote sample
-        if not skip(sample, "receive", peek=True):
-            due = [sp for sp in sample.objectValues("SamplePartition")
-                   if workflow.getInfoFor(sp, 'review_state') == 'sample_due']
-            if sample_state == 'sample_due' and not due:
-                doActionFor(sample, 'receive')
+        self.workflow_do_action(Actions.receive, StateFlow.review)
 
     def workflow_script_reinstate(self):
         if skip(self, "reinstate"):

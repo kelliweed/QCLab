@@ -2,6 +2,7 @@
 """
 from AccessControl import ClassSecurityInfo
 from Products.CMFCore.WorkflowCore import WorkflowException
+from bika.lims import logger
 from bika.lims import bikaMessageFactory as _
 from bika.lims.utils import t, getUsers
 from bika.lims.browser.widgets.datetimewidget import DateTimeWidget
@@ -9,8 +10,9 @@ from bika.lims.config import PROJECTNAME
 from bika.lims.content.bikaschema import BikaSchema
 from bika.lims.interfaces import ISample
 from bika.lims.permissions import SampleSample
-from bika.lims.workflow import doActionFor, isBasicTransitionAllowed
-from bika.lims.workflow import skip
+from bika.lims.workflow import doActionFor, isBasicTransitionAllowed, is_transition_allowed, filter_by_state, States, Actions, \
+    getCurrentState
+from bika.lims.workflow import skip, filter_by_state
 from DateTime import DateTime
 from Products.Archetypes import atapi
 from Products.Archetypes.config import REFERENCE_CATALOG
@@ -824,6 +826,12 @@ class Sample(BaseFolder, HistoryAwareMixin):
         return DisplayList(prep_workflows)
 
     def workflow_script_receive(self):
+        """
+        Performs the following transitions:
+        - receive all Sample Partitions from this sample and with review_state='sample_due'
+        - receive all Analysis Requests from this sample and with review_state=''
+        :return:
+        """
         workflow = getToolByName(self, 'portal_workflow')
         self.setDateReceived(DateTime())
         self.reindexObject(idxs=["review_state", "getDateReceived"])
@@ -993,5 +1001,75 @@ class Sample(BaseFolder, HistoryAwareMixin):
         if len(transitions) > 0:
             return False
         return True
+
+    def notify_transition(self, instance, action, workflow_id='review_state'):
+        """ Method used by children objects to notify the Sample when they are transitioned.
+            If the Sample and its children (Sample Partitions and Analysis Requests) are in a desired state, this
+            method forces the transition of all the children objects pending for the action specified.
+            If all children has been successfully transitioned, the Sample itself is transitioned too.
+            If there are Analysis Requests pending to be transitioned, the transitions will take place only and only
+            when the instance specified is a Sample Partition and all the Sample Partitions are already transitioned.
+            On the other hand, if there are Sample Partitions pending to be transitioned, the transitions will take
+            place only and only when the instance specified is an Analysis Request and all Analysis Requests are
+            already transitioned.
+            This behavior allows the user to do a transition for only on Sample Partition without the Sample and
+            other Sample Partitions being automatically transitioned. Also allows the user to do a transition for
+            only one Analysis Request without the Sample and other Analysis Requests being automatically transitioned.
+            If all Sample Partitions have been transitioned, we assume the Sample and the Analysis Requests must be
+            transitioned too. The same happens if all Analysis Requests have been transitioned.
+        :param instance: the child object transitioned (AnalysisRequest or SamplePartition types)
+        :param action: the action that causes the transition
+        :param workflow_id: the workflow identifier. By default, 'review_state'.
+        """
+        # Sample itself can be transitioned?
+        if not is_transition_allowed(self, action, workflow_id):
+            state = getCurrentState(self, workflow_id)
+            logger.warn("Action '%s' not allowed for Sample type and state '%s'" % (action, state))
+            return
+
+        # Are the type of the instance valid?
+        if not instance or (instance.portal_type not in ['SamplePartition', 'AnalysisRequest']):
+            logger.error("Instance type not valid")
+            return
+
+        # Dictionary of previous states allowed to be transitioned for an specified action
+        action_states = {
+            Actions.preserve: [States.to_be_sampled, States.to_be_preserved],
+        }
+
+        prev_states = action_states.get(action, None)
+        if not prev_states:
+            # This action hasn't any previous state defined
+            logger.error("Unable to populate transition for Sample. Action '%s' not declared." % action)
+            return
+
+        # Are all children in a desirable state?
+        parts_ready = filter_by_state(self.objectValues('SamplePartition'), prev_states, workflow_id)
+        ars_ready = filter_by_state(self.getAnalysisRequests(), prev_states, workflow_id)
+
+        if len(parts_ready) == 0 and len(ars_ready) > 0 and instance == 'SamplePartition':
+            # The last transitioned type is a SamplePartition. All sample partitions are ok, but at least one AR fails.
+            # ARs should be transitioned too..
+            for ar in ars_ready:
+                # To prevent a infinite loop, force the child to not notify!
+                if not ar.workflow_do_action(action, workflow_id=workflow_id, notify_parent=False):
+                    # The Analysis Request cannot be transitioned. Abort.
+                    return
+
+        elif len(parts_ready) > 0 and len(ars_ready) == 0 and instance == 'AnalysisRequest':
+            # The last transitioned type is an AnalysisRequest. All ARs are ok, but at least one partition fails.
+            for part in parts_ready:
+                # To prevent a infinite loop, force the child to not notify!
+                if not part.workflow_do_action(action, workflow_id=workflow_id, notify_parent=False):
+                    # The Partition cannot be transitioned. Abort.
+                    return
+
+        elif len(parts_ready) != 0 or len(ars_ready) != 0:
+            # Abort, children from different types still pending to be transitioned
+            return
+
+        # All child items have been transitioned already
+        # Sample itself ready to be transitioned
+        doActionFor(self, action)
 
 atapi.registerType(Sample, PROJECTNAME)
