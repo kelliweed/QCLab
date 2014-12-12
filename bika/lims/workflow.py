@@ -1,5 +1,6 @@
 from bika.lims import enum
 from bika.lims import PMF
+from bika.lims import logger
 from bika.lims.interfaces import IJSONReadExtender
 from bika.lims.utils import t
 from Products.CMFCore.interfaces import IContentish
@@ -41,13 +42,15 @@ def doActionFor(instance, action_id):
     actionperformed = False
     message = ''
     workflow = getToolByName(instance, "portal_workflow")
-    if not skip(instance, action_id, peek=True):
+    ex_state = workflow.getInfoFor(instance, 'review_state')
+    if not skip(instance, action_id, peek=True) and ex_state != action_id:
         try:
             workflow.doActionFor(instance, action_id)
             actionperformed = True
         except WorkflowException as e:
-            message = str(e)
-            pass
+            logmsg = "Error while transitioning %s from %s to %s: %s" \
+                     % (instance.portal_type,  ex_state, action_id, str(e))
+            logger.error(logmsg)
     return actionperformed, message
 
 
