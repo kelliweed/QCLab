@@ -1045,6 +1045,14 @@ class AnalysisService(BaseContent, HistoryAwareMixin):
                             percvalue = float(d['errorvalue'].replace('%', ''))
                         except ValueError:
                             return None
+						    if result < 0.001  
+							    # i have taken 3 places after decimal for calculation ;; can be modified for less or more digits after decimal
+						        if percvalue < 10.00 and percvalue >=5
+							        percvalue = 10.00
+									
+						    else:
+							    if percvalue <5.00
+								    percvalue = 0.00
                         unc = result / 100 * percvalue
                     else:
                         unc = float(d['errorvalue'])
@@ -1060,7 +1068,7 @@ class AnalysisService(BaseContent, HistoryAwareMixin):
         set, the method will return the precision value set in the
         Schema. Otherwise, will calculate the precision value
         according to the Uncertainty and the result.
-        If Calculate Preciosion to Uncertainty is set but no result
+        If Calculate Precision to Uncertainty is set but no result
         provided neither uncertainty values are set, returns the
         fixed precision.
 
