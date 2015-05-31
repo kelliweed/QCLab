@@ -593,7 +593,8 @@ class BikaGenerator:
         at.setCatalogsByType('ReferenceSample', ['bika_catalog', 'portal_catalog'])
         at.setCatalogsByType('Report', ['bika_catalog', ])
         at.setCatalogsByType('Worksheet', ['bika_catalog', 'portal_catalog'])
-
+        '''
+        addIndex(catalog, name, type, **args)
         addIndex(bc, 'path', 'ExtendedPathIndex', ('getPhysicalPath'))
         addIndex(bc, 'allowedRolesAndUsers', 'KeywordIndex')
         addIndex(bc, 'UID', 'FieldIndex')
@@ -681,7 +682,7 @@ class BikaGenerator:
         addColumn(bc, 'getDatePublished')
         addColumn(bc, 'getDateReceived')
         addColumn(bc, 'getDateSampled')
-        addColumn(bc, 'review_state')
+        addColumn(bc, 'review_state')'''
 
         # bika_setup_catalog
 
