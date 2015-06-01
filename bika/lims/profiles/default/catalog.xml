@@ -8,6 +8,62 @@
  <index name="review_state" meta_type="FieldIndex"> <indexed_attr value="review_state"/> </index>
  <index name="inactive_state" meta_type="FieldIndex"> <indexed_attr value="inactive_state"/> </index>
  <index name="cancellation_state" meta_type="FieldIndex"> <indexed_attr value="inactive_state"/> </index>
- <index name="UID" meta_type="FieldIndex"> <indexed_attr value="UID"/> </index>
+ <index name="path" meta_type="ExtendedPathIndex"></index>
+ <index name="allowedRolesAndUsers" meta_type="KeywordIndex"></index>
+ <index name="UID" meta_type="FieldIndex"></index>
+ <index name="SearchableText" meta_type="ZCTextIndex"></index>
+ <index name="Title" meta_type="ZCTextIndex"></index>
+ <index name="Description" meta_type="ZCTextIndex"></index>
+ <index name="id" meta_type="FieldIndex"></index>
+ <index name="getId" meta_type="FieldIndex"></index>
+ <index name="Type" meta_type="FieldIndex"></index>
+ <index name="portal_type" meta_type="FieldIndex"></index>
+ <index name="created" meta_type="DateIndex"></index>
+ <index name="Creator" meta_type="FieldIndex"></index>
+ <index name="getObjPositionInParent" meta_type="GopipIndex"></index>
+ <index name="title" meta_type="FieldIndex"></index>
+ <index name="sortable_title" meta_type="FieldIndex"></index>
+ <index name="description" meta_type="FieldIndex"></index>
+ <index name="review_state" meta_type="FieldIndex"></index>
+ <index name="inactive_state" meta_type="FieldIndex"></index>
+ <index name="worksheetanalysis_review_state" meta_type="FieldIndex"></index>
+ <index name="cancellation_state" meta_type="FieldIndex"></index>
+ <index name="getAnalysisCategory" meta_type="KeywordIndex"></index>
+ <index name="getAnalysisService" meta_type="KeywordIndex"></index>
+ <index name="getAnalyst" meta_type="FieldIndex"></index>
+ <index name="getAnalysts" meta_type="KeywordIndex"></index>
+ <index name="BatchDate" meta_type="DateIndex"></index>
+ <index name="getClientOrderNumber" meta_type="FieldIndex"></index>
+ <index name="getClientReference" meta_type="FieldIndex"></index>
+ <index name="getClientSampleID" meta_type="FieldIndex"></index>
+ <index name="getClientTitle" meta_type="FieldIndex"></index>
+ <index name="getClientUID" meta_type="FieldIndex"></index>
+ <index name="getContactTitle" meta_type="FieldIndex"></index>
+ <index name="getDateDisposed" meta_type="DateIndex"></index>
+ <index name="getDateExpired" meta_type="DateIndex"></index>
+ <index name="getDateOpened" meta_type="DateIndex"></index>
+ <index name="getDatePublished" meta_type="DateIndex"></index>
+ <index name="getDateReceived" meta_type="DateIndex"></index>
+ <index name="getDateSampled" meta_type="DateIndex"></index>
+ <index name="getDisposalDate" meta_type="DateIndex"></index>
+ <index name="getDueDate" meta_type="DateIndex"></index>
+ <index name="getExpiryDate" meta_type="DateIndex"></index>
+ <index name="getInvoiced" meta_type="FieldIndex"></index>
+ <index name="getPreserver" meta_type="FieldIndex"></index>
+ <index name="getProfileTitle" meta_type="FieldIndex"></index>
+ <index name="getReferenceDefinitionUID" meta_type="FieldIndex"></index>
+ <index name="getRequestID" meta_type="FieldIndex"></index>
+ <index name="getSampleID" meta_type="FieldIndex"></index>
+ <index name="getSamplePointTitle" meta_type="FieldIndex"></index>
+ <index name="getSamplePointUID" meta_type="FieldIndex"></index>
+ <index name="getSampler" meta_type="FieldIndex"></index>
+ <index name="getSampleTypeTitle" meta_type="FieldIndex"></index>
+ <index name="getSampleTypeUID" meta_type="FieldIndex"></index>
+ <index name="getSampleUID" meta_type="FieldIndex"></index>
+ <index name="getSamplingDate" meta_type="DateIndex"></index>
+ <index name="getServiceTitle" meta_type="FieldIndex"></index>
+ <index name="getWorksheetTemplateTitle" meta_type="FieldIndex"></index>
+ <index name="Priority" meta_type="FieldIndex"></index>
+ <index name="BatchUID" meta_type="FieldIndex"></index>
  <column value="review_state"/>
 </object>
