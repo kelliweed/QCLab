@@ -62,5 +62,33 @@
  <index name="getWorksheetTemplateTitle" meta_type="FieldIndex"></index>
  <index name="Priority" meta_type="FieldIndex"></index>
  <index name="BatchUID" meta_type="FieldIndex"></index>
+ <column value="path"/>
+ <column value="UID"/>
+ <column value="id"/>
+ <column value="Type"/>
+ <column value="portal_type"/>
+ <column value="creator"/>
+ <column value="Created"/>
+ <column value="Title"/>
+ <column value="Description"/>
+ <column value="sortable_title"/>
  <column value="review_state"/>
+ <column value="inactive_state"/>
+ <column value="cancellation_state"/>
+ <column value="getAnalysts"/>
+ <column value="getSampleID"/>
+ <column value="getRequestID"/>
+ <column value="getClientOrderNumber"/>
+ <column value="getClientReference"/>
+ <column value="getClientSampleID"/>
+ <column value="getContactTitle"/>
+ <column value="getClientTitle"/>
+ <column value="getProfileTitle"/>
+ <column value="getSamplePointTitle"/>
+ <column value="getSampleTypeTitle"/>
+ <column value="getAnalysisCategory"/>
+ <column value="getAnalysisService"/>
+ <column value="getDatePublished"/>
+ <column value="getDateReceived"/>
+ <column value="getDateSampled"/>
 </object>
