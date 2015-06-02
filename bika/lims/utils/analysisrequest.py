@@ -18,7 +18,7 @@ def create_analysisrequest(
 ):
     # Gather neccesary tools
     workflow = getToolByName(context, 'portal_workflow')
-    bc = getToolByName(context, 'bika_catalog')
+    pc = getToolByName(context, 'portal_catalog')
 
     # Create new sample or locate the existing for secondary AR
     if values.get('Sample'):
@@ -26,7 +26,7 @@ def create_analysisrequest(
         if ISample.providedBy(values['Sample']):
             sample = values['Sample']
         else:
-            sample = bc(UID=values['Sample'])[0].getObject()
+            sample = pc(UID=values['Sample'])[0].getObject()
         workflow_enabled = sample.getSamplingWorkflowEnabled()
     else:
         secondary = False
