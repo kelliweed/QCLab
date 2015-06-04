@@ -85,6 +85,7 @@ class BikaGenerator:
                        'bika_labcontacts',
                        'bika_labproducts',
                        'bika_manufacturers',
+                       'bika_productcategories',
                        'bika_sampleconditions',
                        'bika_samplematrices',
                        'bika_samplingdeviations',
