@@ -51,6 +51,7 @@ ADD_CONTENT_PERMISSIONS = {
     'Invoice': AddInvoice,
     'Method': AddMethod,
     'Multifile': AddMultifile,
+    'ProductCategory': AddProductCategory,
     'SupplyOrder': AddSupplyOrder,
     'Sample': AddSample,
     'SampleMatrix': AddSampleMatrix,
