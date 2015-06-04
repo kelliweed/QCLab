@@ -719,6 +719,7 @@ class BikaGenerator:
         at.setCatalogsByType('Method', ['bika_setup_catalog', 'portal_catalog'])
         at.setCatalogsByType('Multifile', ['bika_setup_catalog'])
         at.setCatalogsByType('Preservation', ['bika_setup_catalog', ])
+        at.setCatalogsByType('ProductCategory', ['bika_setup_catalog', ])
         at.setCatalogsByType('ReferenceDefinition', ['bika_setup_catalog', 'portal_catalog'])
         at.setCatalogsByType('SampleCondition', ['bika_setup_catalog'])
         at.setCatalogsByType('SampleMatrix', ['bika_setup_catalog', ])
