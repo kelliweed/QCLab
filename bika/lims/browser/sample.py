@@ -388,7 +388,7 @@ class SamplesView(BikaListingView):
 
         request.set('disable_plone.rightcolumn', 1)
 
-        self.catalog = 'bika_catalog'
+        self.catalog = 'portal_catalog'
         self.contentFilter = {'portal_type': 'Sample',
                               'sort_on':'created',
                               'sort_order': 'reverse',

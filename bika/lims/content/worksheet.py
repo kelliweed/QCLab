@@ -333,7 +333,7 @@ class Worksheet(BaseFolder, HistoryAwareMixin):
         """
         rc = getToolByName(self, REFERENCE_CATALOG)
         bac = getToolByName(self, "bika_analysis_catalog")
-        bc = getToolByName(self, 'bika_catalog')
+        pc = getToolByName(self, 'portal_catalog')
 
         layout = self.getLayout()
         wstlayout = wst.getLayout()
@@ -385,7 +385,7 @@ class Worksheet(BaseFolder, HistoryAwareMixin):
             for row in [r for r in wstlayout if
                         r['type'] == t and r['pos'] not in ws_slots]:
                 reference_definition_uid = row[form_key]
-                samples = bc(portal_type='ReferenceSample',
+                samples = pc(portal_type='ReferenceSample',
                              review_state='current',
                              inactive_state='active',
                              getReferenceDefinitionUID=reference_definition_uid)
