@@ -44,7 +44,7 @@ class getAnalysisContainers(BrowserView):
 
         ars = []
         for x in [a.getObject() for a in
-                  self.bika_catalog(
+                  self.portal_catalog(
                     portal_type='AnalysisRequest',
                     cancellation_state='active',
                     sort_on="created",
@@ -54,7 +54,7 @@ class getAnalysisContainers(BrowserView):
 
         batches = []
         for x in [a.getObject() for a in
-                  self.bika_catalog(
+                  self.portal_catalog(
                     portal_type='Batch',
                     cancellation_state='active',
                     sort_on="created",

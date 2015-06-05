@@ -48,10 +48,10 @@ class InheritedObjectsUIField(RecordsField):
         _field = instance.Schema().getField('InheritedObjects')
         uids = []
         if value:
-            bc = getToolByName(instance, 'bika_catalog')
+            pc = getToolByName(instance, 'portal_catalog')
             ids = [x['ObjectID'] for x in value]
             if ids:
-                proxies = bc(id=ids)
+                proxies = pc(id=ids)
                 if proxies:
                     uids = [x.UID for x in proxies]
         RecordsField.set(self, instance, value)

@@ -226,7 +226,7 @@ class AnalysisRequestAddView(AnalysisRequestViewView):
 
         n = 0
         for uid in uids:
-            proxies = self.bika_catalog(UID=uid)
+            proxies = self.portal_catalog(UID=uid)
             rr = proxies[0].getObject().getResultsRange()
             new_rr = []
             for i, r in enumerate(rr):
@@ -478,7 +478,7 @@ def create_analysisrequest(context, request, values):
     """
     # Gather neccesary tools
     workflow = getToolByName(context, 'portal_workflow')
-    bc = getToolByName(context, 'bika_catalog')
+    pc = getToolByName(context, 'portal_catalog')
 
     # Create new sample or locate the existing for secondary AR
     if values['Sample']:
@@ -486,7 +486,7 @@ def create_analysisrequest(context, request, values):
         if ISample.providedBy(values['Sample']):
             sample = values['Sample']
         else:
-            sample = bc(UID=values['Sample'])[0].getObject()
+            sample = pc(UID=values['Sample'])[0].getObject()
         samplingworkflow_enabled = sample.getSamplingWorkflowEnabled()
     else:
         secondary = False
