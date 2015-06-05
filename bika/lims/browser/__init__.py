@@ -95,10 +95,6 @@ class BrowserView(BrowserView):
         return getToolByName(self.context, 'bika_setup_catalog')
 
     @lazy_property
-    def bika_catalog(self):
-        return getToolByName(self.context, 'bika_catalog')
-
-    @lazy_property
     def portal_membership(self):
         return getToolByName(self.context, 'portal_membership')
 
