@@ -24,6 +24,7 @@ AddInvoice = 'BIKA: Add Invoice'
 AddMethod = 'BIKA: Add Method'
 AddMultifile = 'BIKA: Add Multifile'
 AddPricelist = 'BIKA: Add Pricelist'
+AddProductCategory = 'BIKA: Add ProductCategory'
 AddSupplyOrder = 'BIKA: Add SupplyOrder'
 AddSample = 'BIKA: Add Sample'
 AddSampleMatrix = 'BIKA: Add SampleMatrix'
@@ -50,6 +51,7 @@ ADD_CONTENT_PERMISSIONS = {
     'Invoice': AddInvoice,
     'Method': AddMethod,
     'Multifile': AddMultifile,
+    'ProductCategory': AddProductCategory,
     'SupplyOrder': AddSupplyOrder,
     'Sample': AddSample,
     'SampleMatrix': AddSampleMatrix,

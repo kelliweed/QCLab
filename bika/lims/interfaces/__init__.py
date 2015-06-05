@@ -380,6 +380,13 @@ class ISupplyOrder(Interface):
 class ISupplyOrderFolder(Interface):
     ""
 
+class IProductCategory(Interface):
+    """Product Category"""
+
+
+class IProductCategories(Interface):
+    """Product Categories"""
+
 
 class ISubGroups(Interface):
     """Sub-groups configuration folder"""
