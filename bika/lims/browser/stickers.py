@@ -16,10 +16,10 @@ class Sticker(BrowserView):
     #referencesample_sticker = ViewPageTemplateFile("templates/referencesample_sticker.pt")
 
     def __call__(self):
-        bc = getToolByName(self.context, 'bika_catalog')
+        pc = getToolByName(self.context, 'portal_catalog')
         items = self.request.get('items', '')
         if items:
-            self.items = [o.getObject() for o in bc(id=items.split(","))]
+            self.items = [o.getObject() for o in pc(id=items.split(","))]
         else:
             self.items = [self.context,]
 

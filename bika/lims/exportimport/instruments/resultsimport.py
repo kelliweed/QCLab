@@ -253,7 +253,6 @@ class AnalysisResultsImporter(Logger):
         self.bsc = getToolByName(self.context, 'bika_setup_catalog')
         self.bac = getToolByName(self.context, 'bika_analysis_catalog')
         self.pc = getToolByName(self.context, 'portal_catalog')
-        self.bc = getToolByName(self.context, 'bika_catalog')
         self.wf = getToolByName(self.context, 'portal_workflow')
         if not self._allowed_ar_states:
             self._allowed_ar_states=['sample_received',
@@ -380,7 +379,7 @@ class AnalysisResultsImporter(Logger):
                     # How can we create a ReferenceAnalysis if we don't know
                     # which ReferenceSample we might use?
                     # Ok. The objid HAS to be the ReferenceSample code.
-                    refsample = self.bc(portal_type='ReferenceSample', id=objid)
+                    refsample = self.pc(portal_type='ReferenceSample', id=objid)
                     if refsample and len(refsample) == 1:
                         refsample = refsample[0].getObject()
 
@@ -515,7 +514,7 @@ class AnalysisResultsImporter(Logger):
 
         # Calculate analysis dependencies
         for aruid in arprocessed:
-            ar = self.bc(portal_type='AnalysisRequest',
+            ar = self.pc(portal_type='AnalysisRequest',
                          UID=aruid)
             ar = ar[0].getObject()
             analyses = ar.getAnalyses()
@@ -570,19 +569,19 @@ class AnalysisResultsImporter(Logger):
         #self.log("Criteria: %s %s") % (criteria, obji))
         obj = []
         if (criteria == 'arid'):
-            obj = self.bc(portal_type='AnalysisRequest',
+            obj = self.pc(portal_type='AnalysisRequest',
                            getRequestID=objid,
                            review_state=states)
         elif (criteria == 'sid'):
-            obj = self.bc(portal_type='AnalysisRequest',
+            obj = self.pc(portal_type='AnalysisRequest',
                            getSampleID=objid,
                            review_state=states)
         elif (criteria == 'csid'):
-            obj = self.bc(portal_type='AnalysisRequest',
+            obj = self.pc(portal_type='AnalysisRequest',
                            getClientSampleID=objid,
                            review_state=states)
         elif (criteria == 'aruid'):
-            obj = self.bc(portal_type='AnalysisRequest',
+            obj = self.pc(portal_type='AnalysisRequest',
                            UID=objid,
                            review_state=states)
         elif (criteria == 'rgid'):
