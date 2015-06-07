@@ -12,11 +12,11 @@
      tal:define="portal context/portal_url/getPortalObject;
                  plone_view context/@@plone;
                  DateTime python:modules['DateTime'].DateTime;
-                 ws python:context.bika_catalog(
+                 ws python:context.portal_catalog(
                     portal_type='Worksheet',
                     review_state='to_be_verified');
                  ws_results python:[p.getObject() for p in ws[:5]];
-                 ar python:context.bika_catalog(
+                 ar python:context.portal_catalog(
                     portal_type='AnalysisRequest',
                     review_state='to_be_verified',
                     cancellation_state='active',

@@ -298,7 +298,6 @@ class Create(object):
         """
 
         wftool = getToolByName(context, 'portal_workflow')
-        bc = getToolByName(context, 'bika_catalog')
         bsc = getToolByName(context, 'bika_setup_catalog')
         pc = getToolByName(context, 'portal_catalog')
         ret = {

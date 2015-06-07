@@ -36,7 +36,7 @@ class Report(BrowserView):
             titles.append(val['titles'])
 
         # Query the catalog and store results in a dictionary
-        samples = self.bika_catalog(self.contentFilter)
+        samples = self.portal_catalog(self.contentFilter)
         if not samples:
             message = _("No samples matched your query")
             self.context.plone_utils.addPortalMessage(message, "error")

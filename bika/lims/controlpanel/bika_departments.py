@@ -110,7 +110,6 @@ class Departments(ATFolder):
 
     def getContacts(self):
         pc = getToolByName(self, 'portal_catalog')
-        bc = getToolByName(self, 'bika_catalog')
         bsc = getToolByName(self, 'bika_setup_catalog')
         # fallback - all Lab Contacts
         pairs = []

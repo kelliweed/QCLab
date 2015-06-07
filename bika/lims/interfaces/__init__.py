@@ -399,12 +399,6 @@ class IWorksheetTemplates(Interface):
 
     ""
 
-
-class IBikaCatalog(Interface):
-
-    "Marker interface for custom catalog"
-
-
 class IBikaAnalysisCatalog(Interface):
 
     "Marker interface for custom catalog"
