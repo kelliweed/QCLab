@@ -1853,7 +1853,7 @@ class Analysis_Requests(WorksheetImporter):
             self.analyses_worksheet = worksheet
         bsc = getToolByName(self.context, 'bika_setup_catalog')
         pc = getToolByName(self.context, 'portal_catalog')
-        forrow in self.get_rows(3, worksheet=self.analyses_worksheet):
+        for row in self.get_rows(3, worksheet=self.analyses_worksheet):
             service = bsc(portal_type='AnalysisService',
                           title=row['AnalysisService_title'])[0].getObject()
             # analyses are keyed/named by keyword
