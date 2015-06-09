@@ -87,6 +87,7 @@ def initialize(context):
     from content.pricelist import Pricelist
     from content.pricelistfolder import PricelistFolder
     from content.productcategory import ProductCategory
+    from content.productitem import ProductItem
     from content.queryfolder import QueryFolder
     from content.query import Query
     from content.referenceanalysis import ReferenceAnalysis

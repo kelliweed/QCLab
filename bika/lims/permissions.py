@@ -25,6 +25,7 @@ AddMethod = 'BIKA: Add Method'
 AddMultifile = 'BIKA: Add Multifile'
 AddPricelist = 'BIKA: Add Pricelist'
 AddProductCategory = 'BIKA: Add ProductCategory'
+AddProductItem = 'BIKA: Add ProductItem'
 AddSupplyOrder = 'BIKA: Add SupplyOrder'
 AddSample = 'BIKA: Add Sample'
 AddSampleMatrix = 'BIKA: Add SampleMatrix'
@@ -52,6 +53,7 @@ ADD_CONTENT_PERMISSIONS = {
     'Method': AddMethod,
     'Multifile': AddMultifile,
     'ProductCategory': AddProductCategory,
+    'ProductItem': AddProductItem,
     'SupplyOrder': AddSupplyOrder,
     'Sample': AddSample,
     'SampleMatrix': AddSampleMatrix,

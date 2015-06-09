@@ -73,6 +73,7 @@
     <element value="SupplyOrder"/>
     <element value="Preservation"/>
     <element value="ProductCategory"/>
+    <element value="ProductItem"/>
     <element value="ReferenceAnalysis"/>
     <element value="ReferenceDefinition"/>
     <element value="ReferenceSample"/>

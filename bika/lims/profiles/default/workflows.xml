@@ -265,6 +265,11 @@
    <bound-workflow workflow_id="bika_inactive_workflow"/>
   </type>
 
+  <type type_id="ProductItem">
+   <bound-workflow workflow_id="bika_one_state_workflow"/>
+   <bound-workflow workflow_id="bika_inactive_workflow"/>
+  </type>
+
   <type type_id="ReferenceAnalysis">
    <bound-workflow workflow_id="bika_referenceanalysis_workflow"/>
   </type>
