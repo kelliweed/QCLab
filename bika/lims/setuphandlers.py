@@ -198,6 +198,7 @@ class BikaGenerator:
         mp(AddClientFolder, ['Manager'], 1)
         mp(AddInvoice, ['Manager', 'LabManager'], 1)
         mp(AddMethod, ['Manager', 'LabManager'], 1)
+        mp(AddMultifile, ['Manager', 'LabManager', 'LabClerk'], 1)
         mp(AddPricelist, ['Manager', 'Owner', 'LabManager'], 1)
         mp(AddSample, ['Manager', 'Owner', 'LabManager', 'LabClerk', 'Sampler'], 1)
         mp(AddSampleMatrix, ['Manager', 'Owner', 'LabManager', 'LabClerk'], 1)
@@ -601,6 +602,7 @@ class BikaGenerator:
         at.setCatalogsByType('Instrument', ['bika_setup_catalog', ])
         at.setCatalogsByType('InstrumentType', ['bika_setup_catalog', ])
         at.setCatalogsByType('Method', ['bika_setup_catalog', 'portal_catalog'])
+        at.setCatalogsByType('Multifile', ['bika_setup_catalog'])
         at.setCatalogsByType('AttachmentType', ['bika_setup_catalog', ])
         at.setCatalogsByType('Calculation', ['bika_setup_catalog', 'portal_catalog'])
         at.setCatalogsByType('AnalysisProfile', ['bika_setup_catalog', 'portal_catalog'])
@@ -678,6 +680,7 @@ class BikaGenerator:
         addIndex(bsc, 'getVolume', 'FieldIndex')
         addIndex(bsc, 'sortKey', 'FieldIndex')
         addIndex(bsc, 'getMethodID', 'FieldIndex')
+        addIndex(bsc, 'getDocumentID', 'FieldIndex')
 
         addColumn(bsc, 'path')
         addColumn(bsc, 'UID')
