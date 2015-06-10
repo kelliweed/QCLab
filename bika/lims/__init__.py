@@ -135,6 +135,7 @@ def initialize(context):
     from controlpanel.bika_manufacturers import Manufacturers
     from controlpanel.bika_preservations import Preservations
     from controlpanel.bika_productcategories import ProductCategories
+    from controlpanel.bika_productitems import ProductItems
     from controlpanel.bika_referencedefinitions import ReferenceDefinitions
     from controlpanel.bika_sampleconditions import SampleConditions
     from controlpanel.bika_samplematrices import SampleMatrices

@@ -205,6 +205,14 @@
     />
 
     <browser:page
+      for="bika.lims.interfaces.IProductItems"
+      name="folder_view"
+      class=".bika_productitems.ProductItemsView"
+      permission="bika.lims.ManageBika"
+      layer="bika.lims.interfaces.IBikaLIMS"
+    />
+
+    <browser:page
       for="bika.lims.interfaces.IReferenceDefinitions"
       name="folder_view"
       class=".bika_referencedefinitions.ReferenceDefinitionsView"
