@@ -678,3 +678,13 @@ class IHeaderTableFieldRenderer(Interface):
         """
         Accepts an Archetypes Field, returns HTML.
         """
+
+class IProductItem(Interface):
+	"""
+	Interface for ProductItem class.
+	"""
+
+class IProductItems(Interface):
+    """
+    Interface for ProductItems class.
+    """

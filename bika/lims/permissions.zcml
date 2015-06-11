@@ -28,6 +28,7 @@
 <permission id="bika.lims.permissions.AddMultifile" title="BIKA: Add Multifile"/>
 <permission id="bika.lims.permissions.AddPricelist" title="BIKA: Add Pricelist"/>
 <permission id="bika.lims.permissions.AddProductCategory" title="BIKA: Add ProductCategory"/>
+<permission id="bika.lims.permissions.AddProductItem" title="BIKA: Add ProductItem"/>
 <permission id="bika.lims.permissions.AddSample" title="BIKA: Add Sample"/>
 <permission id="bika.lims.permissions.AddSupplyOrder" title="BIKA: Add SupplyOrder"/>
 <permission id="bika.lims.permissions.AddSamplePoint" title="BIKA: Add SamplePoint"/>

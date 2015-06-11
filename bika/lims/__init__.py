@@ -87,6 +87,7 @@ def initialize(context):
     from content.pricelist import Pricelist
     from content.pricelistfolder import PricelistFolder
     from content.productcategory import ProductCategory
+    from content.productitem import ProductItem
     from content.queryfolder import QueryFolder
     from content.query import Query
     from content.referenceanalysis import ReferenceAnalysis
@@ -134,6 +135,7 @@ def initialize(context):
     from controlpanel.bika_manufacturers import Manufacturers
     from controlpanel.bika_preservations import Preservations
     from controlpanel.bika_productcategories import ProductCategories
+    from controlpanel.bika_productitems import ProductItems
     from controlpanel.bika_referencedefinitions import ReferenceDefinitions
     from controlpanel.bika_sampleconditions import SampleConditions
     from controlpanel.bika_samplematrices import SampleMatrices

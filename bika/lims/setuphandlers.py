@@ -84,6 +84,7 @@ class BikaGenerator:
                        'bika_artemplates',
                        'bika_labcontacts',
                        'bika_labproducts',
+                       'bika_productitems',
                        'bika_manufacturers',
                        'bika_productcategories',
                        'bika_sampleconditions',
@@ -720,6 +721,7 @@ class BikaGenerator:
         at.setCatalogsByType('Multifile', ['bika_setup_catalog'])
         at.setCatalogsByType('Preservation', ['bika_setup_catalog', ])
         at.setCatalogsByType('ProductCategory', ['bika_setup_catalog', ])
+        at.setCatalogsByType('ProductItem', ['bika_setup_catalog', ])
         at.setCatalogsByType('ReferenceDefinition', ['bika_setup_catalog', 'portal_catalog'])
         at.setCatalogsByType('SampleCondition', ['bika_setup_catalog'])
         at.setCatalogsByType('SampleMatrix', ['bika_setup_catalog', ])
