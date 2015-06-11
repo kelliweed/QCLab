@@ -65,4 +65,13 @@
          visible="True">
   <permission value="View"/>
  </action>
+
+<action action_id="products"
+        title="Products"
+        category="object"
+        url_expr="string:${object_url}/products"
+        i18n:attributes="title"
+        visible="True">
+  <permission value="View"/>
+</action>
 </object>
