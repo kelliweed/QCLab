@@ -22,6 +22,23 @@ class SupplierInstrumentsView(InstrumentsView):
         return outitems
 
 
+class SupplierProductsView(ProductsView):
+
+    def __init__(self, context, request):
+        super(SupplierProductsView, self).__init__(context, request)
+
+    def folderitems(self):
+        items = ProductsView.folderitems(self)
+        uidsup = self.context.UID()
+        outitems = []
+        for x in range(len(items)):
+            obj = items[x].get('obj', None)
+            if obj and hasattr(obj, 'getRawSupplier') \
+               and obj.getRawSupplier() == uidsup:
+                outitems.append(items[x])
+        return outitems
+
+
 class ReferenceSamplesView(BikaListingView):
 
     def __init__(self, context, request):
