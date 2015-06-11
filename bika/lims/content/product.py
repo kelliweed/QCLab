@@ -3,6 +3,7 @@ from Products.Archetypes import atapi
 from bika.lims import bikaMessageFactory as _
 from Products.ATContentTypes.content import base
 from Products.ATContentTypes.content import schemata
+from Products.CMFCore.utils import getToolByName
 from bika.lims.interfaces import IProduct
 from bika.lims import config
 from bika.lims.content.bikaschema import BikaSchema
@@ -14,8 +15,7 @@ import sys
 schema = BikaSchema.copy() + Schema((
     ReferenceField('ProductCategory',
         required=1,
-        vocabulary='getProductCategory',
-        vocabulary_display_path_bound=sys.maxsize,
+        vocabulary='getProductCategories',
         allowed_types=('ProductCateogory',),
         relationship='ProductProductCategory',
         referenceClass=HoldingReference,
@@ -27,8 +27,7 @@ schema = BikaSchema.copy() + Schema((
     ),
     ReferenceField('Supplier',
         required=1,
-        vocabulary='getSupplier',
-        vocabulary_display_path_bound=sys.maxsize,
+        vocabulary='getSuppliers',
         allowed_types=('Supplier',),
         relationship='ProductSupplier',
         referenceClass=HoldingReference,
@@ -116,5 +115,21 @@ class Product(BaseContent):
     def _renameAfterCreation(self, check_auto_id=False):
         from bika.lims.idserver import renameAfterCreation
         renameAfterCreation(self)
+
+    def getSuppliers(self):
+        bsc = getToolByName(self, 'bika_setup_catalog')
+        items = [(c.UID, c.getName) \
+                for c in bsc(portal_type='Supplier',
+                             inactive_state = 'active')]
+        items.sort(lambda x,y:cmp(x[1], y[1]))
+        return DisplayList(items)
+
+    def getProductCategories(self):
+        bsc = getToolByName(self, 'bika_setup_catalog')
+        deps = []
+        for d in bsc(portal_type='ProductCategory',
+                     inactive_state='active'):
+            deps.append((d.UID, d.Title))
+        return DisplayList(deps)
 
 registerType(Product, config.PROJECTNAME)
