@@ -25,15 +25,10 @@ schema = BikaSchema.copy() + Schema((
             description = _(""),
         ),
     ),
-    ReferenceField('Supplier',
-        required=1,
-        vocabulary='getSuppliers',
-        allowed_types=('Supplier',),
-        relationship='ProductSupplier',
-        referenceClass=HoldingReference,
-        widget=ReferenceWidget(
-            checkbox_bound=0,
-            label = _("Supplier"),
+    ComputedField('SupplierUID',
+        expression = 'context.aq_parent.UID()',
+        widget = ComputedWidget(
+            visible = False,
         ),
     ),
     StringField('CAS',
@@ -55,10 +50,16 @@ schema = BikaSchema.copy() + Schema((
             description=_("Samples of this type should be treated as hazardous"),
         ),
     ),
-    StringField('Quantity',
-        widget = StringWidget(
+    FloatField('Quantity',
+        widget = DecimalWidget(
             label=_("Quantity"),
-            description=_("The quantity of the product already in storage eg. '10 ml' or '1 kg'."),
+            description=_("The quantity of the product already in storage eg. '10', '1.02'."),
+        ),
+    ),
+    StringField('Unit',
+        widget = StringWidget(
+            label=_("Unit"),
+            description=_(" Unit for the quantity eg. ml or kg"),
         ),
     ),
     StringField('Toxicity',
@@ -73,10 +74,9 @@ schema = BikaSchema.copy() + Schema((
         widget=TextAreaWidget (
             label = _("Health Effects")),
     ),
-    TextField('FirstAidSOP',
-        default_output_type = 'text/plain',
-        allowable_content_types = ('text/plain',),
-        widget=TextAreaWidget (
+    FileField('FirstAidSOP',
+        schemata="Documents",
+        widget=FileWidget (
             label = _("First Aid SOP")),
             description=_("Standard operating procedures for first aid."),
     ),
@@ -87,19 +87,22 @@ schema = BikaSchema.copy() + Schema((
             label = _("Storage Conditions")),
             description=_("Requirements for storing the product."),
     ),
-    TextField('DisposalSOP',
-        default_output_type = 'text/plain',
-        allowable_content_types = ('text/plain',),
-        widget=TextAreaWidget (
+    FileField('DisposalSOP',
+        schemata="Documents",
+        widget=FileWidget (
             label = _("Disposal SOP")),
             description=_("Standard operating procedures for disposal of the product."),
     ),
-    TextField('SpillHandlingSOP',
-        default_output_type = 'text/plain',
-        allowable_content_types = ('text/plain',),
-        widget=TextAreaWidget (
+    FileField('SpillHandlingSOP',
+        schemata="Documents",
+        widget=FileWidget (
             label = _("Spill-handling SOP")),
             description=_("Standard operating procedures for handling spillage of the product."),
+    ),
+    FileField('MaterialSafetyDataSheets',
+        schemata="Documents",
+        widget=FileWidget (
+            label = _("Material Safety Data Sheets")),
     ),
 ))
 
@@ -115,14 +118,6 @@ class Product(BaseContent):
     def _renameAfterCreation(self, check_auto_id=False):
         from bika.lims.idserver import renameAfterCreation
         renameAfterCreation(self)
-
-    def getSuppliers(self):
-        bsc = getToolByName(self, 'bika_setup_catalog')
-        items = [(c.UID, c.getName) \
-                for c in bsc(portal_type='Supplier',
-                             inactive_state = 'active')]
-        items.sort(lambda x,y:cmp(x[1], y[1]))
-        return DisplayList(items)
 
     def getProductCategories(self):
         bsc = getToolByName(self, 'bika_setup_catalog')

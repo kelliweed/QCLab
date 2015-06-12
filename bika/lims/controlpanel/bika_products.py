@@ -41,9 +41,6 @@ class ProductsView(BikaListingView):
             'ProductCategory': {'title': _('Product Category'),
                            'index': 'getProductCategory',
                            'toggle': True},
-            'Supplier': {'title': _('Supplier'),
-                           'index': 'getSupplier',
-                           'toggle': True},
             'Quantity': {'title': _('Quantity'),
                            'index': 'getQuantity',
                            'toggle': True},
@@ -61,7 +58,6 @@ class ProductsView(BikaListingView):
              'transitions': [{'id':'deactivate'}, ],
              'columns': ['Title',
                          'ProductCategory',
-                         'Supplier',
                          'Quantity',
                          'Hazardous',
                          'Toxicity']},
@@ -71,7 +67,6 @@ class ProductsView(BikaListingView):
              'transitions': [{'id':'activate'}, ],
              'columns': ['Title',
                          'ProductCategory',
-                         'Supplier',
                          'Quantity',
                          'Hazardous',
                          'Toxicity']},
@@ -80,7 +75,6 @@ class ProductsView(BikaListingView):
              'contentFilter':{},
              'columns': ['Title',
                          'ProductCategory',
-                         'Supplier',
                          'Quantity',
                          'Hazardous',
                          'Toxicity']},
@@ -91,8 +85,7 @@ class ProductsView(BikaListingView):
         for x in range(len(items)):
             if not items[x].has_key('obj'): continue
             obj = items[x]['obj']
-            items[x]['ProductCategory'] = obj.getProductCategory()
-            items[x]['Supplier'] = obj.getSupplier()
+            items[x]['ProductCategory'] = obj.getProductCategory() and obj.getProductCategory().Title() or ''
             items[x]['Quantity'] = obj.getQuantity()
             items[x]['Hazardous'] = obj.getHazardous()
             items[x]['Toxicity'] = obj.getToxicity()
