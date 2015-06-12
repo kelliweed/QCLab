@@ -511,6 +511,14 @@ schema = BikaFolderSchema.copy() + Schema((
 
         ),
     ),
+    BooleanField('CategoriseProducts',
+        schemata = "Inventory",
+        default = True,
+        widget = BooleanWidget(
+            label=_("Categorise Products"),
+            description=_("Group Products by category in the LIMS tables, helpful when the list is long")
+        ),
+    ),
 ))
 
 schema['title'].validators = ()

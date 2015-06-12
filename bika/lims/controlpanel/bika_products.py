@@ -39,16 +39,20 @@ class ProductsView(BikaListingView):
             'Title': {'title': _('Title'),
                       'index': 'sortable_title'},
             'ProductCategory': {'title': _('Product Category'),
-                           'index': 'getProductCategory',
-                           'toggle': True},
+                                'toggle': True},
+            'CAS': {'title': _('CAS'),
+                    'toggle': True},
+            'SupplierCatalogueID': {'title': _('Supplier Catalogue ID'),
+                                    'toggle': False},
             'Quantity': {'title': _('Quantity'),
-                           'index': 'getQuantity',
-                           'toggle': True},
-            'Hazardous': {'title': _('Hazardous'),
-                           'index': 'getHazardous',
-                           'toggle': True},
+                         'toggle': True},
             'Toxicity': {'title': _('Toxicity'),
-                           'index': 'getToxicity',
+                         'toggle': False},
+            'VATAmount': {'title': _('VATAmount'),
+                           'toggle': True},
+            'Price': {'title': _('Price'),
+                      'toggle': False},
+            'TotalPrice': {'title': _('Total Price'),
                            'toggle': True},
         }
         self.review_states = [
@@ -58,26 +62,35 @@ class ProductsView(BikaListingView):
              'transitions': [{'id':'deactivate'}, ],
              'columns': ['Title',
                          'ProductCategory',
+                         'CAS',
                          'Quantity',
-                         'Hazardous',
-                         'Toxicity']},
+                         'Toxicity',
+                         'VATAmount',
+                         'Price',
+                         'TotalPrice']},
             {'id':'inactive',
              'title': _('Dormant'),
              'contentFilter': {'inactive_state': 'inactive'},
              'transitions': [{'id':'activate'}, ],
              'columns': ['Title',
                          'ProductCategory',
+                         'CAS',
                          'Quantity',
-                         'Hazardous',
-                         'Toxicity']},
+                         'Toxicity',
+                         'VATAmount',
+                         'Price',
+                         'TotalPrice']},
             {'id':'all',
              'title': _('All'),
              'contentFilter':{},
              'columns': ['Title',
                          'ProductCategory',
+                         'CAS',
                          'Quantity',
-                         'Hazardous',
-                         'Toxicity']},
+                         'Toxicity',
+                         'VATAmount',
+                         'Price',
+                         'TotalPrice']},
         ]
 
     def folderitems(self):
@@ -85,13 +98,17 @@ class ProductsView(BikaListingView):
         for x in range(len(items)):
             if not items[x].has_key('obj'): continue
             obj = items[x]['obj']
-            items[x]['ProductCategory'] = obj.getProductCategory() and obj.getProductCategory().Title() or ''
+            items[x]['ProductCategory'] = obj.getProductCategoryTitle()
+            items[x]['CAS'] = obj.getCAS()
             items[x]['Quantity'] = obj.getQuantity()
-            items[x]['Hazardous'] = obj.getHazardous()
+            if obj.getQuantity() and obj.getUnit():
+                items[x]['Quantity'] = str(obj.getQuantity()) + ' ' + obj.getUnit()
             items[x]['Toxicity'] = obj.getToxicity()
+            items[x]['VATAmount'] = obj.getVATAmount()
+            items[x]['Price'] = obj.getPrice()
+            items[x]['TotalPrice'] = obj.getTotalPrice()
             items[x]['replace']['Title'] = "<a href='%s'>%s</a>" % \
                  (items[x]['url'], items[x]['Title'])
-
         return items
 
 schema = ATFolderSchema.copy()

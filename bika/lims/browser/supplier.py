@@ -27,6 +27,17 @@ class SupplierProductsView(ProductsView):
 
     def __init__(self, context, request):
         super(SupplierProductsView, self).__init__(context, request)
+        self.categories = []
+        self.do_cats = self.context.bika_setup.getCategoriseProducts()
+        if self.do_cats:
+            self.pagesize = 0  # hide batching controls
+            self.show_categories = True
+            self.expand_all_categories = False
+            self.ajax_categories = True
+            self.category_index = 'getProductCategoryTitle'
+            for rs in self.review_states:
+                if 'columns' in rs and 'ProductCategory' in rs['columns']:
+                    rs['columns'].remove('ProductCategory')
 
     def folderitems(self):
         items = ProductsView.folderitems(self)
@@ -34,8 +45,21 @@ class SupplierProductsView(ProductsView):
         outitems = []
         for x in range(len(items)):
             obj = items[x].get('obj', None)
-            if obj and hasattr(obj, 'getRawSupplier') \
-               and obj.getRawSupplier() == uidsup:
+            if obj and hasattr(obj, 'getSupplierUID') \
+               and obj.getSupplierUID() == uidsup:
+
+                cat = obj.getProductCategoryTitle()
+                if self.do_cats:
+                    # category is for bika_listing to groups entries
+                    items[x]['category'] = cat
+                    if cat not in self.categories:
+                        self.categories.append(cat)
+                after_icons = ''
+                if obj.getHazardous():
+                    after_icons = ("<img src='++resource++bika.lims.images/"
+                                   "hazardous.png' title='Hazardous'>")
+                items[x]['replace']['Title'] = "<a href='%s'>%s</a>&nbsp;%s" % \
+                     (items[x]['url'], items[x]['Title'], after_icons)
                 outitems.append(items[x])
         return outitems
 
