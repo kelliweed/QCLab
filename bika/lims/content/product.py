@@ -15,11 +15,11 @@ from Products.Archetypes.references import HoldingReference
 import sys
 
 schema = BikaSchema.copy() + Schema((
-    ReferenceField('ProductCategory',
+    ReferenceField('Category',
         required=1,
-        vocabulary='getProductCategories',
-        allowed_types=('ProductCateogory',),
-        relationship='ProductProductCategory',
+        vocabulary='getCategories',
+        allowed_types=('ProductCategory',),
+        relationship='ProductCategory',
         referenceClass=HoldingReference,
         widget=ReferenceWidget(
             checkbox_bound=0,
@@ -106,8 +106,8 @@ schema = BikaSchema.copy() + Schema((
         widget=FileWidget (
             label = _("Material Safety Data Sheets")),
     ),
-    ComputedField('ProductCategoryTitle',
-        expression="context.getProductCategory() and context.getProductCategory().Title() or ''",
+    ComputedField('CategoryTitle',
+        expression="context.getCategory() and context.getCategory().Title() or ''",
         widget=ComputedWidget(visible=False),
     ),
     FixedPointField('VAT',
@@ -155,7 +155,7 @@ class Product(BaseContent):
         from bika.lims.idserver import renameAfterCreation
         renameAfterCreation(self)
 
-    def getProductCategories(self):
+    def getCategories(self):
         bsc = getToolByName(self, 'bika_setup_catalog')
         deps = []
         for d in bsc(portal_type='ProductCategory',

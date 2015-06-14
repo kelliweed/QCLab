@@ -34,10 +34,10 @@ class SupplierProductsView(ProductsView):
             self.show_categories = True
             self.expand_all_categories = False
             self.ajax_categories = True
-            self.category_index = 'getProductCategoryTitle'
+            self.category_index = 'getCategoryTitle'
             for rs in self.review_states:
-                if 'columns' in rs and 'ProductCategory' in rs['columns']:
-                    rs['columns'].remove('ProductCategory')
+                if 'columns' in rs and 'Category' in rs['columns']:
+                    rs['columns'].remove('Category')
 
     def folderitems(self):
         items = ProductsView.folderitems(self)
@@ -48,7 +48,7 @@ class SupplierProductsView(ProductsView):
             if obj and hasattr(obj, 'getSupplierUID') \
                and obj.getSupplierUID() == uidsup:
 
-                cat = obj.getProductCategoryTitle()
+                cat = obj.getCategoryTitle()
                 if self.do_cats:
                     # category is for bika_listing to groups entries
                     items[x]['category'] = cat

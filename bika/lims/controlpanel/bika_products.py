@@ -38,7 +38,7 @@ class ProductsView(BikaListingView):
         self.columns = {
             'Title': {'title': _('Title'),
                       'index': 'sortable_title'},
-            'ProductCategory': {'title': _('Product Category'),
+            'Category': {'title': _('Product Category'),
                                 'toggle': True},
             'CAS': {'title': _('CAS'),
                     'toggle': True},
@@ -61,7 +61,7 @@ class ProductsView(BikaListingView):
              'contentFilter': {'inactive_state': 'active'},
              'transitions': [{'id':'deactivate'}, ],
              'columns': ['Title',
-                         'ProductCategory',
+                         'Category',
                          'CAS',
                          'Quantity',
                          'Toxicity',
@@ -73,7 +73,7 @@ class ProductsView(BikaListingView):
              'contentFilter': {'inactive_state': 'inactive'},
              'transitions': [{'id':'activate'}, ],
              'columns': ['Title',
-                         'ProductCategory',
+                         'Category',
                          'CAS',
                          'Quantity',
                          'Toxicity',
@@ -84,7 +84,7 @@ class ProductsView(BikaListingView):
              'title': _('All'),
              'contentFilter':{},
              'columns': ['Title',
-                         'ProductCategory',
+                         'Category',
                          'CAS',
                          'Quantity',
                          'Toxicity',
@@ -98,7 +98,7 @@ class ProductsView(BikaListingView):
         for x in range(len(items)):
             if not items[x].has_key('obj'): continue
             obj = items[x]['obj']
-            items[x]['ProductCategory'] = obj.getProductCategoryTitle()
+            items[x]['Category'] = obj.getCategoryTitle()
             items[x]['CAS'] = obj.getCAS()
             items[x]['Quantity'] = obj.getQuantity()
             if obj.getQuantity() and obj.getUnit():
