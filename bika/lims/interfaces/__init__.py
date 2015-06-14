@@ -81,11 +81,6 @@ class IQueryFolder(Interface):
     """Queries Folder"""
 
 
-class IQuery(Interface):
-
-    """Query collection object"""
-
-
 class IReferenceAnalysis(Interface):
 
     """Reference Analyses """
