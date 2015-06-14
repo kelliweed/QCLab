@@ -57,7 +57,7 @@ class InvoiceView(BrowserView):
             )
         self.datePublished = datePublished
         # Collect received date
-        dateReceived = context.DateReceived()
+        dateReceived = context.getDateReceived()
         if dateReceived is not None:
             dateReceived = self.ulocalized_time(dateReceived, long_format=1)
         self.dateReceived = dateReceived

@@ -28,7 +28,6 @@ class ReferenceSamplesView(BikaListingView):
         super(ReferenceSamplesView, self).__init__(context, request)
         self.icon = self.portal_url + "/++resource++bika.lims.images/referencesample_big.png"
         self.title = self.context.translate(_("Reference Samples"))
-        self.catalog = 'portal_catalog'
         self.contentFilter = {'portal_type': 'ReferenceSample',
                               'sort_on': 'id',
                               'sort_order': 'reverse',

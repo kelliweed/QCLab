@@ -57,7 +57,7 @@ class Report(BrowserView):
                             'SampleID': sample.getSampleID(),
                             'SampleType': sample.getSampleType().Title(),
                             'SampleDateReceived': self.ulocalized_time(
-                                sample.DateReceived(), long_format=1),
+                                sample.getDateReceived(), long_format=1),
                             'SampleSamplingDate': self.ulocalized_time(
                                 sample.getSamplingDate(), long_format=1)}
                 datalines.append(dataline)

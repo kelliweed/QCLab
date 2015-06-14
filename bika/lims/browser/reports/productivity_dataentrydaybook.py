@@ -50,7 +50,7 @@ class Report(BrowserView):
         for ar in ars:
             ar = ar.getObject()
             datecreated = ar.created()
-            datereceived = ar.DateReceived()
+            datereceived = ar.getDateReceived()
             datepublished = ar.getDatePublished()
             receptionlag = 0
             publicationlag = 0

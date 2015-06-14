@@ -123,7 +123,7 @@ class Report(BrowserView):
             dataitem = {'value': analysis.getServiceTitle()}
             dataline.append(dataitem)
 
-            dataitem = {'value': self.ulocalized_time(analysis.DateReceived())}
+            dataitem = {'value': self.ulocalized_time(analysis.getDateReceived())}
             dataline.append(dataitem)
 
             state = wf_tool.getInfoFor(analysis, 'review_state', '')

@@ -388,7 +388,6 @@ class SamplesView(BikaListingView):
 
         request.set('disable_plone.rightcolumn', 1)
 
-        self.catalog = 'portal_catalog'
         self.contentFilter = {'portal_type': 'Sample',
                               'sort_on':'created',
                               'sort_order': 'reverse',
@@ -642,7 +641,7 @@ class SamplesView(BikaListingView):
                     (obj.aq_parent.absolute_url(), obj.aq_parent.Title())
             items[x]['Creator'] = self.user_fullname(obj.Creator())
 
-            items[x]['DateReceived'] = self.ulocalized_time(obj.DateReceived())
+            items[x]['DateReceived'] = self.ulocalized_time(obj.getDateReceived())
 
             deviation = obj.getSamplingDeviation()
             items[x]['SamplingDeviation'] = deviation and deviation.Title() or ''

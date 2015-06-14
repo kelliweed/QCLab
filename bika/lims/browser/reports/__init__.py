@@ -96,7 +96,6 @@ class ReportHistoryView(BikaListingView):
     def __init__(self, context, request):
         super(ReportHistoryView, self).__init__(context, request)
 
-        self.catalog = "portal_catalog"
         # this will be reset in the call to filter on own reports
         self.contentFilter = {'portal_type': 'Report',
                               'sort_order': 'reverse'}

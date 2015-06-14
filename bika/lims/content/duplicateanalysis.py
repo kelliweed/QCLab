@@ -84,7 +84,7 @@ schema = schema.copy() + Schema((
     ),
     ComputedField(
         'DateReceived',
-        expression='context.getAnalysis() and context.getAnalysis().aq_parent.portal_type=="AnalysisRequest" and context.getAnalysis().DateReceived()',
+        expression='context.getAnalysis() and context.getAnalysis().aq_parent.portal_type=="AnalysisRequest" and context.getAnalysis().getDateReceived()',
     ),
     ComputedField(
         'MaxTimeAllowed',

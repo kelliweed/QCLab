@@ -176,7 +176,7 @@ class bika_ar_export(UniqueObject, SimpleItem):
             sample_id = sample.getId()
             sampletype = sample.getSampleType().Title()
             samplepoint = sample.getSamplePoint() and sample.getSamplePoint().Title() or ''
-            datereceived = plone_view.toLocalizedTime(ar.DateReceived(), \
+            datereceived = plone_view.toLocalizedTime(ar.getDateReceived(), \
                            long_format = 1)
             datepublished = plone_view.toLocalizedTime(ar.getDatePublished(), \
                            long_format = 1)

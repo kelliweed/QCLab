@@ -965,7 +965,7 @@ class AddAnalysesView(BikaListingView):
             service = obj.getService()
             client = obj.aq_parent.aq_parent
             items[x]['getClientOrderNumber'] = obj.getClientOrderNumber()
-            items[x]['DateReceived'] = self.ulocalized_time(obj.DateReceived())
+            items[x]['DateReceived'] = self.ulocalized_time(obj.getDateReceived())
             DueDate = obj.getDueDate()
             items[x]['getDueDate'] = self.ulocalized_time(DueDate)
             if DueDate < DateTime():

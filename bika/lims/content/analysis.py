@@ -176,7 +176,7 @@ schema = BikaSchema.copy() + Schema((
         expression = 'context.getService().getPointOfCapture()',
     ),
     ComputedField('DateReceived',
-        expression = 'context.aq_parent.DateReceived()',
+        expression = 'context.aq_parent.getDateReceived()',
     ),
     ComputedField('DateSampled',
         expression = 'context.aq_parent.getSample().getDateSampled()',

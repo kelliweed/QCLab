@@ -16,7 +16,6 @@ class BatchFolderContentsView(BikaListingView):
 
     def __init__(self, context, request):
         super(BatchFolderContentsView, self).__init__(context, request)
-        self.catalog = 'portal_catalog'
         self.contentFilter = {
             'portal_type': 'Batch',
             'sort_on': 'created',

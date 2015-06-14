@@ -560,7 +560,7 @@ class AnalysisRequestWorkflowAction(WorkflowAction):
         newar.setInvoiceExclude(ar.getInvoiceExclude())
         newar.setAttachment(ar.getAttachment())
         newar.setInvoice(ar.getInvoice())
-        newar.setDateReceived(ar.DateReceived())
+        newar.setDateReceived(ar.getDateReceived())
         newar.setMemberDiscount(ar.getMemberDiscount())
         # Set the results for each AR analysis
         ans = ar.getAnalyses(full_objects=True)
