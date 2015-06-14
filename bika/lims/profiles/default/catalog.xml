@@ -40,7 +40,7 @@
  <index name="getDateExpired" meta_type="DateIndex"></index>
  <index name="getDateOpened" meta_type="DateIndex"></index>
  <index name="getDatePublished" meta_type="DateIndex"></index>
- <index name="getDateReceived" meta_type="DateIndex"></index>
+ <index name="DateReceived" meta_type="DateIndex"></index>
  <index name="getDateSampled" meta_type="DateIndex"></index>
  <index name="getDisposalDate" meta_type="DateIndex"></index>
  <index name="getDueDate" meta_type="DateIndex"></index>
@@ -89,6 +89,6 @@
  <column value="getAnalysisCategory"/>
  <column value="getAnalysisService"/>
  <column value="getDatePublished"/>
- <column value="getDateReceived"/>
+ <column value="DateReceived"/>
  <column value="getDateSampled"/>
 </object>

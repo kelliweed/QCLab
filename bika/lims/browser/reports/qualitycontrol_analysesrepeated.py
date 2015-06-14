@@ -33,7 +33,7 @@ class Report(BrowserView):
 
         date_query = formatDateQuery(self.context, 'Received')
         if date_query:
-            query['getDateReceived'] = date_query
+            query['DateReceived'] = date_query
             received = formatDateParms(self.context, 'Received')
         else:
             received = 'Undefined'
@@ -123,7 +123,7 @@ class Report(BrowserView):
             dataitem = {'value': analysis.getServiceTitle()}
             dataline.append(dataitem)
 
-            dataitem = {'value': self.ulocalized_time(analysis.getDateReceived())}
+            dataitem = {'value': self.ulocalized_time(analysis.DateReceived())}
             dataline.append(dataitem)
 
             state = wf_tool.getInfoFor(analysis, 'review_state', '')

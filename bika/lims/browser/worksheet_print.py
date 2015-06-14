@@ -454,7 +454,7 @@ class WorksheetPrintView(BrowserView):
                     'id': sample.id,
                     'url': sample.absolute_url(),
                     'date_sampled': self.ulocalized_time(sample.getDateSampled(), long_format=0),
-                    'date_received': self.ulocalized_time(sample.getDateReceived(), long_format=0),
+                    'date_received': self.ulocalized_time(sample.DateReceived(), long_format=0),
                     }
 
             if sample.portal_type == "ReferenceSample":
@@ -502,13 +502,13 @@ class WorksheetPrintView(BrowserView):
         if ar.portal_type == "AnalysisRequest":
             return {'obj': ar,
                     'id': ar.getRequestID(),
-                    'date_received': self.ulocalized_time(ar.getDateReceived(), long_format=0),
+                    'date_received': self.ulocalized_time(ar.DateReceived(), long_format=0),
                     'date_sampled': self.ulocalized_time(ar.getDateSampled(), long_format=0),
                     'url': ar.absolute_url(),}
         elif ar.portal_type == "ReferenceSample":
             return {'obj': ar,
                     'id': ar.id,
-                    'date_received': self.ulocalized_time(ar.getDateReceived(), long_format=0),
+                    'date_received': self.ulocalized_time(ar.DateReceived(), long_format=0),
                     'date_sampled': self.ulocalized_time(ar.getDateSampled(), long_format=0),
                     'url': ar.absolute_url(),}
         else:

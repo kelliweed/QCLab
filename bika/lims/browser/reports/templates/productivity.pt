@@ -110,7 +110,7 @@
                        value="productivity_dailysamplesreceived"/>
                 <fieldset>
                     <tal:x content="structure python:view.selection_macros.select_daterange(
-                                                              field_id='getDateReceived',
+                                                              field_id='DateReceived',
                                                               field_title='Date Received')"/>
                     <tal:x content="structure context/@@selection_macros/select_output_format"/>
                 </fieldset>
@@ -142,7 +142,7 @@
                        value="productivity_samplereceivedvsreported"/>
                 <fieldset>
                     <tal:x content="structure python:view.selection_macros.select_daterange(
-                                                              field_id='getDateReceived',
+                                                              field_id='DateReceived',
                                                               field_title='Date Received')"/>
                     <tal:x content="structure context/@@selection_macros/select_output_format"/>
                 </fieldset>

@@ -50,7 +50,7 @@ class Report(BrowserView):
         for ar in ars:
             ar = ar.getObject()
             datecreated = ar.created()
-            datereceived = ar.getDateReceived()
+            datereceived = ar.DateReceived()
             datepublished = ar.getDatePublished()
             receptionlag = 0
             publicationlag = 0
@@ -75,7 +75,7 @@ class Report(BrowserView):
 
             datalines[ar.getRequestID()] = dataline
 
-            totalreceivedcount += ar.getDateReceived() and 1 or 0
+            totalreceivedcount += ar.DateReceived() and 1 or 0
             totalpublishedcount += ar.getDatePublished() and 1 or 0
             totalanlcount += anlcount
             totalreceptionlag += receptionlag

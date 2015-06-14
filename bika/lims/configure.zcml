@@ -20,7 +20,7 @@
   <five:registerPackage package="." initialize=".initialize" />
 
   <include file="permissions.zcml" />
-
+  <include package=".indexers" />
   <include package=".adapters" />
   <include package=".browser" />
   <include package=".content" />

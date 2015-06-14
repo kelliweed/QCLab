@@ -531,7 +531,7 @@ class BikaGenerator:
 
         addIndex(bac, 'getDueDate', 'DateIndex')
         addIndex(bac, 'getDateSampled', 'DateIndex')
-        addIndex(bac, 'getDateReceived', 'DateIndex')
+        addIndex(bac, 'DateReceived', 'DateIndex')
         addIndex(bac, 'getResultCaptureDate', 'DateIndex')
         addIndex(bac, 'getDateAnalysisPublished', 'DateIndex')
 
@@ -546,7 +546,7 @@ class BikaGenerator:
         addIndex(bac, 'getCategoryUID', 'FieldIndex')
         addIndex(bac, 'getCategoryTitle', 'FieldIndex')
         addIndex(bac, 'getPointOfCapture', 'FieldIndex')
-        addIndex(bac, 'getDateReceived', 'DateIndex')
+        addIndex(bac, 'DateReceived', 'DateIndex')
         addIndex(bac, 'getResultCaptureDate', 'DateIndex')
         addIndex(bac, 'getSampleTypeUID', 'FieldIndex')
         addIndex(bac, 'getSamplePointUID', 'FieldIndex')

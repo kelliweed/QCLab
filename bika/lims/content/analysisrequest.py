@@ -2134,7 +2134,7 @@ class AnalysisRequest(BaseFolder):
             return
         workflow = getToolByName(self, 'portal_workflow')
         self.setDateReceived(DateTime())
-        self.reindexObject(idxs=["review_state", "getDateReceived", ])
+        self.reindexObject(idxs=["review_state", "DateReceived", ])
         # receive the AR's sample
         sample = self.getSample()
         if not skip(sample, 'receive', peek=True):

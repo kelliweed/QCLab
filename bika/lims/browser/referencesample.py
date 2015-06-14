@@ -317,7 +317,7 @@ class ReferenceSamplesView(BikaListingView):
                 'toggle':True},
             'DateReceived': {
                 'title': _('Date Received'),
-                'index': 'getDateReceived',
+                'index': 'DateReceived',
                 'toggle':True},
             'ExpiryDate': {
                 'title': _('Expiry Date'),
@@ -401,7 +401,7 @@ class ReferenceSamplesView(BikaListingView):
                 items[x]['Definition'] = ' '
 
             items[x]['DateSampled'] = self.ulocalized_time(obj.getDateSampled())
-            items[x]['DateReceived'] = self.ulocalized_time(obj.getDateReceived())
+            items[x]['DateReceived'] = self.ulocalized_time(obj.DateReceived())
             items[x]['ExpiryDate'] = self.ulocalized_time(obj.getExpiryDate())
 
             after_icons = ''

@@ -82,7 +82,7 @@
             <th i18n:translate="">Date Received</th>
             <td class="left">
                 <span
-                    tal:define="date_received context/getDateReceived"
+                    tal:define="date_received context/DateReceived"
                     tal:condition="date_received"
                     tal:content="python:view.ulocalized_time(
 						date_received,

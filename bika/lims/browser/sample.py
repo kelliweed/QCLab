@@ -465,7 +465,7 @@ class SamplesView(BikaListingView):
             'getPreserver': {'title': _('Preserver'),
                              'toggle': user_is_preserver},
             'DateReceived': {'title': _('Date Received'),
-                             'index': 'getDateReceived',
+                             'index': 'DateReceived',
                              'toggle': False},
             'state_title': {'title': _('State'),
                             'index':'review_state'},
@@ -642,7 +642,7 @@ class SamplesView(BikaListingView):
                     (obj.aq_parent.absolute_url(), obj.aq_parent.Title())
             items[x]['Creator'] = self.user_fullname(obj.Creator())
 
-            items[x]['DateReceived'] = self.ulocalized_time(obj.getDateReceived())
+            items[x]['DateReceived'] = self.ulocalized_time(obj.DateReceived())
 
             deviation = obj.getSamplingDeviation()
             items[x]['SamplingDeviation'] = deviation and deviation.Title() or ''

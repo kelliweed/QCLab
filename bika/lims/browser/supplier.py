@@ -52,7 +52,7 @@ class ReferenceSamplesView(BikaListingView):
                             'index': 'getDateSampled',
                             'toggle':True},
             'DateReceived': {'title': _('Date Received'),
-                             'index': 'getDateReceived',
+                             'index': 'DateReceived',
                              'toggle':True},
             'DateOpened': {'title': _('Date Opened'),
                            'toggle':True},
@@ -135,7 +135,7 @@ class ReferenceSamplesView(BikaListingView):
             items[x]['Definition'] = obj.getReferenceDefinition() and \
                  obj.getReferenceDefinition().Title() or ''
             items[x]['DateSampled'] = self.ulocalized_time(obj.getDateSampled())
-            items[x]['DateReceived'] = self.ulocalized_time(obj.getDateReceived())
+            items[x]['DateReceived'] = self.ulocalized_time(obj.DateReceived())
             items[x]['DateOpened'] = self.ulocalized_time(obj.getDateOpened())
             items[x]['ExpiryDate'] = self.ulocalized_time(obj.getExpiryDate())
 

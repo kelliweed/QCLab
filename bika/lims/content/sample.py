@@ -697,7 +697,7 @@ class Sample(BaseFolder, HistoryAwareMixin):
     def workflow_script_receive(self):
         workflow = getToolByName(self, 'portal_workflow')
         self.setDateReceived(DateTime())
-        self.reindexObject(idxs=["review_state", "getDateReceived"])
+        self.reindexObject(idxs=["review_state", "DateReceived"])
         # Receive all self partitions that are still 'sample_due'
         parts = self.objectValues('SamplePartition')
         sample_due = [sp for sp in parts

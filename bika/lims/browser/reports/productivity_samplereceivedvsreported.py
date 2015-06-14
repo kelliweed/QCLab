@@ -29,10 +29,10 @@ class Report(BrowserView):
         self.contentFilter = {'portal_type': 'Sample',
                               'review_state': ['sample_received', 'expired',
                                                'disposed'],
-                              'sort_on': 'getDateReceived'}
+                              'sort_on': 'DateReceived'}
 
         val = self.selection_macros.parse_daterange(self.request,
-                                                    'getDateReceived',
+                                                    'DateReceived',
                                                     _('Date Received'))
         if val:
             self.contentFilter[val['contentFilter'][0]] = val['contentFilter'][1]
@@ -63,7 +63,7 @@ class Report(BrowserView):
                     published = True
                     break
 
-            datereceived = sample.getDateReceived()
+            datereceived = sample.DateReceived()
             monthyear = datereceived.strftime("%B") + " " + datereceived.strftime(
                 "%Y")
             received = 1

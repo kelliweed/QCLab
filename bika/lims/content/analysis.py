@@ -176,7 +176,7 @@ schema = BikaSchema.copy() + Schema((
         expression = 'context.getService().getPointOfCapture()',
     ),
     ComputedField('DateReceived',
-        expression = 'context.aq_parent.getDateReceived()',
+        expression = 'context.aq_parent.DateReceived()',
     ),
     ComputedField('DateSampled',
         expression = 'context.aq_parent.getSample().getDateSampled()',
@@ -239,7 +239,7 @@ class Analysis(BaseContent):
                  )
         part = self.getSamplePartition()
         if part:
-            starttime = part.getDateReceived()
+            starttime = part.DateReceived()
             if starttime:
                 duetime = starttime + max_days
             else:
@@ -1305,7 +1305,7 @@ class Analysis(BaseContent):
             return
         endtime = DateTime()
         self.setDateAnalysisPublished(endtime)
-        starttime = self.aq_parent.getDateReceived()
+        starttime = self.aq_parent.DateReceived()
         starttime = starttime or self.created()
         service = self.getService()
         maxtime = service.getMaxTimeAllowed()

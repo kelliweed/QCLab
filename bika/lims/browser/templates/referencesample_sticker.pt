@@ -61,7 +61,7 @@ td {
     <th i18n:translate="">Date Received</th>
     <td class="left">
         <span
-        tal:define="date_received reference/getDateReceived"
+        tal:define="date_received reference/DateReceived"
         tal:condition="date_received"
         tal:content="python:plone_view.toLocalizedTime(date_received, long_format=0)"/>
     </td>
