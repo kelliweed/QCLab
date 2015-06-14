@@ -76,11 +76,6 @@ class IDuplicateAnalysis(Interface):
     """DuplicateAnalysis"""
 
 
-class IQueryFolder(Interface):
-
-    """Queries Folder"""
-
-
 class IReferenceAnalysis(Interface):
 
     """Reference Analyses """
