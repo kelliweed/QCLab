@@ -564,7 +564,7 @@ class AnalysisRequestsView(BikaListingView):
 
             samplingdate = obj.getSample().getSamplingDate()
             items[x]['SamplingDate'] = self.ulocalized_time(samplingdate, long_format=1)
-            items[x]['DateReceived'] = self.ulocalized_time(obj.DateReceived())
+            items[x]['DateReceived'] = self.ulocalized_time(obj.getDateReceived())
             items[x]['getDatePublished'] = self.ulocalized_time(obj.getDatePublished())
 
             deviation = sample.getSamplingDeviation()
