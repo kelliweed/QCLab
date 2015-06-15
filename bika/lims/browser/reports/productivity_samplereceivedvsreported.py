@@ -63,7 +63,7 @@ class Report(BrowserView):
                     published = True
                     break
 
-            datereceived = sample.DateReceived()
+            datereceived = sample.getDateReceived()
             monthyear = datereceived.strftime("%B") + " " + datereceived.strftime(
                 "%Y")
             received = 1

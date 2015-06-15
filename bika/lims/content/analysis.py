@@ -239,7 +239,7 @@ class Analysis(BaseContent):
                  )
         part = self.getSamplePartition()
         if part:
-            starttime = part.DateReceived()
+            starttime = part.getDateReceived()
             if starttime:
                 duetime = starttime + max_days
             else:
@@ -1305,7 +1305,7 @@ class Analysis(BaseContent):
             return
         endtime = DateTime()
         self.setDateAnalysisPublished(endtime)
-        starttime = self.aq_parent.DateReceived()
+        starttime = self.aq_parent.getDateReceived()
         starttime = starttime or self.created()
         service = self.getService()
         maxtime = service.getMaxTimeAllowed()

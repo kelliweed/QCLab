@@ -75,7 +75,7 @@ class Report(BrowserView):
 
             datalines[ar.getRequestID()] = dataline
 
-            totalreceivedcount += ar.DateReceived() and 1 or 0
+            totalreceivedcount += ar.getDateReceived() and 1 or 0
             totalpublishedcount += ar.getDatePublished() and 1 or 0
             totalanlcount += anlcount
             totalreceptionlag += receptionlag
