@@ -1,5 +1,6 @@
 from bika.lims.browser.bika_listing import BikaListingView
 from bika.lims.controlpanel.bika_instruments import InstrumentsView
+from bika.lims.controlpanel.bika_products import ProductsView
 from bika.lims import bikaMessageFactory as _
 from bika.lims.utils import t
 from Products.CMFCore.utils import getToolByName
@@ -18,6 +19,47 @@ class SupplierInstrumentsView(InstrumentsView):
             obj = items[x].get('obj', None)
             if obj and hasattr(obj, 'getRawSupplier') \
                and obj.getRawSupplier() == uidsup:
+                outitems.append(items[x])
+        return outitems
+
+
+class SupplierProductsView(ProductsView):
+
+    def __init__(self, context, request):
+        super(SupplierProductsView, self).__init__(context, request)
+        self.categories = []
+        self.do_cats = self.context.bika_setup.getCategoriseProducts()
+        if self.do_cats:
+            self.pagesize = 0  # hide batching controls
+            self.show_categories = True
+            self.expand_all_categories = False
+            self.ajax_categories = True
+            self.category_index = 'getCategoryTitle'
+            for rs in self.review_states:
+                if 'columns' in rs and 'Category' in rs['columns']:
+                    rs['columns'].remove('Category')
+
+    def folderitems(self):
+        items = ProductsView.folderitems(self)
+        uidsup = self.context.UID()
+        outitems = []
+        for x in range(len(items)):
+            obj = items[x].get('obj', None)
+            if obj and hasattr(obj, 'getSupplierUID') \
+               and obj.getSupplierUID() == uidsup:
+
+                cat = obj.getCategoryTitle()
+                if self.do_cats:
+                    # category is for bika_listing to groups entries
+                    items[x]['category'] = cat
+                    if cat not in self.categories:
+                        self.categories.append(cat)
+                after_icons = ''
+                if obj.getHazardous():
+                    after_icons = ("<img src='++resource++bika.lims.images/"
+                                   "hazardous.png' title='Hazardous'>")
+                items[x]['replace']['Title'] = "<a href='%s'>%s</a>&nbsp;%s" % \
+                     (items[x]['url'], items[x]['Title'], after_icons)
                 outitems.append(items[x])
         return outitems
 

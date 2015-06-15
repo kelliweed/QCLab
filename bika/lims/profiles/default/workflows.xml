@@ -259,6 +259,12 @@
    <bound-workflow workflow_id="bika_inactive_workflow"/>
   </type>
 
+  <type type_id="Products"/>
+  <type type_id="Product">
+   <bound-workflow workflow_id="bika_one_state_workflow"/>
+   <bound-workflow workflow_id="bika_inactive_workflow"/>
+  </type>
+
   <type type_id="ProductCategories"/>
   <type type_id="ProductCategory">
    <bound-workflow workflow_id="bika_one_state_workflow"/>

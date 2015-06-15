@@ -18,6 +18,7 @@
   <element value="ReferenceSample"/>
   <element value="SupplierContact"/>
   <element value="Instrument"/>
+  <element value="Product"/>
  </property>
  <property name="allow_discussion">False</property>
  <property name="default_view_fallback">False</property>
@@ -65,4 +66,13 @@
          visible="True">
   <permission value="View"/>
  </action>
+
+<action action_id="products"
+        title="Products"
+        category="object"
+        url_expr="string:${object_url}/products"
+        i18n:attributes="title"
+        visible="True">
+  <permission value="View"/>
+</action>
 </object>

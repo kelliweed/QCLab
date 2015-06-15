@@ -688,3 +688,13 @@ class IProductItems(Interface):
     """
     Interface for ProductItems class.
     """
+
+class IProduct(Interface):
+    """
+    Interface for Product.
+    """
+
+class IProducts(Interface):
+    """
+    Interface for Products.
+    """

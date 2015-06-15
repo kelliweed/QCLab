@@ -72,6 +72,7 @@
     <element value="Supplier"/>
     <element value="SupplyOrder"/>
     <element value="Preservation"/>
+    <element value="Product"/>
     <element value="ProductCategory"/>
     <element value="ProductItem"/>
     <element value="ReferenceAnalysis"/>
