@@ -191,4 +191,7 @@ class Product(BaseContent):
             vatamount = Decimal('0.00')
         return vatamount.quantize(Decimal('0.00'))
 
+    def getSupplierTitle(self):
+        return self.aq_parent.Title()
+
 registerType(Product, config.PROJECTNAME)
