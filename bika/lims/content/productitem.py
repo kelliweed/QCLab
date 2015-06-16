@@ -64,13 +64,13 @@ schema['description'].schemata = 'default'
 schema['description'].widget.visible = True
 
 class ProductItem(BaseContent):
-	implements(IProductItem)
-	schema = schema
-	
-	_at_rename_after_creation = True
+    implements(IProductItem)
+    schema = schema
 
-	def _renameAfterCreation(self, check_auto_id=False):
-		from bika.lims.idserver import renameAfterCreation
-		renameAfterCreation(self)
+    _at_rename_after_creation = True
+
+    def _renameAfterCreation(self, check_auto_id=False):
+        from bika.lims.idserver import renameAfterCreation
+        renameAfterCreation(self)
 
 registerType(ProductItem, config.PROJECTNAME)
