@@ -40,29 +40,27 @@ class ProductItemsView(BikaListingView):
                       'index': 'sortable_title',
                       'toggle': True},
             'orderId': {'title': _('Order Id'),
-                       'index': 'getOrderId',
                        'toggle': True},
             'labId': {'title': _('Lab Id'),
-                       'index': 'getLabId',
-                       'toggle': True},
+                       'toggle': False},
             'batchId': {'title': _('Batch Id'),
-                       'index': 'getBatchId',
+                       'toggle': True},
+            'product': {'title': _('Product'),
+                       'toggle': True},
+            'supplier': {'title': _('Supplier'),
+                       'toggle': True},
+            'productCategory': {'title': _('Category'),
                        'toggle': True},
             'location': {'title': _('Location'),
-                       'index': 'getLocation',
-                       'toggle': True},
+                       'toggle': False},
             'dateReceived': {'title': _('Date Received'),
-                       'index': 'getDateReceived',
                        'toggle': True},
             'dateOpened': {'title': _('Date Opened'),
-                       'index': 'getDateOpened',
                        'toggle': True},
             'expiryDate': {'title': _('Expiry Date'),
-                       'index': 'getExpiryDate',
-                       'toggle': True},
+                       'toggle': False},
             'disposalDate': {'title': _('Disposal Date'),
-                       'index': 'getDisposalDate',
-                       'toggle': True},
+                       'toggle': False},
         }
         self.review_states = [
             {'id':'default',
@@ -73,6 +71,9 @@ class ProductItemsView(BikaListingView):
                          'orderId',
                          'labId',
                          'batchId',
+                         'product',
+                         'supplier',
+                         'productCategory',
                          'location',
                          'dateReceived',
                          'dateOpened',
@@ -86,6 +87,9 @@ class ProductItemsView(BikaListingView):
                          'orderId',
                          'labId',
                          'batchId',
+                         'product',
+                         'supplier',
+                         'productCategory',
                          'location',
                          'dateReceived',
                          'dateOpened',
@@ -98,6 +102,9 @@ class ProductItemsView(BikaListingView):
                          'orderId',
                          'labId',
                          'batchId',
+                         'product',
+                         'Supplier',
+                         'ProductCategory',
                          'location',
                          'dateReceived',
                          'dateOpened',
@@ -113,11 +120,14 @@ class ProductItemsView(BikaListingView):
             items[x]['orderId'] = obj.getOrderId()
             items[x]['labId'] = obj.getLabId()
             items[x]['batchId'] = obj.getBatchId()
+            items[x]['product'] = obj.getProductTitle()
+            items[x]['supplier'] = obj.getSupplierTitle()
+            items[x]['productCategory'] = obj.getProductCategoryTitle()
             items[x]['location'] = obj.getLocation()
-            items[x]['dateReceived'] = obj.getDateReceived()
-            items[x]['dateOpened'] = obj.getDateOpened()
-            items[x]['expiryDate'] = obj.getExpiryDate()
-            items[x]['disposalDate'] = obj.getDisposalDate()
+            items[x]['dateReceived'] = self.ulocalized_time(obj.getDateReceived())
+            items[x]['dateOpened'] = self.ulocalized_time(obj.getDateOpened())
+            items[x]['expiryDate'] = self.ulocalized_time(obj.getExpiryDate())
+            items[x]['disposalDate'] = self.ulocalized_time(obj.getDisposalDate())
             items[x]['replace']['Title'] = "<a href='%s'>%s</a>" % \
                  (items[x]['url'], items[x]['Title'])
 
