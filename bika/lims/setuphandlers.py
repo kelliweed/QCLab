@@ -54,6 +54,7 @@ class BikaGenerator:
                        'referencesamples',
                        'samples',
                        'supplyorders',
+                       'orders',
                        'worksheets',
                        'reports',
                        'queries',
@@ -426,6 +427,21 @@ class BikaGenerator:
             portal.supplyorders.reindexObject()
         except:
             pass
+
+        try:
+            # /orders folder permissions
+            mp = portal.orders.manage_permission
+            mp(CancelAndReinstate, ['Manager', 'LabManager', 'LabClerk'], 0)
+            mp(AddInventoryOrder, ['Manager', 'LabManager', 'Owner'], 1)
+            mp(permissions.ListFolderContents, ['Member'], 1)
+            mp(permissions.AddPortalContent, ['Manager', 'LabManager', 'Owner'], 0)
+            mp(permissions.DeleteObjects, ['Manager', 'LabManager', 'Owner'], 0)
+            mp(permissions.View, ['Manager', 'LabManager'], 0)
+            portal.orders.reindexObject()
+        except:
+            pass
+
+
 
         # Add Analysis Services View permission to Clients
         # (allow Clients to add attachments to Analysis Services from an AR)
