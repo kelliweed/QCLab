@@ -278,4 +278,16 @@
       provides="bika.lims.interfaces.ISetupDataImporter"
       for="Products.CMFPlone.interfaces.IPloneSiteRoot"/>
 
+    <adapter
+      name="Product_Categories"
+      factory="bika.lims.exportimport.setupdata.Product_Categories"
+      provides="bika.lims.interfaces.ISetupDataImporter"
+      for="Products.CMFPlone.interfaces.IPloneSiteRoot"/>
+
+    <adapter
+      name="Products"
+      factory="bika.lims.exportimport.setupdata.Products"
+      provides="bika.lims.interfaces.ISetupDataImporter"
+      for="Products.CMFPlone.interfaces.IPloneSiteRoot"/>
+
 </configure>
