@@ -222,6 +222,13 @@
    <bound-workflow workflow_id="bika_inactive_workflow"/>
   </type>
 
+  <type type_id="Order">
+   <bound-workflow workflow_id="bika_order_workflow"/>
+   <bound-workflow workflow_id="bika_inactive_workflow"/>
+  </type>
+  <type type_id="OrderFolder">
+  </type>
+
   <type type_id="Query"/>
   <type type_id="QueryFolder"/>
 

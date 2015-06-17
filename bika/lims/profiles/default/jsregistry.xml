@@ -239,6 +239,17 @@
               inline="False"
               insert-after="*"/>
 
+  <javascript authenticated="False"
+              id="++resource++bika.lims.js/bika.lims.order.js"
+              cacheable="True"
+              compression="safe"
+              conditionalcomment=""
+              cookable="True"
+              enabled="on"
+              expression=""
+              inline="False"
+              insert-after="*"/>
+
  <javascript authenticated="False"
               id="++resource++bika.lims.js/bika.lims.arimport.js"
               cacheable="True"
@@ -419,6 +430,7 @@
   <javascript id="++resource++bika.lims.js/jquery.ui.combogrid-1.6.2.js" enabled="False"/>
   <javascript id="++resource++bika.lims.js/attachments.js" enabled="False"/>
   <javascript id="++resource++bika.lims.js/supplyorder_edit.js" enabled="False"/>
+  <javascript id="++resource++bika.lims.js/order_edit.js" enabled="False"/>
   <javascript id="++resource++bika.lims.js/arimport.js" enabled="False"/>
   <javascript id="++resource++bika.lims.js/d3.js" enabled="False"/>
   <javascript id="++resource++bika.lims.js/bika.d3.controlchart.js" enabled="False"/>
