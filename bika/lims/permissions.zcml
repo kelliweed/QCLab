@@ -29,6 +29,7 @@
 <permission id="bika.lims.permissions.AddPricelist" title="BIKA: Add Pricelist"/>
 <permission id="bika.lims.permissions.AddSample" title="BIKA: Add Sample"/>
 <permission id="bika.lims.permissions.AddSupplyOrder" title="BIKA: Add SupplyOrder"/>
+<permission id="bika.lims.permissions.AddInventoryOrder" title="BIKA: Add Inventory Order"/>
 <permission id="bika.lims.permissions.AddSamplePoint" title="BIKA: Add SamplePoint"/>
 <permission id="bika.lims.permissions.AddStorageLocation" title="BIKA: Add StorageLocation"/>
 <permission id="bika.lims.permissions.AddSampleMatrix" title="BIKA: Add SampleMatrix"/>
