@@ -3,8 +3,11 @@ from bika.lims.controlpanel.bika_instruments import InstrumentsView
 from bika.lims.controlpanel.bika_products import ProductsView
 from bika.lims import bikaMessageFactory as _
 from bika.lims.utils import t
-from Products.CMFCore.utils import getToolByName
 from bika.lims.utils import to_utf8
+from plone.app.layout.viewlets.common import ViewletBase
+from Products.CMFCore.utils import getToolByName
+from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
+from zope.component import getMultiAdapter
 
 class SupplierInstrumentsView(InstrumentsView):
 
@@ -62,6 +65,20 @@ class SupplierProductsView(ProductsView):
                      (items[x]['url'], items[x]['Title'], after_icons)
                 outitems.append(items[x])
         return outitems
+
+
+class ProductPathBarViewlet(ViewletBase):
+    """Viewlet for overriding breadcrumbs in Product View"""
+
+    index = ViewPageTemplateFile('templates/path_bar.pt')
+
+    def update(self):
+        super(ProductPathBarViewlet, self).update()
+        self.is_rtl = self.portal_state.is_rtl()
+        breadcrumbs = getMultiAdapter((self.context, self.request),
+                                      name='breadcrumbs_view').breadcrumbs()
+        breadcrumbs[2]['absolute_url'] += '/products'
+        self.breadcrumbs = breadcrumbs
 
 
 class ReferenceSamplesView(BikaListingView):
