@@ -52,7 +52,7 @@ schema = BikaSchema.copy() + Schema((
             description=_("Samples of this type should be treated as hazardous"),
         ),
     ),
-    FloatField('Quantity',
+    FixedPointField('Quantity',
         widget = DecimalWidget(
             label=_("Quantity"),
             description=_("The quantity of the product already in storage eg. '10', '1.02'."),
