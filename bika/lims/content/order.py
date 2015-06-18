@@ -23,23 +23,6 @@ from zope.interface import implements
 
 
 schema = BikaSchema.copy() + Schema((
-    ReferenceField(
-      'Supplier',
-      required=1,
-      vocabulary_display_path_bound=sys.maxsize,
-      allowed_types=('Supplier',),
-      referenceClass=HoldingReference,
-      relationship='OrderSupplier',
-      widget=BikaReferenceWidget(
-        render_own_label=True,
-        showOn=True,
-        colModel=[
-          {'columnName': 'UID', 'hidden': True},
-          {'columnName': 'Fullname', 'width': '50', 'label': _('Name')},
-          {'columnName': 'EmailAddress', 'width': '50', 'label': _('Email Address')},
-        ],
-      ),
-    ),
     StringField('OrderNumber',
                 required=1,
                 searchable=True,
@@ -82,13 +65,13 @@ schema = BikaSchema.copy() + Schema((
     ComputedField('SupplierUID',
                   expression = 'here.aq_parent.UID()',
                   widget = ComputedWidget(
-                      visible=False,
+                      visible=True,
                       ),
                   ),
     ComputedField('ProductUID',
                   expression = 'context.getProductUIDs()',
                   widget = ComputedWidget(
-                      visible=False,
+                      visible=True,
                       ),
                   ),
 ),
@@ -125,6 +108,41 @@ class Order(BaseFolder):
         adapter = getAdapter(self.aq_parent, name='getSuppliers')
         return adapter()
 
+    security.declareProtected(View, 'getTotalQty')
+
+    def getTotalQty(self):
+        """ Compute total qty """
+        if self.order_lineitems:
+            return sum(
+                [obj['Quantity'] for obj in self.order_lineitems])
+        return 0
+
+    security.declareProtected(View, 'getSubtotal')
+
+    def getSubtotal(self):
+        """ Compute Subtotal """
+        if self.order_lineitems:
+            return sum(
+                [(Decimal(obj['Quantity']) * Decimal(obj['Price'])) for obj in self.order_lineitems])
+        return 0
+
+    security.declareProtected(View, 'getVATAmount')
+
+    def getVATAmount(self):
+        """ Compute VAT """
+        return Decimal(self.getTotal()) - Decimal(self.getSubtotal())
+
+    security.declareProtected(View, 'getTotal')
+
+    def getTotal(self):
+        """ Compute TotalPrice """
+        total = 0
+        for lineitem in self.order_lineitems:
+            total += Decimal(lineitem['Quantity']) * \
+                     Decimal(lineitem['Price']) *  \
+                     ((Decimal(lineitem['VAT']) /100) + 1)
+        return total
+
     def workflow_script_dispatch(self):
         """ dispatch order """
         self.setDateDispatched(DateTime())
@@ -136,7 +154,7 @@ class Order(BaseFolder):
         """ return the uids of the products referenced by order items
         """
         uids = []
-        for orderitem in self.objectValues('XupplyOrderItem'):
+        for orderitem in self.objectValues('OrderItem'):
             product = orderitem.getProduct()
             if product is not None:
                 uids.append(orderitem.getProduct().UID())
