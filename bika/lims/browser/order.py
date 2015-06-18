@@ -19,44 +19,43 @@ class View(BrowserView):
 		portal = self.portal
 		setup = portal.bika_setup
 		# Disabling the add new menu item
-        context.setConstrainTypesMode(1)
-        context.setLocallyAllowedTypes(())
-        # Collect general data
-        self.orderDate = self.ulocalized_time(context.getOrderDate())
-        self.supplier = context.getsupplier()
-        self.supplier = self.supplier.getFullname() if self.supplier else ''
-        self.subtotal = '%.2f' % context.getSubtotal()
-        self.vat = '%.2f' % context.getVATAmount()
-        self.total = '%.2f' % context.getTotal()
-        # Set the title
-        self.title = context.Title()
-        # Collect order item data
-        items = context.order_lineitems
+		context.setConstrainTypesMode(1)
+		context.setLocallyAllowedTypes(())
+		# Collect general data
+		self.orderDate = self.ulocalized_time(context.getOrderDate())
+		# self.supplier = context.getsupplier()
+		# self.supplier = self.supplier.getFullname() if self.supplier else ''
+		self.subtotal = '%.2f' % context.getSubtotal()
+		self.vat = '%.2f' % context.getVATAmount()
+		self.total = '%.2f' % context.getTotal()
+		# Set the title
+		self.title = context.Title()
+		# Collect order item data
+		items = context.order_lineitems
 
-        self.items = []
-        for item in items:
-            prodid = item['Product']
-            product = setup.bika_products[prodid]
-            price = float(item['Price'])
-            vat = float(item['VAT'])
-            qty = float(item['Quantity'])
-            self.items.append({
-                'title': product.Title(),
-                'description': product.Description(),
-                'volume': product.getVolume(),
-                'unit': product.getUnit(),
-                'price': price,
-                'vat': '%s%%' % vat,
-                'quantity': qty,
-                'totalprice': '%.2f' % (price * qty)
-            })
-        self.items = sorted(self.items, key = itemgetter('title')) 
-        # Render the template
-        return self.template()
+        	products = context.aq_parent.objectValues('Product')
+		self.items = []
+		for item in items:
+		    prodid = item['Product']
+		    product = [pro for pro in products if pro.getId() == prodid][0]
+		    price = float(item['Price'])
+		    vat = float(item['VAT'])
+		    qty = float(item['Quantity'])
+		    self.items.append({
+		        'title': product.Title(),
+		        'description': product.Description(),
+		        'unit': product.getUnit(),
+		        'price': price,
+		        'vat': '%s%%' % vat,
+		        'quantity': qty,
+		        'totalprice': '%.2f' % (price * qty)
+		    })
+		self.items = sorted(self.items, key = itemgetter('title')) 
+		# Render the template
+		return self.template()
 
-    def getPreferredCurrencyAbreviation(self):
-        return self.context.bika_setup.getCurrency()
-
+	def getPreferredCurrencyAbreviation(self):
+		return self.context.bika_setup.getCurrency()
 
 class EditView(BrowserView):
 
@@ -71,7 +70,7 @@ class EditView(BrowserView):
         # Allow adding items to this context
         context.setConstrainTypesMode(0)
         # Collect the products
-        products = setup.bika_products.objectValues('Product')
+        products = context.aq_parent.objectValues('Product')
         # Handle for submission and regular request
     	if 'submit' in request:
             portal_factory = getToolByName(context, 'portal_factory')
@@ -83,7 +82,7 @@ class EditView(BrowserView):
             for prodid, qty in request.form.items():
                 if prodid.startswith('product_') and float(qty) > 0:
                     prodid = prodid.replace('product_', '')
-                    product = setup.bika_products[prodid]
+                    product = [pro for pro in products if pro.getId() == prodid][0]
                     context.order_lineitems.append(
                             {'Product': prodid,
                              'Quantity': qty,
@@ -96,7 +95,6 @@ class EditView(BrowserView):
             return
         else:
             self.orderDate = context.Schema()['OrderDate']
-            self.supplier = context.Schema()['Supplier']
             self.subtotal = '%.2f' % context.getSubtotal()
             self.vat = '%.2f' % context.getVATAmount()
             self.total = '%.2f' % context.getTotal()
@@ -111,7 +109,6 @@ class EditView(BrowserView):
                     'id': product.getId(),
                     'title': product.Title(),
                     'description': product.Description(),
-                    'volume': product.getVolume(),
                     'unit': product.getUnit(),
                     'price': product.getPrice(),
                     'vat': '%s%%' % product.getVAT(),

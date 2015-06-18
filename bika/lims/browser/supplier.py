@@ -1,10 +1,13 @@
 from bika.lims.browser.bika_listing import BikaListingView
 from bika.lims.controlpanel.bika_instruments import InstrumentsView
 from bika.lims.controlpanel.bika_products import ProductsView
+from bika.lims.browser.orderfolder import OrderFolderView
 from bika.lims import bikaMessageFactory as _
 from bika.lims.utils import t
 from Products.CMFCore.utils import getToolByName
 from bika.lims.utils import to_utf8
+from zope.interface import implements
+from plone.app.layout.globals.interfaces import IViewView
 
 class SupplierInstrumentsView(InstrumentsView):
 
@@ -63,6 +66,26 @@ class SupplierProductsView(ProductsView):
                 outitems.append(items[x])
         return outitems
 
+class SupplierOrdersView(OrderFolderView):
+    implements(IViewView)
+
+    def __init__(self, context, request):
+        super(SupplierOrdersView, self).__init__(context, request)
+        self.contentFilter = {
+            'portal_type': 'Order',
+            'sort_on': 'sortable_title',
+            'sort_order': 'reverse',
+            'path': {
+                'query': '/'.join(context.getPhysicalPath()),
+                'level': 0
+            }
+        }
+        self.context_actions = {
+            _('Add'): {
+                'url': 'createObject?type_name=Order',
+                'icon': '++resource++bika.lims.images/add.png'
+            }
+        }
 
 class ReferenceSamplesView(BikaListingView):
 
