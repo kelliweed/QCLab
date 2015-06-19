@@ -51,6 +51,16 @@ schema = BikaSchema.copy() + Schema((
                       label=_("Date Dispatched"),
                       ),
                   ),
+    DateTimeField('DateReceived',
+                  widget=DateTimeWidget(
+                      label=_("Date Received"),
+                      ),
+                  ),
+    DateTimeField('DateStored',
+                  widget=DateTimeWidget(
+                      label=_("Date Stored"),
+                      ),
+                  ),
     TextField('Remarks',
         searchable=True,
         default_content_type='text/plain',

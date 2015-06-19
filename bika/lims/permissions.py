@@ -90,6 +90,9 @@ AccessJSONAPI = 'BIKA: Access JSON API'
 
 # New or changed permissions:
 # ---------------------------
+DispatchInventoryOrder = 'BIKA: Dispatch Inventory Order'
+ReceiveInventoryOrder = 'BIKA: Receive Inventory Order'
+StoreInventoryOrder = 'BIKA: Store Inventory Order'
 SampleSample = 'BIKA: Sample Sample'
 PreserveSample = 'BIKA: Preserve Sample'
 ReceiveSample = 'BIKA: Receive Sample'
