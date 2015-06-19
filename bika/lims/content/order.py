@@ -65,13 +65,13 @@ schema = BikaSchema.copy() + Schema((
     ComputedField('SupplierUID',
                   expression = 'here.aq_parent.UID()',
                   widget = ComputedWidget(
-                      visible=True,
+                      visible=False,
                       ),
                   ),
     ComputedField('ProductUID',
                   expression = 'context.getProductUIDs()',
                   widget = ComputedWidget(
-                      visible=True,
+                      visible=False,
                       ),
                   ),
 ),
