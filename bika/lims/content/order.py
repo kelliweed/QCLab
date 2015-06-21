@@ -1,5 +1,3 @@
-import sys
-
 from Products.Archetypes.public import *
 
 from AccessControl import ClassSecurityInfo
@@ -156,6 +154,16 @@ class Order(BaseFolder):
     def workflow_script_dispatch(self):
         """ dispatch order """
         self.setDateDispatched(DateTime())
+        self.reindexObject()
+
+    def workflow_script_receive(self):
+        """ receive order """
+        self.setDateReceived(DateTime())
+        self.reindexObject()
+
+    def workflow_script_store(self):
+        """ store order """
+        self.setDateStored(DateTime())
         self.reindexObject()
 
     security.declareProtected(View, 'getProductUIDs')

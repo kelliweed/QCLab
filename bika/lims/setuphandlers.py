@@ -11,7 +11,7 @@ from bika.lims import logger
 from bika.lims.config import *
 from bika.lims.permissions import *
 from bika.lims.interfaces \
-        import IHaveNoBreadCrumbs, IARImportFolder, IARPriorities
+    import IHaveNoBreadCrumbs, IARImportFolder, IARPriorities
 from zope.event import notify
 from zope.interface import alsoProvides
 from Products.CMFEditions.Permissions import ApplyVersionControl
@@ -436,19 +436,23 @@ class BikaGenerator:
             # /orders folder permissions
             mp = portal.orders.manage_permission
             mp(CancelAndReinstate, ['Manager', 'LabManager', 'LabClerk'], 0)
-            mp(AddInventoryOrder, ['Manager', 'LabManager', 'Owner', 'LabClerk'], 1)
-            mp(DispatchInventoryOrder, ['Manager', 'LabManager', 'Owner', 'LabClerk'], 1)
-            mp(ReceiveInventoryOrder, ['Manager', 'LabManager', 'Owner', 'LabClerk'], 1)
-            mp(StoreInventoryOrder, ['Manager', 'LabManager', 'LabClerk', 'Owner'], 1)
+            mp(AddInventoryOrder,
+                ['Manager', 'LabManager', 'Owner', 'LabClerk'], 1)
+            mp(DispatchInventoryOrder,
+                ['Manager', 'LabManager', 'Owner', 'LabClerk'], 1)
+            mp(ReceiveInventoryOrder,
+                ['Manager', 'LabManager', 'Owner', 'LabClerk'], 1)
+            mp(StoreInventoryOrder,
+                ['Manager', 'LabManager', 'LabClerk', 'Owner'], 1)
             mp(permissions.ListFolderContents, ['Member'], 1)
-            mp(permissions.AddPortalContent, ['Manager', 'LabManager', 'Owner', 'LabClerk'], 0)
-            mp(permissions.DeleteObjects, ['Manager', 'LabManager', 'Owner', 'LabClerk'], 0)
+            mp(permissions.AddPortalContent,
+                ['Manager', 'LabManager', 'Owner', 'LabClerk'], 0)
+            mp(permissions.DeleteObjects,
+                ['Manager', 'LabManager', 'Owner', 'LabClerk'], 0)
             mp(permissions.View, ['Manager', 'LabManager', 'LabClerk'], 0)
             portal.orders.reindexObject()
         except:
             pass
-
-
 
         # Add Analysis Services View permission to Clients
         # (allow Clients to add attachments to Analysis Services from an AR)
