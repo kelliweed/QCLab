@@ -59,7 +59,7 @@ Test ProductItem as LabManager
       and I select the product Water-sampling kit
       and I enter other fields of the item
       and I submit the form
-     Then product items list should contain 12572, Water-sampling kit, Instruments Inc and Sampling Kit
+     Then product items list should contain 12572, Water-sampling kit and Sampling Kit
 
 
 *** Keywords ***
@@ -121,11 +121,10 @@ products list of ${supplier} should not contain ${title} under ${category}
     click element  xpath=//th[contains(@cat, '${category}')]
     page should not contain  ${title}
 
-product items list should contain ${title}, ${product}, ${supplier} and ${category}
+product items list should contain ${title}, ${product} and ${category}
     go to  ${PLONEURL}/bika_setup/bika_productitems
     page should contain  ${title}
     page should contain  ${product}
-    page should contain  ${supplier}
     page should contain  ${category}
 
 # --- other ------------------------------------------------------------------
