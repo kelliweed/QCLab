@@ -11,7 +11,7 @@ from bika.lims import logger
 from bika.lims.config import *
 from bika.lims.permissions import *
 from bika.lims.interfaces \
-        import IHaveNoBreadCrumbs, IARImportFolder, IARPriorities
+    import IHaveNoBreadCrumbs, IARImportFolder, IARPriorities
 from zope.event import notify
 from zope.interface import alsoProvides
 from Products.CMFEditions.Permissions import ApplyVersionControl
@@ -54,6 +54,7 @@ class BikaGenerator:
                        'referencesamples',
                        'samples',
                        'supplyorders',
+                       'orders',
                        'worksheets',
                        'reports',
                        'queries',
@@ -225,6 +226,10 @@ class BikaGenerator:
         mp(AccessPreviousVersions, ['Manager', 'LabManager', 'LabClerk', 'Analyst', 'Owner', 'RegulatoryInspector'], 1)
 
         mp(DispatchOrder, ['Manager', 'LabManager', 'LabClerk'], 1)
+        mp(AddInventoryOrder, ['Manager', 'LabManager', 'LabClerk'], 1)
+        mp(DispatchInventoryOrder, ['Manager', 'LabManager', 'LabClerk'], 1)
+        mp(ReceiveInventoryOrder, ['Manager', 'LabManager', 'LabClerk'], 1)
+        mp(StoreInventoryOrder, ['Manager', 'LabManager', 'LabClerk'], 1)
         mp(ManageARImport, ['Manager', 'LabManager', 'LabClerk'], 1)
         mp(ManageARPriority, ['Manager', 'LabManager', 'LabClerk'], 1)
         mp(ManageAnalysisRequests, ['Manager', 'LabManager', 'LabClerk', 'Analyst', 'Sampler', 'Preserver', 'Owner', 'RegulatoryInspector'], 1)
@@ -424,6 +429,28 @@ class BikaGenerator:
             mp(permissions.DeleteObjects, ['Manager', 'LabManager', 'Owner'], 0)
             mp(permissions.View, ['Manager', 'LabManager'], 0)
             portal.supplyorders.reindexObject()
+        except:
+            pass
+
+        try:
+            # /orders folder permissions
+            mp = portal.orders.manage_permission
+            mp(CancelAndReinstate, ['Manager', 'LabManager', 'LabClerk'], 0)
+            mp(AddInventoryOrder,
+                ['Manager', 'LabManager', 'Owner', 'LabClerk'], 1)
+            mp(DispatchInventoryOrder,
+                ['Manager', 'LabManager', 'Owner', 'LabClerk'], 1)
+            mp(ReceiveInventoryOrder,
+                ['Manager', 'LabManager', 'Owner', 'LabClerk'], 1)
+            mp(StoreInventoryOrder,
+                ['Manager', 'LabManager', 'LabClerk', 'Owner'], 1)
+            mp(permissions.ListFolderContents, ['Member'], 1)
+            mp(permissions.AddPortalContent,
+                ['Manager', 'LabManager', 'Owner', 'LabClerk'], 0)
+            mp(permissions.DeleteObjects,
+                ['Manager', 'LabManager', 'Owner', 'LabClerk'], 0)
+            mp(permissions.View, ['Manager', 'LabManager', 'LabClerk'], 0)
+            portal.orders.reindexObject()
         except:
             pass
 

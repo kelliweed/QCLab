@@ -82,6 +82,8 @@ def initialize(context):
     from content.methods import Methods
     from content.multifile import Multifile
     from content.organisation import Organisation
+    from content.orderfolder import OrderFolder
+    from content.order import Order
     from content.person import Person
     from content.preservation import Preservation
     from content.pricelist import Pricelist

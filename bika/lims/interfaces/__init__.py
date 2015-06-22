@@ -698,3 +698,8 @@ class IProducts(Interface):
     """
     Interface for Products.
     """
+class IOrder(Interface):
+    "Interface for Orders for Inventory"
+
+class IOrderFolder(Interface):
+    "Interface for Order Folder for Inventory"
