@@ -2032,7 +2032,7 @@ class Products(WorksheetImporter):
                 description=row.get('description', ''),
                 CAS=row.get('CAS', ''),
                 SupplierCatalogueID=row.get('SupplierCatalogueID', ''),
-                Hazardous=row.get('Hazardous', ''),
+                Hazardous=self.to_bool(row.get('Hazardous', '')),
                 Quantity="%02f" % Float(row.get('Quantity', '')),
                 Unit=row.get('Unit', ''),
                 VAT="%02f" % Float(row.get('VAT', '')),
