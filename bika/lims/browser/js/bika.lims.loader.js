@@ -126,6 +126,9 @@ window.bika.lims.controllers =  {
     ".portaltype-supplyorder.template-base_edit":
         ['SupplyOrderEditView'],
 
+    // Orders
+    ".portaltype-order.template-base_edit":
+        ['OrderEditView'],
 
     // Imports
     ".portaltype-plone-site.template-import":
