@@ -58,21 +58,21 @@
                     <td colspan="6" i18n:translate="">Subtotal</td>
                     <td class="currency">
                         <span tal:content="python:view.getPreferredCurrencyAbreviation()">$</span>
-                        <span tal:content="view/subtotal"></span>
+                        <span class="subtotal" tal:content="view/subtotal"></span>
                     </td>
                 </tr>
                 <tr class="totals">
                     <td colspan="6" i18n:translate="">VAT</td>
                     <td class="currency">
                         <span tal:content="python:view.getPreferredCurrencyAbreviation()">$</span>
-                        <span tal:content="view/vat"></span>
+                        <span class="vat" tal:content="view/vat"></span>
                     </td>
                 </tr>
                 <tr class="totals">
                     <td colspan="6" i18n:translate="">Total</td>
                     <td class="currency">
                         <span tal:content="python:view.getPreferredCurrencyAbreviation()">$</span>
-                        <span tal:content="view/total"></span>
+                        <span class="total" tal:content="view/total"></span>
                     </td>
                 </tr>
                 </tbody>
