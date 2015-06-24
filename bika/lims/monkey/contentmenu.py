@@ -21,7 +21,6 @@ def contentmenu_factories_available(self):
         'Method',
         'Department',
         'ReferenceDefinition',
-        'ReportFolder',
         'SampleType',
         'SamplePoint',
         'StorageLocation',
