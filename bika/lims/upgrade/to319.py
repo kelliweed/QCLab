@@ -11,6 +11,11 @@ def upgrade(tool):
     """
     portal = aq_parent(aq_inner(tool))
     setup = portal.portal_setup
+    
+    # Migration
+    if "bika_catalog" in app.Plone:
+        portal.manage_delObjects(['bika_catalog'])
+
     # Updated profile steps
     setup.runImportStepFromProfile('profile-bika.lims:default', 'typeinfo')
     setup.runImportStepFromProfile('profile-bika.lims:default', 'jsregistry')
