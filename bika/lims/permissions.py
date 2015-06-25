@@ -36,6 +36,7 @@ AddSamplePoint = 'BIKA: Add SamplePoint'
 AddStorageLocation = 'BIKA: Add StorageLocation'
 AddSamplingDeviation = 'BIKA: Add SamplingDeviation'
 AddSRTemplate = 'BIKA: Add SRTemplate'
+AddStorageUnit = 'BIKA: Add StorageUnit'
 AddSubGroup = 'BIKA: Add Sub-group'
 AddQuery = 'BIKA: Add Query'
 

@@ -54,6 +54,7 @@
   <type portal_type="SampleType"/>
   <type portal_type="SamplingDeviation"/>
   <type portal_type="SRTemplate"/>
+  <type portal_type="StorageUnit"/>
   <type portal_type="SubGroup"/>
   <type portal_type="Supplier"/>
   <type portal_type="SupplierContact"/>

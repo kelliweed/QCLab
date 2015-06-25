@@ -95,6 +95,7 @@ class BikaGenerator:
                        'bika_samplepoints',
                        'bika_sampletypes',
                        'bika_srtemplates',
+                       'bika_storageunits',
                        'bika_storagelocations',
                        'bika_subgroups',
                        'bika_suppliers',
@@ -211,6 +212,8 @@ class BikaGenerator:
         mp(AddStorageLocation, ['Manager', 'Owner', 'LabManager', ], 1)
         mp(AddSamplingDeviation, ['Manager', 'Owner', 'LabManager', 'LabClerk'], 1)
         mp(AddSRTemplate, ['Manager', 'Owner', 'LabManager'], 0)
+        mp(AddStorageLevel, ['Manager', 'LabManager', 'LabClerk'], 0)
+        mp(AddStorageUnit, ['Manager', 'LabManager', 'LabClerk'], 0)
         mp(AddSubGroup, ['Manager', 'LabManager', 'LabClerk'], 0)
         mp(AddQuery, ['Manager', 'Owner', 'LabManager', 'LabClerk'], 0)
 
@@ -758,6 +761,7 @@ class BikaGenerator:
         at.setCatalogsByType('SampleType', ['bika_setup_catalog', 'portal_catalog'])
         at.setCatalogsByType('SamplingDeviation', ['bika_setup_catalog', ])
         at.setCatalogsByType('SRTemplate', ['bika_setup_catalog', 'portal_catalog'])
+        at.setCatalogsByType('StorageUnit', ['bika_setup_catalog', 'portal_catalog'])
         at.setCatalogsByType('StorageLocation', ['bika_setup_catalog', 'portal_catalog'])
         at.setCatalogsByType('SubGroup', ['bika_setup_catalog', ])
         at.setCatalogsByType('Supplier', ['bika_setup_catalog', 'portal_catalog'])

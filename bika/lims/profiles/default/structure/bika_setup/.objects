@@ -27,6 +27,7 @@ bika_sampletypes,SampleTypes
 bika_storagelocations,StorageLocations
 bika_samplingdeviations,SamplingDeviations
 bika_srtemplates,SRTemplates
+bika_storageunits,StorageUnits
 bika_subgroups,SubGroups
 bika_suppliers,Suppliers
 bika_worksheettemplates,WorksheetTemplates
