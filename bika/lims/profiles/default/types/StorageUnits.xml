@@ -9,7 +9,7 @@
  <property name="content_icon">++resource++bika.lims.images/category.png</property>
  <property name="content_meta_type">StorageUnits</property>
  <property name="product">bika.lims</property>
- <property name="factory">StorageUnits</property>
+ <property name="factory">addStorageUnits</property>
  <property name="add_view_expr"></property>
  <property name="link_target"></property>
  <property name="global_allow">False</property>
