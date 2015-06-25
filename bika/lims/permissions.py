@@ -62,6 +62,7 @@ ADD_CONTENT_PERMISSIONS = {
     'SamplePartition': AddSamplePartition,
     'SamplingDeviation': AddSamplingDeviation,
     'SubGroup': AddSubGroup,
+    'StorageUnit': AddStorageUnit,
     'Query': AddQuery,
 }
 
