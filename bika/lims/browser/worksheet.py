@@ -883,9 +883,9 @@ class AddAnalysesView(BikaListingView):
             'Title': {
                 'title': _('Analysis'),
                 'index':'sortable_title'},
-            'getDateReceived': {
+            'DateReceived': {
                 'title': _('Date Received'),
-                'index': 'getDateReceived'},
+                'index': 'DateReceived'},
             'getDueDate': {
                 'title': _('Due Date'),
                 'index': 'getDueDate'},
@@ -902,7 +902,7 @@ class AddAnalysesView(BikaListingView):
                         'Priority',
                         'CategoryTitle',
                         'Title',
-                        'getDateReceived',
+                        'DateReceived',
                         'getDueDate'],
             },
         ]
@@ -965,7 +965,7 @@ class AddAnalysesView(BikaListingView):
             service = obj.getService()
             client = obj.aq_parent.aq_parent
             items[x]['getClientOrderNumber'] = obj.getClientOrderNumber()
-            items[x]['getDateReceived'] = self.ulocalized_time(obj.getDateReceived())
+            items[x]['DateReceived'] = self.ulocalized_time(obj.getDateReceived())
             DueDate = obj.getDueDate()
             items[x]['getDueDate'] = self.ulocalized_time(DueDate)
             if DueDate < DateTime():
@@ -1375,7 +1375,7 @@ class ajaxGetWorksheetReferences(ReferenceSamplesView):
 
     def __init__(self, context, request):
         super(ajaxGetWorksheetReferences, self).__init__(context, request)
-        self.catalog = 'bika_catalog'
+        self.catalog = 'portal_catalog'
         self.contentFilter = {'portal_type': 'ReferenceSample'}
         self.context_actions = {}
         self.show_sort_column = False

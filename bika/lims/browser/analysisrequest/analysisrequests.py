@@ -23,7 +23,6 @@ class AnalysisRequestsView(BikaListingView):
 
         request.set('disable_plone.rightcolumn', 1)
 
-        self.catalog = "bika_catalog"
         self.contentFilter = {'portal_type': 'AnalysisRequest',
                               'sort_on': 'created',
                               'sort_order': 'reverse',
@@ -114,8 +113,8 @@ class AnalysisRequestsView(BikaListingView):
                                  'sortable': False},  # no datesort without index
             'getPreserver': {'title': _('Preserver'),
                              'toggle': user_is_preserver},
-            'getDateReceived': {'title': _('Date Received'),
-                                'index': 'getDateReceived',
+            'DateReceived': {'title': _('Date Received'),
+                                'index': 'DateReceived',
                                 'toggle': False},
             'getDatePublished': {'title': _('Date Published'),
                                  'index': 'getDatePublished',
@@ -174,7 +173,7 @@ class AnalysisRequestsView(BikaListingView):
                         'getSampler',
                         'getDatePreserved',
                         'getPreserver',
-                        'getDateReceived',
+                        'DateReceived',
                         'getAnalysesNum',
                         'state_title']},
             {'id': 'sample_due',
@@ -248,7 +247,7 @@ class AnalysisRequestsView(BikaListingView):
                         'getDatePreserved',
                         'getPreserver',
                         'getAnalysesNum',
-                        'getDateReceived']},
+                        'DateReceived']},
             {'id': 'to_be_verified',
              'title': _('To be verified'),
              'contentFilter': {'review_state': 'to_be_verified',
@@ -284,7 +283,7 @@ class AnalysisRequestsView(BikaListingView):
                         'getDatePreserved',
                         'getPreserver',
                         'getAnalysesNum',
-                        'getDateReceived']},
+                        'DateReceived']},
             {'id': 'verified',
              'title': _('Verified'),
              'contentFilter': {'review_state': 'verified',
@@ -316,7 +315,7 @@ class AnalysisRequestsView(BikaListingView):
                         'getDatePreserved',
                         'getPreserver',
                         'getAnalysesNum',
-                        'getDateReceived']},
+                        'DateReceived']},
             {'id': 'published',
              'title': _('Published'),
              'contentFilter': {'review_state': ('published', 'invalid'),
@@ -347,7 +346,7 @@ class AnalysisRequestsView(BikaListingView):
                         'getSampler',
                         'getDatePreserved',
                         'getPreserver',
-                        'getDateReceived',
+                        'DateReceived',
                         'getAnalysesNum',
                         'getDatePublished']},
             {'id': 'cancelled',
@@ -384,7 +383,7 @@ class AnalysisRequestsView(BikaListingView):
                         'getSampler',
                         'getDatePreserved',
                         'getPreserver',
-                        'getDateReceived',
+                        'DateReceived',
                         'getDatePublished',
                         'getAnalysesNum',
                         'state_title']},
@@ -418,7 +417,7 @@ class AnalysisRequestsView(BikaListingView):
                         'getSampler',
                         'getDatePreserved',
                         'getPreserver',
-                        'getDateReceived',
+                        'DateReceived',
                         'getAnalysesNum',
                         'getDatePublished']},
             {'id': 'assigned',
@@ -462,7 +461,7 @@ class AnalysisRequestsView(BikaListingView):
                         'getSampler',
                         'getDatePreserved',
                         'getPreserver',
-                        'getDateReceived',
+                        'DateReceived',
                         'getAnalysesNum',
                         'state_title']},
             {'id': 'unassigned',
@@ -508,7 +507,7 @@ class AnalysisRequestsView(BikaListingView):
                         'getSampler',
                         'getDatePreserved',
                         'getPreserver',
-                        'getDateReceived',
+                        'DateReceived',
                         'getAnalysesNum',
                         'state_title']},
             ]
@@ -565,7 +564,7 @@ class AnalysisRequestsView(BikaListingView):
 
             samplingdate = obj.getSample().getSamplingDate()
             items[x]['SamplingDate'] = self.ulocalized_time(samplingdate, long_format=1)
-            items[x]['getDateReceived'] = self.ulocalized_time(obj.getDateReceived())
+            items[x]['DateReceived'] = self.ulocalized_time(obj.getDateReceived())
             items[x]['getDatePublished'] = self.ulocalized_time(obj.getDatePublished())
 
             deviation = sample.getSamplingDeviation()

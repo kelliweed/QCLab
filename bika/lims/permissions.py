@@ -33,7 +33,6 @@ AddStorageLocation = 'BIKA: Add StorageLocation'
 AddSamplingDeviation = 'BIKA: Add SamplingDeviation'
 AddSRTemplate = 'BIKA: Add SRTemplate'
 AddSubGroup = 'BIKA: Add Sub-group'
-AddQuery = 'BIKA: Add Query'
 
 # Default Archetypes Add Permission
 ADD_CONTENT_PERMISSION = AddPortalContent
@@ -56,7 +55,6 @@ ADD_CONTENT_PERMISSIONS = {
     'SamplePartition': AddSamplePartition,
     'SamplingDeviation': AddSamplingDeviation,
     'SubGroup': AddSubGroup,
-    'Query': AddQuery,
 }
 
 # Very Old permissions:

@@ -1868,13 +1868,13 @@ class Analysis_Requests(WorksheetImporter):
                 return
             self.analyses_worksheet = worksheet
         bsc = getToolByName(self.context, 'bika_setup_catalog')
-        bc = getToolByName(self.context, 'bika_catalog')
+        pc = getToolByName(self.context, 'portal_catalog')
         for row in self.get_rows(3, worksheet=self.analyses_worksheet):
             service = bsc(portal_type='AnalysisService',
                           title=row['AnalysisService_title'])[0].getObject()
             # analyses are keyed/named by keyword
             keyword = service.getKeyword()
-            ar = bc(portal_type='AnalysisRequest', id=row['AnalysisRequest_id'])[0].getObject()
+            ar = pc(portal_type='AnalysisRequest', id=row['AnalysisRequest_id'])[0].getObject()
             obj = _createObjectByType("Analysis", ar, keyword)
             MTA = {
                 'days': int(row['MaxTimeAllowed_days'] and row['MaxTimeAllowed_days'] or 0),
@@ -1926,7 +1926,7 @@ class Analysis_Requests(WorksheetImporter):
         analysis.setInterimFields(interims)
 
     def Import(self):
-        bc = getToolByName(self.context, 'bika_catalog')
+        pc = getToolByName(self.context, 'portal_catalog')
         bsc = getToolByName(self.context, 'bika_setup_catalog')
         pc = getToolByName(self.context, 'portal_catalog')
         for row in self.get_rows(3):
@@ -1937,7 +1937,7 @@ class Analysis_Requests(WorksheetImporter):
             obj = _createObjectByType("AnalysisRequest", client, row['id'])
             contact = pc(portal_type="Contact",
                          getFullname=row['Contact_Fullname'])[0].getObject()
-            sample = bc(portal_type="Sample",
+            sample = pc(portal_type="Sample",
                         id=row['Sample_id'])[0].getObject()
             obj.edit(
                 RequestID=row['id'],

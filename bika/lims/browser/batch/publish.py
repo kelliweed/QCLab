@@ -93,7 +93,7 @@ class PublishView(BrowserView):
                                  _("Analyst")]
         for ar in self.context.getAnalysisRequests():
             datecreated = ar.created()
-            # datereceived = ar.getDateReceived()
+            # datereceived = ar.DateReceived()
             # datepublished = ar.getDatePublished()
             datalines = []
             for analysis in ar.getAnalyses(full_objects=True):

@@ -33,7 +33,7 @@ class Report(BrowserView):
 
         date_query = formatDateQuery(self.context, 'Received')
         if date_query:
-            query['getDateReceived'] = date_query
+            query['DateReceived'] = date_query
             received = formatDateParms(self.context, 'Received')
         else:
             received = 'Undefined'

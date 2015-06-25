@@ -11,9 +11,11 @@ def upgrade(tool):
     """
     portal = aq_parent(aq_inner(tool))
     setup = portal.portal_setup
+    
     # Updated profile steps
     setup.runImportStepFromProfile('profile-bika.lims:default', 'typeinfo')
     setup.runImportStepFromProfile('profile-bika.lims:default', 'jsregistry')
+    setup.runImportStepFromProfile('profile-bika.lims:default', 'cssregistry')
     setup.runImportStepFromProfile('profile-bika.lims:default', 'workflow-csv')
     # important info about upgrade steps in
     # http://stackoverflow.com/questions/7821498/is-there-a-good-reference-list-for-the-names-of-the-genericsetup-import-steps
@@ -27,5 +29,7 @@ def upgrade(tool):
     logger.info("Upgrading Bika LIMS: %s -> %s" % (ufrom, '319'))
 
     # Migrations
+    if "bika_catalog" in portal:
+        portal.manage_delObjects(['bika_catalog'])
 
     return True

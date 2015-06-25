@@ -27,7 +27,6 @@ class AnalysisRequestPublishedResults(BikaListingView):
 
     def __init__(self, context, request):
         super(AnalysisRequestPublishedResults, self).__init__(context, request)
-        self.catalog = "bika_catalog"
         self.contentFilter = {'portal_type': 'ARReport',
                               'sort_order': 'reverse'}
         self.context_actions = {}

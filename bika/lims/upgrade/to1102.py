@@ -69,30 +69,7 @@ def upgrade(tool):
     ntp = getattr(portal_properties, 'navtree_properties')
     types = list(ntp.getProperty('metaTypesNotToList'))
     types.append("AnalysisRequestQuery")
-    types.append("QueryFolder")
     ntp.manage_changeProperties(MetaTypesNotToQuery=types)
-
-    # Add /queries folder
-    typestool.constructContent(type_name="QueryFolder",
-                               container=portal,
-                               id='queries',
-                               title='Queries')
-    obj = portal['queries']
-    obj.unmarkCreationFlag()
-    obj.reindexObject()
-
-    # /queries folder permissions
-    mp = portal.queries.manage_permission
-    mp(permissions.ListFolderContents, ['Manager', 'LabManager',
-                                        'LabClerk', 'Analyst'], 0)
-    mp(permissions.AddPortalContent, ['Manager', 'LabManager',
-                                      'LabClerk', 'Analyst'], 0)
-    mp(permissions.View, ['Manager', 'LabManager',
-                          'LabClerk', 'Analyst'], 0)
-    mp('Access contents information', ['Manager', 'LabManager',
-                                       'LabClerk', 'Analyst'], 0)
-    mp(permissions.DeleteObjects, ['Manager'], 0)
-    portal.queries.reindexObject()
 
     # idserver prefix for AnalysisRequestQuery
     prefixes = portal.bika_setup.getPrefixes()

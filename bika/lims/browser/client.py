@@ -55,7 +55,7 @@ class ClientWorkflowAction(AnalysisRequestWorkflowAction):
         plone.protect.CheckAuthenticator(form)
         self.context = aq_inner(self.context)
         workflow = getToolByName(self.context, 'portal_workflow')
-        bc = getToolByName(self.context, 'bika_catalog')
+        pc = getToolByName(self.context, 'portal_catalog')
         rc = getToolByName(self.context, REFERENCE_CATALOG)
         translate = self.context.translate
         checkPermission = self.context.portal_membership.checkPermission
@@ -244,9 +244,9 @@ class ClientBatchesView(BatchFolderContentsView):
         return BatchFolderContentsView.__call__(self)
 
     def contentsMethod(self, contentFilter):
-        bc = getToolByName(self.context, "bika_catalog")
+        pc = getToolByName(self.context, "portal_catalog")
         batches = {}
-        for ar in bc(portal_type = 'AnalysisRequest',
+        for ar in pc(portal_type = 'AnalysisRequest',
                      getClientUID = self.context.UID()):
             ar = ar.getObject()
             batch = ar.getBatch()

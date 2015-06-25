@@ -9,7 +9,6 @@ function ReportFolderView() {
      * Entry-point method for AnalysisServiceEditView
      */
     that.load = function() {
-
         $("a[id$='_selector']").click(function(event){
             $(".criteria").toggle(false);
             event.preventDefault();

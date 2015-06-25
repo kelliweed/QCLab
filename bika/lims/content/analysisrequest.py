@@ -237,7 +237,6 @@ schema = BikaSchema.copy() + Schema((
                      'published':         {'view': 'visible', 'edit': 'invisible'},
                      'invalid':           {'view': 'visible', 'edit': 'invisible'},
                      },
-            catalog_name='bika_catalog',
             base_query={'cancellation_state': 'active',
                         'review_state': ['sample_due', 'sample_received', ]},
             showOn=True,
@@ -270,7 +269,6 @@ schema = BikaSchema.copy() + Schema((
                      'published':         {'view': 'visible', 'edit': 'invisible'},
                      'invalid':           {'view': 'visible', 'edit': 'invisible'},
                      },
-            catalog_name='bika_catalog',
             base_query={'review_state': 'open',
                         'cancellation_state': 'active'},
             showOn=True,
@@ -2135,7 +2133,7 @@ class AnalysisRequest(BaseFolder):
             return
         workflow = getToolByName(self, 'portal_workflow')
         self.setDateReceived(DateTime())
-        self.reindexObject(idxs=["review_state", "getDateReceived", ])
+        self.reindexObject(idxs=["review_state", "DateReceived", ])
         # receive the AR's sample
         sample = self.getSample()
         if not skip(sample, 'receive', peek=True):

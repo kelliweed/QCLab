@@ -132,7 +132,7 @@ def ObjectModifiedEventHandler(instance, event):
                 'query': [start, end]
             }
         }
-        ars = instance.bika_catalog(query)
+        ars = instance.portal_catalog(query)
         # Query for Orders in date range
         query = {
             'portal_type': 'SupplyOrder',

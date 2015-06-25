@@ -388,7 +388,6 @@ class SamplesView(BikaListingView):
 
         request.set('disable_plone.rightcolumn', 1)
 
-        self.catalog = 'bika_catalog'
         self.contentFilter = {'portal_type': 'Sample',
                               'sort_on':'created',
                               'sort_order': 'reverse',
@@ -465,7 +464,7 @@ class SamplesView(BikaListingView):
             'getPreserver': {'title': _('Preserver'),
                              'toggle': user_is_preserver},
             'DateReceived': {'title': _('Date Received'),
-                             'index': 'getDateReceived',
+                             'index': 'DateReceived',
                              'toggle': False},
             'state_title': {'title': _('State'),
                             'index':'review_state'},

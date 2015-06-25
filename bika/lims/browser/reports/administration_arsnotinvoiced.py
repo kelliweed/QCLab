@@ -17,7 +17,7 @@ class Report(BrowserView):
         BrowserView.__init__(self, context, request)
 
     def __call__(self):
-        bc = getToolByName(self.context, 'bika_catalog')
+        pc = getToolByName(self.context, 'portal_catalog')
         self.report_content = {}
         parm_lines = {}
         parms = []
@@ -76,7 +76,7 @@ class Report(BrowserView):
         categories = {}
         services = {}
 
-        for ar_proxy in bc(query):
+        for ar_proxy in pc(query):
             ar = ar_proxy.getObject()
 
             dataline = []

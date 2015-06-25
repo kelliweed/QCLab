@@ -213,7 +213,7 @@ class SamplePartition(BaseContent, HistoryAwareMixin):
         workflow = getToolByName(self, 'portal_workflow')
         sample_state = workflow.getInfoFor(sample, 'review_state')
         self.setDateReceived(DateTime())
-        self.reindexObject(idxs=["getDateReceived", ])
+        self.reindexObject(idxs=["DateReceived", ])
         # Transition our analyses
         analyses = self.getBackReferences('AnalysisSamplePartition')
         for analysis in analyses:

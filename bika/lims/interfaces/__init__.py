@@ -76,16 +76,6 @@ class IDuplicateAnalysis(Interface):
     """DuplicateAnalysis"""
 
 
-class IQueryFolder(Interface):
-
-    """Queries Folder"""
-
-
-class IQuery(Interface):
-
-    """Query collection object"""
-
-
 class IReferenceAnalysis(Interface):
 
     """Reference Analyses """
@@ -402,12 +392,6 @@ class IReferenceDefinitions(Interface):
 class IWorksheetTemplates(Interface):
 
     ""
-
-
-class IBikaCatalog(Interface):
-
-    "Marker interface for custom catalog"
-
 
 class IBikaAnalysisCatalog(Interface):
 

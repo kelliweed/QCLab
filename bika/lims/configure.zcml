@@ -26,10 +26,10 @@
   <include package=".content" />
   <include package=".controlpanel" />
   <include package=".exportimport" />
+  <include package=".indexers" />
   <include package=".jsonapi" />
   <include package=".locales" />
   <include package=".monkey" />
-  <include package=".querystring" />
   <include package=".search" />
   <include package=".subscribers" />
   <include package=".vocabularies" />

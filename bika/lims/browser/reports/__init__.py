@@ -96,7 +96,6 @@ class ReportHistoryView(BikaListingView):
     def __init__(self, context, request):
         super(ReportHistoryView, self).__init__(context, request)
 
-        self.catalog = "bika_catalog"
         # this will be reset in the call to filter on own reports
         self.contentFilter = {'portal_type': 'Report',
                               'sort_order': 'reverse'}
@@ -332,7 +331,7 @@ class ReferenceAnalysisQC_Samples(BrowserView):
         supplier = self.reference_catalog.lookupObject(supplier)
         if supplier:
             # get ReferenceSamples for this supplier
-            samples = self.bika_catalog(portal_type='ReferenceSample',
+            samples = self.portal_catalog(portal_type='ReferenceSample',
                                         path={"query": "/".join(
                                             supplier.getPhysicalPath()),
                                               "level": 0})

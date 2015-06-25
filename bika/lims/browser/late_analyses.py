@@ -22,7 +22,7 @@ class LateAnalysesView(BikaListingView):
                             'to_be_verified',
                             'verified'],
             'cancellation_state': 'active',
-            'sort_on': 'getDateReceived'
+            'sort_on': 'DateReceived'
         }
         self.title = self.context.translate(_("Late Analyses"))
         self.description = ""
@@ -43,7 +43,7 @@ class LateAnalysesView(BikaListingView):
                         'Client': {'title': _('Client')},
                         'Contact': {'title': _('Contact')},
                         'DateReceived': {'title': _('Date Received'),
-                                         'index': 'getDateReceived'},
+                                         'index': 'DateReceived'},
                         'DueDate': {'title': _('Due Date'),
                                     'index': 'getDueDate'},
                         'Late': {'title': _('Late')},

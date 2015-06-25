@@ -21,7 +21,6 @@ class Report(BrowserView):
 
         pc = getToolByName(self.context, 'portal_catalog')
         bac = getToolByName(self.context, 'bika_analysis_catalog')
-        bc = getToolByName(self.context, 'bika_catalog')
         rc = getToolByName(self.context, 'reference_catalog')
 
         self.report_content = {}
@@ -111,7 +110,7 @@ class Report(BrowserView):
             query['getClientUID'] = client.UID
             dataline = [{'value': client.Title}, ]
             query['portal_type'] = 'AnalysisRequest'
-            ars = bc(query)
+            ars = pc(query)
             count_ars = len(ars)
             dataitem = {'value': count_ars}
             dataline.append(dataitem)

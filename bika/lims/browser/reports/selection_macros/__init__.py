@@ -27,7 +27,6 @@ class SelectionMacrosView(BrowserView):
 
     def __init__(self, context, request):
         super(SelectionMacrosView, self).__init__(context, request)
-        self.bc = self.bika_catalog
         self.bac = self.bika_analysis_catalog
         self.bsc = self.bika_setup_catalog
         self.pc = self.portal_catalog

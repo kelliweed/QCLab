@@ -17,7 +17,6 @@ class BatchFolderContentsView(BikaListingView):
 
     def __init__(self, context, request):
         super(BatchFolderContentsView, self).__init__(context, request)
-        self.catalog = 'bika_catalog'
         self.contentFilter = {
             'portal_type': 'Batch',
             'sort_on': 'created',
@@ -138,7 +137,7 @@ class ajaxGetBatches(BrowserView):
 
         rows = []
 
-        batches = self.bika_catalog(portal_type='Batch')
+        batches = self.portal_catalog(portal_type='Batch')
 
         for batch in batches:
             batch = batch.getObject()
