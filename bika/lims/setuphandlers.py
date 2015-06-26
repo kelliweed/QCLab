@@ -483,35 +483,7 @@ class BikaGenerator:
         zc_extras.lexicon_id = 'Lexicon'
 
         #addIndex(bac, 'DatePublished', 'DateIndex')
-        #addIndex(bac, 'Keyword', 'FieldIndex')
-        addIndex(bac, 'ServiceTitle', 'FieldIndex')
-        addIndex(bac, 'ServiceUID', 'FieldIndex')
-        addIndex(bac, 'CategoryUID', 'FieldIndex')
-        addIndex(bac, 'CategoryTitle', 'FieldIndex')
-        addIndex(bac, 'PointOfCapture', 'FieldIndex')
-        addIndex(bac, 'SampleTypeUID', 'FieldIndex')
-        addIndex(bac, 'SamplePointUID', 'FieldIndex')
-        addIndex(bac, 'RawSamplePoints', 'KeywordsIndex')
-        addIndex(bac, 'RawSampleTypes', 'KeywordIndex')
-        addIndex(bac, 'Retested', 'FieldIndex')
-        addIndex(bac, 'ReferenceAnalysesGroupID', 'FieldIndex')
-        addColumn(bac, 'path')
-        addColumn(bac, 'UID')
-        addColumn(bac, 'id')
-        addColumn(bac, 'Type')
-        addColumn(bac, 'portal_type')
-        addColumn(bac, 'ObjPositionInParent')
-        addColumn(bac, 'Title')
-        addColumn(bac, 'Description')
-        addColumn(bac, 'title')
-        addColumn(bac, 'sortable_title')
-        addColumn(bac, 'description')
-        addColumn(bac, 'review_state')
-        addColumn(bac, 'cancellation_state')
-        addColumn(bac, 'RequestID')
-        addColumn(bac, 'ReferenceAnalysesGroupID')
-        addColumn(bac, 'ResultCaptureDate')
-        addColumn(bac, 'Priority')
+
 
         # bika_setup_catalog
 
