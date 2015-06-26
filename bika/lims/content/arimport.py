@@ -538,7 +538,7 @@ class ARImport(BaseFolder):
                 if not services.has_key(analysis):
                     for service in self.bika_setup_catalog(
                             portal_type = 'AnalysisService',
-                            getKeyword = analysis):
+                            Keyword = analysis):
                         obj = service.getObject()
                         services[analysis] = '%s:%s' % (obj.UID(), obj.getPrice())
                         service_uids[obj.UID()] = '%s:%s' % (obj.UID(), obj.getPrice())

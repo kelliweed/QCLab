@@ -8,22 +8,22 @@
     <!-- Dates -->
     <index name="BatchDate" meta_type="DateIndex">                        <indexed_attr value="BatchDate"/> </index>
     <index name="DateReceived" meta_type="DateIndex"></index>
-    <index name="DateDisposed" meta_type="DateIndex">                  <indexed_attr value="getDateDisposed"/> </index>
-    <index name="DateExpired" meta_type="DateIndex">                   <indexed_attr value="getDateExpired"/> </index>
-    <index name="DateOpened" meta_type="DateIndex">                    <indexed_attr value="getDateOpened"/> </index>
-    <index name="DatePublished" meta_type="DateIndex">                 <indexed_attr value="getDatePublished"/> </index>
-    <index name="DateSampled" meta_type="DateIndex">                   <indexed_attr value="getDateSampled"/> </index>
-    <index name="DisposalDate" meta_type="DateIndex">                  <indexed_attr value="getDisposalDate"/> </index>
-    <index name="DueDate" meta_type="DateIndex">                       <indexed_attr value="getDueDate"/> </index>
-    <index name="ExpiryDate" meta_type="DateIndex">                    <indexed_attr value="getExpiryDate"/> </index>
-    <index name="SamplingDate" meta_type="DateIndex">                  <indexed_attr value="getSamplingDate"/> </index>
-    <index name="DatePublished" meta_type="DateIndex">         <indexed_attr value="getDatePublished"/> </index>
+    <index name="DateDisposed" meta_type="DateIndex">                  <indexed_attr value="DateDisposed"/> </index>
+    <index name="DateExpired" meta_type="DateIndex">                   <indexed_attr value="DateExpired"/> </index>
+    <index name="DateOpened" meta_type="DateIndex">                    <indexed_attr value="DateOpened"/> </index>
+    <index name="DatePublished" meta_type="DateIndex">                 <indexed_attr value="DatePublished"/> </index>
+    <index name="DateSampled" meta_type="DateIndex">                   <indexed_attr value="DateSampled"/> </index>
+    <index name="DisposalDate" meta_type="DateIndex">                  <indexed_attr value="DisposalDate"/> </index>
+    <index name="DueDate" meta_type="DateIndex">                       <indexed_attr value="DueDate"/> </index>
+    <index name="ExpiryDate" meta_type="DateIndex">                    <indexed_attr value="ExpiryDate"/> </index>
+    <index name="SamplingDate" meta_type="DateIndex">                  <indexed_attr value="SamplingDate"/> </index>
+    <index name="DatePublished" meta_type="DateIndex">         <indexed_attr value="DatePublished"/> </index>
 
     <!-- FieldIndex version of the Title and Description indexes -->
     <index name="description" meta_type="FieldIndex">                     <indexed_attr value="Description"/> </index>
     <index name="title" meta_type="FieldIndex">                           <indexed_attr value="Title"/> </index>
 
-    <index name="Keyword" meta_type="FieldIndex">                        <indexed_attr value="getKeyword"/> </index>
+    <index name="Keyword" meta_type="FieldIndex">                        <indexed_attr value="Keyword"/> </index>
     <index name="BatchUID" meta_type="FieldIndex">                        <indexed_attr value="BatchUID"/> </index>
     <index name="AnalysisCategory" meta_type="KeywordIndex">           <indexed_attr value="AnalysisCategory"/> </index>
     <index name="AnalysisService" meta_type="KeywordIndex">            <indexed_attr value="AnalysisService"/> </index>

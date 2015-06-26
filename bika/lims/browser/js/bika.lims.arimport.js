@@ -339,12 +339,12 @@ function AnalysisRequestImportView() {
     function clearSampleAndService() {
         sample = document.getElementById('getStandardSampleUID');
         sample.value = '';
-        service = document.getElementById('getServiceUID');
+        service = document.getElementById('ServiceUID');
         service.value = '';
         return
     }
     function clearService() {
-        service = document.getElementById('getServiceUID');
+        service = document.getElementById('ServiceUID');
         service.value = '';
         return
     }

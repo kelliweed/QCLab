@@ -47,7 +47,7 @@ class AnalysisRequestAnalysesView(BikaListingView):
             self.show_categories = True
             self.expand_all_categories = False
             self.ajax_categories = True
-            self.category_index = 'getCategoryTitle'
+            self.category_index = 'CategoryTitle'
 
         self.columns = {
             'Title': {'title': _('Service'),
@@ -122,7 +122,7 @@ class AnalysisRequestAnalysesView(BikaListingView):
             keyword = r['keyword']
             try:
                 service_uid = bsc(portal_type='AnalysisService',
-                                  getKeyword=keyword)[0].UID
+                                  Keyword=keyword)[0].UID
                 rr_dict_by_service_uid[service_uid] = r
             except IndexError:
                 from bika.lims import logger

@@ -158,7 +158,7 @@ class Report(BrowserView):
             cat_mins_early = 0
             cat_mins_late = 0
             for service in sc(portal_type="AnalysisService",
-                              getCategoryUID=cat.UID,
+                              CategoryUID=cat.UID,
                               sort_on='sortable_title'):
 
                 dataline = [{'value': service.Title,

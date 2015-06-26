@@ -98,7 +98,7 @@ class ReferenceAnalysesView(AnalysesView):
 
         self.columns = {
             'id': {'title': _('ID'), 'toggle':False},
-            'getReferenceAnalysesGroupID': {'title': _('QC Sample ID'), 'toggle': True},
+            'ReferenceAnalysesGroupID': {'title': _('QC Sample ID'), 'toggle': True},
             'Category': {'title': _('Category'), 'toggle':True},
             'Service': {'title': _('Service'), 'toggle':True},
             'Worksheet': {'title': _('Worksheet'), 'toggle':True},
@@ -125,7 +125,7 @@ class ReferenceAnalysesView(AnalysesView):
              'contentFilter':{},
              'transitions': [],
              'columns':['id',
-                        'getReferenceAnalysesGroupID',
+                        'ReferenceAnalysesGroupID',
                         'Category',
                         'Service',
                         'Worksheet',
@@ -161,7 +161,7 @@ class ReferenceAnalysesView(AnalysesView):
             serviceref = "%s (%s)" % (items[x]['Service'], items[x]['Keyword'])
             trows = self.anjson.get(serviceref, {});
             anrows = trows.get(qcid, []);
-            anid = '%s.%s' % (items[x]['getReferenceAnalysesGroupID'],
+            anid = '%s.%s' % (items[x]['ReferenceAnalysesGroupID'],
                               items[x]['id'])
             rr = obj.aq_parent.getResultsRangeDict()
             uid = service.UID()

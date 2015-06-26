@@ -295,7 +295,7 @@ class Instrument(ATFolder):
 
     def getSuppliers(self):
         bsc = getToolByName(self, 'bika_setup_catalog')
-        items = [(c.UID, c.getName) \
+        items = [(c.UID, c.Title) \
                 for c in bsc(portal_type='Supplier',
                              inactive_state = 'active')]
         items.sort(lambda x,y:cmp(x[1], y[1]))

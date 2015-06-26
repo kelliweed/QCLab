@@ -64,17 +64,17 @@
 		</td></tr></table>
 
 		<fieldset class="criteria" name="criteria" style="margin-top: 0.5em;">
-			<label tal:attributes="for string:${form_id}_getCategoryTitle"
+			<label tal:attributes="for string:${form_id}_CategoryTitle"
 				i18n:translate="">Category</label>
 			<select id="CategorySelector"
-					tal:attributes="name string:${form_id}_getCategoryTitle"
+					tal:attributes="name string:${form_id}_CategoryTitle"
 					class="listing-filter">
 				<option value="any" i18n:translate="">Any</option>
 				<tal:options repeat="category view/getCategories">
 					<option
 						tal:attributes="
 							value python:category;
-							selected python: view.request.form.get(form_id+'_getCategoryTitle', '') == category and 'selected' or ''"
+							selected python: view.request.form.get(form_id+'_CategoryTitle', '') == category and 'selected' or ''"
 						tal:content="python:category"/>
 				</tal:options>
 			</select>

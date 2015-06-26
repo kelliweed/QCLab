@@ -42,7 +42,7 @@ class AnalysisProfileAnalysesView(BikaListingView):
             self.ajax_categories = True
             self.ajax_categories_url = self.context.absolute_url() + \
                                        "/analysisprofile_analysesview"
-            self.category_index = 'getCategoryTitle'
+            self.category_index = 'CategoryTitle'
 
         self.columns = {
             'Title': {'title': _('Service'),

@@ -74,7 +74,7 @@ class AnalysisRequestViewView(BrowserView):
             if self.context.getAnalyses(getPointOfCapture=poc):
                 t = self.createAnalysesView(ar,
                                  self.request,
-                                 getPointOfCapture=poc,
+                                 PointOfCapture=poc,
                                  show_categories=self.context.bika_setup.getCategoriseAnalysisServices())
                 t.allow_edit = True
                 t.form_id = "%s_analyses" % poc
@@ -301,7 +301,7 @@ class AnalysisRequestViewView(BrowserView):
         bac = getToolByName(self.context, 'bika_analysis_catalog')
         res = []
         for analysis in bac(portal_type="Analysis",
-                           getRequestID=self.context.RequestID):
+                            RequestID=self.context.RequestID):
             analysis = analysis.getObject()
             service = analysis.getService()
             res.append([service.getPointOfCapture(),

@@ -149,13 +149,13 @@ class AnalysisServicesView(BikaListingView):
             self.show_categories = True
             self.expand_all_categories = False
             self.ajax_categories = True
-            self.category_index = 'getCategoryTitle'
+            self.category_index = 'CategoryTitle'
 
         self.columns = {
             'Title': {'title': _('Service'),
                       'index': 'sortable_title'},
             'Keyword': {'title': _('Keyword'),
-                        'index': 'getKeyword'},
+                        'index': 'Keyword'},
             'Category': {'title': _('Category')},
             'Method': {'title': _('Method'),
                        'toggle': False},

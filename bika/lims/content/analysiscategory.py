@@ -71,7 +71,7 @@ class AnalysisCategory(BaseContent):
         # A instance cannot be deactivated if it contains services
         pu = getToolByName(self, 'plone_utils')
         bsc = getToolByName(self, 'bika_setup_catalog')
-        ars = bsc(portal_type='AnalysisService', getCategoryUID=self.UID())
+        ars = bsc(portal_type='AnalysisService', CategoryUID=self.UID())
         if ars:
             message = _("Category cannot be deactivated because "
                         "it contains Analysis Services")

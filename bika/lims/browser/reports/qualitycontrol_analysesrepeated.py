@@ -28,7 +28,7 @@ class Report(BrowserView):
         count_all = 0
 
         query = {'portal_type': 'Analysis',
-                 'getRetested': True,
+                 'Retested': True,
                  'sort_order': 'reverse'}
 
         date_query = formatDateQuery(self.context, 'Received')

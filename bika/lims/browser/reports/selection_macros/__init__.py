@@ -61,7 +61,7 @@ class SelectionMacrosView(BrowserView):
             uids = [o.UID() for o in val]
             titles = [o.Title() for o in val]
             res = {}
-            res['contentFilter'] = ('getServiceUID', uids)
+            res['contentFilter'] = ('ServiceUID', uids)
             res['parms'] = {'title': _("Services"), 'value': ','.join(titles)}
             res['titles'] = ','.join(titles)
             return res

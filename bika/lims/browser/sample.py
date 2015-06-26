@@ -352,11 +352,11 @@ class SampleEdit(BrowserView):
         self.tables = {}
         if not self.allow_edit:
             for poc in POINTS_OF_CAPTURE:
-                if not self.context.getAnalyses({'getPointOfCapture': poc}):
+                if not self.context.getAnalyses({'PointOfCapture': poc}):
                     continue
                 t = SampleAnalysesView(self.context,
                                  self.request,
-                                 getPointOfCapture = poc,
+                                 PointOfCapture = poc,
                                  sort_on = 'ServiceTitle')
                 t.form_id = "sample_%s_analyses" % poc
                 if poc == 'field':

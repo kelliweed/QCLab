@@ -1212,7 +1212,7 @@ class Calculations(WorksheetImporter):
                            src_field='DependentServices',
                            dest_catalog='bika_setup_catalog',
                            dest_query={'portal_type': 'AnalysisService',
-                                       'getKeyword': kw}
+                                       'Keyword': kw}
                            )
             obj.unmarkCreationFlag()
             renameAfterCreation(obj)
@@ -1360,7 +1360,7 @@ class Analysis_Specifications(WorksheetImporter):
         if not service:
             service = bsc(
                 portal_type="AnalysisService",
-                getKeyword=row["service"]
+                Keyword=row["service"]
             )
         service = service[0].getObject()
         return service
@@ -1429,7 +1429,7 @@ class Analysis_Profiles(WorksheetImporter):
             service = self.get_object(bsc, 'AnalysisService', row.get('Service'))
             if not service:
                 service = bsc(portal_type='AnalysisService',
-                              getKeyword=row['Service'])[0].getObject()
+                              Keyword=row['Service'])[0].getObject()
             self.profile_services[row['Profile']].append(service)
 
     def Import(self):

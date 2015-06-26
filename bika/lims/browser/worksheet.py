@@ -879,7 +879,7 @@ class AddAnalysesView(BikaListingView):
                 'index': 'Priority'},
             'CategoryTitle': {
                 'title': _('Category'),
-                'index':'getCategoryTitle'},
+                'index':'CategoryTitle'},
             'Title': {
                 'title': _('Analysis'),
                 'index':'sortable_title'},
@@ -995,7 +995,7 @@ class AddAnalysesView(BikaListingView):
         bsc = getToolByName(self.context, 'bika_setup_catalog')
         return [c.Title for c in
                 bsc(portal_type = 'AnalysisService',
-                   getCategoryUID = self.request.get('list_getCategoryUID', ''),
+                   CategoryUID = self.request.get('CategoryUID', ''),
                    inactive_state = 'active',
                    sort_on = 'sortable_title')]
 
@@ -1491,7 +1491,7 @@ class ajaxGetServices(BrowserView):
         bsc = getToolByName(self.context, 'bika_setup_catalog')
         return json.dumps([c.Title for c in
                 bsc(portal_type = 'AnalysisService',
-                   getCategoryTitle = self.request.get('getCategoryTitle', ''),
+                   CategoryTitle = self.request.get('CategoryTitle', ''),
                    inactive_state = 'active',
                    sort_on = 'sortable_title')])
 

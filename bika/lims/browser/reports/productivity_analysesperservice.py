@@ -100,9 +100,9 @@ class Report(BrowserView):
                          'colspan': 2}, ]
             datalines.append(dataline)
             for service in sc(portal_type="AnalysisService",
-                              getCategoryUID=cat.UID,
+                              CategoryUID=cat.UID,
                               sort_on='sortable_title'):
-                query['getServiceUID'] = service.UID
+                query['ServiceUID'] = service.UID
                 analyses = bc(query)
                 count_analyses = len(analyses)
 

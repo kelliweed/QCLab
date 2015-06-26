@@ -74,7 +74,7 @@ class ServiceKeywordValidator:
         # this has to be done from catalog so we don't
         # clash with ourself
         bsc = getToolByName(instance, 'bika_setup_catalog')
-        services = bsc(portal_type='AnalysisService', getKeyword=value)
+        services = bsc(portal_type='AnalysisService', Keyword=value)
         for service in services:
             if service.UID != instance.UID():
                 msg = _("Validation failed: '${title}': This keyword "
@@ -175,7 +175,7 @@ class InterimFieldsValidator:
             return instance.REQUEST[key]
 
         # check all keywords against all AnalysisService keywords for dups
-        services = bsc(portal_type='AnalysisService', getKeyword=value)
+        services = bsc(portal_type='AnalysisService', Keyword=value)
         if services:
             msg = _("Validation failed: '${title}': "
                     "This keyword is already in use by service '${used_by}'",
@@ -416,7 +416,7 @@ class RestrictedCategoriesValidator:
             if not category:
                 continue
             services = bsc(portal_type="AnalysisService",
-                           getCategoryUID=category)
+                           CategoryUID=category)
             for service in services:
                 service = service.getObject()
                 calc = service.getCalculation()

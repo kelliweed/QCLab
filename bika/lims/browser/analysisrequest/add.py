@@ -48,10 +48,10 @@ class AnalysisServicesView(ASV):
     def __init__(self, context, request, poc, ar_count=None, category=None):
         super(AnalysisServicesView, self).__init__(context, request)
 
-        self.contentFilter['getPointOfCapture'] = poc
+        self.contentFilter['PointOfCapture'] = poc
 
         if category:
-            self.contentFilter['getCategoryTitle'] = category
+            self.contentFilter['CategoryTitle'] = category
 
         self.cat_header_class = "ignore_bikalisting_default_handler"
 
@@ -66,7 +66,7 @@ class AnalysisServicesView(ASV):
         # Customise form for AR Add context
         self.form_id = poc
 
-        self.filter_indexes = ['id', 'Title', 'SearchableText', 'getKeyword']
+        self.filter_indexes = ['id', 'Title', 'SearchableText', 'Keyword']
 
         self.pagesize = 0
         self.table_only = True
@@ -231,7 +231,7 @@ class AnalysisRequestAddView(AnalysisRequestViewView):
             new_rr = []
             for i, r in enumerate(rr):
                 s_uid = self.bika_setup_catalog(portal_type='AnalysisService',
-                                              getKeyword=r['keyword'])[0].UID
+                                                Keyword=r['keyword'])[0].UID
                 r['uid'] = s_uid
                 new_rr.append(r)
             specs[n] = new_rr

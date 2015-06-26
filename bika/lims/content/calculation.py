@@ -116,7 +116,7 @@ class Calculation(BaseFolder, HistoryAwareMixin):
             keywords = re.compile(r"\[([^\.^\]]+)\]").findall(Formula)
             for keyword in keywords:
                 service = bsc(portal_type="AnalysisService",
-                              getKeyword=keyword)
+                              Keyword=keyword)
                 if service:
                     DependentServices.append(service[0].getObject())
 

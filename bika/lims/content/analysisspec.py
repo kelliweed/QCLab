@@ -124,7 +124,7 @@ class AnalysisSpec(BaseFolder, HistoryAwareMixin):
         for spec in self.getResultsRange():
             keyword = spec['keyword']
             service = bsc(portal_type="AnalysisService",
-                          getKeyword = keyword)
+                          Keyword = keyword)
             if service.getCategoryUID() not in categories:
                 categories.append(service.getCategoryUID())
         return categories

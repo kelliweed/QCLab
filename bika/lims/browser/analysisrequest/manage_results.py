@@ -36,7 +36,7 @@ class AnalysisRequestManageResultsView(AnalysisRequestViewView):
                 if self.context.getAnalyses(getPointOfCapture=poc):
                     t = self.createAnalysesView(ar,
                                      self.request,
-                                     getPointOfCapture=poc,
+                                     PointOfCapture=poc,
                                      sort_on='ServiceTitle',
                                      show_categories=show_cats)
                     t.form_id = "ar_manage_results_%s" % poc

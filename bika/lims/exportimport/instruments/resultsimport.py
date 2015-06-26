@@ -587,7 +587,7 @@ class AnalysisResultsImporter(Logger):
         elif (criteria == 'rgid'):
             obj = self.bac(portal_type=['ReferenceAnalysis',
                                          'DuplicateAnalysis'],
-                                         getReferenceAnalysesGroupID=objid)
+                                         ReferenceAnalysesGroupID=objid)
         elif (criteria == 'rid'):
             obj = self.bac(portal_type=['ReferenceAnalysis',
                                          'DuplicateAnalysis'], id=objid)

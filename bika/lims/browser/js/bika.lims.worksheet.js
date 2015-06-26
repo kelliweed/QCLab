@@ -53,7 +53,7 @@ function WorksheetAddAnalysesView() {
                 url: window.location.href.split("?")[0].replace("/add_analyses","") + "/getServices",
                 type: 'POST',
                 data: {'_authenticator': $('input[name="_authenticator"]').val(),
-                       'getCategoryTitle': val},
+                       'CategoryTitle': val},
                 dataType: "json",
                 success: function(data, textStatus, $XHR){
                     current_service_selection = $('[name="list_Title"]').val();

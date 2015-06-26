@@ -276,7 +276,7 @@ class AnalysesView(BikaListingView):
         if not self.allow_edit:
             can_edit_analyses = False
         else:
-            if self.contentFilter.get('getPointOfCapture', '') == 'field':
+            if self.contentFilter.get('PointOfCapture', '') == 'field':
                 can_edit_analyses = checkPermission(EditFieldResults, self.context)
             else:
                 can_edit_analyses = checkPermission(EditResults, self.context)
@@ -415,7 +415,7 @@ class AnalysesView(BikaListingView):
 
             # permission to edit this item's results
             # Editing Field Results is possible while in Sample Due.
-            poc = self.contentFilter.get("getPointOfCapture", 'lab')
+            poc = self.contentFilter.get("PointOfCapture", 'lab')
             can_edit_analysis = self.allow_edit and context_active and \
                 ( (poc == 'field' and getSecurityManager().checkPermission(EditFieldResults, obj))
                   or
@@ -836,13 +836,13 @@ class QCAnalysesView(AnalysesView):
 
     def __init__(self, context, request, **kwargs):
         AnalysesView.__init__(self, context, request, **kwargs)
-        self.columns['getReferenceAnalysesGroupID'] = {'title': _('QC Sample ID'),
+        self.columns['ReferenceAnalysesGroupID'] = {'title': _('QC Sample ID'),
                                                        'sortable': False}
         self.columns['Worksheet'] = {'title': _('Worksheet'),
                                                 'sortable': False}
         self.review_states[0]['columns'] = ['Service',
                                             'Worksheet',
-                                            'getReferenceAnalysesGroupID',
+                                            'ReferenceAnalysesGroupID',
                                             'Partition',
                                             'Method',
                                             'Instrument',

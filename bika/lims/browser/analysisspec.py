@@ -20,6 +20,6 @@ class JSONReadExtender(object):
         rr = []
         for i, x in enumerate(data.get("ResultsRange", [])):
             keyword = x.get("keyword")
-            proxies = bsc(portal_type="AnalysisService", getKeyword=keyword)
+            proxies = bsc(portal_type="AnalysisService", Keyword=keyword)
             if proxies:
                 data['ResultsRange'][i]['uid'] = proxies[0].UID

@@ -381,14 +381,14 @@ class InstrumentReferenceAnalysesView(AnalysesView):
 
     def __init__(self, context, request, **kwargs):
         AnalysesView.__init__(self, context, request, **kwargs)
-        self.columns['getReferenceAnalysesGroupID'] = {'title': _('QC Sample ID'),
+        self.columns['ReferenceAnalysesGroupID'] = {'title': _('QC Sample ID'),
                                                        'sortable': False}
         self.columns['Partition'] = {'title': _('Reference Sample'),
                                      'sortable': False}
         self.columns['Retractions'] = {'title': '',
                                                   'sortable': False}
         self.review_states[0]['columns'] = ['Service',
-                                            'getReferenceAnalysesGroupID',
+                                            'ReferenceAnalysesGroupID',
                                             'Partition',
                                             'Result',
                                             'Uncertainty',
@@ -450,7 +450,7 @@ class InstrumentReferenceAnalysesView(AnalysesView):
             serviceref = "%s (%s)" % (items[i]['Service'], items[i]['Keyword'])
             trows = self.anjson.get(serviceref, {});
             anrows = trows.get(qcid, []);
-            anid = '%s.%s' % (items[i]['getReferenceAnalysesGroupID'],
+            anid = '%s.%s' % (items[i]['ReferenceAnalysesGroupID'],
                               items[i]['id'])
 
             rr = obj.aq_parent.getResultsRangeDict()

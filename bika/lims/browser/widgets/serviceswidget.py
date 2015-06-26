@@ -36,7 +36,7 @@ class ServicesView(BikaListingView):
         self.columns = {
             'Service': {'title': _('Service')},
             'Keyword': {'title': _('Keyword'),
-                        'index': 'getKeyword'},
+                        'index': 'Keyword'},
             'Method': {'title': _('Method')},
             'Calculation': {'title': _('Calculation')},
         }
