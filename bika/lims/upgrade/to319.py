@@ -30,7 +30,13 @@ def upgrade(tool):
     logger.info("Upgrading Bika LIMS: %s -> %s" % (ufrom, '319'))
 
     # Migrations
+
+    #https://jira.bikalabs.com/browse/LIMS-1851
     if "bika_catalog" in portal:
         portal.manage_delObjects(['bika_catalog'])
+
+    #https://jira.bikalabs.com/browse/LIMS-1914
+    if "bika_analysis_catalog" in portal:
+        portal.manage_delObjects(['bika_analysis_catalog'])
 
     return True

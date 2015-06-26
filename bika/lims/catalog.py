@@ -4,7 +4,6 @@ from Products.CMFCore.permissions import ManagePortal
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.CatalogTool import CatalogTool
 from Products.ZCatalog.ZCatalog import ZCatalog
-from bika.lims.interfaces import IBikaAnalysisCatalog
 from bika.lims.interfaces import IBikaSetupCatalog
 from zope.interface import implements
 
@@ -29,44 +28,6 @@ def getCatalog(instance, field='UID'):
         catalog = getToolByName(plone, catalog_name)
         return catalog
 
-class BikaAnalysisCatalog(CatalogTool):
-
-    """Catalog for analysis types"""
-
-    implements(IBikaAnalysisCatalog)
-
-    security = ClassSecurityInfo()
-    _properties = ({'id': 'title', 'type': 'string', 'mode': 'w'},)
-
-    title = 'Bika Analysis Catalog'
-    id = 'bika_analysis_catalog'
-    portal_type = meta_type = 'BikaAnalysisCatalog'
-    plone_tool = 1
-
-    def __init__(self):
-        ZCatalog.__init__(self, self.id)
-
-    security.declareProtected(ManagePortal, 'clearFindAndRebuild')
-
-    def clearFindAndRebuild(self):
-        """
-        """
-
-        def indexObject(obj, path):
-            self.reindexObject(obj)
-
-        at = getToolByName(self, 'archetype_tool')
-        types = [k for k, v in at.catalog_map.items()
-                 if self.id in v]
-
-        self.manage_catalogClear()
-        portal = getToolByName(self, 'portal_url').getPortalObject()
-        portal.ZopeFindAndApply(portal,
-                                obj_metatypes=types,
-                                search_sub=True,
-                                apply_func=indexObject)
-
-InitializeClass(BikaAnalysisCatalog)
 
 class BikaSetupCatalog(CatalogTool):
 

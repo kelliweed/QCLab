@@ -398,7 +398,6 @@ class InstrumentReferenceAnalysesView(AnalysesView):
 
         analyses = self.context.getReferenceAnalyses()
         asuids = [an.UID() for an in analyses]
-        self.catalog = 'bika_analysis_catalog'
         self.contentFilter = {'UID': asuids}
         self.anjson = {}
 

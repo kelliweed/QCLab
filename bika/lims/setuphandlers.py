@@ -482,13 +482,8 @@ class BikaGenerator:
         zc_extras.index_type = 'Okapi BM25 Rank'
         zc_extras.lexicon_id = 'Lexicon'
 
-        #bika_analysis_catalog
-
-        #added to catalog.xml
-        
         #addIndex(bac, 'DatePublished', 'DateIndex')
         #addIndex(bac, 'Keyword', 'FieldIndex')
-        
         addIndex(bac, 'ServiceTitle', 'FieldIndex')
         addIndex(bac, 'ServiceUID', 'FieldIndex')
         addIndex(bac, 'CategoryUID', 'FieldIndex')
@@ -500,7 +495,6 @@ class BikaGenerator:
         addIndex(bac, 'RawSampleTypes', 'KeywordIndex')
         addIndex(bac, 'Retested', 'FieldIndex')
         addIndex(bac, 'ReferenceAnalysesGroupID', 'FieldIndex')
-
         addColumn(bac, 'path')
         addColumn(bac, 'UID')
         addColumn(bac, 'id')

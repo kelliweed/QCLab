@@ -19,7 +19,7 @@ class Report(BrowserView):
     def __call__(self):
         # get all the data into datalines
 
-        bc = getToolByName(self.context, 'bika_analysis_catalog')
+        pc = getToolByName(self.context, 'portal_catalog')
         rc = getToolByName(self.context, 'reference_catalog')
         self.report_content = {}
         parms = []
@@ -81,7 +81,7 @@ class Report(BrowserView):
         total_count = 0
         total_duration = 0
 
-        analyses = bc(query)
+        analyses = pc(query)
         for a in analyses:
             analysis = a.getObject()
             received = analysis.created()

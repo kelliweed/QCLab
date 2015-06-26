@@ -19,7 +19,7 @@ class Report(BrowserView):
 
     def __call__(self):
         bsc = getToolByName(self.context, 'bika_setup_catalog')
-        bac = getToolByName(self.context, 'bika_analysis_catalog')
+        pc = getToolByName(self.context, 'portal_catalog')
         self.report_content = {}
         parms = []
         headings = {}
@@ -113,7 +113,7 @@ class Report(BrowserView):
 
         datalines = []
 
-        for a_proxy in bac(query):
+        for a_proxy in pc(query):
             analysis = a_proxy.getObject()
             if analysis.getResult():
                 try:

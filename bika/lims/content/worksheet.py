@@ -332,7 +332,6 @@ class Worksheet(BaseFolder, HistoryAwareMixin):
             is allowed
         """
         rc = getToolByName(self, REFERENCE_CATALOG)
-        bac = getToolByName(self, "bika_analysis_catalog")
         pc = getToolByName(self, 'portal_catalog')
 
         layout = self.getLayout()
@@ -340,7 +339,7 @@ class Worksheet(BaseFolder, HistoryAwareMixin):
         services = wst.getService()
         wst_service_uids = [s.UID() for s in services]
 
-        analyses = bac(portal_type='Analysis',
+        analyses = pc(portal_type='Analysis',
                        ServiceUID=wst_service_uids,
                        review_state='sample_received',
                        worksheetanalysis_review_state='unassigned',

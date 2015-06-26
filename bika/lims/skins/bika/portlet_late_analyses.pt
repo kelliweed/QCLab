@@ -14,7 +14,7 @@
                  DateTime python:modules['DateTime'].DateTime;
                  sm python:modules['AccessControl'].getSecurityManager();
                  now python: DateTime();
-                 rs python:context.bika_analysis_catalog(
+                 rs python:context.portal_catalog(
                     portal_type='Analysis',
                     DueDate={'query': [now,], 'range': 'max'},
                     sort_on='DateReceived',

@@ -87,7 +87,6 @@ class ReferenceAnalysesView(AnalysesView):
 
     def __init__(self, context, request):
         AnalysesView.__init__(self, context, request)
-        self.catalog = 'bika_analysis_catalog'
         self.contentFilter = {'portal_type':'ReferenceAnalysis',
                               'path': {'query':"/".join(self.context.getPhysicalPath()),
                                        'level':0}}

@@ -30,11 +30,10 @@ import json
 class AnalysesView(BikaListingView):
     """ Displays a list of Analyses in a table.
         Visible InterimFields from all analyses are added to self.columns[].
-        Keyword arguments are passed directly to bika_analysis_catalog.
+        Keyword arguments are passed directly to portal_catalog.
     """
 
     def __init__(self, context, request, **kwargs):
-        self.catalog = "bika_analysis_catalog"
         self.contentFilter = dict(kwargs)
         self.contentFilter['portal_type'] = 'Analysis'
         self.contentFilter['sort_on'] = 'sortable_title'
@@ -854,7 +853,6 @@ class QCAnalysesView(AnalysesView):
 
         qcanalyses = context.getQCAnalyses()
         asuids = [an.UID() for an in qcanalyses]
-        self.catalog = 'bika_analysis_catalog'
         self.contentFilter = {'UID': asuids,
                               'sort_on': 'sortable_title'}
         self.icon = self.portal_url + \

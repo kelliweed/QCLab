@@ -13,7 +13,6 @@ class LateAnalysesView(BikaListingView):
     """
     def __init__(self, context, request):
         super(LateAnalysesView, self).__init__(context, request)
-        self.catalog = 'bika_analysis_catalog'
         self.contentFilter = {
             'portal_type':'Analysis',
             'DueDate': {'query': [DateTime(),], 'range': 'max'},

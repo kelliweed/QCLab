@@ -251,7 +251,6 @@ class AnalysisResultsImporter(Logger):
         self._idsearch = idsearchcriteria
         self._priorizedsearchcriteria = ''
         self.bsc = getToolByName(self.context, 'bika_setup_catalog')
-        self.bac = getToolByName(self.context, 'bika_analysis_catalog')
         self.pc = getToolByName(self.context, 'portal_catalog')
         self.wf = getToolByName(self.context, 'portal_workflow')
         if not self._allowed_ar_states:
@@ -585,15 +584,15 @@ class AnalysisResultsImporter(Logger):
                            UID=objid,
                            review_state=states)
         elif (criteria == 'rgid'):
-            obj = self.bac(portal_type=['ReferenceAnalysis',
-                                         'DuplicateAnalysis'],
-                                         ReferenceAnalysesGroupID=objid)
+            obj = self.pc(portal_type=['ReferenceAnalysis',
+                                       'DuplicateAnalysis'],
+                          ReferenceAnalysesGroupID=objid)
         elif (criteria == 'rid'):
-            obj = self.bac(portal_type=['ReferenceAnalysis',
-                                         'DuplicateAnalysis'], id=objid)
+            obj = self.pc(portal_type=['ReferenceAnalysis',
+                                       'DuplicateAnalysis'], id=objid)
         elif (criteria == 'ruid'):
-            obj = self.bac(portal_type=['ReferenceAnalysis',
-                                          'DuplicateAnalysis'], UID=objid)
+            obj = self.pc(portal_type=['ReferenceAnalysis',
+                                       'DuplicateAnalysis'], UID=objid)
         if obj and len(obj) > 0:
             self._priorizedsearchcriteria = criteria
         return obj

@@ -39,7 +39,7 @@ class ARAnalysesField(ObjectField):
             If you want to override "ViewRetractedAnalyses",
             pass retracted=True
 
-            other kwargs are passed to bika_analysis_catalog
+            other kwargs are passed to portal_catalog
 
         """
 
@@ -56,13 +56,13 @@ class ARAnalysesField(ObjectField):
             retracted = mtool.checkPermission(ViewRetractedAnalyses,
                                               instance)
 
-        bac = getToolByName(instance, 'bika_analysis_catalog')
+        pc = getToolByName(instance, 'portal_catalog')
         contentFilter = dict([(k, v) for k, v in kwargs.items()
-                              if k in bac.indexes()])
+                              if k in pc.indexes()])
         contentFilter['portal_type'] = "Analysis"
         contentFilter['path'] = {'query': "/".join(instance.getPhysicalPath()),
                                  'level': 0}
-        analyses = bac(contentFilter)
+        analyses = pc(contentFilter)
         if not retracted:
             analyses = [a for a in analyses if a.review_state != 'retracted']
         if full_objects:

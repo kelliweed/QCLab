@@ -298,9 +298,9 @@ class AnalysisRequestViewView(BrowserView):
             [[PointOfCapture, category uid, service uid],
              [PointOfCapture, category uid, service uid], ...]
         """
-        bac = getToolByName(self.context, 'bika_analysis_catalog')
+        pc = getToolByName(self.context, 'portal_catalog')
         res = []
-        for analysis in bac(portal_type="Analysis",
+        for analysis in pc(portal_type="Analysis",
                             RequestID=self.context.RequestID):
             analysis = analysis.getObject()
             service = analysis.getService()

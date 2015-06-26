@@ -21,7 +21,7 @@ class Report(BrowserView):
         # get all the data into datalines
 
         sc = getToolByName(self.context, 'bika_setup_catalog')
-        bc = getToolByName(self.context, 'bika_analysis_catalog')
+        pc = getToolByName(self.context, 'portal_catalog')
         rc = getToolByName(self.context, 'reference_catalog')
         self.report_content = {}
         parms = []
@@ -103,7 +103,7 @@ class Report(BrowserView):
                               CategoryUID=cat.UID,
                               sort_on='sortable_title'):
                 query['ServiceUID'] = service.UID
-                analyses = bc(query)
+                analyses = pc(query)
                 count_analyses = len(analyses)
 
                 dataline = []

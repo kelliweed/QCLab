@@ -52,8 +52,7 @@ class WorksheetWorkflowAction(WorkflowAction):
         plone.protect.CheckAuthenticator(form)
         workflow = getToolByName(self.context, 'portal_workflow')
         rc = getToolByName(self.context, REFERENCE_CATALOG)
-        bsc = getToolByName(self.context, 'bika_setup_catalog')
-        bac = getToolByName(self.context, 'bika_analysis_catalog')
+        pc = getToolByName(self.context, 'portal_catalog')
         action, came_from = WorkflowAction._get_form_workflow_action(self)
 
 
@@ -93,7 +92,7 @@ class WorksheetWorkflowAction(WorkflowAction):
 
             for analysis_uid in selected_analysis_uids:
                 try:
-                    analysis = bac(UID=analysis_uid)[0].getObject()
+                    analysis = pc(UID=analysis_uid)[0].getObject()
                 except IndexError:
                     # Duplicate analyses are removed when their analyses
                     # get removed, so indexerror is expected.
@@ -384,7 +383,6 @@ class WorksheetAnalysesView(AnalysesView):
     """
     def __init__(self, context, request):
         AnalysesView.__init__(self, context, request)
-        self.catalog = 'bika_analysis_catalog'
         self.contentFilter = {'portal_type':'Analysis',
                               'review_state':'sample_received',
                               'worksheetanalysis_review_state':'unassigned'}
@@ -849,7 +847,6 @@ class AddAnalysesView(BikaListingView):
         self.icon = self.portal_url + "/++resource++bika.lims.images/worksheet_big.png"
         self.title = self.context.translate(_("Add Analyses"))
         self.description = ""
-        self.catalog = "bika_analysis_catalog"
         self.context_actions = {}
         # initial review state for first form display of the worksheet
         # add_analyses search view - first batch of analyses, latest first.
@@ -1217,7 +1214,6 @@ class WorksheetARsView(BikaListingView):
     def __init__(self, context, request):
         BikaListingView.__init__(self, context, request)
         self.context_actions = {}
-        self.catalog = 'bika_analysis_catalog'
         self.contentFilter = {'portal_type': 'Analysis',
                               'review_state':'impossible_state'}
         self.base_url = self.context.absolute_url()

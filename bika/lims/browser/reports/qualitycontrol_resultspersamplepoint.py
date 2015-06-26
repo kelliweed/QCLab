@@ -112,7 +112,7 @@ class Report(BrowserView):
         in_shoulder_range_count = 0
         analysis_count = 0
 
-        proxies = self.bika_analysis_catalog(self.contentFilter)
+        proxies = self.portal_catalog(self.contentFilter)
 
         if not proxies:
             message = _("No analyses matched your query")

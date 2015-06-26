@@ -620,7 +620,7 @@ class Instrument(ATFolder):
         addedanalyses = []
         wf = getToolByName(self, 'portal_workflow')
         bsc = getToolByName(self, 'bika_setup_catalog')
-        bac = getToolByName(self, 'bika_analysis_catalog')
+        pc = getToolByName(self, 'portal_catalog')
         ref_type = reference.getBlank() and 'b' or 'c'
         ref_uid = reference.UID()
         postfix = 1
@@ -641,7 +641,7 @@ class Instrument(ATFolder):
             if calc and calc.getDependentServices():
                 continue
             ref_uid = reference.addReferenceAnalysis(service_uid, ref_type)
-            ref_analysis = bac(portal_type='ReferenceAnalysis', UID=ref_uid)[0].getObject()
+            ref_analysis = pc(portal_type='ReferenceAnalysis', UID=ref_uid)[0].getObject()
 
             # Set ReferenceAnalysesGroupID (same id for the analyses from
             # the same Reference Sample and same Worksheet)
@@ -691,8 +691,8 @@ class Instrument(ATFolder):
         if isvalid:
             return []
 
-        bac = getToolByName(self, 'bika_analysis_catalog')
-        prox = bac(portal_type=['Analysis', 'DuplicateAnalysis'],
+        pc = getToolByName(self, 'portal_catalog')
+        prox = pc(portal_type=['Analysis', 'DuplicateAnalysis'],
                    review_state='to_be_verified')
         ans = [p.getObject() for p in prox]
         return [a for a in ans if a.getRawInstrument() == self.UID()]

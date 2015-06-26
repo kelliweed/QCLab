@@ -80,7 +80,7 @@ class Report(BrowserView):
             self.parms.append(val['parms'])
             titles.append(val['titles'])
 
-        proxies = self.bika_analysis_catalog(self.contentFilter)
+        proxies = portal_catalog(self.contentFilter)
         if not proxies:
             message = _("No analyses matched your query")
             self.context.plone_utils.addPortalMessage(message, 'error')
