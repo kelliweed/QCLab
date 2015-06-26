@@ -32,6 +32,14 @@ def upgrade(tool):
     wf.updateRoleMappings()
 
     # Migrations
+    port_indexes_to_portal_catalog(portal)
+
+
+    return True
+
+
+def port_indexes_to_portal_catalog(portal):
+    at = getToolByName(portal, 'archetype_tool')
 
     #https://jira.bikalabs.com/browse/LIMS-1851
     if "bika_catalog" in portal:
@@ -41,4 +49,15 @@ def upgrade(tool):
     if "bika_analysis_catalog" in portal:
         portal.manage_delObjects(['bika_analysis_catalog'])
 
-    return True
+    # These are moved to portal_catalog.
+    at.setCatalogsByType('Analysis', ['portal_catalog', ])
+    at.setCatalogsByType('AnalysisRequest', ['portal_catalog', ])
+    at.setCatalogsByType('Batch', ['portal_catalog', ])
+    at.setCatalogsByType('Sample', ['portal_catalog', ])
+    at.setCatalogsByType('SamplePartition', ['portal_catalog', ])
+    at.setCatalogsByType('Worksheet', ['portal_catalog', ])
+    at.setCatalogsByType('DuplicateAnalysis', ['portal_catalog', ])
+    at.setCatalogsByType('ReferenceAnalysis', ['portal_catalog', ])
+    at.setCatalogsByType('Report', ['portal_catalog', ])
+    at.setCatalogsByType('ReferenceSample', ['portal_catalog', ])
+
