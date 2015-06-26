@@ -17,11 +17,13 @@
     <index name="getDueDate" meta_type="DateIndex">                       <indexed_attr value="getDueDate"/> </index>
     <index name="getExpiryDate" meta_type="DateIndex">                    <indexed_attr value="getExpiryDate"/> </index>
     <index name="getSamplingDate" meta_type="DateIndex">                  <indexed_attr value="getSamplingDate"/> </index>
+    <index name="getDateAnalysisPublished" meta_type="DateIndex">         <indexed_attr value="getDateAnalysisPublished"/> </index>
 
     <!-- FieldIndex version of the Title and Description indexes -->
     <index name="description" meta_type="FieldIndex">                     <indexed_attr value="Description"/> </index>
     <index name="title" meta_type="FieldIndex">                           <indexed_attr value="Title"/> </index>
 
+    <index name="getKeyword" meta_type="FieldIndex">                        <indexed_attr value="getKeyword"/> </index>
     <index name="BatchUID" meta_type="FieldIndex">                        <indexed_attr value="BatchUID"/> </index>
     <index name="getAnalysisCategory" meta_type="KeywordIndex">           <indexed_attr value="getAnalysisCategory"/> </index>
     <index name="getAnalysisService" meta_type="KeywordIndex">            <indexed_attr value="getAnalysisService"/> </index>
