@@ -3,6 +3,7 @@ from bika.lims.utils import t
 from bika.lims.utils import to_utf8
 from plone.app.contentmenu.menu import WorkflowSubMenuItem as _WorkflowSubMenuItem
 from Products.CMFCore.utils import getToolByName
+from plone.app.contentmenu.menu import FactoriesMenu, FactoriesSubMenuItem
 
 try:
     from Products.CMFPlacefulWorkflow import ManageWorkflowPolicies
@@ -93,6 +94,27 @@ when viewing cancelled/inactive objects """
             transitions = transitions.values()
 
         return transitions
+
+class MyFactoriesMenu(FactoriesMenu):
+    """
+    Overriding default FactoriesMenu to add reportcollection classes like dailysamplesreceived
+    """
+    def getMenuItems(self, context, request):
+        # menuitems is a list of tal-friendly dictionaries
+        menuitems = super(MyFactoriesMenu, self).getMenuItems(context, request)
+        #import pdb;
+        #pdb.set_trace();
+        menuitems.append({
+                'id': 'dailysamplesreceived',
+                'title': (u'dailysamplesreceived'),
+                'description': 'Description for dailysamplesreceived',
+                'action': None,
+                'selected': False,
+                'icon': None,
+                'extra': {'separator': None, 'id': 'collection', 'class': 'contenttype-collection'},
+                'submenu': None,
+                })
+        return menuitems
 
 # @memoize
 # def _currentStateTitle(self):
