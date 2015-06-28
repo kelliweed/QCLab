@@ -165,6 +165,7 @@ class StorageLocationVocabulary(BikaContentVocabulary):
 
 StorageLocationVocabularyFactory = StorageLocationVocabulary()
 
+
 class SamplePointVocabulary(BikaContentVocabulary):
 
     def __init__(self):

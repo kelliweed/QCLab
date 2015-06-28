@@ -84,7 +84,11 @@ class IReferenceAnalysis(Interface):
 class IReportFolder(Interface):
 
     """Report folder"""
+    
 
+class IReportCollection(Interface):
+
+    """Report folder"""
 
 class ISample(Interface):
 

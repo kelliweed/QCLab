@@ -17,6 +17,7 @@
  <property name="allowed_content_types">
   <element value="Report"/>
   <element value="Collection"/>
+  <element value="ReportCollection"/>
  </property>
  <property name="allow_discussion">False</property>
  <property name="default_view_fallback">False</property>
