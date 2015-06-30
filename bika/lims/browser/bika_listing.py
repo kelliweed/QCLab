@@ -922,7 +922,6 @@ class BikaListingView(BrowserView):
             Then you can insert your own form tags around it.
         """
         table = BikaListingTable(bika_listing = self, table_only = table_only)
-        import pdb;pdb.set_trace()
         return table.render(self)
 
     def rendered_items(self):
