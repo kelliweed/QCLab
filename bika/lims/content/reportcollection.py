@@ -6,6 +6,12 @@ from plone.app.collection.collection import Collection
 from bika.lims import PMF, bikaMessageFactory as _
 from zope.interface import implements
 
+schema = Collection.schema
+schema['limit'].widget.visible = False
+schema['text'].widget.visible = False
+schema['customViewFields'].widget.visible = False
+schema['b_size'].widget.visible = False
+
 
 class ReportCollection(Collection):
     security = ClassSecurityInfo()
