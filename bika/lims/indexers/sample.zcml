@@ -7,4 +7,18 @@
 
     <adapter name="DateReceived" factory=".sample.DateReceived" />
 
+    <index name="SamplePointTitle" meta_type="FieldIndex">             <indexed_attr value="SamplePointTitle"/> </index>
+    <index name="SamplePointUID" meta_type="FieldIndex">               <indexed_attr value="SamplePointUID"/> </index>
+    <index name="SampleTypeTitle" meta_type="FieldIndex">              <indexed_attr value="SampleTypeTitle"/> </index>
+    <index name="SampleTypeUID" meta_type="FieldIndex">                <indexed_attr value="SampleTypeUID"/> </index>
+    <index name="Analysts" meta_type="KeywordIndex">                   <indexed_attr value="Analysts"/> </index>
+    <index name="ClientReference" meta_type="FieldIndex">              <indexed_attr value="ClientReference"/> </index>
+    <index name="ClientSampleID" meta_type="FieldIndex">               <indexed_attr value="ClientSampleID"/> </index>
+    <index name="SampleID" meta_type="FieldIndex">                     <indexed_attr value="SampleID"/> </index>
+    <index name="SampleUID" meta_type="FieldIndex">                    <indexed_attr value="SampleUID"/> </index>
+    <index name="Sampler" meta_type="FieldIndex">                      <indexed_attr value="Sampler"/> </index>
+    <index name="Preserver" meta_type="FieldIndex">                    <indexed_attr value="Preserver"/> </index>
+
+</object>
+
 </configure>

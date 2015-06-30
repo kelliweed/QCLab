@@ -4,3 +4,4 @@ from plone.indexer import indexer
 @indexer(ISample)
 def DateReceived(instance):
     return instance.getDateReceived()
+

@@ -6,6 +6,46 @@
     i18n_domain="bika">
 
     <include file="analysisrequest.zcml"/>
+    <include file="contact.zcml"/>
     <include file="sample.zcml"/>
+
+    <!-- Indexers that are applied generally.  These should be fast
+     enough to apply to all objects (!), but general enough to apply
+     to as many objects as possible. -->
+
+    <adapter name="BatchDate"         factory=".BatchDate"/>
+    <adapter name="SamplingDate"      factory=".SamplingDate"/>
+    <adapter name="DisposalDate"      factory=".DisposalDate"/>
+    <adapter name="ExpiryDate"        factory=".ExpiryDate"/>
+    <adapter name="DueDate"           factory=".DueDate"/>
+    <adapter name="DateOpened"        factory=".DateOpened"/>
+    <adapter name="DateReceived"      factory=".DateReceived"/>
+    <adapter name="DateDisposed"      factory=".DateDisposed"/>
+    <adapter name="DateExpired"       factory=".DateExpired"/>
+    <adapter name="DatePublished"     factory=".DatePublished"/>
+    <adapter name="DateSampled"       factory=".DateSampled"/>
+    <adapter name="Priority"          factory=".Priority"/>
+    <adapter name="ParentUID"         factory=".ParentUID"/>
+    <adapter name="Fullname"          factory=".Fullname"/>
+    <adapter name="Username"          factory=".Username"/>
+    <adapter name="Keyword"           factory=".Keyword"/>
+    <adapter name="description"       factory=".description"/>
+    <adapter name="title"             factory=".title"/>
+    <adapter name="ServiceTitle"      factory=".ServiceTitle"/>
+    <adapter name="ServiceUID"        factory=".ServiceUID"/>
+    <adapter name="CategoryTitle"     factory=".CategoryTitle"/>
+    <adapter name="CategoryUID"       factory=".CategoryUID"/>
+    <adapter name="SamplePointTitle"  factory=".SamplePointTitle"/>
+    <adapter name="SamplePointUID"    factory=".SamplePointUID"/>
+    <adapter name="SampleTypeTitle"   factory=".SampleTypeTitle"/>
+    <adapter name="SampleTypeUID"     factory=".SampleTypeUID"/>
+    <adapter name="Analyst"           factory=".Analyst"/>
+    <adapter name="Analysts"          factory=".Analysts"/>
+    <adapter name="ClientTitle"       factory=".ClientTitle"/>
+    <adapter name="ClientUID"         factory=".ClientUID"/>
+    <adapter name="ClientOrderNumber" factory=".ClientOrderNumber"/>
+    <adapter name="ClientReference"   factory=".ClientReference"/>
+    <adapter name="ClientSampleID"    factory=".ClientSampleID"/>
+    <adapter name="ContactTitle"      factory=".ContactTitle"/>
 
 </configure>
