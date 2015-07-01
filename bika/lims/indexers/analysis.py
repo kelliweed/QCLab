@@ -1,12 +1,28 @@
-from Acquisition import aq_base
-from bika.lims.interfaces import IAnalysisRequest
-from bika.lims.utils import get_transition_info
 from plone.indexer import indexer
 
+from bika.lims.interfaces import IAnalysis, IAnalysisRequest
 
-#  These aren't used anywhere except analyses
-Retested
-ReferenceAnalysesGroupID
-PointOfCapture
-ReferenceDefinitionUID
 
+@indexer(IAnalysis)
+def RequestID(instance):
+    if IAnalysisRequest.providedBy(instance.aq_parent):
+        return instance.aq_parent.getRequestID()
+
+
+@indexer(IAnalysis)
+def Retested(instance):
+    return instance.getRetested()
+
+
+@indexer(IAnalysis)
+def ReferenceAnalysesGroupID(instance):
+    # reference analyses are also IAnalysis
+    if hasattr(instance, 'getReferenceAnalysesGroupID'):
+        return instance.getReferenceAnalysesGroupID()
+
+
+@indexer(IAnalysis)
+def PointOfCapture(instance):
+    service = instance.getService()
+    if service:
+        return service.getPointOfCapture()

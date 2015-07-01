@@ -5,13 +5,16 @@
     xmlns:i18n="http://namespaces.zope.org/i18n"
     i18n_domain="bika">
 
+    <!-- Indexers for specific types -->
+    <include file="analysis.zcml"/>
     <include file="analysisrequest.zcml"/>
-    <include file="contact.zcml"/>
     <include file="sample.zcml"/>
+    <include file="samplepartition.zcml"/>
+    <include file="referencesample.zcml"/>
 
-    <!-- Indexers that are applied generally.  These should be fast
-     enough to apply to all objects (!), but general enough to apply
-     to as many objects as possible. -->
+    <!-- Indexers that are applied generally.  This code should attempt to
+    fill all indexes possible, as fast as possible, but generically enough
+    to apply to as many object types as possible. -->
 
     <adapter name="BatchDate"         factory=".BatchDate"/>
     <adapter name="SamplingDate"      factory=".SamplingDate"/>
@@ -45,7 +48,6 @@
     <adapter name="ClientUID"         factory=".ClientUID"/>
     <adapter name="ClientOrderNumber" factory=".ClientOrderNumber"/>
     <adapter name="ClientReference"   factory=".ClientReference"/>
-    <adapter name="ClientSampleID"    factory=".ClientSampleID"/>
     <adapter name="ContactTitle"      factory=".ContactTitle"/>
 
 </configure>

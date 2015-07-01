@@ -8,8 +8,6 @@ from Acquisition._Acquisition import aq_base
 from plone.indexer import indexer
 from zope.interface import Interface
 
-from bika.lims import logger
-
 # Dates acquired from schema fields
 from bika.lims.utils import get_transition_info
 
@@ -143,18 +141,26 @@ def ServiceUID(instance):
 
 @indexer(Interface)
 def CategoryTitle(instance):
-    if hasattr(instance, 'getCategory'):
-        return instance.getCategory().Title()
-    elif hasattr(instance, 'getAnalysisCategory'):
-        return instance.getAnalysisCategory().Title()
+    if hasattr(instance, 'getAnalysisCategory'):
+        cat = instance.getAnalysisCategory()
+        if cat:
+            return cat.Title()
+    elif hasattr(instance, 'getCategory'):
+        cat = instance.getCategory()
+        if cat:
+            return cat.Title()
 
 
 @indexer(Interface)
 def CategoryUID(instance):
-    if hasattr(instance, 'getCategory'):
-        return instance.getCategory().UID()
-    elif hasattr(instance, 'getAnalysisCategory'):
-        return instance.getAnalysisCategory().UID()
+    if hasattr(instance, 'getAnalysisCategory'):
+        cat = instance.getAnalysisCategory()
+        if cat:
+          return cat.UID()
+    elif hasattr(instance, 'getCategory'):
+        cat = instance.getCategory()
+        if cat:
+          return cat.UID()
 
 
 # two separate (redundant?) indexes
@@ -163,12 +169,24 @@ def CategoryUID(instance):
 def SamplePointTitle(instance):
     if hasattr(instance, 'getSamplePoint'):
         return instance.getSamplePoint().Title()
+    elif hasattr(instance, 'getSample'):
+        sample = instance.getSample()
+        if sample:
+            samplepoint = sample.getSamplePoint()
+            if samplepoint:
+                return samplepoint.Title()
 
 
 @indexer(Interface)
 def SamplePointUID(instance):
     if hasattr(instance, 'getSamplePoint'):
         return instance.getSamplePoint().UID()
+    elif hasattr(instance, 'getSample'):
+        sample = instance.getSample()
+        if sample:
+            samplepoint = sample.getSamplePoint()
+            if samplepoint:
+                return samplepoint.UID()
 
 
 # two separate (redundant?) indexes
@@ -177,12 +195,25 @@ def SamplePointUID(instance):
 def SampleTypeTitle(instance):
     if hasattr(instance, 'getSampleType'):
         return instance.getSampleType().Title()
+    elif hasattr(instance, 'getSample'):
+        sample = instance.getSample()
+        if sample:
+            sampletype = sample.getSampleType()
+            if sampletype:
+                return sampletype.Title()
 
 
 @indexer(Interface)
 def SampleTypeUID(instance):
     if hasattr(instance, 'getSampleType'):
         return instance.getSampleType().UID()
+    elif hasattr(instance, 'getSample'):
+        sample = instance.getSample()
+        if sample:
+            sampletype = sample.getSampleType()
+            if sampletype:
+                return sampletype.UID()
+
 
 # redundant? (should be using a single KeywordIndex).
 
@@ -191,10 +222,12 @@ def Analyst(instance):
     if hasattr(instance, 'getAnalyst'):
         return instance.getAnalyst()
 
+
 @indexer(Interface)
 def Analysts(instance):
     if hasattr(instance, 'getAnalysts'):
         return instance.getAnalysts()
+
 
 @indexer(Interface)
 def ClientTitle(instance):
@@ -203,6 +236,7 @@ def ClientTitle(instance):
         if client:
             return client.Title()
 
+
 @indexer(Interface)
 def ClientUID(instance):
     if hasattr(instance, 'getClient'):
@@ -210,20 +244,18 @@ def ClientUID(instance):
         if client:
             return client.UID()
 
+
 @indexer(Interface)
 def ClientOrderNumber(instance):
     if hasattr(instance, 'getClientOrderNumber'):
         return instance.getClientOrderNumber()
+
 
 @indexer(Interface)
 def ClientReference(instance):
     if hasattr(instance, 'getClientReference'):
         return instance.getClientReference()
 
-@indexer(Interface)
-def ClientSampleID(instance):
-    if hasattr(instance, 'getClientSampleID'):
-        return instance.getClientSampleID()
 
 @indexer(Interface)
 def ContactTitle(instance):
@@ -233,4 +265,3 @@ def ContactTitle(instance):
         contact = instance.getContact()
         if contact:
             return contact.Title()
-

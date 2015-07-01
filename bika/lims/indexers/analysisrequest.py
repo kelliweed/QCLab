@@ -1,10 +1,19 @@
-from bika.lims.interfaces import IAnalysisRequest
 from plone.indexer import indexer
+
+from bika.lims.interfaces import IAnalysisRequest
 
 
 @indexer(IAnalysisRequest)
 def RequestID(instance):
-    return instance.id
+    return instance.getId()
+
+
+@indexer(IAnalysisRequest)
+def Retested(instance):
+    for analysis in instance.getAnalyses(full_objects=True):
+        if analysis.getRetested():
+            return True
+    return False
 
 
 @indexer(IAnalysisRequest)
@@ -58,28 +67,7 @@ def Sampler(instance):
 
 
 @indexer(IAnalysisRequest)
-def SamplePointTitle(instance):
-    sample = instance.getSample()
-    if sample:
-        return sample.getSamplePoint().Title()
-
-
-@indexer(IAnalysisRequest)
-def SamplePointUID(instance):
-    sample = instance.getSample()
-    if sample:
-        return sample.getSamplePoint().UID()
-
-
-@indexer(IAnalysisRequest)
-def SampleTypeTitle(instance):
-    sample = instance.getSample()
-    if sample:
-        return sample.getSampleType().Title()
-
-
-@indexer(IAnalysisRequest)
-def SampleTypeUID(instance):
-    sample = instance.getSample()
-    if sample:
-        return sample.getSampleType().UID()
+def ClientSampleID(instance):
+    if hasattr(instance, 'getSample'):
+        sample = instance.getSample()
+        return sample.getClientSampleID()
