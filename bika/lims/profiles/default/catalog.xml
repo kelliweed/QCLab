@@ -74,7 +74,7 @@
 
     <index name="WorksheetTemplateTitle" meta_type="FieldIndex">       <indexed_attr value="WorksheetTemplateTitle"/> </index>
 
-    <!-- These aren't used anywhere except analyses -->
+    <!-- These are directly related to Analysis -->
     <index name="Retested" meta_type="FieldIndex">                     <indexed_attr value="Retested"/> </index>
     <index name="ReferenceAnalysesGroupID" meta_type="FieldIndex">     <indexed_attr value="ReferenceAnalysesGroupID"/> </index>
     <index name="PointOfCapture" meta_type="KeywordIndex">             <indexed_attr value="PointOfCapture"/> </index>
@@ -104,5 +104,82 @@
     <column value="ReferenceAnalysesGroupID"/>
     <column value="ResultCaptureDate"/>
     <column value="Priority"/>
+
+    <!-- ported from bika_setup_catalog -->
+
+    <index name="Accredited" meta_type="FieldIndex"/>
+    <index name="InstrumentType" meta_type="FieldIndex"/>
+    <index name="InstrumentTypeName" meta_type="FieldIndex"/>
+    <index name="Blank" meta_type="FieldIndex"/>
+    <index name="CalculationTitle" meta_type="FieldIndex"/>
+    <index name="CalculationUID" meta_type="FieldIndex"/>
+    <index name="CalibrationExpiryDate" meta_type="FieldIndex"/>
+    <index name="CategoryTitle" meta_type="FieldIndex"/>
+    <index name="CategoryUID" meta_type="FieldIndex"/>
+    <index name="ClientUID" meta_type="FieldIndex"/>
+    <index name="DepartmentTitle" meta_type="FieldIndex"/>
+    <index name="DuplicateVariation" meta_type="FieldIndex"/>
+    <index name="Formula" meta_type="FieldIndex"/>
+    <index name="Fullname" meta_type="FieldIndex"/>
+    <index name="Hazardous" meta_type="FieldIndex"/>
+    <index name="InstrumentTitle" meta_type="FieldIndex"/>
+    <index name="Keyword" meta_type="FieldIndex"/>
+    <index name="ManagerName" meta_type="FieldIndex"/>
+    <index name="ManagerPhone" meta_type="FieldIndex"/>
+    <index name="ManagerEmail" meta_type="FieldIndex"/>
+    <index name="MaxTimeAllowed" meta_type="FieldIndex"/>
+    <index name="Model" meta_type="FieldIndex"/>
+    <index name="Name" meta_type="FieldIndex"/>
+    <index name="PointOfCapture" meta_type="FieldIndex"/>
+    <index name="Price" meta_type="FieldIndex"/>
+    <index name="SamplePointTitle" meta_type="KeywordIndex"/>
+    <index name="SamplePointUID" meta_type="FieldIndex"/>
+    <index name="SampleTypeTitle" meta_type="KeywordIndex"/>
+    <index name="SampleTypeUID" meta_type="FieldIndex"/>
+    <index name="ServiceTitle" meta_type="FieldIndex"/>
+    <index name="ServiceUID" meta_type="FieldIndex"/>
+    <index name="TotalPrice" meta_type="FieldIndex"/>
+    <index name="Unit" meta_type="FieldIndex"/>
+    <index name="VATAmount" meta_type="FieldIndex"/>
+    <index name="Volume" meta_type="FieldIndex"/>
+    <index name="sortKey" meta_type="FieldIndex"/>
+    <index name="MethodID" meta_type="FieldIndex"/>
+    <index name="DocumentID" meta_type="FieldIndex"/>
+
+    <column name="Accredited"/>
+    <column name="InstrumentType"/>
+    <column name="InstrumentTypeName"/>
+    <column name="Blank"/>
+    <column name="CalculationTitle"/>
+    <column name="CalculationUID"/>
+    <column name="CalibrationExpiryDate"/>
+    <column name="CategoryTitle"/>
+    <column name="CategoryUID"/>
+    <column name="ClientUID"/>
+    <column name="DepartmentTitle"/>
+    <column name="DuplicateVariation"/>
+    <column name="Formula"/>
+    <column name="Fullname"/>
+    <column name="Hazardous"/>
+    <column name="InstrumentTitle"/>
+    <column name="Keyword"/>
+    <column name="ManagerName"/>
+    <column name="ManagerPhone"/>
+    <column name="ManagerEmail"/>
+    <column name="MaxTimeAllowed"/>
+    <column name="Model"/>
+    <column name="Name"/>
+    <column name="PointOfCapture"/>
+    <column name="Price"/>
+    <column name="SamplePointTitle"/>
+    <column name="SamplePointUID"/>
+    <column name="SampleTypeTitle"/>
+    <column name="SampleTypeUID"/>
+    <column name="ServiceTitle"/>
+    <column name="ServiceUID"/>
+    <column name="TotalPrice"/>
+    <column name="Unit"/>
+    <column name="VATAmount"/>
+    <column name="Volume"/>
 
 </object>

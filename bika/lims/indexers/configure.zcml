@@ -12,6 +12,9 @@
     <include file="samplepartition.zcml"/>
     <include file="referencesample.zcml"/>
 
+    <!-- Indexes ported from bika setup catalog into portal_catalog -->
+    <include file="bika_setup.zcml"/>
+
     <!-- Indexers that are applied generally.  This code should attempt to
     fill all indexes possible, as fast as possible, but generically enough
     to apply to as many object types as possible. -->

@@ -1,0 +1,47 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    xmlns:five="http://namespaces.zope.org/five"
+    xmlns:i18n="http://namespaces.zope.org/i18n"
+    i18n_domain="bika">
+
+    <adapter name="Accredited"            factory=".bika_setup.Accredited"/>
+    <adapter name="InstrumentType"        factory=".bika_setup.InstrumentType"/>
+    <adapter name="InstrumentTypeName"    factory=".bika_setup.InstrumentTypeName"/>
+    <adapter name="Blank"                 factory=".bika_setup.Blank"/>
+    <adapter name="CalculationTitle"      factory=".bika_setup.CalculationTitle"/>
+    <adapter name="CalculationUID"        factory=".bika_setup.CalculationUID"/>
+    <adapter name="CalibrationExpiryDate" factory=".bika_setup.CalibrationExpiryDate"/>
+    <adapter name="CategoryTitle"         factory=".bika_setup.CategoryTitle"/>
+    <adapter name="CategoryUID"           factory=".bika_setup.CategoryUID"/>
+    <adapter name="ClientUID"             factory=".bika_setup.ClientUID"/>
+    <adapter name="DepartmentTitle"       factory=".bika_setup.DepartmentTitle"/>
+    <adapter name="DuplicateVariation"    factory=".bika_setup.DuplicateVariation"/>
+    <adapter name="Formula"               factory=".bika_setup.Formula"/>
+    <adapter name="Fullname"              factory=".bika_setup.Fullname"/>
+    <adapter name="Hazardous"             factory=".bika_setup.Hazardous"/>
+    <adapter name="InstrumentTitle"       factory=".bika_setup.InstrumentTitle"/>
+    <adapter name="Keyword"               factory=".bika_setup.Keyword"/>
+    <adapter name="ManagerName"           factory=".bika_setup.ManagerName"/>
+    <adapter name="ManagerPhone"          factory=".bika_setup.ManagerPhone"/>
+    <adapter name="ManagerEmail"          factory=".bika_setup.ManagerEmail"/>
+    <adapter name="MaxTimeAllowed"        factory=".bika_setup.MaxTimeAllowed"/>
+    <adapter name="Model"                 factory=".bika_setup.Model"/>
+    <adapter name="Name"                  factory=".bika_setup.Name"/>
+    <adapter name="PointOfCapture"        factory=".bika_setup.PointOfCapture"/>
+    <adapter name="Price"                 factory=".bika_setup.Price"/>
+    <adapter name="SamplePointTitle"      factory=".bika_setup.SamplePointTitle"/>
+    <adapter name="SamplePointUID"        factory=".bika_setup.SamplePointUID"/>
+    <adapter name="SampleTypeTitle"       factory=".bika_setup.SampleTypeTitle"/>
+    <adapter name="SampleTypeUID"         factory=".bika_setup.SampleTypeUID"/>
+    <adapter name="ServiceTitle"          factory=".bika_setup.ServiceTitle"/>
+    <adapter name="ServiceUID"            factory=".bika_setup.ServiceUID"/>
+    <adapter name="TotalPrice"            factory=".bika_setup.TotalPrice"/>
+    <adapter name="Unit"                  factory=".bika_setup.Unit"/>
+    <adapter name="VATAmount"             factory=".bika_setup.VATAmount"/>
+    <adapter name="Volume"                factory=".bika_setup.Volume"/>
+    <adapter name="sortKey"               factory=".bika_setup.sortKey"/>
+    <adapter name="MethodID"              factory=".bika_setup.MethodID"/>
+    <adapter name="DocumentID"            factory=".bika_setup.DocumentID"/>
+
+</configure>

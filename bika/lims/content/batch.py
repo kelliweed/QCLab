@@ -339,8 +339,3 @@ class Batch(ATFolder):
 
 
 registerType(Batch, PROJECTNAME)
-
-
-@indexer(IBatch)
-def BatchDate(instance):
-    return instance.Schema().getField('BatchDate').get(instance)

@@ -43,12 +43,6 @@ from zope.interface import implements
 import datetime
 import math
 
-@indexer(IAnalysis)
-def Priority(instance):
-    priority = instance.getPriority()
-    if priority:
-        return priority.getSortKey()
-
 schema = BikaSchema.copy() + Schema((
     HistoryAwareReferenceField('Service',
         required=1,
