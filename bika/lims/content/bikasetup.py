@@ -519,6 +519,17 @@ schema = BikaFolderSchema.copy() + Schema((
             description=_("Group Products by category in the LIMS tables, helpful when the list is long")
         ),
     ),
+    StringField('StorageLevelTitleSeparator',
+        schemata = 'Inventory',
+        required = 1,
+        vocabulary = ('', '-', '_'),
+        default = '-',
+        widget = SelectionWidget(
+            label=_('Storage level title separator'),
+            description=_('The separator between title and index while creating multiple storage levels at once.'),
+            format='select',
+        )
+    ),
 ))
 
 schema['title'].validators = ()
