@@ -1,0 +1,23 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    xmlns:i18n="http://namespaces.zope.org/i18n"
+    i18n_domain="bika">
+
+    <browser:page
+    name="display_query_results"
+    class=".productivity_dailysamplesreceived.ContentListingView"
+    permission="zope2.View"
+    for=".interfaces.IDailySamplesReceived"
+    template="templates/productivity_dailysamplesreceived.pt"
+    />
+
+    <browser:page
+    name="create_report"
+    class=".CreateReport"
+    permission="cmf.ModifyPortalContent"
+    for="bika.lims.interfaces.IReportFolder"
+    />
+
+
+</configure>

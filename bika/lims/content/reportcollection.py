@@ -5,8 +5,9 @@ from bika.lims.config import PROJECTNAME
 from plone.app.collection.collection import Collection
 from bika.lims import PMF, bikaMessageFactory as _
 from zope.interface import implements
+from bika.lims.interfaces import IReportCollection
 
-schema = Collection.schema
+schema = Collection.schema.copy()
 schema['limit'].widget.visible = False
 schema['text'].widget.visible = False
 schema['customViewFields'].widget.visible = False
@@ -14,6 +15,8 @@ schema['b_size'].widget.visible = False
 
 
 class ReportCollection(Collection):
+    schema = schema
+    implements(IReportCollection)
     security = ClassSecurityInfo()
     displayContentsTab = False
 
@@ -27,3 +30,5 @@ class ReportCollection(Collection):
 
 
 registerType(ReportCollection, PROJECTNAME)
+
+[{'i': 'created', 'o': 'plone.app.querystring.operation.date.today'}]

@@ -108,7 +108,7 @@ class MyFactoriesMenu(FactoriesMenu):
                 'id': 'dailysamplesreceived',
                 'title': (u'dailysamplesreceived'),
                 'description': 'Description for dailysamplesreceived',
-                'action': None,
+                'action': 'create_report?report=productivity_dailysamplesreceived',
                 'selected': False,
                 'icon': None,
                 'extra': {'separator': None, 'id': 'collection', 'class': 'contenttype-collection'},
