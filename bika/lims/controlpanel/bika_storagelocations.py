@@ -26,7 +26,7 @@ class StorageLocationsView(BikaListingView):
 
     def __init__(self, context, request):
         super(StorageLocationsView, self).__init__(context, request)
-        self.catalog = 'bika_setup_catalog'
+
         self.contentFilter = {'portal_type': 'StorageLocation',
                               'sort_on': 'sortable_title'}
         self.context_actions = {_('Add'):
@@ -136,7 +136,7 @@ class ajax_StorageLocations(BrowserView):
 
     def __call__(self):
         plone.protect.CheckAuthenticator(self.request)
-        bsc = getToolByName(self.context, 'bika_setup_catalog')
+        pc = getToolByName(self.context, 'portal_catalog')
         term = safe_unicode(self.request.get('term', '')).lower()
         if not term:
             return json.dumps([])
@@ -147,7 +147,7 @@ class ajax_StorageLocations(BrowserView):
         if self.context.portal_type == 'Client':
             client_path = self.context.getPhysicalPath()
             client_items = list(
-                bsc(portal_type = "StorageLocation",
+                pc(portal_type = "StorageLocation",
                     path = {"query": "/".join(client_path), "level" : 0 },
                     inactive_state = 'active',
                     sort_on='sortable_title'))
@@ -156,7 +156,7 @@ class ajax_StorageLocations(BrowserView):
         lab_path = \
                 self.context.bika_setup.bika_storagelocations.getPhysicalPath()
         lab_items = list(
-            bsc(portal_type = "StorageLocation",
+            pc(portal_type = "StorageLocation",
                 path = {"query": "/".join(lab_path), "level" : 0 },
                 inactive_state = 'active',
                 sort_on='sortable_title'))

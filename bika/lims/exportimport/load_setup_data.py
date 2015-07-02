@@ -41,9 +41,9 @@ class LoadSetupData(BrowserView):
             src_mutator = src_field.getMutator(src_obj)
             src_accessor = src_field.getAccessor(src_obj)
 
-            tool = getToolByName(self.context, d['dest_catalog'])
+            pc = getToolByName(self.context, "portal_catalog")
             try:
-                proxies = tool(d['dest_query'])
+                proxies = pc(d['dest_query'])
             except:
                 continue
             if len(proxies) > 0:
@@ -113,8 +113,8 @@ class LoadSetupData(BrowserView):
             check = new
 
         logger.info("Rebuilding bika_setup_catalog")
-        bsc = getToolByName(self.context, 'bika_setup_catalog')
-        bsc.clearFindAndRebuild()
+        pc = getToolByName(self.context, 'portal_catalog')
+        pc.clearFindAndRebuild()
 
         message = PMF("Changes saved.")
         self.context.plone_utils.addPortalMessage(message)

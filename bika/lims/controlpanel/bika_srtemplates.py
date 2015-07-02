@@ -18,7 +18,7 @@ class TemplatesView(BikaListingView):
 
     def __init__(self, context, request):
         super(TemplatesView, self).__init__(context, request)
-        self.catalog = "bika_setup_catalog"
+
         self.contentFilter = {
             'portal_type': 'SRTemplate',
             'sort_order': 'sortable_title',

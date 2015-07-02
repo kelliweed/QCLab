@@ -27,8 +27,6 @@ EVER = DateTime('1970-01-03')
 
 class SearchView(Search):
 
-    catalogs = ['portal_catalog', 'bika_setup_catalog']
-
     def __init__(self, context, request):
         super(SearchView, self).__init__(self, context, request)
         # Construct template from a file which lies in plone.app.search
@@ -50,12 +48,11 @@ class SearchView(Search):
 
         results = []
         if query is not None:
-            for catalog_name in self.catalogs:
-                catalog = getToolByName(self.context, catalog_name)
-                try:
-                    results = results + list(catalog(**query))
-                except ParseError:
-                    pass
+            pc = getToolByName(self.context, 'portal_catalog')
+            try:
+                results = results + list(pc(**query))
+            except ParseError:
+                pass
         if not results:
             return results
 
@@ -76,9 +73,8 @@ class SearchView(Search):
                 return
 
         valid_keys = self.valid_keys
-        for catalog_name in self.catalogs:
-            catalog = getToolByName(self.context, catalog_name)
-            valid_keys = valid_keys + tuple(catalog.indexes())
+        pc = getToolByName(self.context, 'portal_catalog')
+        valid_keys = valid_keys + tuple(pc.indexes())
         valid_keys = sorted(set(valid_keys))
 
         for k, v in request.form.items():
@@ -110,9 +106,8 @@ class SearchView(Search):
     def types_list(self):
         # only show those types that have any content
         used_types = []
-        for catalog_name in self.catalogs:
-            catalog = getToolByName(self.context, catalog_name)
-            used_types = used_types + catalog._catalog.getIndex('portal_type').uniqueValues()
+        pc = getToolByName(self.context, 'portal_catalog')
+        used_types = used_types + pc._catalog.getIndex('portal_type').uniqueValues()
         return self.filter_types(list(used_types))
 
 

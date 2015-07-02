@@ -126,7 +126,6 @@ schema = BikaSchema.copy() + Schema((
                      'expired':           {'view': 'visible', 'edit': 'invisible'},
                      'disposed':          {'view': 'visible', 'edit': 'invisible'},
                      },
-            catalog_name='bika_setup_catalog',
             base_query={'inactive_state': 'active'},
             showOn=True,
         ),
@@ -161,7 +160,6 @@ schema = BikaSchema.copy() + Schema((
                      'expired':           {'view': 'visible', 'edit': 'invisible'},
                      'disposed':          {'view': 'visible', 'edit': 'invisible'},
                      },
-            catalog_name='bika_setup_catalog',
             base_query={'inactive_state': 'active'},
             showOn=True,
         ),
@@ -197,7 +195,6 @@ schema = BikaSchema.copy() + Schema((
                      'expired':           {'view': 'visible', 'edit': 'visible'},
                      'disposed':          {'view': 'visible', 'edit': 'invisible'},
                      },
-            catalog_name='bika_setup_catalog',
             base_query={'inactive_state': 'active'},
             showOn=True,
         ),
@@ -294,7 +291,6 @@ schema = BikaSchema.copy() + Schema((
                      'expired':           {'view': 'visible', 'edit': 'invisible'},
                      'disposed':          {'view': 'visible', 'edit': 'invisible'},
                      },
-            catalog_name='bika_setup_catalog',
             base_query={'inactive_state': 'active'},
             showOn=True,
         ),
@@ -322,7 +318,6 @@ schema = BikaSchema.copy() + Schema((
                      'expired':           {'view': 'visible', 'edit': 'invisible'},
                      'disposed':          {'view': 'visible', 'edit': 'invisible'},
                      },
-            catalog_name='bika_setup_catalog',
             base_query={'inactive_state': 'active'},
             showOn=True,
         ),
@@ -576,12 +571,12 @@ class Sample(BaseFolder, HistoryAwareMixin):
         if hasattr(value, "portal_type") and value.portal_type == "SampleType":
             pass
         else:
-            bsc = getToolByName(self, 'bika_setup_catalog')
-            sampletypes = bsc(portal_type='SampleType', title=to_unicode(value))
+            pc = getToolByName(self, 'portal_catalog')
+            sampletypes = pc(portal_type='SampleType', title=to_unicode(value))
             if sampletypes:
                 value = sampletypes[0].UID
             else:
-                sampletypes = bsc(portal_type='SampleType', UID=value)
+                sampletypes = pc(portal_type='SampleType', UID=value)
                 if sampletypes:
                     value = sampletypes[0].UID
                 else:
@@ -599,12 +594,12 @@ class Sample(BaseFolder, HistoryAwareMixin):
         if hasattr(value, "portal_type") and value.portal_type == "SamplePoint":
             pass
         else:
-            bsc = getToolByName(self, 'bika_setup_catalog')
-            sampletypes = bsc(portal_type='SamplePoint', title=to_unicode(value))
+            pc = getToolByName(self, 'portal_catalog')
+            sampletypes = pc(portal_type='SamplePoint', title=to_unicode(value))
             if sampletypes:
                 value = sampletypes[0].UID
             else:
-                sampletypes = bsc(portal_type='SamplePoint', UID=value)
+                sampletypes = pc(portal_type='SamplePoint', UID=value)
                 if sampletypes:
                     value = sampletypes[0].UID
                 else:

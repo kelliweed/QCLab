@@ -243,9 +243,9 @@ class AnalysisRequestAddView(AnalysisRequestViewView):
         return adapter()
 
     def partitioned_services(self):
-        bsc = getToolByName(self.context, 'bika_setup_catalog')
+        pc = getToolByName(self.context, 'portal_catalog')
         ps = []
-        for service in bsc(portal_type='AnalysisService'):
+        for service in pc(portal_type='AnalysisService'):
             service = service.getObject()
             if service.getPartitionSetup() \
                     or service.getSeparate():
@@ -355,7 +355,7 @@ class ajaxAnalysisRequestSubmit():
         plone.protect.CheckAuthenticator(self.request.form)
         plone.protect.PostOnly(self.request.form)
         uc = getToolByName(self.context, 'uid_catalog')
-        bsc = getToolByName(self.context, 'bika_setup_catalog')
+        pc = getToolByName(self.context, 'portal_catalog')
         portal_catalog = getToolByName(self.context, 'portal_catalog')
 
         # Load the form data from request.state.  If anything goes wrong here,

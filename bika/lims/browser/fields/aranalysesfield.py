@@ -92,7 +92,7 @@ class ARAnalysesField(ObjectField):
 
         assert type(service_uids) in (list, tuple)
 
-        bsc = getToolByName(instance, 'bika_setup_catalog')
+        pc = getToolByName(instance, 'portal_catalog')
         workflow = getToolByName(instance, 'portal_workflow')
 
         # one can only edit Analyses up to a certain state.
@@ -119,7 +119,7 @@ class ARAnalysesField(ObjectField):
         instance.setResultsRange(rr)
 
         new_analyses = []
-        proxies = bsc(UID=service_uids)
+        proxies = pc(UID=service_uids)
         for proxy in proxies:
             service = proxy.getObject()
             service_uid = service.UID()
@@ -202,10 +202,10 @@ class ARAnalysesField(ObjectField):
     def Services(self):
         """ Return analysis services
         """
-        bsc = getToolByName(self.context, 'bika_setup_catalog')
+        pc = getToolByName(self.context, 'portal_catalog')
         if not shasattr(self, '_v_services'):
             self._v_services = [service.getObject()
-                                for service in bsc(portal_type='AnalysisService')]
+                                for service in pc(portal_type='AnalysisService')]
         return self._v_services
 
 registerField(ARAnalysesField,

@@ -20,7 +20,7 @@ class PreservationsView(BikaListingView):
 
     def __init__(self, context, request):
         super(PreservationsView, self).__init__(context, request)
-        self.catalog = 'bika_setup_catalog'
+
         self.contentFilter = {'portal_type': 'Preservation',
                               'sort_on': 'sortable_title'}
         self.context_actions = {_('Add'):

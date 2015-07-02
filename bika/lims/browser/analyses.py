@@ -200,8 +200,8 @@ class AnalysesView(BikaListingView):
                             'ResultText': method.Title()})
         else:
             # All active methods
-            bsc = getToolByName(self.context, 'bika_setup_catalog')
-            brains = bsc(portal_type='Method', inactive_state='active')
+            pc = getToolByName(self.context, 'portal_catalog')
+            brains = pc(portal_type='Method', inactive_state='active')
             for brain in brains:
                 ret.append({'ResultValue': brain.UID,
                             'ResultText': brain.title})
@@ -235,8 +235,8 @@ class AnalysesView(BikaListingView):
 
         else:
             # All active instruments
-            bsc = getToolByName(self.context, 'bika_setup_catalog')
-            brains = bsc(portal_type='Instrument', inactive_state='active')
+            pc = getToolByName(self.context, 'portal_catalog')
+            brains = pc(portal_type='Instrument', inactive_state='active')
             instruments = [brain.getObject() for brain in brains]
 
         for ins in instruments:
@@ -268,7 +268,7 @@ class AnalysesView(BikaListingView):
 
     def folderitems(self):
         rc = getToolByName(self.context, REFERENCE_CATALOG)
-        bsc = getToolByName(self.context, 'bika_setup_catalog')
+        pc = getToolByName(self.context, 'portal_catalog')
         workflow = getToolByName(self.context, 'portal_workflow')
         mtool = getToolByName(self.context, 'portal_membership')
         checkPermission = mtool.checkPermission

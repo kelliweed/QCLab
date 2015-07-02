@@ -565,7 +565,7 @@ class AnalysisRequestPublishView(BrowserView):
         # Out of range?
         if specs:
             adapters = getAdapters((analysis, ), IResultOutOfRange)
-            bsc = getToolByName(self.context, "bika_setup_catalog")
+            pc = getToolByName(self.context, "portal_catalog")
             for name, adapter in adapters:
                 ret = adapter(specification=specs)
                 if ret and ret['out_of_range']:

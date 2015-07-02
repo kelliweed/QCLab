@@ -18,7 +18,6 @@ class Report(BrowserView):
         BrowserView.__init__(self, context, request)
 
     def __call__(self):
-        bsc = getToolByName(self.context, 'bika_setup_catalog')
         pc = getToolByName(self.context, 'portal_catalog')
         self.report_content = {}
         parms = []
@@ -35,7 +34,7 @@ class Report(BrowserView):
         spec_obj = None
         spec_title = ""
         if spec_uid:
-            brains = bsc(UID=spec_uid)
+            brains = pc(UID=spec_uid)
             if brains:
                 spec_obj = brains[0].getObject()
                 spec_title = spec_obj.Title()

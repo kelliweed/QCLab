@@ -4,23 +4,26 @@
 
 from AccessControl import getSecurityManager
 from AccessControl import ClassSecurityInfo
+from decimal import Decimal
+import math
+
 from DateTime import DateTime
-from bika.lims import logger
-from bika.lims.utils.analysis import format_numeric_result
-from plone.indexer import indexer
-from Products.ATContentTypes.content import schemata
-from Products.ATExtensions.ateapi import DateTimeField, DateTimeWidget, RecordsField
+from Products.ATExtensions.ateapi import DateTimeWidget
 from Products.Archetypes import atapi
 from Products.Archetypes.config import REFERENCE_CATALOG
 from Products.Archetypes.public import *
 from Products.Archetypes.references import HoldingReference
 from Products.CMFCore.WorkflowCore import WorkflowException
-from Products.CMFCore.permissions import View, ModifyPortalContent
 from Products.CMFCore.utils import getToolByName
+
 from Products.CMFPlone.utils import safe_unicode, _createObjectByType
+
 from Products.CMFEditions.ArchivistTool import ArchivistRetrieveError
+
+from zope.interface import implements
+
+from bika.lims.utils.analysis import format_numeric_result
 from bika.lims import bikaMessageFactory as _
-from bika.lims.utils import t
 from bika.lims import logger
 from bika.lims.browser.fields import DurationField
 from bika.lims.browser.fields import HistoryAwareReferenceField
@@ -30,18 +33,12 @@ from bika.lims.browser.widgets import DurationWidget
 from bika.lims.browser.widgets import RecordsWidget as BikaRecordsWidget
 from bika.lims.config import PROJECTNAME
 from bika.lims.content.bikaschema import BikaSchema
-from bika.lims.interfaces import IAnalysis, IDuplicateAnalysis, IReferenceAnalysis, \
-    IRoutineAnalysis
+from bika.lims.interfaces import IAnalysis, IDuplicateAnalysis, IReferenceAnalysis
 from bika.lims.interfaces import IReferenceSample
 from bika.lims.utils import changeWorkflowState, formatDecimalMark
 from bika.lims.utils import drop_trailing_zeros_decimal
 from bika.lims.utils.analysis import get_significant_digits
 from bika.lims.workflow import skip
-from bika.lims.workflow import doActionFor
-from decimal import Decimal
-from zope.interface import implements
-import datetime
-import math
 
 schema = BikaSchema.copy() + Schema((
     HistoryAwareReferenceField('Service',
@@ -554,25 +551,25 @@ class Analysis(BaseContent):
 
         sampletype = sample.getSampleType()
         sampletype_uid = sampletype and sampletype.UID() or ''
-        bsc = getToolByName(self, 'bika_setup_catalog')
+        pc = getToolByName(self, 'portal_catalog')
 
         # retrieves the desired specs if None specs defined
         if not specification:
-            proxies = bsc(portal_type='AnalysisSpec',
-                          ClientUID=self.getClientUID(),
-                          SampleTypeUID=sampletype_uid)
+            proxies = pc(portal_type='AnalysisSpec',
+                         ClientUID=self.getClientUID(),
+                         SampleTypeUID=sampletype_uid)
 
             if len(proxies) == 0:
                 # No client specs available, retrieve lab specs
                 labspecsuid = self.bika_setup.bika_analysisspecs.UID()
-                proxies = bsc(portal_type = 'AnalysisSpec',
-                          SampleTypeUID = sampletype_uid)
+                proxies = pc(portal_type='AnalysisSpec',
+                             SampleTypeUID=sampletype_uid)
         else:
             specuid = specification == "client" and self.getClientUID() or \
                     self.bika_setup.bika_analysisspecs.UID()
-            proxies = bsc(portal_type='AnalysisSpec',
-                              SampleTypeUID=sampletype_uid,
-                              ClientUID=specuid)
+            proxies = pc(portal_type='AnalysisSpec',
+                         SampleTypeUID=sampletype_uid,
+                         ClientUID=specuid)
 
         outspecs = None
         for spec in (p.getObject() for p in proxies):

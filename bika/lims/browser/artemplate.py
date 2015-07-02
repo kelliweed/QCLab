@@ -1,3 +1,4 @@
+from Products.CMFCore.utils import getToolByName
 from bika.lims.interfaces import IJSONReadExtender, IARTemplate
 from zope.component import adapts
 from zope.interface import implements
@@ -95,11 +96,11 @@ class JSONReadExtender(object):
         return parts
 
     def __call__(self, request, data):
-        bsc = self.context.bika_setup_catalog
+        pc = getToolByName(self.context, 'portal_catalog')
         service_data = []
         for item in self.context.getAnalyses():
             service_uid = item['service_uid']
-            service = bsc(UID=service_uid)[0].getObject()
+            service = pc(UID=service_uid)[0].getObject()
             this_service = {'UID': service.UID(),
                             'Title': service.Title(),
                             'Keyword': service.getKeyword(),

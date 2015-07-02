@@ -204,7 +204,7 @@ class ReferenceResultsView(BikaListingView):
     """
     def __init__(self, context, request):
         super(ReferenceResultsView, self).__init__(context, request)
-        bsc = getToolByName(context, 'bika_setup_catalog')
+        pc = getToolByName(context, 'portal_catalog')
         self.title = self.context.translate(_("Reference Values"))
         self.description = self.context.translate(_(
                              "Click on Analysis Categories (against shaded background) "
@@ -243,7 +243,7 @@ class ReferenceResultsView(BikaListingView):
     def folderitems(self):
         items = []
         uc = getToolByName(self.context, 'uid_catalog')
-        # not using <self.contentsMethod=bsc>
+        # not using <self.contentsMethod=catalog>
         for x in self.context.getReferenceResults():
             service = uc(UID=x['uid'])[0].getObject()
             item = {

@@ -55,19 +55,15 @@ def getContainers(instance,
     If the partition is flagged 'Separate', only containers are displayed.
     If the Separate flag is false, displays container types.
 
-    XXX bsc = self.portal.bika_setup_catalog
-    XXX obj = bsc(getKeyword='Moist')[0].getObject()
-    XXX u'Container Type: Canvas bag' in obj.getContainers().values()
-    XXX True
 
     """
 
-    bsc = getToolByName(instance, 'bika_setup_catalog')
+    pc = getToolByName(instance, 'portal_catalog')
 
     items = allow_blank and [['', _('Any')]] or []
 
     containers = []
-    for container in bsc(portal_type='Container', sort_on='sortable_title'):
+    for container in pc(portal_type='Container', sort_on='sortable_title'):
         container = container.getObject()
 
         # verify container capacity is large enough for required sample volume.
@@ -155,9 +151,9 @@ class PartitionSetupField(RecordsField):
 
     def SampleTypes(self, instance=None):
         instance = instance or self
-        bsc = getToolByName(instance, 'bika_setup_catalog')
+        pc = getToolByName(instance, 'portal_catalog')
         items = []
-        for st in bsc(portal_type='SampleType',
+        for st in pc(portal_type='SampleType',
                       inactive_state='active',
                       sort_on='sortable_title'):
             st = st.getObject()
@@ -170,9 +166,9 @@ class PartitionSetupField(RecordsField):
 
     def Preservations(self, instance=None):
         instance = instance or self
-        bsc = getToolByName(instance, 'bika_setup_catalog')
+        pc = getToolByName(instance, 'portal_catalog')
         items = [(c.UID, c.title) for c in
-                 bsc(portal_type='Preservation',
+                 pc(portal_type='Preservation',
                      inactive_state='active',
                      sort_on='sortable_title')]
         items = [['', _('Any')]] + list(items)
@@ -533,7 +529,6 @@ schema = BikaSchema.copy() + Schema((
                                      "default Method selected. The Calculation " + \
                                      "for a method can be assigned in the Method " + \
                                      "edit view."),
-                       catalog_name='bika_setup_catalog',
                        base_query={'inactive_state': 'active'},
                    ),
     ),
@@ -564,7 +559,6 @@ schema = BikaSchema.copy() + Schema((
                            "If required, select a calculation for the analysis here. "
                            "Calculations can be configured under the calculations item "
                            "in the LIMS set-up"),
-                       catalog_name='bika_setup_catalog',
                        base_query={'inactive_state': 'active'},
                    ),
     ),
@@ -648,7 +642,6 @@ schema = BikaSchema.copy() + Schema((
                        label = _("Analysis Category"),
                        description=_(
                            "The category the analysis service belongs to"),
-                       catalog_name='bika_setup_catalog',
                        base_query={'inactive_state': 'active'},
                    ),
     ),
@@ -717,7 +710,6 @@ schema = BikaSchema.copy() + Schema((
                        checkbox_bound=0,
                        label = _("Department"),
                        description = _("The laboratory department"),
-                       catalog_name='bika_setup_catalog',
                        base_query={'inactive_state': 'active'},
                    ),
     ),
@@ -849,7 +841,6 @@ schema = BikaSchema.copy() + Schema((
                                      "analysis service. If the preservation depends on " + \
                                      "the sample type combination, specify a preservation " + \
                                      "per sample type in the table below"),
-                       catalog_name='bika_setup_catalog',
                        base_query={'inactive_state': 'active'},
                    ),
     ),
@@ -870,7 +861,6 @@ schema = BikaSchema.copy() + Schema((
                            "depends on the sample type and preservation "
                            "combination, specify the container in the sample "
                            "type table below"),
-                       catalog_name='bika_setup_catalog',
                        base_query={'inactive_state': 'active'},
                    ),
     ),
@@ -1014,9 +1004,9 @@ class AnalysisService(BaseContent, HistoryAwareMixin):
         return (float(price) * (float(vat) / 100))
 
     def getAnalysisCategories(self):
-        bsc = getToolByName(self, 'bika_setup_catalog')
+        pc = getToolByName(self, 'portal_catalog')
         items = [(o.UID, o.Title) for o in
-                 bsc(portal_type='AnalysisCategory',
+                 pc(portal_type='AnalysisCategory',
                      inactive_state='active')]
         o = self.getCategory()
         if o and o.UID() not in [i[0] for i in items]:
@@ -1029,9 +1019,9 @@ class AnalysisService(BaseContent, HistoryAwareMixin):
             registered in Bika-Setup. Only active Instruments are
             fetched. Used to fill the Instruments MultiSelectionWidget
         """
-        bsc = getToolByName(self, 'bika_setup_catalog')
+        pc = getToolByName(self, 'portal_catalog')
         items = [(i.UID, i.Title) \
-                 for i in bsc(portal_type='Instrument',
+                 for i in pc(portal_type='Instrument',
                               inactive_state='active')]
         items.sort(lambda x, y: cmp(x[1], y[1]))
         return DisplayList(list(items))
@@ -1043,9 +1033,9 @@ class AnalysisService(BaseContent, HistoryAwareMixin):
             Used to fill the Methods MultiSelectionWidget when 'Allow
             Instrument Entry of Results is not selected'.
         """
-        bsc = getToolByName(self, 'bika_setup_catalog')
+        pc = getToolByName(self, 'portal_catalog')
         items = [(i.UID, i.Title) \
-                 for i in bsc(portal_type='Method',
+                 for i in pc(portal_type='Method',
                               inactive_state='active') \
                  if i.getObject().isManualEntryOfResults()]
         items.sort(lambda x, y: cmp(x[1], y[1]))
@@ -1058,9 +1048,9 @@ class AnalysisService(BaseContent, HistoryAwareMixin):
             fetched. Used to fill the _Calculation and DeferredCalculation
             List fields
         """
-        bsc = getToolByName(self, 'bika_setup_catalog')
+        pc = getToolByName(self, 'portal_catalog')
         items = [(i.UID, i.Title) \
-                 for i in bsc(portal_type='Calculation',
+                 for i in pc(portal_type='Calculation',
                               inactive_state='active')]
         items.sort(lambda x, y: cmp(x[1], y[1]))
         items.insert(0, ('', _("None")))
@@ -1132,9 +1122,9 @@ class AnalysisService(BaseContent, HistoryAwareMixin):
         return instruments if instruments else []
 
     def getDepartments(self):
-        bsc = getToolByName(self, 'bika_setup_catalog')
+        pc = getToolByName(self, 'portal_catalog')
         items = [('', '')] + [(o.UID, o.Title) for o in
-                              bsc(portal_type='Department',
+                              pc(portal_type='Department',
                                   inactive_state='active')]
         o = self.getDepartment()
         if o and o.UID() not in [i[0] for i in items]:
@@ -1305,9 +1295,9 @@ class AnalysisService(BaseContent, HistoryAwareMixin):
         return DisplayList(containers)
 
     def getPreservations(self):
-        bsc = getToolByName(self, 'bika_setup_catalog')
+        pc = getToolByName(self, 'portal_catalog')
         items = [(o.UID, o.Title) for o in
-                 bsc(portal_type='Preservation', inactive_state='active')]
+                 pc(portal_type='Preservation', inactive_state='active')]
         items.sort(lambda x, y: cmp(x[1], y[1]))
         return DisplayList(list(items))
 
@@ -1325,11 +1315,11 @@ class AnalysisService(BaseContent, HistoryAwareMixin):
             raise WorkflowException
 
     def workflow_scipt_deactivate(self):
-        bsc = getToolByName(self, 'bika_setup_catalog')
+        pc = getToolByName(self, 'portal_catalog')
         pu = getToolByName(self, 'plone_utils')
         # A service cannot be deactivated if "active" calculations list it
         # as a dependency.
-        active_calcs = bsc(portal_type='Calculation', inactive_state="active")
+        active_calcs = pc(portal_type='Calculation', inactive_state="active")
         calculations = (c.getObject() for c in active_calcs)
         for calc in calculations:
             deps = [dep.UID() for dep in calc.getDependentServices()]

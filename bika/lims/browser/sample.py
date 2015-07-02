@@ -129,15 +129,15 @@ class SamplePartitionsView(BikaListingView):
         if self.allow_edit == False:
             self.review_states[0]['custom_actions'] = []
 
-        bsc = getToolByName(self.context, 'bika_setup_catalog')
+        pc = getToolByName(self.context, 'portal_catalog')
 
         containers = [({'ResultValue':o.UID,
                         'ResultText':o.title})
-                      for o in bsc(portal_type="Container",
+                      for o in pc(portal_type="Container",
                                    inactive_state="active")]
         preservations = [({'ResultValue':o.UID,
                            'ResultText':o.title})
-                         for o in bsc(portal_type="Preservation",
+                         for o in pc(portal_type="Preservation",
                                       inactive_state="active")]
 
         parts = [p for p in self.sample.objectValues()
@@ -775,14 +775,14 @@ class ajaxGetSampleTypeInfo(BrowserView):
         proxies = None
         if uid:
             try:
-                bsc = getToolByName(self.context, 'bika_setup_catalog')
-                proxies = bsc(UID=uid)
+                pc = getToolByName(self.context, 'portal_catalog')
+                proxies = pc(UID=uid)
             except ParseError:
                 pass
         elif title:
             try:
-                bsc = getToolByName(self.context, 'bika_setup_catalog')
-                proxies = bsc(portal_type='SampleType', title=to_unicode(title))
+                pc = getToolByName(self.context, 'portal_catalog')
+                proxies = pc(portal_type='SampleType', title=to_unicode(title))
             except ParseError:
                 pass
 

@@ -240,7 +240,6 @@ schema = BikaSchema.copy() + Schema((
                      'view': 'visible',
                      'add': 'visible',
                      'secondary': 'invisible'},
-            catalog_name='bika_setup_catalog',
             base_query={'review_state': 'published'},
             showOn=True,
         ),
@@ -760,7 +759,6 @@ class ARImport(BaseFolder):
     def validateIt(self):
         rc = getToolByName(self, 'reference_catalog')
         pc = getToolByName(self, 'portal_catalog')
-        bsc = getToolByName(self, 'bika_setup_catalog')
         client = self.aq_parent
         batch_remarks = []
         valid_batch = True
@@ -833,11 +831,11 @@ class ARImport(BaseFolder):
         sampletypes = \
             [p.Title for p in pc(portal_type="SampleType")]
         containertypes = \
-            [p.Title for p in bsc(portal_type="ContainerType")]
+            [p.Title for p in pc(portal_type="ContainerType")]
         service_keys = []
         dependant_services = {}
 
-        services = bsc(portal_type = "AnalysisService",
+        services = pc(portal_type = "AnalysisService",
                        inactive_state = 'active')
         for brain in services:
             service = brain.getObject()

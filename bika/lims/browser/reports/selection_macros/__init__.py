@@ -27,7 +27,6 @@ class SelectionMacrosView(BrowserView):
 
     def __init__(self, context, request):
         super(SelectionMacrosView, self).__init__(context, request)
-        self.bsc = self.bika_setup_catalog
         self.pc = self.portal_catalog
         self.rc = self.reference_catalog
 
@@ -36,7 +35,7 @@ class SelectionMacrosView(BrowserView):
 
     def select_analysiscategory(self, style=None):
         self.style = style
-        self.analysiscategories = self.bsc(portal_type='AnalysisCategory',
+        self.analysiscategories = self.pc(portal_type='AnalysisCategory',
                                            sort_on='sortable_title')
         return self.select_analysiscategory_pt()
 
@@ -47,7 +46,7 @@ class SelectionMacrosView(BrowserView):
         self.style = style
         self.allow_blank = allow_blank
         self.multiselect = multiselect
-        self.analysisservices = self.bsc(portal_type='AnalysisService',
+        self.analysisservices = self.pc(portal_type='AnalysisService',
                                          sort_on='sortable_title')
         return self.select_analysisservice_pt()
 
@@ -72,8 +71,8 @@ class SelectionMacrosView(BrowserView):
         self.style = style
         specfolder_uid = self.context.bika_setup.bika_analysisspecs.UID()
         res = []
-        bsc = getToolByName(self.context, "bika_setup_catalog")
-        for s in bsc(portal_type='AnalysisSpec'):
+        pc = getToolByName(self.context, "portal_catalog")
+        for s in pc(portal_type='AnalysisSpec'):
             if s.getClientUID == specfolder_uid:
                 res.append({'uid': s.UID, 'title': s.Title})
         for c in self.context.clients.objectValues():
@@ -170,7 +169,7 @@ class SelectionMacrosView(BrowserView):
 
     def select_instrument(self, style=None):
         self.style = style
-        self.instruments = self.bsc(portal_type='Instrument',
+        self.instruments = self.pc(portal_type='Instrument',
                                     inactive_state='active',
                                     sort_on='sortable_title')
         return self.select_instrument_pt()
@@ -185,7 +184,7 @@ class SelectionMacrosView(BrowserView):
 
     def select_profile(self, style=None):
         self.style = style
-        self.analysisprofiles = self.bsc(portal_type='AnalysisProfile',
+        self.analysisprofiles = self.pc(portal_type='AnalysisProfile',
                                          inactive_state='active',
                                          sort_on='sortable_title')
         return self.select_profile_pt()
@@ -194,7 +193,7 @@ class SelectionMacrosView(BrowserView):
 
     def select_supplier(self, style=None):
         self.style = style
-        self.suppliers = self.bsc(portal_type='Supplier', inactive_state='active',
+        self.suppliers = self.pc(portal_type='Supplier', inactive_state='active',
                                   sort_on='sortable_title')
         return self.select_supplier_pt()
 
@@ -242,7 +241,7 @@ class SelectionMacrosView(BrowserView):
         self.style = style
         self.allow_blank = allow_blank
         self.multiselect = multiselect
-        self.samplepoints = self.bsc(portal_type='SamplePoint',
+        self.samplepoints = self.pc(portal_type='SamplePoint',
                                      inactive_state='active',
                                      sort_on='sortable_title')
         return self.select_samplepoint_pt()
@@ -264,7 +263,7 @@ class SelectionMacrosView(BrowserView):
         self.style = style
         self.allow_blank = allow_blank
         self.multiselect = multiselect
-        self.sampletypes = self.bsc(portal_type='SampleType',
+        self.sampletypes = self.pc(portal_type='SampleType',
                                     inactive_state='active',
                                     sort_on='sortable_title')
         return self.select_sampletype_pt()

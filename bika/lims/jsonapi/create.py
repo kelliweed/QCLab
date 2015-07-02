@@ -239,7 +239,7 @@ class Create(object):
         spec_rr = brains[0].getObject().getResultsRange() if brains else {}
         spec_rr = dicts_to_dict(spec_rr, 'keyword')
         #
-        bsc = getToolByName(context, "bika_setup_catalog")
+        pc = getToolByName(context, "portal_catalog")
         req_rr = request.get('ResultsRange', "[]")
         try:
             req_rr = json.loads(req_rr)
@@ -298,7 +298,6 @@ class Create(object):
         """
 
         wftool = getToolByName(context, 'portal_workflow')
-        bsc = getToolByName(context, 'bika_setup_catalog')
         pc = getToolByName(context, 'portal_catalog')
         ret = {
             "url": router.url_for("create", force_external=True),

@@ -147,10 +147,10 @@ class InstrumentCertification(BaseFolder):
         renameAfterCreation(self)
 
     def getLabContacts(self):
-        bsc = getToolByName(self, 'bika_setup_catalog')
+        pc = getToolByName(self, 'portal_catalog')
         # fallback - all Lab Contacts
         pairs = []
-        for contact in bsc(portal_type='LabContact',
+        for contact in pc(portal_type='LabContact',
                            inactive_state='active',
                            sort_on='sortable_title'):
             pairs.append((contact.UID, contact.Title))

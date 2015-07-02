@@ -286,17 +286,17 @@ class Instrument(ATFolder):
         return getCalibrationAgents(self)
 
     def getManufacturers(self):
-        bsc = getToolByName(self, 'bika_setup_catalog')
+        pc = getToolByName(self, 'portal_catalog')
         items = [(c.UID, c.Title) \
-                for c in bsc(portal_type='Manufacturer',
+                for c in pc(portal_type='Manufacturer',
                              inactive_state = 'active')]
         items.sort(lambda x,y:cmp(x[1], y[1]))
         return DisplayList(items)
 
     def getSuppliers(self):
-        bsc = getToolByName(self, 'bika_setup_catalog')
+        pc = getToolByName(self, 'portal_catalog')
         items = [(c.UID, c.Title) \
-                for c in bsc(portal_type='Supplier',
+                for c in pc(portal_type='Supplier',
                              inactive_state = 'active')]
         items.sort(lambda x,y:cmp(x[1], y[1]))
         return DisplayList(items)
@@ -306,18 +306,18 @@ class Instrument(ATFolder):
             One method can be done by multiple instruments, but one
             instrument can only be used in one method.
         """
-        bsc = getToolByName(self, 'bika_setup_catalog')
+        pc = getToolByName(self, 'portal_catalog')
         items = [(c.UID, c.Title) \
-                for c in bsc(portal_type='Method',
+                for c in pc(portal_type='Method',
                              inactive_state = 'active')]
         items.sort(lambda x,y:cmp(x[1], y[1]))
         items.insert(0, ('', t(_('None'))))
         return DisplayList(items)
 
     def getInstrumentTypes(self):
-        bsc = getToolByName(self, 'bika_setup_catalog')
+        pc = getToolByName(self, 'portal_catalog')
         items = [(c.UID, c.Title) \
-                for c in bsc(portal_type='InstrumentType',
+                for c in pc(portal_type='InstrumentType',
                              inactive_state = 'active')]
         items.sort(lambda x,y:cmp(x[1], y[1]))
         return DisplayList(items)
@@ -619,7 +619,6 @@ class Instrument(ATFolder):
         """
         addedanalyses = []
         wf = getToolByName(self, 'portal_workflow')
-        bsc = getToolByName(self, 'bika_setup_catalog')
         pc = getToolByName(self, 'portal_catalog')
         ref_type = reference.getBlank() and 'b' or 'c'
         ref_uid = reference.UID()
@@ -636,7 +635,7 @@ class Instrument(ATFolder):
         refgid = 'I%s-%s' % (reference.id, postfix)
         for service_uid in service_uids:
             # services with dependents don't belong in references
-            service = bsc(portal_type='AnalysisService', UID=service_uid)[0].getObject()
+            service = pc(portal_type='AnalysisService', UID=service_uid)[0].getObject()
             calc = service.getCalculation()
             if calc and calc.getDependentServices():
                 continue

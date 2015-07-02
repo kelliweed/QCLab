@@ -17,7 +17,7 @@ class AnalysisProfileAnalysesView(BikaListingView):
 
     def __init__(self, context, request, fieldvalue=[], allow_edit=False):
         super(AnalysisProfileAnalysesView, self).__init__(context, request)
-        self.catalog = "bika_setup_catalog"
+
         self.contentFilter = {'portal_type': 'AnalysisService',
                               'sort_on': 'sortable_title',
                               'inactive_state': 'active',}
@@ -80,7 +80,7 @@ class AnalysisProfileAnalysesView(BikaListingView):
     def folderitems(self):
         self.categories = []
 
-        bsc = getToolByName(self.context, 'bika_setup_catalog')
+        pc = getToolByName(self.context, 'portal_catalog')
         wf = getToolByName(self.context, 'portal_workflow')
         mtool = getToolByName(self.context, 'portal_membership')
         member = mtool.getAuthenticatedMember()
@@ -166,7 +166,7 @@ class AnalysisProfileAnalysesWidget(TypesWidget):
         """ Return a list of dictionaries fit for AnalysisProfile/Analyses field
             consumption.
         """
-        bsc = getToolByName(instance, 'bika_setup_catalog')
+        pc = getToolByName(instance, 'portal_catalog')
         value = []
         service_uids = form.get('uids', None)
 

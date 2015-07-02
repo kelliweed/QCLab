@@ -161,9 +161,9 @@ class Client(Organisation):
     security.declarePublic('getAnalysisCategories')
     def getAnalysisCategories(self):
         """ return all available analysis categories """
-        bsc = getToolByName(self, 'bika_setup_catalog')
+        pc = getToolByName(self, 'portal_catalog')
         cats = []
-        for st in bsc(portal_type = 'AnalysisCategory',
+        for st in pc(portal_type = 'AnalysisCategory',
                       inactive_state = 'active',
                       sort_on = 'sortable_title'):
             cats.append((st.UID, st.Title))

@@ -31,9 +31,9 @@ registerType(SampleCondition, PROJECTNAME)
 
 def SampleConditions(self, instance=None, allow_blank=False):
     instance = instance or self
-    bsc = getToolByName(instance, 'bika_setup_catalog')
+    pc = getToolByName(instance, 'portal_catalog')
     items = []
-    for sm in bsc(portal_type='SampleCondition',
+    for sm in pc(portal_type='SampleCondition',
                   inactive_state='active',
                   sort_on='sortable_title'):
         items.append((sm.UID, sm.Title))

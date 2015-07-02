@@ -573,7 +573,6 @@ function AnalysisServiceEditView() {
         }
         if (calcuid != null && calcuid != '') {
             var request_data = {
-                catalog_name: "bika_setup_catalog",
                 UID: calcuid
             };
             window.bika.lims.jsonapi_read(request_data, function(data) {
@@ -621,7 +620,6 @@ function AnalysisServiceEditView() {
             return;
         }
         var request_data = {
-            catalog_name: "bika_setup_catalog",
             UID: calcuid
         };
         window.bika.lims.jsonapi_read(request_data, function(data) {

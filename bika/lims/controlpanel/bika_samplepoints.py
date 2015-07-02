@@ -26,7 +26,7 @@ class SamplePointsView(BikaListingView):
 
     def __init__(self, context, request):
         super(SamplePointsView, self).__init__(context, request)
-        self.catalog = 'bika_setup_catalog'
+
         self.contentFilter = {'portal_type': 'SamplePoint',
                               'sort_on': 'sortable_title'}
         self.context_actions = {_('Add'):
@@ -134,7 +134,7 @@ class ajax_SamplePoints(BrowserView):
 
     def __call__(self):
         plone.protect.CheckAuthenticator(self.request)
-        bsc = getToolByName(self.context, 'bika_setup_catalog')
+        pc = getToolByName(self.context, 'portal_catalog')
         term = safe_unicode(self.request.get('term', '')).lower()
         items = []
         if not term:
@@ -143,7 +143,7 @@ class ajax_SamplePoints(BrowserView):
         term = term.replace("%s: " % _("Lab"), '')
         sampletype = safe_unicode(self.request.get('sampletype', ''))
         if sampletype and len(sampletype) > 1:
-            st = bsc(portal_type = "SampleType",
+            st = pc(portal_type = "SampleType",
                      title = sampletype,
                      inactive_state = 'active')
             if not st:
@@ -161,7 +161,7 @@ class ajax_SamplePoints(BrowserView):
                 else:
                     client_path = self.context.aq_parent.getPhysicalPath()
                 client_items = list(
-                    bsc(portal_type = "SamplePoint",
+                    pc(portal_type = "SamplePoint",
                         path = {"query": "/".join(client_path), "level" : 0 },
                         inactive_state = 'active',
                         sort_on='sortable_title'))
@@ -169,7 +169,7 @@ class ajax_SamplePoints(BrowserView):
             # Global (lab) sample points
             lab_path = self.context.bika_setup.bika_samplepoints.getPhysicalPath()
             lab_items = list(
-                bsc(portal_type = "SamplePoint",
+                pc(portal_type = "SamplePoint",
                     path = {"query": "/".join(lab_path), "level" : 0 },
                     inactive_state = 'active',
                     sort_on='sortable_title'))

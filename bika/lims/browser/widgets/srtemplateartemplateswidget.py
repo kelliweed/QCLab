@@ -13,7 +13,7 @@ class SRTemplateARTemplatesView(BikaListingView):
 
     def __init__(self, context, request, fieldvalue, allow_edit):
         super(SRTemplateARTemplatesView, self).__init__(context, request)
-        self.catalog = "bika_setup_catalog"
+
         self.contentFilter = {
             'portal_type': 'ARTemplate',
             'sort_on': 'sortable_title',
@@ -71,7 +71,7 @@ class SRTemplateARTemplatesWidget(TypesWidget):
     security.declarePublic('process_form')
     def process_form(self, instance, field, form, empty_marker = None,
         emptyReturnsMarker = False):
-        bsc = getToolByName(instance, 'bika_setup_catalog')
+        pc = getToolByName(instance, 'portal_catalog')
         value = []
         service_uids = form.get('uids', None)
         return service_uids, {}

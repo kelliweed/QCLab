@@ -623,8 +623,8 @@ class ajaxGetInstrumentMethod(BrowserView):
             plone.protect.CheckAuthenticator(self.request)
         except Forbidden:
             return json.dumps(methoddict)
-        bsc = getToolByName(self, 'bika_setup_catalog')
-        instrument = bsc(portal_type='Instrument', UID=self.request.get("uid", '0'))
+        pc = getToolByName(self, 'portal_catalog')
+        instrument = pc(portal_type='Instrument', UID=self.request.get("uid", '0'))
         if instrument and len(instrument) == 1:
             method = instrument[0].getObject().getMethod()
             if method:
@@ -656,8 +656,8 @@ class InstrumentQCFailuresViewlet(ViewletBase):
             Return a dictionary with all info about expired/invalid instruments
 
         """
-        bsc = getToolByName(self, 'bika_setup_catalog')
-        insts = bsc(portal_type='Instrument', inactive_state='active')
+        pc = getToolByName(self, 'portal_catalog')
+        insts = pc(portal_type='Instrument', inactive_state='active')
         for i in insts:
             i = i.getObject()
             instr = {

@@ -68,9 +68,9 @@ if 'Analysts' in member_groups:
 elif 'Samplers' in member_groups:
     # We only route to the to_be_sampled list if there are
     # sample partitions waiting to be "sampled".
-    bsc = getToolByName(context, 'bika_setup_catalog')
+    pc = getToolByName(context, 'portal_catalog')
     url = context.samples.absolute_url()
-    if bsc(portal_type='SamplePartition', review_state='to_be_sampled'):
+    if pc(portal_type='SamplePartition', review_state='to_be_sampled'):
         url += "/list_review_state=to_be_sampled"
     return context.REQUEST.RESPONSE.redirect(url)
 

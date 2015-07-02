@@ -19,7 +19,7 @@ class PartitionSetupWidget(RecordsWidget):
         """ Some special field handling for disabled fields, which don't
         get submitted by the browser but still need to be written away.
         """
-        bsc = getToolByName(instance, 'bika_setup_catalog')
+        pc = getToolByName(instance, 'portal_catalog')
         default = super(PartitionSetupWidget,self).process_form(
             instance, field, form, empty_marker, emptyReturnsMarker)
         if not default:
@@ -32,7 +32,7 @@ class PartitionSetupWidget(RecordsWidget):
             if v.get('separate', '') == 'on' and not 'preservation' in v:
                 container_uid = v.get('container', [''])[0];
                 if container_uid:
-                    container = bsc(UID=container_uid)[0].getObject();
+                    container = pc(UID=container_uid)[0].getObject();
                     if container.getPrePreserved():
                         pres = container.getPreservation()
                         if pres:

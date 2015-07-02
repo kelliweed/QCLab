@@ -1,3 +1,4 @@
+from Products.CMFCore.utils import getToolByName
 from bika.lims.config import POINTS_OF_CAPTURE
 from bika.lims.interfaces import IAnalysisSpec
 from bika.lims.interfaces import IJSONReadExtender
@@ -16,10 +17,10 @@ class JSONReadExtender(object):
         self.context = context
 
     def __call__(self, request, data):
-        bsc = self.context.bika_setup_catalog
+        pc = getToolByName(self.context, 'portal_catalog')
         rr = []
         for i, x in enumerate(data.get("ResultsRange", [])):
             keyword = x.get("keyword")
-            proxies = bsc(portal_type="AnalysisService", Keyword=keyword)
+            proxies = pc(portal_type="AnalysisService", Keyword=keyword)
             if proxies:
                 data['ResultsRange'][i]['uid'] = proxies[0].UID

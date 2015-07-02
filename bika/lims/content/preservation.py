@@ -54,7 +54,6 @@ registerType(Preservation, PROJECTNAME)
 
 class ajaxGetPreservations:
 
-    catalog_name='bika_setup_catalog'
     contentFilter = {'portal_type': 'Preservation',
                      'inactive_state': 'active'}
 

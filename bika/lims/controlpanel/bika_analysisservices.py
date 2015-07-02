@@ -127,7 +127,7 @@ class AnalysisServicesView(BikaListingView):
         """
 
         super(AnalysisServicesView, self).__init__(context, request)
-        self.catalog = 'bika_setup_catalog'
+
         self.contentFilter = {'portal_type': 'AnalysisService',
                               'sort_on': 'sortable_title'}
         self.context_actions = {

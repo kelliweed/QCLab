@@ -96,9 +96,9 @@ class Container(BaseContent):
         return str(default)
 
     def getContainerTypes(self):
-        bsc = getToolByName(self, 'bika_setup_catalog')
+        pc = getToolByName(self, 'portal_catalog')
         items = [('','')] + [(o.UID, o.Title) for o in
-                               bsc(portal_type='ContainerType')]
+                               pc(portal_type='ContainerType')]
         o = self.getContainerType()
         if o and o.UID() not in [i[0] for i in items]:
             items.append((o.UID(), o.Title()))
@@ -106,9 +106,9 @@ class Container(BaseContent):
         return DisplayList(list(items))
 
     def getPreservations(self):
-        bsc = getToolByName(self, 'bika_setup_catalog')
+        pc = getToolByName(self, 'portal_catalog')
         items = [('','')] + [(o.UID, o.Title) for o in
-                               bsc(portal_type='Preservation',
+                               pc(portal_type='Preservation',
                                    inactive_state = 'active')]
         o = self.getPreservation()
         if o and o.UID() not in [i[0] for i in items]:
@@ -121,7 +121,6 @@ registerType(Container, PROJECTNAME)
 
 class ajaxGetContainers:
 
-    catalog_name='bika_setup_catalog'
     contentFilter = {'portal_type': 'Container',
                      'inactive_state': 'active'}
 

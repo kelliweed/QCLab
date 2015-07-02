@@ -98,7 +98,7 @@ class AnalysisRequestWorkflowAction(WorkflowAction):
     def workflow_action_save_analyses_button(self):
         form = self.request.form
         workflow = getToolByName(self.context, 'portal_workflow')
-        bsc = self.context.bika_setup_catalog
+        pc = getToolByName(self.context, 'bika_catalog')
         action, came_from = WorkflowAction._get_form_workflow_action(self)
         # AR Manage Analyses: save Analyses
         ar = self.context
@@ -126,7 +126,7 @@ class AnalysisRequestWorkflowAction(WorkflowAction):
         specs = {}
         if form.get("min", None):
             for service_uid in Analyses:
-                service = bsc(UID=service_uid)[0].getObject()
+                service = pc(UID=service_uid)[0].getObject()
                 keyword = service.getKeyword()
                 specs[service_uid] = {
                     "min": form["min"][0][service_uid],
@@ -137,7 +137,7 @@ class AnalysisRequestWorkflowAction(WorkflowAction):
                 }
         else:
             for service_uid in Analyses:
-                service = bsc(UID=service_uid)[0].getObject()
+                service = pc(UID=service_uid)[0].getObject()
                 keyword = service.getKeyword()
                 specs[service_uid] = {"min": "", "max": "", "error": "",
                                       "keyword": keyword, "uid": service_uid}

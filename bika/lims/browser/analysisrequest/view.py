@@ -266,9 +266,9 @@ class AnalysisRequestViewView(BrowserView):
     def samplingdeviations(self):
         """ SamplingDeviation vocabulary for AR Add
         """
-        bsc = getToolByName(self.context, 'bika_setup_catalog')
+        pc = getToolByName(self.context, 'portal_catalog')
         res = [(sd.getObject().Title(), sd.getObject())
-               for sd in bsc(portal_type='SamplingDeviation',
+               for sd in pc(portal_type='SamplingDeviation',
                              inactive_state='active')]
         res.sort(lambda x, y: cmp(x[0], y[0]))
         return res
@@ -276,9 +276,9 @@ class AnalysisRequestViewView(BrowserView):
     def sampleconditions(self):
         """ SampleConditions vocabulary for AR Add
         """
-        bsc = getToolByName(self.context, 'bika_setup_catalog')
+        pc = getToolByName(self.context, 'portal_catalog')
         res = [(sd.getObject().Title(), sd.getObject())
-               for sd in bsc(portal_type='SampleConditions',
+               for sd in pc(portal_type='SampleConditions',
                              inactive_state='active')]
         res.sort(lambda x, y: cmp(x[0], y[0]))
         return res
@@ -286,9 +286,9 @@ class AnalysisRequestViewView(BrowserView):
     def containertypes(self):
         """ DefaultContainerType vocabulary for AR Add
         """
-        bsc = getToolByName(self.context, 'bika_setup_catalog')
+        pc = getToolByName(self.context, 'portal_catalog')
         res = [(o.getObject().Title(), o.getObject())
-               for o in bsc(portal_type='ContainerType')]
+               for o in pc(portal_type='ContainerType')]
         res.sort(lambda x, y: cmp(x[0], y[0]))
         return res
 
@@ -320,10 +320,10 @@ class AnalysisRequestViewView(BrowserView):
         """ Dictionary keys: poc
             Dictionary values: (Category UID,category Title)
         """
-        bsc = getToolByName(self.context, 'bika_setup_catalog')
+        pc = getToolByName(self.context, 'portal_catalog')
         cats = {}
         restricted = [u.UID() for u in self.getRestrictedCategories()]
-        for service in bsc(portal_type="AnalysisService",
+        for service in pc(portal_type="AnalysisService",
                            inactive_state='active'):
             cat = (service.getCategoryUID, service.getCategoryTitle)
             if restricted and cat[0] not in restricted:

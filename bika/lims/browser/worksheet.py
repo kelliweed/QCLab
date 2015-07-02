@@ -744,9 +744,9 @@ class ManageResultsView(BrowserView):
 
     def getInstruments(self):
         # TODO: Return only the allowed instruments for at least one contained analysis
-        bsc = getToolByName(self, 'bika_setup_catalog')
+        pc = getToolByName(self, 'portal_catalog')
         items = [('', '')] + [(o.UID, o.Title) for o in
-                               bsc(portal_type = 'Instrument',
+                               pc(portal_type = 'Instrument',
                                    inactive_state = 'active')]
         o = self.context.getInstrument()
         if o and o.UID() not in [i[0] for i in items]:
@@ -989,9 +989,9 @@ class AddAnalysesView(BikaListingView):
         return items
 
     def getServices(self):
-        bsc = getToolByName(self.context, 'bika_setup_catalog')
+        pc = getToolByName(self.context, 'portal_catalog')
         return [c.Title for c in
-                bsc(portal_type = 'AnalysisService',
+                pc(portal_type = 'AnalysisService',
                    CategoryUID = self.request.get('CategoryUID', ''),
                    inactive_state = 'active',
                    sort_on = 'sortable_title')]
@@ -1004,18 +1004,18 @@ class AddAnalysesView(BikaListingView):
                    sort_on = 'sortable_title')]
 
     def getCategories(self):
-        bsc = getToolByName(self.context, 'bika_setup_catalog')
+        pc = getToolByName(self.context, 'portal_catalog')
         return [c.Title for c in
-                bsc(portal_type = 'AnalysisCategory',
+                pc(portal_type = 'AnalysisCategory',
                    inactive_state = 'active',
                    sort_on = 'sortable_title')]
 
     def getWorksheetTemplates(self):
         """ Return WS Templates """
         profiles = []
-        bsc = getToolByName(self.context, 'bika_setup_catalog')
+        pc = getToolByName(self.context, 'portal_catalog')
         return [(c.UID, c.Title) for c in
-                bsc(portal_type = 'WorksheetTemplate',
+                pc(portal_type = 'WorksheetTemplate',
                    inactive_state = 'active',
                    sort_on = 'sortable_title')]
 
@@ -1287,7 +1287,7 @@ class WorksheetServicesView(BikaListingView):
     def __init__(self, context, request):
         BikaListingView.__init__(self, context, request)
         self.context_actions = {}
-        self.catalog = 'bika_setup_catalog'
+
         self.contentFilter = {'review_state':'impossible_state'}
         self.base_url = self.context.absolute_url()
         self.view_url = self.context.absolute_url()
@@ -1484,9 +1484,9 @@ class ajaxGetServices(BrowserView):
     """
     def __call__(self):
         plone.protect.CheckAuthenticator(self.request)
-        bsc = getToolByName(self.context, 'bika_setup_catalog')
+        pc = getToolByName(self.context, 'portal_catalog')
         return json.dumps([c.Title for c in
-                bsc(portal_type = 'AnalysisService',
+                pc(portal_type = 'AnalysisService',
                    CategoryTitle = self.request.get('CategoryTitle', ''),
                    inactive_state = 'active',
                    sort_on = 'sortable_title')])

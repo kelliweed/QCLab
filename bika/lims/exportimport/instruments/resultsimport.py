@@ -250,7 +250,6 @@ class AnalysisResultsImporter(Logger):
         self._override = override
         self._idsearch = idsearchcriteria
         self._priorizedsearchcriteria = ''
-        self.bsc = getToolByName(self.context, 'bika_setup_catalog')
         self.pc = getToolByName(self.context, 'portal_catalog')
         self.wf = getToolByName(self.context, 'portal_workflow')
         if not self._allowed_ar_states:
@@ -340,7 +339,7 @@ class AnalysisResultsImporter(Logger):
         for acode in rawacodes:
             if acode in exclude:
                 continue
-            service = self.bsc(getKeyword=acode)
+            service = self.pc(getKeyword=acode)
             if not service:
                 self.warn('Service keyword ${analysis_keyword} not found',
                             mapping={"analysis_keyword": acode})
@@ -360,7 +359,7 @@ class AnalysisResultsImporter(Logger):
                 if len(analyses) == 0 and self.instrument_uid:
                     # No registered analyses found, but maybe we need to
                     # create them first if an instruemnt id has been set in
-                    insts = self.bsc(portal_type='Instrument', UID=self.instrument_uid)
+                    insts = self.pc(portal_type='Instrument', UID=self.instrument_uid)
                     if len(insts) == 0:
                         # No instrument found
                         self.err("No Analysis Request with '${allowed_ar_states}' "
@@ -399,7 +398,7 @@ class AnalysisResultsImporter(Logger):
                     # to the Reference Sample
                     service_uids = []
                     reference_type = 'b' if refsample.getBlank() == True else 'c'
-                    services = self.bsc(portal_type='AnalysisService')
+                    services = self.pc(portal_type='AnalysisService')
                     service_uids = [service.UID for service in services \
                                     if service.getObject().getKeyword() in result.keys()]
                     analyses = inst.addReferences(refsample, service_uids)
@@ -464,7 +463,7 @@ class AnalysisResultsImporter(Logger):
 
                         # Create the AttachmentType for mime type if not exists
                         attuid = None
-                        attachmentType = self.bsc(portal_type="AttachmentType",
+                        attachmentType = self.pc(portal_type="AttachmentType",
                                                   title=self._parser.getAttachmentFileType())
                         if len(attachmentType) == 0:
                             try:
@@ -531,7 +530,7 @@ class AnalysisResultsImporter(Logger):
         # defined the method calculateResult...
         # Needs investigation.
         #for instuid in instprocessed:
-        #    inst = self.bsc(portal_type='Instrument',UID=instuid)[0].getObject()
+        #    inst = self.pc(portal_type='Instrument',UID=instuid)[0].getObject()
         #    analyses = inst.getAnalyses()
         #    for analysis in analyses:
         #        if (analysis.calculateResult(True, True)):

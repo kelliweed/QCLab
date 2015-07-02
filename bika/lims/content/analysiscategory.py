@@ -60,9 +60,9 @@ class AnalysisCategory(BaseContent):
         renameAfterCreation(self)
 
     def getDepartments(self):
-        bsc = getToolByName(self, 'bika_setup_catalog')
+        pc = getToolByName(self, 'portal_catalog')
         deps = []
-        for d in bsc(portal_type='Department',
+        for d in pc(portal_type='Department',
                      inactive_state='active'):
             deps.append((d.UID, d.Title))
         return DisplayList(deps)
@@ -70,8 +70,8 @@ class AnalysisCategory(BaseContent):
     def workflow_script_deactivat(self):
         # A instance cannot be deactivated if it contains services
         pu = getToolByName(self, 'plone_utils')
-        bsc = getToolByName(self, 'bika_setup_catalog')
-        ars = bsc(portal_type='AnalysisService', CategoryUID=self.UID())
+        pc = getToolByName(self, 'portal_catalog')
+        ars = pc(portal_type='AnalysisService', CategoryUID=self.UID())
         if ars:
             message = _("Category cannot be deactivated because "
                         "it contains Analysis Services")

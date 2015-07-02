@@ -107,7 +107,6 @@ schema = BikaSchema.copy() + Schema((
                            "method. Calculations can be configured "
                            "under the calculations item in the LIMS "
                            "set-up"),
-            catalog_name='bika_setup_catalog',
             base_query={'inactive_state': 'active'},
         )
     ),
@@ -149,9 +148,9 @@ class Method(BaseFolder):
             registered in Bika-Setup. Used to fill the Calculation
             ReferenceWidget.
         """
-        bsc = getToolByName(self, 'bika_setup_catalog')
+        pc = getToolByName(self, 'portal_catalog')
         items = [(c.UID, c.Title) \
-                for c in bsc(portal_type='Calculation',
+                for c in pc(portal_type='Calculation',
                              inactive_state = 'active')]
         items.sort(lambda x,y: cmp(x[1], y[1]))
         items.insert(0, ('', t(_('None'))))
@@ -178,9 +177,9 @@ class Method(BaseFolder):
         """ Available instruments registered in the system
             Only instruments with state=active will be fetched
         """
-        bsc = getToolByName(self, 'bika_setup_catalog')
+        pc = getToolByName(self, 'portal_catalog')
         items = [(i.UID, i.Title) \
-                for i in bsc(portal_type='Instrument',
+                for i in pc(portal_type='Instrument',
                              inactive_state = 'active')]
         items.sort(lambda x,y: cmp(x[1], y[1]))
         return DisplayList(list(items))
