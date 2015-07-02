@@ -243,6 +243,12 @@ def ClientUID(instance):
         client = instance.getClient()
         if client:
             return client.UID()
+    # SamplePoint, SampleType, AnalysisSpec, AnalysisProfile, ARTemplate (etc?):
+    # These can live inside Client folder, hence ClientUID was used;
+    # This case, should be replaced with ParentUID everywhere in code.
+    elif hasattr(instance, 'aq_parent') \
+            and hasattr(instance.aq_parent, 'UID'):
+        return instance.aq_parent.UID()
 
 
 @indexer(Interface)
