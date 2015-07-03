@@ -6,7 +6,10 @@ from bika.lims.indexers.analysisrequest import Analysts as ARAnalysts
 def Analysts(instance):
     analysts = []
     for ar in instance.getAnalysisRequests():
-        analysts.extend(ARAnalysts(ar))
+        for analysis in ar.objectValues("Analysis"):
+            analyst = analysis.getAnalyst()
+            if analyst not in analysts:
+                analysts.append(analyst)
     return analysts
 
 @indexer(ISample)
