@@ -95,6 +95,7 @@ class BikaGenerator:
                        'bika_samplepoints',
                        'bika_sampletypes',
                        'bika_srtemplates',
+                       'bika_storagelevels',
                        'bika_storageunits',
                        'bika_storagelocations',
                        'bika_subgroups',
@@ -760,6 +761,7 @@ class BikaGenerator:
         at.setCatalogsByType('SamplePoint', ['bika_setup_catalog', 'portal_catalog'])
         at.setCatalogsByType('SampleType', ['bika_setup_catalog', 'portal_catalog'])
         at.setCatalogsByType('SamplingDeviation', ['bika_setup_catalog', ])
+        at.setCatalogsByType('StorageLevel', ['bika_setup_catalog', ])
         at.setCatalogsByType('SRTemplate', ['bika_setup_catalog', 'portal_catalog'])
         at.setCatalogsByType('StorageUnit', ['bika_setup_catalog', 'portal_catalog'])
         at.setCatalogsByType('StorageLocation', ['bika_setup_catalog', 'portal_catalog'])

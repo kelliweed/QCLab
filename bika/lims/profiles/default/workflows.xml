@@ -359,6 +359,12 @@
 
   <type type_id="SRTemplates"/>
 
+  <type type_id="StorageLevels"/>
+  <type type_id="StorageLevel">
+   <bound-workflow workflow_id="bika_one_state_workflow"/>
+   <bound-workflow workflow_id="bika_inactive_workflow"/>
+  </type>
+
   <type type_id="StorageUnits"/>
   <type type_id="StorageUnit">
    <bound-workflow workflow_id="bika_one_state_workflow"/>
