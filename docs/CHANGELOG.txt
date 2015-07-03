@@ -1,5 +1,10 @@
 3.1.9 (unreleased)
 ------------------
+HEALTH-279: AS IDs to be near top of page. Columns in AS list
+LIMS-1625: Instrument tab titles and headers do not correspond
+LIMS-1924: Instrument tab very miss-titled. Internal Calibration Tests
+LIMS-1922: Instrument out of date typo and improvement
+HEALTH-175: Supplier does not resolve on Instrument view page
 LIMS-1887: uniquefield validator doesn't work properly
 LIMS-1869: Not possible to create an Analysis Request
 LIMS-1867: Auto-header, auto-footer and auto-pagination in results reports
@@ -18,6 +23,7 @@ Fix portlets.xml for Plone 4.3.6 compatibility
 
 3.1.8 (2015-06-03)
 ------------------
+LIMS-1923: Typo InstrumentCalibration
 LIMS-1773: Instrument. Thermo Fisher ELISA Spectrophotometer
 LIMS-1697: Error updating bika.lims 317 to 318 via quickinstaller
 LIMS-1820: QC Graphs DateTime's X-Axis not well sorted
