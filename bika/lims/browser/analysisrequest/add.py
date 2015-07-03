@@ -230,8 +230,8 @@ class AnalysisRequestAddView(AnalysisRequestViewView):
             rr = proxies[0].getObject().getResultsRange()
             new_rr = []
             for i, r in enumerate(rr):
-                s_uid = self.bika_setup_catalog(portal_type='AnalysisService',
-                                                Keyword=r['keyword'])[0].UID
+                s_uid = self.portal_catalog(portal_type='AnalysisService',
+                                            Keyword=r['keyword'])[0].UID
                 r['uid'] = s_uid
                 new_rr.append(r)
             specs[n] = new_rr

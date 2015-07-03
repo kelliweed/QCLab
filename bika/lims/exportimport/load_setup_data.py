@@ -112,10 +112,6 @@ class LoadSetupData(BrowserView):
                     len(self.deferred), self.deferred))
             check = new
 
-        logger.info("Rebuilding bika_setup_catalog")
-        pc = getToolByName(self.context, 'portal_catalog')
-        pc.clearFindAndRebuild()
-
         message = PMF("Changes saved.")
         self.context.plone_utils.addPortalMessage(message)
         self.request.RESPONSE.redirect(portal.absolute_url())

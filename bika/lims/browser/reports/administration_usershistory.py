@@ -88,7 +88,7 @@ class Report(BrowserView):
                 {'title': _('User'), 'value': ("%s (%s)" % (userfullname, user))})
 
         # Query the catalog and store results in a dictionary
-        entities = self.bika_setup_catalog(self.contentFilter)
+        entities = self.portal_catalog(self.contentFilter)
 
         if not entities:
             message = _("No historical actions matched your query")

@@ -20,7 +20,6 @@ class Report(BrowserView):
     def __call__(self):
         # get all the data into datalines
 
-        sc = getToolByName(self.context, 'bika_setup_catalog')
         pc = getToolByName(self.context, 'portal_catalog')
         rc = getToolByName(self.context, 'reference_catalog')
         self.report_content = {}
@@ -93,13 +92,13 @@ class Report(BrowserView):
 
         datalines = []
         count_all = 0
-        for cat in sc(portal_type="AnalysisCategory",
+        for cat in pc(portal_type="AnalysisCategory",
                       sort_on='sortable_title'):
             dataline = [{'value': cat.Title,
                          'class': 'category_heading',
                          'colspan': 2}, ]
             datalines.append(dataline)
-            for service in sc(portal_type="AnalysisService",
+            for service in pc(portal_type="AnalysisService",
                               CategoryUID=cat.UID,
                               sort_on='sortable_title'):
                 query['ServiceUID'] = service.UID

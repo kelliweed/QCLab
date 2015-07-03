@@ -20,7 +20,6 @@ class Report(BrowserView):
     def __call__(self):
         # get all the data into datalines
 
-        sc = getToolByName(self.context, 'bika_setup_catalog')
         pc = getToolByName(self.context, 'portal_catalog')
         rc = getToolByName(self.context, 'reference_catalog')
         self.report_content = {}
@@ -146,7 +145,7 @@ class Report(BrowserView):
         total_count_undefined = 0
         datalines = []
 
-        for cat in sc(portal_type='AnalysisCategory',
+        for cat in pc(portal_type='AnalysisCategory',
                       sort_on='sortable_title'):
             catline = [{'value': cat.Title,
                         'class': 'category_heading',
@@ -157,7 +156,7 @@ class Report(BrowserView):
             cat_count_undefined = 0
             cat_mins_early = 0
             cat_mins_late = 0
-            for service in sc(portal_type="AnalysisService",
+            for service in pc(portal_type="AnalysisService",
                               CategoryUID=cat.UID,
                               sort_on='sortable_title'):
 

@@ -311,14 +311,14 @@ class ARImport(BaseFolder):
 
         # get Keyword to ServiceId Map
         services = {}
-        for service in self.bika_setup_catalog(
+        for service in self.portal_catalog(
                 portal_type = 'AnalysisService'):
             obj = service.getObject()
             keyword = obj.getKeyword()
             if keyword:
                 services[keyword] = '%s:%s' % (obj.UID(), obj.getPrice())
 
-        samplepoints = self.bika_setup_catalog(
+        samplepoints = self.portal_catalog(
             portal_type = 'SamplePoint',
             Title = self.getSamplePoint())
         if not samplepoints:
@@ -385,7 +385,7 @@ class ARImport(BaseFolder):
             samples.append(sample_id)
             aritem.setSample(sample_uid)
 
-            priorities = self.bika_setup_catalog(
+            priorities = self.portal_catalog(
                 portal_type = 'ARPriority',
                 sortable_title = aritem.Priority.lower(),
                 )
@@ -459,7 +459,7 @@ class ARImport(BaseFolder):
         services = {}
         service_uids = {}
 
-        for service in self.bika_setup_catalog(
+        for service in self.portal_catalog(
                 portal_type = 'AnalysisService'):
             obj = service.getObject()
             keyword = obj.getKeyword()
@@ -467,7 +467,7 @@ class ARImport(BaseFolder):
                 services[keyword] = '%s:%s' % (obj.UID(), obj.getPrice())
             service_uids[obj.UID()] = '%s:%s' % (obj.UID(), obj.getPrice())
 
-        samplepoints = self.bika_setup_catalog(
+        samplepoints = self.portal_catalog(
             portal_type = 'SamplePoint',
             Title = self.getSamplePoint())
         if not samplepoints:
@@ -504,7 +504,7 @@ class ARImport(BaseFolder):
                     else:
                         #TODO This will not find it!!
                         # there is no profilekey index
-                        c_prox = self.bika_setup_catalog(
+                        c_prox = self.portal_catalog(
                                     portal_type = 'AnalysisProfile',
                                     ClientUID = client.UID(),
                                     getProfileKey = profilekey)
@@ -535,7 +535,7 @@ class ARImport(BaseFolder):
 
             for analysis in aritem.getAnalyses(full_objects=True):
                 if not services.has_key(analysis):
-                    for service in self.bika_setup_catalog(
+                    for service in self.portal_catalog(
                             portal_type = 'AnalysisService',
                             Keyword = analysis):
                         obj = service.getObject()
@@ -585,7 +585,7 @@ class ARImport(BaseFolder):
             samples.append(sample_id)
             aritem.setSample(sample_uid)
 
-            priorities = self.bika_setup_catalog(
+            priorities = self.portal_catalog(
                 portal_type = 'ARPriority',
                 sortable_title = aritem.Priority.lower(),
                 )
@@ -876,7 +876,7 @@ class ARImport(BaseFolder):
             #validate Priority
             invalid_priority = False
             try:
-                priorities = self.bika_setup_catalog(
+                priorities = self.portal_catalog(
                     portal_type = 'ARPriority',
                     sortable_title = aritem.Priority.lower(),
                     )
@@ -972,8 +972,7 @@ class ARImport(BaseFolder):
         return valid_batch
 
     def _findProfileKey(self, key):
-        profiles = self.bika_setup_catalog(
-                portal_type = 'AnalysisProfile')
+        profiles = self.portal_catalog(portal_type = 'AnalysisProfile')
         found = False
         for brain in profiles:
             if brain.getObject().getProfileKey() == key:

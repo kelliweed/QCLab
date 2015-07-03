@@ -115,7 +115,7 @@ class AnalysisRequestAnalysesView(BikaListingView):
         """Return the AR Specs sorted by Service UID, so that the JS can
         work easily with the values.
         """
-        pc = getToolByName(self.context, 'bika_setup_catalog')
+        pc = getToolByName(self.context, 'portal_catalog')
         rr_dict_by_service_uid = {}
         rr = self.context.getResultsRange()
         for r in rr:
