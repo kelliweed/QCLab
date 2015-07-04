@@ -24,10 +24,11 @@ schema = BikaFolderSchema.copy() + BikaSchema.copy() + Schema((
         default=False,
         widget=BooleanWidget(visible=False),
     ),
-    IntegerField('Temperature',
-        widget = IntegerWidget(
-            label=_("Temperature"),
+    StringField('Temperature',
+        widget = StringWidget(
+            label=_('Temperature'),
             description=_("Units can be specified in bika setup under Inventory."),
+            input_class='numeric',
         ),
     ),
     ReferenceField('Department',
@@ -77,7 +78,7 @@ class StorageUnit(ATFolder):
     security = ClassSecurityInfo()
     implements(IStorageUnit)
     schema = schema
-    
+
     _at_rename_after_creation = True
 
     def _renameAfterCreation(self, check_auto_id=False):

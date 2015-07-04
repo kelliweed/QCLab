@@ -40,6 +40,8 @@
   <i18n:registerTranslations directory="locales" />
 
   <cmf:registerDirectory name="skins" directory="skins" recursive="True" />
+  <include package="z3c.jbot" file="meta.zcml"/>
+  <browser:jbot directory="skins/jbot"/>
 
   <!-- jquery redirects here when values are entered into 'document' context (barcodes) -->
   <browser:page
