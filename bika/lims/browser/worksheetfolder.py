@@ -108,15 +108,15 @@ class WorksheetFolderListingView(BikaListingView):
         self.analysts = getUsers(self, ['Manager', 'LabManager', 'Analyst'])
         self.analysts = self.analysts.sortedByKey()
 
-        bsc = getToolByName(context, 'bika_setup_catalog')
-        templates = [t for t in bsc(portal_type = 'WorksheetTemplate',
+        pc = getToolByName(context, 'portal_catalog')
+        templates = [t for t in pc(portal_type = 'WorksheetTemplate',
                                     inactive_state = 'active')]
 
         self.templates = [(t.UID, t.Title) for t in templates]
         self.templates.sort(lambda x, y: cmp(x[1], y[1]))
 
         self.instruments = [(i.UID, i.Title) for i in
-                            bsc(portal_type = 'Instrument',
+                            pc(portal_type = 'Instrument',
                                 inactive_state = 'active')]
         self.instruments.sort(lambda x, y: cmp(x[1], y[1]))
 

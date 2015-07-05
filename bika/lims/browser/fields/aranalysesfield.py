@@ -39,7 +39,7 @@ class ARAnalysesField(ObjectField):
             If you want to override "ViewRetractedAnalyses",
             pass retracted=True
 
-            other kwargs are passed to bika_analysis_catalog
+            other kwargs are passed to portal_catalog
 
         """
 
@@ -56,13 +56,13 @@ class ARAnalysesField(ObjectField):
             retracted = mtool.checkPermission(ViewRetractedAnalyses,
                                               instance)
 
-        bac = getToolByName(instance, 'bika_analysis_catalog')
+        pc = getToolByName(instance, 'portal_catalog')
         contentFilter = dict([(k, v) for k, v in kwargs.items()
-                              if k in bac.indexes()])
+                              if k in pc.indexes()])
         contentFilter['portal_type'] = "Analysis"
         contentFilter['path'] = {'query': "/".join(instance.getPhysicalPath()),
                                  'level': 0}
-        analyses = bac(contentFilter)
+        analyses = pc(contentFilter)
         if not retracted:
             analyses = [a for a in analyses if a.review_state != 'retracted']
         if full_objects:
@@ -92,7 +92,7 @@ class ARAnalysesField(ObjectField):
 
         assert type(service_uids) in (list, tuple)
 
-        bsc = getToolByName(instance, 'bika_setup_catalog')
+        pc = getToolByName(instance, 'portal_catalog')
         workflow = getToolByName(instance, 'portal_workflow')
 
         # one can only edit Analyses up to a certain state.
@@ -119,7 +119,7 @@ class ARAnalysesField(ObjectField):
         instance.setResultsRange(rr)
 
         new_analyses = []
-        proxies = bsc(UID=service_uids)
+        proxies = pc(UID=service_uids)
         for proxy in proxies:
             service = proxy.getObject()
             service_uid = service.UID()
@@ -202,10 +202,10 @@ class ARAnalysesField(ObjectField):
     def Services(self):
         """ Return analysis services
         """
-        bsc = getToolByName(self.context, 'bika_setup_catalog')
+        pc = getToolByName(self.context, 'portal_catalog')
         if not shasattr(self, '_v_services'):
             self._v_services = [service.getObject()
-                                for service in bsc(portal_type='AnalysisService')]
+                                for service in pc(portal_type='AnalysisService')]
         return self._v_services
 
 registerField(ARAnalysesField,

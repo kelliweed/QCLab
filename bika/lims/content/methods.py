@@ -22,7 +22,7 @@ class MethodsView(BikaListingView):
 
     def __init__(self, context, request):
         super(MethodsView, self).__init__(context, request)
-        self.catalog = 'bika_setup_catalog'
+
         self.contentFilter = {'portal_type': 'Method',
                               'sort_on': 'sortable_title'}
         self.context_actions = {}

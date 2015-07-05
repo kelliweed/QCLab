@@ -188,9 +188,9 @@ class ReferenceSample(BaseFolder):
 
             return title
 
-        bsc = getToolByName(self, 'bika_setup_catalog')
+        pc = getToolByName(self, 'portal_catalog')
         defs = [o.getObject() for o in
-                bsc(portal_type = 'ReferenceDefinition',
+                pc(portal_type = 'ReferenceDefinition',
                     inactive_state = 'active')]
         items = [('','')] + [(o.UID(), make_title(o)) for o in defs]
         o = self.getReferenceDefinition()
@@ -201,9 +201,9 @@ class ReferenceSample(BaseFolder):
         return DisplayList(list(items))
 
     def getReferenceManufacturers(self):
-        bsc = getToolByName(self, 'bika_setup_catalog')
+        pc = getToolByName(self, 'portal_catalog')
         items = [('','')] + [(o.UID, o.Title) for o in
-                               bsc(portal_type='Manufacturer',
+                               pc(portal_type='Manufacturer',
                                    inactive_state = 'active')]
         o = self.getReferenceDefinition()
         if o and o.UID() not in [i[0] for i in items]:

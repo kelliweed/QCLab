@@ -104,12 +104,12 @@ class SamplePoint(BaseContent, HistoryAwareMixin):
             relation to be equal on both sides, here.
             It's done strangely, because it may be required to behave strangely.
         """
-        bsc = getToolByName(self, 'bika_setup_catalog')
+        pc = getToolByName(self, 'portal_catalog')
         ## convert value to objects
         if value and type(value) == str:
-            value = [bsc(UID=value)[0].getObject(),]
+            value = [pc(UID=value)[0].getObject(),]
         elif value and type(value) in (list, tuple) and type(value[0]) == str:
-            value = [bsc(UID=uid)[0].getObject() for uid in value if uid]
+            value = [pc(UID=uid)[0].getObject() for uid in value if uid]
         if not type(value) in (list, tuple):
             value = [value,]
         ## Find all SampleTypes that were removed
@@ -139,7 +139,7 @@ registerType(SamplePoint, PROJECTNAME)
 
 def SamplePoints(self, instance=None, allow_blank=True, lab_only=True):
     instance = instance or self
-    bsc = getToolByName(instance, 'bika_setup_catalog')
+    pc = getToolByName(instance, 'portal_catalog')
     items = []
     contentFilter = {
         'portal_type'  : 'SamplePoint',
@@ -148,7 +148,7 @@ def SamplePoints(self, instance=None, allow_blank=True, lab_only=True):
     if lab_only:
         lab_path = instance.bika_setup.bika_samplepoints.getPhysicalPath()
         contentFilter['path'] = {"query": "/".join(lab_path), "level" : 0 }
-    for sp in bsc(contentFilter):
+    for sp in pc(contentFilter):
         items.append((sp.UID, sp.Title))
     items = allow_blank and [['','']] + list(items) or list(items)
     return DisplayList(items)

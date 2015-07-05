@@ -119,12 +119,12 @@ class AnalysisSpec(BaseFolder, HistoryAwareMixin):
 
     security.declarePublic('getSpecCategories')
     def getSpecCategories(self):
-        bsc = getToolByName(self, 'bika_setup_catalog')
+        pc = getToolByName(self, 'portal_catalog')
         categories = []
         for spec in self.getResultsRange():
             keyword = spec['keyword']
-            service = bsc(portal_type="AnalysisService",
-                          getKeyword = keyword)
+            service = pc(portal_type="AnalysisService",
+                          Keyword = keyword)
             if service.getCategoryUID() not in categories:
                 categories.append(service.getCategoryUID())
         return categories
@@ -200,8 +200,8 @@ class AnalysisSpec(BaseFolder, HistoryAwareMixin):
     def getSampleTypes(self):
         """ return all sampletypes """
         sampletypes = []
-        bsc = getToolByName(self, 'bika_setup_catalog')
-        for st in bsc(portal_type = 'SampleType',
+        pc = getToolByName(self, 'portal_catalog')
+        for st in pc(portal_type = 'SampleType',
                       sort_on = 'sortable_title'):
             sampletypes.append((st.UID, st.Title))
 

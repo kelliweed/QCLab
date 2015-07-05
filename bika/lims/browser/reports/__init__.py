@@ -229,7 +229,7 @@ class SubmitForm(BrowserView):
 
         # signature image
         self.reporter_signature = ""
-        c = [x for x in self.bika_setup_catalog(portal_type='LabContact')
+        c = [x for x in self.portal_catalog(portal_type='LabContact')
              if x.getObject().getUsername() == username]
         if c:
             sf = c[0].getObject().getSignature()
@@ -355,10 +355,10 @@ class ReferenceAnalysisQC_Services(BrowserView):
         sample = self.reference_catalog.lookupObject(sample)
         if sample:
             # get ReferenceSamples for this supplier
-            analyses = self.bika_analysis_catalog(portal_type='ReferenceAnalysis',
-                                                  path={"query": "/".join(
-                                                      sample.getPhysicalPath()),
-                                                        "level": 0})
+            pc = getToolByName(self, 'portal_catalog')
+            analyses = pc(portal_type='ReferenceAnalysis',
+                          path={"query": "/".join(sample.getPhysicalPath()),
+                                "level": 0})
             ret = {}
             for analysis in analyses:
                 service = analysis.getObject().getService()

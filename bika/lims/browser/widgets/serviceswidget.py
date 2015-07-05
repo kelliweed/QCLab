@@ -21,7 +21,7 @@ class ServicesView(BikaListingView):
         BikaListingView.__init__(self, context, request)
         self.selected = [o.UID() for o in getattr(field, field.accessor)()]
         self.context_actions = {}
-        self.catalog = "bika_setup_catalog"
+
         self.contentFilter = {'review_state': 'impossible_state'}
         self.base_url = self.context.absolute_url()
         self.view_url = self.base_url
@@ -36,7 +36,7 @@ class ServicesView(BikaListingView):
         self.columns = {
             'Service': {'title': _('Service')},
             'Keyword': {'title': _('Keyword'),
-                        'index': 'getKeyword'},
+                        'index': 'Keyword'},
             'Method': {'title': _('Method')},
             'Calculation': {'title': _('Calculation')},
         }

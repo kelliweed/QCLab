@@ -52,8 +52,7 @@ class WorksheetWorkflowAction(WorkflowAction):
         plone.protect.CheckAuthenticator(form)
         workflow = getToolByName(self.context, 'portal_workflow')
         rc = getToolByName(self.context, REFERENCE_CATALOG)
-        bsc = getToolByName(self.context, 'bika_setup_catalog')
-        bac = getToolByName(self.context, 'bika_analysis_catalog')
+        pc = getToolByName(self.context, 'portal_catalog')
         action, came_from = WorkflowAction._get_form_workflow_action(self)
 
 
@@ -93,7 +92,7 @@ class WorksheetWorkflowAction(WorkflowAction):
 
             for analysis_uid in selected_analysis_uids:
                 try:
-                    analysis = bac(UID=analysis_uid)[0].getObject()
+                    analysis = pc(UID=analysis_uid)[0].getObject()
                 except IndexError:
                     # Duplicate analyses are removed when their analyses
                     # get removed, so indexerror is expected.
@@ -384,7 +383,6 @@ class WorksheetAnalysesView(AnalysesView):
     """
     def __init__(self, context, request):
         AnalysesView.__init__(self, context, request)
-        self.catalog = 'bika_analysis_catalog'
         self.contentFilter = {'portal_type':'Analysis',
                               'review_state':'sample_received',
                               'worksheetanalysis_review_state':'unassigned'}
@@ -746,9 +744,9 @@ class ManageResultsView(BrowserView):
 
     def getInstruments(self):
         # TODO: Return only the allowed instruments for at least one contained analysis
-        bsc = getToolByName(self, 'bika_setup_catalog')
+        pc = getToolByName(self, 'portal_catalog')
         items = [('', '')] + [(o.UID, o.Title) for o in
-                               bsc(portal_type = 'Instrument',
+                               pc(portal_type = 'Instrument',
                                    inactive_state = 'active')]
         o = self.context.getInstrument()
         if o and o.UID() not in [i[0] for i in items]:
@@ -849,7 +847,6 @@ class AddAnalysesView(BikaListingView):
         self.icon = self.portal_url + "/++resource++bika.lims.images/worksheet_big.png"
         self.title = self.context.translate(_("Add Analyses"))
         self.description = ""
-        self.catalog = "bika_analysis_catalog"
         self.context_actions = {}
         # initial review state for first form display of the worksheet
         # add_analyses search view - first batch of analyses, latest first.
@@ -879,7 +876,7 @@ class AddAnalysesView(BikaListingView):
                 'index': 'Priority'},
             'CategoryTitle': {
                 'title': _('Category'),
-                'index':'getCategoryTitle'},
+                'index':'CategoryTitle'},
             'Title': {
                 'title': _('Analysis'),
                 'index':'sortable_title'},
@@ -992,10 +989,10 @@ class AddAnalysesView(BikaListingView):
         return items
 
     def getServices(self):
-        bsc = getToolByName(self.context, 'bika_setup_catalog')
+        pc = getToolByName(self.context, 'portal_catalog')
         return [c.Title for c in
-                bsc(portal_type = 'AnalysisService',
-                   getCategoryUID = self.request.get('list_getCategoryUID', ''),
+                pc(portal_type = 'AnalysisService',
+                   CategoryUID = self.request.get('CategoryUID', ''),
                    inactive_state = 'active',
                    sort_on = 'sortable_title')]
 
@@ -1007,18 +1004,18 @@ class AddAnalysesView(BikaListingView):
                    sort_on = 'sortable_title')]
 
     def getCategories(self):
-        bsc = getToolByName(self.context, 'bika_setup_catalog')
+        pc = getToolByName(self.context, 'portal_catalog')
         return [c.Title for c in
-                bsc(portal_type = 'AnalysisCategory',
+                pc(portal_type = 'AnalysisCategory',
                    inactive_state = 'active',
                    sort_on = 'sortable_title')]
 
     def getWorksheetTemplates(self):
         """ Return WS Templates """
         profiles = []
-        bsc = getToolByName(self.context, 'bika_setup_catalog')
+        pc = getToolByName(self.context, 'portal_catalog')
         return [(c.UID, c.Title) for c in
-                bsc(portal_type = 'WorksheetTemplate',
+                pc(portal_type = 'WorksheetTemplate',
                    inactive_state = 'active',
                    sort_on = 'sortable_title')]
 
@@ -1217,7 +1214,6 @@ class WorksheetARsView(BikaListingView):
     def __init__(self, context, request):
         BikaListingView.__init__(self, context, request)
         self.context_actions = {}
-        self.catalog = 'bika_analysis_catalog'
         self.contentFilter = {'portal_type': 'Analysis',
                               'review_state':'impossible_state'}
         self.base_url = self.context.absolute_url()
@@ -1291,7 +1287,7 @@ class WorksheetServicesView(BikaListingView):
     def __init__(self, context, request):
         BikaListingView.__init__(self, context, request)
         self.context_actions = {}
-        self.catalog = 'bika_setup_catalog'
+
         self.contentFilter = {'review_state':'impossible_state'}
         self.base_url = self.context.absolute_url()
         self.view_url = self.context.absolute_url()
@@ -1488,10 +1484,10 @@ class ajaxGetServices(BrowserView):
     """
     def __call__(self):
         plone.protect.CheckAuthenticator(self.request)
-        bsc = getToolByName(self.context, 'bika_setup_catalog')
+        pc = getToolByName(self.context, 'portal_catalog')
         return json.dumps([c.Title for c in
-                bsc(portal_type = 'AnalysisService',
-                   getCategoryTitle = self.request.get('getCategoryTitle', ''),
+                pc(portal_type = 'AnalysisService',
+                   CategoryTitle = self.request.get('CategoryTitle', ''),
                    inactive_state = 'active',
                    sort_on = 'sortable_title')])
 

@@ -22,7 +22,7 @@ class SampleMatricesView(BikaListingView):
 
     def __init__(self, context, request):
         super(SampleMatricesView, self).__init__(context, request)
-        self.catalog = 'bika_setup_catalog'
+
         self.contentFilter = {'portal_type': 'SampleMatrix',
                               'sort_on': 'sortable_title'}
         self.context_actions = {_('Add'): {

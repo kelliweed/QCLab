@@ -18,7 +18,7 @@ class SampleConditionsView(BikaListingView):
 
     def __init__(self, context, request):
         super(SampleConditionsView, self).__init__(context, request)
-        self.catalog = 'bika_setup_catalog'
+
         self.contentFilter = {'portal_type': 'SampleCondition',
                               'sort_on': 'sortable_title'}
         self.context_actions = {_('Add'): {

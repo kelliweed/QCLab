@@ -62,7 +62,7 @@ class ajaxServicePopup(BrowserView):
 
     def __call__(self):
         plone.protect.CheckAuthenticator(self.request)
-        bsc = getToolByName(self.context, 'bika_setup_catalog')
+        pc = getToolByName(self.context, 'portal_catalog')
         uc = getToolByName(self.context, 'uid_catalog')
 
         service_title = self.request.get('service_title', '').strip()
@@ -79,7 +79,7 @@ class ajaxServicePopup(BrowserView):
         else:
             self.log = []
 
-        brains = bsc(portal_type="AnalysisService",
+        brains = pc(portal_type="AnalysisService",
                      title=to_unicode(service_title))
         if not brains:
             return ''
@@ -100,7 +100,7 @@ class ajaxServicePopup(BrowserView):
                 ps['sampletype'] = [ps['sampletype'],]
             sampletypes = []
             for st in ps['sampletype']:
-                res = bsc(UID=st)
+                res = pc(UID=st)
                 sampletypes.append(res and res[0].Title or st)
             self.partsetup[i]['sampletype'] = ", ".join(sampletypes)
 
@@ -108,7 +108,7 @@ class ajaxServicePopup(BrowserView):
                 if type(ps['container']) == str:
                     self.partsetup[i]['container'] = [ps['container'],]
                 try:
-                    containers = [bsc(UID=c)[0].Title for c in ps['container']]
+                    containers = [pc(UID=c)[0].Title for c in ps['container']]
                 except IndexError:
                     containers = [c for c in ps['container']]
                 self.partsetup[i]['container'] = ", ".join(containers)
@@ -119,7 +119,7 @@ class ajaxServicePopup(BrowserView):
                 if type(ps['preservation']) == str:
                     ps['preservation'] = [ps['preservation'],]
                 try:
-                    preservations = [bsc(UID=c)[0].Title for c in ps['preservation']]
+                    preservations = [pc(UID=c)[0].Title for c in ps['preservation']]
                 except IndexError:
                     preservations = [c for c in ps['preservation']]
                 self.partsetup[i]['preservation'] = ", ".join(preservations)
@@ -139,10 +139,10 @@ class ajaxGetServiceInterimFields:
     def __call__(self):
         plone.protect.CheckAuthenticator(self.request)
         plone.protect.PostOnly(self.request)
-        bsc = getToolByName(self.context, 'bika_setup_catalog')
+        pc = getToolByName(self.context, 'portal_catalog')
         service_url = self.request['service_url']
         service_id = service_url.split('/')[-1]
-        services = bsc(portal_type='AnalysisService', id=service_id)
+        services = pc(portal_type='AnalysisService', getId=service_id)
         if services:
             service = services[0].getObject()
             service_interims = service.getInterimFields()

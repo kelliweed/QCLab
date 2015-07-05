@@ -309,7 +309,7 @@ class ClientAnalysisProfilesView(BikaListingView):
 
     def __init__(self, context, request):
         super(ClientAnalysisProfilesView, self).__init__(context, request)
-        self.catalog = "bika_setup_catalog"
+
         self.contentFilter = {
             'portal_type': 'AnalysisProfile',
             'sort_on':'sortable_title',
@@ -377,7 +377,7 @@ class ClientARTemplatesView(BikaListingView):
 
     def __init__(self, context, request):
         super(ClientARTemplatesView, self).__init__(context, request)
-        self.catalog = "bika_setup_catalog"
+
         self.contentFilter = {
             'portal_type': 'ARTemplate',
             'sort_on':'sortable_title',
@@ -443,7 +443,7 @@ class ClientSamplePointsView(BikaListingView):
 
     def __init__(self, context, request):
         super(ClientSamplePointsView, self).__init__(context, request)
-        self.catalog = "bika_setup_catalog"
+
         self.contentFilter = {
             'portal_type': 'SamplePoint',
             'sort_on':'sortable_title',
@@ -508,7 +508,7 @@ class ClientAnalysisSpecsView(BikaListingView):
 
     def __init__(self, context, request):
         super(ClientAnalysisSpecsView, self).__init__(context, request)
-        self.catalog = 'bika_setup_catalog'
+
         self.contentFilter = {
             'portal_type': 'AnalysisSpec',
             'sort_on':'sortable_title',
@@ -586,16 +586,16 @@ class SetSpecsToLabDefaults(BrowserView):
     """
     def __call__(self):
         form = self.request.form
-        bsc = getToolByName(self.context, 'bika_setup_catalog')
+        pc = getToolByName(self.context, 'portal_catalog')
 
         # find and remove existing specs
-        cs = bsc(portal_type = 'AnalysisSpec',
+        cs = pc(portal_type = 'AnalysisSpec',
                   ClientUID = self.context.UID())
         if cs:
             self.context.manage_delObjects([s.id for s in cs])
 
         # find and duplicate lab specs
-        ls = bsc(portal_type = 'AnalysisSpec',
+        ls = pc(portal_type = 'AnalysisSpec',
                  ClientUID = self.context.bika_setup.bika_analysisspecs.UID())
         ls = [s.getObject() for s in ls]
         for labspec in ls:

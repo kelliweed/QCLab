@@ -25,7 +25,7 @@ class SampleTypesView(BikaListingView):
 
     def __init__(self, context, request):
         super(SampleTypesView, self).__init__(context, request)
-        self.catalog = 'bika_setup_catalog'
+
         self.contentFilter = {'portal_type': 'SampleType',
                               'sort_on': 'sortable_title'}
         self.context_actions = {_('Add'):
@@ -172,7 +172,7 @@ class ajax_SampleTypes(BrowserView):
     """
     def __call__(self):
         plone.protect.CheckAuthenticator(self.request)
-        bsc = getToolByName(self.context, 'bika_setup_catalog')
+        pc = getToolByName(self.context, 'portal_catalog')
         term = safe_unicode(self.request.get('term', '')).lower()
         items = []
         if not term:
@@ -181,7 +181,7 @@ class ajax_SampleTypes(BrowserView):
         # Strip "Lab: " from sample point titles
         samplepoint = samplepoint.replace("%s: " % _("Lab"), '')
         if samplepoint and len(samplepoint) > 1:
-            sp = bsc(portal_type = "SamplePoint",
+            sp = pc(portal_type = "SamplePoint",
                      inactive_state = 'active',
                      title=samplepoint)
             if not sp:
@@ -189,7 +189,7 @@ class ajax_SampleTypes(BrowserView):
             sp = sp[0].getObject()
             items = sp.getSampleTypes()
         if not items:
-            items = bsc(portal_type = "SampleType",
+            items = pc(portal_type = "SampleType",
                         inactive_state = 'active',
                         sort_on='sortable_title')
             if term and len(term) < 3:

@@ -17,7 +17,7 @@ class ARTemplateAnalysesView(BikaListingView):
 
     def __init__(self, context, request, fieldvalue=[], allow_edit=False):
         super(ARTemplateAnalysesView, self).__init__(context, request)
-        self.catalog = "bika_setup_catalog"
+
         self.contentFilter = {'portal_type': 'AnalysisService',
                               'sort_on': 'sortable_title',
                               'inactive_state': 'active',}
@@ -41,7 +41,7 @@ class ARTemplateAnalysesView(BikaListingView):
             self.ajax_categories = True
             self.ajax_categories_url = self.context.absolute_url() + \
                                        "/artemplate_analysesview"
-            self.category_index = 'getCategoryTitle'
+            self.category_index = 'CategoryTitle'
 
         self.columns = {
             'Title': {'title': _('Service'),
@@ -81,7 +81,7 @@ class ARTemplateAnalysesView(BikaListingView):
     def folderitems(self):
         self.categories = []
 
-        bsc = getToolByName(self.context, 'bika_setup_catalog')
+        pc = getToolByName(self.context, 'portal_catalog')
         wf = getToolByName(self.context, 'portal_workflow')
         mtool = getToolByName(self.context, 'portal_membership')
         member = mtool.getAuthenticatedMember()
@@ -185,7 +185,7 @@ class ARTemplateAnalysesWidget(TypesWidget):
         """ Return a list of dictionaries fit for ARTemplate/Analyses field
             consumption.
         """
-        bsc = getToolByName(instance, 'bika_setup_catalog')
+        pc = getToolByName(instance, 'portal_catalog')
         value = []
         service_uids = form.get('uids', None)
         Partitions = form.get('Partition', None)

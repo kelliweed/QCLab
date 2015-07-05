@@ -381,14 +381,14 @@ class InstrumentReferenceAnalysesView(AnalysesView):
 
     def __init__(self, context, request, **kwargs):
         AnalysesView.__init__(self, context, request, **kwargs)
-        self.columns['getReferenceAnalysesGroupID'] = {'title': _('QC Sample ID'),
+        self.columns['ReferenceAnalysesGroupID'] = {'title': _('QC Sample ID'),
                                                        'sortable': False}
         self.columns['Partition'] = {'title': _('Reference Sample'),
                                      'sortable': False}
         self.columns['Retractions'] = {'title': '',
                                                   'sortable': False}
         self.review_states[0]['columns'] = ['Service',
-                                            'getReferenceAnalysesGroupID',
+                                            'ReferenceAnalysesGroupID',
                                             'Partition',
                                             'Result',
                                             'Uncertainty',
@@ -398,7 +398,6 @@ class InstrumentReferenceAnalysesView(AnalysesView):
 
         analyses = self.context.getReferenceAnalyses()
         asuids = [an.UID() for an in analyses]
-        self.catalog = 'bika_analysis_catalog'
         self.contentFilter = {'UID': asuids}
         self.anjson = {}
 
@@ -450,7 +449,7 @@ class InstrumentReferenceAnalysesView(AnalysesView):
             serviceref = "%s (%s)" % (items[i]['Service'], items[i]['Keyword'])
             trows = self.anjson.get(serviceref, {});
             anrows = trows.get(qcid, []);
-            anid = '%s.%s' % (items[i]['getReferenceAnalysesGroupID'],
+            anid = '%s.%s' % (items[i]['ReferenceAnalysesGroupID'],
                               items[i]['id'])
 
             rr = obj.aq_parent.getResultsRangeDict()
@@ -624,8 +623,8 @@ class ajaxGetInstrumentMethod(BrowserView):
             plone.protect.CheckAuthenticator(self.request)
         except Forbidden:
             return json.dumps(methoddict)
-        bsc = getToolByName(self, 'bika_setup_catalog')
-        instrument = bsc(portal_type='Instrument', UID=self.request.get("uid", '0'))
+        pc = getToolByName(self, 'portal_catalog')
+        instrument = pc(portal_type='Instrument', UID=self.request.get("uid", '0'))
         if instrument and len(instrument) == 1:
             method = instrument[0].getObject().getMethod()
             if method:
@@ -657,8 +656,8 @@ class InstrumentQCFailuresViewlet(ViewletBase):
             Return a dictionary with all info about expired/invalid instruments
 
         """
-        bsc = getToolByName(self, 'bika_setup_catalog')
-        insts = bsc(portal_type='Instrument', inactive_state='active')
+        pc = getToolByName(self, 'portal_catalog')
+        insts = pc(portal_type='Instrument', inactive_state='active')
         for i in insts:
             i = i.getObject()
             instr = {

@@ -39,7 +39,6 @@ schema = BikaSchema.copy() + Schema((
             description = _("Location where sample was taken"),
             visible={'edit': 'visible', 'view': 'visible', 'add': 'visible',
                      'secondary': 'invisible'},
-            catalog_name='bika_setup_catalog',
             base_query={'inactive_state': 'active'},
             showOn=True,
         ),
@@ -64,7 +63,6 @@ schema = BikaSchema.copy() + Schema((
             description = _("Create a new sample of this type"),
             visible={'edit': 'visible', 'view': 'visible', 'add': 'visible',
                      'secondary': 'invisible'},
-            catalog_name='bika_setup_catalog',
             base_query={'inactive_state': 'active'},
             showOn=True,
         ),
@@ -154,7 +152,6 @@ schema = BikaSchema.copy() + Schema((
             description =_("The Analysis Profile selection for this template"),
             visible={'edit': 'visible', 'view': 'visible', 'add': 'visible',
                      'secondary': 'invisible'},
-            catalog_name='bika_setup_catalog',
             base_query={'inactive_state': 'active'},
             showOn=True,
         ),
@@ -205,9 +202,9 @@ class ARTemplate(BaseContent):
     security.declarePublic('AnalysisProfiles')
     def AnalysisProfiles(self, instance=None):
         instance = instance or self
-        bsc = getToolByName(instance, 'bika_setup_catalog')
+        pc = getToolByName(instance, 'portal_catalog')
         items = []
-        for p in bsc(portal_type='AnalysisProfile',
+        for p in pc(portal_type='AnalysisProfile',
                       inactive_state='active',
                       sort_on = 'sortable_title'):
             p = p.getObject()

@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from AccessControl import ModuleSecurityInfo, allow_module
+from Products.CMFCore.WorkflowCore import WorkflowException
 from bika.lims import logger
 from bika.lims.browser import BrowserView
 from DateTime import DateTime
@@ -335,6 +336,20 @@ def changeWorkflowState(content, wf_id, state_id, acquire_permissions=False,
     # Map changes to the catalogs
     content.reindexObject(idxs=['allowedRolesAndUsers', 'review_state'])
     return
+
+
+def get_transition_info(instance, action_id, variable_id):
+    """Return the time at which the action was most recently invoked
+    """
+    workflow = getToolByName(instance, 'portal_workflow')
+    try:
+        review_history = list(workflow.getInfoFor(instance, 'review_history'))
+        review_history.reverse()
+        for event in review_history:
+            if event.get('action') == action_id:
+                return event.get(variable_id)
+    except WorkflowException:
+        return None
 
 
 def tmpID():

@@ -89,9 +89,9 @@ class ajaxGetImportTemplate(BrowserView):
         return ViewPageTemplateFile("instruments/%s_import.pt" % exim)(self)
 
     def getInstruments(self):
-        bsc = getToolByName(self, 'bika_setup_catalog')
+        pc = getToolByName(self, 'portal_catalog')
         items = [('', '')] + [(o.UID, o.Title) for o in
-                               bsc(portal_type = 'Instrument',
+                               pc(portal_type = 'Instrument',
                                    inactive_state = 'active')]
         items.sort(lambda x, y: cmp(x[1].lower(), y[1].lower()))
         return DisplayList(list(items))
@@ -101,9 +101,9 @@ class ajaxGetImportTemplate(BrowserView):
             available. The value is the keyword and the title is the
             text to be displayed.
         '''
-        bsc = getToolByName(self, 'bika_setup_catalog')
+        pc = getToolByName(self, 'portal_catalog')
         items = [('', '')] + [(o.getObject().Keyword, o.Title) for o in
-                                bsc(portal_type = 'AnalysisService',
+                                pc(portal_type = 'AnalysisService',
                                    inactive_state = 'active')]
         items.sort(lambda x, y: cmp(x[1].lower(), y[1].lower()))
         return DisplayList(list(items))

@@ -271,7 +271,7 @@ class WorksheetPrintView(BrowserView):
             data['fullname'] = to_utf8(self.user_fullname(username))
             data['email'] = to_utf8(self.user_email(username))
 
-            c = [x for x in self.bika_setup_catalog(portal_type='LabContact')
+            c = [x for x in self.portal_catalog(portal_type='LabContact')
                  if x.getObject().getUsername() == username]
             if c:
                 sf = c[0].getObject().getSignature()
@@ -433,7 +433,7 @@ class WorksheetPrintView(BrowserView):
         # Out of range?
         if specs:
             adapters = getAdapters((analysis, ), IResultOutOfRange)
-            bsc = getToolByName(self.context, "bika_setup_catalog")
+            pc = getToolByName(self.context, "portal_catalog")
             for name, adapter in adapters:
                 ret = adapter(specification=specs)
                 if ret and ret['out_of_range']:

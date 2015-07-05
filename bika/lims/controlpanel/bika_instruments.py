@@ -21,7 +21,7 @@ class InstrumentsView(BikaListingView):
     implements(IFolderContentsView, IViewView)
     def __init__(self, context, request):
         super(InstrumentsView, self).__init__(context, request)
-        self.catalog = 'bika_setup_catalog'
+
         self.contentFilter = {'portal_type': 'Instrument',
                               'sort_on': 'sortable_title'}
         self.context_actions = {_('Add'):

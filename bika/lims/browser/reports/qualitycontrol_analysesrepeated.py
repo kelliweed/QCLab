@@ -17,7 +17,7 @@ class Report(BrowserView):
         BrowserView.__init__(self, context, request)
 
     def __call__(self):
-        bac = getToolByName(self.context, 'bika_analysis_catalog')
+        pc = getToolByName(self.context, 'portal_catalog')
         self.report_content = {}
         parm_lines = {}
         parms = []
@@ -28,7 +28,7 @@ class Report(BrowserView):
         count_all = 0
 
         query = {'portal_type': 'Analysis',
-                 'getRetested': True,
+                 'Retested': True,
                  'sort_order': 'reverse'}
 
         date_query = formatDateQuery(self.context, 'Received')
@@ -100,7 +100,7 @@ class Report(BrowserView):
         categories = {}
         services = {}
 
-        for a_proxy in bac(query):
+        for a_proxy in pc(query):
             analysis = a_proxy.getObject()
 
             dataline = []

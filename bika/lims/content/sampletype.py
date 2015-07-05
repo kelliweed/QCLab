@@ -151,12 +151,12 @@ class SampleType(BaseContent, HistoryAwareMixin):
             relation to be equal on both sides, here.
             It's done strangely, because it may be required to behave strangely.
         """
-        bsc = getToolByName(self, 'bika_setup_catalog')
+        pc = getToolByName(self, 'portal_catalog')
         ## convert value to objects
         if value and type(value) == str:
-            value = [bsc(UID=value)[0].getObject(),]
+            value = [pc(UID=value)[0].getObject(),]
         elif value and type(value) in (list, tuple) and type(value[0]) == str:
-            value = [bsc(UID=uid)[0].getObject() for uid in value if uid]
+            value = [pc(UID=uid)[0].getObject() for uid in value if uid]
         ## Find all SamplePoints that were removed
         existing = self.Schema()['SamplePoints'].get(self)
         removed = existing and [s for s in existing if s not in value] or []
@@ -189,9 +189,9 @@ registerType(SampleType, PROJECTNAME)
 
 def SampleTypes(self, instance=None, allow_blank=False):
     instance = instance or self
-    bsc = getToolByName(instance, 'bika_setup_catalog')
+    pc = getToolByName(instance, 'portal_catalog')
     items = []
-    for st in bsc(portal_type='SampleType',
+    for st in pc(portal_type='SampleType',
                   inactive_state='active',
                   sort_on = 'sortable_title'):
         items.append((st.UID, st.Title))

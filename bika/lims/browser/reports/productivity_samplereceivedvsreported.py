@@ -59,7 +59,7 @@ class Report(BrowserView):
             analyses = sample.getAnalyses({})
             for analysis in analyses:
                 analysis = analysis.getObject()
-                if not (analysis.getDateAnalysisPublished() is None):
+                if not (analysis.getDatePublished() is None):
                     published = True
                     break
 

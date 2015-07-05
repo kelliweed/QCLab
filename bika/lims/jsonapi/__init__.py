@@ -1,5 +1,6 @@
 from Products.Archetypes.config import TOOL_NAME
 from Products.CMFCore.utils import getToolByName
+from Products.CMFPlone.utils import safe_unicode
 from zExceptions import BadRequest
 import json
 import Missing
@@ -110,10 +111,10 @@ def resolve_request_lookup(context, request, fieldname):
             if index in contentFilter:
                 v = contentFilter[index]
                 v = v if type(v) in (list, tuple) else [v, ]
-                v.append(value)
+                v.append(safe_unicode(value))
                 contentFilter[index] = v
             else:
-                contentFilter[index] = value
+                contentFilter[index] = safe_unicode(value)
         # search all possible catalogs
         if 'portal_type' in contentFilter:
             catalogs = at.getCatalogsByType(contentFilter['portal_type'])
@@ -125,7 +126,10 @@ def resolve_request_lookup(context, request, fieldname):
         else:
             catalogs = [getToolByName(context, 'portal_catalog'), ]
         for catalog in catalogs:
-            _brains = catalog(contentFilter)
+            try:
+                _brains = catalog(contentFilter)
+            except UnicodeDecodeError:
+                import pdb;pdb.set_trace()
             if _brains:
                 brains.extend(_brains)
                 break
@@ -150,6 +154,8 @@ def set_fields_from_request(obj, request):
             if value:
                 brains = resolve_request_lookup(obj, request, fieldname)
                 if not brains:
+                    import pdb;pdb.set_trace()
+                    resolve_request_lookup(obj, request, fieldname)
                     raise BadRequest("Can't resolve reference: %s" % fieldname)
             if schema[fieldname].multiValued:
                 value = [b.UID for b in brains] if brains else []

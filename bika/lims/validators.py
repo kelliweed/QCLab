@@ -73,8 +73,8 @@ class ServiceKeywordValidator:
         # check the value against all AnalysisService keywords
         # this has to be done from catalog so we don't
         # clash with ourself
-        bsc = getToolByName(instance, 'bika_setup_catalog')
-        services = bsc(portal_type='AnalysisService', getKeyword=value)
+        pc = getToolByName(instance, 'portal_catalog')
+        services = pc(portal_type='AnalysisService', Keyword=value)
         for service in services:
             if service.UID != instance.UID():
                 msg = _("Validation failed: '${title}': This keyword "
@@ -88,7 +88,7 @@ class ServiceKeywordValidator:
         our_calc_uid = calc and calc.UID() or ''
 
         # check the value against all Calculation Interim Field ids
-        calcs = [c for c in bsc(portal_type='Calculation')]
+        calcs = [c for c in pc(portal_type='Calculation')]
         for calc in calcs:
             calc = calc.getObject()
             interim_fields = calc.getInterimFields()
@@ -128,7 +128,7 @@ class InterimFieldsValidator:
         interim_fields = form.get(fieldname, [])
 
         translate = getToolByName(instance, 'translation_service').translate
-        bsc = getToolByName(instance, 'bika_setup_catalog')
+        pc = getToolByName(instance, 'portal_catalog')
 
         # We run through the validator once per form submit, and check all values
         # this value in request prevents running once per subfield value.
@@ -175,7 +175,7 @@ class InterimFieldsValidator:
             return instance.REQUEST[key]
 
         # check all keywords against all AnalysisService keywords for dups
-        services = bsc(portal_type='AnalysisService', getKeyword=value)
+        services = pc(portal_type='AnalysisService', Keyword=value)
         if services:
             msg = _("Validation failed: '${title}': "
                     "This keyword is already in use by service '${used_by}'",
@@ -186,7 +186,7 @@ class InterimFieldsValidator:
 
         # any duplicated interimfield titles must share the same keyword
         # any duplicated interimfield keywords must share the same title
-        calcs = bsc(portal_type='Calculation')
+        calcs = pc(portal_type='Calculation')
         keyword_titles = {}
         title_keywords = {}
         for calc in calcs:
@@ -241,14 +241,14 @@ class FormulaValidator:
         interim_fields = form.get('InterimFields')
 
         translate = getToolByName(instance, 'translation_service').translate
-        bsc = getToolByName(instance, 'bika_setup_catalog')
+        pc = getToolByName(instance, 'portal_catalog')
         interim_keywords = interim_fields and \
             [f['keyword'] for f in interim_fields] or []
         keywords = re.compile(r"\[([^\.^\]]+)\]").findall(value)
 
         for keyword in keywords:
             # Check if the service keyword exists and is active.
-            dep_service = bsc(getKeyword=keyword, inactive_state="active")
+            dep_service = pc(getKeyword=keyword, inactive_state="active")
             if not dep_service and \
                not keyword in interim_keywords:
                 msg = _("Validation failed: Keyword '${keyword}' is invalid",
@@ -375,7 +375,7 @@ class ResultOptionsValidator:
         form_value = form.get(fieldname)
 
         translate = getToolByName(instance, 'translation_service').translate
-        # bsc = getToolByName(instance, 'bika_setup_catalog')
+        # pc = getToolByName(instance, 'portal_catalog')
 
         # ResultValue must always be a number
         for field in form_value:
@@ -407,7 +407,7 @@ class RestrictedCategoriesValidator:
         # form = request.get('form', {})
 
         translate = getToolByName(instance, 'translation_service').translate
-        bsc = getToolByName(instance, 'bika_setup_catalog')
+        pc = getToolByName(instance, 'portal_catalog')
         # uc = getToolByName(instance, 'uid_catalog')
 
         failures = []
@@ -415,8 +415,8 @@ class RestrictedCategoriesValidator:
         for category in value:
             if not category:
                 continue
-            services = bsc(portal_type="AnalysisService",
-                           getCategoryUID=category)
+            services = pc(portal_type="AnalysisService",
+                           CategoryUID=category)
             for service in services:
                 service = service.getObject()
                 calc = service.getCalculation()
@@ -463,7 +463,7 @@ class PrePreservationValidator:
             return True
 
         translate = getToolByName(instance, 'translation_service').translate
-        # bsc = getToolByName(instance, 'bika_setup_catalog')
+        # pc = getToolByName(instance, 'portal_catalog')
 
         if not preservation:
             msg = _("Validation failed: PrePreserved containers "

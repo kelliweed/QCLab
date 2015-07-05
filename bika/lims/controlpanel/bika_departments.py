@@ -21,7 +21,7 @@ class DepartmentsView(BikaListingView):
 
     def __init__(self, context, request):
         super(DepartmentsView, self).__init__(context, request)
-        self.catalog = 'bika_setup_catalog'
+
         self.contentFilter = {'portal_type': 'Department',
                               'sort_on': 'sortable_title'}
         self.context_actions = {_('Add'):
@@ -110,10 +110,9 @@ class Departments(ATFolder):
 
     def getContacts(self):
         pc = getToolByName(self, 'portal_catalog')
-        bsc = getToolByName(self, 'bika_setup_catalog')
         # fallback - all Lab Contacts
         pairs = []
-        for contact in bsc(portal_type = 'LabContact',
+        for contact in pc(portal_type = 'LabContact',
                            inactive_state = 'active',
                            sort_on = 'sortable_title'):
             pairs.append((contact.UID, contact.Title))

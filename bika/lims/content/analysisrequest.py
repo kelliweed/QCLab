@@ -43,18 +43,6 @@ except:
     from zope.app.component.hooks import getSite
 
 
-@indexer(IAnalysisRequest)
-def Priority(instance):
-    priority = instance.getPriority()
-    if priority:
-        return priority.getSortKey()
-
-@indexer(IAnalysisRequest)
-def BatchUID(instance):
-    batch = instance.getBatch()
-    if batch:
-        return batch.UID()
-
 schema = BikaSchema.copy() + Schema((
     StringField(
         'RequestID',
@@ -300,7 +288,6 @@ schema = BikaSchema.copy() + Schema((
                      'published':         {'view': 'visible', 'edit': 'invisible'},
                      'invalid':           {'view': 'visible', 'edit': 'invisible'},
                      },
-            catalog_name='bika_setup_catalog',
             colModel=[
                 {'columnName': 'Title', 'width': '30',
                  'label': _('Title'), 'align': 'left'},
@@ -344,7 +331,6 @@ schema = BikaSchema.copy() + Schema((
                      'published':         {'view': 'visible', 'edit': 'invisible'},
                      'invalid':           {'view': 'visible', 'edit': 'invisible'},
                      },
-            catalog_name='bika_setup_catalog',
             base_query={'inactive_state': 'active'},
             showOn=True,
         ),
@@ -377,7 +363,6 @@ schema = BikaSchema.copy() + Schema((
                      'published':         {'view': 'visible', 'edit': 'invisible'},
                      'invalid':           {'view': 'visible', 'edit': 'invisible'},
                      },
-            catalog_name='bika_setup_catalog',
             base_query={'inactive_state': 'active'},
             showOn=True,
         ),
@@ -496,7 +481,6 @@ schema = BikaSchema.copy() + Schema((
                      'published':         {'view': 'visible', 'edit': 'invisible'},
                      'invalid':           {'view': 'visible', 'edit': 'invisible'},
                      },
-            catalog_name='bika_setup_catalog',
             base_query={'inactive_state': 'active'},
             showOn=True,
         ),
@@ -530,7 +514,6 @@ schema = BikaSchema.copy() + Schema((
                      'published':         {'view': 'visible', 'edit': 'invisible'},
                      'invalid':           {'view': 'visible', 'edit': 'invisible'},
                      },
-            catalog_name='bika_setup_catalog',
             colModel=[
                 {'columnName': 'contextual_title',
                  'width': '30',
@@ -581,7 +564,6 @@ schema = BikaSchema.copy() + Schema((
                      'published':         {'view': 'visible', 'edit': 'visible'},
                      'invalid':           {'view': 'visible', 'edit': 'invisible'},
                      },
-            catalog_name='bika_setup_catalog',
             base_query={'inactive_state': 'active'},
             showOn=True,
         ),
@@ -615,7 +597,6 @@ schema = BikaSchema.copy() + Schema((
                      'published':         {'view': 'visible', 'edit': 'invisible'},
                      'invalid':           {'view': 'visible', 'edit': 'invisible'},
                      },
-            catalog_name='bika_setup_catalog',
             base_query={'inactive_state': 'active'},
             showOn=True,
         ),
@@ -649,7 +630,6 @@ schema = BikaSchema.copy() + Schema((
                      'published':         {'view': 'visible', 'edit': 'invisible'},
                      'invalid':           {'view': 'visible', 'edit': 'invisible'},
                      },
-            catalog_name='bika_setup_catalog',
             base_query={'inactive_state': 'active'},
             showOn=True,
         ),
@@ -771,7 +751,6 @@ schema = BikaSchema.copy() + Schema((
                      'published':         {'view': 'visible', 'edit': 'invisible'},
                      'invalid':           {'view': 'visible', 'edit': 'invisible'},
                      },
-            catalog_name='bika_setup_catalog',
             base_query={'inactive_state': 'active'},
             showOn=True,
         ),
@@ -806,7 +785,6 @@ schema = BikaSchema.copy() + Schema((
                      'published':         {'view': 'visible', 'edit': 'invisible'},
                      'invalid':           {'view': 'visible', 'edit': 'invisible'},
                      },
-            catalog_name='bika_setup_catalog',
             base_query={'inactive_state': 'active'},
             showOn=True,
         ),
@@ -841,7 +819,6 @@ schema = BikaSchema.copy() + Schema((
                      'published':         {'view': 'visible', 'edit': 'invisible'},
                      'invalid':           {'view': 'visible', 'edit': 'invisible'},
                      },
-            catalog_name='bika_setup_catalog',
             base_query={'inactive_state': 'active'},
             showOn=True,
         ),
@@ -1202,7 +1179,6 @@ schema = BikaSchema.copy() + Schema((
                      'published':         {'view': 'visible', 'edit': 'invisible'},
                      'invalid':           {'view': 'visible', 'edit': 'invisible'},
                      },
-            catalog_name='bika_setup_catalog',
             base_query={'inactive_state': 'active'},
             colModel=[
                 {'columnName': 'Title', 'width': '30',
@@ -1374,10 +1350,8 @@ class AnalysisRequest(BaseFolder):
 
     def setDefaultPriority(self):
         """ compute default priority """
-        bsc = getToolByName(self, 'bika_setup_catalog')
-        priorities = bsc(
-            portal_type='ARPriority',
-            )
+        pc = getToolByName(self, 'portal_catalog')
+        priorities = pc(portal_type='ARPriority')
         for brain in priorities:
             obj = brain.getObject()
             if obj.getIsDefault():
@@ -1792,10 +1766,10 @@ class AnalysisRequest(BaseFolder):
             # portal_factory
             return []
         stt = self.getSample().getSampleType().Title()
-        bsc = getToolByName(self, 'bika_setup_catalog')
+        pc = getToolByName(self, 'portal_catalog')
         # 1 or 2: rr = Client specs where (spec.Title) matches (ar.SampleType.Title)
         for folder in self.aq_parent, self.bika_setup.bika_analysisspecs:
-            proxies = bsc(portal_type='AnalysisSpec',
+            proxies = pc(portal_type='AnalysisSpec',
                           SampleTypeTitle=stt,
                           ClientUID=folder.UID())
             if proxies:

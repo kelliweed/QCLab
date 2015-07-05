@@ -559,9 +559,9 @@ class BikaSetup(folder.ATFolder):
     def getAnalysisServices(self):
         """
         """
-        bsc = getToolByName(self, 'bika_setup_catalog')
+        pc = getToolByName(self, 'portal_catalog')
         items = [('','')] + [(o.UID, o.Title) for o in
-                               bsc(portal_type='AnalysisService',
+                               pc(portal_type='AnalysisService',
                                    inactive_state = 'active')]
         items.sort(lambda x,y: cmp(x[1], y[1]))
         return DisplayList(list(items))

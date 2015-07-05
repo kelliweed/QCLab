@@ -55,9 +55,9 @@ class ReferenceResultsView(BikaListingView):
         ]
 
     def folderitems(self):
-        bsc = getToolByName(self.context, 'bika_setup_catalog')
+        pc = getToolByName(self.context, 'portal_catalog')
         self.categories = []
-        services = bsc(portal_type='AnalysisService',
+        services = pc(portal_type='AnalysisService',
                        sort_on='sortable_title')
         items = []
         for service in services:

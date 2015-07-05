@@ -685,7 +685,6 @@ function AnalysisRequestAddByCol() {
             return d.promise()
         }
         var request_data = {
-            catalog_name: 'bika_setup_catalog',
             UID: spec_uid
         }
         window.bika.lims.jsonapi_read(request_data, function (data) {
@@ -744,7 +743,6 @@ function AnalysisRequestAddByCol() {
                                  "td[arnum='" + arnum + "'] " +
                                  "input[id$='_uid']")
         var request_data = {
-            catalog_name: "bika_setup_catalog",
             portal_type: "AnalysisSpec",
             SampleTypeUID: st_uid,
             include_fields: ["Title", "UID", "ResultsRange"]
@@ -870,7 +868,6 @@ function AnalysisRequestAddByCol() {
         template_unset(arnum)
         var d = $.Deferred()
         var request_data = {
-            catalog_name: "bika_setup_catalog",
             portal_type: "AnalysisProfile",
             title: profile_title
         }
@@ -920,7 +917,6 @@ function AnalysisRequestAddByCol() {
                    "td[arnum='" + arnum + "'] ")
         var title = $(td).find("input[type='text']").val()
         var request_data = {
-            catalog_name: "bika_setup_catalog",
             title: title,
             include_fields: [
                 "SampleType",

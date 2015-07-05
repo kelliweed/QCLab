@@ -100,7 +100,7 @@ registerType(StorageLocation, PROJECTNAME)
 
 #def StorageLocations(self, instance=None, allow_blank=True, lab_only=True):
 #    instance = instance or self
-#    bsc = getToolByName(instance, 'bika_setup_catalog')
+#    pc = getToolByName(instance, 'portal_catalog')
 #    items = []
 #    contentFilter = {
 #        'portal_type'  : 'StorageLocation',
@@ -109,7 +109,7 @@ registerType(StorageLocation, PROJECTNAME)
 #    if lab_only:
 #        lab_path = instance.bika_setup.bika_storagelocations.getPhysicalPath()
 #        contentFilter['path'] = {"query": "/".join(lab_path), "level" : 0 }
-#    for sp in bsc(contentFilter):
+#    for sp in pc(contentFilter):
 #        items.append((sp.UID, sp.Title))
 #    items = allow_blank and [['','']] + list(items) or list(items)
 #    return DisplayList(items)

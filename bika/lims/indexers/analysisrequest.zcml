@@ -1,0 +1,19 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    xmlns:five="http://namespaces.zope.org/five"
+    xmlns:i18n="http://namespaces.zope.org/i18n"
+    i18n_domain="bika">
+
+    <adapter name="RequestID"        factory=".analysisrequest.RequestID"/>
+    <adapter name="Retested"         factory=".analysisrequest.Retested"/>
+    <adapter name="Invoiced"         factory=".analysisrequest.Invoiced"/>
+    <adapter name="ProfileTitle"     factory=".analysisrequest.ProfileTitle"/>
+    <adapter name="Analysts"         factory=".analysisrequest.Analysts"/>
+    <adapter name="BatchUID"         factory=".analysisrequest.BatchUID"/>
+    <adapter name="SampleID"         factory=".analysisrequest.SampleID"/>
+    <adapter name="SampleUID"        factory=".analysisrequest.SampleUID"/>
+    <adapter name="Sampler"          factory=".analysisrequest.Sampler"/>
+    <adapter name="ClientSampleID"   factory=".analysisrequest.ClientSampleID"/>
+
+</configure>

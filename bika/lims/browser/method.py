@@ -20,8 +20,8 @@ class ajaxGetInstruments(BrowserView):
             plone.protect.CheckAuthenticator(self.request)
         except Forbidden:
             return json.dumps(instruments)
-        bsc = getToolByName(self, 'portal_catalog')
-        method = bsc(portal_type='Method', UID=self.request.get("uid", '0'))
+        pc = getToolByName(self, 'portal_catalog')
+        method = pc(portal_type='Method', UID=self.request.get("uid", '0'))
         if method and len(method) == 1:
             method = method[0].getObject()
             for i in method.getInstruments():

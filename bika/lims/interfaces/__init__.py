@@ -397,16 +397,6 @@ class IWorksheetTemplates(Interface):
 
     ""
 
-class IBikaAnalysisCatalog(Interface):
-
-    "Marker interface for custom catalog"
-
-
-class IBikaSetupCatalog(Interface):
-
-    "Marker interface for custom catalog"
-
-
 class IIdServer(Interface):
 
     """ Interface for ID server """

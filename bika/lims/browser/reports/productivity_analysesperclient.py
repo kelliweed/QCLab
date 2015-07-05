@@ -20,7 +20,6 @@ class Report(BrowserView):
         # get all the data into datalines
 
         pc = getToolByName(self.context, 'portal_catalog')
-        bac = getToolByName(self.context, 'bika_analysis_catalog')
         rc = getToolByName(self.context, 'reference_catalog')
 
         self.report_content = {}
@@ -116,7 +115,7 @@ class Report(BrowserView):
             dataline.append(dataitem)
 
             query['portal_type'] = 'Analysis'
-            analyses = bac(query)
+            analyses = pc(query)
             count_analyses = len(analyses)
             dataitem = {'value': count_analyses}
             dataline.append(dataitem)

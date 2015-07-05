@@ -87,7 +87,6 @@ class ReferenceAnalysesView(AnalysesView):
 
     def __init__(self, context, request):
         AnalysesView.__init__(self, context, request)
-        self.catalog = 'bika_analysis_catalog'
         self.contentFilter = {'portal_type':'ReferenceAnalysis',
                               'path': {'query':"/".join(self.context.getPhysicalPath()),
                                        'level':0}}
@@ -98,7 +97,7 @@ class ReferenceAnalysesView(AnalysesView):
 
         self.columns = {
             'id': {'title': _('ID'), 'toggle':False},
-            'getReferenceAnalysesGroupID': {'title': _('QC Sample ID'), 'toggle': True},
+            'ReferenceAnalysesGroupID': {'title': _('QC Sample ID'), 'toggle': True},
             'Category': {'title': _('Category'), 'toggle':True},
             'Service': {'title': _('Service'), 'toggle':True},
             'Worksheet': {'title': _('Worksheet'), 'toggle':True},
@@ -125,7 +124,7 @@ class ReferenceAnalysesView(AnalysesView):
              'contentFilter':{},
              'transitions': [],
              'columns':['id',
-                        'getReferenceAnalysesGroupID',
+                        'ReferenceAnalysesGroupID',
                         'Category',
                         'Service',
                         'Worksheet',
@@ -161,7 +160,7 @@ class ReferenceAnalysesView(AnalysesView):
             serviceref = "%s (%s)" % (items[x]['Service'], items[x]['Keyword'])
             trows = self.anjson.get(serviceref, {});
             anrows = trows.get(qcid, []);
-            anid = '%s.%s' % (items[x]['getReferenceAnalysesGroupID'],
+            anid = '%s.%s' % (items[x]['ReferenceAnalysesGroupID'],
                               items[x]['id'])
             rr = obj.aq_parent.getResultsRangeDict()
             uid = service.UID()
@@ -205,7 +204,7 @@ class ReferenceResultsView(BikaListingView):
     """
     def __init__(self, context, request):
         super(ReferenceResultsView, self).__init__(context, request)
-        bsc = getToolByName(context, 'bika_setup_catalog')
+        pc = getToolByName(context, 'portal_catalog')
         self.title = self.context.translate(_("Reference Values"))
         self.description = self.context.translate(_(
                              "Click on Analysis Categories (against shaded background) "
@@ -244,7 +243,7 @@ class ReferenceResultsView(BikaListingView):
     def folderitems(self):
         items = []
         uc = getToolByName(self.context, 'uid_catalog')
-        # not using <self.contentsMethod=bsc>
+        # not using <self.contentsMethod=catalog>
         for x in self.context.getReferenceResults():
             service = uc(UID=x['uid'])[0].getObject()
             item = {

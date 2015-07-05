@@ -30,11 +30,10 @@ import json
 class AnalysesView(BikaListingView):
     """ Displays a list of Analyses in a table.
         Visible InterimFields from all analyses are added to self.columns[].
-        Keyword arguments are passed directly to bika_analysis_catalog.
+        Keyword arguments are passed directly to portal_catalog.
     """
 
     def __init__(self, context, request, **kwargs):
-        self.catalog = "bika_analysis_catalog"
         self.contentFilter = dict(kwargs)
         self.contentFilter['portal_type'] = 'Analysis'
         self.contentFilter['sort_on'] = 'sortable_title'
@@ -201,8 +200,8 @@ class AnalysesView(BikaListingView):
                             'ResultText': method.Title()})
         else:
             # All active methods
-            bsc = getToolByName(self.context, 'bika_setup_catalog')
-            brains = bsc(portal_type='Method', inactive_state='active')
+            pc = getToolByName(self.context, 'portal_catalog')
+            brains = pc(portal_type='Method', inactive_state='active')
             for brain in brains:
                 ret.append({'ResultValue': brain.UID,
                             'ResultText': brain.title})
@@ -236,8 +235,8 @@ class AnalysesView(BikaListingView):
 
         else:
             # All active instruments
-            bsc = getToolByName(self.context, 'bika_setup_catalog')
-            brains = bsc(portal_type='Instrument', inactive_state='active')
+            pc = getToolByName(self.context, 'portal_catalog')
+            brains = pc(portal_type='Instrument', inactive_state='active')
             instruments = [brain.getObject() for brain in brains]
 
         for ins in instruments:
@@ -269,14 +268,14 @@ class AnalysesView(BikaListingView):
 
     def folderitems(self):
         rc = getToolByName(self.context, REFERENCE_CATALOG)
-        bsc = getToolByName(self.context, 'bika_setup_catalog')
+        pc = getToolByName(self.context, 'portal_catalog')
         workflow = getToolByName(self.context, 'portal_workflow')
         mtool = getToolByName(self.context, 'portal_membership')
         checkPermission = mtool.checkPermission
         if not self.allow_edit:
             can_edit_analyses = False
         else:
-            if self.contentFilter.get('getPointOfCapture', '') == 'field':
+            if self.contentFilter.get('PointOfCapture', '') == 'field':
                 can_edit_analyses = checkPermission(EditFieldResults, self.context)
             else:
                 can_edit_analyses = checkPermission(EditResults, self.context)
@@ -415,7 +414,7 @@ class AnalysesView(BikaListingView):
 
             # permission to edit this item's results
             # Editing Field Results is possible while in Sample Due.
-            poc = self.contentFilter.get("getPointOfCapture", 'lab')
+            poc = self.contentFilter.get("PointOfCapture", 'lab')
             can_edit_analysis = self.allow_edit and context_active and \
                 ( (poc == 'field' and getSecurityManager().checkPermission(EditFieldResults, obj))
                   or
@@ -836,13 +835,13 @@ class QCAnalysesView(AnalysesView):
 
     def __init__(self, context, request, **kwargs):
         AnalysesView.__init__(self, context, request, **kwargs)
-        self.columns['getReferenceAnalysesGroupID'] = {'title': _('QC Sample ID'),
+        self.columns['ReferenceAnalysesGroupID'] = {'title': _('QC Sample ID'),
                                                        'sortable': False}
         self.columns['Worksheet'] = {'title': _('Worksheet'),
                                                 'sortable': False}
         self.review_states[0]['columns'] = ['Service',
                                             'Worksheet',
-                                            'getReferenceAnalysesGroupID',
+                                            'ReferenceAnalysesGroupID',
                                             'Partition',
                                             'Method',
                                             'Instrument',
@@ -854,7 +853,6 @@ class QCAnalysesView(AnalysesView):
 
         qcanalyses = context.getQCAnalyses()
         asuids = [an.UID() for an in qcanalyses]
-        self.catalog = 'bika_analysis_catalog'
         self.contentFilter = {'UID': asuids,
                               'sort_on': 'sortable_title'}
         self.icon = self.portal_url + \

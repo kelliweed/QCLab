@@ -33,9 +33,9 @@ registerType(SampleMatrix, PROJECTNAME)
 
 def SampleMatrices(self, instance=None, allow_blank=False):
     instance = instance or self
-    bsc = getToolByName(instance, 'bika_setup_catalog')
+    pc = getToolByName(instance, 'portal_catalog')
     items = []
-    for sm in bsc(portal_type='SampleMatrix',
+    for sm in pc(portal_type='SampleMatrix',
                   inactive_state='active',
                   sort_on = 'sortable_title'):
         items.append((sm.UID, sm.Title))

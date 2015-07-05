@@ -5,8 +5,52 @@
     xmlns:i18n="http://namespaces.zope.org/i18n"
     i18n_domain="bika">
 
-    <adapter name="DateReceived" factory=".analysisrequest.DateReceived" />
+    <!-- Indexers for specific types -->
+    <include file="analysis.zcml"/>
+    <include file="analysisrequest.zcml"/>
+    <include file="sample.zcml"/>
+    <include file="samplepartition.zcml"/>
+    <include file="referencesample.zcml"/>
 
-    <adapter name="DateReceived" factory=".sample.DateReceived" />
+    <!-- Indexes ported from bika setup catalog into portal_catalog -->
+    <include file="bika_setup.zcml"/>
+
+    <!-- Indexers that are applied generally.  This code should attempt to
+    fill all indexes possible, as fast as possible, but generically enough
+    to apply to as many object types as possible. -->
+
+    <adapter name="BatchDate"         factory=".BatchDate"/>
+    <adapter name="SamplingDate"      factory=".SamplingDate"/>
+    <adapter name="DisposalDate"      factory=".DisposalDate"/>
+    <adapter name="ExpiryDate"        factory=".ExpiryDate"/>
+    <adapter name="DueDate"           factory=".DueDate"/>
+    <adapter name="DateOpened"        factory=".DateOpened"/>
+    <adapter name="DateReceived"      factory=".DateReceived"/>
+    <adapter name="DateDisposed"      factory=".DateDisposed"/>
+    <adapter name="DateExpired"       factory=".DateExpired"/>
+    <adapter name="DatePublished"     factory=".DatePublished"/>
+    <adapter name="DateSampled"       factory=".DateSampled"/>
+    <adapter name="Priority"          factory=".Priority"/>
+    <adapter name="ParentUID"         factory=".ParentUID"/>
+    <adapter name="Fullname"          factory=".Fullname"/>
+    <adapter name="Username"          factory=".Username"/>
+    <adapter name="Keyword"           factory=".Keyword"/>
+    <adapter name="description"       factory=".description"/>
+    <adapter name="title"             factory=".title"/>
+    <adapter name="ServiceTitle"      factory=".ServiceTitle"/>
+    <adapter name="ServiceUID"        factory=".ServiceUID"/>
+    <adapter name="CategoryTitle"     factory=".CategoryTitle"/>
+    <adapter name="CategoryUID"       factory=".CategoryUID"/>
+    <adapter name="SamplePointTitle"  factory=".SamplePointTitle"/>
+    <adapter name="SamplePointUID"    factory=".SamplePointUID"/>
+    <adapter name="SampleTypeTitle"   factory=".SampleTypeTitle"/>
+    <adapter name="SampleTypeUID"     factory=".SampleTypeUID"/>
+    <adapter name="Analyst"           factory=".Analyst"/>
+    <adapter name="Analysts"          factory=".Analysts"/>
+    <adapter name="ClientTitle"       factory=".ClientTitle"/>
+    <adapter name="ClientUID"         factory=".ClientUID"/>
+    <adapter name="ClientOrderNumber" factory=".ClientOrderNumber"/>
+    <adapter name="ClientReference"   factory=".ClientReference"/>
+    <adapter name="ContactTitle"      factory=".ContactTitle"/>
 
 </configure>

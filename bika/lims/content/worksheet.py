@@ -22,13 +22,6 @@ from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.utils import safe_unicode, _createObjectByType
 from zope.interface import implements
 
-@indexer(IWorksheet)
-def Priority(instance):
-    priority = instance.getPriority()
-    if priority:
-        return priority.getSortKey()
-
-
 schema = BikaSchema.copy() + Schema((
     HistoryAwareReferenceField('WorksheetTemplate',
         allowed_types=('WorksheetTemplate',),
@@ -233,7 +226,7 @@ class Worksheet(BaseFolder, HistoryAwareMixin):
             # the same Reference Sample and same Worksheet)
             # https://github.com/bikalabs/Bika-LIMS/issues/931
             ref_analysis.setReferenceAnalysesGroupID(refgid)
-            ref_analysis.reindexObject(idxs=["getReferenceAnalysesGroupID"])
+            ref_analysis.reindexObject(idxs=["ReferenceAnalysesGroupID"])
 
             # copy the interimfields
             if calc:
@@ -307,7 +300,7 @@ class Worksheet(BaseFolder, HistoryAwareMixin):
                 postfix = str(postfix).zfill(int(2))
                 refgid = '%s-D%s' % (part, postfix)
             duplicate.setReferenceAnalysesGroupID(refgid)
-            duplicate.reindexObject(idxs=["getReferenceAnalysesGroupID"])
+            duplicate.reindexObject(idxs=["ReferenceAnalysesGroupID"])
 
             duplicate.processForm()
             if calc:
@@ -332,7 +325,6 @@ class Worksheet(BaseFolder, HistoryAwareMixin):
             is allowed
         """
         rc = getToolByName(self, REFERENCE_CATALOG)
-        bac = getToolByName(self, "bika_analysis_catalog")
         pc = getToolByName(self, 'portal_catalog')
 
         layout = self.getLayout()
@@ -340,8 +332,8 @@ class Worksheet(BaseFolder, HistoryAwareMixin):
         services = wst.getService()
         wst_service_uids = [s.UID() for s in services]
 
-        analyses = bac(portal_type='Analysis',
-                       getServiceUID=wst_service_uids,
+        analyses = pc(portal_type='Analysis',
+                       ServiceUID=wst_service_uids,
                        review_state='sample_received',
                        worksheetanalysis_review_state='unassigned',
                        cancellation_state = 'active')

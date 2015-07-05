@@ -1,3 +1,4 @@
+from Products.CMFCore.utils import getToolByName
 from bika.lims.utils import tmpID
 from Products.CMFPlone.utils import _createObjectByType
 from magnitude import mg
@@ -20,7 +21,8 @@ def set_container_preservation(context, container, data):
     if container:
         if type(container) in (list, tuple):
             container = container[0]
-        proxies = context.bika_setup_catalog(UID=container)
+        pc = getToolByName(context, 'portal_catalog')
+        proxies = pc(UID=container)
         container = [_p.getObject() for _p in proxies]
         container = container[0] if container else None
         if container:
@@ -43,7 +45,8 @@ def create_samplepartition(context, data, analyses=[]):
         containers = []
         if type(container[0]) is str:
             # UIDs
-            containers = context.bika_setup_catalog(UID=container)
+            pc = getToolByName(context, 'portal_catalog')
+            containers = pc (UID=container)
             containers = [_p.getObject() for _p in containers]
         elif hasattr(container[0], 'getObject'):
             # Brains

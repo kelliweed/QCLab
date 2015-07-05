@@ -79,9 +79,9 @@ class LabContact(Person):
             self.getUsername()) is not None
 
     def getDepartments(self):
-        bsc = getToolByName(self, 'bika_setup_catalog')
+        pc = getToolByName(self, 'portal_catalog')
         items = [('','')] + [(o.UID, o.Title) for o in
-                               bsc(portal_type='Department',
+                               pc(portal_type='Department',
                                    inactive_state = 'active')]
         o = self.getDepartment()
         if o and o.UID() not in [i[0] for i in items]:

@@ -61,7 +61,7 @@ class PublishView(BrowserView):
         self.reporter = self.user_fullname(self.username)
         self.reporter_email = self.user_email(self.username)
         self.reporter_signature = ""
-        c = [x for x in self.bika_setup_catalog(portal_type='LabContact')
+        c = [x for x in self.portal_catalog(portal_type='LabContact')
              if x.getObject().getUsername() == self.username]
         if c:
             sf = c[0].getObject().getSignature()

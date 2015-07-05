@@ -21,7 +21,6 @@ function CommonUtils() {
         window.bika.lims.AnalysisService = window.bika.lims.AnalysisService || {
             Dependants: function(service_uid){
                 var request_data = {
-                    catalog_name: "bika_setup_catalog",
                     UID: service_uid
                 };
                 var deps = {};
@@ -38,7 +37,6 @@ function CommonUtils() {
             },
             Dependencies: function(service_uid){
                 var request_data = {
-                    catalog_name: "bika_setup_catalog",
                     UID: service_uid
                 };
                 var deps = {};

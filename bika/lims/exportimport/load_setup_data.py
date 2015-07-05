@@ -41,9 +41,9 @@ class LoadSetupData(BrowserView):
             src_mutator = src_field.getMutator(src_obj)
             src_accessor = src_field.getAccessor(src_obj)
 
-            tool = getToolByName(self.context, d['dest_catalog'])
+            pc = getToolByName(self.context, "portal_catalog")
             try:
-                proxies = tool(d['dest_query'])
+                proxies = pc(d['dest_query'])
             except:
                 continue
             if len(proxies) > 0:
@@ -111,13 +111,6 @@ class LoadSetupData(BrowserView):
                 raise Exception("%s unsolved deferred references: %s" % (
                     len(self.deferred), self.deferred))
             check = new
-
-        logger.info("Rebuilding bika_setup_catalog")
-        bsc = getToolByName(self.context, 'bika_setup_catalog')
-        bsc.clearFindAndRebuild()
-        logger.info("Rebuilding bika_analysis_catalog")
-        bac = getToolByName(self.context, 'bika_analysis_catalog')
-        bac.clearFindAndRebuild()
 
         message = PMF("Changes saved.")
         self.context.plone_utils.addPortalMessage(message)

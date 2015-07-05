@@ -286,9 +286,9 @@ class Batch(ATFolder):
 
     def BatchLabelVocabulary(self):
         """ return all batch labels """
-        bsc = getToolByName(self, 'bika_setup_catalog')
+        pc = getToolByName(self, 'portal_catalog')
         ret = []
-        for p in bsc(portal_type='BatchLabel',
+        for p in pc(portal_type='BatchLabel',
                      inactive_state='active',
                      sort_on='sortable_title'):
             ret.append((p.UID, p.Title))
@@ -339,8 +339,3 @@ class Batch(ATFolder):
 
 
 registerType(Batch, PROJECTNAME)
-
-
-@indexer(IBatch)
-def BatchDate(instance):
-    return instance.Schema().getField('BatchDate').get(instance)

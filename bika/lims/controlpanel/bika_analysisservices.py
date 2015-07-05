@@ -127,7 +127,7 @@ class AnalysisServicesView(BikaListingView):
         """
 
         super(AnalysisServicesView, self).__init__(context, request)
-        self.catalog = 'bika_setup_catalog'
+
         self.contentFilter = {'portal_type': 'AnalysisService',
                               'sort_on': 'sortable_title'}
         self.context_actions = {
@@ -149,13 +149,13 @@ class AnalysisServicesView(BikaListingView):
             self.show_categories = True
             self.expand_all_categories = False
             self.ajax_categories = True
-            self.category_index = 'getCategoryTitle'
+            self.category_index = 'CategoryTitle'
 
         self.columns = {
             'Title': {'title': _('Service'),
                       'index': 'sortable_title'},
             'Keyword': {'title': _('Keyword'),
-                        'index': 'getKeyword'},
+                        'index': 'Keyword'},
             'Category': {'title': _('Category')},
             'Method': {'title': _('Method'),
                        'toggle': False},
@@ -169,6 +169,10 @@ class AnalysisServicesView(BikaListingView):
             'DuplicateVariation': {'title': _('Dup Var'),
                                    'toggle': False},
             'Calculation': {'title': _('Calculation')},
+            'CommercialID': {'title': _('Commercial ID'),
+                             'toggle': True},
+            'ProtocolID': {'title': _('Protocol ID'),
+                           'toggle': True},
         }
 
         self.review_states = [
@@ -181,6 +185,8 @@ class AnalysisServicesView(BikaListingView):
                          'Keyword',
                          'Method',
                          'Department',
+                         'CommercialID',
+                         'ProtocolID',
                          'Instrument',
                          'Unit',
                          'Price',
@@ -201,6 +207,8 @@ class AnalysisServicesView(BikaListingView):
                          'Keyword',
                          'Method',
                          'Department',
+                         'CommercialID',
+                         'ProtocolID',
                          'Instrument',
                          'Unit',
                          'Price',
@@ -220,6 +228,8 @@ class AnalysisServicesView(BikaListingView):
                          'Category',
                          'Method',
                          'Department',
+                         'CommercialID',
+                         'ProtocolID',
                          'Instrument',
                          'Unit',
                          'Price',

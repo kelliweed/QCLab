@@ -18,7 +18,7 @@ class ARPrioritiesView(BikaListingView):
         super(ARPrioritiesView, self).__init__(context, request)
         request.set('disable_plone.rightcolumn', 1)
 
-        self.catalog = 'bika_setup_catalog'
+
         self.contentFilter = {
                 'portal_type': 'ARPriority',
                 'path': {'query': '/'.join(context.getPhysicalPath())},

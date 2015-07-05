@@ -19,7 +19,7 @@ class SubGroupsView(BikaListingView):
 
     def __init__(self, context, request):
         super(SubGroupsView, self).__init__(context, request)
-        self.catalog = 'bika_setup_catalog'
+
         self.contentFilter = {'portal_type': 'SubGroup',
                               'sort_on': 'sortable_title'}
         self.context_actions = {

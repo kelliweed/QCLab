@@ -15,7 +15,7 @@ class BatchLabelsView(BikaListingView):
 
     def __init__(self, context, request):
         super(BatchLabelsView, self).__init__(context, request)
-        self.catalog = 'bika_setup_catalog'
+
         self.contentFilter = {'portal_type': 'BatchLabel',
                               'sort_on': 'sortable_title'}
         self.context_actions = {_('Add'):

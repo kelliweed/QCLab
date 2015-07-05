@@ -27,7 +27,7 @@ class AnalysisRequestAnalysesView(BikaListingView):
 
     def __init__(self, context, request):
         super(AnalysisRequestAnalysesView, self).__init__(context, request)
-        self.catalog = "bika_setup_catalog"
+
         self.contentFilter = {'portal_type': 'AnalysisService',
                               'sort_on': 'sortable_title',
                               'inactive_state': 'active', }
@@ -47,7 +47,7 @@ class AnalysisRequestAnalysesView(BikaListingView):
             self.show_categories = True
             self.expand_all_categories = False
             self.ajax_categories = True
-            self.category_index = 'getCategoryTitle'
+            self.category_index = 'CategoryTitle'
 
         self.columns = {
             'Title': {'title': _('Service'),
@@ -115,14 +115,14 @@ class AnalysisRequestAnalysesView(BikaListingView):
         """Return the AR Specs sorted by Service UID, so that the JS can
         work easily with the values.
         """
-        bsc = self.bika_setup_catalog
+        pc = getToolByName(self.context, 'portal_catalog')
         rr_dict_by_service_uid = {}
         rr = self.context.getResultsRange()
         for r in rr:
             keyword = r['keyword']
             try:
-                service_uid = bsc(portal_type='AnalysisService',
-                                  getKeyword=keyword)[0].UID
+                service_uid = pc(portal_type='AnalysisService',
+                                  Keyword=keyword)[0].UID
                 rr_dict_by_service_uid[service_uid] = r
             except IndexError:
                 from bika.lims import logger

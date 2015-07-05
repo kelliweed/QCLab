@@ -55,6 +55,7 @@ schema = BikaFolderSchema.copy() + BikaSchema.copy() + Schema((
         widget=SelectionWidget(
             format='select',
             label=_("Supplier"),
+            visible={'view': 'invisible', 'edit': 'visible'}
         ),
     ),
 
@@ -187,6 +188,14 @@ schema = BikaFolderSchema.copy() + BikaSchema.copy() + Schema((
          ),
     ),
 
+    ComputedField('SupplierName',
+        expression = 'here.getSupplier().Title() if here.getSupplier() else ""',
+        widget = ComputedWidget(
+        label=_('Supplier'),
+            visible=True,
+         ),
+    ),
+
     StringField('AssetNumber',
         widget = StringWidget(
             label=_("Asset Number"),
@@ -229,9 +238,9 @@ schema = BikaFolderSchema.copy() + BikaSchema.copy() + Schema((
 ))
 
 schema.moveField('AssetNumber', before='description')
-schema.moveField('ManufacturerName', before='Supplier')
+schema.moveField('SupplierName', before='Model')
+schema.moveField('ManufacturerName', before='SupplierName')
 schema.moveField('InstrumentTypeName', before='ManufacturerName')
-
 
 schema['description'].widget.visible = True
 schema['description'].schemata = 'default'
@@ -286,17 +295,17 @@ class Instrument(ATFolder):
         return getCalibrationAgents(self)
 
     def getManufacturers(self):
-        bsc = getToolByName(self, 'bika_setup_catalog')
+        pc = getToolByName(self, 'portal_catalog')
         items = [(c.UID, c.Title) \
-                for c in bsc(portal_type='Manufacturer',
+                for c in pc(portal_type='Manufacturer',
                              inactive_state = 'active')]
         items.sort(lambda x,y:cmp(x[1], y[1]))
         return DisplayList(items)
 
     def getSuppliers(self):
-        bsc = getToolByName(self, 'bika_setup_catalog')
-        items = [(c.UID, c.getName) \
-                for c in bsc(portal_type='Supplier',
+        pc = getToolByName(self, 'portal_catalog')
+        items = [(c.UID, c.Title) \
+                for c in pc(portal_type='Supplier',
                              inactive_state = 'active')]
         items.sort(lambda x,y:cmp(x[1], y[1]))
         return DisplayList(items)
@@ -306,18 +315,18 @@ class Instrument(ATFolder):
             One method can be done by multiple instruments, but one
             instrument can only be used in one method.
         """
-        bsc = getToolByName(self, 'bika_setup_catalog')
+        pc = getToolByName(self, 'portal_catalog')
         items = [(c.UID, c.Title) \
-                for c in bsc(portal_type='Method',
+                for c in pc(portal_type='Method',
                              inactive_state = 'active')]
         items.sort(lambda x,y:cmp(x[1], y[1]))
         items.insert(0, ('', t(_('None'))))
         return DisplayList(items)
 
     def getInstrumentTypes(self):
-        bsc = getToolByName(self, 'bika_setup_catalog')
+        pc = getToolByName(self, 'portal_catalog')
         items = [(c.UID, c.Title) \
-                for c in bsc(portal_type='InstrumentType',
+                for c in pc(portal_type='InstrumentType',
                              inactive_state = 'active')]
         items.sort(lambda x,y:cmp(x[1], y[1]))
         return DisplayList(items)
@@ -619,8 +628,7 @@ class Instrument(ATFolder):
         """
         addedanalyses = []
         wf = getToolByName(self, 'portal_workflow')
-        bsc = getToolByName(self, 'bika_setup_catalog')
-        bac = getToolByName(self, 'bika_analysis_catalog')
+        pc = getToolByName(self, 'portal_catalog')
         ref_type = reference.getBlank() and 'b' or 'c'
         ref_uid = reference.UID()
         postfix = 1
@@ -636,12 +644,12 @@ class Instrument(ATFolder):
         refgid = 'I%s-%s' % (reference.id, postfix)
         for service_uid in service_uids:
             # services with dependents don't belong in references
-            service = bsc(portal_type='AnalysisService', UID=service_uid)[0].getObject()
+            service = pc(portal_type='AnalysisService', UID=service_uid)[0].getObject()
             calc = service.getCalculation()
             if calc and calc.getDependentServices():
                 continue
             ref_uid = reference.addReferenceAnalysis(service_uid, ref_type)
-            ref_analysis = bac(portal_type='ReferenceAnalysis', UID=ref_uid)[0].getObject()
+            ref_analysis = pc(portal_type='ReferenceAnalysis', UID=ref_uid)[0].getObject()
 
             # Set ReferenceAnalysesGroupID (same id for the analyses from
             # the same Reference Sample and same Worksheet)
@@ -691,8 +699,8 @@ class Instrument(ATFolder):
         if isvalid:
             return []
 
-        bac = getToolByName(self, 'bika_analysis_catalog')
-        prox = bac(portal_type=['Analysis', 'DuplicateAnalysis'],
+        pc = getToolByName(self, 'portal_catalog')
+        prox = pc(portal_type=['Analysis', 'DuplicateAnalysis'],
                    review_state='to_be_verified')
         ans = [p.getObject() for p in prox]
         return [a for a in ans if a.getRawInstrument() == self.UID()]

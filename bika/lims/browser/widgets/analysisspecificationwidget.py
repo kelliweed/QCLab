@@ -58,7 +58,7 @@ class AnalysisSpecificationView(BikaListingView):
 
 
     def folderitems(self):
-        bsc = getToolByName(self.context, 'bika_setup_catalog')
+        pc = getToolByName(self.context, 'portal_catalog')
         self.categories = []
 
         # Check edition permissions
@@ -70,7 +70,7 @@ class AnalysisSpecificationView(BikaListingView):
         # Analysis Services retrieval and custom item creation
         items = []
         workflow = getToolByName(self.context, 'portal_workflow')
-        services = bsc(portal_type = "AnalysisService",
+        services = pc(portal_type = "AnalysisService",
                        sort_on = "sortable_title")
         for service in services:
             service = service.getObject();
