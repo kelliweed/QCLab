@@ -37,6 +37,8 @@
 <permission id="bika.lims.permissions.AddSamplingDeviation" title="BIKA: Add SamplingDeviation"/>
 <permission id="bika.lims.permissions.AddQuery" title="BIKA: Add Query"/>
 <permission id="bika.lims.permissions.AddSRTemplate" title="BIKA: Add SRTemplate"/>
+<permission id="bika.lims.permissions.AddStorageLevel" title="BIKA: Add StorageLevel"/>
+<permission id="bika.lims.permissions.AddStorageUnit" title="BIKA: Add StorageUnit"/>
 <permission id="bika.lims.permissions.AddSubGroup" title="BIKA: Add Sub-group"/>
 <permission id="bika.lims.DispatchOrder" title="BIKA: Dispatch Order"/>
 <permission id="bika.lims.DispatchInventoryOrder" title="BIKA: Dispatch Inventory Order"/>

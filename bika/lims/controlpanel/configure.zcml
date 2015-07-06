@@ -237,6 +237,46 @@
     />
 
     <browser:page
+      for="bika.lims.interfaces.IStorageUnits"
+      name="folder_view"
+      class=".bika_storageunits.StorageUnitsView"
+      permission="bika.lims.ManageBika"
+      layer="bika.lims.interfaces.IBikaLIMS"
+    />
+
+    <browser:page
+      for="bika.lims.interfaces.IStorageLevel"
+      name="base_view"
+      class=".bika_storagelevels.StorageLevelsView"
+      permission="bika.lims.ManageBika"
+      layer="bika.lims.interfaces.IBikaLIMS"
+    />
+
+    <browser:page
+      for="bika.lims.interfaces.IStorageUnit"
+      name="base_view"
+      class=".bika_storagelevels.StorageLevelsView"
+      permission="bika.lims.ManageBika"
+      layer="bika.lims.interfaces.IBikaLIMS"
+    />
+
+    <browser:page
+      for="bika.lims.interfaces.IStorageLevel"
+      name="storagelevel_add"
+      class=".bika_storagelevels.AddStorageLevelView"
+      permission="bika.lims.ManageBika"
+      layer="bika.lims.interfaces.IBikaLIMS"
+    />
+
+    <browser:page
+      for="bika.lims.interfaces.IStorageUnit"
+      name="storagelevel_add"
+      class=".bika_storagelevels.AddStorageLevelView"
+      permission="bika.lims.ManageBika"
+      layer="bika.lims.interfaces.IBikaLIMS"
+    />
+
+    <browser:page
       for="bika.lims.interfaces.ISubGroups"
       name="folder_view"
       class=".bika_subgroups.SubGroupsView"

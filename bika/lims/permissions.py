@@ -36,6 +36,8 @@ AddSamplePoint = 'BIKA: Add SamplePoint'
 AddStorageLocation = 'BIKA: Add StorageLocation'
 AddSamplingDeviation = 'BIKA: Add SamplingDeviation'
 AddSRTemplate = 'BIKA: Add SRTemplate'
+AddStorageLevel = 'BIKA: Add StorageLevel'
+AddStorageUnit = 'BIKA: Add StorageUnit'
 AddSubGroup = 'BIKA: Add Sub-group'
 AddQuery = 'BIKA: Add Query'
 
@@ -61,6 +63,8 @@ ADD_CONTENT_PERMISSIONS = {
     'SamplePartition': AddSamplePartition,
     'SamplingDeviation': AddSamplingDeviation,
     'SubGroup': AddSubGroup,
+    'StorageLevel': AddStorageLevel,
+    'StorageUnit': AddStorageUnit,
     'Query': AddQuery,
 }
 

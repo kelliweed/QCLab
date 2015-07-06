@@ -86,6 +86,8 @@
     <element value="SamplePartition"/>
     <element value="SamplePoint"/>
     <element value="StorageLocation"/>
+    <element value="StorageLevel"/>
+    <element value="StorageUnit"/>
     <element value="SampleType"/>
     <element value="BatchLabel"/>
     <element value="Worksheet"/>

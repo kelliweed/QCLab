@@ -110,6 +110,8 @@ def initialize(context):
     from content.sampletype import SampleType
     from content.samplingdeviation import SamplingDeviation
     from content.srtemplate import SRTemplate
+    from content.storagelevel import StorageLevel
+    from content.storageunit import StorageUnit
     from content.subgroup import SubGroup
     from content.supplier import Supplier
     from content.suppliercontact import SupplierContact
@@ -148,6 +150,8 @@ def initialize(context):
     from controlpanel.bika_sampletypes import SampleTypes
     from controlpanel.bika_samplingdeviations import SamplingDeviations
     from controlpanel.bika_srtemplates import SRTemplates
+    from controlpanel.bika_storagelevels import StorageLevels
+    from controlpanel.bika_storageunits import StorageUnits
     from controlpanel.bika_subgroups import SubGroups
     from controlpanel.bika_suppliers import Suppliers
     from controlpanel.bika_worksheettemplates import WorksheetTemplates

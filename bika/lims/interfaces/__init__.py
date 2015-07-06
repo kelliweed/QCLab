@@ -366,6 +366,18 @@ class ISRTemplates(Interface):
     ""
 
 
+class IStorageLevel(Interface):
+    ""
+
+class IStorageLevels(Interface):
+    ""
+
+class IStorageUnit(Interface):
+    ""
+
+class IStorageUnits(Interface):
+    ""
+
 class ISupplier(Interface):
 
     ""
