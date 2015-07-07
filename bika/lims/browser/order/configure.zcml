@@ -75,7 +75,7 @@
     />
 
     <browser:page
-      for="bika.lims.interfaces.IAnalysisRequest"
+      for="bika.lims.interfaces.IOrder"
       name="publish"
       class="bika.lims.browser.order.publish.OrderPublishView"
       permission="bika.lims.ManageBika"

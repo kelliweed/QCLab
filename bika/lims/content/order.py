@@ -155,7 +155,7 @@ class Order(BaseFolder):
         """ dispatch order """
         self.setDateDispatched(DateTime())
         self.reindexObject()
-        doActionFor(self.getObject(), "dispatch")
+        doActionFor(self.getObject(), "publish")
 
     def workflow_script_receive(self):
         """ receive order """
