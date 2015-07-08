@@ -22,8 +22,14 @@ class CreateReport(object):
 		if report_type == 'productivity_dailysamplesreceived' :
 			alsoProvides(obj, IDailySamplesReceived)
 			obj.Schema().getField('query').set(obj,[
-				{'i': 'DateReceived', 'o': 'plone.app.querystring.operation.date.between', 'v': ['', '']}
+				{'i': 'DateReceived', 'o': 'plone.app.querystring.operation.date.today', 'v': ['', '']}
 				])
+		elif report_type == 'productivity_samplesreceivedvsreported' :
+			alsoProvides(obj, ISamplesReceivedVsReported)
+			obj.Schema().getField('query').set(obj,[
+				{'i': 'DateReceived', 'o': 'plone.app.querystring.operation.date.today', 'v': ['', '']}
+				])
+			
 		self.request.response.redirect(obj.absolute_url())
 
 

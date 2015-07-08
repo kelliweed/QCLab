@@ -102,18 +102,79 @@ class MyFactoriesMenu(FactoriesMenu):
     def getMenuItems(self, context, request):
         # menuitems is a list of tal-friendly dictionaries
         menuitems = super(MyFactoriesMenu, self).getMenuItems(context, request)
-        #import pdb;
-        #pdb.set_trace();
+        #import pdb
+        #pdb.set_trace()
+        productivity_reports = ['dailysamplesreceived', 'samplesreceivedvsreported', 'analysesperservice', 'analysespersampletype', \
+         'analysesperclient', 'analysestats', 'analysestats_overtime', 'analysesperdepartment', 'analysesperformedpertotal', \
+         'analysesattachments', 'dataentrydaybook']
         menuitems.append({
-                'id': 'dailysamplesreceived',
-                'title': (u'dailysamplesreceived'),
-                'description': 'Description for dailysamplesreceived',
-                'action': 'create_report?report=productivity_dailysamplesreceived',
+                'id': 'Productivity',
+                'title': (u'Productivity'),
+                'description': 'Productivity Reports',
+                'action': None,
                 'selected': False,
                 'icon': None,
-                'extra': {'separator': None, 'id': 'collection', 'class': 'contenttype-collection'},
+                  'extra': {'separator': None, 'id': 'Productivity', 'class': ''},
                 'submenu': None,
                 })
+        for report in productivity_reports:
+            menuitems.append({
+                    'id': report,
+                    'title': (unicode(report, 'utf-8')),
+                    'description': 'Description for ' + report ,
+                    'action': 'create_report?report=productivity_' + report,
+                    'selected': False,
+                    'icon': None,
+                      'extra': {'separator': None, 'id': report, 'class': 'contenttype-reportcollection'},
+                    'submenu': None,
+                    })
+        
+        quality_control_reports = ['analysesoutofrange', 'analysesrepeated', 'resultspersamplepoint', 'referenceanalysisqc', 'duplicateanalysisqc']
+        menuitems.append({
+                'id': 'QualityControl',
+                'title': (u'Quality Control'),
+                'description': 'Quality Control Reports',
+                'action': None,
+                'selected': False,
+                'icon': None,
+                  'extra': {'separator': None, 'id': 'QualityControl', 'class': ''},
+                'submenu': None,
+                })
+        for report in quality_control_reports:
+            menuitems.append({
+                    'id': report,
+                    'title': (unicode(report, 'utf-8')),
+                    'description': 'Description for ' + report ,
+                    'action': 'create_report?report=qualitycontrol_' + report,
+                    'selected': False,
+                    'icon': None,
+                      'extra': {'separator': None, 'id': report, 'class': 'contenttype-reportcollection'},
+                    'submenu': None,
+                    })
+        
+        administration_reports = ['arsnotinvoiced', 'usershistory']
+        menuitems.append({
+                'id': 'administration',
+                'title': (u'Administration'),
+                'description': 'Administration Reports',
+                'action': None,
+                'selected': False,
+                'icon': None,
+                  'extra': {'separator': None, 'id': 'Administration', 'class': ''},
+                'submenu': None,
+                })
+        for report in administration_reports:
+            menuitems.append({
+                    'id': report,
+                    'title': (unicode(report, 'utf-8')),
+                    'description': 'Description for ' + report ,
+                    'action': 'create_report?report=administration_' + report,
+                    'selected': False,
+                    'icon': None,
+                      'extra': {'separator': None, 'id': report, 'class': 'contenttype-reportcollection'},
+                    'submenu': None,
+                    })
+
         return menuitems
 
 # @memoize

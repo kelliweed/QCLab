@@ -30,5 +30,3 @@ class ReportCollection(Collection):
 
 
 registerType(ReportCollection, PROJECTNAME)
-
-[{'i': 'created', 'o': 'plone.app.querystring.operation.date.today'}]
