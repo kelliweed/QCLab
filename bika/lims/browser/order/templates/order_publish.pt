@@ -15,7 +15,7 @@
 <head>
     <div tal:replace="structure provider:plone.resourceregistries.scripts" />
 </head>
-<body class="A4" data-layout="A4">
+<body class="A4" data-layout="A4" tal:define="order python:view.getOrder()">
     <div id='ar_publish_container'>
         <div id="ar_publish_header" tal:condition="python:view.showOptions()">
             <div id='options_handler'>
@@ -36,21 +36,12 @@
                     bottom: <input class='option-margin' id="margin-bottom" type="text"/>&nbsp;
                     left: <input class='option-margin' id="margin-left" type="text"/>
                 </div>
-                <div class='options-line'>
-                    <input type="checkbox" name="qcvisible" id='qcvisible' value="0"><span i18n:translate="">Show QC Analyses</span><br/>
-                    <input type="checkbox" name="hvisible" id='hvisible' value="0"><span i18n:translate="">Show Hidden Analyses</span>
-                </div>
+                
             </div>
             <div id="sel_format_info_pane" style="display:none">
                 <p i18n:translate="">Refer to <a target="_blank" href="https://github.com/bikalabs/Bika-LIMS/wiki/Creating-new-report-templates">Creating new report templates</a> documentation from Bika LIMS wiki to get more or add your own report templates.</p>
             </div>
-            <div id='ar_publish_summary'>
-                <span tal:content="python:view.getProductsCount()"></span>&nbsp;
-                <span i18n:translate=""> analysis requests selected</span>:&nbsp;
-                <tal:ars repeat="ar python:view.getProducts()">
-                    <a tal:attributes="href python:'#'+ar.id" tal:content="python: ar.id"></a>&nbsp;
-                </tal:ars>
-            </div>
+            
             <div id='ar_publish_buttons'>
                 <input type="button" id='cancel_button' value="Cancel"/>&nbsp;&nbsp;
                 <input type="button" id='publish_button' value="Publish"/>
@@ -214,12 +205,9 @@
             }
         </style>
         <div id='report'>
-        <tal:ar tal:repeat="i python:range(view.getProductsCount())">
-        <div tal:attributes="id python:view.getProductObj().id;
-                            uid python:view.getProductObj().UID();
-                            "
-            tal:content='structure python:view.getOrderTemplate()'></div>
-        </tal:ar>
+        <div tal:attributes="id order/id"
+            tal:content='structure python:view.getOrderTemplate()'>
+        </div>
         </div>
     </div>
     <div id="my_mm" style="height:1mm;display:none"></div>

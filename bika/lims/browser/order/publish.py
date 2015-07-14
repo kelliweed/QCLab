@@ -128,10 +128,10 @@ class OrderPublishView(BrowserView):
         """
         return self._products[self._current_product_index]
 
-    def getProduct(self):
+    def getOrder(self):
         """ Returns the dict for the current product
         """
-        return self._product_data(self._products[self._current_product_index])
+        return self._order_data(self._products[self._current_product_index])
 
     def _nextProduct(self):
         """ Move to the next product
@@ -139,33 +139,58 @@ class OrderPublishView(BrowserView):
         if self._current_product_index < len(self._products):
             self._current_product_index += 1
 
-    def _product_data(self, product, excludearuids=[]):
-        """ Creates an product dict, accessible from the view and from each
+    def _order_data(self, order, excludearuids=[]):
+        """ Creates an order dict, accessible from the view and from each
             specific template.
         """
-        data = {'obj': product,
-                'id': product.getId(),
-                'order_number': product.getOrderNumber(),
-                'title': product.Title(),
-                'description': product.Description(),
-                'unit': product.getUnit(),
-                'price': product.getPrice(),
-                'vat': '%s%%' % product.getVAT(),
-                'quantity': product.getQuantity(),
-                'total': (float(product.getPrice()) * float(product.getQuantity())),
-                'supplier_id': product.getSupplierUID(),
-                'date_dispatched': self.ulocalized_time(product.getDateDispatched(), long_format=1),
-                'remarks': pro.getRemarks(),
+         
+        data = {'obj': order,
+                'id': order.getId(),
+                'order_number': order.getOrderNumber(),
+                'title': order.Title(),
+                'description': order.Description(),
+                'supplier_id': order.getSupplierUID(),
+                'date_dispatched': self.ulocalized_time(order.getDateDispatched(), long_format=1),
+                'remarks': order.getRemarks(),
                 'date_published': self.ulocalized_time(DateTime(), long_format=1),
-                'subtotal': pro.getSubtotal(),
-                'vat_amount': pro.getVATAmount(),
-                'url': pro.absolute_url(),
-                'remarks': to_utf8(pro.getRemarks()),
+                'subtotal': order.getSubtotal(),
+                'vat_amount': order.getVATAmount(),
+                'url': order.absolute_url(),
+                'remarks': to_utf8(order.getRemarks()),
                 'footer': to_utf8(self.context.bika_setup.getResultFooter()),
                 }
 
-        data['supplier'] = self._supplier_data(pro)
+        data['supplier'] = self._supplier_data(order)
 
+        # Get the Product List for the Order
+        # print order.order_lineitems
+        items = order.order_lineitems
+        products = order.aq_parent.objectValues('Product')
+        item_list = []
+        grand_total = 0.00
+        for item in items:
+            withvat_price = 0.00
+            prodid = item['Product']
+            product = [pro for pro in products if pro.getId() == prodid][0]
+            price = float(item['Price'])
+            vat = float(item['VAT'])
+            qty = float(item['Quantity'])
+            withvat_price = price * qty * ((vat /100) + 1)
+            item_list.append({
+                'title': product.Title(),
+                'description': product.Description(),
+                'unit': product.getUnit(),
+                'price': price,
+                'vat': '%s%%' % vat,
+                'quantity': qty,
+                'subtotal': '%.2f' % (price * qty),
+                'withvat' : '%.2f' % (withvat_price)
+            })
+            grand_total += withvat_price
+        item_list = sorted(item_list, key = itemgetter('title'))
+
+        data['products'] = item_list
+        data["grandTotal"] = '%.2f' % grand_total
         return data
 
     def _supplier_data(self, order):
@@ -180,8 +205,15 @@ class OrderPublishView(BrowserView):
             data['fax'] = to_utf8(supplier.getFax())
 
             supplier_address = supplier.getPostalAddress()
+            if supplier_address:
+                _keys = ['address', 'city', 'state', 'zip', 'country']
+                _list = ["<div>%s</div>" % supplier_address.get(v) for v in _keys
+                         if supplier_address.get(v)]
+                supplier_address = "".join(_list)
+            else:
+                supplier_address = ''
             data['address'] = to_utf8(supplier_address)
-            data['email'] = to_utf8(supplier.getContact().getEmailAddress())
+            data['email'] = to_utf8(supplier.getEmailAddress())
         return data
 
 

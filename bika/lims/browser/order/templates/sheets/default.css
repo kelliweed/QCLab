@@ -74,45 +74,47 @@
     border:none;
     color:#d40000;
 }
-#report #section-results,
+#report #section-details,
 #report #section-qcresults,
-#report #section-resultsinterpretation {
+#report #section-detailsinterpretation {
     padding-top:20px;
 }
 #report #section-summary table tr td,
-#report #section-results table tr td,
+#report #section-details table tr td,
 #report #section-qcresults table tr td {
     padding-left:5px;
 }
+#report #section-details tr td,
 #report #section-summary tr td {
     border-left-width: 0px;
     border-bottom:1px solid #ccc;
 }
+#report #section-details tr td.label,
 #report #section-summary tr td.label {
     width:60mm;
 }
-#report #section-results table thead tr th,
+#report #section-details table thead tr th,
 #report #section-qcresults table thead tr th {
     padding-right:10px;
 }
-#report #section-results table thead tr th span,
+#report #section-details table thead tr th span,
 #report #section-qcresults table thead tr th span {
     display:block;
     border-bottom:1px solid #000;
     line-height:1.6;
 }
-#report #section-results .result {
+#report #section-details .result {
     width:100px;
 }
-#report #section-results .specs {
+#report #section-details .specs {
     width:200px;
     text-align:center;
     padding-right:10px;
 }
-#report #section-results .outofrange {
+#report #section-details .outofrange {
     width:10px;
 }
-#report #section-results .remarks {
+#report #section-details .remarks {
     font-size: 0.9em;
     padding: 0 400px 15px 3px;
     color: #555;
