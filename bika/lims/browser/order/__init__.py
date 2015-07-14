@@ -23,18 +23,7 @@ from zope.interface import implements
 
 import json
 
-from .view import AnalysisRequestViewView    # view first.
-from .add import AnalysisRequestAddView
-from .invoice import InvoicePrintView
-from .invoice import InvoiceView
-from invoice import InvoiceCreate
-from .log import AnalysisRequestLog
-from .manage_analyses import AnalysisRequestAnalysesView
-from .manage_results import AnalysisRequestManageResultsView
-from .published_results import AnalysisRequestPublishedResults
-from .results_not_requested import AnalysisRequestResultsNotRequestedView
-from .workflow import AnalysisRequestWorkflowAction
-from .analysisrequests import AnalysisRequestsView
+from .workflow import OrderWorkflowAction
 
 
 class SupplierContactVocabularyFactory(CatalogVocabulary):

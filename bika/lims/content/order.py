@@ -18,6 +18,7 @@ from Products.CMFPlone.interfaces import IConstrainTypes
 from Products.CMFPlone.utils import safe_unicode
 from zope.component import getAdapter
 from zope.interface import implements
+from bika.lims.workflow import doActionFor
 
 
 schema = BikaSchema.copy() + Schema((
@@ -155,7 +156,7 @@ class Order(BaseFolder):
         """ dispatch order """
         self.setDateDispatched(DateTime())
         self.reindexObject()
-        doActionFor(self.getObject(), "publish")
+        doActionFor(self, "publish")
 
     def workflow_script_receive(self):
         """ receive order """

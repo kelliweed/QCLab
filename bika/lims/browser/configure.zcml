@@ -41,7 +41,7 @@
   
   <!-- include file="order.zcml" -->
   
-  <include file="orderfolder.zcml"/>
+  <!-- include file="orderfolder.zcml" -->
   <include file="worksheet.zcml"/>
   <include file="worksheetfolder.zcml"/>
   <include file="viewlets.zcml"/>

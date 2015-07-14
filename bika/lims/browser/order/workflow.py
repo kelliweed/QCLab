@@ -61,5 +61,5 @@ class OrderWorkflowAction(WorkflowAction):
             self.context.plone_utils.addPortalMessage(message, 'info')
             self.request.response.redirect(self.context.absolute_url())
             return
-        # AR publish preview
+        # Order publish preview
         self.request.response.redirect(self.context.absolute_url() + "/publish")
