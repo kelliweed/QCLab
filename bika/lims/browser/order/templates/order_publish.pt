@@ -16,8 +16,8 @@
     <div tal:replace="structure provider:plone.resourceregistries.scripts" />
 </head>
 <body class="A4" data-layout="A4" tal:define="order python:view.getOrder()">
-    <div id='ar_publish_container'>
-        <div id="ar_publish_header" tal:condition="python:view.showOptions()">
+    <div id='order_publish_container'>
+        <div id="order_publish_header" tal:condition="python:view.showOptions()">
             <div id='options_handler'>
                 <div class='options-line'>
                     
@@ -51,53 +51,53 @@
             /** Report preview styling **/
             html, body { margin: 0; }
             html { background-color:#cdcdcd; }
-            body.A4 #ar_publish_container { width: 210mm; }
-            body.letter #ar_publish_container { width: 216mm; }
+            body.A4 #order_publish_container { width: 210mm; }
+            body.letter #order_publish_container { width: 216mm; }
             #report {
                 background-color:#ffffff;
             }
             div.ar_publish_page {
                 border: 1px dashed #cdcdcd;
             }
-            #ar_publish_container {
+            #order_publish_container {
                 margin:0 auto;
                 background-color:#fff;
                 padding:30px;
             }
-            #ar_publish_header {
+            #order_publish_header {
                 margin:-30px -30px 30px -30px;
                 padding:10px 20px 20px 10px;
                 background-color: #dcdcdc;
                 border-bottom: 20px solid #CDCDCD;
                 font-size:11px;
             }
-            #ar_publish_header * {
+            #order_publish_header * {
                 font-family: Arial !important;
                 font-size:11.5px !important;
             }
-            #ar_publish_header #options_handler label {
+            #order_publish_header #options_handler label {
                 padding:5px 10px 5px 10px;
             }
-            #ar_publish_header #options_handler input {
+            #order_publish_header #options_handler input {
                 padding:5px 10px 0px;
             }
-            #ar_publish_header #ar_publish_summary {
+            #order_publish_header {
                 padding-left:10px;
                 padding-top:10px;
             }
-            #ar_publish_header #ar_publish_buttons {
+            #order_publish_header #ar_publish_buttons {
                 text-align:right;
                 padding-left:10px;
                 padding-top:10px;
             }
-            #ar_publish_header #ar_publish_buttons input {
+            #order_publish_header #ar_publish_buttons input {
                 padding:4px 15px;
                 border:none;
                 color:#fff;
                 font-size:1.2em;
                 cursor:pointer;
             }
-            #ar_publish_header #ar_publish_buttons input:hover {
+            #order_publish_header #ar_publish_buttons input:hover {
                 opacity:0.8;
                 moz-opacity:0.8;
                 filter:alpha(opacity=80);
@@ -107,16 +107,16 @@
                 -ms-transition: opacity 250ms ease-in-out;
                 transition: opacity 250ms ease-in-out;
             }
-            #ar_publish_header #ar_publish_buttons #cancel_button {
+            #order_publish_header #ar_publish_buttons #cancel_button {
                 background-color:#666;
             }
-            #ar_publish_header #ar_publish_buttons #publish_button {
+            #order_publish_header #ar_publish_buttons #publish_button {
                 background-color:#0B486B;
             }
-            #ar_publish_header #options_handler div.options-line {
+            #order_publish_header #options_handler div.options-line {
                 padding:0 0 10px 0;
             }
-            #ar_publish_header #options_handler input.option-margin {
+            #order_publish_header #options_handler input.option-margin {
                 border: 1px solid #bbb;
                 padding: 1px 2px;
                 width: 16px;
@@ -194,7 +194,7 @@
                     border:none !important;
                     background-color:#ffffff;
                 }
-                #ar_publish_header {
+                #order_publish_header {
                     display:none;
                     visibility:hidden;
                 }
@@ -205,7 +205,9 @@
             }
         </style>
         <div id='report'>
-        <div tal:attributes="id order/id"
+        <div tal:attributes="id order/id; 
+                             uid python:view.getOrderObj().UID();"
+            class="order_publish_body"
             tal:content='structure python:view.getOrderTemplate()'>
         </div>
         </div>

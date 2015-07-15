@@ -123,8 +123,8 @@ class OrderPublishView(BrowserView):
         """
         return len(self._products);
 
-    def getProductObj(self):
-        """ Returns the product objects to be managed
+    def getOrderObj(self):
+        """ Returns the order obj
         """
         return self._products[self._current_product_index]
 
