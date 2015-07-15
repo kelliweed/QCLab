@@ -48,13 +48,7 @@ class OrderWorkflowAction(WorkflowAction):
         else:
             WorkflowAction.__call__(self)
 
-    def workflow_action_prepublish(self):
-        self.workflow_action_publish()
-
-    def workflow_action_republish(self):
-        self.workflow_action_publish()
-
-    def workflow_action_publish(self):
+    def workflow_action_dispatch(self):
         action, came_from = WorkflowAction._get_form_workflow_action(self)
         if not isActive(self.context):
             message = _('Item is inactive.')

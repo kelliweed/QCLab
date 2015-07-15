@@ -199,6 +199,7 @@ class OrderPublishView(BrowserView):
         if supplier:
             data['obj'] = supplier
             data['id'] = supplier.id
+            data['title'] = supplier.Title()
             data['url'] = supplier.absolute_url()
             data['name'] = to_utf8(supplier.getName())
             data['phone'] = to_utf8(supplier.getPhone())
@@ -290,55 +291,44 @@ class OrderPublishView(BrowserView):
             os.remove(pdf_fn)
 
         recipients = []
-        contact = pro.aq_parent.getContact()
         lab = pro.bika_setup.laboratory
         
 
-        # Send report to recipients
-        recips = self.get_recipients(pro)
-        for recip in recips:
-            if 'email' not in recip.get('pubpref', []) \
-                    or not recip.get('email', ''):
-                continue
+        # Send report to supplier
+        supplier_data = self._supplier_data(pro)
+        title = encode_header(supplier_data.get('title', ''))
+        email = supplier_data.get('email')
+        formatted = formataddr((title, email))
 
-            title = encode_header(recip.get('title', ''))
-            email = recip.get('email')
-            formatted = formataddr((title, email))
+        # Create the new mime_msg object
+        mime_msg = MIMEMultipart('related')
+        mime_msg['Subject'] = self.get_mail_subject(pro)
+        mime_msg['From'] = formataddr(
+        (encode_header(lab.getName()), lab.getEmailAddress()))
+        mime_msg.preamble = 'This is a multi-part MIME message.'
+        msg_txt = MIMEText(results_html, _subtype='html')
+        mime_msg.attach(msg_txt)
+        mime_msg['To'] = formatted
 
-            # Create the new mime_msg object, cause the previous one
-            # has the pdf already attached
-            mime_msg = MIMEMultipart('related')
-            mime_msg['Subject'] = self.get_mail_subject(pro)
-            mime_msg['From'] = formataddr(
-            (encode_header(lab.getName()), lab.getEmailAddress()))
-            mime_msg.preamble = 'This is a multi-part MIME message.'
-            msg_txt = MIMEText(results_html, _subtype='html')
-            mime_msg.attach(msg_txt)
-            mime_msg['To'] = formatted
+        # Attach the pdf to the email if requested
+        if pdf_report:
+            attachPdf(mime_msg, pdf_report, pdf_fn)
 
-            # Attach the pdf to the email if requested
-            if pdf_report and 'pdf' in recip.get('pubpref'):
-                attachPdf(mime_msg, pdf_report, pdf_fn)
+        msg_string = mime_msg.as_string()
 
-            # For now, I will simply ignore mail send under test.
-            if hasattr(self.portal, 'robotframework'):
-                continue
+        # content of outgoing email written to debug file
+        if debug_mode:
+            tmp_fn = tempfile.mktemp(suffix=".email")
+            logger.debug("Writing MIME message for %s to %s" % (pro.Title(), tmp_fn))
+            open(tmp_fn, "wb").write(msg_string)
 
-            msg_string = mime_msg.as_string()
-
-            # content of outgoing email written to debug file
-            if debug_mode:
-                tmp_fn = tempfile.mktemp(suffix=".email")
-                logger.debug("Writing MIME message for %s to %s" % (pro.Title(), tmp_fn))
-                open(tmp_fn, "wb").write(msg_string)
-
-            try:
-                host = getToolByName(pro, 'MailHost')
-                host.send(msg_string, immediate=True)
-            except SMTPServerDisconnected as msg:
-                logger.warn("SMTPServerDisconnected: %s." % msg)
-            except SMTPRecipientsRefused as msg:
-                raise WorkflowException(str(msg))
+        try:
+            host = getToolByName(pro, 'MailHost')
+            host.send(msg_string, immediate=True)
+        except SMTPServerDisconnected as msg:
+            logger.warn("SMTPServerDisconnected: %s." % msg)
+        except SMTPRecipientsRefused as msg:
+            raise WorkflowException(str(msg))
 
         pro.setDateDispatched(DateTime())
         return [pro]
@@ -363,28 +353,9 @@ class OrderPublishView(BrowserView):
         return self.publishFromHTML(results_html)
 
 
-    def get_recipients(self, ar):
-        """ Returns a list with the recipients and all its publication prefs
-        """
-        recips = []
-
-        # Contact and CC's
-        contact = ar.getContact()
-        if contact:
-            recips.append({'title': to_utf8(contact.Title()),
-                           'email': contact.getEmailAddress(),
-                           'pubpref': contact.getPublicationPreference()})
-        for cc in ar.getCCContact():
-            recips.append({'title': to_utf8(cc.Title()),
-                           'email': cc.getEmailAddress(),
-                           'pubpref': contact.getPublicationPreference()})
-
-        return recips
-
     def get_mail_subject(self, ar):
         """ Returns the email subject
         """
         supplier = ar.aq_parent
-        subject_items = supplier.getEmailSubject()
-        subject ="Order Details"
+        subject ="Order Details: %s" % (ar.getDateDispatched())
         return subject
