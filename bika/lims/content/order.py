@@ -1,5 +1,5 @@
 from Products.Archetypes.public import *
-
+from Acquisition import aq_inner
 from AccessControl import ClassSecurityInfo
 from bika.lims import bikaMessageFactory as _
 from bika.lims.browser.widgets import DateTimeWidget
@@ -118,7 +118,6 @@ class Order(BaseFolder):
         return adapter()
 
     security.declareProtected(View, 'getTotalQty')
-
     def getTotalQty(self):
         """ Compute total qty """
         if self.order_lineitems:
@@ -127,7 +126,6 @@ class Order(BaseFolder):
         return 0
 
     security.declareProtected(View, 'getSubtotal')
-
     def getSubtotal(self):
         """ Compute Subtotal """
         if self.order_lineitems:
@@ -136,13 +134,11 @@ class Order(BaseFolder):
         return 0
 
     security.declareProtected(View, 'getVATAmount')
-
     def getVATAmount(self):
         """ Compute VAT """
         return Decimal(self.getTotal()) - Decimal(self.getSubtotal())
 
     security.declareProtected(View, 'getTotal')
-
     def getTotal(self):
         """ Compute TotalPrice """
         total = 0
@@ -155,8 +151,12 @@ class Order(BaseFolder):
     def workflow_script_dispatch(self):
         """ dispatch order """
         self.setDateDispatched(DateTime())
-        doActionFor(self.getObject(), "dispatch")
         self.reindexObject()
+        # Order publish preview
+        context = aq_inner(self)
+        print context.absolute_url() + "/publish"
+        self.destination_url = context.absolute_url() + "/publish"
+        context.REQUEST.response.redirect(context.absolute_url() + "/publish")
 
     def workflow_script_receive(self):
         """ receive order """
@@ -169,7 +169,6 @@ class Order(BaseFolder):
         self.reindexObject()
 
     security.declareProtected(View, 'getProductUIDs')
-
     def getProductUIDs(self):
         """ return the uids of the products referenced by order items
         """
@@ -181,7 +180,6 @@ class Order(BaseFolder):
         return uids
 
     security.declarePublic('current_date')
-
     def current_date(self):
         """ return current date """
         return DateTime()

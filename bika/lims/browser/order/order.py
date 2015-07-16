@@ -4,44 +4,42 @@ from zope import event
 from Products.CMFCore.utils import getToolByName
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from operator import itemgetter, methodcaller
-
+from bika.lims.utils import to_utf8
 from bika.lims import bikaMessageFactory as _
 from bika.lims.browser import BrowserView
 from bika.lims.utils import t
 
-class View(BrowserView):
-
-	template = ViewPageTemplateFile('templates/order_view.pt')
-	title = _('Inventory Order')
-
-	def __call__(self):
-		context = self.context
-		portal = self.portal
-		setup = portal.bika_setup
-		# Disabling the add new menu item
-		context.setConstrainTypesMode(1)
-		context.setLocallyAllowedTypes(())
-		# Collect general data
-		self.orderDate = self.ulocalized_time(context.getOrderDate())
-		# self.supplier = context.getsupplier()
-		# self.supplier = self.supplier.getFullname() if self.supplier else ''
-		self.subtotal = '%.2f' % context.getSubtotal()
-		self.vat = '%.2f' % context.getVATAmount()
-		self.total = '%.2f' % context.getTotal()
-		# Set the title
-		self.title = context.Title()
-		# Collect order item data
-		items = context.order_lineitems
-
-        	products = context.aq_parent.objectValues('Product')
-		self.items = []
-		for item in items:
-		    prodid = item['Product']
-		    product = [pro for pro in products if pro.getId() == prodid][0]
-		    price = float(item['Price'])
-		    vat = float(item['VAT'])
-		    qty = float(item['Quantity'])
-		    self.items.append({
+class OrderView(BrowserView):
+    template = ViewPageTemplateFile('templates/order_view.pt')
+    title = _('Inventory Order')
+    
+    def __call__(self):
+        context = self.context
+        portal = self.portal
+        setup = portal.bika_setup
+        # Disabling the add new menu item
+        context.setConstrainTypesMode(1)
+        context.setLocallyAllowedTypes(())
+        # Collect general data
+        self.orderDate = self.ulocalized_time(context.getOrderDate())
+        # self.supplier = context.getsupplier()
+        # self.supplier = self.supplier.getFullname() if self.supplier else ''
+        self.subtotal = '%.2f' % context.getSubtotal()
+        self.vat = '%.2f' % context.getVATAmount()
+        self.total = '%.2f' % context.getTotal()
+        # Set the title
+        self.title = context.Title()
+        # Collect order item data
+        items = context.order_lineitems
+        products = context.aq_parent.objectValues('Product')
+        self.items = []
+        for item in items:
+            prodid = item['Product']
+            product = [pro for pro in products if pro.getId() == prodid][0]
+            price = float(item['Price'])
+            vat = float(item['VAT'])
+            qty = float(item['Quantity'])
+            self.items.append({
 		        'title': product.Title(),
 		        'description': product.Description(),
 		        'unit': product.getUnit(),
@@ -50,12 +48,12 @@ class View(BrowserView):
 		        'quantity': qty,
 		        'totalprice': '%.2f' % (price * qty)
 		    })
-		self.items = sorted(self.items, key = itemgetter('title')) 
-		# Render the template
-		return self.template()
+        self.items = sorted(self.items, key = itemgetter('title'))
+        # Render the template
+        return self.template()
 
-	def getPreferredCurrencyAbreviation(self):
-		return self.context.bika_setup.getCurrency()
+    def getPreferredCurrencyAbreviation(self):
+        return self.context.bika_setup.getCurrency()
 
 class EditView(BrowserView):
 
@@ -121,10 +119,63 @@ class EditView(BrowserView):
     def getPreferredCurrencyAbreviation(self):
         return self.context.bika_setup.getCurrency()
 
-
-class PrintView(View):
+class PrintView(OrderView):
 
     template = ViewPageTemplateFile('templates/order_print.pt')
+    view_template = ViewPageTemplateFile('templates/order_view.pt')
 
     def __call__(self):
-        return View.__call__(self)
+        context = self.context
+        self.orderDate = context.getOrderDate()
+        products = context.aq_parent.objectValues('Product')
+        items = context.order_lineitems
+        self.items = []
+        for item in items:
+            prodid = item['Product']
+            product = [pro for pro in products if pro.getId() == prodid][0]
+            price = float(item['Price'])
+            vat = float(item['VAT'])
+            qty = float(item['Quantity'])
+            self.items.append({
+                'title': product.Title(),
+                'description': product.Description(),
+                'unit': product.getUnit(),
+                'price': price,
+                'vat': '%s%%' % vat,
+                'quantity': qty,
+                'totalprice': '%.2f' % (price * qty)
+            })
+        self.items = sorted(self.items, key = itemgetter('title'))
+        self.subtotal = '%.2f' % context.getSubtotal()
+        self.vat = '%.2f' % context.getVATAmount()
+        self.total = '%.2f' % context.getTotal()
+        self.supplier = self._supplier_data()
+        return self.template()
+
+    def _supplier_data(self):
+        data = {}
+        supplier = self.context.aq_parent
+        if supplier:
+            data['obj'] = supplier
+            data['id'] = supplier.id
+            data['title'] = supplier.Title()
+            data['url'] = supplier.absolute_url()
+            data['name'] = to_utf8(supplier.getName())
+            data['phone'] = to_utf8(supplier.getPhone())
+            data['fax'] = to_utf8(supplier.getFax())
+
+            supplier_address = supplier.getPostalAddress()
+            if supplier_address:
+                _keys = ['address', 'city', 'state', 'zip', 'country']
+                _list = ["<div>%s</div>" % supplier_address.get(v) for v in _keys
+                         if supplier_address.get(v)]
+                supplier_address = "".join(_list)
+            else:
+                supplier_address = ''
+            data['address'] = to_utf8(supplier_address)
+            data['email'] = to_utf8(supplier.getEmailAddress())
+        return data
+
+    def getPreferredCurrencyAbreviation(self):
+        return self.context.bika_setup.getCurrency()
+
