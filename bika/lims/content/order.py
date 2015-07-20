@@ -153,10 +153,9 @@ class Order(BaseFolder):
         self.setDateDispatched(DateTime())
         self.reindexObject()
         # Order publish preview
-        context = aq_inner(self)
-        print context.absolute_url() + "/publish"
-        self.destination_url = context.absolute_url() + "/publish"
-        context.REQUEST.response.redirect(context.absolute_url() + "/publish")
+        import zExceptions, transaction
+        transaction.commit()
+        raise zExceptions.Redirect(self.absolute_url() + "/publish")
 
     def workflow_script_receive(self):
         """ receive order """

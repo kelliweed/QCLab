@@ -291,7 +291,6 @@ class OrderPublishView(BrowserView):
             os.remove(pdf_fn)
 
         recipients = []
-        lab = pro.bika_setup.laboratory
         
 
         # Send report to supplier
@@ -303,8 +302,12 @@ class OrderPublishView(BrowserView):
         # Create the new mime_msg object
         mime_msg = MIMEMultipart('related')
         mime_msg['Subject'] = self.get_mail_subject(pro)
-        mime_msg['From'] = formataddr(
-        (encode_header(lab.getName()), lab.getEmailAddress()))
+        """
+        	Edit this to change the From address
+        	mime_msg['From'] = formataddr(
+        	(encode_header(lab.getName()), lab.getEmailAddress()))
+        """
+        mime_msg['From'] = formataddr(("BIKA IMM", "imm@bika.com"))
         mime_msg.preamble = 'This is a multi-part MIME message.'
         msg_txt = MIMEText(results_html, _subtype='html')
         mime_msg.attach(msg_txt)
