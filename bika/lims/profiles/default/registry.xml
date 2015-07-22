@@ -26,6 +26,7 @@
         </field>
     </record>
 
+  <!-- Dates Group start -->
   <records interface="plone.app.querystring.interfaces.IQueryField"
            prefix="plone.app.querystring.field.DateReceived">
     <value key="title" i18n:translate="">Date Received</value>
@@ -44,10 +45,10 @@
     </value>
     <value key="group" i18n:translate="" i18n:domain="plone">Dates</value>
   </records>
-<!--
+
   <records interface="plone.app.querystring.interfaces.IQueryField"
-           prefix="bika.lims.bika_catalog_query.field.created">
-    <value key="title" i18n:translate="">Date Created</value>
+           prefix="plone.app.querystring.field.created">
+    <value key="title" i18n:translate="">Date Requested</value>
     <value key="description" i18n:translate=""/>
     <value key="enabled">True</value>
     <value key="sortable">True</value>
@@ -65,7 +66,7 @@
   </records>
 
    <records interface="plone.app.querystring.interfaces.IQueryField"
-           prefix="bika.lims.bika_catalog_query.field.getDatePublished">
+           prefix="plone.app.querystring.field.DatePublished">
     <value key="title" i18n:translate="">Date Published</value>
     <value key="description" i18n:translate=""/>
     <value key="enabled">True</value>
@@ -82,8 +83,39 @@
     </value>
     <value key="group" i18n:translate="" i18n:domain="plone">Dates</value>
   </records>
+  
+  <!-- Dates Group end -->
+  
+  <!-- Metadata Group start -->
 
--->
+  <records interface="plone.app.querystring.interfaces.IQueryField"
+           prefix="plone.app.querystring.field.worksheetanalysis_review_state">
+    <value key="title" i18n:translate="" i18n_domain="plone">Worksheet state</value>
+    <value key="description" i18n:translate="" i18n_domain="plone">A worksheet's state</value>
+    <value key="enabled">True</value>
+    <value key="sortable">True</value>
+    <value key="operations">
+      <element>plone.app.querystring.operation.selection.is</element>
+    </value>
+    <value key="vocabulary">bika.lims.vocabularies.AnalysisWorkflowStates</value>
+    <value key="group" i18n:translate="" i18n_domain="plone">Metadata</value>
+  </records>
+
+  <records interface="plone.app.querystring.interfaces.IQueryField"
+           prefix="plone.app.querystring.field.cancellation_state">
+    <value key="title" i18n:translate="" i18n_domain="plone">Cancellation state</value>
+    <value key="description" i18n:translate="" i18n_domain="plone">An item's cancellation state</value>
+    <value key="enabled">True</value>
+    <value key="sortable">True</value>
+    <value key="operations">
+      <element>plone.app.querystring.operation.selection.is</element>
+    </value>
+    <value key="vocabulary">bika.lims.vocabularies.AnalysisWorkflowStates</value>
+    <value key="group" i18n:translate="" i18n_domain="plone">Metadata</value>
+  </records>
+
+  <!-- Metadata Group end -->
+
   <!-- Hidden Attributes-->
   <record name="bika.lims.hiddenattributes">
      <field type="plone.registry.field.Tuple">

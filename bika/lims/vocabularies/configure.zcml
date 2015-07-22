@@ -61,6 +61,11 @@
     />
 
   <utility
+    component="bika.lims.vocabularies.AnalysisWorkflowStateVocabularyFactory"
+    name="bika.lims.vocabularies.AnalysisWorkflowStates"
+    />  
+
+  <utility
     component="bika.lims.vocabularies.ARReportTemplatesVocabularyFactory"
     name="bika.lims.vocabularies.ARReportTemplates"
     />

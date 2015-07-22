@@ -6,3 +6,12 @@ class IDailySamplesReceived(Interface):
     """
     """
 
+class ISamplesReceivedVsReported(Interface):
+
+    """
+    """
+
+class IAnalysesPerService(Interface):
+
+    """
+    """

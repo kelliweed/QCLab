@@ -18,7 +18,9 @@ class CreateReport(object):
 		obj = _createObjectByType('ReportCollection', self.context, tmpID())
 
 		obj.unmarkCreationFlag()
-
+	#	productivity_reports = ['dailysamplesreceived', 'samplesreceivedvsreported', 'analysesperservice', 'analysespersampletype', \
+    #     'analysesperclient', 'analysestats', 'analysestats_overtime', 'analysesperdepartment', 'analysesperformedpertotal', \
+    #     'analysesattachments', 'dataentrydaybook']
 		if report_type == 'productivity_dailysamplesreceived' :
 			alsoProvides(obj, IDailySamplesReceived)
 			obj.Schema().getField('query').set(obj,[
@@ -29,7 +31,11 @@ class CreateReport(object):
 			obj.Schema().getField('query').set(obj,[
 				{'i': 'DateReceived', 'o': 'plone.app.querystring.operation.date.today', 'v': ['', '']}
 				])
-			
+		elif report_type == 'productivity_analysesperservice' :
+			alsoProvides(obj, IAnalysesPerService)
+			obj.Schema().getField('query').set(obj,[
+				{'i': 'DateReceived', 'o': 'plone.app.querystring.operation.date.today', 'v': ['', '']}
+				])	
 		self.request.response.redirect(obj.absolute_url())
 
 
