@@ -2,7 +2,7 @@ from bika.lims.exportimport.dataimport import SetupDataSetList as SDL
 from bika.lims.idserver import renameAfterCreation
 from bika.lims.interfaces import ISetupDataSetList
 from Products.CMFPlone.utils import safe_unicode, _createObjectByType
-from bika.lims.utils import tmpID, to_unicode
+from bika.lims.utils import tmpID
 from bika.lims.utils import to_utf8
 from bika.lims import bikaMessageFactory as _
 from bika.lims.utils import t
@@ -223,7 +223,7 @@ class WorksheetImporter:
             return None
         contentFilter = {"portal_type": portal_type}
         if title:
-            contentFilter['title'] = to_unicode(title)
+            contentFilter['title'] = to_utf8(title)
         contentFilter.update(kwargs)
         brains = catalog(contentFilter)
         if len(brains) > 1:
