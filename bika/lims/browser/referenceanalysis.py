@@ -221,7 +221,7 @@ class AnalysesRetractedListReport(BrowserView):
             manager_id = manager.UID()
             if manager_id not in added and manager.getEmailAddress():
                 added.append(manager_id)
-                name = safe_unicode(manager.getFullname()).encode('utf-8')
+                name = manager.Title()
                 email = safe_unicode(manager.getEmailAddress()).encode('utf-8')
                 to = '%s, %s' % (to, formataddr((encode_header(name), email)))
         html = safe_unicode(self.template()).encode('utf-8')

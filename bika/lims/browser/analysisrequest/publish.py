@@ -330,7 +330,7 @@ class AnalysisRequestPublishView(BrowserView):
             pc = getToolByName(self, 'portal_catalog')
             c = pc(portal_type='Contact', Username=member.id)
             c = c[0].getObject() if c else None
-            cfullname = c.getFullname() if c else None
+            cfullname = c.Title() if c else None
             cemail = c.getEmailAddress() if c else None
             data = {'id': member.id,
                     'fullname': to_utf8(cfullname) if cfullname else to_utf8(mfullname),
@@ -395,7 +395,7 @@ class AnalysisRequestPublishView(BrowserView):
         contact = ar.getContact()
         if contact:
             data = {'obj': contact,
-                    'fullname': to_utf8(contact.getFullname()),
+                    'fullname': to_utf8(contact.Title()),
                     'email': to_utf8(contact.getEmailAddress()),
                     'pubpref': contact.getPublicationPreference()}
         return data
@@ -723,7 +723,7 @@ class AnalysisRequestPublishView(BrowserView):
                 recipients = [{
                     'UID': contact.UID(),
                     'Username': to_utf8(contact.getUsername()),
-                    'Fullname': to_utf8(contact.getFullname()),
+                    'Title': to_utf8(contact.Title()),
                     'EmailAddress': to_utf8(contact.getEmailAddress()),
                     'PublicationModes': contact.getPublicationPreference()
                 }]

@@ -176,7 +176,7 @@ class ContactsView(BikaListingView):
         self.title = self.context.translate(_("Contacts"))
 
         self.columns = {
-            'Fullname': {'title': _('Full Name')},
+            'Title': {'title': _('Full Name')},
             'getEmailAddress': {'title': _('Email Address')},
             'getBusinessPhone': {'title': _('Business Phone')},
             'getMobilePhone': {'title': _('Mobile Phone')},
@@ -187,7 +187,7 @@ class ContactsView(BikaListingView):
             {'id':'default',
              'title': _('All'),
              'contentFilter':{},
-             'columns': ['Fullname',
+             'columns': ['Title',
                          'getEmailAddress',
                          'getBusinessPhone',
                          'getMobilePhone',
@@ -198,7 +198,7 @@ class ContactsView(BikaListingView):
         items = BikaListingView.folderitems(self)
         for x in range(len(items)):
             if not items[x].has_key('obj'): continue
-            items[x]['replace']['Fullname'] = "<a href='%s'>%s</a>" % \
-                 (items[x]['url'], items[x]['obj'].getFullname())
+            items[x]['replace']['Title'] = "<a href='%s'>%s</a>" % \
+                 (items[x]['url'], items[x]['obj'].Title())
 
         return items

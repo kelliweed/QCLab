@@ -1,3 +1,4 @@
+from Products.CMFPlone.utils import safe_unicode
 from webdav.common import rfc1123_date
 from AccessControl import ClassSecurityInfo
 from Products.CMFCore import permissions as CMFCorePermissions
@@ -41,14 +42,6 @@ schema = BikaSchema.copy() + Schema((
         required = 1,
         widget = StringWidget(
             label=_("Surname"),
-        ),
-    ),
-    ComputedField('Fullname',
-        expression = 'context.getFullname()',
-        searchable = 1,
-        widget = ComputedWidget(
-            label=_("Full Name"),
-            visible = {'edit': 'invisible', 'view': 'invisible'},
         ),
     ),
     StringField('Username',
@@ -147,7 +140,7 @@ class Person(BaseFolder):
                                         self.getSurname())
             else:
                 fullname = '%s %s' % (self.getFirstname(), self.getSurname())
-        return fullname.strip()
+        return safe_unicode(fullname.strip()).encode('utf-8')
 
     def getListingname(self):
         """ return Person's Fullname as Surname, Firstname """
@@ -172,7 +165,7 @@ class Person(BaseFolder):
             elif md:
                 fullname = '%s %s' % (fullname, self.getMiddlename())
 
-        return fullname.strip()
+        return safe_unicode(fullname.strip()).encode('utf-8')
 
     Title = getFullname
 

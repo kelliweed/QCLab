@@ -69,10 +69,6 @@ class LabContact(Person):
         from bika.lims.idserver import renameAfterCreation
         renameAfterCreation(self)
 
-    def Title(self):
-        """ Return the contact's Fullname as title """
-        return safe_unicode(self.getFullname()).encode('utf-8')
-
     def hasUser(self):
         """ check if contact has user """
         return self.portal_membership.getMemberById(

@@ -96,7 +96,7 @@ class Create(object):
         ... "obj_type=AnalysisRequest",
         ... "Client=portal_type:Client|id:client-1",
         ... "SampleType=portal_type:SampleType|title:Apple Pulp",
-        ... "Contact=portal_type:Contact|Fullname:Rita Mohale",
+        ... "Contact=portal_type:Contact|title:Rita Mohale",
         ... "Services:list=portal_type:AnalysisService|title:Calcium",
         ... "Services:list=portal_type:AnalysisService|title:Copper",
         ... "Services:list=portal_type:AnalysisService|title:Magnesium",
@@ -127,7 +127,7 @@ class Create(object):
         ... "thing=Fish",
         ... "Client=portal_type:Client|id:client-1",
         ... "SampleType=portal_type:SampleType|title:Apple Pulp",
-        ... "Contact=portal_type:Contact|Fullname:Rita Mohale",
+        ... "Contact=portal_type:Contact|title:Rita Mohale",
         ... "Services:list=portal_type:AnalysisService|title:Calcium",
         ... "Services:list=portal_type:AnalysisService|title:Copper",
         ... "Services:list=portal_type:AnalysisService|title:Magnesium",
@@ -217,7 +217,7 @@ class Create(object):
         ... "obj_type=AnalysisRequest",
         ... "Client=portal_type:Client|id:client-1",
         ... "SampleType=portal_type:SampleType|title:Apple Pulp",
-        ... "Contact=portal_type:Contact|Fullname:Rita Mohale",
+        ... "Contact=portal_type:Contact|title:Rita Mohale",
         ... "Services:list=portal_type:AnalysisService|title:Calcium",
         ... "Services:list=portal_type:AnalysisService|title:Copper",
         ... "Services:list=portal_type:AnalysisService|title:Magnesium",
@@ -270,9 +270,9 @@ class Create(object):
 
         Required request parameters:
 
-            - Contact: One client contact Fullname.  The contact must exist
+            - Contact: One client contact Title.  The contact must exist
               in the specified client.  The first Contact with the specified
-              value in it's Fullname field will be used.
+              value in it's Title field will be used.
 
             - SampleType_<index> - Must be an existing sample type.
 

@@ -123,7 +123,7 @@ class AnalysisRequestPublishedResults(BikaListingView):
                 recip = ''
                 for recipient in obj.getRecipients():
                     email = recipient['EmailAddress']
-                    val = recipient['Fullname']
+                    val = recipient['Title']
                     if email:
                         val = "<a href='mailto:%s'>%s</a>" % (email, val)
                     if len(recip) == 0:

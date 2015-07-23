@@ -92,7 +92,7 @@ class LateAnalysesView(BikaListingView):
             if contact:
                 items[x]['replace']['Contact'] = "<a href='mailto:%s'>%s</a>" % \
                                                  (contact.getEmailAddress(),
-                                                  contact.getFullname())
+                                                  contact.Title())
             items[x]['DateReceived'] = self.ulocalized_time(sample.getDateReceived())
             items[x]['DueDate'] = self.ulocalized_time(obj.getDueDate())
 

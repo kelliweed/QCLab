@@ -35,7 +35,7 @@ schema = BikaSchema.copy() + Schema((
         showOn=True,
         colModel=[
           {'columnName': 'UID', 'hidden': True},
-          {'columnName': 'Fullname', 'width': '50', 'label': _('Name')},
+          {'columnName': 'Title', 'width': '50', 'label': _('Name')},
           {'columnName': 'EmailAddress', 'width': '50', 'label': _('Email Address')},
         ],
       ),

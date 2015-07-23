@@ -13,7 +13,7 @@
 
 <metal:description fill-slot="content-description">
 	<p i18n:translate="" tal:condition="context/hasUser">
-		<span tal:content="here/getFullname" i18n:name="contact_fullname">Pete Smith</span>
+		<span tal:content="here/Title" i18n:name="contact_fullname">Pete Smith</span>
 		can log into the LIMS by using
 		<strong tal:content="here/getUsername" i18n:name="contact_username">username</strong>
 		as username. Contacts must change their own
@@ -23,7 +23,7 @@
 	<div class="portalMessage" i18n:translate=""
 		tal:condition="not:context/hasUser">
 		No user exists for
-		<span tal:content="here/getFullname" i18n:name="contact_fullname">Pete Smith</span>
+		<span tal:content="here/Title" i18n:name="contact_fullname">Pete Smith</span>
 		and he/she will not be able to log in.
 		Fill in the form below to create one for him/her.
 	</div>
@@ -42,7 +42,7 @@
 		<input type="hidden"
 			name="fullname"
 			value="fullname"
-			tal:attributes="value here/getFullname"/>
+			tal:attributes="value here/Title"/>
 
 		<fieldset>
 

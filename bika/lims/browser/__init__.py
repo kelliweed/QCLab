@@ -108,7 +108,7 @@ class BrowserView(BrowserView):
             return userid
         member_fullname = member.getProperty('fullname')
         c = self.portal_catalog(portal_type='Contact', Username=userid)
-        contact_fullname = c[0].getObject().getFullname() if c else None
+        contact_fullname = c[0].getObject().Title() if c else None
         return contact_fullname or member_fullname or userid
 
     def user_email(self, userid):

@@ -733,8 +733,7 @@ class ClientContactsView(BikaListingView):
         self.description = ""
 
         self.columns = {
-            'Fullname': {'title': _('Full Name'),
-                            'index': 'Fullname'},
+            'Title': {'title': _('Full Name'), 'index': 'title'},
             'Username': {'title': _('User Name')},
             'getEmailAddress': {'title': _('Email Address')},
             'getBusinessPhone': {'title': _('Business Phone')},
@@ -745,7 +744,7 @@ class ClientContactsView(BikaListingView):
              'title': _('Active'),
              'contentFilter': {'inactive_state': 'active'},
              'transitions': [{'id':'deactivate'}, ],
-             'columns': ['Fullname',
+             'columns': ['Title',
                          'Username',
                          'getEmailAddress',
                          'getBusinessPhone',
@@ -754,7 +753,7 @@ class ClientContactsView(BikaListingView):
              'title': _('Dormant'),
              'contentFilter': {'inactive_state': 'inactive'},
              'transitions': [{'id':'activate'}, ],
-             'columns': ['Fullname',
+             'columns': ['Title',
                          'Username',
                          'getEmailAddress',
                          'getBusinessPhone',
@@ -762,7 +761,7 @@ class ClientContactsView(BikaListingView):
             {'id':'all',
              'title': _('All'),
              'contentFilter':{},
-             'columns': ['Fullname',
+             'columns': ['Title',
                          'Username',
                          'getEmailAddress',
                          'getBusinessPhone',
@@ -775,15 +774,15 @@ class ClientContactsView(BikaListingView):
             if not items[x].has_key('obj'): continue
 
             obj = items[x]['obj']
-            items[x]['Fullname'] = obj.getFullname()
+            items[x]['Title'] = obj.Title()
             items[x]['getEmailAddress'] = obj.getEmailAddress()
             items[x]['getBusinessPhone'] = obj.getBusinessPhone()
             items[x]['getMobilePhone'] = obj.getMobilePhone()
             username = obj.getUsername()
             items[x]['Username'] = username and username or ''
 
-            items[x]['replace']['Fullname'] = "<a href='%s'>%s</a>" % \
-                 (items[x]['url'], items[x]['Fullname'])
+            items[x]['replace']['Title'] = "<a href='%s'>%s</a>" % \
+                 (items[x]['url'], items[x]['Title'])
 
             if items[x]['getEmailAddress']:
                 items[x]['replace']['getEmailAddress'] = "<a href='mailto:%s'>%s</a>" % \

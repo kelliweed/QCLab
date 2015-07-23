@@ -60,7 +60,6 @@
     <index name="ClientSampleID" meta_type="FieldIndex">               <indexed_attr value="ClientSampleID"/> </index>
 
     <index name="ContactTitle" meta_type="FieldIndex">                 <indexed_attr value="ContactTitle"/> </index>
-    <index name="Fullname" meta_type="FieldIndex">                     <indexed_attr value="Fullname"/> </index>
 
     <index name="SampleID" meta_type="FieldIndex">                     <indexed_attr value="SampleID"/> </index>
     <index name="SampleUID" meta_type="FieldIndex">                    <indexed_attr value="SampleUID"/> </index>
@@ -120,7 +119,6 @@
     <index name="DepartmentTitle" meta_type="FieldIndex"/>
     <index name="DuplicateVariation" meta_type="FieldIndex"/>
     <index name="Formula" meta_type="FieldIndex"/>
-    <index name="Fullname" meta_type="FieldIndex"/>
     <index name="Hazardous" meta_type="FieldIndex"/>
     <index name="InstrumentTitle" meta_type="FieldIndex"/>
     <index name="Keyword" meta_type="FieldIndex"/>
@@ -159,7 +157,6 @@
     <column value="DepartmentTitle"/>
     <column value="DuplicateVariation"/>
     <column value="Formula"/>
-    <column value="Fullname"/>
     <column value="Hazardous"/>
     <column value="InstrumentTitle"/>
     <column value="Keyword"/>

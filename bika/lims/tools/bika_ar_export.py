@@ -105,7 +105,7 @@ class bika_ar_export(UniqueObject, SimpleItem):
 
         contact = info['contact']
         contact_id = contact.getUsername()
-        contact_name = contact.getFullname()
+        contact_name = contact.Title()
 
         rows = []
 

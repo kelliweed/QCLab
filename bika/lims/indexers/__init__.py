@@ -92,12 +92,6 @@ def ParentUID(instance):
 
 
 @indexer(Interface)
-def Fullname(instance):
-    if hasattr(instance, 'getFullname'):
-        return instance.getFullname()
-
-
-@indexer(Interface)
 def Username(instance):
     if hasattr(instance, 'getUsername'):
         return instance.getUsername()
