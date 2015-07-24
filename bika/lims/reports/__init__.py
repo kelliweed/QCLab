@@ -34,7 +34,11 @@ class CreateReport(object):
 		elif report_type == 'productivity_analysesperservice' :
 			alsoProvides(obj, IAnalysesPerService)
 			obj.Schema().getField('query').set(obj,[
-				{'i': 'DateReceived', 'o': 'plone.app.querystring.operation.date.today', 'v': ['', '']}
+				{'i': 'created', 'o': 'plone.app.querystring.operation.date.today'}, \
+				{'i': 'DatePublished', 'o': 'plone.app.querystring.operation.date.today'}, \
+				{'i': 'review_state', 'o': 'plone.app.querystring.operation.selection.is'}, \
+				{'i': 'cancellation_state', 'o': 'plone.app.querystring.operation.selection.is'}, \
+				{'i': 'worksheetanalysis_review_state', 'o': 'plone.app.querystring.operation.selection.is'} \
 				])	
 		self.request.response.redirect(obj.absolute_url())
 
