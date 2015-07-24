@@ -32,7 +32,6 @@
     <adapter name="DateSampled"       factory=".DateSampled"/>
     <adapter name="Priority"          factory=".Priority"/>
     <adapter name="ParentUID"         factory=".ParentUID"/>
-    <adapter name="Fullname"          factory=".Fullname"/>
     <adapter name="Username"          factory=".Username"/>
     <adapter name="Keyword"           factory=".Keyword"/>
     <adapter name="description"       factory=".description"/>

@@ -299,9 +299,8 @@ class ClientContactVocabulary(object):
         items = []
         for client in site.clients.objectValues('Client'):
             objects = list(client.objectValues('Contact'))
-            objects.sort(lambda x, y: cmp(x.getFullname().lower(),
-                                          y.getFullname().lower()))
-            xitems = [(to_utf8(item.getFullname()), item.getFullname())
+            objects.sort(lambda x, y: cmp(x.Title().lower(), y.Title().lower()))
+            xitems = [(to_utf8(item.Title()), item.Title())
                       for item in objects]
             xitems = [SimpleTerm(i[1], i[1], i[0]) for i in xitems]
             items += xitems

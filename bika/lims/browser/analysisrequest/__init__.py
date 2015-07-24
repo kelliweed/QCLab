@@ -166,7 +166,7 @@ class mailto_link_from_contacts:
         for contact in contacts:
             if contact:
                 mailto = "<a href='mailto:%s'>%s</a>" % (
-                    contact.getEmailAddress(), contact.getFullname())
+                    contact.getEmailAddress(), contact.Title())
             ret.append(mailto)
         return ",".join(ret)
 

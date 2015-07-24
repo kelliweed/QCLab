@@ -18,8 +18,7 @@ schema['Department'].schemata = 'default'
 
 schema['id'].schemata = 'default'
 schema['id'].widget.visible = False
-# Don't make title required - it will be computed from the Person's
-# Fullname
+# Don't make title required - it will be computed from the Person's Fullname
 schema['title'].schemata = 'default'
 schema['title'].required = 0
 schema['title'].widget.visible = False

@@ -35,8 +35,7 @@ class LabContactsView(BikaListingView):
         self.pagesize = 25
 
         self.columns = {
-            'Fullname': {'title': _('Name'),
-                         'index': 'Fullname'},
+            'Title': {'title': _('Name'), 'index': 'title'},
             'Department': {'title': _('Department'),
                            'index': 'getDepartmentTitle',
                            'toggle': True},
@@ -55,7 +54,7 @@ class LabContactsView(BikaListingView):
              'title': _('Active'),
              'contentFilter': {'inactive_state': 'active'},
              'transitions': [{'id':'deactivate'}, ],
-             'columns': ['Fullname',
+             'columns': ['Title',
                          'Department',
                          'BusinessPhone',
                          'Fax',
@@ -65,7 +64,7 @@ class LabContactsView(BikaListingView):
              'title': _('Dormant'),
              'contentFilter': {'inactive_state': 'inactive'},
              'transitions': [{'id':'activate'}, ],
-             'columns': ['Fullname',
+             'columns': ['Title',
                          'Department',
                          'BusinessPhone',
                          'Fax',
@@ -74,7 +73,7 @@ class LabContactsView(BikaListingView):
             {'id':'all',
              'title': _('All'),
              'contentFilter':{},
-             'columns': ['Fullname',
+             'columns': ['Title',
                          'Department',
                          'BusinessPhone',
                          'Fax',
@@ -87,14 +86,14 @@ class LabContactsView(BikaListingView):
         for x in range(len(items)):
             if not items[x].has_key('obj'): continue
             obj = items[x]['obj']
-            items[x]['Fullname'] = obj.getFullname()
+            items[x]['Title'] = obj.Title()
             items[x]['Department'] = obj.getDepartmentTitle()
             items[x]['BusinessPhone'] = obj.getBusinessPhone()
             items[x]['Fax'] = obj.getBusinessFax()
             items[x]['MobilePhone'] = obj.getMobilePhone()
             items[x]['EmailAddress'] = obj.getEmailAddress()
-            items[x]['replace']['Fullname'] = "<a href='%s'>%s</a>" % \
-                 (items[x]['url'], items[x]['Fullname'])
+            items[x]['replace']['Title'] = "<a href='%s'>%s</a>" % \
+                 (items[x]['url'], items[x]['Title'])
 
         return items
 

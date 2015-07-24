@@ -18,7 +18,6 @@
     <adapter name="DepartmentTitle"       factory=".bika_setup.DepartmentTitle"/>
     <adapter name="DuplicateVariation"    factory=".bika_setup.DuplicateVariation"/>
     <adapter name="Formula"               factory=".bika_setup.Formula"/>
-    <adapter name="Fullname"              factory=".bika_setup.Fullname"/>
     <adapter name="Hazardous"             factory=".bika_setup.Hazardous"/>
     <adapter name="InstrumentTitle"       factory=".bika_setup.InstrumentTitle"/>
     <adapter name="Keyword"               factory=".bika_setup.Keyword"/>

@@ -25,7 +25,7 @@ class View(BrowserView):
         # Collect general data
         self.orderDate = self.ulocalized_time(context.getOrderDate())
         self.contact = context.getContact()
-        self.contact = self.contact.getFullname() if self.contact else ''
+        self.contact = self.contact.Title() if self.contact else ''
         self.subtotal = '%.2f' % context.getSubtotal()
         self.vat = '%.2f' % context.getVATAmount()
         self.total = '%.2f' % context.getTotal()

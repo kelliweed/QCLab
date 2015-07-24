@@ -65,10 +65,6 @@ class Contact(Person):
         from bika.lims.idserver import renameAfterCreation
         renameAfterCreation(self)
 
-    def Title(self):
-        """ Return the contact's Fullname as title """
-        return safe_unicode(self.getFullname()).encode('utf-8')
-
     security.declareProtected(ManageClients, 'hasUser')
     def hasUser(self):
         """ check if contact has user """

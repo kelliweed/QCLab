@@ -2,7 +2,7 @@ from bika.lims.exportimport.dataimport import SetupDataSetList as SDL
 from bika.lims.idserver import renameAfterCreation
 from bika.lims.interfaces import ISetupDataSetList
 from Products.CMFPlone.utils import safe_unicode, _createObjectByType
-from bika.lims.utils import tmpID, to_unicode
+from bika.lims.utils import tmpID
 from bika.lims.utils import to_utf8
 from bika.lims import bikaMessageFactory as _
 from bika.lims.utils import t
@@ -223,7 +223,7 @@ class WorksheetImporter:
             return None
         contentFilter = {"portal_type": portal_type}
         if title:
-            contentFilter['title'] = to_unicode(title)
+            contentFilter['title'] = to_utf8(title)
         contentFilter.update(kwargs)
         brains = catalog(contentFilter)
         if len(brains) > 1:
@@ -302,9 +302,7 @@ class Lab_Contacts(WorksheetImporter):
             obj = _createObjectByType("LabContact", folder, tmpID())
             obj.unmarkCreationFlag()
             renameAfterCreation(obj)
-            Fullname = row['Firstname'] + " " + row.get('Surname', '')
             obj.edit(
-                title=Fullname,
                 Salutation=row.get('Salutation', ''),
                 Firstname=row['Firstname'],
                 Surname=row.get('Surname', ''),
@@ -332,7 +330,7 @@ class Lab_Contacts(WorksheetImporter):
                     properties={
                         'username': username,
                         'email': row['EmailAddress'],
-                        'fullname': Fullname}
+                        'fullname': obj.Title()}
                 )
                 groups = row.get('Groups', '')
                 if groups:
@@ -466,7 +464,7 @@ class Client_Contacts(WorksheetImporter):
                     self.defer(src_obj=contact,
                                src_field='CCContact',
                                dest_query={'portal_type': 'Contact',
-                                           'Fullname': _fullname}
+                                           'title': _fullname}
                                )
             ## Create Plone user
             username = safe_unicode(row['Username']).encode('utf-8')
@@ -725,7 +723,7 @@ class Instrument_Validations(WorksheetImporter):
                 # Getting lab contacts
                 lab_contacts = [o.getObject() for o in pc(portal_type="LabContact", nactive_state='active')]
                 for contact in lab_contacts:
-                    if contact.getFullname() == row.get('Worker', ''):
+                    if contact.Title() == row.get('Worker', ''):
                         obj.setWorker(contact.UID())
                 obj.unmarkCreationFlag()
                 renameAfterCreation(obj)
@@ -756,7 +754,7 @@ class Instrument_Calibrations(WorksheetImporter):
                 # Getting lab contacts
                 lab_contacts = [o.getObject() for o in pc(portal_type="LabContact", nactive_state='active')]
                 for contact in lab_contacts:
-                    if contact.getFullname() == row.get('Worker', ''):
+                    if contact.Title() == row.get('Worker', ''):
                         obj.setWorker(contact.UID())
                 obj.unmarkCreationFlag()
                 renameAfterCreation(obj)
@@ -804,9 +802,9 @@ class Instrument_Certifications(WorksheetImporter):
                 # Getting lab contacts
                 lab_contacts = [o.getObject() for o in pc(portal_type="LabContact", nactive_state='active')]
                 for contact in lab_contacts:
-                    if contact.getFullname() == row.get('preparedby', ''):
+                    if contact.Title() == row.get('preparedby', ''):
                         obj.setPreparator(contact.UID())
-                    if contact.getFullname() == row.get('approvedby', ''):
+                    if contact.Title() == row.get('approvedby', ''):
                         obj.setValidator(contact.UID())
                 obj.unmarkCreationFlag()
                 renameAfterCreation(obj)
@@ -1922,7 +1920,7 @@ class Analysis_Requests(WorksheetImporter):
                         title=row['Client_title'])[0].getObject()
             obj = _createObjectByType("AnalysisRequest", client, row['id'])
             contact = pc(portal_type="Contact",
-                         Fullname=row['Contact_Fullname'])[0].getObject()
+                         title=row['Contact_Fullname'])[0].getObject()
             sample = pc(portal_type="Sample",
                         id=row['Sample_id'])[0].getObject()
             obj.edit(
@@ -1938,7 +1936,7 @@ class Analysis_Requests(WorksheetImporter):
             )
             if row['CCContact_Fullname']:
                 contact = pc(portal_type="Contact",
-                             Fullname=row['CCContact_Fullname'])[0].getObject()
+                             title=row['CCContact_Fullname'])[0].getObject()
                 obj.setCCContact(contact)
             if row['AnalysisProfile_title']:
                 profile = pc(portal_type="AnalysisProfile",

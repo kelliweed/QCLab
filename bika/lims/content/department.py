@@ -28,7 +28,7 @@ schema = BikaSchema.copy() + Schema((
         ),
     ),
     ComputedField('ManagerName',
-        expression = "context.getManager() and context.getManager().getFullname() or ''",
+        expression = "context.getManager() and context.getManager().Title() or ''",
         widget = ComputedWidget(
             visible = False,
         ),

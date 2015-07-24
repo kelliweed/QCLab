@@ -39,11 +39,6 @@
     <index name="CategoryUID" meta_type="KeywordIndex">                <indexed_attr value="CategoryUID"/> </index>
     <index name="CategoryTitle" meta_type="KeywordIndex">              <indexed_attr value="CategoryTitle"/> </index>
 
-    <!-- Different (redundant?) indexes for SamplePoint -->
-    <index name="SamplePointTitle" meta_type="FieldIndex">             <indexed_attr value="SamplePointTitle"/> </index>
-    <index name="SamplePointUID" meta_type="FieldIndex">               <indexed_attr value="SamplePointUID"/> </index>
-    <index name="SampleTypeTitle" meta_type="FieldIndex">              <indexed_attr value="SampleTypeTitle"/> </index>
-
     <!-- Different (redundant?) indexes for SampleType -->
     <index name="SampleTypeUID" meta_type="FieldIndex">                <indexed_attr value="SampleTypeUID"/> </index>
     <index name="RawSamplePoints" meta_type="KeywordIndex">            <indexed_attr value="RawSamplePoints"/> </index>
@@ -60,7 +55,6 @@
     <index name="ClientSampleID" meta_type="FieldIndex">               <indexed_attr value="ClientSampleID"/> </index>
 
     <index name="ContactTitle" meta_type="FieldIndex">                 <indexed_attr value="ContactTitle"/> </index>
-    <index name="Fullname" meta_type="FieldIndex">                     <indexed_attr value="Fullname"/> </index>
 
     <index name="SampleID" meta_type="FieldIndex">                     <indexed_attr value="SampleID"/> </index>
     <index name="SampleUID" meta_type="FieldIndex">                    <indexed_attr value="SampleUID"/> </index>
@@ -82,6 +76,7 @@
 
     <column value="path"/>
     <column value="sortable_title"/>
+
     <column value="inactive_state"/>
     <column value="cancellation_state"/>
     <column value="workflowanalysis_review_state"/>
@@ -107,44 +102,36 @@
 
     <!-- ported from bika_setup_catalog -->
 
-    <index name="Accredited" meta_type="FieldIndex"/>
-    <index name="InstrumentType" meta_type="FieldIndex"/>
-    <index name="InstrumentTypeName" meta_type="FieldIndex"/>
-    <index name="Blank" meta_type="FieldIndex"/>
-    <index name="CalculationTitle" meta_type="FieldIndex"/>
-    <index name="CalculationUID" meta_type="FieldIndex"/>
-    <index name="CalibrationExpiryDate" meta_type="FieldIndex"/>
-    <index name="CategoryTitle" meta_type="FieldIndex"/>
-    <index name="CategoryUID" meta_type="FieldIndex"/>
-    <index name="ClientUID" meta_type="FieldIndex"/>
-    <index name="DepartmentTitle" meta_type="FieldIndex"/>
-    <index name="DuplicateVariation" meta_type="FieldIndex"/>
-    <index name="Formula" meta_type="FieldIndex"/>
-    <index name="Fullname" meta_type="FieldIndex"/>
-    <index name="Hazardous" meta_type="FieldIndex"/>
-    <index name="InstrumentTitle" meta_type="FieldIndex"/>
-    <index name="Keyword" meta_type="FieldIndex"/>
-    <index name="ManagerName" meta_type="FieldIndex"/>
-    <index name="ManagerPhone" meta_type="FieldIndex"/>
-    <index name="ManagerEmail" meta_type="FieldIndex"/>
-    <index name="MaxTimeAllowed" meta_type="FieldIndex"/>
-    <index name="Model" meta_type="FieldIndex"/>
-    <index name="Name" meta_type="FieldIndex"/>
-    <index name="PointOfCapture" meta_type="FieldIndex"/>
-    <index name="Price" meta_type="FieldIndex"/>
-    <index name="SamplePointTitle" meta_type="KeywordIndex"/>
-    <index name="SamplePointUID" meta_type="FieldIndex"/>
-    <index name="SampleTypeTitle" meta_type="KeywordIndex"/>
-    <index name="SampleTypeUID" meta_type="FieldIndex"/>
-    <index name="ServiceTitle" meta_type="FieldIndex"/>
-    <index name="ServiceUID" meta_type="FieldIndex"/>
-    <index name="TotalPrice" meta_type="FieldIndex"/>
-    <index name="Unit" meta_type="FieldIndex"/>
-    <index name="VATAmount" meta_type="FieldIndex"/>
-    <index name="Volume" meta_type="FieldIndex"/>
-    <index name="sortKey" meta_type="FieldIndex"/>
-    <index name="MethodID" meta_type="FieldIndex"/>
-    <index name="DocumentID" meta_type="FieldIndex"/>
+    <index name="Accredited" meta_type="FieldIndex">              <indexed_attr value="Accredited"/>              </index>
+    <index name="InstrumentType" meta_type="FieldIndex">          <indexed_attr value="InstrumentType"/>          </index>
+    <index name="InstrumentTypeName" meta_type="FieldIndex">      <indexed_attr value="InstrumentTypeName"/>      </index>
+    <index name="Blank" meta_type="FieldIndex">                   <indexed_attr value="Blank"/>                   </index>
+    <index name="CalculationTitle" meta_type="FieldIndex">        <indexed_attr value="CalculationTitle"/>        </index>
+    <index name="CalculationUID" meta_type="FieldIndex">          <indexed_attr value="CalculationUID"/>          </index>
+    <index name="CalibrationExpiryDate" meta_type="FieldIndex">   <indexed_attr value="CalibrationExpiryDate"/>   </index>
+    <index name="DepartmentTitle" meta_type="FieldIndex">         <indexed_attr value="DepartmentTitle"/>         </index>
+    <index name="DuplicateVariation" meta_type="FieldIndex">      <indexed_attr value="DuplicateVariation"/>      </index>
+    <index name="Formula" meta_type="FieldIndex">                 <indexed_attr value="Formula"/>                 </index>
+    <index name="Hazardous" meta_type="FieldIndex">               <indexed_attr value="Hazardous"/>               </index>
+    <index name="InstrumentTitle" meta_type="FieldIndex">         <indexed_attr value="InstrumentTitle"/>         </index>
+    <index name="ManagerName" meta_type="FieldIndex">             <indexed_attr value="ManagerName"/>             </index>
+    <index name="ManagerPhone" meta_type="FieldIndex">            <indexed_attr value="ManagerPhone"/>            </index>
+    <index name="ManagerEmail" meta_type="FieldIndex">            <indexed_attr value="ManagerEmail"/>            </index>
+    <index name="MaxTimeAllowed" meta_type="FieldIndex">          <indexed_attr value="MaxTimeAllowed"/>          </index>
+    <index name="Model" meta_type="FieldIndex">                   <indexed_attr value="Model"/>                   </index>
+    <index name="Name" meta_type="FieldIndex">                    <indexed_attr value="Name"/>                    </index>
+    <index name="Price" meta_type="FieldIndex">                   <indexed_attr value="Price"/>                   </index>
+    <index name="SamplePointTitle" meta_type="KeywordIndex">      <indexed_attr value="SamplePointTitle"/>        </index>
+    <index name="SamplePointUID" meta_type="FieldIndex">          <indexed_attr value="SamplePointUID"/>          </index>
+    <index name="SampleTypeTitle" meta_type="KeywordIndex">       <indexed_attr value="SampleTypeTitle"/>         </index>
+    <index name="SampleTypeUID" meta_type="FieldIndex">           <indexed_attr value="SampleTypeUID"/>           </index>
+    <index name="TotalPrice" meta_type="FieldIndex">              <indexed_attr value="TotalPrice"/>              </index>
+    <index name="Unit" meta_type="FieldIndex">                    <indexed_attr value="Unit"/>                    </index>
+    <index name="VATAmount" meta_type="FieldIndex">               <indexed_attr value="VATAmount"/>               </index>
+    <index name="Volume" meta_type="FieldIndex">                  <indexed_attr value="Volume"/>                  </index>
+    <index name="sortKey" meta_type="FieldIndex">                 <indexed_attr value="sortKey"/>                 </index>
+    <index name="MethodID" meta_type="FieldIndex">                <indexed_attr value="MethodID"/>                </index>
+    <index name="DocumentID" meta_type="FieldIndex">              <indexed_attr value="DocumentID"/>              </index>
 
     <column value="Accredited"/>
     <column value="InstrumentType"/>
@@ -159,7 +146,6 @@
     <column value="DepartmentTitle"/>
     <column value="DuplicateVariation"/>
     <column value="Formula"/>
-    <column value="Fullname"/>
     <column value="Hazardous"/>
     <column value="InstrumentTitle"/>
     <column value="Keyword"/>

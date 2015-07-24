@@ -83,12 +83,6 @@ def Formula(instance):
 
 
 @indexer(Interface)
-def Fullname(instance):
-    if hasattr(instance, 'getFullname'):
-        return instance.getFullname()
-
-
-@indexer(Interface)
 def Hazardous(instance):
     if hasattr(instance, 'getHazardous'):
         return instance.getHazardous()

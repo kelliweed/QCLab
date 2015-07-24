@@ -37,9 +37,9 @@
             catalog_name="portal_catalog"
             ui_item="id"
             autocomplete="false"
-            combogrid_options='{"colModel": [{"columnName": "Fullname", "align": "left", "label": "ID", "width": "100"},
+            combogrid_options='{"colModel": [{"columnName": "Title", "align": "left", "label": "ID", "width": "100"},
                                             {"columnName": "UID", "hidden": true}],
-                                "search_fields": ["Fullname"],
+                                "search_fields": ["title"],
                                 "catalog_name": "portal_catalog",
                                 "url": "referencewidget_search",
                                 "discard_empty": [],

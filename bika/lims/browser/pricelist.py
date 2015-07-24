@@ -162,7 +162,7 @@ class PricelistEmailView(BrowserView):
             else:
                 contact = context.reference_catalog.lookupObject(request.Contact_uid)
                 contact_address = formataddr(
-                    (encode_header(contact.getFullname()),
+                    (encode_header(contact.Title()),
                       contact.getEmailAddress())
                 )
                 msg = 'portal_status_message=Pricelist sent to %s at %s' % (

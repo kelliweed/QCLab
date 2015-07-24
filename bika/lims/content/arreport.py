@@ -27,7 +27,7 @@ schema = BikaSchema.copy() + Schema((
     ),
     RecordsField('Recipients',
         type='recipients',
-        subfields=('UID', 'Username', 'Fullname', 'EmailAddress',
+        subfields=('UID', 'Username', 'Title', 'EmailAddress',
                    'PublicationModes'),
     ),
 ))
