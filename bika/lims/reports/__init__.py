@@ -39,7 +39,31 @@ class CreateReport(object):
 				{'i': 'review_state', 'o': 'plone.app.querystring.operation.selection.is'}, \
 				{'i': 'cancellation_state', 'o': 'plone.app.querystring.operation.selection.is'}, \
 				{'i': 'worksheetanalysis_review_state', 'o': 'plone.app.querystring.operation.selection.is'} \
+				])
+		elif report_type == 'productivity_analysespersampletype' :
+			alsoProvides(obj, IAnalysesPerSampleType)
+			obj.Schema().getField('query').set(obj,[
+				{'i': 'created', 'o': 'plone.app.querystring.operation.date.today'}, \
+				{'i': 'review_state', 'o': 'plone.app.querystring.operation.selection.is'}, \
+				{'i': 'cancellation_state', 'o': 'plone.app.querystring.operation.selection.is'}, \
+				{'i': 'worksheetanalysis_review_state', 'o': 'plone.app.querystring.operation.selection.is'} \
 				])	
+		elif report_type == 'productivity_analysesperclient' :
+			alsoProvides(obj, IAnalysesPerClient)
+			obj.Schema().getField('query').set(obj,[
+				{'i': 'created', 'o': 'plone.app.querystring.operation.date.today'}, \
+				{'i': 'review_state', 'o': 'plone.app.querystring.operation.selection.is'}, \
+				{'i': 'cancellation_state', 'o': 'plone.app.querystring.operation.selection.is'}, \
+				{'i': 'worksheetanalysis_review_state', 'o': 'plone.app.querystring.operation.selection.is'} \
+				])	
+		"""
+		elif report_type == 'productivity_analysestats_overtime' :
+			alsoProvides(obj, IAnalysesStatsOvertime)
+			obj.Schema().getField('query').set(obj,[
+				{'i': 'created', 'o': 'plone.app.querystring.operation.date.today'}, \
+				{'i': 'worksheetanalysis_review_state', 'o': 'plone.app.querystring.operation.selection.is'} \
+				])	
+		"""	
 		self.request.response.redirect(obj.absolute_url())
 
 

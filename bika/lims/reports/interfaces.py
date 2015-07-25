@@ -15,3 +15,20 @@ class IAnalysesPerService(Interface):
 
     """
     """
+
+class IAnalysesPerSampleType(Interface):
+
+    """
+    """
+
+class IAnalysesPerClient(Interface):
+
+    """
+    """
+
+class IAnalysesStatsOverTime(Interface):
+
+    """
+    """
+
+
