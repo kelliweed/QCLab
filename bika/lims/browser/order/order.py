@@ -8,6 +8,8 @@ from bika.lims.utils import to_utf8
 from bika.lims import bikaMessageFactory as _
 from bika.lims.browser import BrowserView
 from bika.lims.utils import t
+from plone.app.layout.viewlets.common import ViewletBase
+from zope.component import getMultiAdapter
 
 class OrderView(BrowserView):
     template = ViewPageTemplateFile('templates/order_view.pt')
@@ -178,4 +180,18 @@ class PrintView(OrderView):
 
     def getPreferredCurrencyAbreviation(self):
         return self.context.bika_setup.getCurrency()
+
+
+class OrderPathBarViewlet(ViewletBase):
+    """Viewlet for overriding breadcrumbs in Order View"""
+
+    index = ViewPageTemplateFile('templates/path_bar.pt')
+
+    def update(self):
+        super(OrderPathBarViewlet, self).update()
+        self.is_rtl = self.portal_state.is_rtl()
+        breadcrumbs = getMultiAdapter((self.context, self.request),
+                                      name='breadcrumbs_view').breadcrumbs()
+        breadcrumbs[2]['absolute_url'] += '/orders'
+        self.breadcrumbs = breadcrumbs
 
