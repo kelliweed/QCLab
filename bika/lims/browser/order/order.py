@@ -38,7 +38,7 @@ class OrderView(BrowserView):
             product = [pro for pro in products if pro.getId() == prodid][0]
             price = float(item['Price'])
             vat = float(item['VAT'])
-            qty = float(item['Quantity'])
+            qty = item['Quantity']
             self.items.append({
 		        'title': product.Title(),
 		        'description': product.Description(),
@@ -78,12 +78,12 @@ class EditView(BrowserView):
             context.order_lineitems = []
             # Process the order item data
             for prodid, qty in request.form.items():
-                if prodid.startswith('product_') and float(qty) > 0:
+                if prodid.startswith('product_') and int(qty) > 0:
                     prodid = prodid.replace('product_', '')
                     product = [pro for pro in products if pro.getId() == prodid][0]
                     context.order_lineitems.append(
                             {'Product': prodid,
-                             'Quantity': qty,
+                             'Quantity': int(qty),
                              'Price': product.getPrice(),
                              'VAT': product.getVAT()})
 
@@ -135,7 +135,7 @@ class PrintView(OrderView):
             product = [pro for pro in products if pro.getId() == prodid][0]
             price = float(item['Price'])
             vat = float(item['VAT'])
-            qty = float(item['Quantity'])
+            qty = item['Quantity']
             self.items.append({
                 'title': product.Title(),
                 'description': product.Description(),
