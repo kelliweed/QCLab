@@ -55,11 +55,10 @@ Test ProductItem as LabManager
     Add Water-sampling kit as product under Sampling Kit in supplier-1
 
     Given a blank product item form
-     When I enter the title 12572
-      and I select the product Water-sampling kit
+     When I select the product Water-sampling kit
       and I enter other fields of the item
       and I submit the form
-     Then product items list should contain 12572, Water-sampling kit and Sampling Kit
+     Then product items list should contain Water-sampling kit and Sampling Kit
 
 
 *** Keywords ***
@@ -85,7 +84,7 @@ I enter the title ${title}
 I select the category ${category}
     [Documentation]  Input the product category for the product
     select from list  xpath=//select[contains(@id, 'Category:list')]  ${category}
-    
+
 
 I enter other fields
     [Documentation]  Fill other fields while adding Product
@@ -121,9 +120,9 @@ products list of ${supplier} should not contain ${title} under ${category}
     click element  xpath=//th[contains(@cat, '${category}')]
     page should not contain  ${title}
 
-product items list should contain ${title}, ${product} and ${category}
+product items list should contain ${product} and ${category}
     go to  ${PLONEURL}/bika_setup/bika_productitems
-    page should contain  ${title}
+    wait until page contains  Product Items
     page should contain  ${product}
     page should contain  ${category}
 
