@@ -93,4 +93,12 @@
       layer="bika.lims.interfaces.IBikaLIMS"
     />
 
+    <browser:page
+     for="bika.lims.interfaces.IOrder"
+     name="stickers"
+     class="bika.lims.browser.order.stickers.Sticker"
+     permission="zope2.View"
+     layer="bika.lims.interfaces.IBikaLIMS"
+    />
+
 </configure>

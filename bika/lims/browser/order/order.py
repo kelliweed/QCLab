@@ -14,7 +14,7 @@ from zope.component import getMultiAdapter
 class OrderView(BrowserView):
     template = ViewPageTemplateFile('templates/order_view.pt')
     title = _('Inventory Order')
-    
+
     def __call__(self):
         context = self.context
         portal = self.portal
@@ -194,4 +194,3 @@ class OrderPathBarViewlet(ViewletBase):
                                       name='breadcrumbs_view').breadcrumbs()
         breadcrumbs[2]['absolute_url'] += '/orders'
         self.breadcrumbs = breadcrumbs
-

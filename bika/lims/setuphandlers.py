@@ -751,6 +751,7 @@ class BikaGenerator:
         at.setCatalogsByType('Manufacturer', ['bika_setup_catalog', 'portal_catalog'])
         at.setCatalogsByType('Method', ['bika_setup_catalog', 'portal_catalog'])
         at.setCatalogsByType('Multifile', ['bika_setup_catalog'])
+        at.setCatalogsByType('Order', ['bika_setup_catalog'])
         at.setCatalogsByType('Preservation', ['bika_setup_catalog', ])
         at.setCatalogsByType('ProductCategory', ['bika_setup_catalog', ])
         at.setCatalogsByType('ProductItem', ['bika_setup_catalog', ])
@@ -927,4 +928,3 @@ def setupVarious(context):
     setup.runImportStepFromProfile(
             'profile-plone.app.jquery:default', 'jsregistry')
     # setup.runImportStepFromProfile('profile-plone.app.jquerytools:default', 'jsregistry')
-

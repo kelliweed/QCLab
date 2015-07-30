@@ -522,7 +522,6 @@ schema = BikaFolderSchema.copy() + Schema((
     ),
     StringField('StorageLevelTitleSeparator',
         schemata = 'Inventory',
-        required = 1,
         vocabulary = ('', '-', '_'),
         default = '-',
         widget = SelectionWidget(
@@ -530,6 +529,13 @@ schema = BikaFolderSchema.copy() + Schema((
             description=_('The separator between title and index while creating multiple storage levels at once.'),
             format='select',
         )
+    ),
+    BooleanField('AutoPrintInventoryStickers',
+        schemata = "Inventory",
+        default = True,
+        widget = BooleanWidget(
+            label=_("Print product item stickers automatically"),
+        ),
     ),
 ))
 
