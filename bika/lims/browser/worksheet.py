@@ -1330,7 +1330,7 @@ class WorksheetServicesView(BikaListingView):
             calculation = service.getObject().getCalculation()
             if calculation and calculation.getDependentServices():
                 continue
-            cat = service.getCategoryTitle
+            cat = service.CategoryTitle
             if cat not in self.categories:
                 self.categories.append(cat)
             # this folderitems doesn't subclass from the bika_listing.py

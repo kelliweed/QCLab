@@ -780,7 +780,7 @@ function AnalysisRequestAddByCol() {
         var query_str = $(spec_element).attr("search_query")
         var query = $.parseJSON(query_str)
         if (query.hasOwnProperty("SampleTypeUID")) {
-            delete query.getSampleTypeUID
+            delete query.SampleTypeUID
         }
         query.getSampleTypeUID = [encodeURIComponent(sampletype_uid), ""]
         query_str = $.toJSON(query)

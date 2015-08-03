@@ -73,7 +73,7 @@ class SelectionMacrosView(BrowserView):
         res = []
         pc = getToolByName(self.context, "portal_catalog")
         for s in pc(portal_type='AnalysisSpec'):
-            if s.getClientUID == specfolder_uid:
+            if s.ClientUID == specfolder_uid:
                 res.append({'uid': s.UID, 'title': s.Title})
         for c in self.context.clients.objectValues():
             for s in c.objectValues():

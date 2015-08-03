@@ -357,7 +357,7 @@ class Worksheet(BaseFolder, HistoryAwareMixin):
                 # Exclude those analyses for which the ws selected
                 # instrument is not allowed
                 continue
-            ar = analysis.getRequestID
+            ar = analysis.RequestID
             if ar in ar_analyses:
                 ar_analyses[ar].append(analysis.getObject())
             else:

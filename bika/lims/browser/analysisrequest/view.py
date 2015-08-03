@@ -325,7 +325,7 @@ class AnalysisRequestViewView(BrowserView):
         restricted = [u.UID() for u in self.getRestrictedCategories()]
         for service in pc(portal_type="AnalysisService",
                            inactive_state='active'):
-            cat = (service.getCategoryUID, service.getCategoryTitle)
+            cat = (service.CategoryUID, service.CategoryTitle)
             if restricted and cat[0] not in restricted:
                 continue
             poc = service.PointOfCapture
