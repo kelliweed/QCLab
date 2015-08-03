@@ -3,7 +3,8 @@ from Acquisition import aq_get
 from bika.lims import bikaMessageFactory as _
 from bika.lims.utils import t
 from bika.lims.interfaces import IDisplayListVocabulary
-from bika.lims.utils import to_utf8
+from bika.lims.utils import to_utf8, to_unicode
+from operator import methodcaller
 from Products.Archetypes.public import DisplayList
 from Products.CMFCore.utils import getToolByName
 from zope.interface import implements
@@ -61,11 +62,13 @@ class BikaContentVocabulary(object):
     """
     implements(IVocabularyFactory)
 
-    def __init__(self, folders, portal_types):
+    def __init__(self, folders, portal_types,
+                 keyfield='Title', valuefield='Title'):
         self.folders = isinstance(folders, (tuple, list)) and \
             folders or [folders, ]
         self.portal_types = isinstance(portal_types, (tuple, list)) and \
             portal_types or [portal_types, ]
+        self.keyfield, self.valuefield = keyfield, valuefield
 
     def __call__(self, context):
         site = getSite()
@@ -80,10 +83,11 @@ class BikaContentVocabulary(object):
                            wf.getInfoFor(o, 'inactive_state') == 'active']
                 if not objects:
                     continue
-                objects.sort(lambda x, y: cmp(x.Title().lower(),
-                                              y.Title().lower()))
-                xitems = [(t(item.Title()), item.Title()) for item in objects]
-                xitems = [SimpleTerm(i[1], i[1], i[0]) for i in xitems]
+                objects = sorted(objects, key=methodcaller(self.valuefield))
+                xitems = [(getattr(item, self.keyfield)(),
+                           t(to_unicode(getattr(item, self.valuefield)())))
+                          for item in objects]
+                xitems = [SimpleTerm(i[0], i[0], i[1]) for i in xitems]
                 items += xitems
         return SimpleVocabulary(items)
 
@@ -201,7 +205,9 @@ class ClientVocabulary(BikaContentVocabulary):
     def __init__(self):
         BikaContentVocabulary.__init__(self,
                                        ['clients', ],
-                                       ['Client', ])
+                                       ['Client', ],
+                                       keyfield='UID',
+                                       valuefield='Title')
 
 ClientVocabularyFactory = ClientVocabulary()
 
@@ -251,9 +257,6 @@ class UserVocabulary(object):
         return SimpleVocabulary(items)
 
 UserVocabularyFactory = UserVocabulary()
-
-
-ClientVocabularyFactory = ClientVocabulary()
 
 
 class ClientContactVocabulary(object):
