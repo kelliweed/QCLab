@@ -71,7 +71,7 @@ class AnalysisRequestViewView(BrowserView):
         # Create Field and Lab Analyses tables
         self.tables = {}
         for poc in POINTS_OF_CAPTURE:
-            if self.context.getAnalyses(getPointOfCapture=poc):
+            if self.context.getAnalyses(PointOfCapture=poc):
                 t = self.createAnalysesView(ar,
                                  self.request,
                                  PointOfCapture=poc,
@@ -88,7 +88,7 @@ class AnalysisRequestViewView(BrowserView):
                     t.review_states[0]['columns'].remove('DueDate')
                 self.tables[POINTS_OF_CAPTURE.getValue(poc)] = t.contents_table()
         # Un-captured field analyses may cause confusion
-        if ar.getAnalyses(getPointOfCapture='field',
+        if ar.getAnalyses(PointOfCapture='field',
                           review_state=['sampled', 'sample_due']):
             message = _("There are field analyses without submitted results.")
             self.addMessage(message, 'info')
@@ -304,7 +304,7 @@ class AnalysisRequestViewView(BrowserView):
                             RequestID=self.context.RequestID):
             analysis = analysis.getObject()
             service = analysis.getService()
-            res.append([service.getPointOfCapture(),
+            res.append([service.PointOfCapture(),
                         service.getCategoryUID(),
                         service.UID()])
         return res
@@ -328,7 +328,7 @@ class AnalysisRequestViewView(BrowserView):
             cat = (service.getCategoryUID, service.getCategoryTitle)
             if restricted and cat[0] not in restricted:
                 continue
-            poc = service.getPointOfCapture
+            poc = service.PointOfCapture
             if poc not in cats:
                 cats[poc] = []
             if cat not in cats[poc]:

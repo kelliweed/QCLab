@@ -154,7 +154,7 @@ class Worksheet(BaseFolder, HistoryAwareMixin):
             # if dry matter service in my dependents:
             if dmk in [a.getService().getKeyword() for a in deps]:
                 # get dry matter analysis from AR
-                dma = analysis.aq_parent.getAnalyses(getKeyword=dmk,
+                dma = analysis.aq_parent.getAnalyses(Keyword=dmk,
                                                      full_objects=True)[0]
                 # add it.
                 if dma not in self.getAnalyses():

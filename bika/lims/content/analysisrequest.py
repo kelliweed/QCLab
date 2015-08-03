@@ -2095,7 +2095,7 @@ class AnalysisRequest(BaseFolder):
             return False
         # check if any related ARs have field analyses with no result.
         for ar in self.getSample().getAnalysisRequests():
-            field_analyses = ar.getAnalyses(getPointOfCapture='field',
+            field_analyses = ar.getAnalyses(PointOfCapture='field',
                                             full_objects=True)
             no_results = [a for a in field_analyses if a.getResult() == '']
             if no_results:
