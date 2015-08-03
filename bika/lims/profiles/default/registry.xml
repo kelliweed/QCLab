@@ -135,7 +135,7 @@
 
   <!-- plone.app.querystring.field.Client -->
   <records interface="plone.app.querystring.interfaces.IQueryField"
-           prefix="plone.app.querystring.field.ClientUID">
+           prefix="plone.app.querystring.field.ClientTitle">
     <value key="title" i18n:translate="" i18n_domain="plone">Client</value>
     <value key="description" i18n:translate="" i18n_domain="plone">Client</value>
     <value key="enabled">True</value>
@@ -143,8 +143,8 @@
     <value key="operations">
       <element>plone.app.querystring.operation.selection.is</element>
     </value>
-    <value key="vocabulary">bika.lims.vocabularies.Client</value>
-    <value key="group" i18n:translate="" i18n_domain="plone">Bika LIMS</value>
+    <value key="vocabulary">bika.lims.vocabularies.Clients</value>
+    <value key="group" i18n:translate="" i18n_domain="plone">Bika-LIMS</value>
   </records>
 
   <!-- Metadata Group end -->
