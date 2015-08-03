@@ -34,7 +34,7 @@ class ProductItemsView(BikaListingView):
         self.show_select_row = False
         self.show_select_column = True
         self.pagesize = 25
-
+        self.filter_indexes.append('getBatchId')
         self.columns = {
             'Title': {'title': _('Title'),
                       'index': 'sortable_title',
@@ -44,6 +44,7 @@ class ProductItemsView(BikaListingView):
             'labId': {'title': _('Lab Id'),
                        'toggle': False},
             'batchId': {'title': _('Batch Id'),
+                       'index' : 'getBatchId',
                        'toggle': True},
             'product': {'title': _('Product'),
                        'toggle': True},
