@@ -104,9 +104,18 @@ class MyFactoriesMenu(FactoriesMenu):
         menuitems = super(MyFactoriesMenu, self).getMenuItems(context, request)
         #import pdb
         #pdb.set_trace()
-        productivity_reports = ['dailysamplesreceived', 'samplesreceivedvsreported', 'analysesperservice', 'analysespersampletype', \
-         'analysesperclient', 'analysestats', 'analysestats_overtime', 'analysesperdepartment', 'analysesperformedpertotal', \
-         'analysesattachments', 'dataentrydaybook']
+        productivity_reports = [('dailysamplesreceived','Daily Samples Received'),\
+            ('samplesreceivedvsreported', 'Samples received vs. samples reported '), \
+            ('analysesperservice', 'Analyses per service '),\
+            ('analysespersampletype', 'Analyses per sample type'), \
+            ('analysesperclient', 'Analysis requests and analyses per client '), \
+            ('analysestats', 'Analysis turnaround time'), \
+            ('analysestats_overtime', 'Analysis turnaround time over time'), \
+            ('analysesperdepartment', 'Analyses summary per department'),\
+            ('analysesperformedpertotal', 'Analyses performed and published as % of total'), \
+            ('analysesattachments', 'Attachments '), \
+            ('dataentrydaybook', 'Data entry day book ')]
+
         menuitems.append({
                 'id': 'Productivity',
                 'title': (u'Productivity'),
@@ -119,13 +128,13 @@ class MyFactoriesMenu(FactoriesMenu):
                 })
         for report in productivity_reports:
             menuitems.append({
-                    'id': report,
-                    'title': (unicode(report, 'utf-8')),
-                    'description': 'Description for ' + report ,
-                    'action': 'create_report?report=productivity_' + report,
+                    'id': report[0],
+                    'title': (unicode(report[1], 'utf-8')),
+                    'description': 'Description for ' + report[1] ,
+                    'action': 'create_report?report=productivity_' + report[0],
                     'selected': False,
                     'icon': None,
-                      'extra': {'separator': None, 'id': report, 'class': 'contenttype-reportcollection'},
+                      'extra': {'separator': None, 'id': report[0], 'class': 'contenttype-reportcollection'},
                     'submenu': None,
                     })
         
