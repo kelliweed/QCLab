@@ -104,7 +104,8 @@ class MyFactoriesMenu(FactoriesMenu):
         menuitems = super(MyFactoriesMenu, self).getMenuItems(context, request)
         #import pdb
         #pdb.set_trace()
-        productivity_reports = [('dailysamplesreceived','Daily Samples Received'),\
+        productivity_reports = [
+            ('dailysamplesreceived','Daily Samples Received'),\
             ('samplesreceivedvsreported', 'Samples received vs. samples reported '), \
             ('analysesperservice', 'Analyses per service '),\
             ('analysespersampletype', 'Analyses per sample type'), \
@@ -114,7 +115,8 @@ class MyFactoriesMenu(FactoriesMenu):
             ('analysesperdepartment', 'Analyses summary per department'),\
             ('analysesperformedpertotal', 'Analyses performed and published as % of total'), \
             ('analysesattachments', 'Attachments '), \
-            ('dataentrydaybook', 'Data entry day book ')]
+            ('dataentrydaybook', 'Data entry day book ')
+            ]
 
         menuitems.append({
                 'id': 'Productivity',
@@ -138,7 +140,13 @@ class MyFactoriesMenu(FactoriesMenu):
                     'submenu': None,
                     })
         
-        quality_control_reports = ['analysesoutofrange', 'analysesrepeated', 'resultspersamplepoint', 'referenceanalysisqc', 'duplicateanalysisqc']
+        quality_control_reports = [
+        ('analysesoutofrange', 'Analyses out of range'), \
+        ('analysesrepeated', 'Analyses repeated'), \
+        ('resultspersamplepoint', 'Results per sample point'), \
+        ('referenceanalysisqc', 'Reference analysis QC'), \
+        ('duplicateanalysisqc', 'Duplicate analysis QC ')
+        ]
         menuitems.append({
                 'id': 'QualityControl',
                 'title': (u'Quality Control'),
@@ -151,17 +159,20 @@ class MyFactoriesMenu(FactoriesMenu):
                 })
         for report in quality_control_reports:
             menuitems.append({
-                    'id': report,
-                    'title': (unicode(report, 'utf-8')),
-                    'description': 'Description for ' + report ,
-                    'action': 'create_report?report=qualitycontrol_' + report,
+                    'id': report[0],
+                    'title': (unicode(report[1], 'utf-8')),
+                    'description': 'Description for ' + report[1] ,
+                    'action': 'create_report?report=qualitycontrol_' + report[0],
                     'selected': False,
                     'icon': None,
-                      'extra': {'separator': None, 'id': report, 'class': 'contenttype-reportcollection'},
+                      'extra': {'separator': None, 'id': report[0], 'class': 'contenttype-reportcollection'},
                     'submenu': None,
                     })
         
-        administration_reports = ['arsnotinvoiced', 'usershistory']
+        administration_reports = [
+        ('arsnotinvoiced', 'Analysis requests not invoiced'), \
+        ('usershistory', 'User history')
+        ]
         menuitems.append({
                 'id': 'administration',
                 'title': (u'Administration'),
@@ -174,13 +185,13 @@ class MyFactoriesMenu(FactoriesMenu):
                 })
         for report in administration_reports:
             menuitems.append({
-                    'id': report,
-                    'title': (unicode(report, 'utf-8')),
-                    'description': 'Description for ' + report ,
-                    'action': 'create_report?report=administration_' + report,
+                    'id': report[0],
+                    'title': (unicode(report[1], 'utf-8')),
+                    'description': 'Description for ' + report[1] ,
+                    'action': 'create_report?report=administration_' + report[0],
                     'selected': False,
                     'icon': None,
-                      'extra': {'separator': None, 'id': report, 'class': 'contenttype-reportcollection'},
+                      'extra': {'separator': None, 'id': report[0], 'class': 'contenttype-reportcollection'},
                     'submenu': None,
                     })
 

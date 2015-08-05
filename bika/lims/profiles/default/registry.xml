@@ -87,6 +87,26 @@
     <value key="group" i18n:translate="" i18n:domain="plone">Dates</value>
   </records>
   
+  <!-- .app.querystring.field.DateSampled -->
+   <records interface="plone.app.querystring.interfaces.IQueryField"
+           prefix="plone.app.querystring.field.DateSampled">
+    <value key="title" i18n:translate="">Date Sampled</value>
+    <value key="description" i18n:translate=""/>
+    <value key="enabled">True</value>
+    <value key="sortable">True</value>
+    <value key="operations">
+      <element>plone.app.querystring.operation.date.lessThan</element>
+      <element>plone.app.querystring.operation.date.largerThan</element>
+      <element>plone.app.querystring.operation.date.between</element>
+      <element>plone.app.querystring.operation.date.lessThanRelativeDate</element>
+      <element>plone.app.querystring.operation.date.largerThanRelativeDate</element>
+      <element>plone.app.querystring.operation.date.today</element>
+      <element>plone.app.querystring.operation.date.beforeToday</element>
+      <element>plone.app.querystring.operation.date.afterToday</element>
+    </value>
+    <value key="group" i18n:translate="" i18n:domain="plone">Dates</value>
+  </records>
+  
   <!-- Dates Group end -->
   
   <!-- Metadata Group start -->
@@ -118,6 +138,8 @@
     <value key="vocabulary">bika.lims.vocabularies.AnalysisWorkflowStates</value>
     <value key="group" i18n:translate="" i18n_domain="plone">Metadata</value>
   </records>
+
+  <!-- Metadata Group end -->
 
   <!-- plone.app.querystring.field.Client -->
   <records interface="plone.app.querystring.interfaces.IQueryField"
@@ -175,26 +197,40 @@
     <value key="group" i18n:translate="" i18n_domain="plone">Bika-LIMS</value>
   </records>
 
-  <!-- plone.app.querystring.field.InstrumentTitle -->
+  <!-- plone.app.querystring.field.SamplePointTitle -->
   <records interface="plone.app.querystring.interfaces.IQueryField"
-           prefix="plone.app.querystring.field.InstrumentTitle">
-    <value key="title" i18n:translate="" i18n_domain="plone">Instrument Title</value>
-    <value key="description" i18n:translate="" i18n_domain="plone">Instrument Title</value>
+           prefix="plone.app.querystring.field.SamplePointTitle">
+    <value key="title" i18n:translate="" i18n_domain="plone">Sample Point</value>
+    <value key="description" i18n:translate="" i18n_domain="plone">Sample Point</value>
     <value key="enabled">True</value>
     <value key="sortable">True</value>
     <value key="operations">
       <element>plone.app.querystring.operation.selection.is</element>
     </value>
-    <value key="vocabulary">bika.lims.vocabularies.Instruments</value>
+    <value key="vocabulary">bika.lims.vocabularies.SamplePoints</value>
     <value key="group" i18n:translate="" i18n_domain="plone">Bika-LIMS</value>
   </records>
+  
+  <!-- plone.app.querystring.field.SampleTypeTitle -->
+  <records interface="plone.app.querystring.interfaces.IQueryField"
+           prefix="plone.app.querystring.field.SampleTypeTitle">
+    <value key="title" i18n:translate="" i18n_domain="plone">Sample Type</value>
+    <value key="description" i18n:translate="" i18n_domain="plone">Sample Type</value>
+    <value key="enabled">True</value>
+    <value key="sortable">True</value>
+    <value key="operations">
+      <element>plone.app.querystring.operation.selection.is</element>
+    </value>
+    <value key="vocabulary">bika.lims.vocabularies.SampleTypes</value>
+    <value key="group" i18n:translate="" i18n_domain="plone">Bika-LIMS</value>
+  </records>
+  
 
   <!-- To add Period : [Day, Week, Month]  -->
   <!-- To add Output Format  -->
   <!-- To add Group by : [Day, Week, Month, Year] -->
   <!--  created used instead of DateLoaded -->
 
-  <!-- Metadata Group end -->
 
   
 

@@ -94,6 +94,44 @@ class CreateReport(object):
             obj.Schema().getField('query').set(obj,[
                 {'i': 'created', 'o': 'plone.app.querystring.operation.date.today'}
                 ])
+        # Specification to be added in qualitycontrol_analysesoutofrange
+        elif report_type == 'qualitycontrol_analysesoutofrange' :
+            alsoProvides(obj, IAnalysesOutOfRange)
+            obj.Schema().getField('query').set(obj,[
+                {'i': 'DateReceived', 'o': 'plone.app.querystring.operation.date.today'}, \
+                {'i': 'review_state', 'o': 'plone.app.querystring.operation.selection.is'}, \
+                {'i': 'cancellation_state', 'o': 'plone.app.querystring.operation.selection.is'}, \
+                {'i': 'worksheetanalysis_review_state', 'o': 'plone.app.querystring.operation.selection.is'}
+                ])
+        elif report_type == 'qualitycontrol_analysesrepeated' :
+            alsoProvides(obj, IAnalysesRepeated)
+            obj.Schema().getField('query').set(obj,[
+                {'i': 'DateReceived', 'o': 'plone.app.querystring.operation.date.today'}, \
+                {'i': 'review_state', 'o': 'plone.app.querystring.operation.selection.is'}, \
+                {'i': 'cancellation_state', 'o': 'plone.app.querystring.operation.selection.is'}, \
+                {'i': 'worksheetanalysis_review_state', 'o': 'plone.app.querystring.operation.selection.is'}
+                ])
+        elif report_type == 'qualitycontrol_resultspersamplepoint' :
+            alsoProvides(obj, IResultsPerSamplePoint)
+            obj.Schema().getField('query').set(obj,[
+                {'i': 'ClientTitle', 'o': 'plone.app.querystring.operation.selection.is'}, \
+                {'i': 'SamplePointTitle', 'o': 'plone.app.querystring.operation.selection.is'}, \
+                {'i': 'SampleTypeTitle', 'o': 'plone.app.querystring.operation.selection.is'}, \
+                {'i': 'AnalysisService', 'o': 'plone.app.querystring.operation.selection.is'}, 
+                {'i': 'DateSampled', 'o': 'plone.app.querystring.operation.date.today'}, \
+                {'i': 'worksheetanalysis_review_state', 'o': 'plone.app.querystring.operation.selection.is'}
+                ])
+        # incomplete information about below 2 reports
+        elif report_type == 'qualitycontrol_referenceanalysisqc' :
+            alsoProvides(obj, IReferenceAnalysisQC)
+            obj.Schema().getField('query').set(obj,[
+                #{'i': 'AnalysisService', 'o': 'plone.app.querystring.operation.selection.is'} 
+                ])
+        elif report_type == 'qualitycontrol_duplicateanalysisqc' :
+            alsoProvides(obj, IDuplicateAnalysisQC)
+            obj.Schema().getField('query').set(obj,[
+                #{'i': 'created', 'o': 'plone.app.querystring.operation.date.today'}
+                ])
         self.request.response.redirect(obj.absolute_url())
 
 

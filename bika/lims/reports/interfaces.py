@@ -56,3 +56,28 @@ class IDataEntryDayBook(Interface):
     """
     """
 
+class IAnalysesOutOfRange(Interface):
+
+    """
+    """
+
+class IAnalysesRepeated(Interface):
+
+    """
+    """
+
+class IResultsPerSamplePoint(Interface):
+
+    """
+    """
+
+class IReferenceAnalysisQC(Interface):
+
+    """
+    """
+
+class IDuplicateAnalysisQC(Interface):
+
+    """
+    """
+
