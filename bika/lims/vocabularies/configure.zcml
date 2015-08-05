@@ -15,6 +15,11 @@
     name="bika.lims.vocabularies.ClientContacts"
     />
 
+   <utility
+    component="bika.lims.vocabularies.InstrumentVocabularyFactory"
+    name="bika.lims.vocabularies.Instruments"
+    /> 
+
   <utility
     component="bika.lims.vocabularies.AnalysisCategoryVocabularyFactory"
     name="bika.lims.vocabularies.AnalysisCategories"

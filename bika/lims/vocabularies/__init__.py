@@ -211,6 +211,16 @@ class ClientVocabulary(BikaContentVocabulary):
 
 ClientVocabularyFactory = ClientVocabulary()
 
+class InstrumentVocabulary(BikaContentVocabulary):
+
+    def __init__(self):
+        BikaContentVocabulary.__init__(self,
+                                       ['bika_setup/bika_instruments', ],
+                                       ['Instrument', ],
+                                       keyfield='UID',
+                                       valuefield='Title')
+
+InstrumentVocabularyFactory = InstrumentVocabulary()
 
 class UserVocabulary(object):
 

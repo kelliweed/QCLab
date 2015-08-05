@@ -119,20 +119,6 @@
     <value key="group" i18n:translate="" i18n_domain="plone">Metadata</value>
   </records>
 
-  <!-- plone.app.querystring.field.worksheetanalysis_review_state -->
-  <records interface="plone.app.querystring.interfaces.IQueryField"
-           prefix="plone.app.querystring.field.worksheetanalysis_review_state">
-    <value key="title" i18n:translate="" i18n_domain="plone">Worksheet state</value>
-    <value key="description" i18n:translate="" i18n_domain="plone">A worksheet's state</value>
-    <value key="enabled">True</value>
-    <value key="sortable">True</value>
-    <value key="operations">
-      <element>plone.app.querystring.operation.selection.is</element>
-    </value>
-    <value key="vocabulary">bika.lims.vocabularies.AnalysisWorkflowStates</value>
-    <value key="group" i18n:translate="" i18n_domain="plone">Metadata</value>
-  </records>
-
   <!-- plone.app.querystring.field.Client -->
   <records interface="plone.app.querystring.interfaces.IQueryField"
            prefix="plone.app.querystring.field.ClientTitle">
@@ -147,7 +133,70 @@
     <value key="group" i18n:translate="" i18n_domain="plone">Bika-LIMS</value>
   </records>
 
+  <!-- plone.app.querystring.field.AnalysisService -->
+  <records interface="plone.app.querystring.interfaces.IQueryField"
+           prefix="plone.app.querystring.field.AnalysisService">
+    <value key="title" i18n:translate="" i18n_domain="plone">Analysis Service</value>
+    <value key="description" i18n:translate="" i18n_domain="plone">Analysis Service</value>
+    <value key="enabled">True</value>
+    <value key="sortable">True</value>
+    <value key="operations">
+      <element>plone.app.querystring.operation.selection.is</element>
+    </value>
+    <value key="vocabulary">bika.lims.vocabularies.AnalysisServices</value>
+    <value key="group" i18n:translate="" i18n_domain="plone">Bika-LIMS</value>
+  </records>
+
+  <!-- plone.app.querystring.field.Analyst -->
+  <records interface="plone.app.querystring.interfaces.IQueryField"
+           prefix="plone.app.querystring.field.Analyst">
+    <value key="title" i18n:translate="" i18n_domain="plone">Analyst</value>
+    <value key="description" i18n:translate="" i18n_domain="plone">Analyst</value>
+    <value key="enabled">True</value>
+    <value key="sortable">True</value>
+    <value key="operations">
+      <element>plone.app.querystring.operation.selection.is</element>
+    </value>
+    <value key="vocabulary">bika.lims.vocabularies.Analysts</value>
+    <value key="group" i18n:translate="" i18n_domain="plone">Bika-LIMS</value>
+  </records>
+
+  <!-- plone.app.querystring.field.InstrumentTitle -->
+  <records interface="plone.app.querystring.interfaces.IQueryField"
+           prefix="plone.app.querystring.field.InstrumentTitle">
+    <value key="title" i18n:translate="" i18n_domain="plone">Instrument Title</value>
+    <value key="description" i18n:translate="" i18n_domain="plone">Instrument Title</value>
+    <value key="enabled">True</value>
+    <value key="sortable">True</value>
+    <value key="operations">
+      <element>plone.app.querystring.operation.selection.is</element>
+    </value>
+    <value key="vocabulary">bika.lims.vocabularies.Instruments</value>
+    <value key="group" i18n:translate="" i18n_domain="plone">Bika-LIMS</value>
+  </records>
+
+  <!-- plone.app.querystring.field.InstrumentTitle -->
+  <records interface="plone.app.querystring.interfaces.IQueryField"
+           prefix="plone.app.querystring.field.InstrumentTitle">
+    <value key="title" i18n:translate="" i18n_domain="plone">Instrument Title</value>
+    <value key="description" i18n:translate="" i18n_domain="plone">Instrument Title</value>
+    <value key="enabled">True</value>
+    <value key="sortable">True</value>
+    <value key="operations">
+      <element>plone.app.querystring.operation.selection.is</element>
+    </value>
+    <value key="vocabulary">bika.lims.vocabularies.Instruments</value>
+    <value key="group" i18n:translate="" i18n_domain="plone">Bika-LIMS</value>
+  </records>
+
+  <!-- To add Period : [Day, Week, Month]  -->
+  <!-- To add Output Format  -->
+  <!-- To add Group by : [Day, Week, Month, Year] -->
+  <!--  created used instead of DateLoaded -->
+
   <!-- Metadata Group end -->
+
+  
 
   <!-- Hidden Attributes-->
   <record name="bika.lims.hiddenattributes">
