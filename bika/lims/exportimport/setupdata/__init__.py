@@ -764,8 +764,8 @@ class Instrument_Calibrations(WorksheetImporter):
                     ReportID=row.get('ReportID', '')
                 )
                 # Gettinginstrument lab contacts
-                bsc = getToolByName(self.context, 'bika_setup_catalog')
-                lab_contacts = [o.getObject() for o in bsc(portal_type="LabContact", nactive_state='active')]
+                pc = getToolByName(self.context, 'portal_catalog')
+                lab_contacts = [o.getObject() for o in pc(portal_type="LabContact", inactive_state='active')]
                 for contact in lab_contacts:
                     if contact.Title() == row.get('Worker', ''):
                         obj.setWorker(contact.UID())
@@ -1111,7 +1111,7 @@ class Analysis_Categories(WorksheetImporter):
         for row in self.get_rows(3):
             department = None
             if row.get('Department_title', None):
-                department = self.get_object(bsc, 'Department',
+                department = self.get_object(pc, 'Department',
                                              row.get('Department_title'))
             if row.get('title', None) and department:
                 obj = _createObjectByType("AnalysisCategory", folder, tmpID())
