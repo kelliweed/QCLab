@@ -15,16 +15,15 @@
  <property name="global_allow">False</property>
  <property name="filter_content_types">True</property>
  <property name="allowed_content_types">
-  <element value="Report"/>
   <element value="Collection"/>
   <element value="ReportCollection"/>
  </property>
  <property name="allow_discussion">False</property>
  <property name="default_view_fallback">False</property>
 
- <alias from="(Default)" to="productivity"/>
+ <alias from="(Default)" to="folder_listing"/>
  <alias from="view" to="base_view"/>
- <alias from="edit" to="productivity"/>
+ <alias from="edit" to="folder_listing"/>
 
  <action title="Productivity"
          action_id="productivity"
