@@ -30,6 +30,12 @@ from bika.lims import PROJECTNAME
 
 ReportCollectionSchema = BikaFolderSchema.copy() + atapi.Schema((
 
+
+    QueryField(
+        name='base_query',
+        widget=QueryWidget(visible=False)
+    ),
+
     QueryField(
         name='query',
         widget=QueryWidget(
@@ -148,7 +154,6 @@ class ReportCollection(ATFolder, ObjectManager):
             b_size = self.getLimit()
         if b_size == 0 and batch_size and batch:
             b_size = batch_size
-        print ("self.getQuery")
         return self.getQuery(batch=batch, b_start=b_start, b_size=b_size,
                              sort_on=sort_on, brains=brains,
                              custom_query=custom_query)
