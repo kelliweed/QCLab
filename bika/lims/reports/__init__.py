@@ -11,11 +11,19 @@ class CreateReport(object):
         self.context = context
         self.request = request
 
+    def next_report_id(self, report_type):
+        prefix = report_type.split("_")[-1]
+        existing = [x for x in self.context.objectValues()
+                    if x.id.find(prefix) > -1]
+        return '%s-%s'%(prefix, len(existing)+1)
+
     def __call__(self):
         if 'report' not in self.request:
             raise BadRequest("No report was specified in request!")
-        report_type = self.request['report']        
-        obj = _createObjectByType('ReportCollection', self.context, tmpID())
+        report_type = self.request['report']
+        next_id = self.next_report_id(report_type)
+        obj = _createObjectByType('ReportCollection', self.context, next_id,
+                                  title=next_id)
 
         obj.unmarkCreationFlag()
     #    productivity_reports = ['dailysamplesreceived', 'samplesreceivedvsreported', 'analysesperservice', 'analysespersampletype', \
