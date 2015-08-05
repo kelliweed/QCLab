@@ -30,10 +30,14 @@ from bika.lims import PROJECTNAME
 
 ReportCollectionSchema = BikaFolderSchema.copy() + atapi.Schema((
 
-
     QueryField(
         name='base_query',
         widget=QueryWidget(visible=False)
+    ),
+
+    StringField(
+        name='report_output_template',
+        widget=StringWidget(visible=False)
     ),
 
     QueryField(
