@@ -4,6 +4,16 @@
     xmlns:i18n="http://namespaces.zope.org/i18n"
     i18n_domain="bika">
 
+    <include file="menu.zcml"/>
+
+    <browser:page
+      for="bika.lims.interfaces.IReportFolder"
+      name="folder_listing"
+      class="bika.lims.reports.folderlisting.FolderListingView"
+      permission="zope2.View"
+      layer="bika.lims.interfaces.IBikaLIMS"
+    />
+
     <browser:page
     name="display_query_results"
     class=".productivity_dailysamplesreceived.ContentListingView"

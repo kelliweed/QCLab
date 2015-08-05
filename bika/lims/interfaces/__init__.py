@@ -155,11 +155,6 @@ class IReferenceSamplesFolder(Interface):
     """Reference Samples Folder"""
 
 
-class IReportsFolder(Interface):
-
-    """Reports Folder"""
-
-
 class IInvoice(Interface):
 
     """Invoice"""
