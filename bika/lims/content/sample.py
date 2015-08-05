@@ -2,7 +2,7 @@
 """
 from AccessControl import ClassSecurityInfo
 from bika.lims import bikaMessageFactory as _
-from bika.lims.utils import t, getUsers
+from bika.lims.utils import t, getUsers, to_utf8
 from bika.lims.browser.widgets.datetimewidget import DateTimeWidget
 from bika.lims.config import PROJECTNAME
 from bika.lims.content.bikaschema import BikaSchema
@@ -591,6 +591,7 @@ class Sample(BaseFolder, HistoryAwareMixin):
         """ Accept Object, Title or UID, and convert SampleType title to UID
         before saving.
         """
+        value = to_utf8(value)
         if hasattr(value, "portal_type") and value.portal_type == "SamplePoint":
             pass
         else:
