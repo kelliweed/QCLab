@@ -782,7 +782,7 @@ class ajaxGetSampleTypeInfo(BrowserView):
         elif title:
             try:
                 pc = getToolByName(self.context, 'portal_catalog')
-                proxies = pc(portal_type='SampleType', title=to_unicode(title))
+                proxies = pc(portal_type='SampleType', title=title)
             except ParseError:
                 pass
 
