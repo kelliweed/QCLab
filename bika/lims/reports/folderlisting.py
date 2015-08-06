@@ -17,8 +17,31 @@ class FolderListingView(BikaListingView):
         alsoProvides(request, IContentsPage)
 
         # this will be reset in the call to filter on own reports
-        self.contentFilter = {'portal_type': 'Report',
-                              'sort_order': 'reverse'}
+        self.contentFilter = {
+            'portal_type': 'ReportCollection',
+            'sort_on': 'created',
+            'sort_order': 'reverse'}
+
+        self.columns = {
+            'Client': {'title': _('Client')},
+            'Title': {'title': _('Title')},
+            'Type': {'title': _('Report Type')},
+            'FileSize': {'title': _('Size')},
+            'Created': {'title': _('Created')},
+            'By': {'title': _('By')},
+        }
+        self.review_states = [
+            {'id': 'default',
+             'title': 'All',
+             'contentFilter': {},
+             'columns': ['Client',
+                         'Title',
+                         'Type',
+                         'FileSize',
+                         'Created',
+                         'By']},
+        ]
+
         self.context_actions = {}
         self.show_sort_column = False
         self.show_select_row = False
@@ -29,63 +52,15 @@ class FolderListingView(BikaListingView):
         self.title = self.context.translate(_("Reports"))
         self.description = ""
 
-        # this is set up in call where member is authenticated
-        self.columns = {}
-        self.review_states = []
-
     def __call__(self):
         this_client = logged_in_client(self.context)
         if this_client:
-            self.contentFilter = {
-                'portal_type': 'Report',
-                'ClientUID': this_client.UID(),
-                'sort_order': 'reverse'}
-            self.columns = {
-                'Title': {'title': _('Title')},
-                'FileSize': {'title': _('Size')},
-                'Created': {'title': _('Created')},
-                'By': {'title': _('By')}, }
-            self.review_states = [
-                {'id': 'default',
-                 'title': 'All',
-                 'contentFilter': {},
-                 'columns': ['Title',
-                             'FileSize',
-                             'Created',
-                             'By']},
-            ]
-        else:
-            self.contentFilter = {
-                'portal_type': 'Report',
-                'sort_order': 'reverse'}
-
-            self.columns = {
-                'Client': {'title': _('Client')},
-                'Title': {'title': _('Report Type')},
-                'FileSize': {'title': _('Size')},
-                'Created': {'title': _('Created')},
-                'By': {'title': _('By')},
-            }
-            self.review_states = [
-                {'id': 'default',
-                 'title': 'All',
-                 'contentFilter': {},
-                 'columns': ['Client',
-                             'Title',
-                             'FileSize',
-                             'Created',
-                             'By']},
-            ]
+            self.contentFilter['ClientUID'] = this_client.UID()
+            del(self.columns['Client'])
+            for x in len(self.review_states):
+                del(self.review_states[x]['columns']['Client'])
 
         return super(FolderListingView, self).__call__()
-
-    def lookupMime(self, name):
-        mimetool = getToolByName(self, 'mimetypes_registry')
-        mimetypes = mimetool.lookup(name)
-        if len(mimetypes):
-            return mimetypes[0].name()
-        else:
-            return name
 
     def folderitems(self):
         items = BikaListingView.folderitems(self)
@@ -94,21 +69,27 @@ class FolderListingView(BikaListingView):
             if 'obj' not in items[x]:
                 continue
             obj = items[x]['obj']
-            obj_url = obj.absolute_url()
-            file = obj.getReportFile()
-            icon = file.getBestIcon()
 
-            items[x]['Client'] = ''
-            client = obj.getClient()
-            if client:
-                items[x]['replace']['Client'] = "<a href='%s'>%s</a>" % \
-                                                (client.absolute_url(),
-                                                 client.Title())
-            items[x]['FileSize'] = '%sKb' % (file.get_size() / 1024)
+            items[x]['Type'] = obj.getReportType()
             items[x]['Created'] = self.ulocalized_time(obj.created())
             items[x]['By'] = self.user_fullname(obj.Creator())
 
-            items[x]['replace']['Title'] = \
-                "<a href='%s/at_download/ReportFile'>%s</a>" % \
-                (obj_url, items[x]['Title'])
+            rptfile = obj.getReportFile()
+            if rptfile:
+                icon = rptfile.getBestIcon()
+                items[x]['FileSize'] = '%sKb' % (rptfile.get_size() / 1024)
+                items[x]['replace']['Title'] = \
+                    "<a href='%s/at_download/ReportFile'>%s</a>" % \
+                    (obj.absolute_url(), items[x]['Title'])
+            else:
+                items[x]['FileSize'] = ''
+
+            client = obj.getClient()
+            if client:
+                items[x]['replace']['Client'] = \
+                    "<a href='%s'>%s</a>" % \
+                    (client.absolute_url(), client.Title())
+            else:
+                items[x]['Client'] = ''
+
         return items

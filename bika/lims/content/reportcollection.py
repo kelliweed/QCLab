@@ -1,9 +1,13 @@
 # -*- coding: utf-8 -*-
 from AccessControl import ClassSecurityInfo
 from OFS.ObjectManager import ObjectManager
+from Products.Archetypes.Field import FileField, ReferenceField, ComputedField
+from Products.Archetypes.Widget import FileWidget, ComputedWidget
 from archetypes.querywidget.field import QueryField
 from archetypes.querywidget.widget import QueryWidget
 from bika.lims import to_utf8
+from bika.lims import bikaMessageFactory as _
+from bika.lims.browser.widgets import ReferenceWidget
 from bika.lims.content.bikaschema import BikaFolderSchema
 from bika.lims.interfaces import IReportCollection
 from plone.app.collection.interfaces import ICollection
@@ -22,14 +26,13 @@ from Products.CMFCore.permissions import ModifyPortalContent, View
 from Products.CMFCore.utils import getToolByName
 from zope.interface import implements
 
-from plone.app.collection import PloneMessageFactory as _
+from plone.app.collection import PloneMessageFactory as _p
 from plone.app.collection.config import ATCT_TOOLNAME
 from plone.app.collection.marshaller import CollectionRFC822Marshaller
 from plone.app.folder.folder import ATFolder
 from bika.lims import PROJECTNAME
 
 ReportCollectionSchema = BikaFolderSchema.copy() + atapi.Schema((
-
 
     QueryField(
         name='base_query',
@@ -39,8 +42,8 @@ ReportCollectionSchema = BikaFolderSchema.copy() + atapi.Schema((
     QueryField(
         name='query',
         widget=QueryWidget(
-            label=_(u"Search terms"),
-            description=_(u"Define the search terms for the items you want to "
+            label=_p(u"Search terms"),
+            description=_p(u"Define the search terms for the items you want to "
                           u"list by choosing what to match on. "
                           u"The list of results will be dynamically updated."),
         ),
@@ -53,7 +56,7 @@ ReportCollectionSchema = BikaFolderSchema.copy() + atapi.Schema((
         mode='rw',
         default='sortable_title',
         widget=StringWidget(
-            label=_(u'Sort the collection on this index'),
+            label=_p(u'Sort the collection on this index'),
             description='',
             visible=False,
         ),
@@ -65,7 +68,7 @@ ReportCollectionSchema = BikaFolderSchema.copy() + atapi.Schema((
         mode='rw',
         default=False,
         widget=BooleanWidget(
-            label=_(u'Sort the results in reversed order'),
+            label=_p(u'Sort the results in reversed order'),
             description='',
             visible=False,
         ),
@@ -77,8 +80,8 @@ ReportCollectionSchema = BikaFolderSchema.copy() + atapi.Schema((
         mode='rw',
         default=30,
         widget=IntegerWidget(
-            label=_(u'Limit Results by Page'),
-            description=_(u"Specify the number of items to show by page."),
+            label=_p(u'Limit Results by Page'),
+            description=_p(u"Specify the number of items to show by page."),
             visible=False
         ),
         validators=('isInt',)
@@ -90,8 +93,8 @@ ReportCollectionSchema = BikaFolderSchema.copy() + atapi.Schema((
         mode='rw',
         default=1000000,
         widget=IntegerWidget(
-            label=_(u'Limit Search Results'),
-            description=_(u"Specify the maximum number of items to show."),
+            label=_p(u'Limit Search Results'),
+            description=_p(u"Specify the maximum number of items to show."),
             visible=False
         ),
         validators=('isInt',)
@@ -106,10 +109,38 @@ ReportCollectionSchema = BikaFolderSchema.copy() + atapi.Schema((
         enforceVocabulary=True,
         write_permission=ModifyPortalContent,
         widget=InAndOutWidget(
-            label=_(u'Table Columns'),
-            description=_(u"Select which fields to display when "
+            label=_p(u'Table Columns'),
+            description=_p(u"Select which fields to display when "
                           u"'Tabular view' is selected in the display menu."),
             visible=False
+        ),
+    ),
+
+    FileField('ReportFile',
+        widget = FileWidget(
+            label=_("Report"),
+        ),
+    ),
+
+    StringField('ReportType',
+        widget = StringWidget(
+            label=_("Report Type"),
+            description=_("Report type"),
+        ),
+    ),
+
+    ReferenceField('Client',
+        allowed_types = ('Client',),
+        relationship = 'ReportClient',
+        widget = ReferenceWidget(
+            label=_("Client"),
+        ),
+    ),
+
+    ComputedField('ClientUID',
+        expression = 'here.getClient() and here.getClient().UID()',
+        widget = ComputedWidget(
+            visible = False,
         ),
     ),
 ))
