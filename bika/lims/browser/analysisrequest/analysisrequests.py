@@ -66,7 +66,7 @@ class AnalysisRequestsView(BikaListingView):
             'Created': {'title': PMF('Date Created'),
                         'index': 'created',
                         'toggle': False},
-            'getSample': {'title': _("Sample"),
+            'Sample': {'title': _("Sample"),
                           'toggle': True, },
             'BatchID': {'title': _("Batch ID"), 'toggle': True},
             'SubGroup': {'title': _('Sub-group')},
@@ -86,7 +86,7 @@ class AnalysisRequestsView(BikaListingView):
             'SamplePointTitle': {'title': _('Sample Point'),
                                     'index': 'SamplePointTitle',
                                     'toggle': False},
-            'getStorageLocation': {'title': _('Storage Location'),
+            'StorageLocation': {'title': _('Storage Location'),
                                     'toggle': False},
             'SamplingDeviation': {'title': _('Sampling Deviation'),
                                   'toggle': False},
@@ -106,7 +106,7 @@ class AnalysisRequestsView(BikaListingView):
                                'input_width': '10'},
             'Sampler': {'title': _('Sampler'),
                            'toggle': SamplingWorkflowEnabled},
-            'getDatePreserved': {'title': _('Date Preserved'),
+            'DatePreserved': {'title': _('Date Preserved'),
                                  'toggle': user_is_preserver,
                                  'input_class': 'datepicker_nofuture',
                                  'input_width': '10',
@@ -128,8 +128,8 @@ class AnalysisRequestsView(BikaListingView):
                                'index': 'getAnalysesNum',
                                'sortable': True,
                                'toggle': False},
-            'getTemplateTitle': {'title': _('Template'),
-                                 'index': 'getTemplateTitle',
+            'TemplateTitle': {'title': _('Template'),
+                                 'index': 'TemplateTitle',
                                  'toggle': False},
         }
         self.review_states = [
@@ -150,7 +150,7 @@ class AnalysisRequestsView(BikaListingView):
                              {'id': 'reinstate'}],
              'custom_actions': [],
              'columns': ['RequestID',
-                        'getSample',
+                        'Sample',
                         'BatchID',
                         'SubGroup',
                         'Client',
@@ -161,17 +161,17 @@ class AnalysisRequestsView(BikaListingView):
                         'ClientContact',
                         'ClientSampleID',
                         'ProfileTitle',
-                        'getTemplateTitle',
+                        'TemplateTitle',
                         'SampleTypeTitle',
                         'SamplePointTitle',
-                        'getStorageLocation',
+                        'StorageLocation',
                         'SamplingDeviation',
                         'Priority',
                         'AdHoc',
                         'SamplingDate',
                         'DateSampled',
                         'Sampler',
-                        'getDatePreserved',
+                        'DatePreserved',
                         'Preserver',
                         'DateReceived',
                         'getAnalysesNum',
@@ -190,12 +190,12 @@ class AnalysisRequestsView(BikaListingView):
                              {'id': 'reinstate'}],
              'custom_actions': [],
              'columns': ['RequestID',
-                        'getSample',
+                        'Sample',
                         'BatchID',
                         'SubGroup',
                         'Client',
                         'ProfileTitle',
-                        'getTemplateTitle',
+                        'TemplateTitle',
                         'Creator',
                         'Created',
                         'ClientOrderNumber',
@@ -204,11 +204,11 @@ class AnalysisRequestsView(BikaListingView):
                         'ClientContact',
                         'DateSampled',
                         'Sampler',
-                        'getDatePreserved',
+                        'DatePreserved',
                         'Preserver',
                         'SampleTypeTitle',
                         'SamplePointTitle',
-                        'getStorageLocation',
+                        'StorageLocation',
                         'SamplingDeviation',
                         'Priority',
                         'AdHoc',
@@ -224,12 +224,12 @@ class AnalysisRequestsView(BikaListingView):
                              {'id': 'reinstate'}],
              'custom_actions': [],
              'columns': ['RequestID',
-                        'getSample',
+                        'Sample',
                         'BatchID',
                         'SubGroup',
                         'Client',
                         'ProfileTitle',
-                        'getTemplateTitle',
+                        'TemplateTitle',
                         'Creator',
                         'Created',
                         'ClientOrderNumber',
@@ -238,13 +238,13 @@ class AnalysisRequestsView(BikaListingView):
                         'ClientContact',
                         'SampleTypeTitle',
                         'SamplePointTitle',
-                        'getStorageLocation',
+                        'StorageLocation',
                         'SamplingDeviation',
                         'Priority',
                         'AdHoc',
                         'DateSampled',
                         'Sampler',
-                        'getDatePreserved',
+                        'DatePreserved',
                         'Preserver',
                         'getAnalysesNum',
                         'DateReceived']},
@@ -260,12 +260,12 @@ class AnalysisRequestsView(BikaListingView):
                              {'id': 'reinstate'}],
              'custom_actions': [],
              'columns': ['RequestID',
-                        'getSample',
+                        'Sample',
                         'BatchID',
                         'SubGroup',
                         'Client',
                         'ProfileTitle',
-                        'getTemplateTitle',
+                        'TemplateTitle',
                         'Creator',
                         'Created',
                         'ClientOrderNumber',
@@ -274,13 +274,13 @@ class AnalysisRequestsView(BikaListingView):
                         'ClientContact',
                         'SampleTypeTitle',
                         'SamplePointTitle',
-                        'getStorageLocation',
+                        'StorageLocation',
                         'SamplingDeviation',
                         'Priority',
                         'AdHoc',
                         'DateSampled',
                         'Sampler',
-                        'getDatePreserved',
+                        'DatePreserved',
                         'Preserver',
                         'getAnalysesNum',
                         'DateReceived']},
@@ -292,12 +292,12 @@ class AnalysisRequestsView(BikaListingView):
              'transitions': [{'id': 'publish'}],
              'custom_actions': [],
              'columns': ['RequestID',
-                        'getSample',
+                        'Sample',
                         'BatchID',
                         'SubGroup',
                         'Client',
                         'ProfileTitle',
-                        'getTemplateTitle',
+                        'TemplateTitle',
                         'Creator',
                         'Created',
                         'ClientOrderNumber',
@@ -306,13 +306,13 @@ class AnalysisRequestsView(BikaListingView):
                         'ClientContact',
                         'SampleTypeTitle',
                         'SamplePointTitle',
-                        'getStorageLocation',
+                        'StorageLocation',
                         'SamplingDeviation',
                         'Priority',
                         'AdHoc',
                         'DateSampled',
                         'Sampler',
-                        'getDatePreserved',
+                        'DatePreserved',
                         'Preserver',
                         'getAnalysesNum',
                         'DateReceived']},
@@ -324,12 +324,12 @@ class AnalysisRequestsView(BikaListingView):
              'transitions': [{'id': 'republish'}],
              'custom_actions': [],
              'columns': ['RequestID',
-                        'getSample',
+                        'Sample',
                         'BatchID',
                         'SubGroup',
                         'Client',
                         'ProfileTitle',
-                        'getTemplateTitle',
+                        'TemplateTitle',
                         'Creator',
                         'Created',
                         'ClientOrderNumber',
@@ -338,13 +338,13 @@ class AnalysisRequestsView(BikaListingView):
                         'ClientContact',
                         'SampleTypeTitle',
                         'SamplePointTitle',
-                        'getStorageLocation',
+                        'StorageLocation',
                         'SamplingDeviation',
                         'Priority',
                         'AdHoc',
                         'DateSampled',
                         'Sampler',
-                        'getDatePreserved',
+                        'DatePreserved',
                         'Preserver',
                         'DateReceived',
                         'getAnalysesNum',
@@ -361,12 +361,12 @@ class AnalysisRequestsView(BikaListingView):
              'transitions': [{'id': 'reinstate'}],
              'custom_actions': [],
              'columns': ['RequestID',
-                        'getSample',
+                        'Sample',
                         'BatchID',
                         'SubGroup',
                         'Client',
                         'ProfileTitle',
-                        'getTemplateTitle',
+                        'TemplateTitle',
                         'Creator',
                         'Created',
                         'ClientOrderNumber',
@@ -375,13 +375,13 @@ class AnalysisRequestsView(BikaListingView):
                         'ClientContact',
                         'SampleTypeTitle',
                         'SamplePointTitle',
-                        'getStorageLocation',
+                        'StorageLocation',
                         'SamplingDeviation',
                         'Priority',
                         'AdHoc',
                         'DateSampled',
                         'Sampler',
-                        'getDatePreserved',
+                        'DatePreserved',
                         'Preserver',
                         'DateReceived',
                         'DatePublished',
@@ -395,12 +395,12 @@ class AnalysisRequestsView(BikaListingView):
              'transitions': [],
              'custom_actions': [],
              'columns':['RequestID',
-                        'getSample',
+                        'Sample',
                         'BatchID',
                         'SubGroup',
                         'Client',
                         'ProfileTitle',
-                        'getTemplateTitle',
+                        'TemplateTitle',
                         'Creator',
                         'Created',
                         'ClientOrderNumber',
@@ -409,13 +409,13 @@ class AnalysisRequestsView(BikaListingView):
                         'ClientContact',
                         'SampleTypeTitle',
                         'SamplePointTitle',
-                        'getStorageLocation',
+                        'StorageLocation',
                         'SamplingDeviation',
                         'Priority',
                         'AdHoc',
                         'DateSampled',
                         'Sampler',
-                        'getDatePreserved',
+                        'DatePreserved',
                         'Preserver',
                         'DateReceived',
                         'getAnalysesNum',
@@ -439,12 +439,12 @@ class AnalysisRequestsView(BikaListingView):
                              {'id': 'reinstate'}],
              'custom_actions': [],
              'columns': ['RequestID',
-                        'getSample',
+                        'Sample',
                         'BatchID',
                         'SubGroup',
                         'Client',
                         'ProfileTitle',
-                        'getTemplateTitle',
+                        'TemplateTitle',
                         'Creator',
                         'Created',
                         'ClientOrderNumber',
@@ -453,13 +453,13 @@ class AnalysisRequestsView(BikaListingView):
                         'ClientContact',
                         'SampleTypeTitle',
                         'SamplePointTitle',
-                        'getStorageLocation',
+                        'StorageLocation',
                         'SamplingDeviation',
                         'Priority',
                         'AdHoc',
                         'DateSampled',
                         'Sampler',
-                        'getDatePreserved',
+                        'DatePreserved',
                         'Preserver',
                         'DateReceived',
                         'getAnalysesNum',
@@ -484,12 +484,12 @@ class AnalysisRequestsView(BikaListingView):
                              {'id': 'reinstate'}],
              'custom_actions': [],
              'columns': ['RequestID',
-                        'getSample',
+                        'Sample',
                         'BatchID',
                         'SubGroup',
                         'Client',
                         'ProfileTitle',
-                        'getTemplateTitle',
+                        'TemplateTitle',
                         'Creator',
                         'Created',
                         'ClientOrderNumber',
@@ -498,14 +498,14 @@ class AnalysisRequestsView(BikaListingView):
                         'ClientContact',
                         'SampleTypeTitle',
                         'SamplePointTitle',
-                        'getStorageLocation',
+                        'StorageLocation',
                         'SamplingDeviation',
                         'Priority',
                         'AdHoc',
                         'SamplingDate',
                         'DateSampled',
                         'Sampler',
-                        'getDatePreserved',
+                        'DatePreserved',
                         'Preserver',
                         'DateReceived',
                         'getAnalysesNum',
@@ -538,13 +538,31 @@ class AnalysisRequestsView(BikaListingView):
             if (hideclientlink is False):
                 items[x]['replace']['Client'] = "<a href='%s'>%s</a>" % \
                     (obj.aq_parent.absolute_url(), obj.aq_parent.Title())
+
             items[x]['Creator'] = self.user_fullname(obj.Creator())
+
             items[x]['RequestID'] = obj.getRequestID()
             items[x]['replace']['RequestID'] = "<a href='%s'>%s</a>" % \
                  (url, items[x]['RequestID'])
-            items[x]['getSample'] = sample
-            items[x]['replace']['getSample'] = \
+
+            items[x]['ClientOrderNumber'] = obj.getClientOrderNumber()
+
+            profile = obj.getProfile()
+            items[x]['ProfileTitle'] = profile.Title() if profile else ''
+
+            template = obj.getTemplate()
+            items[x]['TemplateTitle'] = template.Title() if template else ''
+
+            items[x]['Sample'] = sample
+            items[x]['replace']['Sample'] = \
                 "<a href='%s'>%s</a>" % (sample.absolute_url(), sample.Title())
+
+            st = sample.getSampleType()
+            items[x]['SampleTypeTitle'] = st.Title() if st else ''
+            sp = sample.getSamplePoint()
+            items[x]['SamplePointTitle'] = sp.Title() if sp else ''
+            items[x]['ClientReference'] = sample.getClientReference()
+            items[x]['ClientSampleID'] = sample.getClientSampleID()
 
             if obj.getAnalysesNum():
                 items[x]['getAnalysesNum'] = str(obj.getAnalysesNum()[0]) + '/' + str(obj.getAnalysesNum()[1])
@@ -568,12 +586,14 @@ class AnalysisRequestsView(BikaListingView):
             items[x]['DatePublished'] = self.ulocalized_time(obj.getDatePublished())
 
             deviation = sample.getSamplingDeviation()
-            items[x]['SamplingDeviation'] = deviation and deviation.Title() or ''
+            items[x]['SamplingDeviation'] = deviation.Title() \
+                if deviation else ''
             priority = obj.getPriority()
             items[x]['Priority'] = '' # priority.Title()
 
-            items[x]['getStorageLocation'] = sample.getStorageLocation() and sample.getStorageLocation().Title() or ''
-            items[x]['AdHoc'] = sample.getAdHoc() and True or ''
+            sl = sample.getStorageLocation()
+            items[x]['StorageLocation'] =  sl.Title() if sl else ''
+            items[x]['AdHoc'] = 'True' if sample.getAdHoc() else ''
 
             after_icons = ""
             state = workflow.getInfoFor(obj, 'worksheetanalysis_review_state')
@@ -648,13 +668,13 @@ class AnalysisRequestsView(BikaListingView):
             # These don't exist on ARs
             # XXX This should be a list of preservers...
             items[x]['Preserver'] = ''
-            items[x]['getDatePreserved'] = ''
+            items[x]['DatePreserved'] = ''
 
             # inline edits for Preserver and Date Preserved
             checkPermission = self.context.portal_membership.checkPermission
             if checkPermission(PreserveSample, obj):
-                items[x]['required'] = ['Preserver', 'getDatePreserved']
-                items[x]['allow_edit'] = ['Preserver', 'getDatePreserved']
+                items[x]['required'] = ['Preserver', 'DatePreserved']
+                items[x]['allow_edit'] = ['Preserver', 'DatePreserved']
                 preservers = getUsers(obj, ['Preserver', 'LabManager', 'Manager'])
                 username = member.getUserName()
                 users = [({'ResultValue': u, 'ResultText': preservers.getValue(u)})
@@ -662,11 +682,11 @@ class AnalysisRequestsView(BikaListingView):
                 items[x]['choices'] = {'Preserver': users}
                 preserver = username in preservers.keys() and username or ''
                 items[x]['Preserver'] = preserver
-                items[x]['getDatePreserved'] = self.ulocalized_time(
+                items[x]['DatePreserved'] = self.ulocalized_time(
                     DateTime(),
                     long_format=1)
                 items[x]['class']['Preserver'] = 'provisional'
-                items[x]['class']['getDatePreserved'] = 'provisional'
+                items[x]['class']['DatePreserved'] = 'provisional'
 
             # Submitting user may not verify results
             if items[x]['review_state'] == 'to_be_verified' and \
@@ -700,7 +720,7 @@ class AnalysisRequestsView(BikaListingView):
                     else:
                         state['hide_transitions'] = ['sample', ]
                 if 'Preserver' not in toggle_cols \
-                   or 'getDatePreserved' not in toggle_cols:
+                   or 'DatePreserved' not in toggle_cols:
                     if 'hide_transitions' in state:
                         state['hide_transitions'].append('preserve')
                     else:
