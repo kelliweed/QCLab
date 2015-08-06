@@ -131,24 +131,24 @@ class QualityControlMenu(BrowserMenu):
                        'class': 'contenttype-reportcollection'},
              'submenu': QualityControlSubMenuItem
              } for x in [
-                ('analysesoutofrange_selector',
+                ('analysesoutofrange',
                  _('Analyses out of range'),
                  _('Analysis results out of lab or client specified range. '
                    'Note that this may take several minutes')
                  ),
-                ('analysesrepeated_selector',
+                ('analysesrepeated',
                  _('Analyses repeated'),
                  _('Repeated analyses')
                  ),
-                ('resultspersamplepoint_selector',
+                ('resultspersamplepoint',
                  _('Results per sample point'),
                  _('Results per samplepoint and analysis service')
                  ),
-                ('referenceanalysisqc_selector',
+                ('referenceanalysisqc',
                  _('Reference analysis QC'),
                  _('Reference analysis quality control graphs')
                  ),
-                ('duplicateanalysisqc_selector',
+                ('duplicateanalysisqc',
                  _('Duplicate analysis QC'),
                  _('Duplicate analysis quality control graphs')
                  ),
