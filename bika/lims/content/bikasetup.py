@@ -436,6 +436,7 @@ schema = BikaFolderSchema.copy() + Schema((
                    {'portal_type': 'SupplyOrder', 'prefix': 'O', 'padding': '3', 'separator': '-', 'sequence_start': '0'},
                    {'portal_type': 'Worksheet', 'prefix': 'WS', 'padding': '4', 'separator': '-', 'sequence_start': '0'},
                    {'portal_type': 'Pricelist', 'prefix': 'PL', 'padding': '4', 'separator': '-', 'sequence_start': '0'},
+                   {'portal_type': 'ProductItem', 'prefix': 'P', 'padding': '4', 'separator': '-', 'sequence_start': '0'},
                    ],
 #        fixedSize=8,
         widget=RecordsWidget(
@@ -521,7 +522,6 @@ schema = BikaFolderSchema.copy() + Schema((
     ),
     StringField('StorageLevelTitleSeparator',
         schemata = 'Inventory',
-        required = 1,
         vocabulary = ('', '-', '_'),
         default = '-',
         widget = SelectionWidget(
@@ -529,6 +529,13 @@ schema = BikaFolderSchema.copy() + Schema((
             description=_('The separator between title and index while creating multiple storage levels at once.'),
             format='select',
         )
+    ),
+    BooleanField('AutoPrintInventoryStickers',
+        schemata = "Inventory",
+        default = True,
+        widget = BooleanWidget(
+            label=_("Print product item stickers automatically"),
+        ),
     ),
 ))
 

@@ -18,6 +18,7 @@ class OrderFolderView(BikaListingView):
             'sort_order': 'reverse',
         }
         self.context_actions = {}
+        self.catalog = 'bika_setup_catalog'
         self.base_url = self.context.absolute_url()
         self.view_url = self.base_url
         self.show_table_only = False

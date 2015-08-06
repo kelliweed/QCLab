@@ -36,7 +36,7 @@ class ProductItemsView(BikaListingView):
         self.pagesize = 25
 
         self.columns = {
-            'Title': {'title': _('Title'),
+            'productItemID': {'title': _('Product Item ID'),
                       'index': 'sortable_title',
                       'toggle': True},
             'orderId': {'title': _('Order Id'),
@@ -67,7 +67,7 @@ class ProductItemsView(BikaListingView):
              'title': _('Active'),
              'contentFilter': {'inactive_state': 'active'},
              'transitions': [{'id':'deactivate'}, ],
-             'columns': ['Title',
+             'columns': ['productItemID',
                          'orderId',
                          'labId',
                          'batchId',
@@ -83,7 +83,7 @@ class ProductItemsView(BikaListingView):
              'title': _('Dormant'),
              'contentFilter': {'inactive_state': 'inactive'},
              'transitions': [{'id':'activate'}, ],
-             'columns': ['Title',
+             'columns': ['productItemID',
                          'orderId',
                          'labId',
                          'batchId',
@@ -98,7 +98,7 @@ class ProductItemsView(BikaListingView):
             {'id':'all',
              'title': _('All'),
              'contentFilter':{},
-             'columns': ['Title',
+             'columns': ['productItemID',
                          'orderId',
                          'labId',
                          'batchId',
@@ -128,9 +128,8 @@ class ProductItemsView(BikaListingView):
             items[x]['dateOpened'] = self.ulocalized_time(obj.getDateOpened())
             items[x]['expiryDate'] = self.ulocalized_time(obj.getExpiryDate())
             items[x]['disposalDate'] = self.ulocalized_time(obj.getDisposalDate())
-            items[x]['replace']['Title'] = "<a href='%s'>%s</a>" % \
-                 (items[x]['url'], items[x]['Title'])
-
+            items[x]['replace']['productItemID'] = "<a href='%s'>%s</a>" % \
+                (items[x]['url'], obj.getProductItemId())
         return items
 
 schema = ATFolderSchema.copy()
