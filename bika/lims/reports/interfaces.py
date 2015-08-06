@@ -81,3 +81,15 @@ class IDuplicateAnalysisQC(Interface):
     """
     """
 
+class IArsNotInvoiced(Interface):
+
+    """
+    """
+class IUserHistory(Interface):
+
+    """
+    """
+
+
+
+

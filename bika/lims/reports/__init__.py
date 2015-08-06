@@ -178,7 +178,7 @@ class CreateReport(object):
         elif report_type == 'qualitycontrol_referenceanalysisqc' :
             alsoProvides(obj, IReferenceAnalysisQC)
             obj.Schema().getField('query').set(obj,[
-                # {'i': 'AnalysisService',
+            	# {'i': 'AnalysisService',
                 # 'o': 'plone.app.querystring.operation.selection.is'}
                 ])
         elif report_type == 'qualitycontrol_duplicateanalysisqc' :
@@ -186,6 +186,22 @@ class CreateReport(object):
             obj.Schema().getField('query').set(obj,[
                 # {'i': 'created',
                 # 'o': 'plone.app.querystring.operation.date.today'}
+                ])
+        elif report_type == 'administration_arsnotinvoiced' :
+            alsoProvides(obj, IArsNotInvoiced)
+            obj.Schema().getField('query').set(obj,[
+                {'i': 'DatePublished',
+                 'o': 'plone.app.querystring.operation.date.today'},
+                {'i': 'review_state',
+                 'o': 'plone.app.querystring.operation.selection.is'},
+                {'i': 'cancellation_state',
+                 'o': 'plone.app.querystring.operation.selection.is'}
+                ])
+        elif report_type == 'administration_userhistory' :
+            alsoProvides(obj, IUserHistory)
+            obj.Schema().getField('query').set(obj,[
+            	{'i': 'modified',
+                 'o': 'plone.app.querystring.operation.date.today'}
                 ])
         self.request.response.redirect(obj.absolute_url())
 
