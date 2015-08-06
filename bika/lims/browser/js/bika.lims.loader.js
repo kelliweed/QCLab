@@ -15,7 +15,7 @@ window.bika.lims.controllers =  {
         ['CommonUtils'],
 
     // Barcode utils
-    ".barcode":
+    ".barcode, .qrcode":
         ['BarcodeUtils'],
 
     // Calculation utils
@@ -49,6 +49,9 @@ window.bika.lims.controllers =  {
     ".portaltype-analysisservice.template-base_edit":
         ['AnalysisServiceEditView'],
 
+    // Analysis Profile
+    ".portaltype-analysisprofile.template-base_edit":
+        ['AnalysisProfileEditView'],
 
     // Instruments
     ".portaltype-instrument.template-referenceanalyses":
