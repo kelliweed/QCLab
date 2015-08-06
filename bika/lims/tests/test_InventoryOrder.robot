@@ -20,6 +20,7 @@ Library          DebugLibrary
 
 Test order as LabManager
     Enable autologin as  LabManager
+    Disable auto print inventory stickers
     # https://jira.bikalabs.com/browse/LIMS-1900
     Given a blank order form in supplier-3
      # Only products registered to a supplier can be ordered to him
@@ -38,6 +39,17 @@ Test order as LabManager
     Then when I trigger store transition
     page should contain  Item state changed
 
+Test order reception as LabManager
+    Enable autologin as  LabManager
+    Disable auto print inventory stickers
+    # https://jira.bikalabs.com/browse/LIMS-1936
+
+    Given a dispatched order in supplier-3 with 5 items of Nitric acid
+     When I trigger receive transition
+     Then new product items appear in the list under order-1
+      and quantity of the Chemical named Nitric acid supplied by supplier-3 is 5
+      and I can print stickers by clicking an icon in order-1 of supplier-3
+
 
 *** Keywords ***
 
@@ -47,6 +59,14 @@ a blank order form in ${supplier_id}
     [Documentation]  Load a fresh Order form
     go to  ${PLONEURL}/bika_setup/bika_suppliers/${supplier_id}/portal_factory/Order/xxx/edit
     wait until page contains  xxx
+
+a dispatched order in ${supplier_id} with ${number} items of ${product}
+    Given a blank order form in ${supplier_id}
+    When I enter ${number} for product ${product}
+     and I submit the new order
+     and I trigger dispatch transition
+     and I publish the order
+    Wait until page contains  Product
 
 # --- When -------------------------------------------------------------------
 
@@ -91,3 +111,26 @@ total is ${nr}
 I can print the order for ${supplier_id}
     Page Should contain Link  ${PLONEURL}/bika_setup/bika_suppliers/${supplier_id}/order-1/print
     # Can't display print here, as Robot framework can't close the print dialog box once it opens!
+
+new product items appear in the list under ${order_id}
+    go to  ${PLONEURL}/bika_setup/bika_productitems
+    page should contain  ${order_id}
+
+quantity of the ${category} named ${product} supplied by ${supplier} is ${quantity}
+    go to  ${PLONEURL}/bika_setup/bika_suppliers/${supplier}/products
+    click element  xpath=//th[contains(@cat, '${category}')]
+    click link  ${product}
+
+I can print stickers by clicking an icon in ${order} of ${supplier}
+    go to  ${PLONEURL}/bika_setup/bika_suppliers/${supplier}/${order}
+    click element  //img[@title='Small Sticker']
+    location should be  ${PLONEURL}/bika_setup/bika_suppliers/${supplier}/${order}/stickers
+
+# --- Other -------------------------------------------------------------------
+
+Disable auto print inventory stickers
+    go to  ${PLONEURL}/bika_setup/
+    click link  Inventory
+    unselect checkbox  css=#AutoPrintInventoryStickers
+    click button  Save
+    wait until page contains  saved
