@@ -572,11 +572,11 @@ class Sample(BaseFolder, HistoryAwareMixin):
             pass
         else:
             pc = getToolByName(self, 'portal_catalog')
-            sampletypes = pc(portal_type='SampleType', title=value)
+            sampletypes = pc(portal_type='SampleType', title=to_utf8(value))
             if sampletypes:
                 value = sampletypes[0].UID
             else:
-                sampletypes = pc(portal_type='SampleType', UID=value)
+                sampletypes = pc(portal_type='SampleType', UID=to_utf8(value))
                 if sampletypes:
                     value = sampletypes[0].UID
                 else:
