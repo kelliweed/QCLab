@@ -1,9 +1,16 @@
 from zope.interface import Interface
 
 
+class IReportCollectionView(Interface):
+
+    """
+    """
+
+
 class IDailySamplesReceived(Interface):
 
     """
+
     """
 
 class ISamplesReceivedVsReported(Interface):

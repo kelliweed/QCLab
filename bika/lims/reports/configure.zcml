@@ -5,36 +5,28 @@
     i18n_domain="bika">
 
     <include file="menu.zcml"/>
+    <include file="productivity.zcml"/>
 
     <browser:page
-      for="bika.lims.interfaces.IReportFolder"
-      name="folder_listing"
-      class="bika.lims.reports.folderlisting.FolderListingView"
-      permission="zope2.View"
-      layer="bika.lims.interfaces.IBikaLIMS"
+        for="bika.lims.interfaces.IReportFolder"
+        name="folder_listing"
+        class="bika.lims.reports.folderlisting.FolderListingView"
+        permission="zope2.View"
+        layer="bika.lims.interfaces.IBikaLIMS"
     />
 
     <browser:page
-      name="base_view"
-      class="bika.lims.reports.view.ReportView"
-      for="bika.lims.interfaces.IReportCollection"
-      permission="bika.lims.ManageAnalysisRequests"
+        name="create_report"
+        class=".createreport.CreateReport"
+        permission="cmf.ModifyPortalContent"
+        for="bika.lims.interfaces.IReportFolder"
     />
 
     <browser:page
-    name="display_query_results"
-    class=".productivity_dailysamplesreceived.ContentListingView"
-    permission="zope2.View"
-    for=".interfaces.IDailySamplesReceived"
-    template="templates/productivity_dailysamplesreceived.pt"
+        name="base_view"
+        class=".viewreport.ViewReport"
+        for="bika.lims.interfaces.IReportCollection"
+        permission="zope2.View"
     />
-
-    <browser:page
-    name="create_report"
-    class=".CreateReport"
-    permission="cmf.ModifyPortalContent"
-    for="bika.lims.interfaces.IReportFolder"
-    />
-
 
 </configure>

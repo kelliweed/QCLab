@@ -74,10 +74,9 @@ class FolderListingView(BikaListingView):
             items[x]['Created'] = self.ulocalized_time(obj.created())
             items[x]['By'] = self.user_fullname(obj.Creator())
 
-            rptfile = obj.getReportFile()
-            if rptfile:
-                icon = rptfile.getBestIcon()
-                items[x]['FileSize'] = '%sKb' % (rptfile.get_size() / 1024)
+            PDF = obj.getPDF()
+            if PDF:
+                items[x]['FileSize'] = '%sKb' % (PDF.get_size() / 1024)
                 items[x]['replace']['Title'] = \
                     "<a href='%s/at_download/ReportFile'>%s</a>" % \
                     (obj.absolute_url(), items[x]['Title'])

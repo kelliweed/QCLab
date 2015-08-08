@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from AccessControl import ClassSecurityInfo
 from OFS.ObjectManager import ObjectManager
-from Products.Archetypes.Field import FileField, ReferenceField, ComputedField
+from Products.Archetypes.Field import *
 from Products.Archetypes.Widget import FileWidget, ComputedWidget
 from archetypes.querywidget.field import QueryField
 from archetypes.querywidget.widget import QueryWidget
@@ -39,18 +39,13 @@ ReportCollectionSchema = BikaFolderSchema.copy() + atapi.Schema((
         widget=QueryWidget(visible=False)
     ),
 
-    StringField(
-        name='report_output_template',
-        widget=StringWidget(visible=False)
-    ),
-
     QueryField(
         name='query',
         widget=QueryWidget(
             label=_p(u"Search terms"),
             description=_p(u"Define the search terms for the items you want to "
-                          u"list by choosing what to match on. "
-                          u"The list of results will be dynamically updated."),
+                           u"list by choosing what to match on. "
+                           u"The list of results will be dynamically updated."),
         ),
         validators=('javascriptDisabled',)
     ),
@@ -116,36 +111,51 @@ ReportCollectionSchema = BikaFolderSchema.copy() + atapi.Schema((
         widget=InAndOutWidget(
             label=_p(u'Table Columns'),
             description=_p(u"Select which fields to display when "
-                          u"'Tabular view' is selected in the display menu."),
+                           u"'Tabular view' is selected in the display menu."),
             visible=False
         ),
     ),
 
-    FileField('ReportFile',
-        widget = FileWidget(
-            label=_("Report"),
-        ),
+    FileField(
+        'PDF',
+        widget=ComputedWidget(
+            visible=False,
+        )
+    ),
+    TextField(
+        'CSV',
+        widget=ComputedWidget(
+            visible=False,
+        )
+    ),
+    TextField(
+        'HTML',
+        widget=ComputedWidget(
+            visible=False,
+        )
     ),
 
-    StringField('ReportType',
-        widget = StringWidget(
-            label=_("Report Type"),
-            description=_("Report type"),
-        ),
+    StringField(
+        'ReportType',
+        widget=ComputedWidget(
+            visible=False,
+        )
     ),
 
-    ReferenceField('Client',
-        allowed_types = ('Client',),
-        relationship = 'ReportClient',
-        widget = ReferenceWidget(
-            label=_("Client"),
-        ),
+    ReferenceField(
+        'Client',
+        allowed_types=('Client',),
+        relationship='ReportClient',
+        widget=ComputedWidget(
+            visible=False,
+        )
     ),
 
-    ComputedField('ClientUID',
-        expression = 'here.getClient() and here.getClient().UID()',
-        widget = ComputedWidget(
-            visible = False,
+    ComputedField(
+        'ClientUID',
+        expression='here.getClient() and here.getClient().UID()',
+        widget=ComputedWidget(
+            visible=False,
         ),
     ),
 ))
@@ -154,6 +164,7 @@ ReportCollectionSchema = BikaFolderSchema.copy() + atapi.Schema((
 ReportCollectionSchema.registerLayer("marshall", CollectionRFC822Marshaller())
 
 ReportCollectionSchema.moveField('query', after='description')
+
 
 class ReportCollection(ATFolder, ObjectManager):
     """A (new style) Plone ReportCollection"""
@@ -165,8 +176,10 @@ class ReportCollection(ATFolder, ObjectManager):
     security = ClassSecurityInfo()
 
     _at_rename_after_creation = True
+
     def _renameAfterCreation(self, check_auto_id=False):
         from bika.lims.idserver import renameAfterCreation
+
         renameAfterCreation(self)
 
     def Title(self):
@@ -200,5 +213,6 @@ class ReportCollection(ATFolder, ObjectManager):
         for field in self.listMetaDataFields().items():
             _mapping[field[0]] = field
         return [_mapping[field] for field in self.customViewFields]
+
 
 atapi.registerType(ReportCollection, PROJECTNAME)
