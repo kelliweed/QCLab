@@ -450,7 +450,6 @@ class BikaGenerator:
                     portal_repository.addPolicyForContentType(type_id, policy_id)
         portal_repository.setVersionableContentTypes(versionable_types)
 
-
     def setupTopLevelFolders(self, context):
         workflow = getToolByName(context, "portal_workflow")
         obj_id = 'arimports'

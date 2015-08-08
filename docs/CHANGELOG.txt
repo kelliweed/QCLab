@@ -1,5 +1,11 @@
 3.1.9 (unreleased)
 ------------------
+LIMS-1959: Not possible to create an AR
+LIMS-1956: Error upgrading to 319
+LIMS-1934: Hyperlinks in invoices
+LIMS-1943: Stickers preview and custom stickers templates support
+LIMS-1855: Small Sticker layout. QR-code capabilities
+LIMS-1627: Pricing per Analysis Profile
 HEALTH-279: AS IDs to be near top of page. Columns in AS list
 LIMS-1625: Instrument tab titles and headers do not correspond
 LIMS-1924: Instrument tab very miss-titled. Internal Calibration Tests
@@ -24,6 +30,8 @@ Fix portlets.xml for Plone 4.3.6 compatibility
 3.1.8 (2015-06-03)
 ------------------
 LIMS-1923: Typo InstrumentCalibration
+HEALTH-287: Hyperlink in Instrument messages
+LIMS-1929: Translation error on Instrument Document page
 LIMS-1928 Asset Number on Instruments' Certificate tab should use Instrument's default
 LIMS-1929: Translation error on Instrument Document page
 LIMS-1773: Instrument. Thermo Fisher ELISA Spectrophotometer
@@ -770,4 +778,3 @@ http://plone.org/documentation/manual/upgrade-guide
  - Added CHANGES.txt and README.txt
  - Added windows batch script for ID server
    (scripts/start-id-server.bat)
-
