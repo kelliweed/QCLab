@@ -31,11 +31,16 @@ def upgrade(tool):
     wf = getToolByName(portal, 'portal_workflow')
     wf.updateRoleMappings()
 
-    # Migrations
+    ### Migrations
+
+    # catalog indexes have been refactored
+    # and moved over to standard portal_catalog.
     port_indexes_to_portal_catalog(portal)
 
-    return True
+    # Adding new feature multiple profiles per Analysis Request
+    multipleAnalysisProfiles(portal)
 
+    return True
 
 def port_indexes_to_portal_catalog(portal):
     """ Consolidating indexes into portal_catalog
@@ -94,3 +99,20 @@ def port_indexes_to_portal_catalog(portal):
     at.setCatalogsByType('WorksheetTemplate', ['portal_catalog'])
     at.setCatalogsByType('BatchLabel', ['portal_catalog'])
     at.setCatalogsByType('ARPriority', ['portal_catalog'])
+
+def multipleAnalysisProfiles(portal):
+    """
+    All the logic used to use multiple analysis profile selection in analysis request.
+    We have to add some indexes and columns in setuphandler.py and also we have to move all analysis profiles from the
+    analysis request's content field "profile" to profiles
+    """
+    bc = getToolByName(portal, 'bika_catalog', None)
+    if 'getProfilesTitle' not in bc.indexes():
+        bc.addIndex('getProfilesTitle', 'FieldIndex')
+        bc.addColumn('getProfilesTitle')
+    # Moving from profile to profiles
+    ars = bc(portal_type="AnalysisRequest")
+    for ar_brain in ars:
+        ar = ar_brain.getObject()
+        if not ar.getProfiles():
+            ar.setProfiles(ar.getProfile())
