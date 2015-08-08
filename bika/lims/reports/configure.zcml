@@ -15,6 +15,13 @@
     />
 
     <browser:page
+      name="base_view"
+      class="bika.lims.reports.view.ReportView"
+      for="bika.lims.interfaces.IReportCollection"
+      permission="bika.lims.ManageAnalysisRequests"
+    />
+
+    <browser:page
     name="display_query_results"
     class=".productivity_dailysamplesreceived.ContentListingView"
     permission="zope2.View"
