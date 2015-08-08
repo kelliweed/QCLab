@@ -243,9 +243,6 @@ class Batch(ATFolder):
     def getContactTitle(self):
         return ""
 
-    def getProfilesTitle(self):
-        return ""
-
     def getAnalysisCategory(self):
         analyses = []
         for ar in self.getAnalysisRequests():

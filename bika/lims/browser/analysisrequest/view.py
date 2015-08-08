@@ -361,11 +361,10 @@ class AnalysisRequestViewView(BrowserView):
         default_spec = ('Clients' in member_groups) and 'client' or 'lab'
         return default_spec
 
-    def getAnalysisProfileTitle(self):
+    def getAnalysisProfileTitles(self):
         """Grab the context's current AnalysisProfile Title if any
         """
-        return self.context.getProfile() and \
-               self.context.getProfile().Title() or ''
+        return [profile.Title() for profile in self.context.getProfiles()]
 
     def getARTemplateTitle(self):
         """Grab the context's current ARTemplate Title if any

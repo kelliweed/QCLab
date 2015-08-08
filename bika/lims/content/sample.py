@@ -526,9 +526,6 @@ class Sample(BaseFolder, HistoryAwareMixin):
         value = proxies[0].aq_parent.Title()
         return value
 
-    def getProfilesTitle(self):
-        return ""
-
     def getAnalysisCategory(self):
         analyses = []
         for ar in self.getAnalysisRequests():

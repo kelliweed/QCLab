@@ -1315,9 +1315,6 @@ class AnalysisRequest(BaseFolder):
     def getContactTitle(self):
         return self.getContact().Title() if self.getContact() else ''
 
-    def getProfilesTitle(self):
-        return [profile.Title() for profile in self.getProfiles()]
-
     def getTemplateTitle(self):
         return self.getTemplate().Title() if self.getTemplate() else ''
 
