@@ -81,8 +81,7 @@ class StorageLevelsView(BikaListingView):
 
 class AddStorageLevelView(BrowserView):
     """ Handler for the "Add Storage levels" button in Storage levels 
-        view. If a template was selected, the worksheet is pre-populated
-        here.
+        view.
     """
 
     def StorageLevelTitleExists(self, title):

@@ -17,6 +17,18 @@ schema = BikaFolderSchema.copy() + BikaSchema.copy() + Schema((
             visible = False,
         ),
     ),
+    BooleanField('IsAssignable',
+        default=False,
+        widget=BooleanWidget(visible=False),
+    ),
+    BooleanField('HasChildren',
+        default=False,
+        widget=BooleanWidget(visible=False),
+    ),
+    IntegerField('NumberOfChildlessChildren',
+        default=0,
+        widget=IntegerWidget(visible=False)
+    ),
 ))
 
 schema['description'].schemata = 'default'
@@ -32,5 +44,25 @@ class StorageLevel(ATFolder):
     def _renameAfterCreation(self, check_auto_id=False):
         from bika.lims.idserver import renameAfterCreation
         renameAfterCreation(self)
+
+    def at_post_create_script(self):
+        # Jira LIMS-1961
+        if hasattr(self.aq_parent, 'getNumberOfChildlessChildren'):
+            number = self.aq_parent.getNumberOfChildlessChildren()
+            self.aq_parent.setNumberOfChildlessChildren(number+1)
+            self.aq_parent.setIsAssignable(True)
+
+        if hasattr(self.aq_parent, 'HasChildren') and not self.aq_parent.HasChildren:
+            self.aq_parent.setHasChildren(True)
+            grand_parent = self.aq_parent.aq_parent
+
+            if hasattr(self.aq_parent, 'aq_parent') and \
+               hasattr(grand_parent, 'getNumberOfChildlessChildren'):
+                number = grand_parent.getNumberOfChildlessChildren()
+                grand_parent.setNumberOfChildlessChildren(number-1)
+
+                if number <= 1:
+                    grand_parent.setIsAssignable(False)
+
 
 registerType(StorageLevel, PROJECTNAME)
