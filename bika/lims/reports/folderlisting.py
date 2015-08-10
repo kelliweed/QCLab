@@ -90,5 +90,4 @@ class FolderListingView(BikaListingView):
                     (client.absolute_url(), client.Title())
             else:
                 items[x]['Client'] = ''
-
         return items

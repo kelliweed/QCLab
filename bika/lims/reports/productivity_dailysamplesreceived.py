@@ -17,7 +17,7 @@ class Report(BrowserView):
         #
         # If there is no content, then we will re-create it with the code
         # that we modify from original reports.
-
+        
         html = self.context.getHTML()
         if not html:
             return self.create_report()
