@@ -8,8 +8,15 @@
     <link rel="stylesheet" type="text/css" media="all" href=""
             tal:attributes="href string:$portal_url/reports.css" />
 </head>
-    <body>
-        Report Body Stuff from the old productivity_dailysamplesreceived.pt
-    </body>
-
+<body tal:define="
+    report_data view/report_data;
+    parameters python:report_data.has_key('parameters') and report_data['parameters'] or [];">
+    
+    <h1 i18n:translate="">Daily samples received</h1>
+    <table class="bika-report-parms" summary="Parameters">
+	    <tr tal:repeat="parm parameters">
+	        <th tal:content="python:parm"></th>
+	    </tr>
+	</table>
+</body>
 </html>

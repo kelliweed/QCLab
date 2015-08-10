@@ -1,5 +1,5 @@
 from Products.CMFPlone.utils import _createObjectByType
-from bika.lims.utils import tmpID
+from bika.lims.utils import tmpID, logged_in_client
 from zExceptions import BadRequest
 from zope.interface import alsoProvides
 from bika.lims.reports.interfaces import *
@@ -22,9 +22,11 @@ class CreateReport(object):
             raise BadRequest("No report was specified in request!")
         report_type = self.request['report']
         next_id = self.next_report_id(report_type)
+        this_client = logged_in_client(self.context)
+        if this_client == False or this_client == None:
+            this_client = '' 
         obj = _createObjectByType('ReportCollection', self.context, next_id,
                                   title=next_id)
-
         obj.unmarkCreationFlag()
     #    productivity_reports = ['dailysamplesreceived', 'samplesreceivedvsreported', 'analysesperservice', 'analysespersampletype', \
     #     'analysesperclient', 'analysestats', 'analysestats_overtime', 'analysesperdepartment', 'analysesperformedpertotal', \
@@ -36,6 +38,11 @@ class CreateReport(object):
                  'o': 'plone.app.querystring.operation.date.today',
                  'v': ['', '']}
                 ])
+            obj.Schema().getField('base_query').set(obj,
+                {
+                'portal_type': 'Sample',
+                'client': this_client
+                })
         elif report_type == 'productivity_samplesreceivedvsreported':
             alsoProvides(obj, ISamplesReceivedVsReported)
             obj.Schema().getField('query').set(obj,[

@@ -17,13 +17,15 @@ class Report(BrowserView):
         #
         # If there is no content, then we will re-create it with the code
         # that we modify from original reports.
-        
+        '''
+        commented for testing need to uncomment after done
         html = self.context.getHTML()
-        if not html:
-            return self.create_report()
+        if not html:'''
+        return self.create_report()
+        '''
         else:
             return html
-
+'''
 
 
 
@@ -34,7 +36,23 @@ class Report(BrowserView):
         #  like self.report_data.
         #
         #  Then we will call something like:
+        
+        parms = []
+        titles = []
+        self.contentFilter = {}
 
+        #search term is of format :
+        #{'i': 'DateReceived', 'o': 'plone.app.querystring.operation.date.today', 'v': ['', '']}
+        search_terms = self.context.query
+        for search_term in search_terms:
+            parms.append(search_term['i'])
+            self.contentFilter[search_term['i']] = search_term['v'] if search_term.has_key('v') else ''
+        #results = self.portal_catalog(self.contentFilter)
+        self.report_data = {
+             'parameters': parms
+        }
+        import pdb
+        pdb.set_trace()
         html = self.template()
         self.context.setHTML(html)
         return html
