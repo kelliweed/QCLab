@@ -38,11 +38,17 @@ class CreateReport(object):
                  'o': 'plone.app.querystring.operation.date.today',
                  'v': ['', '']}
                 ])
-            obj.Schema().getField('base_query').set(obj,
-                {
-                'portal_type': 'Sample',
-                'client': this_client
-                })
+            base_query = [
+                {'i': 'portal_type',
+                 'o': 'plone.app.querystring.operation.selection.is', 
+                 'v': ['Sample']}]
+            if this_client != '' :
+                base_query.append(
+                    {'i': 'ClientTitle', 
+                    'o': 'plone.app.querystring.operation.selection.is', 
+                    'v': [str(this_client.UID())]
+                    })
+            obj.Schema().getField('base_query').set(obj,base_query)
         elif report_type == 'productivity_samplesreceivedvsreported':
             alsoProvides(obj, ISamplesReceivedVsReported)
             obj.Schema().getField('query').set(obj,[
