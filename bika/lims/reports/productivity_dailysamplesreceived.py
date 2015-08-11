@@ -61,9 +61,9 @@ class Report(BrowserView):
         b_size = 30
         limit = 0
         brains = False
+        self.context.query += self.context.base_query
         parsedquery = queryparser.parseFormquery(
             self.context, self.context.query, sort_on, sort_order)
-
         index_modifiers = getUtilitiesFor(IParsedQueryIndexModifier)
         for name, modifier in index_modifiers:
             if name in parsedquery:
@@ -93,24 +93,14 @@ class Report(BrowserView):
             else:
                 return IContentListing([])
 
-        parsedquery['sort_limit'] = limit
-
         if 'path' not in parsedquery:
-            parsedquery['path'] = {'query': ''}
-
-        if isinstance(self.context.base_query, dict):
-            # Update the parsed query with an extra query dictionary. This may
-            # override the parsed query. The custom_query is a dictonary of
-            # index names and their associated query values.
-            parsedquery.update(self.context.base_query)
+            parsedquery['path'] = {"query": "/".join(self.context.getPhysicalPath()), "level": 0}
 
         results = catalog(**parsedquery)
         if getattr(results, 'actual_result_count', False) and limit\
                 and results.actual_result_count > limit:
             results.actual_result_count = limit
 
-        if not brains:
-            results = IContentListing(results)
         self.report_data = {
              'parameters': parms
         }
