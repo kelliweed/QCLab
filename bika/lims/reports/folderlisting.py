@@ -57,8 +57,9 @@ class FolderListingView(BikaListingView):
         if this_client:
             self.contentFilter['ClientUID'] = this_client.UID()
             del(self.columns['Client'])
-            for x in len(self.review_states):
-                del(self.review_states[x]['columns']['Client'])
+            for x in range(len(self.review_states)):
+                if 'Client' in self.review_states[x]['columns'] :
+                    self.review_states[x]['columns'].remove('Client')
 
         return super(FolderListingView, self).__call__()
 

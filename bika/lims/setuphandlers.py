@@ -361,13 +361,13 @@ class BikaGenerator:
 
         # /reports folder permissions
         mp = portal.reports.manage_permission
-        mp(permissions.ListFolderContents, ['Manager', 'LabManager', 'Member', 'LabClerk', ], 0)
-        mp(permissions.View, ['Manager', 'LabManager', 'LabClerk', 'Member'], 0)
-        mp('Access contents information', ['Manager', 'LabManager', 'Member', 'LabClerk', 'Owner'], 0)
-        mp(permissions.AddPortalContent, ['Manager', 'LabManager', 'LabClerk', 'Owner', 'Member'], 0)
+        mp(permissions.ListFolderContents, ['Manager', 'LabManager', 'Member', 'LabClerk', 'Client'], 0)
+        mp(permissions.View, ['Manager', 'LabManager', 'LabClerk', 'Member', 'Client'], 0)
+        mp('Access contents information', ['Manager', 'LabManager', 'Member', 'LabClerk', 'Owner', 'Client'], 0)
+        mp(permissions.AddPortalContent, ['Manager', 'LabManager', 'LabClerk', 'Owner', 'Member', 'Client'], 0)
 
-        mp('ATContentTypes: Add Image', ['Manager', 'Labmanager', 'LabClerk', 'Member', ], 0)
-        mp('ATContentTypes: Add File', ['Manager', 'Labmanager', 'LabClerk', 'Member', ], 0)
+        mp('ATContentTypes: Add Image', ['Manager', 'Labmanager', 'LabClerk', 'Member', 'Client'], 0)
+        mp('ATContentTypes: Add File', ['Manager', 'Labmanager', 'LabClerk', 'Member', 'Client'], 0)
         portal.reports.reindexObject()
 
         # /invoices folder permissions
