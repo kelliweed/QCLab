@@ -1,0 +1,34 @@
+[Workflow],,,,,,,,,,
+Id:,bika_expiry_workflow,,,,,,,,,
+Title:,Bika Product Items Workflow,,,,,,,,,
+Description:,,,,,,,,,,
+Initial state:,active,,,,,,,,,
+Type:,Workflow,,,,,,,,,
+State variable:,review_state,,,,,,,,,
+,,,,,,,,,,
+[State],,,,,,,,,,
+Id:,active,,,,,,,,,
+Title:,Item Active,,,,,,,,,
+Description:,,,,,,,,,,
+Transitions,discard,,,,,,,,,
+Permissions,Acquire,Anonymous,Manager,Owner,Reader,Editor,Contributor,Analyst,LabClerk,LabManager
+Modify portal content,Y,N,N,N,N,N,N,N,N,N
+Delete objects,Y,N,N,N,N,N,N,N,N,N
+,,,,,,,,,,
+[State],,,,,,,,,,
+Id:,discarded,,,,,,,,,
+Title:,Item Discarded,,,,,,,,,
+Description:,,,,,,,,,,
+Transitions,,,,,,,,,,
+Permissions,Acquire,Anonymous,Manager,Owner,Reader,Editor,Contributor,Analyst,LabClerk,LabManager
+Modify portal content,N,N,Y,Y,N,N,N,N,N,Y
+Delete objects,N,N,Y,Y,N,N,N,N,N,Y
+,,,,,,,,,,
+[Transition],,,,,,,,,,
+Id:,discard,,,,,,,,,
+Title:,Discard Product Items,,,,,,,,,
+Description:,Discard Product Items,,,,,,,,,
+Target state:,discarded,,,,,,,,,
+Trigger:,User,,,,,,,,,
+Guard permission:,BIKA: Manage Bika,,,,,,,,,
+
