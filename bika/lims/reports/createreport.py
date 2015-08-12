@@ -24,7 +24,7 @@ class CreateReport(object):
         next_id = self.next_report_id(report_type)
         this_client = logged_in_client(self.context)
         if this_client == False or this_client == None:
-            this_client = '' 
+            this_client = ''
         obj = _createObjectByType('ReportCollection', self.context, next_id,
                                   title=next_id)
         obj.unmarkCreationFlag()

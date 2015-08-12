@@ -5,6 +5,7 @@ from zope.component import getUtilitiesFor
 from plone.app.querystring.interfaces import IParsedQueryIndexModifier
 from plone.app.contentlisting.interfaces import IContentListing
 from Products.CMFCore.utils import getToolByName
+from bika.lims.utils import logged_in_client
 
 class Report(BrowserView):
 
@@ -44,23 +45,13 @@ class Report(BrowserView):
         
         parms = []
         titles = []
-        self.contentFilter = {}
 
-        #search term is of format :
-        #{'i': 'DateReceived', 'o': 'plone.app.querystring.operation.date.today', 'v': ['', '']}
-        '''
-        search_terms = self.context.query
-        for search_term in search_terms:
-            parms.append(search_term['i'])
-            self.contentFilter[search_term['i']] = search_term['v'] if search_term.has_key('v') else ''
-        '''
         #results = self.portal_catalog(self.contentFilter)
         sort_on = None
         sort_order = None
         b_start = 0
         b_size = 30
         limit = 0
-        brains = False
         self.context.query += self.context.base_query
         parsedquery = queryparser.parseFormquery(
             self.context, self.context.query, sort_on, sort_order)
@@ -87,14 +78,11 @@ class Report(BrowserView):
                 "Using empty query because there are no valid indexes used.")
             parsedquery = {}
 
-        if not parsedquery:
-            if brains:
-                return []
-            else:
-                return IContentListing([])
-
-        if 'path' not in parsedquery:
-            parsedquery['path'] = {"query": "/".join(self.context.getPhysicalPath()), "level": 0}
+        client = logged_in_client(self.context)
+        if client: 
+            parsedquery['path'] = {'query': '/'.join(client.getPhysicalPath()), "level": 0}
+        #if 'path' not in parsedquery:
+        #    parsedquery['path'] = {"query": "/".join(self.context.getPhysicalPath()), "level": 0}
 
         results = catalog(**parsedquery)
         if getattr(results, 'actual_result_count', False) and limit\
