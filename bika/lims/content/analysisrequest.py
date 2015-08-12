@@ -349,7 +349,7 @@ schema = BikaSchema.copy() + Schema((
             size=20,
             render_own_label=True,
             visible=False,
-            catalog_name='bika_setup_catalog',
+            catalog_name='portal_catalog',
             base_query={'inactive_state': 'active'},
             showOn=False,
         ),

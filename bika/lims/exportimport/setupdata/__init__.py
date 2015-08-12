@@ -863,7 +863,7 @@ def addDocument(self, row_dict, folder):
                 logger.warning(msg[0] + " Error on sheet: " + self.sheetname)
 
             # Obtain all created instrument documents content type
-            catalog = getToolByName(self.context, 'bika_setup_catalog')
+            catalog = getToolByName(self.context, 'portal_catalog')
             documents_brains = catalog.searchResults({'portal_type': 'Multifile'})
             # If a the new document has the same DocumentID as a created document, this object won't be created.
             idAlreadyInUse = False
