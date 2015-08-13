@@ -40,16 +40,12 @@ class CreateReport(object):
 
         if report_type == 'productivity_dailysamplesreceived':
             alsoProvides(obj, IDailySamplesReceived)
+            obj.base_query = {'portal_type': 'Sample'}
             obj.Schema().getField('query').set(obj, [
                 {'i': 'DateReceived',
                  'o': 'plone.app.querystring.operation.date.today',
                  'v': ['', '']}
             ])
-            obj.base_query = [
-                {'i': 'portal_type', 
-                'o': 'plone.app.querystring.operation.selection.is', 
-                'v': ['Sample']}
-            ]
 
         elif report_type == 'productivity_samplesreceivedvsreported':
             alsoProvides(obj, ISamplesReceivedVsReported)

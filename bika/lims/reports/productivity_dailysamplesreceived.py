@@ -111,10 +111,6 @@ class Report(BrowserView):
         footlines.append(footline)
         self.report_data['footlines'] = footlines
 
-
-        import pdb
-        pdb.set_trace()
-        
         if self.request.get('output_format', '') == 'CSV':
             import csv
             import StringIO

@@ -8,9 +8,10 @@ from bika.lims import bikaMessageFactory as _
 class ProductivitySubMenuItem(BrowserSubMenuItem):
 
     submenuId = 'productivity_reports'
+    id = submenuId
     order = 3
     title = _('Productivity')
-    description = ''
+    description = _('Productivity Reports')
 
     @property
     def extra(self):
@@ -98,9 +99,10 @@ class ProductivityMenu(BrowserMenu):
 class QualityControlSubMenuItem(BrowserSubMenuItem):
 
     submenuId = 'qualitycontrol_reports'
+    id = submenuId
     order = 5
     title = _('Quality Control')
-    description = ''
+    description = _('Quality Control Reports')
 
     @property
     def extra(self):
@@ -157,9 +159,10 @@ class QualityControlMenu(BrowserMenu):
 
 class AdministrationSubMenuItem(BrowserSubMenuItem):
     submenuId = 'administration_reports'
+    id = submenuId
     order = 7
     title = _('Administration')
-    description = ''
+    description = _('Administration Reports')
 
     @property
     def extra(self):
