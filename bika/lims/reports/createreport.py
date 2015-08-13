@@ -216,8 +216,6 @@ class CreateReport(object):
             	{'i': 'modified',
                  'o': 'plone.app.querystring.operation.date.today'}
                 ])
-        self.request.response.redirect(obj.absolute_url())
 
-
-
-
+        # Redirect to the edit page, to allow the user to complete parameters
+        self.request.response.redirect(obj.absolute_url() + '/edit')
