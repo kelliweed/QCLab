@@ -7,7 +7,7 @@ from plone.app.querystring.interfaces import IParsedQueryIndexModifier
 from plone.app.contentlisting.interfaces import IContentListing
 from Products.CMFCore.utils import getToolByName
 from bika.lims.utils import logged_in_client
-
+from bika.lims import bikaMessageFactory as _
 
 class Report(BrowserView):
     template = ViewPageTemplateFile(
@@ -81,7 +81,6 @@ class Report(BrowserView):
             parsedquery['path'] = \
                 {'query': '/'.join(client.getPhysicalPath()), "level": 0}
 
-        import pdb;pdb.set_trace()
         samples = catalog(parsedquery)
 
         datalines = []
@@ -105,11 +104,17 @@ class Report(BrowserView):
                 datalines.append(dataline)
                 analyses_count += 1
 
+        self.report_data['datalines'] = datalines
         # Footer total data
         footlines = []
         footline = {'TotalCount': analyses_count}
         footlines.append(footline)
+        self.report_data['footlines'] = footlines
 
+
+        import pdb
+        pdb.set_trace()
+        
         if self.request.get('output_format', '') == 'CSV':
             import csv
             import StringIO
