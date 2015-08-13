@@ -142,5 +142,4 @@ class Report(BrowserView):
                       "attachment;filename=\"dailysamplesreceived_%s.csv\"" % date)
             self.request.RESPONSE.write(report_data)
         else:
-            return {'report_title': _('Daily samples received'),
-                    'report_data': self.template()}
+            return self.template()
