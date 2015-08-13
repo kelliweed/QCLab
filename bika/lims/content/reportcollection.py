@@ -35,11 +35,6 @@ from bika.lims import PROJECTNAME
 ReportCollectionSchema = BikaFolderSchema.copy() + atapi.Schema((
 
     QueryField(
-        name='base_query',
-        widget=QueryWidget(visible=False)
-    ),
-
-    QueryField(
         name='query',
         widget=QueryWidget(
             label=_p(u"Search terms"),
