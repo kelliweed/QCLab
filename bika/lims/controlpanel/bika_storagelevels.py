@@ -70,6 +70,9 @@ class StorageLevelsView(BikaListingView):
         ]
 
     def folderitems(self):
+        catalog = getToolByName(self.context, 'bika_setup_catalog')
+        from bika.lims.interfaces import IStorageLevelIsAssignable
+        print(catalog(object_provides=IStorageLevelIsAssignable))
         items = BikaListingView.folderitems(self)
         for x in range(len(items)):
             if not items[x].has_key('obj'): continue

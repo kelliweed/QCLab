@@ -68,7 +68,7 @@
                                             class="blurrable firstToFocus referencewidget"
                                             value=""
                                             size=14
-                                            base_query='{"portal_type": "StorageLevel"}'
+                                            base_query='{"portal_type": "StorageLevel", "object_provides": "bika.lims.interfaces.IStorageLevelIsAssignable"}'
                                             search_query='{}'
                                             catalog_name="bika_setup_catalog"
                                             ui_item="Title"

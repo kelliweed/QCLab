@@ -68,6 +68,7 @@ class StorageLevel(ATFolder):
 
                 if number <= 1:
                     noLongerProvides(grand_parent, IStorageLevelIsAssignable)
+        self.reindexObject(idxs=['object_provides'])
 
 
 registerType(StorageLevel, PROJECTNAME)
