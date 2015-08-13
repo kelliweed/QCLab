@@ -518,7 +518,7 @@ def create_analysisrequest(context, request, values):
 
     skip_receive = ['to_be_sampled', 'sample_due', 'sampled', 'to_be_preserved']
     if secondary:
-        # Only 'sample_due' and 'sample_recieved' samples can be selected
+        # Only 'sample_due' and 'sample_received' samples can be selected
         # for secondary analyses
         doActionFor(ar, 'sampled')
         doActionFor(ar, 'sample_due')
