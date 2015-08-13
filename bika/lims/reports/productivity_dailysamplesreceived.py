@@ -1,3 +1,4 @@
+from bika.lims import logger
 from bika.lims.browser import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from plone.app.querystring import queryparser
@@ -7,8 +8,8 @@ from plone.app.contentlisting.interfaces import IContentListing
 from Products.CMFCore.utils import getToolByName
 from bika.lims.utils import logged_in_client
 
-class Report(BrowserView):
 
+class Report(BrowserView):
     template = ViewPageTemplateFile(
         "templates/productivity_dailysamplesreceived.pt")
 
@@ -33,38 +34,23 @@ class Report(BrowserView):
             return html
 '''
 
-
-
     def create_report(self):
-        #This code comes from the original reports.
-        #
-        #  To create the HTML, first we will setup variables on self,
-        #  like self.report_data.
-        #
-        #  Then we will call something like:
-        
-        parms = []
-        titles = []
+        """Parse the parameters, retrieve data, and make it ready for the
+        template to parse.
+        """
 
-        #results = self.portal_catalog(self.contentFilter)
-        sort_on = None
-        sort_order = None
-        b_start = 0
-        b_size = 30
-        limit = 0
-        self.context.query += self.context.base_query
+        self.report_data = {
+            # parameters is a list of dictionaries:  {'title':'', 'value':''}
+            # the selected parameters to be displayed in the output report
+            'parameters': [],
+            # datalines is the data that will be rendered by the report template
+            'datalines': [],
+            # footlines - the report footer.
+            'footlines': [],
+        }
+
         parsedquery = queryparser.parseFormquery(
-            self.context, self.context.query, sort_on, sort_order)
-        index_modifiers = getUtilitiesFor(IParsedQueryIndexModifier)
-        for name, modifier in index_modifiers:
-            if name in parsedquery:
-                new_name, query = modifier(parsedquery[name])
-                parsedquery[name] = query
-                # if a new index name has been returned, we need to replace
-                # the native ones
-                if name != new_name:
-                    del parsedquery[name]
-                    parsedquery[new_name] = query
+            self.context, self.context.query)
 
         # Check for valid indexes
         catalog = getToolByName(self.context, 'portal_catalog')
@@ -78,109 +64,78 @@ class Report(BrowserView):
                 "Using empty query because there are no valid indexes used.")
             parsedquery = {}
 
+        # Write the parameter list before including any automatic parameters
+        # from base_query, as we don't want to print these in the report.
+        for k, v in parsedquery.items():
+            # XXX these must be made pretty for printing, but for now who cares!
+            self.report_data['parameters'].append({'title': k, 'value': v})
+
+        # Insert this report's base_query if one is defined in CreateReport.
+        base_query = getattr(self.context, 'base_query', False)
+        if base_query:
+            parsedquery.update(base_query)
+
+        # Always restrict to Client-only objects if this is client contact user
         client = logged_in_client(self.context)
-        if client: 
-            parsedquery['path'] = {'query': '/'.join(client.getPhysicalPath()), "level": 0}
-        #if 'path' not in parsedquery:
-        #    parsedquery['path'] = {"query": "/".join(self.context.getPhysicalPath()), "level": 0}
+        if client:
+            parsedquery['path'] = \
+                {'query': '/'.join(client.getPhysicalPath()), "level": 0}
 
-        results = catalog(**parsedquery)
-        if getattr(results, 'actual_result_count', False) and limit\
-                and results.actual_result_count > limit:
-            results.actual_result_count = limit
+        import pdb;pdb.set_trace()
+        samples = catalog(parsedquery)
 
-        self.report_data = {
-             'parameters': parms
-        }
-        import pdb
-        pdb.set_trace()
-        html = self.template()
-        self.context.setHTML(html)
-        return html
+        datalines = []
+        analyses_count = 0
+        for sample in samples:
+            sample = sample.getObject()
 
-        #
-        # ANd we can generate the PDF from that html, too.
-        #
-        #
-        #  The CSV stuff is handled separate.
-        #
-        #
-        # parms = []
-        # titles = []
-        # self.contentFilter = {'portal_type': 'Sample',
-        #                       'review_state': ['sample_received', 'expired',
-        #                                        'disposed'],
-        #                       'sort_on': 'DateReceived'}
-        #
-        # if val:
-        #     self.contentFilter[val['contentFilter'][0]] = val['contentFilter'][1]
-        #     parms.append(val['parms'])
-        #     titles.append(val['titles'])
-        #
-        # # Query the catalog and store results in a dictionary
-        # samples = self.portal_catalog(self.contentFilter)
-        # if not samples:
-        #     message = _("No samples matched your query")
-        #     self.context.plone_utils.addPortalMessage(message, "error")
-        #     return self.default_template()
-        #
-        # datalines = []
-        # analyses_count = 0
-        # for sample in samples:
-        #     sample = sample.getObject()
-        #
-        #     # For each sample, retrieve the analyses and generate
-        #     # a data line for each one
-        #     analyses = sample.getAnalyses({})
-        #     for analysis in analyses:
-        #         analysis = analysis.getObject()
-        #         dataline = {'AnalysisKeyword': analysis.getKeyword(),
-        #                     'AnalysisTitle': analysis.getServiceTitle(),
-        #                     'SampleID': sample.getSampleID(),
-        #                     'SampleType': sample.getSampleType().Title(),
-        #                     'SampleDateReceived': self.ulocalized_time(
-        #                         sample.getDateReceived(), long_format=1),
-        #                     'SampleSamplingDate': self.ulocalized_time(
-        #                         sample.getSamplingDate(), long_format=1)}
-        #         datalines.append(dataline)
-        #         analyses_count += 1
-        #
-        # # Footer total data
-        # footlines = []
-        # footline = {'TotalCount': analyses_count}
-        # footlines.append(footline)
-        #
-        # self.report_data = {
-        #     'parameters': parms,
-        #     'datalines': datalines,
-        #     'footlines': footlines}
-        #
-        # if self.request.get('output_format', '') == 'CSV':
-        #     import csv
-        #     import StringIO
-        #     import datetime
-        #
-        #     fieldnames = [
-        #         'SampleID',
-        #         'SampleType',
-        #         'SampleSamplingDate',
-        #         'SampleDateReceived',
-        #         'AnalysisTitle',
-        #         'AnalysisKeyword',
-        #     ]
-        #     output = StringIO.StringIO()
-        #     dw = csv.DictWriter(output, fieldnames=fieldnames)
-        #     dw.writerow(dict((fn, fn) for fn in fieldnames))
-        #     for row in datalines:
-        #         dw.writerow(row)
-        #     report_data = output.getvalue()
-        #     output.close()
-        #     date = datetime.datetime.now().strftime("%Y%m%d%H%M")
-        #     setheader = self.request.RESPONSE.setHeader
-        #     setheader('Content-Type', 'text/csv')
-        #     setheader("Content-Disposition",
-        #               "attachment;filename=\"dailysamplesreceived_%s.csv\"" % date)
-        #     self.request.RESPONSE.write(report_data)
-        # else:
-        #     return {'report_title': _('Daily samples received'),
-        #             'report_data': self.template()}
+            # For each sample, retrieve the analyses and generate
+            # a data line for each one
+            analyses = sample.getAnalyses({})
+            for analysis in analyses:
+                analysis = analysis.getObject()
+                dataline = {'AnalysisKeyword': analysis.getKeyword(),
+                            'AnalysisTitle': analysis.getServiceTitle(),
+                            'SampleID': sample.getSampleID(),
+                            'SampleType': sample.getSampleType().Title(),
+                            'SampleDateReceived': self.ulocalized_time(
+                                sample.getDateReceived(), long_format=1),
+                            'SampleSamplingDate': self.ulocalized_time(
+                                sample.getSamplingDate(), long_format=1)}
+                datalines.append(dataline)
+                analyses_count += 1
+
+        # Footer total data
+        footlines = []
+        footline = {'TotalCount': analyses_count}
+        footlines.append(footline)
+
+        if self.request.get('output_format', '') == 'CSV':
+            import csv
+            import StringIO
+            import datetime
+
+            fieldnames = [
+                'SampleID',
+                'SampleType',
+                'SampleSamplingDate',
+                'SampleDateReceived',
+                'AnalysisTitle',
+                'AnalysisKeyword',
+            ]
+            output = StringIO.StringIO()
+            dw = csv.DictWriter(output, fieldnames=fieldnames)
+            dw.writerow(dict((fn, fn) for fn in fieldnames))
+            for row in datalines:
+                dw.writerow(row)
+            report_data = output.getvalue()
+            output.close()
+            date = datetime.datetime.now().strftime("%Y%m%d%H%M")
+            setheader = self.request.RESPONSE.setHeader
+            setheader('Content-Type', 'text/csv')
+            setheader("Content-Disposition",
+                      "attachment;filename=\"dailysamplesreceived_%s.csv\"" % date)
+            self.request.RESPONSE.write(report_data)
+        else:
+            return {'report_title': _('Daily samples received'),
+                    'report_data': self.template()}
