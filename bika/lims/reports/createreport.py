@@ -7,6 +7,7 @@ from bika.lims.reports.interfaces import *
 
 class CreateReport(object):
     """docstring for CreateReport"""
+
     def __init__(self, context, request=None):
         self.context = context
         self.request = request
@@ -15,50 +16,46 @@ class CreateReport(object):
         prefix = report_type.split("_")[-1]
         existing = [x for x in self.context.objectValues()
                     if x.id.find(prefix) > -1]
-        return '%s-%s'%(prefix, len(existing)+1)
+        return '%s-%s' % (prefix, len(existing) + 1)
 
     def __call__(self):
+        """this function provides the default values for the queries used
+        to retrieve and format report data.
+
+        1) 'query' is the QueryField attached to the reportcollection object.
+           we set defaults here, which the user can change, but probably
+           will not. We should include all valid indexes here, the user can
+           remove what they do not need.
+        2) 'base_query' this is a simple object attribute, consisting of
+           a dictionary of indexes and values which will be updated into the
+           query field's value after it is parsed.
+        """
         if 'report' not in self.request:
             raise BadRequest("No report was specified in request!")
         report_type = self.request['report']
         next_id = self.next_report_id(report_type)
-        this_client = logged_in_client(self.context)
-        if this_client == False or this_client == None:
-            this_client = ''
-        obj = _createObjectByType('ReportCollection', self.context, next_id,
-                                  title=next_id)
+        obj = _createObjectByType('ReportCollection', self.context, next_id)
+        obj.setTitle(next_id)
         obj.unmarkCreationFlag()
-    #    productivity_reports = ['dailysamplesreceived', 'samplesreceivedvsreported', 'analysesperservice', 'analysespersampletype', \
-    #     'analysesperclient', 'analysestats', 'analysestats_overtime', 'analysesperdepartment', 'analysesperformedpertotal', \
-    #     'analysesattachments', 'dataentrydaybook']
-        if report_type == 'productivity_dailysamplesreceived' :
+
+        if report_type == 'productivity_dailysamplesreceived':
             alsoProvides(obj, IDailySamplesReceived)
-            obj.Schema().getField('query').set(obj,[
+            obj.Schema().getField('query').set(obj, [
                 {'i': 'DateReceived',
                  'o': 'plone.app.querystring.operation.date.today',
                  'v': ['', '']}
-                ])
-            base_query = [
-                {'i': 'portal_type',
-                 'o': 'plone.app.querystring.operation.selection.is', 
-                 'v': ['Sample']}]
-            if this_client != '' :
-                base_query.append(
-                    {'i': 'ClientTitle', 
-                    'o': 'plone.app.querystring.operation.selection.is', 
-                    'v': [str(this_client.UID())]
-                    })
-            obj.Schema().getField('base_query').set(obj,base_query)
+            ])
+
         elif report_type == 'productivity_samplesreceivedvsreported':
             alsoProvides(obj, ISamplesReceivedVsReported)
-            obj.Schema().getField('query').set(obj,[
+            obj.Schema().getField('query').set(obj, [
                 {'i': 'DateReceived',
                  'o': 'plone.app.querystring.operation.date.today',
                  'v': ['', '']}
-                ])
+            ])
         elif report_type == 'productivity_analysesperservice':
             alsoProvides(obj, IAnalysesPerService)
-            obj.Schema().getField('query').set(obj,[
+            obj.Schema().getField('query').set(obj, [
                 {'i': 'created',
                  'o': 'plone.app.querystring.operation.date.today'},
                 {'i': 'DatePublished',
@@ -69,10 +66,10 @@ class CreateReport(object):
                  'o': 'plone.app.querystring.operation.selection.is'},
                 {'i': 'worksheetanalysis_review_state',
                  'o': 'plone.app.querystring.operation.selection.is'}
-                ])
-        elif report_type == 'productivity_analysespersampletype' :
+            ])
+        elif report_type == 'productivity_analysespersampletype':
             alsoProvides(obj, IAnalysesPerSampleType)
-            obj.Schema().getField('query').set(obj,[
+            obj.Schema().getField('query').set(obj, [
                 {'i': 'created',
                  'o': 'plone.app.querystring.operation.date.today'},
                 {'i': 'review_state',
@@ -81,10 +78,10 @@ class CreateReport(object):
                  'o': 'plone.app.querystring.operation.selection.is'},
                 {'i': 'worksheetanalysis_review_state',
                  'o': 'plone.app.querystring.operation.selection.is'}
-                ])
-        elif report_type == 'productivity_analysesperclient' :
+            ])
+        elif report_type == 'productivity_analysesperclient':
             alsoProvides(obj, IAnalysesPerClient)
-            obj.Schema().getField('query').set(obj,[
+            obj.Schema().getField('query').set(obj, [
                 {'i': 'created',
                  'o': 'plone.app.querystring.operation.date.today'},
                 {'i': 'review_state',
@@ -93,20 +90,20 @@ class CreateReport(object):
                  'o': 'plone.app.querystring.operation.selection.is'},
                 {'i': 'worksheetanalysis_review_state',
                  'o': 'plone.app.querystring.operation.selection.is'}
-                ])
-        elif report_type == 'productivity_analysestats' :
+            ])
+        elif report_type == 'productivity_analysestats':
             alsoProvides(obj, IAnalysesStats)
-            obj.Schema().getField('query').set(obj,[
+            obj.Schema().getField('query').set(obj, [
                 {'i': 'ClientTitle',
                  'o': 'plone.app.querystring.operation.selection.is'},
                 {'i': 'DateReceived',
                  'o': 'plone.app.querystring.operation.date.today'},
                 {'i': 'worksheetanalysis_review_state',
                  'o': 'plone.app.querystring.operation.selection.is'}
-                ])
-        elif report_type == 'productivity_analysestats_overtime' :
+            ])
+        elif report_type == 'productivity_analysestats_overtime':
             alsoProvides(obj, IAnalysesStatsOverTime)
-            obj.Schema().getField('query').set(obj,[
+            obj.Schema().getField('query').set(obj, [
                 {'i': 'AnalysisService',
                  'o': 'plone.app.querystring.operation.selection.is'},
                 {'i': 'Analyst',
@@ -115,41 +112,41 @@ class CreateReport(object):
                  'o': 'plone.app.querystring.operation.selection.is'},
                 {'i': 'DateReceived',
                  'o': 'plone.app.querystring.operation.date.today'}
-                ])
-        elif report_type == 'productivity_analysesperdepartment' :
+            ])
+        elif report_type == 'productivity_analysesperdepartment':
             alsoProvides(obj, IAnalysesPerDepartment)
-            obj.Schema().getField('query').set(obj,[
+            obj.Schema().getField('query').set(obj, [
                 {'i': 'created',
                  'o': 'plone.app.querystring.operation.date.today'},
                 {'i': 'review_state',
                  'o': 'plone.app.querystring.operation.selection.is'}
-                ])
-        elif report_type == 'productivity_analysesperformedpertotal' :
+            ])
+        elif report_type == 'productivity_analysesperformedpertotal':
             alsoProvides(obj, IAnalysesPerformedPerTotal)
-            obj.Schema().getField('query').set(obj,[
+            obj.Schema().getField('query').set(obj, [
                 {'i': 'created',
                  'o': 'plone.app.querystring.operation.date.today'},
                 {'i': 'review_state',
                  'o': 'plone.app.querystring.operation.selection.is'}
-                ])
-        elif report_type == 'productivity_analysesattachments' :
+            ])
+        elif report_type == 'productivity_analysesattachments':
             alsoProvides(obj, IAnalysesAttachments)
-            obj.Schema().getField('query').set(obj,[
+            obj.Schema().getField('query').set(obj, [
                 {'i': 'ClientTitle',
                  'o': 'plone.app.querystring.operation.selection.is'},
                 {'i': 'created',
                  'o': 'plone.app.querystring.operation.date.today'}
-                ])
-        elif report_type == 'productivity_dataentrydaybook' :
+            ])
+        elif report_type == 'productivity_dataentrydaybook':
             alsoProvides(obj, IDataEntryDayBook)
-            obj.Schema().getField('query').set(obj,[
+            obj.Schema().getField('query').set(obj, [
                 {'i': 'created',
                  'o': 'plone.app.querystring.operation.date.today'}
-                ])
+            ])
         # Specification to be added in qualitycontrol_analysesoutofrange
-        elif report_type == 'qualitycontrol_analysesoutofrange' :
+        elif report_type == 'qualitycontrol_analysesoutofrange':
             alsoProvides(obj, IAnalysesOutOfRange)
-            obj.Schema().getField('query').set(obj,[
+            obj.Schema().getField('query').set(obj, [
                 {'i': 'DateReceived',
                  'o': 'plone.app.querystring.operation.date.today'},
                 {'i': 'review_state',
@@ -158,10 +155,10 @@ class CreateReport(object):
                  'o': 'plone.app.querystring.operation.selection.is'},
                 {'i': 'worksheetanalysis_review_state',
                  'o': 'plone.app.querystring.operation.selection.is'}
-                ])
-        elif report_type == 'qualitycontrol_analysesrepeated' :
+            ])
+        elif report_type == 'qualitycontrol_analysesrepeated':
             alsoProvides(obj, IAnalysesRepeated)
-            obj.Schema().getField('query').set(obj,[
+            obj.Schema().getField('query').set(obj, [
                 {'i': 'DateReceived',
                  'o': 'plone.app.querystring.operation.date.today'},
                 {'i': 'review_state',
@@ -170,10 +167,10 @@ class CreateReport(object):
                  'o': 'plone.app.querystring.operation.selection.is'},
                 {'i': 'worksheetanalysis_review_state',
                  'o': 'plone.app.querystring.operation.selection.is'}
-                ])
-        elif report_type == 'qualitycontrol_resultspersamplepoint' :
+            ])
+        elif report_type == 'qualitycontrol_resultspersamplepoint':
             alsoProvides(obj, IResultsPerSamplePoint)
-            obj.Schema().getField('query').set(obj,[
+            obj.Schema().getField('query').set(obj, [
                 {'i': 'ClientTitle',
                  'o': 'plone.app.querystring.operation.selection.is'},
                 {'i': 'SamplePointTitle',
@@ -186,36 +183,36 @@ class CreateReport(object):
                  'o': 'plone.app.querystring.operation.date.today'},
                 {'i': 'worksheetanalysis_review_state',
                  'o': 'plone.app.querystring.operation.selection.is'}
-                ])
+            ])
         # incomplete information about below 2 reports
-        elif report_type == 'qualitycontrol_referenceanalysisqc' :
+        elif report_type == 'qualitycontrol_referenceanalysisqc':
             alsoProvides(obj, IReferenceAnalysisQC)
-            obj.Schema().getField('query').set(obj,[
-            	# {'i': 'AnalysisService',
+            obj.Schema().getField('query').set(obj, [
+                # {'i': 'AnalysisService',
                 # 'o': 'plone.app.querystring.operation.selection.is'}
-                ])
-        elif report_type == 'qualitycontrol_duplicateanalysisqc' :
+            ])
+        elif report_type == 'qualitycontrol_duplicateanalysisqc':
             alsoProvides(obj, IDuplicateAnalysisQC)
-            obj.Schema().getField('query').set(obj,[
+            obj.Schema().getField('query').set(obj, [
                 # {'i': 'created',
                 # 'o': 'plone.app.querystring.operation.date.today'}
-                ])
-        elif report_type == 'administration_arsnotinvoiced' :
+            ])
+        elif report_type == 'administration_arsnotinvoiced':
             alsoProvides(obj, IArsNotInvoiced)
-            obj.Schema().getField('query').set(obj,[
+            obj.Schema().getField('query').set(obj, [
                 {'i': 'DatePublished',
                  'o': 'plone.app.querystring.operation.date.today'},
                 {'i': 'review_state',
                  'o': 'plone.app.querystring.operation.selection.is'},
                 {'i': 'cancellation_state',
                  'o': 'plone.app.querystring.operation.selection.is'}
-                ])
-        elif report_type == 'administration_userhistory' :
+            ])
+        elif report_type == 'administration_userhistory':
             alsoProvides(obj, IUserHistory)
-            obj.Schema().getField('query').set(obj,[
-            	{'i': 'modified',
+            obj.Schema().getField('query').set(obj, [
+                {'i': 'modified',
                  'o': 'plone.app.querystring.operation.date.today'}
-                ])
+            ])
 
         # Redirect to the edit page, to allow the user to complete parameters
         self.request.response.redirect(obj.absolute_url() + '/edit')
