@@ -13,7 +13,7 @@
  <object name="bika_one_state_workflow" meta_type="Workflow"/>
  <object name="bika_order_workflow" meta_type="Workflow"/>
  <object name="bika_inventory_order_workflow" meta_type="Workflow"/>
- <object name="bika_productitems_workflow" meta_type="Workflow"/>
+ <object name="bika_productitem_workflow" meta_type="Workflow"/>
  <object name="bika_publication_workflow" meta_type="Workflow"/>
  <object name="bika_referenceanalysis_workflow" meta_type="Workflow"/>
  <object name="bika_referencesample_workflow" meta_type="Workflow"/>
@@ -280,12 +280,9 @@
    <bound-workflow workflow_id="bika_inactive_workflow"/>
   </type>
 
-  <type type_id="ProductItems">
-    <bound-workflow workflow_id="bika_productitems_workflow"/>
-  </type>
+  <type type_id="ProductItems" />
   <type type_id="ProductItem">
-   <bound-workflow workflow_id="bika_one_state_workflow"/>
-   <bound-workflow workflow_id="bika_inactive_workflow"/>
+   <bound-workflow workflow_id="bika_productitem_workflow"/>
   </type>
 
   <type type_id="ReferenceAnalysis">
