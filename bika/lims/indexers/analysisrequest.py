@@ -22,10 +22,8 @@ def Invoiced(instance):
 
 
 @indexer(IAnalysisRequest)
-def ProfileTitle(instance):
-    profile = instance.getProfile()
-    if profile:
-        return profile.Title()
+def ProfileTitles(instance):
+    return [profile.Title() for profile in instance.getProfiles()]
 
 
 @indexer(IAnalysisRequest)

@@ -53,7 +53,7 @@ def create_analysisrequest(
     analyses = ar.setAnalyses(analyses, prices=prices, specs=specifications)
 
     if secondary:
-        # Only 'sample_due' and 'sample_recieved' samples can be selected
+        # Only 'sample_due' and 'sample_received' samples can be selected
         # for secondary analyses
         doActionFor(ar, 'sample')
         doActionFor(ar, 'sample_due')

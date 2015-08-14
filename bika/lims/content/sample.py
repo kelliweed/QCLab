@@ -2,7 +2,7 @@
 """
 from AccessControl import ClassSecurityInfo
 from bika.lims import bikaMessageFactory as _
-from bika.lims.utils import t, getUsers
+from bika.lims.utils import t, getUsers, to_utf8
 from bika.lims.browser.widgets.datetimewidget import DateTimeWidget
 from bika.lims.config import PROJECTNAME
 from bika.lims.content.bikaschema import BikaSchema
@@ -526,9 +526,6 @@ class Sample(BaseFolder, HistoryAwareMixin):
         value = proxies[0].aq_parent.Title()
         return value
 
-    def getProfilesTitle(self):
-        return ""
-
     def getAnalysisCategory(self):
         analyses = []
         for ar in self.getAnalysisRequests():
@@ -572,11 +569,11 @@ class Sample(BaseFolder, HistoryAwareMixin):
             pass
         else:
             pc = getToolByName(self, 'portal_catalog')
-            sampletypes = pc(portal_type='SampleType', title=to_unicode(value))
+            sampletypes = pc(portal_type='SampleType', title=to_utf8(value))
             if sampletypes:
                 value = sampletypes[0].UID
             else:
-                sampletypes = pc(portal_type='SampleType', UID=value)
+                sampletypes = pc(portal_type='SampleType', UID=to_utf8(value))
                 if sampletypes:
                     value = sampletypes[0].UID
                 else:
@@ -591,11 +588,12 @@ class Sample(BaseFolder, HistoryAwareMixin):
         """ Accept Object, Title or UID, and convert SampleType title to UID
         before saving.
         """
+        value = to_utf8(value)
         if hasattr(value, "portal_type") and value.portal_type == "SamplePoint":
             pass
         else:
             pc = getToolByName(self, 'portal_catalog')
-            sampletypes = pc(portal_type='SamplePoint', title=to_unicode(value))
+            sampletypes = pc(portal_type='SamplePoint', title=value)
             if sampletypes:
                 value = sampletypes[0].UID
             else:
@@ -812,7 +810,7 @@ class Sample(BaseFolder, HistoryAwareMixin):
             return False
         # check if any related ARs have field analyses with no result.
         for ar in self.getAnalysisRequests():
-            field_analyses = ar.getAnalyses(getPointOfCapture='field',
+            field_analyses = ar.getAnalyses(PointOfCapture='field',
                                             full_objects=True)
             no_results = [a for a in field_analyses if a.getResult() == '']
             if no_results:

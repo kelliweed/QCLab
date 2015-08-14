@@ -3,7 +3,8 @@ from Acquisition import aq_get
 from bika.lims import bikaMessageFactory as _
 from bika.lims.utils import t
 from bika.lims.interfaces import IDisplayListVocabulary
-from bika.lims.utils import to_utf8
+from bika.lims.utils import to_utf8, to_unicode
+from operator import methodcaller
 from Products.Archetypes.public import DisplayList
 from Products.CMFCore.utils import getToolByName
 from zope.interface import implements
@@ -61,11 +62,13 @@ class BikaContentVocabulary(object):
     """
     implements(IVocabularyFactory)
 
-    def __init__(self, folders, portal_types):
+    def __init__(self, folders, portal_types,
+                 keyfield='Title', valuefield='Title'):
         self.folders = isinstance(folders, (tuple, list)) and \
             folders or [folders, ]
         self.portal_types = isinstance(portal_types, (tuple, list)) and \
             portal_types or [portal_types, ]
+        self.keyfield, self.valuefield = keyfield, valuefield
 
     def __call__(self, context):
         site = getSite()
@@ -80,10 +83,11 @@ class BikaContentVocabulary(object):
                            wf.getInfoFor(o, 'inactive_state') == 'active']
                 if not objects:
                     continue
-                objects.sort(lambda x, y: cmp(x.Title().lower(),
-                                              y.Title().lower()))
-                xitems = [(t(item.Title()), item.Title()) for item in objects]
-                xitems = [SimpleTerm(i[1], i[1], i[0]) for i in xitems]
+                objects = sorted(objects, key=methodcaller(self.valuefield))
+                xitems = [(getattr(item, self.keyfield)(),
+                           t(to_unicode(getattr(item, self.valuefield)())))
+                          for item in objects]
+                xitems = [SimpleTerm(i[0], i[0], i[1]) for i in xitems]
                 items += xitems
         return SimpleVocabulary(items)
 
@@ -165,6 +169,7 @@ class StorageLocationVocabulary(BikaContentVocabulary):
 
 StorageLocationVocabularyFactory = StorageLocationVocabulary()
 
+
 class SamplePointVocabulary(BikaContentVocabulary):
 
     def __init__(self):
@@ -200,10 +205,22 @@ class ClientVocabulary(BikaContentVocabulary):
     def __init__(self):
         BikaContentVocabulary.__init__(self,
                                        ['clients', ],
-                                       ['Client', ])
+                                       ['Client', ],
+                                       keyfield='UID',
+                                       valuefield='Title')
 
 ClientVocabularyFactory = ClientVocabulary()
 
+class InstrumentVocabulary(BikaContentVocabulary):
+
+    def __init__(self):
+        BikaContentVocabulary.__init__(self,
+                                       ['bika_setup/bika_instruments', ],
+                                       ['Instrument', ],
+                                       keyfield='UID',
+                                       valuefield='Title')
+
+InstrumentVocabularyFactory = InstrumentVocabulary()
 
 class UserVocabulary(object):
 
@@ -250,9 +267,6 @@ class UserVocabulary(object):
         return SimpleVocabulary(items)
 
 UserVocabularyFactory = UserVocabulary()
-
-
-ClientVocabularyFactory = ClientVocabulary()
 
 
 class ClientContactVocabulary(object):
@@ -361,6 +375,53 @@ class AnalysisRequestWorkflowStateVocabulary(object):
 
 AnalysisRequestWorkflowStateVocabularyFactory = \
     AnalysisRequestWorkflowStateVocabulary()
+
+class AnalysisWorkflowStateVocabulary(object):
+
+    """Vocabulary factory for workflow states.
+
+        >>> from zope.component import queryUtility
+
+        >>> portal = layer['portal']
+
+        >>> name = 'bika.lims.vocabularies.AnalysisRequestWorkflowStates'
+        >>> util = queryUtility(IVocabularyFactory, name)
+
+        >>> tool = getToolByName(portal, "portal_workflow")
+
+        >>> states = util(portal)
+        >>> states
+        <zope.schema.vocabulary.SimpleVocabulary object at ...>
+
+        >>> pub = states.by_token['published']
+        >>> pub.title, pub.token, pub.value
+        (u'Published', 'published', 'published')
+    """
+    implements(IVocabularyFactory)
+
+    def __call__(self, context):
+        portal = getSite()
+        wftool = getToolByName(portal, 'portal_workflow', None)
+        if wftool is None:
+            return SimpleVocabulary([])
+
+        # XXX This is evil. A vocabulary shouldn't be request specific.
+        # The sorting should go into a separate widget.
+
+        # we get REQUEST from wftool because context may be an adapter
+        request = aq_get(wftool, 'REQUEST', None)
+
+        wf = wftool.getWorkflowById('bika_analysis_workflow')
+        items = wftool.listWFStatesByTitle(filter_similar=True)
+        items_dict = dict([(i[1], t(i[0])) for i in items])
+        items_list = [(k, v) for k, v in items_dict.items()]
+        items_list.sort(lambda x, y: cmp(x[1], y[1]))
+        terms = [SimpleTerm(k, title=u'%s' % v) for k, v in items_list]
+        return SimpleVocabulary(terms)
+
+AnalysisWorkflowStateVocabularyFactory = \
+    AnalysisWorkflowStateVocabulary()
+
 
 class ARPrioritiesVocabulary(BikaContentVocabulary):
 

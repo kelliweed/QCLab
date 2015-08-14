@@ -107,9 +107,9 @@ def multipleAnalysisProfiles(portal):
     analysis request's content field "profile" to profiles
     """
     bc = getToolByName(portal, 'bika_catalog', None)
-    if 'getProfilesTitle' not in bc.indexes():
-        bc.addIndex('getProfilesTitle', 'FieldIndex')
-        bc.addColumn('getProfilesTitle')
+    if 'getProfileTitles' not in bc.indexes():
+        bc.addIndex('getProfileTitles', 'KeywordIndex')
+        bc.addColumn('getProfileTitles')
     # Moving from profile to profiles
     ars = bc(portal_type="AnalysisRequest")
     for ar_brain in ars:

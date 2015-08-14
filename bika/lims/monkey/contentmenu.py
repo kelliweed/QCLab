@@ -27,7 +27,9 @@ def contentmenu_factories_available(self):
         'WorksheetTemplate',
         'LabProduct',
         'ReferenceSample',
-        'Preservation'
+        'Preservation',
+        'ReportFolder',
+
     ]:
         return False
     else:
@@ -36,3 +38,4 @@ def contentmenu_factories_available(self):
         if self._addingToParent() and not self.context_state.is_default_page():
             return False
         return (len(itemsToAdd) > 0 or showConstrainOptions)
+

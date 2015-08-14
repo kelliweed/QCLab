@@ -773,8 +773,8 @@ class Instrument_Calibrations(WorksheetImporter):
                     ReportID=row.get('ReportID', '')
                 )
                 # Gettinginstrument lab contacts
-                bsc = getToolByName(self.context, 'bika_setup_catalog')
-                lab_contacts = [o.getObject() for o in bsc(portal_type="LabContact", nactive_state='active')]
+                pc = getToolByName(self.context, 'portal_catalog')
+                lab_contacts = [o.getObject() for o in pc(portal_type="LabContact", inactive_state='active')]
                 for contact in lab_contacts:
                     if contact.Title() == row.get('Worker', ''):
                         obj.setWorker(contact.UID())
@@ -863,7 +863,7 @@ def addDocument(self, row_dict, folder):
                 logger.warning(msg[0] + " Error on sheet: " + self.sheetname)
 
             # Obtain all created instrument documents content type
-            catalog = getToolByName(self.context, 'bika_setup_catalog')
+            catalog = getToolByName(self.context, 'portal_catalog')
             documents_brains = catalog.searchResults({'portal_type': 'Multifile'})
             # If a the new document has the same DocumentID as a created document, this object won't be created.
             idAlreadyInUse = False
@@ -1126,7 +1126,7 @@ class Analysis_Categories(WorksheetImporter):
         for row in self.get_rows(3):
             department = None
             if row.get('Department_title', None):
-                department = self.get_object(bsc, 'Department',
+                department = self.get_object(pc, 'Department',
                                              row.get('Department_title'))
             if row.get('title', None) and department:
                 obj = _createObjectByType("AnalysisCategory", folder, tmpID())

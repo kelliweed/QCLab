@@ -33,6 +33,7 @@
   <include package=".search" />
   <include package=".subscribers" />
   <include package=".vocabularies" />
+  <include package=".reports"/>
 
   <include file="profiles.zcml" />
   <include file="workflow.zcml" />

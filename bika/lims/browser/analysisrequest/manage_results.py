@@ -33,7 +33,7 @@ class AnalysisRequestManageResultsView(AnalysisRequestViewView):
             self.tables = {}
             show_cats = self.context.bika_setup.getCategoriseAnalysisServices()
             for poc in POINTS_OF_CAPTURE:
-                if self.context.getAnalyses(getPointOfCapture=poc):
+                if self.context.getAnalyses(PointOfCapture=poc):
                     t = self.createAnalysesView(ar,
                                      self.request,
                                      PointOfCapture=poc,

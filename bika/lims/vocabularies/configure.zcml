@@ -15,6 +15,11 @@
     name="bika.lims.vocabularies.ClientContacts"
     />
 
+   <utility
+    component="bika.lims.vocabularies.InstrumentVocabularyFactory"
+    name="bika.lims.vocabularies.Instruments"
+    /> 
+
   <utility
     component="bika.lims.vocabularies.AnalysisCategoryVocabularyFactory"
     name="bika.lims.vocabularies.AnalysisCategories"
@@ -59,6 +64,11 @@
     component="bika.lims.vocabularies.AnalysisRequestWorkflowStateVocabularyFactory"
     name="bika.lims.vocabularies.AnalysisRequestWorkflowStates"
     />
+
+  <utility
+    component="bika.lims.vocabularies.AnalysisWorkflowStateVocabularyFactory"
+    name="bika.lims.vocabularies.AnalysisWorkflowStates"
+    />  
 
   <utility
     component="bika.lims.vocabularies.ARReportTemplatesVocabularyFactory"

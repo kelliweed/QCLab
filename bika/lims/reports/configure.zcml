@@ -1,0 +1,32 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    xmlns:i18n="http://namespaces.zope.org/i18n"
+    i18n_domain="bika">
+
+    <include file="menu.zcml"/>
+    <include file="productivity.zcml"/>
+
+    <browser:page
+        for="bika.lims.interfaces.IReportFolder"
+        name="folder_listing"
+        class="bika.lims.reports.folderlisting.FolderListingView"
+        permission="zope2.View"
+        layer="bika.lims.interfaces.IBikaLIMS"
+    />
+
+    <browser:page
+        name="create_report"
+        class=".createreport.CreateReport"
+        permission="zope2.View"
+        for="bika.lims.interfaces.IReportFolder"
+    />
+
+    <browser:page
+        name="base_view"
+        class=".viewreport.ViewReport"
+        for="bika.lims.interfaces.IReportCollection"
+        permission="zope2.View"
+    />
+
+</configure>

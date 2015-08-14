@@ -15,23 +15,23 @@
  <property name="global_allow">False</property>
  <property name="filter_content_types">True</property>
  <property name="allowed_content_types">
-  <element value="Report"/>
   <element value="Collection"/>
+  <element value="ReportCollection"/>
  </property>
  <property name="allow_discussion">False</property>
  <property name="default_view_fallback">False</property>
 
- <alias from="(Default)" to="productivity"/>
+ <alias from="(Default)" to="folder_listing"/>
  <alias from="view" to="base_view"/>
- <alias from="edit" to="productivity"/>
+ <alias from="edit" to="folder_listing"/>
 
  <action title="Productivity"
-         action_id="view"
+         action_id="productivity"
          category="object"
          condition_expr=""
-         url_expr="string:${object_url}/productivity"
+         url_expr="string:${object_url}"
          i18n:attributes="title"
-         visible="True">
+         visible="False">
   <permission value="View"/>
  </action>
 
@@ -39,29 +39,29 @@
          action_id="qualitycontrol"
          category="object"
          condition_expr=""
-         url_expr="string:${object_url}/qualitycontrol"
+         url_expr="string:${object_url}"
          i18n:attributes="title"
-         visible="True">
-  <permission value="Modify portal content"/>
+         visible="False">
+     <permission value="View"/>
  </action>
 
  <action title="Administration"
          action_id="administration"
          category="object"
          condition_expr=""
-         url_expr="string:${object_url}/administration"
+         url_expr="string:${object_url}"
          i18n:attributes="title"
-         visible="True">
-  <permission value="Modify portal content"/>
+         visible="False">
+     <permission value="View"/>
  </action>
 
  <action title="History"
          action_id="history"
          category="object"
          condition_expr=""
-         url_expr="string:${object_url}/history"
+         url_expr="string:${object_url}"
          i18n:attributes="title"
-         visible="True">
+         visible="False">
   <permission value="View"/>
  </action>
 </object>

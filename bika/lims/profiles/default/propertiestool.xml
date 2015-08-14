@@ -75,6 +75,7 @@
     <element value="ReferenceSample"/>
     <element value="RejectAnalysis"/>
     <element value="Report"/>
+    <element value="ReportCollection"/>
     <element value="ReportFolder"/>
     <element value="Sample"/>
     <element value="SamplePartition"/>

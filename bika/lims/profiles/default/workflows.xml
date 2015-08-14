@@ -226,6 +226,10 @@
    <bound-workflow workflow_id="bika_one_state_workflow"/>
   </type>
 
+  <type type_id="ReportCollection">
+   <bound-workflow workflow_id="bika_one_state_workflow"/>
+  </type>
+
   <type type_id="ReportFolder"/>
 
   <type type_id="Suppliers"/>

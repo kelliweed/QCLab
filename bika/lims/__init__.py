@@ -92,6 +92,7 @@ def initialize(context):
     from content.referencesamplesfolder import ReferenceSamplesFolder
     from content.rejectanalysis import RejectAnalysis
     from content.report import Report
+    from content.reportcollection import ReportCollection
     from content.reportfolder import ReportFolder
     from content.sample import Sample
     from content.samplecondition import SampleCondition

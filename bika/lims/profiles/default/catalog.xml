@@ -63,7 +63,7 @@
 
     <index name="RequestID" meta_type="FieldIndex">                    <indexed_attr value="RequestID"/> </index>
     <index name="Invoiced" meta_type="FieldIndex">                     <indexed_attr value="Invoiced"/> </index>
-    <index name="ProfileTitle" meta_type="FieldIndex">                 <indexed_attr value="ProfileTitle"/> </index>
+    <index name="ProfileTitles" meta_type="KeywordIndex">              <indexed_attr value="ProfileTitles"/> </index>
     <index name="BatchUID" meta_type="FieldIndex">                     <indexed_attr value="BatchUID"/> </index>
 
     <index name="WorksheetTemplateTitle" meta_type="FieldIndex">       <indexed_attr value="WorksheetTemplateTitle"/> </index>
@@ -88,7 +88,6 @@
     <column value="ClientSampleID"/>
     <column value="ContactTitle"/>
     <column value="ClientTitle"/>
-    <column value="ProfileTitle"/>
     <column value="SamplePointTitle"/>
     <column value="SampleTypeTitle"/>
     <column value="AnalysisCategory"/>

@@ -71,7 +71,7 @@ class AnalysisRequestViewView(BrowserView):
         # Create Field and Lab Analyses tables
         self.tables = {}
         for poc in POINTS_OF_CAPTURE:
-            if self.context.getAnalyses(getPointOfCapture=poc):
+            if self.context.getAnalyses(PointOfCapture=poc):
                 t = self.createAnalysesView(ar,
                                  self.request,
                                  PointOfCapture=poc,
@@ -88,7 +88,7 @@ class AnalysisRequestViewView(BrowserView):
                     t.review_states[0]['columns'].remove('DueDate')
                 self.tables[POINTS_OF_CAPTURE.getValue(poc)] = t.contents_table()
         # Un-captured field analyses may cause confusion
-        if ar.getAnalyses(getPointOfCapture='field',
+        if ar.getAnalyses(PointOfCapture='field',
                           review_state=['sampled', 'sample_due']):
             message = _("There are field analyses without submitted results.")
             self.addMessage(message, 'info')
@@ -304,7 +304,7 @@ class AnalysisRequestViewView(BrowserView):
                             RequestID=self.context.RequestID):
             analysis = analysis.getObject()
             service = analysis.getService()
-            res.append([service.getPointOfCapture(),
+            res.append([service.PointOfCapture(),
                         service.getCategoryUID(),
                         service.UID()])
         return res
@@ -325,10 +325,10 @@ class AnalysisRequestViewView(BrowserView):
         restricted = [u.UID() for u in self.getRestrictedCategories()]
         for service in pc(portal_type="AnalysisService",
                            inactive_state='active'):
-            cat = (service.getCategoryUID, service.getCategoryTitle)
+            cat = (service.CategoryUID, service.CategoryTitle)
             if restricted and cat[0] not in restricted:
                 continue
-            poc = service.getPointOfCapture
+            poc = service.PointOfCapture
             if poc not in cats:
                 cats[poc] = []
             if cat not in cats[poc]:
@@ -361,11 +361,10 @@ class AnalysisRequestViewView(BrowserView):
         default_spec = ('Clients' in member_groups) and 'client' or 'lab'
         return default_spec
 
-    def getAnalysisProfileTitle(self):
+    def getAnalysisProfileTitles(self):
         """Grab the context's current AnalysisProfile Title if any
         """
-        return self.context.getProfile() and \
-               self.context.getProfile().Title() or ''
+        return [profile.Title() for profile in self.context.getProfiles()]
 
     def getARTemplateTitle(self):
         """Grab the context's current ARTemplate Title if any

@@ -3,6 +3,7 @@ from bika.lims.utils import t
 from bika.lims.utils import to_utf8
 from plone.app.contentmenu.menu import WorkflowSubMenuItem as _WorkflowSubMenuItem
 from Products.CMFCore.utils import getToolByName
+from plone.app.contentmenu.menu import FactoriesMenu, FactoriesSubMenuItem
 
 try:
     from Products.CMFPlacefulWorkflow import ManageWorkflowPolicies
@@ -93,16 +94,3 @@ when viewing cancelled/inactive objects """
             transitions = transitions.values()
 
         return transitions
-
-# @memoize
-# def _currentStateTitle(self):
-# wtool = self.tools.workflow()
-# workflows = wtool.getWorkflowsFor(self.context)
-# titles = []
-# if workflows:
-# for w in workflows:
-# state = wtool.getInfoFor(self.context, w.state_var, None)
-# if state in w.states:
-# title = w.states[state].title or state
-# titles.append(t(title, domain="plone", context=self.request))
-# return u", ".join(titles)

@@ -44,28 +44,28 @@ class SamplePartitionsView(BikaListingView):
         self.show_column_toggles = False
         self.show_select_row = False
         self.show_select_column = True
-        self.pagesize = 0
+        self.pagesize = 999999
         self.form_id = "partitions"
 
         self.columns = {
             'PartTitle': {'title': _('Partition'),
-                          'sortable':False},
-            'getContainer': {'title': _('Container'),
-                             'sortable':False},
-            'getPreservation': {'title': _('Preservation'),
-                                'sortable':False},
-##            'Sampler': {'title': _('Sampler'),
-##                           'sortable':False},
-##            'DateSampled': {'title': _('Date Sampled'),
-##                               'input_class': 'datepicker_nofuture',
-##                               'input_width': '10',
-##                               'sortable':False},
+                          'sortable': False},
+            'Container': {'title': _('Container'),
+                          'sortable': False},
+            'Preservation': {'title': _('Preservation'),
+                             'sortable': False},
+            ##            'Sampler': {'title': _('Sampler'),
+            ##                           'sortable':False},
+            ##            'DateSampled': {'title': _('Date Sampled'),
+            ##                               'input_class': 'datepicker_nofuture',
+            ##                               'input_width': '10',
+            ##                               'sortable':False},
             'Preserver': {'title': _('Preserver'),
-                             'sortable':False},
-            'getDatePreserved': {'title': _('Date Preserved'),
-                                 'input_class': 'datepicker_nofuture',
-                                 'input_width': '10',
-                                 'sortable':False}
+                          'sortable': False},
+            'DatePreserved': {'title': _('Date Preserved'),
+                              'input_class': 'datepicker_nofuture',
+                              'input_width': '10',
+                              'sortable': False}
         }
         if not self.context.absolute_url().endswith('partitions'):
             self.columns['DisposalDate'] = {'title': _('Disposal Date'),
@@ -77,12 +77,12 @@ class SamplePartitionsView(BikaListingView):
              'title': _('All'),
              'contentFilter':{},
              'columns': ['PartTitle',
-                         'getContainer',
-                         'getPreservation',
+                         'Container',
+                         'Preservation',
 ##                         'Sampler',
 ##                         'DateSampled',
                          'Preserver',
-                         'getDatePreserved',
+                         'DatePreserved',
                          'state_title'],
              'transitions': [ #{'id': 'sample'},
                              {'id': 'preserve'},
@@ -173,15 +173,15 @@ class SamplePartitionsView(BikaListingView):
 
             container = part.getContainer()
             if self.allow_edit:
-                item['getContainer'] = container and container.UID() or ''
+                item['Container'] = container and container.UID() or ''
             else:
-                item['getContainer'] = container and container.Title() or ''
+                item['Container'] = container and container.Title() or ''
 
             preservation = part.getPreservation()
             if self.allow_edit:
-                item['getPreservation'] = preservation and preservation.UID() or ''
+                item['Preservation'] = preservation and preservation.UID() or ''
             else:
-                item['getPreservation'] = preservation and preservation.Title() or ''
+                item['Preservation'] = preservation and preservation.Title() or ''
 
 ##            sampler = part.getSampler().strip()
 ##            item['Sampler'] = \
@@ -194,7 +194,7 @@ class SamplePartitionsView(BikaListingView):
             item['Preserver'] = \
                 preserver and self.user_fullname(preserver) or ''
             datepreserved = part.getDatePreserved()
-            item['getDatePreserved'] = \
+            item['DatePreserved'] = \
                 datepreserved and self.ulocalized_time(datepreserved, long_format=False) or ''
 
             disposaldate = part.getDisposalDate()
@@ -203,9 +203,9 @@ class SamplePartitionsView(BikaListingView):
 
             # inline edits for Container and Preservation
             if self.allow_edit:
-                item['allow_edit'] = ['getContainer', 'getPreservation']
-            item['choices']['getPreservation'] = preservations
-            item['choices']['getContainer'] = containers
+                item['allow_edit'] = ['Container', 'Preservation']
+            item['choices']['Preservation'] = preservations
+            item['choices']['Container'] = containers
 
             # inline edits for Sampler and Date Sampled
 ##            checkPermission = self.context.portal_membership.checkPermission
@@ -229,9 +229,9 @@ class SamplePartitionsView(BikaListingView):
             # inline edits for Preserver and Date Preserved
             checkPermission = self.context.portal_membership.checkPermission
             if checkPermission(PreserveSample, part):
-                item['required'] += ['Preserver', 'getDatePreserved']
+                item['required'] += ['Preserver', 'DatePreserved']
                 if self.allow_edit:
-                    item['allow_edit'] += ['Preserver', 'getDatePreserved']
+                    item['allow_edit'] += ['Preserver', 'DatePreserved']
                 preservers = getUsers(part, ['Preserver', 'LabManager', 'Manager'])
                 getAuthenticatedMember = part.portal_membership.getAuthenticatedMember
                 username = getAuthenticatedMember().getUserName()
@@ -240,10 +240,10 @@ class SamplePartitionsView(BikaListingView):
                 item['choices']['Preserver'] = users
                 item['Preserver'] = preserver and preserver or \
                     (username in preservers.keys() and username) or ''
-                item['getDatePreserved'] = item['getDatePreserved'] \
+                item['DatePreserved'] = item['DatePreserved'] \
                     or DateTime().strftime(self.date_format_short)
                 item['class']['Preserver'] = 'provisional'
-                item['class']['getDatePreserved'] = 'provisional'
+                item['class']['DatePreserved'] = 'provisional'
 
             items.append(item)
 
@@ -418,9 +418,9 @@ class SamplesView(BikaListingView):
 
         self.columns = {
             'SampleID': {'title': _('Sample ID'),
-                            'index':'SampleID'},
+                         'index': 'SampleID'},
             'Client': {'title': _("Client"),
-                       'toggle': True,},
+                       'toggle': True, },
             'Creator': {'title': PMF('Creator'),
                         'index': 'Creator',
                         'toggle': True},
@@ -431,43 +431,43 @@ class SamplesView(BikaListingView):
                          'sortable': False,
                          'toggle': False},
             'ClientReference': {'title': _('Client Ref'),
-                                   'index': 'ClientReference',
-                                   'toggle': True},
+                                'index': 'ClientReference',
+                                'toggle': True},
             'ClientSampleID': {'title': _('Client SID'),
-                                  'index': 'ClientSampleID',
-                                  'toggle': True},
+                               'index': 'ClientSampleID',
+                               'toggle': True},
             'SampleTypeTitle': {'title': _('Sample Type'),
-                                   'index': 'SampleTypeTitle'},
+                                'index': 'SampleTypeTitle'},
             'SamplePointTitle': {'title': _('Sample Point'),
-                                    'index': 'SamplePointTitle',
-                                    'toggle': False},
-            'getStorageLocation': {'title': _('Storage Location'),
-                                    'toggle': False},
+                                 'index': 'SamplePointTitle',
+                                 'toggle': False},
+            'StorageLocation': {'title': _('Storage Location'),
+                                'toggle': False},
             'SamplingDeviation': {'title': _('Sampling Deviation'),
                                   'toggle': False},
             'AdHoc': {'title': _('Ad-Hoc'),
                       'toggle': False},
             'SamplingDate': {'title': _('Sampling Date'),
-                                'index':'SamplingDate',
-                                'toggle': True},
+                             'index': 'SamplingDate',
+                             'toggle': True},
             'DateSampled': {'title': _('Date Sampled'),
-                               'index':'DateSampled',
-                               'toggle': SamplingWorkflowEnabled,
-                               'input_class': 'datepicker_nofuture',
-                               'input_width': '10'},
+                            'index': 'DateSampled',
+                            'toggle': SamplingWorkflowEnabled,
+                            'input_class': 'datepicker_nofuture',
+                            'input_width': '10'},
             'Sampler': {'title': _('Sampler'),
-                           'toggle': SamplingWorkflowEnabled},
-            'getDatePreserved': {'title': _('Date Preserved'),
-                                 'toggle': user_is_preserver,
-                                 'input_class': 'datepicker_nofuture',
-                                 'input_width': '10'},
+                        'toggle': SamplingWorkflowEnabled},
+            'DatePreserved': {'title': _('Date Preserved'),
+                              'toggle': user_is_preserver,
+                              'input_class': 'datepicker_nofuture',
+                              'input_width': '10'},
             'Preserver': {'title': _('Preserver'),
-                             'toggle': user_is_preserver},
+                          'toggle': user_is_preserver},
             'DateReceived': {'title': _('Date Received'),
                              'index': 'DateReceived',
                              'toggle': False},
             'state_title': {'title': _('State'),
-                            'index':'review_state'},
+                            'index': 'review_state'},
         }
         self.review_states = [
             {'id':'default',
@@ -483,13 +483,13 @@ class SamplesView(BikaListingView):
                          'ClientSampleID',
                          'SampleTypeTitle',
                          'SamplePointTitle',
-                         'getStorageLocation',
+                         'StorageLocation',
                          'SamplingDeviation',
                          'AdHoc',
                          'SamplingDate',
                          'DateSampled',
                          'Sampler',
-                         'getDatePreserved',
+                         'DatePreserved',
                          'Preserver',
                          'DateReceived',
                          'state_title']},
@@ -510,11 +510,11 @@ class SamplesView(BikaListingView):
                          'SamplingDate',
                          'DateSampled',
                          'Sampler',
-                         'getDatePreserved',
+                         'DatePreserved',
                          'Preserver',
                          'SampleTypeTitle',
                          'SamplePointTitle',
-                         'getStorageLocation',
+                         'StorageLocation',
                          'SamplingDeviation',
                          'AdHoc',
                          'state_title']},
@@ -532,13 +532,13 @@ class SamplesView(BikaListingView):
                          'ClientSampleID',
                          'SampleTypeTitle',
                          'SamplePointTitle',
-                         'getStorageLocation',
+                         'StorageLocation',
                          'SamplingDeviation',
                          'AdHoc',
                          'SamplingDate',
                          'DateSampled',
                          'Sampler',
-                         'getDatePreserved',
+                         'DatePreserved',
                          'Preserver',
                          'DateReceived']},
             {'id':'expired',
@@ -555,13 +555,13 @@ class SamplesView(BikaListingView):
                          'ClientSampleID',
                          'SampleTypeTitle',
                          'SamplePointTitle',
-                         'getStorageLocation',
+                         'StorageLocation',
                          'SamplingDeviation',
                          'AdHoc',
                          'SamplingDate',
                          'DateSampled',
                          'Sampler',
-                         'getDatePreserved',
+                         'DatePreserved',
                          'Preserver',
                          'DateReceived']},
             {'id':'disposed',
@@ -578,13 +578,13 @@ class SamplesView(BikaListingView):
                          'ClientSampleID',
                          'SampleTypeTitle',
                          'SamplePointTitle',
-                         'getStorageLocation',
+                         'StorageLocation',
                          'SamplingDeviation',
                          'AdHoc',
                          'SamplingDate',
                          'DateSampled',
                          'Sampler',
-                         'getDatePreserved',
+                         'DatePreserved',
                          'Preserver',
                          'DateReceived']},
             {'id':'cancelled',
@@ -602,14 +602,14 @@ class SamplesView(BikaListingView):
                          'ClientSampleID',
                          'SampleTypeTitle',
                          'SamplePointTitle',
-                         'getStorageLocation',
+                         'StorageLocation',
                          'SamplingDeviation',
                          'AdHoc',
                          'SamplingDate',
                          'DateReceived',
                          'DateSampled',
                          'Sampler',
-                         'getDatePreserved',
+                         'DatePreserved',
                          'Preserver',
                          'state_title']},
         ]
@@ -630,26 +630,38 @@ class SamplesView(BikaListingView):
             if not items[x].has_key('obj'): continue
             obj = items[x]['obj']
 
+            sample_id = obj.getSampleID()
+            items[x]['SampleID'] = sample_id
             items[x]['replace']['SampleID'] = "<a href='%s'>%s</a>" % \
-                (items[x]['url'], obj.getSampleID())
+                (items[x]['url'], sample_id)
+            items[x]['ClientReference'] = obj.getClientReference()
+            items[x]['ClientSampleID'] = obj.getClientSampleID()
+
+            st = obj.getSampleType()
+            items[x]['SampleTypeTitle'] = st.Title() if st else ''
+            sp = obj.getSamplePoint()
+            items[x]['SamplePointTitle'] = sp.Title() if sp else ''
+
             items[x]['replace']['Requests'] = ",".join(
                 ["<a href='%s'>%s</a>" % (o.absolute_url(), o.Title())
                  for o in obj.getAnalysisRequests()])
+
             items[x]['Client'] = obj.aq_parent.Title()
             if hideclientlink == False:
                 items[x]['replace']['Client'] = "<a href='%s'>%s</a>" % \
                     (obj.aq_parent.absolute_url(), obj.aq_parent.Title())
+
             items[x]['Creator'] = self.user_fullname(obj.Creator())
+            items[x]['Created'] = self.ulocalized_time(obj.created())
 
             items[x]['DateReceived'] = self.ulocalized_time(obj.getDateReceived())
 
             deviation = obj.getSamplingDeviation()
             items[x]['SamplingDeviation'] = deviation and deviation.Title() or ''
 
-            items[x]['getStorageLocation'] = obj.getStorageLocation() and obj.getStorageLocation().Title() or ''
+            items[x]['StorageLocation'] = obj.getStorageLocation() and obj.getStorageLocation().Title() or ''
             items[x]['AdHoc'] = obj.getAdHoc() and True or ''
 
-            items[x]['Created'] = self.ulocalized_time(obj.created())
 
             samplingdate = obj.getSamplingDate()
             items[x]['SamplingDate'] = self.ulocalized_time(samplingdate, long_format=1)
@@ -711,13 +723,13 @@ class SamplesView(BikaListingView):
             # the columns exist just to set "preserve" transition from lists.
             # XXX This should be a list of preservers...
             items[x]['Preserver'] = ''
-            items[x]['getDatePreserved'] = ''
+            items[x]['DatePreserved'] = ''
 
             # inline edits for Preserver and Date Preserved
             checkPermission = self.context.portal_membership.checkPermission
             if checkPermission(PreserveSample, obj):
-                items[x]['required'] = ['Preserver', 'getDatePreserved']
-                items[x]['allow_edit'] = ['Preserver', 'getDatePreserved']
+                items[x]['required'] = ['Preserver', 'DatePreserved']
+                items[x]['allow_edit'] = ['Preserver', 'DatePreserved']
                 preservers = getUsers(obj, ['Preserver', 'LabManager', 'Manager'])
                 getAuthenticatedMember = self.context.portal_membership.getAuthenticatedMember
                 username = getAuthenticatedMember().getUserName()
@@ -726,9 +738,9 @@ class SamplesView(BikaListingView):
                 items[x]['choices'] = {'Preserver': users}
                 preserver = username in preservers.keys() and username or ''
                 items[x]['Preserver'] = preserver
-                items[x]['getDatePreserved'] = self.ulocalized_time(DateTime())
+                items[x]['DatePreserved'] = self.ulocalized_time(DateTime())
                 items[x]['class']['Preserver'] = 'provisional'
-                items[x]['class']['getDatePreserved'] = 'provisional'
+                items[x]['class']['DatePreserved'] = 'provisional'
 
         # Hide Preservation/Sampling workflow actions if the edit columns
         # are not displayed.
@@ -743,7 +755,7 @@ class SamplesView(BikaListingView):
                     else:
                         state['hide_transitions'] = ['sample',]
                 if 'Preserver' not in toggle_cols \
-                   or 'getDatePreserved' not in toggle_cols:
+                   or 'DatePreserved' not in toggle_cols:
                     if 'hide_transitions' in state:
                         state['hide_transitions'].append('preserve')
                     else:
@@ -782,7 +794,7 @@ class ajaxGetSampleTypeInfo(BrowserView):
         elif title:
             try:
                 pc = getToolByName(self.context, 'portal_catalog')
-                proxies = pc(portal_type='SampleType', title=to_unicode(title))
+                proxies = pc(portal_type='SampleType', title=title)
             except ParseError:
                 pass
 

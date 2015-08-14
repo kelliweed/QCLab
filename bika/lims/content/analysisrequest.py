@@ -349,7 +349,7 @@ schema = BikaSchema.copy() + Schema((
             size=20,
             render_own_label=True,
             visible=False,
-            catalog_name='bika_setup_catalog',
+            catalog_name='portal_catalog',
             base_query={'inactive_state': 'active'},
             showOn=False,
         ),
@@ -1315,9 +1315,6 @@ class AnalysisRequest(BaseFolder):
     def getContactTitle(self):
         return self.getContact().Title() if self.getContact() else ''
 
-    def getProfilesTitle(self):
-        return [profile.Title() for profile in self.getProfiles()]
-
     def getTemplateTitle(self):
         return self.getTemplate().Title() if self.getTemplate() else ''
 
@@ -2222,7 +2219,7 @@ class AnalysisRequest(BaseFolder):
             return False
         # check if any related ARs have field analyses with no result.
         for ar in self.getSample().getAnalysisRequests():
-            field_analyses = ar.getAnalyses(getPointOfCapture='field',
+            field_analyses = ar.getAnalyses(PointOfCapture='field',
                                             full_objects=True)
             no_results = [a for a in field_analyses if a.getResult() == '']
             if no_results:

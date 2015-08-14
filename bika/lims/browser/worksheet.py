@@ -1295,7 +1295,7 @@ class WorksheetServicesView(BikaListingView):
         self.show_select_row = False
         self.show_select_all_checkbox = False
         self.show_select_column = True
-        self.pagesize = 0
+        self.pagesize = 999999
         self.show_workflow_action_buttons = False
         self.show_categories=context.bika_setup.getCategoriseAnalysisServices()
         self.expand_all_categories=True
@@ -1330,7 +1330,7 @@ class WorksheetServicesView(BikaListingView):
             calculation = service.getObject().getCalculation()
             if calculation and calculation.getDependentServices():
                 continue
-            cat = service.getCategoryTitle
+            cat = service.CategoryTitle
             if cat not in self.categories:
                 self.categories.append(cat)
             # this folderitems doesn't subclass from the bika_listing.py

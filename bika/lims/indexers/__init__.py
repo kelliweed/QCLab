@@ -52,7 +52,7 @@ def DateOpened(instance):
 
 @indexer(Interface)
 def DateReceived(instance):
-    return get_transition_info(instance, 'recieve', 'time')
+    return get_transition_info(instance, 'receive', 'time')
 
 
 @indexer(Interface)

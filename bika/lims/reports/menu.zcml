@@ -1,0 +1,46 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    xmlns:i18n="http://namespaces.zope.org/i18n"
+    i18n_domain="bika">
+
+    <!-- Productivity reports -->
+    <adapter
+        for="bika.lims.interfaces.IReportFolder *"
+        name="bika.limsproductivity-reports"
+        factory=".menu.ProductivitySubMenuItem"
+        provides="plone.app.contentmenu.interfaces.IContentMenuItem"
+    />
+    <browser:menu
+        id="productivity_reports"
+        title="Productivity"
+        class=".menu.ProductivityMenu"
+    />
+
+    <!-- Quality Control reports -->
+    <adapter
+        for="bika.lims.interfaces.IReportFolder *"
+        name="bika.lims.qualitycontrol-reports"
+        factory=".menu.QualityControlSubMenuItem"
+        provides="plone.app.contentmenu.interfaces.IContentMenuItem"
+    />
+    <browser:menu
+        id="qualitycontrol_reports"
+        title="Quality Control"
+        class=".menu.QualityControlMenu"
+    />
+
+    <!-- Administration reports -->
+    <adapter
+        for="bika.lims.interfaces.IReportFolder *"
+        name="bika.lims.administration-reports"
+        factory=".menu.AdministrationSubMenuItem"
+        provides="plone.app.contentmenu.interfaces.IContentMenuItem"
+    />
+    <browser:menu
+        id="administration_reports"
+        title="Administration"
+        class=".menu.AdministrationMenu"
+    />
+
+</configure>
