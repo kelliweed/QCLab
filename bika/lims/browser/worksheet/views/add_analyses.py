@@ -169,9 +169,9 @@ class AddAnalysesView(BikaListingView):
         return items
 
     def getServices(self):
-        bsc = getToolByName(self.context, 'bika_setup_catalog')
+        pc = getToolByName(self.context, 'portal_catalog')
         return [c.Title for c in
-                bsc(portal_type = 'AnalysisService',
+                pc(portal_type = 'AnalysisService',
                    getCategoryUID = self.request.get('list_getCategoryUID', ''),
                    inactive_state = 'active',
                    sort_on = 'sortable_title')]
@@ -184,17 +184,17 @@ class AddAnalysesView(BikaListingView):
                    sort_on = 'sortable_title')]
 
     def getCategories(self):
-        bsc = getToolByName(self.context, 'bika_setup_catalog')
+        pc = getToolByName(self.context, 'portal_catalog')
         return [c.Title for c in
-                bsc(portal_type = 'AnalysisCategory',
+                pc(portal_type = 'AnalysisCategory',
                    inactive_state = 'active',
                    sort_on = 'sortable_title')]
 
     def getWorksheetTemplates(self):
         """ Return WS Templates """
         profiles = []
-        bsc = getToolByName(self.context, 'bika_setup_catalog')
+        pc = getToolByName(self.context, 'portal_catalog')
         return [(c.UID, c.Title) for c in
-                bsc(portal_type = 'WorksheetTemplate',
+                pc(portal_type = 'WorksheetTemplate',
                    inactive_state = 'active',
                    sort_on = 'sortable_title')]

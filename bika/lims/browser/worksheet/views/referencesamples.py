@@ -18,7 +18,7 @@ class ReferenceSamplesView(BaseView):
 
     def __init__(self, context, request):
         super(ReferenceSamplesView, self).__init__(context, request)
-        self.catalog = 'bika_catalog'
+        self.catalog = 'portal_catalog'
         self.contentFilter = {'portal_type': 'ReferenceSample'}
         self.context_actions = {}
         self.show_sort_column = False

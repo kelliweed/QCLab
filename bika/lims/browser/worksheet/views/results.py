@@ -103,9 +103,9 @@ class ManageResultsView(BrowserView):
 
     def getInstruments(self):
         # TODO: Return only the allowed instruments for at least one contained analysis
-        bsc = getToolByName(self, 'bika_setup_catalog')
+        pc = getToolByName(self, 'portal_catalog')
         items = [('', '')] + [(o.UID, o.Title) for o in
-                               bsc(portal_type = 'Instrument',
+                               pc(portal_type = 'Instrument',
                                    inactive_state = 'active')]
         o = self.context.getInstrument()
         if o and o.UID() not in [i[0] for i in items]:

@@ -19,9 +19,9 @@ class GetServices():
 
     def __call__(self):
         plone.protect.CheckAuthenticator(self.request)
-        bsc = getToolByName(self.context, 'bika_setup_catalog')
+        pc = getToolByName(self.context, 'portal_catalog')
         return json.dumps([c.Title for c in
-                bsc(portal_type = 'AnalysisService',
+                pc(portal_type = 'AnalysisService',
                    getCategoryTitle = self.request.get('getCategoryTitle', ''),
                    inactive_state = 'active',
                    sort_on = 'sortable_title')])

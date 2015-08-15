@@ -32,7 +32,7 @@ class FolderView(BikaListingView):
 
     def __init__(self, context, request):
         super(FolderView, self).__init__(context, request)
-        self.catalog = 'bika_catalog'
+        self.catalog = 'portal_catalog'
         self.contentFilter = {
             'portal_type': 'Worksheet',
             'review_state':['open', 'to_be_verified', 'verified', 'rejected'],

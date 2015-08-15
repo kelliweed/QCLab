@@ -98,7 +98,7 @@ class AnalysisRequestWorkflowAction(WorkflowAction):
     def workflow_action_save_analyses_button(self):
         form = self.request.form
         workflow = getToolByName(self.context, 'portal_workflow')
-        pc = getToolByName(self.context, 'bika_catalog')
+        pc = getToolByName(self.context, 'portal_catalog')
         action, came_from = WorkflowAction._get_form_workflow_action(self)
         # AR Manage Analyses: save Analyses
         ar = self.context

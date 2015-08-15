@@ -83,7 +83,7 @@ class WorksheetWorkflowAction(WorkflowAction):
         plone.protect.CheckAuthenticator(form)
         workflow = getToolByName(self.context, 'portal_workflow')
         rc = getToolByName(self.context, REFERENCE_CATALOG)
-        bsc = getToolByName(self.context, 'bika_setup_catalog')
+        pc = getToolByName(self.context, 'portal_catalog')
         bac = getToolByName(self.context, 'bika_analysis_catalog')
         action, came_from = WorkflowAction._get_form_workflow_action(self)
 
