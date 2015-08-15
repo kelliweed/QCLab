@@ -12,7 +12,7 @@ class ServicesView(BikaListingView):
     def __init__(self, context, request):
         BikaListingView.__init__(self, context, request)
         self.context_actions = {}
-        self.catalog = 'portal_catalog'
+        self.catalog = 'bika_setup_catalog'
         self.contentFilter = {'review_state':'impossible_state'}
         self.base_url = self.context.absolute_url()
         self.view_url = self.context.absolute_url()
@@ -55,7 +55,7 @@ class ServicesView(BikaListingView):
             calculation = service.getObject().getCalculation()
             if calculation and calculation.getDependentServices():
                 continue
-            cat = service.getCategoryTitle
+            cat = service.CategoryTitle
             if cat not in self.categories:
                 self.categories.append(cat)
             # this folderitems doesn't subclass from the bika_listing.py

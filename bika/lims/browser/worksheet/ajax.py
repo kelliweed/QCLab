@@ -22,7 +22,7 @@ class GetServices():
         pc = getToolByName(self.context, 'portal_catalog')
         return json.dumps([c.Title for c in
                 pc(portal_type = 'AnalysisService',
-                   getCategoryTitle = self.request.get('getCategoryTitle', ''),
+                   CategoryTitle = self.request.get('getCategoryTitle', ''),
                    inactive_state = 'active',
                    sort_on = 'sortable_title')])
 

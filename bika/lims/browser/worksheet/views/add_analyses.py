@@ -56,7 +56,7 @@ class AddAnalysesView(BikaListingView):
                 'index': 'Priority'},
             'CategoryTitle': {
                 'title': _('Category'),
-                'index':'getCategoryTitle'},
+                'index':'CategoryTitle'},
             'Title': {
                 'title': _('Analysis'),
                 'index':'sortable_title'},
@@ -172,7 +172,7 @@ class AddAnalysesView(BikaListingView):
         pc = getToolByName(self.context, 'portal_catalog')
         return [c.Title for c in
                 pc(portal_type = 'AnalysisService',
-                   getCategoryUID = self.request.get('list_getCategoryUID', ''),
+                   CategoryUID = self.request.get('list_CategoryUID', ''),
                    inactive_state = 'active',
                    sort_on = 'sortable_title')]
 

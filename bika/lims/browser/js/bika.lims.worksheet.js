@@ -42,8 +42,8 @@ function WorksheetAddAnalysesView() {
     that.load = function() {
 
         // search form - selecting a category fills up the service selector
-        $('[name="list_getCategoryTitle"]').live("change", function(){
-            val = $('[name="list_getCategoryTitle"]').val();
+        $('[name="list_CategoryTitle"]').live("change", function(){
+            val = $('[name="list_CategoryTitle"]').val();
             if(val == 'any'){
                 $('[name="list_Title"]').empty();
                 $('[name="list_Title"]').append("<option value='any'>"+_('Any')+"</option>");
@@ -70,7 +70,7 @@ function WorksheetAddAnalysesView() {
                 }
             });
         });
-        $('[name="list_getCategoryTitle"]').trigger("change");
+        $('[name="list_CategoryTitle"]').trigger("change");
 
         // add_analyses analysis search is handled by bika_listing default __call__
         $('.ws-analyses-search-button').live('click', function (event) {

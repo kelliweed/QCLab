@@ -48,14 +48,14 @@ def CalibrationExpiryDate(instance):
 
 @indexer(Interface)
 def CategoryTitle(instance):
-    if hasattr(instance, 'getCategoryTitle'):
-        return instance.getCategoryTitle()
+    if 'CategoryTitle' in instance.schema:
+        return instance.schema['CategoryTitle'].get(instance)
 
 
 @indexer(Interface)
 def CategoryUID(instance):
-    if hasattr(instance, 'getCategoryUID'):
-        return instance.getCategoryUID()
+    if 'CategoryUID' in instance.schema:
+        return instance.schema['CategoryUID'].get(instance)
 
 
 @indexer(Interface)
