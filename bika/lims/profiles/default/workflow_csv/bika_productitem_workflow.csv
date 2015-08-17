@@ -12,8 +12,8 @@ Title:,Valid,,,,,,,,,
 Description:,Item is valid and visible,,,,,,,,,
 Transitions,discard,,,,,,,,,
 Permissions,Acquire,Anonymous,Manager,Owner,Reader,Editor,Contributor,Analyst,LabClerk,LabManager
-Modify portal content,Y,N,N,N,N,N,N,N,N,Y
-Delete objects,Y,N,N,N,N,N,N,N,N,Y
+Modify portal content,Y,N,Y,N,N,N,N,N,N,Y
+Delete objects,Y,N,Y,N,N,N,N,N,N,Y
 ,,,,,,,,,,
 [State],,,,,,,,,,
 Id:,discarded,,,,,,,,,
@@ -21,8 +21,8 @@ Title:,Discarded,,,,,,,,,
 Description:,,,,,,,,,,
 Transitions,keep,,,,,,,,,
 Permissions,Acquire,Anonymous,Manager,Owner,Reader,Editor,Contributor,Analyst,LabClerk,LabManager
-Modify portal content,N,N,N,N,N,N,N,N,N,Y
-Delete objects,N,N,N,N,N,N,N,N,N,Y
+Modify portal content,N,N,Y,N,N,N,N,N,N,Y
+Delete objects,N,N,Y,N,N,N,N,N,N,Y
 ,,,,,,,,,,
 [Transition],,,,,,,,,,
 Id:,keep,,,,,,,,,

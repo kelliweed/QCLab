@@ -16,6 +16,14 @@ from plone.app.folder.folder import ATFolder, ATFolderSchema
 from zope.interface.declarations import implements
 from bika.lims.interfaces import IProductItems
 
+from bika.lims.browser.bika_listing import WorkflowAction
+import plone
+import time
+from bika.lims.utils import changeWorkflowState
+from bika.lims.workflow import doActionFor
+from bika.lims.utils import t
+from bika.lims import PMF
+
 class ProductItemsView(BikaListingView):
     implements(IFolderContentsView, IViewView)
 
@@ -142,3 +150,58 @@ class ProductItems(ATFolder):
 
 schemata.finalizeATCTSchema(schema, folderish = True, moveDiscussion = False)
 atapi.registerType(ProductItems, PROJECTNAME)
+
+class ProductItemsWorkflowAction(WorkflowAction):
+
+    """Workflow actions taken in ProductItems context.
+
+    """
+
+    def __call__(self):
+        form = self.request.form
+        plone.protect.CheckAuthenticator(form)
+        action, came_from = WorkflowAction._get_form_workflow_action(self)
+        if type(action) in (list, tuple):
+            action = action[0]
+        if type(came_from) in (list, tuple):
+            came_from = came_from[0]
+        # Call out to the workflow action method
+        # Use default bika_listing.py/WorkflowAction for other transitions
+        method_name = 'workflow_action_' + action
+        method = getattr(self, method_name, False)
+        if method:
+            method()
+        else:
+            WorkflowAction.__call__(self)
+
+    def workflow_action_discard(self):
+        workflow = getToolByName(self.context, 'portal_workflow')
+        action, came_from = WorkflowAction._get_form_workflow_action(self)
+        objects = WorkflowAction._get_selected_items(self)
+        for obj_uid, obj in objects.items():
+            pitem = obj
+            old_d = pitem.Description()
+            new_message = "\n*** Discarded at " + time.strftime("%c") + " ***\n"
+            pitem.setDescription(old_d + new_message)
+            pitem.reindexObject()
+            workflow.doActionFor(pitem, action)
+        message = PMF("Changes saved.")
+        self.context.plone_utils.addPortalMessage(message, 'info')
+        self.destination_url = self.context.absolute_url()
+        self.request.response.redirect(self.destination_url)
+
+    def workflow_action_keep(self):
+        workflow = getToolByName(self.context, 'portal_workflow')
+        action, came_from = WorkflowAction._get_form_workflow_action(self)
+        objects = WorkflowAction._get_selected_items(self)
+        for obj_uid, obj in objects.items():
+            pitem = obj
+            old_d = pitem.Description()
+            new_message = "\n*** Restored in Inventory at " + time.strftime("%c") + " ***\n"
+            pitem.setDescription(old_d + new_message)
+            pitem.reindexObject()
+            workflow.doActionFor(pitem, action)
+        message = PMF("Changes saved.")
+        self.context.plone_utils.addPortalMessage(message, 'info')
+        self.destination_url = self.context.absolute_url()
+        self.request.response.redirect(self.destination_url)
