@@ -45,7 +45,7 @@ def t(i18n_msg):
     """Safely translate and convert to UTF8, any zope i18n msgid returned from
     a bikaMessageFactory _
     """
-    return to_utf8(translate(i18n_msg))
+    return to_utf8(translate(to_unicode(i18n_msg)))
 
 # Wrapper for PortalTransport's sendmail - don't know why there sendmail
 # method is marked private
@@ -105,7 +105,6 @@ def getUsers(context, roles, allow_empty=True):
         pairs.append((uid, fullname))
     pairs.sort(lambda x, y: cmp(x[1], y[1]))
     return DisplayList(pairs)
-
 
 def isActive(obj):
     """ Check if obj is inactive or cancelled.

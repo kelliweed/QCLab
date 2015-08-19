@@ -40,14 +40,13 @@
   <include file="supplyorderfolder.zcml"/>
   
   
-  <include file="worksheet.zcml"/>
-  <include file="worksheetfolder.zcml"/>
   <include file="viewlets.zcml"/>
   <include file="arimports.zcml"/>
 
   <include package=".analysisrequest"/>
   <include package=".order"/>
   <include package=".batch"/>
+  <include package=".worksheet"/>
 
   <include package=".fields"/>
   <include package=".widgets"/>
@@ -111,7 +110,7 @@
   <browser:page
       for="bika.lims.interfaces.IARImportFolder"
       name="arimports"
-      class="bika.lims.browser.arimports.GlobalARImportsView"
+      class="bika.lims.browser.arimports.ARImportsView"
       permission="bika.lims.ManageARImport"
       layer="bika.lims.interfaces.IBikaLIMS"
     />
