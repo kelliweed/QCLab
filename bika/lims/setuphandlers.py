@@ -827,6 +827,7 @@ class BikaGenerator:
         addIndex(bsc, 'getServiceUID', 'FieldIndex')
         addIndex(bsc, 'getTotalPrice', 'FieldIndex')
         addIndex(bsc, 'getUnit', 'FieldIndex')
+        addIndex(bsc, 'getBatchId', 'FieldIndex') 
         addIndex(bsc, 'getVATAmount', 'FieldIndex')
         addIndex(bsc, 'getVolume', 'FieldIndex')
         addIndex(bsc, 'sortKey', 'FieldIndex')
