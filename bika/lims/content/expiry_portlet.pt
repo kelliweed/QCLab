@@ -35,7 +35,7 @@
 
             <div class="portletDetails"
                  style="text-align:right; color:red"
-                 tal:define="moddate o/getExpiryDate;"
+                 tal:define="moddate o/getExpiryDate|nothing;"
                  tal:content="python:plone_view.toLocalizedTime(moddate)"/>
         </dd>
         </tal:block>
