@@ -2,6 +2,7 @@
     xmlns="http://namespaces.zope.org/zope"
     xmlns:browser="http://namespaces.zope.org/browser"
     xmlns:five="http://namespaces.zope.org/five"
+    xmlns:plone="http://namespaces.plone.org/plone"
     xmlns:i18n="http://namespaces.zope.org/i18n"
     xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
     i18n_domain="bika">
@@ -11,6 +12,17 @@
     <adapter name="BatchUID" factory=".analysisrequest.BatchUID" />
     <adapter name="Priority" factory=".analysis.Priority" />
     <adapter name="Priority" factory=".worksheet.Priority" />
+
+    <include package="plone.app.portlets"/>
+
+    <plone:portlet
+        name="bika.lims.ExpiryPortlet"
+        interface="bika.lims.interfaces.IExpiryPortlet"
+        assignment=".expiry_portlet.Assignment"
+        renderer=".expiry_portlet.Renderer"
+        addview=".expiry_portlet.AddForm"
+        editview=".expiry_portlet.EditForm"
+        />
 
     <subscriber
       for="bika.lims.interfaces.IPricelist

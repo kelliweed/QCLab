@@ -62,6 +62,7 @@ setup(name='bika.lims',
           'collective.progressbar',
           'z3c.unconfigure==1.0.1',
           'z3c.jbot',
+          'plone.app.portlets',
       ],
       extras_require={
           'test': [
