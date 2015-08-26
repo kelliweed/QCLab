@@ -1,5 +1,7 @@
 from zope.interface import Interface
-
+from plone.portlets.interfaces import IPortletDataProvider
+from Products.CMFPlone import PloneMessageFactory as _
+from zope import schema
 
 class IBikaLIMS(Interface):
 
@@ -719,3 +721,8 @@ class IStorageLevelIsAssignable(Interface):
     This interface should then be used to mark all storage levels
     """
 
+class IExpiryPortlet(IPortletDataProvider):
+    count = schema.Int(title=_(u'Number of items to display'),
+                       description=_(u'How many items to list.'),
+                       required=True,
+                       default=5)

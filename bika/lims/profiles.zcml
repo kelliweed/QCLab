@@ -1,7 +1,10 @@
 <configure
     xmlns="http://namespaces.zope.org/zope"
+    xmlns:five="http://namespaces.zope.org/five"
+    xmlns:plone="http://namespaces.plone.org/plone"
     xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
     i18n_domain="bika">
+
 
   <genericsetup:registerProfile
       name="default"
@@ -19,5 +22,6 @@
   </genericsetup:importStep>
 
   <include package=".upgrade"/>
+
 
 </configure>
