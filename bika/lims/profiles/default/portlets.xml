@@ -127,8 +127,8 @@
     addview="bika.lims.ExpiryPortlet"
     title="Portlet for Expired Products"
     description="A portlet which alerts for the product items which are about to expire soon."
-    i18n:attributes="title title_expiry_portlet;
-                     description description_expiry_portlet">
+    i18n:attributes="title;
+                     description">
     <for interface="plone.app.portlets.interfaces.IColumn" />
     <for interface="plone.app.portlets.interfaces.IDashboard" />
     </portlet>
