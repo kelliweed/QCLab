@@ -46,6 +46,8 @@
   <include package=".analysisrequest"/>
   <include package=".order"/>
   <include package=".batch"/>
+  <include package=".samplinground"/>
+  <include package=".srtemplate"/>
   <include package=".worksheet"/>
 
   <include package=".fields"/>

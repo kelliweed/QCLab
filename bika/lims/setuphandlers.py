@@ -743,7 +743,7 @@ class BikaGenerator:
         at.setCatalogsByType('Calculation', ['bika_setup_catalog', 'portal_catalog'])
         at.setCatalogsByType('Container', ['bika_setup_catalog', ])
         at.setCatalogsByType('ContainerType', ['bika_setup_catalog', ])
-        at.setCatalogsByType('Department', ['bika_setup_catalog', ])
+        at.setCatalogsByType('Department', ['bika_setup_catalog', 'portal_catalog', ])
         at.setCatalogsByType('Instrument', ['bika_setup_catalog', ])
         at.setCatalogsByType('InstrumentType', ['bika_setup_catalog', ])
         at.setCatalogsByType('LabContact', ['bika_setup_catalog', 'portal_catalog'])

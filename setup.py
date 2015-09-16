@@ -63,6 +63,9 @@ setup(name='bika.lims',
           'z3c.unconfigure==1.0.1',
           'z3c.jbot',
           'plone.app.portlets',
+          'plone.app.dexterity',
+          'plone.app.relationfield',
+          'plone.app.referenceablebehavior',
       ],
       extras_require={
           'test': [

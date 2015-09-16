@@ -367,6 +367,8 @@ class ISRTemplates(Interface):
 
     ""
 
+class ISamplingRoundTemplate(Interface):
+    ""
 
 class IStorageLevel(Interface):
     ""
