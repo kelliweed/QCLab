@@ -1,5 +1,14 @@
 3.1.9 (unreleased)
 ------------------
+LIMS-2049: Displaying lists doesn't work as expected in 319
+LIMS-1908: Navigation tree order
+LIMS-1543: Add "Security Seal Intact Y/N" checkbox for partition container
+LIMS-1544: Add "File attachment" field on Sample Point
+LIMS-1949: Enviromental conditions
+LIMS-1549: Sampling Round Templates privileges and permissions
+LIMS-1564: Cancelling a Sampling Round
+LIMS-2020: Add Sampling Round - Department not available for selection
+LIMS-1545: Add "Composite Y/N" checkbox on AR Template
 LIMS-1547: AR Templates tab inside Sampling Round Template
 LIMS-1561: Editing a Sampling Round
 LIMS-1558: Creating Sampling Rounds
@@ -41,13 +50,24 @@ LIMS-1812: Use asynchronous requests for expanding categories in listings
 LIMS-1811: Refactor AR Add form Javascript, and related code.
 LIMS-1818: Instrument Interface. Eltra CS-2000
 LIMS-1817: Instrument Interface. Rigaku Supermini XRF
+LIMS-2041: Resolve ${analysis_keyword) in instrument import alert.
 - New System Dashboard for LabManagers and Admins
 
+3.1.8.2 (2015-09-27)
+--------------------
+LIMS-1996: On new system with no instrument data is difficult to get going.
+LIMS-1760: Customised AR Import spreadsheets (refactored, support importing to Batch)
+LIMS-1930: AssertionError: Having an orphan size, higher than batch size is undefined
+LIMS-1818: Instrument Interface. Eltra CS-2000
+LIMS-1817: Instrument Interface. Rigaku Supermini XRF
+LIMS-2037: Gracefully anticipate missing analysis workflow history
+LIMS-2035: Prevent Weasyprint flooding due to asyncronous publish
 
 3.1.8.1 (2015-06-23)
 --------------------
+LIMS-1806: Instrument Interface. AQ2. Seal Analytical - Error
+LIMS-1760: Customised AR Import spreadsheets (refactored, support importing to Batch)
 Fix portlets.xml for Plone 4.3.6 compatibility
-
 
 3.1.8 (2015-06-03)
 ------------------

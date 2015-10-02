@@ -9,6 +9,9 @@ from zope.schema.vocabulary import SimpleVocabulary
 from Products.CMFCore.utils import getToolByName
 from zope.schema.interfaces import IContextSourceBinder
 from datetime import date
+from bika.lims.workflow import doActionFor
+from bika.lims.workflow import skip
+from Products.CMFCore.permissions import ModifyPortalContent, AddPortalContent
 
 # I implemented it here because following this example
 # (http://docs.plone.org/external/plone.app.dexterity/docs/advanced/vocabularies.html#named-vocabularies)
@@ -154,6 +157,11 @@ class ISamplingRound(model.Schema):
                 required=True
                 )
 
+        environmental_conditions = schema.TextLine(
+                title=_(u"Environmental conditions"),
+                required=False
+                )
+
         instructions = schema.Text(
                 title=_(u"Instructions"),
                 required=False
@@ -253,3 +261,43 @@ class SamplingRound(Item):
             if len(art_obj) != 0:
                 l.append((art_obj[0].Title, art_uid))
         return l
+
+    def hasUserAddEditPermission(self):
+        """
+        Checks if the current user has privileges to access to the editing view.
+        From Jira LIMS-1549:
+           - Creation/Edit: Lab manager, Client Contact, Lab Clerk, Client Contact (for Client-specific SRTs)
+        :return: True/False
+        """
+        mtool = getToolByName(self, 'portal_membership')
+        checkPermission = mtool.checkPermission
+        # In bika_samplinground_workflow.csv there are defined the ModifyPortalContent statements. There is said that
+        # client has ModifyPortalContent permission enabled, so here we have to check if the client satisfy the
+        # condition wrote in the function's description
+        if (checkPermission(ModifyPortalContent, self) or checkPermission(AddPortalContent, self)) \
+                and 'Client' in api.user.get_current().getRoles():
+            # Checking if the current user is a current client's contact
+            userID = api.user.get_current().id
+            contact_objs = self.getContacts()
+            contact_ids = [obj.getUsername() for obj in contact_objs]
+            if userID in contact_ids:
+                return True
+            else:
+                return False
+        return checkPermission(ModifyPortalContent, self) or checkPermission(AddPortalContent, self)
+
+    def workflow_script_cancel(self):
+        """
+        When the round is cancelled, all its associated Samples and ARs are cancelled by the system.
+        """
+        if skip(self, "cancel"):
+            return
+        self.reindexObject(idxs=["cancellation_state", ])
+        # deactivate all analysis requests in this sampling round.
+        analysis_requests = self.getAnalysisRequests()
+        for ar in analysis_requests:
+            ar_obj = ar.getObject()
+            workflow = getToolByName(self, 'portal_workflow')
+            if workflow.getInfoFor(ar_obj, 'cancellation_state') != 'cancelled':
+                doActionFor(ar.getObject(), 'cancel')
+                doActionFor(ar.getObject().getSample(), 'cancel')

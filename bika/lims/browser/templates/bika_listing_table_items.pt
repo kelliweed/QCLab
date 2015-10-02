@@ -15,7 +15,7 @@
                     tabindex view/tabindex;"
             tal:attributes="style tmpstyle;
                         cat python:item.get('category', 'None');
-                        class item/table_row_class;
+                        class python:item.get('table_row_class', '');
                         id string:folder-contents-item-${item/uid};
                         uid python: item['uid'] if 'uid' in item else None;
                         keyword python: keyword if keyword else None;
@@ -373,6 +373,7 @@ Table cells for each column from in review_state's column list.
                 allow_edit python:view.bika_listing.allow_edit \
                                 and item.get('edit_condition', {}).get(column, True)">
         <tr tal:attributes="class item/table_row_class;
+                            cat python:item.get('category', 'None');
                             id string:folder-contents-item-${item/uid};
                             uid item/uid;">
            <td tal:attributes="class string:${item/state_class} result"></td>

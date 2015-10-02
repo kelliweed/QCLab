@@ -21,6 +21,8 @@ class AnalysisRequestsView(_ARV, _ARAV):
         self.columns = {
             'partition': {'title': _('Partition ID'),
                           'toggle': True},
+            'securitySealIntact': {'title': _('Security Seal Intact'),
+                                  'toggle': True},
             'samplingRoundTemplate': {'title': _('Sampling Round Template'),
                                       'toggle': True},
             'getRequestID': {'title': _('Request ID'),
@@ -64,6 +66,7 @@ class AnalysisRequestsView(_ARV, _ARAV):
                              {'id': 'reinstate'}],
              'custom_actions': [],
              'columns': ['partition',
+                         'securitySealIntact',
                          'getRequestID',
                          'samplingRoundTemplate',
                          'getSample',
@@ -84,6 +87,7 @@ class AnalysisRequestsView(_ARV, _ARAV):
                              {'id': 'reinstate'}],
              'custom_actions': [],
              'columns': ['partition',
+                         'securitySealIntact',
                          'getRequestID',
                          'samplingRoundTemplate',
                          'getSample',
@@ -100,6 +104,7 @@ class AnalysisRequestsView(_ARV, _ARAV):
                              {'id': 'reinstate'}],
              'custom_actions': [],
              'columns': ['partition',
+                         'securitySealIntact',
                          'getRequestID',
                          'samplingRoundTemplate',
                          'getSample',
@@ -118,6 +123,7 @@ class AnalysisRequestsView(_ARV, _ARAV):
                              {'id': 'reinstate'}],
              'custom_actions': [],
              'columns': ['partition',
+                         'securitySealIntact',
                          'getRequestID',
                          'samplingRoundTemplate',
                          'getSample',
@@ -132,6 +138,7 @@ class AnalysisRequestsView(_ARV, _ARAV):
              'transitions': [{'id': 'publish'}],
              'custom_actions': [],
              'columns': ['partition',
+                         'securitySealIntact',
                          'getRequestID',
                          'samplingRoundTemplate',
                          'getSample',
@@ -146,6 +153,7 @@ class AnalysisRequestsView(_ARV, _ARAV):
              'transitions': [{'id': 'republish'}],
              'custom_actions': [],
              'columns': ['partition',
+                         'securitySealIntact',
                          'getRequestID',
                          'samplingRoundTemplate',
                          'getSample',
@@ -164,6 +172,7 @@ class AnalysisRequestsView(_ARV, _ARAV):
              'transitions': [{'id': 'reinstate'}],
              'custom_actions': [],
              'columns': ['partition',
+                         'securitySealIntact',
                          'getRequestID',
                          'samplingRoundTemplate',
                          'getSample',
@@ -178,6 +187,7 @@ class AnalysisRequestsView(_ARV, _ARAV):
              'transitions': [],
              'custom_actions': [],
              'columns': ['partition',
+                         'securitySealIntact',
                          'getRequestID',
                          'samplingRoundTemplate',
                          'getSample',
@@ -203,6 +213,7 @@ class AnalysisRequestsView(_ARV, _ARAV):
                              {'id': 'reinstate'}],
              'custom_actions': [],
              'columns': ['partition',
+                         'securitySealIntact',
                          'getRequestID',
                          'samplingRoundTemplate',
                          'getSample',
@@ -229,6 +240,7 @@ class AnalysisRequestsView(_ARV, _ARAV):
                              {'id': 'reinstate'}],
              'custom_actions': [],
              'columns': ['partition',
+                         'securitySealIntact',
                          'getRequestID',
                          'samplingRoundTemplate',
                          'getSample',
@@ -272,7 +284,7 @@ class AnalysisRequestsView(_ARV, _ARAV):
             srTemplateUID = obj.getSamplingRound().sr_template if obj.getSamplingRound().sr_template else ''
             # Getting the sampling round object
             catalog = getToolByName(self.context, 'uid_catalog')
-            srTemplateObj = catalog(UID=srTemplateUID)[0].getObject()
+            srTemplateObj = catalog(UID=srTemplateUID)[0].getObject() if catalog(UID=srTemplateUID) else None
             # Getting the partitions and creating a row per partition
             partitions = obj.getPartitions()
             for part in partitions:
@@ -280,9 +292,16 @@ class AnalysisRequestsView(_ARV, _ARAV):
                 # We ave to make a copy of 'replace' because it's a reference to a dict object
                 item['replace'] = items[x]['replace'].copy()
                 item['partition'] = part.id
+                if part.getContainer():
+                    img_url = '<img src="'+self.portal_url+'/++resource++bika.lims.images/ok.png"/>'
+                    item['securitySealIntact'] = part.getContainer().getSecuritySealIntact()
+                    item['replace']['securitySealIntact'] = img_url \
+                        if part.getContainer().getSecuritySealIntact() else ' '
+                else:
+                    item['securitySealIntact'] = ' '
                 item['replace']['partition'] = "<a href='%s'>%s</a>" % (part.absolute_url(), item['partition'])
+                item['samplingRoundTemplate'] = srTemplateObj.title if srTemplateObj else ''
                 if srTemplateObj:
-                    item['samplingRoundTemplate'] = srTemplateObj.title
                     item['replace']['samplingRoundTemplate'] = \
                         "<a href='%s'>%s</a>" % (srTemplateObj.absolute_url, item['samplingRoundTemplate'])
                 new_items.append(item)
