@@ -2,6 +2,7 @@
 --------------------
 LIMS-1755: PDF writer should be using a world-writeable tmp location
 LIMS-2041: Resolve translation syntax error in instrument import alert
+LIMS-1933: Secondary Sample selection in Client Batches does not locate samples
 
 3.1.8.2 (2015-09-27)
 --------------------
