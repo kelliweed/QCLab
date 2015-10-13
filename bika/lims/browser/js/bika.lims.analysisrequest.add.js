@@ -586,7 +586,8 @@ function AnalysisRequestAddView() {
 				}
 			});
 			// Then populate and disable sample fields
-			$.getJSON(window.location.href.replace("/ar_add", "") + "/secondary_ar_sample_info",
+			var sec_url = window.location.href.split("/ar_add")[0] + "/secondary_ar_sample_info";
+			$.getJSON(sec_url,
 			  {
 				  "Sample_uid": $(this).attr("uid"),
 				  "_authenticator": $("input[name='_authenticator']").val()

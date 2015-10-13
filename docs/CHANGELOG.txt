@@ -1,3 +1,9 @@
+3.1.8.3 (2015-10-01)
+--------------------
+LIMS-1755: PDF writer should be using a world-writeable tmp location
+LIMS-2041: Resolve translation syntax error in instrument import alert
+LIMS-1933: Secondary Sample selection in Client Batches does not locate samples
+
 3.1.8.2 (2015-09-27)
 --------------------
 LIMS-1996: On new system with no instrument data is difficult to get going.
