@@ -1,5 +1,13 @@
-3.1.9 (unreleased)
+3.1.10 (unreleased)
+-------------------
+LIMS-1832: New Results Template, COA. Multiple ARs in columns
+LIMS-1933: Regression: Selecting secondary AR in client batches, fails.
+- Dashboard: replace multi-bar charts by stacked-bar charts
+
+3.1.9 (2015-10-8)
 ------------------
+LIMS-2068: LIMS-2068 Urgent. Analysis Catgories don't expand
+LIMS-1875: Able to deactivate instruments and reference samples without logging in
 LIMS-2049: Displaying lists doesn't work as expected in 319
 LIMS-1908: Navigation tree order
 LIMS-1543: Add "Security Seal Intact Y/N" checkbox for partition container
@@ -50,8 +58,14 @@ LIMS-1812: Use asynchronous requests for expanding categories in listings
 LIMS-1811: Refactor AR Add form Javascript, and related code.
 LIMS-1818: Instrument Interface. Eltra CS-2000
 LIMS-1817: Instrument Interface. Rigaku Supermini XRF
-LIMS-2041: Resolve ${analysis_keyword) in instrument import alert.
 - New System Dashboard for LabManagers and Admins
+
+3.1.8.3 (2015-10-01)
+--------------------
+LIMS-1755: PDF writer should be using a world-writeable tmp location
+LIMS-2041: Resolve ${analysis_keyword) in instrument import alert.
+LIMS-2041: Resolve translation syntax error in instrument import alert
+LIMS-1933: Secondary Sample selection in Client Batches does not locate samples
 
 3.1.8.2 (2015-09-27)
 --------------------
