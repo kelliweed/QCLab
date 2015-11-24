@@ -1,5 +1,6 @@
 3.1.8.3 (2015-10-01)
 --------------------
+LIMS-2149: Cannot access to a Worksheet
 LIMS-1755: PDF writer should be using a world-writeable tmp location
 LIMS-2041: Resolve translation syntax error in instrument import alert
 LIMS-1933: Secondary Sample selection in Client Batches does not locate samples
@@ -766,4 +767,3 @@ http://plone.org/documentation/manual/upgrade-guide
  - Added CHANGES.txt and README.txt
  - Added windows batch script for ID server
    (scripts/start-id-server.bat)
-

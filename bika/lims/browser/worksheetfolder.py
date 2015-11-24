@@ -21,6 +21,7 @@ from zope.interface import implements
 import plone
 import json
 import zope
+import logging
 
 class WorksheetFolderWorkflowAction(WorkflowAction):
     """ Workflow actions taken in the WorksheetFolder
@@ -343,7 +344,7 @@ class WorksheetFolderListingView(BikaListingView):
 
             priority = obj.getPriority()
             items[x]['Priority'] = ''
-            
+
             instrument = obj.getInstrument()
             items[x]['Instrument'] = instrument and instrument.Title() or ''
 
@@ -375,6 +376,11 @@ class WorksheetFolderListingView(BikaListingView):
             ws_services = {}
             for slot in [s for s in layout if s['type'] == 'a']:
                 analysis = rc.lookupObject(slot['analysis_uid'])
+                if !analysis:
+                    error = "Analysis with uid '%s' NOT FOUND in Reference Catalog.\n Worksheet: '%s'. Layout: '%s'" % \
+                            (slot['analysis_uid'], obj, layout)
+                    logging.info(error)
+                    continue
                 service = analysis.getService()
                 title = service.Title()
                 if title not in ws_services:
