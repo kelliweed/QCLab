@@ -42,7 +42,6 @@ except:
     # Plone < 4.3
     from zope.app.component.hooks import getSite
 
-
 schema = BikaSchema.copy() + Schema((
     StringField(
         'RequestID',
@@ -263,6 +262,38 @@ schema = BikaSchema.copy() + Schema((
         ),
     ),
     ReferenceField(
+        'SamplingRound',
+        allowed_types=('SamplingRound',),
+        relationship='AnalysisRequestSamplingRound',
+        mode="rw",
+        read_permission=permissions.View,
+        write_permission=permissions.ModifyPortalContent,
+        widget=ReferenceWidget(
+            label = _("Sampling Round"),
+            size=20,
+            render_own_label=True,
+            visible={'edit': 'visible',
+                     'view': 'visible',
+                     'add': 'edit',
+                     'header_table': 'visible',
+                     'sample_registered': {'view': 'visible', 'edit': 'visible', 'add': 'edit'},
+                     'to_be_sampled':     {'view': 'visible', 'edit': 'visible'},
+                     'sampled':           {'view': 'visible', 'edit': 'visible'},
+                     'to_be_preserved':   {'view': 'visible', 'edit': 'visible'},
+                     'sample_due':        {'view': 'visible', 'edit': 'visible'},
+                     'sample_received':   {'view': 'visible', 'edit': 'visible'},
+                     'attachment_due':    {'view': 'visible', 'edit': 'visible'},
+                     'to_be_verified':    {'view': 'visible', 'edit': 'visible'},
+                     'verified':          {'view': 'visible', 'edit': 'visible'},
+                     'published':         {'view': 'visible', 'edit': 'invisible'},
+                     'invalid':           {'view': 'visible', 'edit': 'invisible'},
+                     },
+            catalog_name='portal_catalog',
+            base_query={},
+            showOn=True,
+        ),
+    ),
+    ReferenceField(
         'SubGroup',
         required=False,
         allowed_types=('SubGroup',),
@@ -459,6 +490,7 @@ schema = BikaSchema.copy() + Schema((
                      'view': 'visible',
                      'add': 'edit',
                      'header_table': 'visible',
+                     'secondary': 'disabled',
                      'sample_registered': {'view': 'visible', 'edit': 'visible', 'add': 'edit'},
                      'to_be_sampled':     {'view': 'visible', 'edit': 'invisible'},
                      'sampled':           {'view': 'visible', 'edit': 'invisible'},
@@ -809,6 +841,32 @@ schema = BikaSchema.copy() + Schema((
                      },
             base_query={'inactive_state': 'active'},
             showOn=True,
+        ),
+    ),
+    StringField(
+        'EnvironmentalConditions',
+        mode="rw",
+        read_permission=permissions.View,
+        write_permission=permissions.ModifyPortalContent,
+        widget=StringWidget(
+            label=_("Environmental conditions"),
+            visible={'edit': 'visible',
+                     'view': 'visible',
+                     'add': 'edit',
+                     'header_table': 'prominent',
+                     'sample_registered': {'view': 'visible', 'edit': 'visible', 'add': 'edit'},
+                     'to_be_sampled':     {'view': 'visible', 'edit': 'visible'},
+                     'sampled':           {'view': 'visible', 'edit': 'visible'},
+                     'to_be_preserved':   {'view': 'visible', 'edit': 'visible'},
+                     'sample_received':   {'view': 'visible', 'edit': 'visible'},
+                     'attachment_due':    {'view': 'visible', 'edit': 'visible'},
+                     'to_be_verified':    {'view': 'visible', 'edit': 'visible'},
+                     'verified':          {'view': 'visible', 'edit': 'invisible'},
+                     'published':         {'view': 'visible', 'edit': 'invisible'},
+                     'invalid':           {'view': 'visible', 'edit': 'invisible'},
+                     },
+            render_own_label=True,
+            size=20,
         ),
     ),
     ReferenceField(
@@ -1287,13 +1345,19 @@ class AnalysisRequest(BaseFolder):
         from bika.lims.idserver import renameAfterCreation
         renameAfterCreation(self)
 
+
     def _getCatalogTool(self):
         from bika.lims.catalog import getCatalog
         return getCatalog(self)
 
+    def getRequestID(self):
+        """ Return the id as RequestID
+        """
+        return safe_unicode(self.getId()).encode('utf-8')
+
     def Title(self):
         """ Return the Request ID as title """
-        return safe_unicode(self.getRequestID()).encode('utf-8')
+        return self.getRequestID()
 
     def Description(self):
         """ Return searchable data as Description """
@@ -1867,6 +1931,16 @@ class AnalysisRequest(BaseFolder):
                 result.append(analyses[analysis_key])
         return result
 
+    def getSamplingRoundUID(self):
+        """
+        Obtains the sampling round UID
+        :return: a UID
+        """
+        if self.getSamplingRound():
+            return self.getSamplingRound().UID()
+        else:
+            return ''
+
     def setResultsRange(self, value=None):
         """Sets the spec values for this AR.
         1 - Client specs where (spec.Title) matches (ar.SampleType.Title)
@@ -2057,6 +2131,22 @@ class AnalysisRequest(BaseFolder):
             return sample.getSampleCondition()
         return self.Schema().getField('SampleCondition').get(self)
 
+    security.declarePublic('setEnvironmentalConditions')
+
+    def setEnvironmentalConditions(self, value):
+        sample = self.getSample()
+        if sample and value:
+            sample.setEnvironmentalConditions(value)
+        self.Schema()['EnvironmentalConditions'].set(self, value)
+
+    security.declarePublic('getEnvironmentalConditions')
+
+    def getEnvironmentalConditions(self):
+        sample = self.getSample()
+        if sample:
+            return sample.getEnvironmentalConditions()
+        return self.Schema().getField('EnvironmentalConditions').get(self)
+
     security.declarePublic('setComposite')
 
     def setComposite(self, value):
@@ -2165,6 +2255,30 @@ class AnalysisRequest(BaseFolder):
             sets = adv if 'hidden' in adv[0] else []
 
         return sets[0] if sets else {'uid': uid}
+
+    def getPartitions(self):
+        """
+        This functions returns the partitions from the analysis request's analyses.
+        :return: a list with the full partition objects
+        """
+        analyses = self.getRequestedAnalyses()
+        partitions = []
+        for analysis in analyses:
+            if analysis.getSamplePartition() not in partitions:
+                partitions.append(analysis.getSamplePartition())
+        return partitions
+
+    def getContainers(self):
+        """
+        This functions returns the containers from the analysis request's analyses
+        :return: a list with the full partition objects
+        """
+        partitions = self.getPartitions()
+        containers = []
+        for partition in partitions:
+            if partition.getContainer():
+                containers.append(partition.getContainer())
+        return containers
 
     def isAnalysisServiceHidden(self, uid):
         """ Checks if the analysis service that match with the uid

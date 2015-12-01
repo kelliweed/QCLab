@@ -49,23 +49,27 @@ class SamplePartitionsView(BikaListingView):
 
         self.columns = {
             'PartTitle': {'title': _('Partition'),
-                          'sortable': False},
+                          'sortable':False},
             'Container': {'title': _('Container'),
-                          'sortable': False},
+                          'sortable':False},
+            'SecuritySealIntact': {'title': _('Security Seal Intact'),
+                                   'type': "boolean",
+                                   'allow_edit': True,
+                                   'sortable': False},
             'Preservation': {'title': _('Preservation'),
-                             'sortable': False},
-            ##            'Sampler': {'title': _('Sampler'),
-            ##                           'sortable':False},
-            ##            'DateSampled': {'title': _('Date Sampled'),
-            ##                               'input_class': 'datepicker_nofuture',
-            ##                               'input_width': '10',
-            ##                               'sortable':False},
+                             'sortable':False},
+##            'getSampler': {'title': _('Sampler'),
+##                           'sortable':False},
+##            'getDateSampled': {'title': _('Date Sampled'),
+##                               'input_class': 'datepicker_nofuture',
+##                               'input_width': '10',
+##                               'sortable':False},
             'Preserver': {'title': _('Preserver'),
-                          'sortable': False},
+                          'sortable':False},
             'DatePreserved': {'title': _('Date Preserved'),
                               'input_class': 'datepicker_nofuture',
                               'input_width': '10',
-                              'sortable': False}
+                              'sortable':False}
         }
         if not self.context.absolute_url().endswith('partitions'):
             self.columns['DisposalDate'] = {'title': _('Disposal Date'),
@@ -78,9 +82,10 @@ class SamplePartitionsView(BikaListingView):
              'contentFilter':{},
              'columns': ['PartTitle',
                          'Container',
+                         'SecuritySealIntact',
                          'Preservation',
-##                         'Sampler',
-##                         'DateSampled',
+##                         'getSampler',
+##                         'getDateSampled',
                          'Preserver',
                          'DatePreserved',
                          'state_title'],
@@ -176,7 +181,7 @@ class SamplePartitionsView(BikaListingView):
                 item['Container'] = container and container.UID() or ''
             else:
                 item['Container'] = container and container.Title() or ''
-
+            item['SecuritySealIntact'] = container.getSecuritySealIntact() if container else True
             preservation = part.getPreservation()
             if self.allow_edit:
                 item['Preservation'] = preservation and preservation.UID() or ''
@@ -203,7 +208,7 @@ class SamplePartitionsView(BikaListingView):
 
             # inline edits for Container and Preservation
             if self.allow_edit:
-                item['allow_edit'] = ['Container', 'Preservation']
+                item['allow_edit'] = ['Container', 'Preservation', 'SecuritySealIntact']
             item['choices']['Preservation'] = preservations
             item['choices']['Container'] = containers
 

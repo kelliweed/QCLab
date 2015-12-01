@@ -1,5 +1,6 @@
 from AccessControl import ClassSecurityInfo
 from bika.lims import bikaMessageFactory as _, logger
+from bika.lims.config import *
 from bika.lims.idserver import renameAfterCreation
 from bika.lims.utils import t, tmpID, changeWorkflowState
 from bika.lims.utils import to_utf8 as _c
@@ -21,6 +22,7 @@ from Products.ATExtensions.ateapi import RecordsField
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.utils import safe_unicode, _createObjectByType
 from zope.interface import implements
+import re
 
 schema = BikaSchema.copy() + Schema((
     HistoryAwareReferenceField('WorksheetTemplate',
@@ -66,6 +68,10 @@ schema = BikaSchema.copy() + Schema((
             label=_("Remarks"),
             append_only=True,
         ),
+    ),
+    StringField('ResultsLayout',
+        default = '1',
+        vocabulary = WORKSHEET_LAYOUT_OPTIONS,
     ),
 ),
 )
@@ -202,17 +208,9 @@ class Worksheet(BaseFolder, HistoryAwareMixin):
                     highest_existing_position = pos
             position = highest_existing_position + 1
 
-        postfix = 1
-        for refa in reference.getReferenceAnalyses():
-            grid = refa.getReferenceAnalysesGroupID()
-            try:
-                cand = int(grid.split('-')[2])
-                if cand >= postfix:
-                    postfix = cand + 1
-            except:
-                pass
-        postfix = str(postfix).zfill(int(3))
-        refgid = '%s-%s' % (reference.id, postfix)
+        # LIMS-2132 Reference Analyses got the same ID
+        refgid = self.nextReferenceAnalysesGroupID(reference)
+
         for service_uid in service_uids:
             # services with dependents don't belong in references
             service = rc.lookupObject(service_uid)
@@ -241,8 +239,23 @@ class Worksheet(BaseFolder, HistoryAwareMixin):
                 self.getAnalyses() + [ref_analysis, ])
             workflow.doActionFor(ref_analysis, 'assign')
 
-    security.declareProtected(EditWorksheet, 'addDuplicateAnalyses')
+    def nextReferenceAnalysesGroupID(self, reference):
+        """ Returns the next ReferenceAnalysesGroupID for the given reference
+            sample. Gets the last reference analysis registered in the system
+            for the specified reference sample and increments in one unit the
+            suffix.
+        """
+        bac = getToolByName(reference, 'bika_analysis_catalog')
+        ids = bac.Indexes['getReferenceAnalysesGroupID'].uniqueValues()
+        prefix = reference.id+"-"
+        rr = re.compile("^"+prefix+"[\d+]+$")
+        ids = [int(i.split(prefix)[1]) for i in ids if i and rr.match(i)]
+        ids.sort()
+        _id = ids[-1] if ids else 0
+        suffix = str(_id+1).zfill(int(3))
+        return '%s%s' % (prefix, suffix)
 
+    security.declareProtected(EditWorksheet, 'addDuplicateAnalyses')
     def addDuplicateAnalyses(self, src_slot, dest_slot):
         """ add duplicate analyses to worksheet
         """
@@ -332,40 +345,36 @@ class Worksheet(BaseFolder, HistoryAwareMixin):
         services = wst.getService()
         wst_service_uids = [s.UID() for s in services]
 
-        analyses = pc(portal_type='Analysis',
-                       ServiceUID=wst_service_uids,
-                       review_state='sample_received',
-                       worksheetanalysis_review_state='unassigned',
-                       cancellation_state = 'active')
-        sortedans = []
-        for an in analyses:
-            sortedans.append({'uid': an.UID,
-                              'duedate': an.getObject().getDueDate() or (DateTime() + 365),
-                              'brain': an});
-        sortedans.sort(key=itemgetter('duedate'), reverse=False)
-        # collect analyses from the first X ARs.
-        ar_analyses = {}  # ar_uid : [analyses]
-        ars = []  # for sorting
-
         wst_slots = [row['pos'] for row in wstlayout if row['type'] == 'a']
         ws_slots = [row['position'] for row in layout if row['type'] == 'a']
         nr_slots = len(wst_slots) - len(ws_slots)
+        positions = [pos for pos in wst_slots if pos not in ws_slots]
+
+        analyses = pc(portal_type='Analysis',
+                      ServiceUID=wst_service_uids,
+                      review_state='sample_received',
+                      worksheetanalysis_review_state='unassigned',
+                      cancellation_state = 'active',
+                      sort_on='getDueDate')
+
+        # ar_analyses is used to group analyses by AR.
+        ar_analyses = {}
         instr = self.getInstrument() if self.getInstrument() else wst.getInstrument()
-        for analysis in sortedans:
-            analysis = analysis['brain']
-            if instr and analysis.getObject().isInstrumentAllowed(instr) == False:
+        for brain in analyses:
+            analysis = brain.getObject()
+            if instr and brain.getObject().isInstrumentAllowed(instr) is False:
                 # Exclude those analyses for which the ws selected
                 # instrument is not allowed
                 continue
-            ar = analysis.RequestID
-            if ar in ar_analyses:
-                ar_analyses[ar].append(analysis.getObject())
+            ar_id = brain.getRequestID
+            if ar_id in ar_analyses:
+                ar_analyses[ar_id].append(analysis)
             else:
                 if len(ar_analyses.keys()) < nr_slots:
-                    ars.append(ar)
-                    ar_analyses[ar] = [analysis.getObject(), ]
+                    ar_analyses[ar_id] = [analysis, ]
 
-        positions = [pos for pos in wst_slots if pos not in ws_slots]
+        # Add analyses, sorted by AR ID
+        ars = sorted(ar_analyses.keys())
         for ar in ars:
             for analysis in ar_analyses[ar]:
                 self.addAnalysis(analysis, position=positions[ars.index(ar)])

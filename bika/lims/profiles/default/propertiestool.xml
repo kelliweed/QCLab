@@ -38,7 +38,6 @@
     <element value="AnalysisService"/>
     <element value="AnalysisSpec"/>
     <element value="ARImport"/>
-    <element value="ARImportItem"/>
     <element value="ARPriority"/>
     <element value="AnalysisProfile"/>
     <element value="ARReport"/>
@@ -55,7 +54,7 @@
     <element value="DuplicateAnalysis"/>
     <element value="Instrument"/>
     <element value="InstrumentCalibration"/>
-	<element value="InstrumentCertification"/>
+    <element value="InstrumentCertification"/>
     <element value="InstrumentMaintenanceTask"/>
     <element value="InstrumentScheduledTask"/>
     <element value="InstrumentType"/>
@@ -67,6 +66,7 @@
     <element value="LogEntry"/>
     <element value="Manufacturer"/>
     <element value="Method"/>
+    <element value="SRTemplate"/>
     <element value="Supplier"/>
     <element value="SupplyOrder"/>
     <element value="Preservation"/>
@@ -103,6 +103,7 @@
     <element value="ATCurrentAuthorCriterion"/>
     <element value="ATPathCriterion"/>
     <element value="ATRelativePathCriterion"/>
+    <element value="SamplingRound"/>
   </property>
   <property name="enable_wf_state_filtering" type="boolean">False</property>
   <property name="wf_states_to_show" type="lines"/>

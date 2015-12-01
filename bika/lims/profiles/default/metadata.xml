@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <metadata>
-  <version>319</version>
+  <version>3110</version>
   <dependencies>
     <dependency>profile-jarn.jsi18n:default</dependency>
     <dependency>profile-Products.ATExtensions:default</dependency>
@@ -8,5 +8,6 @@
     <dependency>profile-plone.app.iterate:plone.app.iterate</dependency>
     <dependency>profile-Products.TinyMCE:TinyMCE</dependency>
     <dependency>profile-collective.js.jqueryui:default</dependency>
+    <dependency>profile-Products.DataGridField:default</dependency>
   </dependencies>
 </metadata>

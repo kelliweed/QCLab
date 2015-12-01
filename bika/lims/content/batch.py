@@ -3,10 +3,11 @@ from bika.lims import bikaMessageFactory as _
 from bika.lims.utils import t
 from bika.lims.config import PROJECTNAME
 from bika.lims.content.bikaschema import BikaFolderSchema
-from bika.lims.interfaces import IBatch
+from bika.lims.interfaces import IBatch, IClient
 from bika.lims.workflow import skip, BatchState, StateFlow, getCurrentState,\
     CancellationState
 from bika.lims.browser.widgets import DateTimeWidget
+from plone import api
 from plone.app.folder.folder import ATFolder
 from Products.Archetypes.public import *
 from Products.CMFCore.utils import getToolByName
@@ -232,7 +233,9 @@ class Batch(ATFolder):
         client = self.Schema().getField('Client').get(self)
         if client:
             return client
-        return client
+        client = self.aq_parent
+        if IClient.providedBy(client):
+            return client
 
     def getClientTitle(self):
         client = self.getClient()
@@ -291,10 +294,16 @@ class Batch(ATFolder):
             ret.append((p.UID, p.Title))
         return DisplayList(ret)
 
-    def getAnalysisRequests(self):
+    def getAnalysisRequests(self, **kwargs):
         """ Return all the Analysis Requests linked to the Batch
+        kargs are passed directly to the catalog.
         """
-        return self.getBackReferences("AnalysisRequestBatch")
+        query = kwargs
+        query['portal_type'] = 'AnalysisRequest'
+        query['BatchUID'] = self.UID()
+        bc = api.portal.get_tool('bika_catalog')
+        brains = bc(query)
+        return [b.getObject() for b in brains]
 
     def isOpen(self):
         """ Returns true if the Batch is in 'open' state

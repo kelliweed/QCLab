@@ -322,6 +322,32 @@ schema = BikaSchema.copy() + Schema((
             showOn=True,
         ),
     ),
+    StringField(
+        'EnvironmentalConditions',
+        mode="rw",
+        read_permission=permissions.View,
+        write_permission=permissions.ModifyPortalContent,
+        widget=StringWidget(
+            label=_("Environmental Conditions"),
+            visible={'edit': 'visible',
+                     'view': 'visible',
+                     'add': 'edit',
+                     'header_table': 'prominent',
+                     'sample_registered': {'view': 'visible', 'edit': 'visible', 'add': 'edit'},
+                     'to_be_sampled':     {'view': 'visible', 'edit': 'visible'},
+                     'sampled':           {'view': 'visible', 'edit': 'visible'},
+                     'to_be_preserved':   {'view': 'visible', 'edit': 'visible'},
+                     'sample_received':   {'view': 'visible', 'edit': 'visible'},
+                     'attachment_due':    {'view': 'visible', 'edit': 'visible'},
+                     'to_be_verified':    {'view': 'visible', 'edit': 'visible'},
+                     'verified':          {'view': 'visible', 'edit': 'invisible'},
+                     'published':         {'view': 'visible', 'edit': 'invisible'},
+                     'invalid':           {'view': 'visible', 'edit': 'invisible'},
+                     },
+            render_own_label=True,
+            size=20,
+        ),
+    ),
     DateTimeField('DateReceived',
         mode="rw",
         read_permission=permissions.View,
@@ -509,9 +535,13 @@ class Sample(BaseFolder, HistoryAwareMixin):
         from bika.lims.catalog import getCatalog
         return getCatalog(self)
 
-    def Title(self):
+    def getSampleID(self):
         """ Return the Sample ID as title """
         return safe_unicode(self.getId()).encode('utf-8')
+
+    def Title(self):
+        """ Return the Sample ID as title """
+        return self.getSampleID()
 
     def getSamplingWorkflowEnabledDefault(self):
         return self.bika_setup.getSamplingWorkflowEnabled()

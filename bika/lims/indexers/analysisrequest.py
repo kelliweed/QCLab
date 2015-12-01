@@ -69,3 +69,9 @@ def ClientSampleID(instance):
     if hasattr(instance, 'getSample'):
         sample = instance.getSample()
         return sample.getClientSampleID()
+
+@indexer(IAnalysisRequest)
+def SamplingRoundUID(instance):
+    sr = instance.getSamplingRound()
+    if sr:
+        return sr.UID()

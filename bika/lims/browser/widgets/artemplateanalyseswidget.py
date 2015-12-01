@@ -29,6 +29,7 @@ class ARTemplateAnalysesView(BikaListingView):
         self.show_select_all_checkbox = False
         self.show_column_toggles = False
         self.show_select_column = True
+        self.pagesize = 999999
         self.allow_edit = allow_edit
         self.form_id = "analyses"
 
@@ -64,6 +65,9 @@ class ARTemplateAnalysesView(BikaListingView):
              'transitions': [{'id':'empty'}, ], # none
              },
         ]
+
+        if not self.context.bika_setup.getShowPrices():
+            self.review_states[0]['columns'].remove('Price')
 
         self.fieldvalue = fieldvalue
         self.selected = [x['service_uid'] for x in fieldvalue]

@@ -6,99 +6,46 @@ from Products.Archetypes.BaseContent import BaseContent
 from bika.lims.upgrade import stub
 from bika.lims import logger
 
+
 def upgrade(tool):
     """Upgrade step required for Bika LIMS 3.1.9
     """
     portal = aq_parent(aq_inner(tool))
+    # Adding new feature multiple profiles per Analysis Request
+    multipleAnalysisProfiles(portal)
     setup = portal.portal_setup
-
-    # Friendly message
-    qi = portal.portal_quickinstaller
-    ufrom = qi.upgradeInfo('bika.lims')['installedVersion']
-    logger.info("Upgrading Bika LIMS: %s -> %s" % (ufrom, '319'))
-
     # Updated profile steps
-    # important info about upgrade steps in
-    # http://stackoverflow.com/questions/7821498/is-there-a-good-reference-list-for-the-names-of-the-genericsetup-import-steps
+    # list of the generic setup import step names: portal.portal_setup.getSortedImportSteps() <---
+    # if you want more metadata use this: portal.portal_setup.getImportStepMetadata('jsregistry') <---
     setup.runImportStepFromProfile('profile-bika.lims:default', 'typeinfo')
     setup.runImportStepFromProfile('profile-bika.lims:default', 'jsregistry')
     setup.runImportStepFromProfile('profile-bika.lims:default', 'cssregistry')
     setup.runImportStepFromProfile('profile-bika.lims:default', 'workflow-csv')
+    setup.runImportStepFromProfile('profile-bika.lims:default', 'factorytool')
+    setup.runImportStepFromProfile('profile-bika.lims:default', 'controlpanel')
     setup.runImportStepFromProfile('profile-bika.lims:default', 'catalog')
+    setup.runImportStepFromProfile('profile-bika.lims:default', 'propertiestool')
+    # important info about upgrade steps in
+    # http://stackoverflow.com/questions/7821498/is-there-a-good-reference-list-for-the-names-of-the-genericsetup-import-steps
     setup.runImportStepFromProfile('profile-bika.lims:default', 'skins')
-
     # Update workflow permissions
     wf = getToolByName(portal, 'portal_workflow')
     wf.updateRoleMappings()
 
-    ### Migrations
+    qi = portal.portal_quickinstaller
+    ufrom = qi.upgradeInfo('bika.lims')['installedVersion']
+    logger.info("Upgrading Bika LIMS: %s -> %s" % (ufrom, '319'))
 
-    # catalog indexes have been refactored
-    # and moved over to standard portal_catalog.
-    port_indexes_to_portal_catalog(portal)
+    # Migrations
 
-    # Adding new feature multiple profiles per Analysis Request
-    multipleAnalysisProfiles(portal)
+    LIMS1546(portal)
+    LIMS1558(portal)
 
+    # Resort Invoices and AR Imports (LIMS-1908) in navigation bar
+    portal.moveObjectToPosition('invoices', portal.objectIds().index('supplyorders'))
+    portal.moveObjectToPosition('arimports', portal.objectIds().index('referencesamples'))
     return True
 
-def port_indexes_to_portal_catalog(portal):
-    """ Consolidating indexes into portal_catalog
-    https://jira.bikalabs.com/browse/LIMS-1851
-    https://jira.bikalabs.com/browse/LIMS-1914
-    https://jira.bikalabs.com/browse/LIMS-121
-    """
-    for cat in ("bika_catalog", "bika_analysis_catalog", "bika_setup_catalog"):
-        if cat in portal:
-            portal.manage_delObjects([cat,])
-
-    at = getToolByName(portal, 'archetype_tool')
-
-    # From bika catalog and bika analysis catalog
-    at.setCatalogsByType('Analysis', ['portal_catalog'])
-    at.setCatalogsByType('AnalysisRequest', ['portal_catalog'])
-    at.setCatalogsByType('Batch', ['portal_catalog'])
-    at.setCatalogsByType('Sample', ['portal_catalog'])
-    at.setCatalogsByType('SamplePartition', ['portal_catalog'])
-    at.setCatalogsByType('Worksheet', ['portal_catalog'])
-    at.setCatalogsByType('DuplicateAnalysis', ['portal_catalog'])
-    at.setCatalogsByType('ReferenceAnalysis', ['portal_catalog'])
-    at.setCatalogsByType('Report', ['portal_catalog'])
-    at.setCatalogsByType('ReferenceSample', ['portal_catalog'])
-
-    # from bika setup catalog:
-    at.setCatalogsByType('Department', ['portal_catalog'])
-    at.setCatalogsByType('Container', ['portal_catalog'])
-    at.setCatalogsByType('ContainerType', ['portal_catalog'])
-    at.setCatalogsByType('AnalysisCategory', ['portal_catalog'])
-    at.setCatalogsByType('AnalysisService', ['portal_catalog'])
-    at.setCatalogsByType('AnalysisSpec', ['portal_catalog'])
-    at.setCatalogsByType('SampleCondition', ['portal_catalog'])
-    at.setCatalogsByType('SampleMatrix', ['portal_catalog'])
-    at.setCatalogsByType('SampleType', ['portal_catalog'])
-    at.setCatalogsByType('SamplePoint', ['portal_catalog'])
-    at.setCatalogsByType('StorageLocation', ['portal_catalog'])
-    at.setCatalogsByType('SamplingDeviation', ['portal_catalog'])
-    at.setCatalogsByType('Instrument', ['portal_catalog'])
-    at.setCatalogsByType('InstrumentType', ['portal_catalog'])
-    at.setCatalogsByType('Method', ['portal_catalog'])
-    at.setCatalogsByType('Multifile', ['portal_catalog'])
-    at.setCatalogsByType('AttachmentType', ['portal_catalog'])
-    at.setCatalogsByType('Calculation', ['portal_catalog'])
-    at.setCatalogsByType('AnalysisProfile', ['portal_catalog'])
-    at.setCatalogsByType('ARTemplate', ['portal_catalog'])
-    at.setCatalogsByType('LabProduct', ['portal_catalog'])
-    at.setCatalogsByType('LabContact', ['portal_catalog'])
-    at.setCatalogsByType('Manufacturer', ['portal_catalog'])
-    at.setCatalogsByType('Preservation', ['portal_catalog'])
-    at.setCatalogsByType('ReferenceDefinition', ['portal_catalog'])
-    at.setCatalogsByType('SRTemplate', ['portal_catalog'])
-    at.setCatalogsByType('SubGroup', ['portal_catalog'])
-    at.setCatalogsByType('Supplier', ['portal_catalog'])
-    at.setCatalogsByType('Unit', ['portal_catalog'])
-    at.setCatalogsByType('WorksheetTemplate', ['portal_catalog'])
-    at.setCatalogsByType('BatchLabel', ['portal_catalog'])
-    at.setCatalogsByType('ARPriority', ['portal_catalog'])
 
 def multipleAnalysisProfiles(portal):
     """
@@ -107,12 +54,59 @@ def multipleAnalysisProfiles(portal):
     analysis request's content field "profile" to profiles
     """
     bc = getToolByName(portal, 'bika_catalog', None)
-    if 'getProfileTitles' not in bc.indexes():
-        bc.addIndex('getProfileTitles', 'KeywordIndex')
-        bc.addColumn('getProfileTitles')
+    if 'getProfilesTitle' not in bc.indexes():
+        bc.addIndex('getProfilesTitle', 'FieldIndex')
+        bc.addColumn('getProfilesTitle')
     # Moving from profile to profiles
     ars = bc(portal_type="AnalysisRequest")
     for ar_brain in ars:
         ar = ar_brain.getObject()
         if not ar.getProfiles():
             ar.setProfiles(ar.getProfile())
+
+
+def LIMS1546(portal):
+    """Set catalogs for SRTemplate
+    """
+    at = getToolByName(portal, 'archetype_tool')
+    at.setCatalogsByType('SRTemplate', ['bika_setup_catalog', 'portal_catalog'])
+    for obj in portal.bika_setup.bika_srtemplates.objectValues():
+        obj.unmarkCreationFlag()
+        obj.reindexObject()
+
+
+def LIMS1558(portal):
+    """Setting Sampling rounds stuff
+    """
+    # Setting departments and ARtemplates to portal_catalog
+    at = getToolByName(portal, 'archetype_tool')
+    at.setCatalogsByType('Department', ['bika_setup_catalog', "portal_catalog", ])
+    at.setCatalogsByType('ARTemplate', ['bika_setup_catalog', 'portal_catalog'])
+    for obj in portal.bika_setup.bika_departments.objectValues():
+        obj.unmarkCreationFlag()
+        obj.reindexObject()
+    for obj in portal.bika_setup.bika_artemplates.objectValues():
+        obj.unmarkCreationFlag()
+        obj.reindexObject()
+    # If Sampling rounds folder is not created yet, we should create it
+    typestool = getToolByName(portal, 'portal_types')
+    qi = portal.portal_quickinstaller
+    if not portal['bika_setup'].get('bika_samplingrounds'):
+        typestool.constructContent(type_name="SamplingRounds",
+                                   container=portal['bika_setup'],
+                                   id='bika_samplingrounds',
+                                   title='Sampling Rounds')
+    obj = portal['bika_setup']['bika_samplingrounds']
+    obj.unmarkCreationFlag()
+    obj.reindexObject()
+    if not portal['bika_setup'].get('bika_samplingrounds'):
+        logger.info("SamplingRounds not created")
+    # Install Products.DataGridField
+    qi.installProducts(['Products.DataGridField'])
+    # add new types not to list in nav
+    # SamplingRound
+    portal_properties = getToolByName(portal, 'portal_properties')
+    ntp = getattr(portal_properties, 'navtree_properties')
+    types = list(ntp.getProperty('metaTypesNotToList'))
+    types.append("SamplingRound")
+    ntp.manage_changeProperties(MetaTypesNotToQuery=types)

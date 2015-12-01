@@ -26,7 +26,8 @@ class AnalysisRequestsView(BikaListingView):
         self.contentFilter = {'portal_type': 'AnalysisRequest',
                               'sort_on': 'created',
                               'sort_order': 'reverse',
-                              'path': {"query": "/", "level": 0}
+                              'path': {"query": "/", "level": 0},
+                              'cancellation_state': 'active',
                               }
 
         self.context_actions = {}
@@ -135,9 +136,8 @@ class AnalysisRequestsView(BikaListingView):
         self.review_states = [
             {'id': 'default',
              'title': _('Active'),
-             'contentFilter': {'cancellation_state': 'active',
-                              'sort_on': 'created',
-                              'sort_order': 'reverse'},
+             'contentFilter': {'sort_on': 'created',
+                               'sort_order': 'reverse'},
              'transitions': [{'id': 'sample'},
                              {'id': 'preserve'},
                              {'id': 'receive'},
@@ -352,10 +352,16 @@ class AnalysisRequestsView(BikaListingView):
             {'id': 'cancelled',
              'title': _('Cancelled'),
              'contentFilter': {'cancellation_state': 'cancelled',
-                               'review_state': ('to_be_sampled', 'to_be_preserved',
-                                                'sample_due', 'sample_received',
-                                                'to_be_verified', 'attachment_due',
-                                                'verified', 'published'),
+                               'review_state': (
+                                   'sample_registered',
+                                   'to_be_sampled',
+                                   'to_be_preserved',
+                                   'sample_due',
+                                   'sample_received',
+                                   'to_be_verified',
+                                   'attachment_due',
+                                   'verified',
+                                   'published'),
                                'sort_on': 'created',
                                'sort_order': 'reverse'},
              'transitions': [{'id': 'reinstate'}],
@@ -538,31 +544,25 @@ class AnalysisRequestsView(BikaListingView):
             if (hideclientlink is False):
                 items[x]['replace']['Client'] = "<a href='%s'>%s</a>" % \
                     (obj.aq_parent.absolute_url(), obj.aq_parent.Title())
-
             items[x]['Creator'] = self.user_fullname(obj.Creator())
-
             items[x]['RequestID'] = obj.getRequestID()
             items[x]['replace']['RequestID'] = "<a href='%s'>%s</a>" % \
                  (url, items[x]['RequestID'])
-
             items[x]['ClientOrderNumber'] = obj.getClientOrderNumber()
-
-            profile = obj.getProfile()
-            items[x]['ProfileTitle'] = profile.Title() if profile else ''
-
             template = obj.getTemplate()
             items[x]['TemplateTitle'] = template.Title() if template else ''
-
             items[x]['Sample'] = sample
             items[x]['replace']['Sample'] = \
                 "<a href='%s'>%s</a>" % (sample.absolute_url(), sample.Title())
-
             st = sample.getSampleType()
             items[x]['SampleTypeTitle'] = st.Title() if st else ''
             sp = sample.getSamplePoint()
             items[x]['SamplePointTitle'] = sp.Title() if sp else ''
             items[x]['ClientReference'] = sample.getClientReference()
             items[x]['ClientSampleID'] = sample.getClientSampleID()
+
+            items[x]['replace']['ProfileTitles'] = ", ".join(
+                [p.Title() for p in obj.getProfiles()])
 
             if obj.getAnalysesNum():
                 items[x]['getAnalysesNum'] = str(obj.getAnalysesNum()[0]) + '/' + str(obj.getAnalysesNum()[1])

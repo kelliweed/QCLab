@@ -524,15 +524,15 @@ class Analysis(BaseContent):
                 rr = an.aq_parent.getResultsRange()
                 rr = [r for r in rr if r.get('keyword', '') == an.getKeyword()]
                 rr = rr[0] if rr and len(rr) > 0 else {}
-            if specification == 'ar' or rr:
+                if rr:
+                    rr['uid'] = self.UID()
+        if not rr:
+            # Let's try to retrieve the specs from client and/or lab
+            specs = an.getAnalysisSpecs(specification)
+            rr = specs.getResultsRangeDict() if specs else {}
+            rr = rr.get(an.getKeyword(), {}) if rr else {}
+            if rr:
                 rr['uid'] = self.UID()
-                return rr
-
-        specs = an.getAnalysisSpecs(specification)
-        rr = specs.getResultsRangeDict() if specs else {}
-        rr = rr.get(an.getKeyword(), {}) if rr else {}
-        if rr:
-            rr['uid'] = self.UID()
         return rr
 
     def getAnalysisSpecs(self, specification=None):
@@ -1022,7 +1022,12 @@ class Analysis(BaseContent):
         # Check for self-submitted Analysis.
         user_id = getSecurityManager().getUser().getId()
         self_submitted = False
-        review_history = workflow.getInfoFor(self, "review_history")
+        try:
+            # https://jira.bikalabs.com/browse/LIMS-2037;
+            # Sometimes the workflow history is inexplicably missing!
+            review_history = workflow.getInfoFor(self, "review_history")
+        except WorkflowException:
+            return True
         review_history = self.reverseList(review_history)
         for event in review_history:
             if event.get("action") == "submit":
@@ -1486,4 +1491,3 @@ class Analysis(BaseContent):
 
 
 atapi.registerType(Analysis, PROJECTNAME)
-

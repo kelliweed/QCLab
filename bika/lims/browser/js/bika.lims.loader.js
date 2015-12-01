@@ -70,6 +70,9 @@ window.bika.lims.controllers =  {
     ".portaltype-client.template-base_edit":
         ['ClientEditView'],
 
+    // Client Sampling Rounds
+    ".template-bika-lims-content-samplingsround.portaltype-client":
+        ['ClientSamplingRoundAddEditView'],
 
     // Reference Samples
     ".portaltype-referencesample.template-analyses":
@@ -116,14 +119,6 @@ window.bika.lims.controllers =  {
 
     "#ar_publish_container":
         ['AnalysisRequestPublishView'],
-
-    // Analysis Request Imports
-    ".portaltype-arimport.template-arimport_view":
-        ['AnalysisRequestImportView'],
-
-    ".portaltype-arimport.template-base_edit":
-        ['AnalysisRequestImportView'],
-
 
     // Supply Orders
     ".portaltype-supplyorder.template-base_edit":

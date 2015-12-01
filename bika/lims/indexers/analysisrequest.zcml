@@ -15,5 +15,6 @@
     <adapter name="SampleUID"        factory=".analysisrequest.SampleUID"/>
     <adapter name="Sampler"          factory=".analysisrequest.Sampler"/>
     <adapter name="ClientSampleID"   factory=".analysisrequest.ClientSampleID"/>
+    <adapter name="SamplingRoundUID" factory=".analysisrequest.SamplingRoundUID" />
 
 </configure>

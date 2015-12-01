@@ -1,5 +1,76 @@
-3.1.9 (unreleased)
+3.1.10 (unreleased)
+-------------------
+- Dashboard: replace multi-bar charts by stacked-bar charts
+LIMS-2143: Statements vs Invoices
+LIMS-1989: Retracting a published AR fails if one or more ASs has been retracted before publishing
+LIMS-2071: Can't generate Invoice Batch/Monthly Statements
+WINE-71: Instrument. BBK WS export to FIA fails
+WINE-72: Instrument. BBK WineScan Auto Import fails
+WINE-58: Instrument. BBK FIAStar import fails
+WINE-76: WineScan FT120 Import warnings incorrect?
+LIMS-1906: Spaces should be stripped out of the keywords coming from the Instrument
+LIMS-2117: Analysis Categories don't expand on Analysis Specification creation
+LIMS-1933: Regression: Selecting secondary AR in client batches, fails.
+LIMS-2075: Ensure hiding of pricing information when disabled in site-setup
+LIMS-2081: AR Batch Import WorkflowException after edit
+LIMS-2106: Attribute error when creating AR inside batch with no client.
+LIMS-2080: Correctly interpret default (empty) values in ARImport CSV file
+LIMS-2115: Error rises when saving a Calculation
+LIMS-2116: JSONAPI throws an UnicodeDecodeError
+LIMS-2114: AR Import with Profiles, no Analyses are created
+LIMS-2132: Reference Analyses got the same ID
+LIMS-2133: Once in a while, specs var is going empty in results reports
+LIMS-2136: Site Error on AR Verification
+LIMS-2121: Fix possible Horiba ICP csv handling errors
+LIMS-2042: Improving Horiba ICP to avoid Element Symbols as keywords
+LIMS-2123: Analysis Categories don't expand in Worksheet Templates
+LIMS-1993: Existing Sample look-up for AR Create in Batch does not work
+LIMS-2124: QR missing on sticker preview
+LIMS-2147: Add ARImport schema fields when creating ARs
+LIMS-409: ShowPrices setting was getting ignored in some contexts
+LIMS-2062: Cancelled ARs no longer appear in analysisrequest folder listings
+LIMS-2076: Cancelled batches appear in listing views
+LIMS-2154: Hide inactive ARs from BatchBook view
+LIMS-2134: Inactive services appear in AR Create
+LIMS-2139: WS Blank and Control Selection renderes whole page
+LIMS-2156: Ignore blank index values when calculating ReferenceAnalysesGroupID
+LIMS-2157: Cancelled ARs appear in AR listing inside Batches
+LIMS-2042: Horiba ICP: Missing 'DefaultResult' for imported rows
+LIMS-2030: Assign ARs in alphabetical ID order to WS
+LIMS-2067: Prevent initial method/instrument query for each analysis
+WINE-82: Ignore invalid entry in Sample field during AR creation
+
+3.1.9 (2015-10-8)
 ------------------
+LIMS-2068: LIMS-2068 Urgent. Analysis Catgories don't expand
+LIMS-1875: Able to deactivate instruments and reference samples without logging in
+LIMS-2049: Displaying lists doesn't work as expected in 319
+LIMS-1908: Navigation tree order
+LIMS-1543: Add "Security Seal Intact Y/N" checkbox for partition container
+LIMS-1544: Add "File attachment" field on Sample Point
+LIMS-1949: Enviromental conditions
+LIMS-1549: Sampling Round Templates privileges and permissions
+LIMS-1564: Cancelling a Sampling Round
+LIMS-2020: Add Sampling Round - Department not available for selection
+LIMS-1545: Add "Composite Y/N" checkbox on AR Template
+LIMS-1547: AR Templates tab inside Sampling Round Template
+LIMS-1561: Editing a Sampling Round
+LIMS-1558: Creating Sampling Rounds
+LIMS-1965: Modified default navtree order for new installations
+LIMS-1987: AR Invoice tab should not be shown if pricing is toggled off
+LIMS-1523: Site Error when transitioning AR from 'Manage Analyses' or 'Log' tab
+LIMS-1970: Analyses with AR Specifications not displayed properly in AR Add form
+LIMS-1969: AR Add error when "Categorise analysis services" is disabled
+LIMS-1397: Fix Client Title accessor to prevent catalog error when data is imported
+LIMS-1996: On new system with no instrument data is difficult to get going.
+LIMS-2005: Click on Validations tab of Instruments it give error
+LIMS-1806: Instrument Interface. AQ2. Seal Analytical - Error
+LIMS-2002: Error creating Analysis Requests from batch.
+LIMS-1996: On new system with no instrument data it is difficult to get going. The warnings could be confusing
+LIMS-1312: Transposed Worksheet view, ARs in columns
+LIMS-1760: Customised AR Import spreadsheets (refactored, support importing to Batch)
+LIMS-1548: Client-specific Sampling Round Templates
+LIMS-1546: Sampling Round Template Creation and Edit view
 LIMS-1944: Prevent concurrent form submissions from clobbering each other's results
 LIMS-1930: AssertionError: Having an orphan size, higher than batch size is undefined
 LIMS-1959: Not possible to create an AR
@@ -22,12 +93,30 @@ LIMS-1812: Use asynchronous requests for expanding categories in listings
 LIMS-1811: Refactor AR Add form Javascript, and related code.
 LIMS-1818: Instrument Interface. Eltra CS-2000
 LIMS-1817: Instrument Interface. Rigaku Supermini XRF
+- New System Dashboard for LabManagers and Admins
 
+3.1.8.3 (2015-10-01)
+--------------------
+LIMS-1755: PDF writer should be using a world-writeable tmp location
+LIMS-2041: Resolve ${analysis_keyword) in instrument import alert.
+LIMS-2041: Resolve translation syntax error in instrument import alert
+LIMS-1933: Secondary Sample selection in Client Batches does not locate samples
+
+3.1.8.2 (2015-09-27)
+--------------------
+LIMS-1996: On new system with no instrument data is difficult to get going.
+LIMS-1760: Customised AR Import spreadsheets (refactored, support importing to Batch)
+LIMS-1930: AssertionError: Having an orphan size, higher than batch size is undefined
+LIMS-1818: Instrument Interface. Eltra CS-2000
+LIMS-1817: Instrument Interface. Rigaku Supermini XRF
+LIMS-2037: Gracefully anticipate missing analysis workflow history
+LIMS-2035: Prevent Weasyprint flooding due to asyncronous publish
 
 3.1.8.1 (2015-06-23)
 --------------------
+LIMS-1806: Instrument Interface. AQ2. Seal Analytical - Error
+LIMS-1760: Customised AR Import spreadsheets (refactored, support importing to Batch)
 Fix portlets.xml for Plone 4.3.6 compatibility
-
 
 3.1.8 (2015-06-03)
 ------------------

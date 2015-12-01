@@ -54,8 +54,6 @@ def getContainers(instance,
 
     If the partition is flagged 'Separate', only containers are displayed.
     If the Separate flag is false, displays container types.
-
-
     """
 
     pc = getToolByName(instance, 'portal_catalog')
@@ -912,6 +910,9 @@ schema['description'].widget.visible = True
 schema['title'].required = True
 schema['title'].widget.visible = True
 schema['title'].schemata = 'Description'
+schema['title'].validators = ()
+# Update the validation layer after change the validator in runtime
+schema['title']._validationLayer()
 schema.moveField('ShortTitle', after='title')
 schema.moveField('CommercialID', after='ShortTitle')
 schema.moveField('ProtocolID', after='CommercialID')

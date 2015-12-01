@@ -167,4 +167,9 @@
     <column value="VATAmount"/>
     <column value="Volume"/>
 
+    <!-- indexes required by Sampling Rounds -->
+    <index name="analysisRequestTemplates" meta_type="FieldIndex"> <indexed_attr value="analysisRequestTemplates"/> </index>
+    <index name="samplingRoundSamplingDate" meta_type="FieldIndex"> <indexed_attr value="samplingRoundSamplingDate"/> </index>
+    <index name="SamplingRoundUID" meta_type="FieldIndex"> <indexed_attr value="SamplingRoundUID"/> </index>
+
 </object>

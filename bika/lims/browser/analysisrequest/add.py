@@ -5,6 +5,7 @@ from bika.lims.workflow import doActionFor
 import plone
 
 from bika.lims import bikaMessageFactory as _
+from bika.lims import logger
 from bika.lims.browser import BrowserView
 from bika.lims.browser.analysisrequest import AnalysisRequestViewView
 from bika.lims.browser.bika_listing import BikaListingView
@@ -49,6 +50,7 @@ class AnalysisServicesView(ASV):
         super(AnalysisServicesView, self).__init__(context, request)
 
         self.contentFilter['PointOfCapture'] = poc
+        self.contentFilter['inactive_state'] = 'active'
 
         if category:
             self.contentFilter['CategoryTitle'] = category
@@ -142,7 +144,11 @@ class AnalysisServicesView(ASV):
         # the item count before choosing to render the table at all.
         if not self.ar_add_items:
             bs = self.context.bika_setup
-            client = self.context.aq_parent
+            # The parent folder can be a client or a batch, but we need the
+            # client.  It is possible that this will be None!  This happens
+            # when the AR is inside a batch, and the batch has no Client set.
+            client = self.context.aq_parent if self.context.aq_parent.portal_type == 'Client'\
+                else self.context.aq_parent.getClient()
             items = super(AnalysisServicesView, self).folderitems()
             for x, item in enumerate(items):
                 if 'obj' not in items[x]:
@@ -151,6 +157,9 @@ class AnalysisServicesView(ASV):
                 kw = obj.getKeyword()
                 for arnum in range(self.ar_count):
                     key = 'ar.%s' % arnum
+                    # If AR Specification fields are enabled, these should
+                    # not be allowed to wrap inside the cell:
+                    items[x]['class'][key] = 'nowrap'
                     # checked or not:
                     selected = self._get_selected_items(form_key=key)
                     items[x][key] = item in selected
@@ -170,12 +179,16 @@ class AnalysisServicesView(ASV):
                     # bika_listing_table_items.pt which allows them to be
                     # inserted into as attributes on <TR>.  TAL has this flaw;
                     # that attributes cannot be dynamically inserted.
-                    items[x]['price'] = obj.getBulkPrice() if client.getBulkDiscount() else obj.getPrice()
+                    # XXX five.zpt should fix this.  we must test five.zpt!
+                    items[x]['price'] = obj.getBulkPrice() \
+                        if client and client.getBulkDiscount() \
+                        else obj.getPrice()
                     items[x]['vat_percentage'] = obj.getVAT()
 
                     # place a clue for the JS to recognize that these are
                     # AnalysisServices being selected here (service_selector
                     # bika_listing):
+                    # XXX five.zpt should fix this.  we must test five.zpt!
                     poc = items[x]['obj'].getPointOfCapture()
                     items[x]['table_row_class'] = \
                         'service_selector bika_listing ' + poc
@@ -207,6 +220,7 @@ class AnalysisRequestAddView(AnalysisRequestViewView):
 
     def __call__(self):
         self.request.set('disable_border', 1)
+        self.ShowPrices = self.context.bika_setup.getShowPrices()
         if 'ajax_category_expand' in self.request.keys():
             cat = self.request.get('cat')
             asv = AnalysisServicesView(self.context,
@@ -322,6 +336,8 @@ class SecondaryARSampleInfo(BrowserView):
                 if fieldvalue is None:
                     fieldvalue = ''
                 if hasattr(fieldvalue, 'Title'):
+                    # Must store UID for referencefields.
+                    ret.append([fieldname + '_uid', fieldvalue.UID()])
                     fieldvalue = fieldvalue.Title()
                 if hasattr(fieldvalue, 'year'):
                     fieldvalue = fieldvalue.strftime(self.date_format_short)
@@ -482,17 +498,22 @@ def create_analysisrequest(context, request, values):
     pc = getToolByName(context, 'portal_catalog')
 
     # Create new sample or locate the existing for secondary AR
+    sample = False
     if values['Sample']:
-        secondary = True
         if ISample.providedBy(values['Sample']):
+            secondary = True
             sample = values['Sample']
+            samplingworkflow_enabled = sample.getSamplingWorkflowEnabled()
         else:
-            sample = pc(UID=values['Sample'])[0].getObject()
-        samplingworkflow_enabled = sample.getSamplingWorkflowEnabled()
-    else:
+            brains = pc(UID=values['Sample'])
+            if brains:
+                secondary = True
+                sample = brains[0].getObject()
+                samplingworkflow_enabled = sample.getSamplingWorkflowEnabled()
+    if not sample:
         secondary = False
-        samplingworkflow_enabled = context.bika_setup.getSamplingWorkflowEnabled()
         sample = create_sample(context, request, values)
+        samplingworkflow_enabled = context.bika_setup.getSamplingWorkflowEnabled()
 
     # Create the Analysis Request
     ar = _createObjectByType('AnalysisRequest', context, tmpID())
@@ -510,8 +531,39 @@ def create_analysisrequest(context, request, values):
         else 'no_sampling_workflow'
     workflow.doActionFor(ar, workflow_action)
 
+
+    # We need to send a list of service UIDS to setAnalyses function.
+    # But we may have received a list of titles, list of UIDS,
+    # list of keywords or list of service objects!
+    service_uids = []
+    for obj in values['Analyses']:
+        uid = False
+        # service objects
+        if hasattr(obj, 'portal_type') and obj.portal_type == 'AnalysisService':
+            uid = obj.UID()
+        # Analysis objects (shortcut for eg copying analyses from other AR)
+        elif hasattr(obj, 'portal_type') and obj.portal_type == 'Analysis':
+            uid = obj.getService()
+        # Maybe already UIDs.
+        if not uid:
+            bsc = getToolByName(context, 'bika_setup_catalog')
+            brains = bsc(portal_type='AnalysisService', UID=obj)
+            if brains:
+                uid = brains[0].UID
+        # Maybe already UIDs.
+        if not uid:
+            bsc = getToolByName(context, 'bika_setup_catalog')
+            brains = bsc(portal_type='AnalysisService', title=obj)
+            if brains:
+                uid = brains[0].UID
+        if uid:
+            service_uids.append(uid)
+        else:
+            logger.info("In analysisrequest.add.create_analysisrequest: cannot "
+                        "find uid of this service: %s" % obj)
+
     # Set analysis request analyses
-    ar.setAnalyses(values['Analyses'],
+    ar.setAnalyses(service_uids,
                    prices=values.get("Prices", []),
                    specs=values.get('ResultsRange', []))
     analyses = ar.getAnalyses(full_objects=True)

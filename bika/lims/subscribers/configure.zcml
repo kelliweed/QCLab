@@ -40,21 +40,15 @@
     />
 
     <subscriber
-        for="bika.lims.interfaces.IARImport
-           zope.lifecycleevent.interfaces.IObjectModifiedEvent"
-      handler="bika.lims.subscribers.arimport.ARImportModifiedEventHandler"
-    />
-    <subscriber
-        for="bika.lims.interfaces.IARImportItem
-           zope.lifecycleevent.interfaces.IObjectModifiedEvent"
-      handler="bika.lims.subscribers.arimport.ARImportItemModifiedEventHandler"
-    />
-
-    <subscriber
         for="bika.lims.interfaces.IBikaSetup
            zope.lifecycleevent.interfaces.IObjectModifiedEvent"
       handler="bika.lims.subscribers.bikasetup.BikaSetupModifiedEventHandler"
     />
 
+    <subscriber
+        for="bika.lims.content.samplinground.ISamplingRound
+           zope.lifecycleevent.interfaces.IObjectAddedEvent"
+      handler="bika.lims.subscribers.samplinground.SamplingRoundAddedEventHandler"
+    />
 
  </configure>

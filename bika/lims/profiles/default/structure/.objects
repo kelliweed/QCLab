@@ -1,6 +1,5 @@
 setup-data-in-this-installation,Document
 clients,ClientFolder
-invoices,InvoiceFolder
 samples,SamplesFolder
 analysisrequests,AnalysisRequestsFolder
 batches,BatchFolder
@@ -12,3 +11,4 @@ supplyorders,SupplyOrderFolder
 bika_setup,BikaSetup
 reports,ReportFolder
 arimports,Folder
+invoices,InvoiceFolder

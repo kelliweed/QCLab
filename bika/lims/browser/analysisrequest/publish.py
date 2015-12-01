@@ -529,24 +529,17 @@ class AnalysisRequestPublishView(BrowserView):
                             if analysis.portal_type == 'Analysis' \
                             else '%s - %s' % (analysis.aq_parent.id, analysis.aq_parent.Title())
 
-        # Which analysis specs must be used?
-        # Try first with those defined at AR Publish Specs level
         if analysis.portal_type == 'ReferenceAnalysis':
             # The analysis is a Control or Blank. We might use the
             # reference results instead other specs
             uid = analysis.getServiceUID()
             specs = analysis.aq_parent.getResultsRangeDict().get(uid, {})
 
-        elif analysis.portal_type == 'DuplicateAnalysis':
-            specs = analysis.getAnalysisSpecs();
-
         else:
-            ar = analysis.aq_parent
-            specs = ar.getPublicationSpecification()
-            if not specs or keyword not in specs.getResultsRangeDict():
-                specs = analysis.getAnalysisSpecs()
-            specs = specs.getResultsRangeDict().get(keyword, {}) \
-                    if specs else {}
+            # Get the specs directly from the analysis. The getResultsRange
+            # function already takes care about which are the specs to be used:
+            # AR, client or lab.
+            specs = analysis.getResultsRange()
 
         andict['specs'] = specs
         scinot = self.context.bika_setup.getScientificNotationReport()
@@ -693,16 +686,6 @@ class AnalysisRequestPublishView(BrowserView):
             tmp_fn = tempfile.mktemp(suffix=".html")
             logger.debug("Writing HTML for %s to %s" % (ar.Title(), tmp_fn))
             open(tmp_fn, "wb").write(results_html)
-
-        # Create the pdf report (will always be attached to the AR)
-        # we must supply the file ourself so that createPdf leaves it alone.
-        # This version replaces 'attachment' links; probably not required,
-        # so it's repeated below, without these localise_images.
-        # cleanup, results_html_for_pdf = self.localise_images(results_html)
-        # pdf_fn = tempfile.mktemp(suffix=".pdf")
-        # pdf_report = createPdf(htmlreport=results_html_for_pdf, outfile=pdf_fn)
-        # for fn in cleanup:
-        #     os.remove(fn)
 
         # Create the pdf report (will always be attached to the AR)
         # we must supply the file ourself so that createPdf leaves it alone.
