@@ -50,6 +50,7 @@ class AnalysisServicesView(ASV):
         super(AnalysisServicesView, self).__init__(context, request)
 
         self.contentFilter['getPointOfCapture'] = poc
+        self.contentFilter['inactive_state'] = 'active'
 
         if category:
             self.contentFilter['getCategoryTitle'] = category
@@ -497,17 +498,22 @@ def create_analysisrequest(context, request, values):
     bc = getToolByName(context, 'bika_catalog')
 
     # Create new sample or locate the existing for secondary AR
+    sample = False
     if values['Sample']:
-        secondary = True
         if ISample.providedBy(values['Sample']):
+            secondary = True
             sample = values['Sample']
+            samplingworkflow_enabled = sample.getSamplingWorkflowEnabled()
         else:
-            sample = bc(UID=values['Sample'])[0].getObject()
-        samplingworkflow_enabled = sample.getSamplingWorkflowEnabled()
-    else:
+            brains = bc(UID=values['Sample'])
+            if brains:
+                secondary = True
+                sample = brains[0].getObject()
+                samplingworkflow_enabled = sample.getSamplingWorkflowEnabled()
+    if not sample:
         secondary = False
-        samplingworkflow_enabled = context.bika_setup.getSamplingWorkflowEnabled()
         sample = create_sample(context, request, values)
+        samplingworkflow_enabled = context.bika_setup.getSamplingWorkflowEnabled()
 
     # Create the Analysis Request
     ar = _createObjectByType('AnalysisRequest', context, tmpID())

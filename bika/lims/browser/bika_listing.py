@@ -267,10 +267,7 @@ class BikaListingView(BrowserView):
     show_column_toggles = True
 
     # setting pagesize to 0 specifically disables the batch size dropdown.
-    pagesize = 25
-
-    # On first load, pagenumber=1 probably makes the most sense.
-    pagenumber = 1
+    pagesize = 30
 
     # select checkbox is normally called uids:list
     # if table_only is set then the context form tag might require
@@ -315,6 +312,11 @@ class BikaListingView(BrowserView):
     field_icons = {}
 
     show_table_footer = True
+
+    # Sort with JS when a column does not have an index associated.
+    # It's not useful if the table is paginated since
+    # it only searches visible items
+    manual_sort_on = None
 
     # Column definitions:
     #
@@ -405,6 +407,8 @@ class BikaListingView(BrowserView):
 
         self.translate = self.context.translate
         self.show_all = False
+        self.show_more = False
+        self.limit_from = 0
 
     @property
     def review_state(self):
@@ -434,10 +438,11 @@ class BikaListingView(BrowserView):
         accordingly.  Setup AdvancedQuery or catalog contentFilter.
 
         Request parameters:
+        <form_id>_limit_from:       index of the first item to display
+        <form_id>_rows_only:        returns only the rows
         <form_id>_sort_on:          list items are sorted on this key
         <form_id>_manual_sort_on:   no index - sort with python
         <form_id>_pagesize:         number of items
-        <form_id>_pagenumber:       page number
         <form_id>_filter:           A string, will be regex matched against
                                     indexes in <form_id>_filter_indexes
         <form_id>_filter_indexes:   list of index names which will be searched
@@ -467,42 +472,62 @@ class BikaListingView(BrowserView):
         # If table_only specifies another form_id, then we abort.
         # this way, a single table among many can request a redraw,
         # and only it's content will be rendered.
-        if form_id not in self.request.get('table_only', form_id):
+        if form_id not in self.request.get('table_only', form_id) \
+            or form_id not in self.request.get('rows_only', form_id):
             return ''
 
+        self.rows_only = self.request.get('rows_only','') == form_id
+        self.limit_from = int(self.request.get(form_id + '_limit_from',0))
 
         # contentFilter is expected in every self.review_state.
         for k, v in self.review_state['contentFilter'].items():
             self.contentFilter[k] = v
+
         # sort on
         self.sort_on = self.request.get(form_id + '_sort_on', None)
-        # manual_sort_on: only sort the current batch of items
-        # this is a compromise for sorting without column indexes
-        self.manual_sort_on = None
-        if self.sort_on \
-           and self.sort_on in self.columns.keys() \
-           and self.columns[self.sort_on].get('index', None):
-            idx = self.columns[self.sort_on].get('index', self.sort_on)
-            self.contentFilter['sort_on'] = idx
-        else:
-            if self.sort_on:
-                self.manual_sort_on = self.sort_on
-                if 'sort_on' in self.contentFilter:
-                    del self.contentFilter['sort_on']
+        self.sort_order = self.request.get(form_id + '_sort_order', 'ascending')
+        self.manual_sort_on = self.request.get(form_id + '_manual_sort_on', None)
 
-        # sort order
-        self.sort_order = self.request.get(form_id + '_sort_order', '')
-        if self.sort_order:
-            self.contentFilter['sort_order'] = self.sort_order
-        else:
-            if 'sort_order' not in self.contentFilter:
-                self.sort_order = 'ascending'
-                self.contentFilter['sort_order'] = 'ascending'
-                self.request.set(form_id+'_sort_order', 'ascending')
+        if self.sort_on:
+            if self.sort_on in self.columns.keys():
+               if self.columns[self.sort_on].get('index', None):
+                   self.request.set(form_id+'_sort_on', self.sort_on)
+                   # The column can be sorted directly using an index
+                   idx = self.columns[self.sort_on]['index']
+                   self.sort_on = idx
+                   # Don't sort manually!
+                   self.manual_sort_on = None
+               else:
+                   # The column must be manually sorted using python
+                   self.manual_sort_on = self.sort_on
             else:
-                self.sort_order = self.contentFilter['sort_order']
+                # We cannot sort for a column that doesn't exist!
+                self.sort_on = None
+
         if self.manual_sort_on:
-            del self.contentFilter['sort_order']
+            self.manual_sort_on = self.manual_sort_on[0] \
+                                if type(self.manual_sort_on) in (list, tuple) \
+                                else self.manual_sort_on
+            if self.manual_sort_on not in self.columns.keys():
+                # We cannot sort for a column that doesn't exist!
+                self.manual_sort_on = None
+        else:
+            self.request.set(form_id+'_manual_sort_on', self.sort_on)
+
+        if self.sort_on or self.manual_sort_on:
+            # By default, if sort_on is set, sort the items ASC
+            # Trick to allow 'descending' keyword instead of 'reverse'
+            self.sort_order = 'reverse' if self.sort_order \
+                                        and self.sort_order[0] in ['d','r'] \
+                                        else 'ascending'
+        else:
+            # By default, sort on created
+            self.sort_order = 'reverse'
+            self.sort_on = 'created'
+
+        self.contentFilter['sort_order'] = self.sort_order
+        if not self.manual_sort_on:
+            self.contentFilter['sort_on'] = self.sort_on
 
         # pagesize
         pagesize = self.request.get(form_id + '_pagesize', self.pagesize)
@@ -517,11 +542,6 @@ class BikaListingView(BrowserView):
         self.request.set('pagesize', self.pagesize)
         # and we want to make our choice remembered in bika_listing also
         self.request.set(self.form_id + '_pagesize', self.pagesize)
-
-        # pagenumber
-        self.pagenumber = int(self.request.get(form_id + '_pagenumber', self.pagenumber))
-        # Plone's batching wants this variable:
-        self.request.set('pagenumber', self.pagenumber)
 
         # index filters.
         self.And = []
@@ -643,7 +663,7 @@ class BikaListingView(BrowserView):
                 if k.startswith(self.form_id + "_") and not "uids" in k:
                     query[k] = v
         # override from self attributes
-        for x in "pagenumber", "pagesize", "review_state", "sort_order", "sort_on":
+        for x in "pagesize", "review_state", "sort_order", "sort_on", "limit_from":
             if str(getattr(self, x, None)) != 'None':
                 # I don't understand why on AR listing, getattr(self,x)
                 # is a dict, but this line will resolve LIMS-1420
@@ -675,8 +695,9 @@ class BikaListingView(BrowserView):
             # - get nice formatted category contents (tr rows only)
             return self.rendered_items()
 
-        if self.request.get('table_only', '') == self.form_id:
-            return self.contents_table(table_only=self.request.get('table_only'))
+        if self.request.get('table_only', '') == self.form_id \
+            or self.request.get('rows_only', '') == self.form_id:
+            return self.contents_table(table_only=self.form_id)
         else:
             return self.template()
 
@@ -738,7 +759,7 @@ class BikaListingView(BrowserView):
 
         >>> browser = layer['getBrowser'](portal, loggedIn=True, username=SITE_OWNER_NAME, password=SITE_OWNER_PASSWORD)
         >>> browser.open(portal_url+"/bika_setup/bika_sampletypes/folder_view?",
-        ... "list_pagesize=10&list_review_state=default&list_pagenumber=2")
+        ... "list_pagesize=10&list_review_state=default")
         >>> browser.contents
         '...Water...'
         """
@@ -762,11 +783,6 @@ class BikaListingView(BrowserView):
             show_all = True
         else:
             show_all = False
-
-        pagenumber = int(self.request.get('pagenumber', 1) or 1)
-        pagesize = self.pagesize
-        start = (pagenumber - 1) * pagesize
-        end = start + pagesize - 1
 
         if (hasattr(self, 'And') and self.And) \
            or (hasattr(self, 'Or') and self.Or):
@@ -795,22 +811,20 @@ class BikaListingView(BrowserView):
         # the idx will not increase.
         idx = 0
         results = []
-        self.page_start_index = 0
+        self.show_more = False
+        brains = brains[self.limit_from:]
         for i, obj in enumerate(brains):
-            # we don't know yet if it's a brain or an object
-            path = hasattr(obj, 'getPath') and obj.getPath() or \
-                 "/".join(obj.getPhysicalPath())
-
-            # If obj is a brain don't retrieve the object and get the UID
-            # from the brain. Object retrieval is resources-consuming
-            uid = obj.UID if hasattr(obj, 'getObject') else obj.UID()
-
             # avoid creating unnecessary info for items outside the current
             # batch;  only the path is needed for the "select all" case...
             # we only take allowed items into account
-            if not show_all and not (start <= i <= end):
-                results.append(dict(path = path, uid = uid))
-                continue
+            if not show_all and idx >= self.pagesize:
+                # Maximum number of items to be shown reached!
+                self.show_more = True
+                break
+
+            # we don't know yet if it's a brain or an object
+            path = hasattr(obj, 'getPath') and obj.getPath() or \
+                 "/".join(obj.getPhysicalPath())
 
             # This item must be rendered, we need the object instead of a brain
             obj = obj.getObject() if hasattr(obj, 'getObject') else obj
@@ -820,6 +834,7 @@ class BikaListingView(BrowserView):
             if not self.isItemAllowed(obj):
                 continue
 
+            uid = obj.UID()
             title = obj.Title()
             description = obj.Description()
             icon = plone_layout.getIcon(obj)
@@ -934,6 +949,13 @@ class BikaListingView(BrowserView):
             if item:
                 results.append(item)
                 idx+=1
+
+            # Need manual_sort?
+            # Note that the order has already been set in contentFilter, so
+            # there is no need to reverse
+            if self.manual_sort_on:
+                results.sort(lambda x,y:cmp(x.get(self.manual_sort_on, ''),
+                                         y.get(self.manual_sort_on, '')))
 
         return results
 
@@ -1055,26 +1077,6 @@ class BikaListingTable(tableview.Table):
             self.pagesize = len(folderitems)
         bika_listing.items = folderitems
         self.hide_hidden_attributes()
-
-        if hasattr(self.bika_listing, 'manual_sort_on') \
-           and self.bika_listing.manual_sort_on:
-            mso = self.bika_listing.manual_sort_on
-            if type(mso) in (list, tuple):
-                self.bika_listing.manual_sort_on = mso[0]
-            psi = self.bika_listing.page_start_index
-            psi = psi and psi or 0
-            # We do a sort of the current page using self.manual_sort_on, here
-            page = folderitems[psi:psi+self.pagesize]
-            page.sort(lambda x,y:cmp(x.get(self.bika_listing.manual_sort_on, ''),
-                                     y.get(self.bika_listing.manual_sort_on, '')))
-
-            if self.bika_listing.sort_order[0] in ['d','r']:
-                page.reverse()
-
-            folderitems = folderitems[:psi] \
-                + page \
-                + folderitems[psi+self.pagesize:]
-
 
         tableview.Table.__init__(self,
                                  bika_listing.request,
