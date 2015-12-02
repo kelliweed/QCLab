@@ -376,7 +376,7 @@ class WorksheetFolderListingView(BikaListingView):
             ws_services = {}
             for slot in [s for s in layout if s['type'] == 'a']:
                 analysis = rc.lookupObject(slot['analysis_uid'])
-                if !analysis:
+                if not analysis:
                     error = "Analysis with uid '%s' NOT FOUND in Reference Catalog.\n Worksheet: '%s'. Layout: '%s'" % \
                             (slot['analysis_uid'], obj, layout)
                     logging.info(error)
