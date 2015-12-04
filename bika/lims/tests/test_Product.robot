@@ -54,11 +54,11 @@ Test StockItem as LabManager
     Add Sampling Kit as product category
     Add Water-sampling kit as product under Sampling Kit in supplier-1
 
-    Given a blank product item form
+    Given a blank stock item form
      When I select the product Water-sampling kit
       and I enter other fields of the item
       and I submit the form
-     Then product items list should contain Water-sampling kit and Sampling Kit
+     Then stock items list should contain Water-sampling kit and Sampling Kit
 
 
 *** Keywords ***
@@ -70,8 +70,8 @@ a blank product form in ${supplier}
     go to  ${PLONEURL}/bika_setup/bika_suppliers/${supplier}/portal_factory/Product/xxx/edit
     wait until page contains  xxx
 
-a blank product item form
-    [Documentation]  Load a fresh Product Item form
+a blank stock item form
+    [Documentation]  Load a fresh Stock item form
     go to  ${PLONEURL}/bika_setup/bika_stockitems/portal_factory/StockItem/xxx/edit
     wait until page contains  xxx
 
@@ -120,9 +120,9 @@ products list of ${supplier} should not contain ${title} under ${category}
     click element  xpath=//th[contains(@cat, '${category}')]
     page should not contain  ${title}
 
-product items list should contain ${product} and ${category}
+stock items list should contain ${product} and ${category}
     go to  ${PLONEURL}/bika_setup/bika_stockitems
-    wait until page contains  Product Items
+    wait until page contains  Stock items
     page should contain  ${product}
     page should contain  ${category}
 

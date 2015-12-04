@@ -24,7 +24,7 @@ class Assignment(base.Assignment):
 class AddForm(base.AddForm):
     form_fields = form.Fields(IExpiryPortlet)
     label = _(u"Add Expiry Portlet")
-    description = _(u"This portlet displays the product items about to expire.")
+    description = _(u"This portlet displays the stock items about to expire.")
 
     def create(self, data):
         return Assignment(count=data.get('count', 5))
@@ -32,7 +32,7 @@ class AddForm(base.AddForm):
 class EditForm(base.EditForm):
     form_fields = form.Fields(IExpiryPortlet)
     label = _(u"Edit Expiry Portlet")
-    description = _(u"This portlet displays the product items about to expire.")
+    description = _(u"This portlet displays the stock items about to expire.")
 
 
 class Renderer(base.Renderer):

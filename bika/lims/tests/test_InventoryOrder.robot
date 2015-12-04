@@ -47,7 +47,7 @@ Test product reception and storage as LabManager
 
     Given a dispatched order in supplier-3 with 5 items of Nitric acid
      When I trigger receive transition
-     Then new product items appear in the list under order-1
+     Then new stock items appear in the list under order-1
       and quantity of the Chemical named Nitric acid supplied by supplier-3 is 5
 
      When I store 3 items of Nitric acid in Freezer > Drawer-1
@@ -123,7 +123,7 @@ I can print the order for ${supplier_id}
     Page Should contain Link  ${PLONEURL}/bika_setup/bika_suppliers/${supplier_id}/order-1/print
     # Can't display print here, as Robot framework can't close the print dialog box once it opens!
 
-new product items appear in the list under ${order_id}
+new stock items appear in the list under ${order_id}
     go to  ${PLONEURL}/bika_setup/bika_stockitems
     page should contain  ${order_id}
 

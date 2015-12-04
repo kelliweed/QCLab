@@ -21,7 +21,7 @@ schema = BikaSchema.copy() + Schema((
         validators=('uniquefieldvalidator',),
         widget=StringWidget(
             visible=False,
-            label=_("Product Item ID"),
+            label=_("Stock item ID"),
         )
     ),
     ReferenceField('Product',

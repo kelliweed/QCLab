@@ -577,7 +577,7 @@ schema = BikaFolderSchema.copy() + Schema((
         schemata = "Inventory",
         default = True,
         widget = BooleanWidget(
-            label=_("Print product item stickers automatically"),
+            label=_("Print stock item stickers automatically"),
         ),
     ),
 ))

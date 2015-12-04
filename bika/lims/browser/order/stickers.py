@@ -5,7 +5,7 @@ from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 import os
 
 class Sticker(BrowserView):
-    """Labels of product items of an order"""
+    """Labels of stock items of an order"""
 
     def __call__(self):
         bsc = getToolByName(self.context, 'bika_setup_catalog')
@@ -15,7 +15,7 @@ class Sticker(BrowserView):
         else:
             self.items = [self.context,]
 
-        # Orders get stickers for their product items
+        # Orders get stickers for their stock items
         new_items = []
         for i in self.items:
             if i.portal_type == 'Order':

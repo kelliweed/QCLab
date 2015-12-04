@@ -35,7 +35,7 @@ class StockItemsView(BikaListingView):
         self.context_actions = {_('Add'):
                                 {'url': 'createObject?type_name=StockItem',
                                  'icon': '++resource++bika.lims.images/add.png'}}
-        self.title = self.context.translate(_("Product Items"))
+        self.title = self.context.translate(_("Stock items"))
         self.icon = self.portal_url + "/++resource++bika.lims.images/product_big.png"
         self.description = ""
         self.show_sort_column = False
@@ -44,7 +44,7 @@ class StockItemsView(BikaListingView):
         self.pagesize = 25
         self.filter_indexes.append('getBatchId')
         self.columns = {
-            'stockitemID': {'title': _('Product Item ID'),
+            'stockitemID': {'title': _('Stock item ID'),
                       'index': 'sortable_title',
                       'toggle': True},
             'orderId': {'title': _('Order Id'),

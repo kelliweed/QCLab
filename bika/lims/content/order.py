@@ -177,12 +177,12 @@ class Order(BaseFolder):
                 pi.setDateReceived(DateTime())
                 pi.unmarkCreationFlag()
                 renameAfterCreation(pi)
-                # Manually reindex product item in catalog
+                # Manually reindex stock item in catalog
                 self.bika_setup_catalog.reindexObject(pi)
             product.setQuantity(product.getQuantity() + quantity)
         self.setDateReceived(DateTime())
         self.reindexObject()
-        # Print product item stickers if opted for
+        # Print stock item stickers if opted for
         if self.bika_setup.getAutoPrintInventoryStickers():
             # TODO: Use better method to redirect after transition
             self.REQUEST.response.write(

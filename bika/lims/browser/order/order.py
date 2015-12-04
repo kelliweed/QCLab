@@ -200,7 +200,7 @@ class OrderStore(BrowserView):
         context.setConstrainTypesMode(0)
         bsc = getToolByName(self.context, 'bika_setup_catalog')
         catalog = [pi.getObject() for pi in bsc(portal_type='StockItem')]
-        # Remaining product items of this order
+        # Remaining stock items of this order
         stockitems = [pi for pi in catalog \
                             if (pi.getOrderId() == self.context.getId() and
                                 pi.getIsStored() == False)]
@@ -261,7 +261,7 @@ class OrderStore(BrowserView):
                 self.context.plone_utils.addPortalMessage(_(message), 'error')
                 continue
 
-            # Store product items in available levels
+            # Store stock items in available levels
             stockitems = stockitems[:number]
             for i, pi in enumerate(stockitems):
                 level = child_levels[i]

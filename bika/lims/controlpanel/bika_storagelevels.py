@@ -50,7 +50,7 @@ class StorageLevelsView(BikaListingView):
                                 'toggle': True},
             'Hierarchy': {'title': _('Hierarchy'),
                                 'toggle': False},
-            'StockItemID': {'title': _('Product Item ID'),
+            'StockItemID': {'title': _('Stock item ID'),
                                 'toggle': True},
             'IsOccupied': {'title': _('Is Occupied'),
                                 'toggle': False},
