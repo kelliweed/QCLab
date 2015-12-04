@@ -1,5 +1,5 @@
 [Workflow],,,,,,,,,,
-Id:,bika_productitem_workflow,,,,,,,,,
+Id:,bika_stockitem_workflow,,,,,,,,,
 Title:,Bika PI workflow,,,,,,,,,
 Description:,,,,,,,,,,
 Initial state:,valid,,,,,,,,,

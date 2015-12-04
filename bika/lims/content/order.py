@@ -169,9 +169,9 @@ class Order(BaseFolder):
             if quantity < 1:
                 continue
             product = [p for p in products if p.getId() == item['Product']][0]
-            folder = self.bika_setup.bika_productitems
+            folder = self.bika_setup.bika_stockitems
             for i in range(quantity):
-                pi = _createObjectByType('ProductItem', folder, tmpID())
+                pi = _createObjectByType('Stockitem', folder, tmpID())
                 pi.setProduct(product)
                 pi.setOrderId(self.getId())
                 pi.setDateReceived(DateTime())

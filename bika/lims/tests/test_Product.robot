@@ -48,7 +48,7 @@ Test Product as LabManager
       and products list of supplier-1 should not contain Test tube under Kit Component
 
 
-Test ProductItem as LabManager
+Test Stockitem as LabManager
     Log in  test_labmanager  test_labmanager
 
     Add Sampling Kit as product category
@@ -72,7 +72,7 @@ a blank product form in ${supplier}
 
 a blank product item form
     [Documentation]  Load a fresh Product Item form
-    go to  ${PLONEURL}/bika_setup/bika_productitems/portal_factory/ProductItem/xxx/edit
+    go to  ${PLONEURL}/bika_setup/bika_stockitems/portal_factory/Stockitem/xxx/edit
     wait until page contains  xxx
 
 # --- When ------------------------------------------------------------------
@@ -121,7 +121,7 @@ products list of ${supplier} should not contain ${title} under ${category}
     page should not contain  ${title}
 
 product items list should contain ${product} and ${category}
-    go to  ${PLONEURL}/bika_setup/bika_productitems
+    go to  ${PLONEURL}/bika_setup/bika_stockitems
     wait until page contains  Product Items
     page should contain  ${product}
     page should contain  ${category}

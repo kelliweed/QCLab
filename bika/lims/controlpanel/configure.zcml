@@ -205,17 +205,17 @@
     />
 
     <browser:page
-      for="bika.lims.interfaces.IProductItems"
+      for="bika.lims.interfaces.IStockitems"
       name="folder_view"
-      class=".bika_productitems.ProductItemsView"
+      class=".bika_stockitems.StockitemsView"
       permission="bika.lims.ManageBika"
       layer="bika.lims.interfaces.IBikaLIMS"
     />
 
     <browser:page
-      for="bika.lims.interfaces.IProductItems"
+      for="bika.lims.interfaces.IStockitems"
       name="workflow_action"
-      class=".bika_productitems.ProductItemsWorkflowAction"
+      class=".bika_stockitems.StockitemsWorkflowAction"
       permission="bika.lims.ManageBika"
       layer="bika.lims.interfaces.IBikaLIMS"
     />

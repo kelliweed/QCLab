@@ -50,7 +50,7 @@ class StorageLevelsView(BikaListingView):
                                 'toggle': True},
             'Hierarchy': {'title': _('Hierarchy'),
                                 'toggle': False},
-            'ProductItemID': {'title': _('Product Item ID'),
+            'StockitemID': {'title': _('Product Item ID'),
                                 'toggle': True},
             'IsOccupied': {'title': _('Is Occupied'),
                                 'toggle': False},
@@ -63,7 +63,7 @@ class StorageLevelsView(BikaListingView):
              'columns': ['Title',
                          'Description',
                          'Hierarchy',
-                         'ProductItemID',
+                         'StockitemID',
                          'IsOccupied']},
             {'id':'inactive',
              'title': _('Dormant'),
@@ -72,7 +72,7 @@ class StorageLevelsView(BikaListingView):
              'columns': ['Title',
                          'Description',
                          'Hierarchy',
-                         'ProductItemID',
+                         'StockitemID',
                          'IsOccupied']},
             {'id':'all',
              'title': _('All'),
@@ -80,7 +80,7 @@ class StorageLevelsView(BikaListingView):
              'columns': ['Title',
                          'Description',
                          'Hierarchy',
-                         'ProductItemID',
+                         'StockitemID',
                          'IsOccupied']},
         ]
 
@@ -91,7 +91,7 @@ class StorageLevelsView(BikaListingView):
             obj = items[x]['obj']
             items[x]['replace']['Title'] = "<a href='%s'>%s</a>" % \
                  (items[x]['url'], items[x]['Title'])
-            items[x]['ProductItemID'] = obj.getProductItemID()
+            items[x]['StockitemID'] = obj.getStockitemID()
             items[x]['IsOccupied'] = 'yes' if obj.getIsOccupied() else 'no'
             items[x]['Hierarchy'] = obj.getHierarchy()
         return items

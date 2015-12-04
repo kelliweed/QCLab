@@ -5,7 +5,7 @@ from Products.ATContentTypes.content import base
 from Products.ATContentTypes.content import schemata
 from bika.lims.browser.widgets import DateTimeWidget as bika_DateTimeWidget
 from bika.lims.browser.widgets import ReferenceWidget as bika_ReferenceWidget
-from bika.lims.interfaces import IProductItem
+from bika.lims.interfaces import IStockitem
 from bika.lims import config
 from bika.lims.content.bikaschema import BikaSchema
 from DateTime.DateTime import DateTime
@@ -16,7 +16,7 @@ import sys
 
 schema = BikaSchema.copy() + Schema((
     StringField(
-        'ProductItemID',
+        'StockitemID',
         searchable=True,
         validators=('uniquefieldvalidator',),
         widget=StringWidget(
@@ -28,7 +28,7 @@ schema = BikaSchema.copy() + Schema((
         required=1,
         vocabulary_display_path_bound = sys.maxint,
         allowed_types=('Product',),
-        relationship='ProductItemProduct',
+        relationship='StockitemProduct',
         referenceClass=HoldingReference,
         widget=bika_ReferenceWidget(
             label = _("Product"),
@@ -110,10 +110,10 @@ schema['title'].required = False
 schema['title'].widget.visible = False
 schema['description'].schemata = 'default'
 schema['description'].widget.visible = True
-schema.moveField('ProductItemID', before='description')
+schema.moveField('StockitemID', before='description')
 
-class ProductItem(BaseContent):
-    implements(IProductItem)
+class Stockitem(BaseContent):
+    implements(IStockitem)
     schema = schema
 
     _at_rename_after_creation = True
@@ -125,7 +125,7 @@ class ProductItem(BaseContent):
     def getProductTitle(self):
         return self.getProduct().Title()
 
-    def getProductItemId(self):
+    def getStockitemId(self):
         return self.getId()
 
-registerType(ProductItem, config.PROJECTNAME)
+registerType(Stockitem, config.PROJECTNAME)

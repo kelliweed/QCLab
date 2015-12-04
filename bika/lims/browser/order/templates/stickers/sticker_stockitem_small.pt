@@ -31,18 +31,18 @@
 
 <body style="margin: 0; padding: 0" onload="this.print();">
 
-<metal:block tal:repeat="productitem view/items">
+<metal:block tal:repeat="stockitem view/items">
 
 <table cellpadding="0" cellspacing="0" tal:define="
     portal_url   nocall:context/portal_url;
-    ItemID       python:productitem.getId();
-    Product      python:productitem.getProductTitle();
-    ExpiryDate   python:productitem.getExpiryDate();
+    ItemID       python:stockitem.getId();
+    Product      python:stockitem.getProductTitle();
+    ExpiryDate   python:stockitem.getExpiryDate();
     ">
 <tr>
     <td>
         <strong tal:content="string:${ItemID}"/>
-        <img tal:condition="python:productitem.getProduct().getHazardous()"
+        <img tal:condition="python:stockitem.getProduct().getHazardous()"
              tal:attributes="src string:${portal_url}/++resource++bika.lims.images/hazardous.png"/>
     </td>
     <td class='barcode' colspan="2">

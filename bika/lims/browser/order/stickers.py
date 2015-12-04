@@ -19,7 +19,7 @@ class Sticker(BrowserView):
         new_items = []
         for i in self.items:
             if i.portal_type == 'Order':
-                catalog = bsc(portal_type='ProductItem')
+                catalog = bsc(portal_type='Stockitem')
                 new_items += [pi.getObject() for pi in catalog
                               if pi.getObject().getOrderId() == i.getId()]
             else:
@@ -31,6 +31,6 @@ class Sticker(BrowserView):
             self.request.response.redirect(self.context.absolute_url())
             return
 
-        template = 'templates/stickers/sticker_productitem_small.pt'
+        template = 'templates/stickers/sticker_stockitem_small.pt'
         stickertemplate = ViewPageTemplateFile(template)
         return stickertemplate(self)

@@ -124,7 +124,7 @@ I can print the order for ${supplier_id}
     # Can't display print here, as Robot framework can't close the print dialog box once it opens!
 
 new product items appear in the list under ${order_id}
-    go to  ${PLONEURL}/bika_setup/bika_productitems
+    go to  ${PLONEURL}/bika_setup/bika_stockitems
     page should contain  ${order_id}
 
 quantity of the ${category} named ${product} supplied by ${supplier} is ${quantity}

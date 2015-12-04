@@ -41,7 +41,7 @@ schema = BikaFolderSchema.copy() + BikaSchema.copy() + Schema((
         widget=BooleanWidget(visible=False),
     ),
     StringField(
-        'ProductItemID',
+        'StockitemID',
         widget=StringWidget(visible=False),
     ),
     ComputedField(

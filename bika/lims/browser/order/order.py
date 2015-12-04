@@ -199,14 +199,14 @@ class OrderStore(BrowserView):
         # Allow adding items to this context
         context.setConstrainTypesMode(0)
         bsc = getToolByName(self.context, 'bika_setup_catalog')
-        catalog = [pi.getObject() for pi in bsc(portal_type='ProductItem')]
+        catalog = [pi.getObject() for pi in bsc(portal_type='Stockitem')]
         # Remaining product items of this order
-        productitems = [pi for pi in catalog \
+        stockitems = [pi for pi in catalog \
                             if (pi.getOrderId() == self.context.getId() and
                                 pi.getIsStored() == False)]
         # Organize items as per their product
         products_dict = {}
-        for pi in productitems:
+        for pi in stockitems:
             product_id = pi.getProduct().getId()
             if not product_id in products_dict:
                 products_dict[product_id] = []
@@ -238,7 +238,7 @@ class OrderStore(BrowserView):
                                     sl.aq_parent.getHierarchy() == hierarchy and
                                     not sl.getHasChildren() and
                                     not sl.getIsOccupied())]
-            productitems = products_dict[product_id]
+            stockitems = products_dict[product_id]
             # Get number of items to store
             nid = 'number-' + product_id
             if nid in request.form and request.form[nid]:
@@ -249,7 +249,7 @@ class OrderStore(BrowserView):
             if number < 1:
                 continue
             message = ''
-            if number > len(productitems):
+            if number > len(stockitems):
                 message = _('Number entered for ' + product_name + ' is invalid.')
             if not child_levels:
                 message = 'Storage level is required. Please correct.'
@@ -262,12 +262,12 @@ class OrderStore(BrowserView):
                 continue
 
             # Store product items in available levels
-            productitems = productitems[:number]
-            for i, pi in enumerate(productitems):
+            stockitems = stockitems[:number]
+            for i, pi in enumerate(stockitems):
                 level = child_levels[i]
                 pi.setStorageLevelID(level.getId())
                 pi.setIsStored(True)
-                level.setProductItemID(pi.getId())
+                level.setStockitemID(pi.getId())
                 level.setIsOccupied(True)
                 # Decrement number of available children of parent
                 nac = level.aq_parent.getNumberOfAvailableChildren()

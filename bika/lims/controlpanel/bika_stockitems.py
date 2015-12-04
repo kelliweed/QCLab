@@ -14,7 +14,7 @@ from bika.lims.content.bikaschema import BikaFolderSchema
 from plone.app.content.browser.interfaces import IFolderContentsView
 from plone.app.folder.folder import ATFolder, ATFolderSchema
 from zope.interface.declarations import implements
-from bika.lims.interfaces import IProductItems
+from bika.lims.interfaces import IStockitems
 
 from bika.lims.browser.bika_listing import WorkflowAction
 import plone
@@ -24,16 +24,16 @@ from bika.lims.workflow import doActionFor
 from bika.lims.utils import t
 from bika.lims import PMF
 
-class ProductItemsView(BikaListingView):
+class StockitemsView(BikaListingView):
     implements(IFolderContentsView, IViewView)
 
     def __init__(self, context, request):
-        super(ProductItemsView, self).__init__(context, request)
+        super(StockitemsView, self).__init__(context, request)
         self.catalog = 'bika_setup_catalog'
-        self.contentFilter = {'portal_type': 'ProductItem',
+        self.contentFilter = {'portal_type': 'Stockitem',
                               'sort_on': 'sortable_title'}
         self.context_actions = {_('Add'):
-                                {'url': 'createObject?type_name=ProductItem',
+                                {'url': 'createObject?type_name=Stockitem',
                                  'icon': '++resource++bika.lims.images/add.png'}}
         self.title = self.context.translate(_("Product Items"))
         self.icon = self.portal_url + "/++resource++bika.lims.images/product_big.png"
@@ -44,7 +44,7 @@ class ProductItemsView(BikaListingView):
         self.pagesize = 25
         self.filter_indexes.append('getBatchId')
         self.columns = {
-            'productItemID': {'title': _('Product Item ID'),
+            'stockitemID': {'title': _('Product Item ID'),
                       'index': 'sortable_title',
                       'toggle': True},
             'orderId': {'title': _('Order Id'),
@@ -80,7 +80,7 @@ class ProductItemsView(BikaListingView):
              'title': _('Valid'),
              'contentFilter': {'review_state': 'valid'},
              'transitions': [{'id':'discard'}, ],
-             'columns': ['productItemID',
+             'columns': ['stockitemID',
                          'orderId',
                          'labId',
                          'batchId',
@@ -98,7 +98,7 @@ class ProductItemsView(BikaListingView):
              'title': _('Discarded'),
              'contentFilter': {'review_state': 'discarded'},
              'transitions': [{'id':'keep'}, ],
-             'columns': ['productItemID',
+             'columns': ['stockitemID',
                          'orderId',
                          'labId',
                          'batchId',
@@ -115,7 +115,7 @@ class ProductItemsView(BikaListingView):
             {'id':'all',
              'title': _('All'),
              'contentFilter':{},
-             'columns': ['productItemID',
+             'columns': ['stockitemID',
                          'orderId',
                          'labId',
                          'batchId',
@@ -149,22 +149,22 @@ class ProductItemsView(BikaListingView):
             items[x]['dateOpened'] = self.ulocalized_time(obj.getDateOpened())
             items[x]['expiryDate'] = self.ulocalized_time(obj.getExpiryDate())
             items[x]['disposalDate'] = self.ulocalized_time(obj.getDisposalDate())
-            items[x]['replace']['productItemID'] = "<a href='%s'>%s</a>" % \
-                (items[x]['url'], obj.getProductItemId())
+            items[x]['replace']['stockitemID'] = "<a href='%s'>%s</a>" % \
+                (items[x]['url'], obj.getStockitemId())
         return items
 
 schema = ATFolderSchema.copy()
-class ProductItems(ATFolder):
-    implements(IProductItems)
+class Stockitems(ATFolder):
+    implements(IStockitems)
     displayContentsTab = False
     schema = schema
 
 schemata.finalizeATCTSchema(schema, folderish = True, moveDiscussion = False)
-atapi.registerType(ProductItems, PROJECTNAME)
+atapi.registerType(Stockitems, PROJECTNAME)
 
-class ProductItemsWorkflowAction(WorkflowAction):
+class StockitemsWorkflowAction(WorkflowAction):
 
-    """Workflow actions taken in ProductItems context.
+    """Workflow actions taken in Stockitems context.
 
     """
 
