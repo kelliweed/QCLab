@@ -14,7 +14,7 @@ from bika.lims.content.bikaschema import BikaFolderSchema
 from plone.app.content.browser.interfaces import IFolderContentsView
 from plone.app.folder.folder import ATFolder, ATFolderSchema
 from zope.interface.declarations import implements
-from bika.lims.interfaces import IStockitems
+from bika.lims.interfaces import IStockItems
 
 from bika.lims.browser.bika_listing import WorkflowAction
 import plone
@@ -24,16 +24,16 @@ from bika.lims.workflow import doActionFor
 from bika.lims.utils import t
 from bika.lims import PMF
 
-class StockitemsView(BikaListingView):
+class StockItemsView(BikaListingView):
     implements(IFolderContentsView, IViewView)
 
     def __init__(self, context, request):
-        super(StockitemsView, self).__init__(context, request)
+        super(StockItemsView, self).__init__(context, request)
         self.catalog = 'bika_setup_catalog'
-        self.contentFilter = {'portal_type': 'Stockitem',
+        self.contentFilter = {'portal_type': 'StockItem',
                               'sort_on': 'sortable_title'}
         self.context_actions = {_('Add'):
-                                {'url': 'createObject?type_name=Stockitem',
+                                {'url': 'createObject?type_name=StockItem',
                                  'icon': '++resource++bika.lims.images/add.png'}}
         self.title = self.context.translate(_("Product Items"))
         self.icon = self.portal_url + "/++resource++bika.lims.images/product_big.png"
@@ -150,21 +150,21 @@ class StockitemsView(BikaListingView):
             items[x]['expiryDate'] = self.ulocalized_time(obj.getExpiryDate())
             items[x]['disposalDate'] = self.ulocalized_time(obj.getDisposalDate())
             items[x]['replace']['stockitemID'] = "<a href='%s'>%s</a>" % \
-                (items[x]['url'], obj.getStockitemId())
+                (items[x]['url'], obj.getStockItemId())
         return items
 
 schema = ATFolderSchema.copy()
-class Stockitems(ATFolder):
-    implements(IStockitems)
+class StockItems(ATFolder):
+    implements(IStockItems)
     displayContentsTab = False
     schema = schema
 
 schemata.finalizeATCTSchema(schema, folderish = True, moveDiscussion = False)
-atapi.registerType(Stockitems, PROJECTNAME)
+atapi.registerType(StockItems, PROJECTNAME)
 
-class StockitemsWorkflowAction(WorkflowAction):
+class StockItemsWorkflowAction(WorkflowAction):
 
-    """Workflow actions taken in Stockitems context.
+    """Workflow actions taken in StockItems context.
 
     """
 

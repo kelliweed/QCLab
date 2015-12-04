@@ -754,7 +754,7 @@ class BikaGenerator:
         at.setCatalogsByType('Order', ['bika_setup_catalog'])
         at.setCatalogsByType('Preservation', ['bika_setup_catalog', ])
         at.setCatalogsByType('ProductCategory', ['bika_setup_catalog', ])
-        at.setCatalogsByType('Stockitem', ['bika_setup_catalog', ])
+        at.setCatalogsByType('StockItem', ['bika_setup_catalog', ])
         at.setCatalogsByType('Product', ['bika_setup_catalog', ])
         at.setCatalogsByType('ReferenceDefinition', ['bika_setup_catalog', 'portal_catalog'])
         at.setCatalogsByType('SampleCondition', ['bika_setup_catalog'])

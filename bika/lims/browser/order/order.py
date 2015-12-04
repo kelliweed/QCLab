@@ -199,7 +199,7 @@ class OrderStore(BrowserView):
         # Allow adding items to this context
         context.setConstrainTypesMode(0)
         bsc = getToolByName(self.context, 'bika_setup_catalog')
-        catalog = [pi.getObject() for pi in bsc(portal_type='Stockitem')]
+        catalog = [pi.getObject() for pi in bsc(portal_type='StockItem')]
         # Remaining product items of this order
         stockitems = [pi for pi in catalog \
                             if (pi.getOrderId() == self.context.getId() and
@@ -267,7 +267,7 @@ class OrderStore(BrowserView):
                 level = child_levels[i]
                 pi.setStorageLevelID(level.getId())
                 pi.setIsStored(True)
-                level.setStockitemID(pi.getId())
+                level.setStockItemID(pi.getId())
                 level.setIsOccupied(True)
                 # Decrement number of available children of parent
                 nac = level.aq_parent.getNumberOfAvailableChildren()

@@ -84,7 +84,7 @@ class Renderer(base.Renderer):
     @memoize
     def _data(self):
         limit = self.data.count
-        ans = self.catalog(portal_type='Stockitems',
+        ans = self.catalog(portal_type='StockItems',
                             sort_on='modified',
                             sort_order='reverse')
         anss = ans[0].getObject().contentItems()

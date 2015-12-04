@@ -70,8 +70,8 @@
  <object name="Products" meta_type="Factory-based Type Information with dynamic views"/>
  <object name="ProductCategories" meta_type="Factory-based Type Information with dynamic views"/>
  <object name="ProductCategory" meta_type="Factory-based Type Information with dynamic views"/>
- <object name="Stockitem" meta_type="Factory-based Type Information with dynamic views"/>
- <object name="Stockitems" meta_type="Factory-based Type Information with dynamic views"/>
+ <object name="StockItem" meta_type="Factory-based Type Information with dynamic views"/>
+ <object name="StockItems" meta_type="Factory-based Type Information with dynamic views"/>
  <object name="QueryFolder" meta_type="Factory-based Type Information with dynamic views"/>
  <object name="Query" meta_type="Factory-based Type Information with dynamic views"/>
  <object name="ReferenceAnalysis" meta_type="Factory-based Type Information with dynamic views"/>

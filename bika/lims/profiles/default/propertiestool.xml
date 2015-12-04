@@ -75,7 +75,7 @@
     <element value="Preservation"/>
     <element value="Product"/>
     <element value="ProductCategory"/>
-    <element value="Stockitem"/>
+    <element value="StockItem"/>
     <element value="ReferenceAnalysis"/>
     <element value="ReferenceDefinition"/>
     <element value="ReferenceSample"/>

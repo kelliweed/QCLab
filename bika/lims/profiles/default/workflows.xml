@@ -265,8 +265,8 @@
    <bound-workflow workflow_id="bika_inactive_workflow"/>
   </type>
 
-  <type type_id="Stockitems" />
-  <type type_id="Stockitem">
+  <type type_id="StockItems" />
+  <type type_id="StockItem">
    <bound-workflow workflow_id="bika_stockitem_workflow"/>
   </type>
 

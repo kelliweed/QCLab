@@ -90,7 +90,7 @@ def initialize(context):
     from content.pricelistfolder import PricelistFolder
     from content.product import Product
     from content.productcategory import ProductCategory
-    from content.stockitem import Stockitem
+    from content.stockitem import StockItem
     from content.queryfolder import QueryFolder
     from content.query import Query
     from content.referenceanalysis import ReferenceAnalysis
@@ -140,7 +140,7 @@ def initialize(context):
     from controlpanel.bika_manufacturers import Manufacturers
     from controlpanel.bika_preservations import Preservations
     from controlpanel.bika_productcategories import ProductCategories
-    from controlpanel.bika_stockitems import Stockitems
+    from controlpanel.bika_stockitems import StockItems
     from controlpanel.bika_products import Products
     from controlpanel.bika_referencedefinitions import ReferenceDefinitions
     from controlpanel.bika_sampleconditions import SampleConditions

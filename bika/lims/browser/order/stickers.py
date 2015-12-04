@@ -19,7 +19,7 @@ class Sticker(BrowserView):
         new_items = []
         for i in self.items:
             if i.portal_type == 'Order':
-                catalog = bsc(portal_type='Stockitem')
+                catalog = bsc(portal_type='StockItem')
                 new_items += [pi.getObject() for pi in catalog
                               if pi.getObject().getOrderId() == i.getId()]
             else:
