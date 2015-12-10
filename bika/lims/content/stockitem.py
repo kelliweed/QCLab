@@ -20,7 +20,7 @@ schema = BikaSchema.copy() + Schema((
         searchable=True,
         validators=('uniquefieldvalidator',),
         widget=StringWidget(
-            visible=False,
+            visible=True,
             label=_("Stock item ID"),
         )
     ),
@@ -33,7 +33,8 @@ schema = BikaSchema.copy() + Schema((
         widget=bika_ReferenceWidget(
             label = _("Product"),
             catalog_name='bika_setup_catalog',
-            showOn=True,
+            showOn=False,
+            description=_("Start typing to filter the list of available products."),
         ),
     ),
     ComputedField('SupplierTitle',
@@ -48,6 +49,13 @@ schema = BikaSchema.copy() + Schema((
         widget = ComputedWidget(
             label=_("Product Category"),
             visible = {'edit':'hidden', }
+        ),
+    ),
+    IntegerField('Quantity',
+        required = 1,
+        widget = IntegerWidget(
+            label=_("Quantity"),
+            description=_("The number of product items that this stock item represents."),
         ),
     ),
     StringField('orderId',
@@ -111,6 +119,7 @@ schema['title'].widget.visible = False
 schema['description'].schemata = 'default'
 schema['description'].widget.visible = True
 schema.moveField('StockItemID', before='description')
+schema.moveField('Product', before='StockItemID')
 
 class StockItem(BaseContent):
     implements(IStockItem)
