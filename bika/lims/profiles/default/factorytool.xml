@@ -41,7 +41,6 @@
   <type portal_type="Product"/>
   <type portal_type="ProductCategory"/>
   <type portal_type="StockItem"/>
-  <type portal_type="Query"/>
   <type portal_type="ReferenceDefinition"/>
   <type portal_type="ReferenceSample"/>
   <type portal_type="Pricelist"/>

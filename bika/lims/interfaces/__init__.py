@@ -78,16 +78,6 @@ class IDuplicateAnalysis(Interface):
     """DuplicateAnalysis"""
 
 
-class IQueryFolder(Interface):
-
-    """Queries Folder"""
-
-
-class IQuery(Interface):
-
-    """Query collection object"""
-
-
 class IReferenceAnalysis(Interface):
 
     """Reference Analyses """
@@ -693,10 +683,20 @@ class IHeaderTableFieldRenderer(Interface):
         Accepts an Archetypes Field, returns HTML.
         """
 
+class ISamplePrepWorkflow(Interface):
+    """This flag enables the sample_prep workflow transitions to be inserted
+    into an object's workflow chain.
+    """
+
+    class ICustomPubPref(Interface):
+    """
+    Interface for CustomPubPreferences class
+    """
+
 class IStockItem(Interface):
-	"""
-	Interface for StockItem class.
-	"""
+    """
+    Interface for StockItem class.
+    """
 
 class IStockItems(Interface):
     """

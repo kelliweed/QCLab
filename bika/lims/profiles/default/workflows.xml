@@ -22,6 +22,7 @@
  <object name="bika_samplinground_workflow" meta_type="Workflow"/>
  <object name="bika_worksheet_workflow" meta_type="Workflow"/>
  <object name="bika_worksheetanalysis_workflow" meta_type="Workflow"/>
+ <object name="sampleprep_simple" meta_type="Workflow"/>
  <object name="folder_workflow" meta_type="Workflow"/>
  <object name="intranet_folder_workflow" meta_type="Workflow"/>
  <object name="intranet_workflow" meta_type="Workflow"/>
@@ -215,9 +216,6 @@
   </type>
   <type type_id="OrderFolder">
   </type>
-
-  <type type_id="Query"/>
-  <type type_id="QueryFolder"/>
 
   <type type_id="Report">
    <bound-workflow workflow_id="bika_one_state_workflow"/>

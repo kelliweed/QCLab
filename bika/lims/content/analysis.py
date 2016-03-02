@@ -31,7 +31,7 @@ from bika.lims.browser.widgets import RecordsWidget as BikaRecordsWidget
 from bika.lims.config import PROJECTNAME
 from bika.lims.content.bikaschema import BikaSchema
 from bika.lims.interfaces import IAnalysis, IDuplicateAnalysis, IReferenceAnalysis, \
-    IRoutineAnalysis
+    IRoutineAnalysis, ISamplePrepWorkflow
 from bika.lims.interfaces import IReferenceSample
 from bika.lims.utils import changeWorkflowState, formatDecimalMark
 from bika.lims.utils import drop_trailing_zeros_decimal
@@ -48,6 +48,15 @@ def Priority(instance):
     priority = instance.getPriority()
     if priority:
         return priority.getSortKey()
+
+@indexer(IAnalysis)
+def sortable_title_with_sort_key(instance):
+    service = instance.getService()
+    if service:
+        sort_key = service.getSortKey()
+        if sort_key:
+            return "{:010.3f}{}".format(sort_key, service.Title())
+        return service.Title()
 
 schema = BikaSchema.copy() + Schema((
     HistoryAwareReferenceField('Service',
@@ -185,6 +194,7 @@ schema = BikaSchema.copy() + Schema((
         expression = 'context.isInstrumentValid()'
     ),
     FixedPointField('Uncertainty',
+        precision=10,
         widget=DecimalWidget(
             label = _("Uncertainty"),
         ),
@@ -197,7 +207,7 @@ schema = BikaSchema.copy() + Schema((
 
 
 class Analysis(BaseContent):
-    implements(IAnalysis)
+    implements(IAnalysis, ISamplePrepWorkflow)
     security = ClassSecurityInfo()
     displayContentsTab = False
     schema = schema
@@ -940,7 +950,7 @@ class Analysis(BaseContent):
             uncertainty = self.getUncertainty(result)
             if uncertainty == 0:
                 return 1
-            return abs(get_significant_digits(uncertainty))
+            return get_significant_digits(uncertainty)
         else:
             return serv.getPrecision(result)
 
@@ -982,6 +992,14 @@ class Analysis(BaseContent):
         if workflow.getInfoFor(self, "cancellation_state", "active") == "cancelled":
             return False
         return True
+
+    def guard_sample_prep_transition(self):
+        sample = self.aq_parent.getSample()
+        return sample.guard_sample_prep_transition()
+
+    def guard_sample_prep_complete_transition(self):
+        sample = self.aq_parent.getSample()
+        return sample.guard_sample_prep_complete_transition()
 
     def guard_receive_transition(self):
         workflow = getToolByName(self, "portal_workflow")

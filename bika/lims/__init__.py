@@ -91,8 +91,6 @@ def initialize(context):
     from content.product import Product
     from content.productcategory import ProductCategory
     from content.stockitem import StockItem
-    from content.queryfolder import QueryFolder
-    from content.query import Query
     from content.referenceanalysis import ReferenceAnalysis
     from content.referencedefinition import ReferenceDefinition
     from content.referencesample import ReferenceSample
