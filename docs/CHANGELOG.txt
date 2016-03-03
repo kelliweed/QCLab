@@ -4,6 +4,8 @@
 
 3.2.1 (unreleased)
 ------------------
+LIMS-2091: Table Column Display options Everywhere
+LIMS-2207: Indentation in analysisrequests.py
 LIMS-2208: WinescanCSVParser class instance variable misspelling
 LIMS-1832: New Results Template, COA. Multiple ARs in columns
 LIMS-2148: Unable to sort Bika Listing tables
@@ -14,6 +16,8 @@ LIMS-1774: Shiny graphs for result ranges
 
 3.1.x Long Term Support (LTS)
 -----------------------------
+LIMS-2209: error in manage analyises
+LIMS-1917: Inconsistencies related to significant digits in uncertainties
 LIMS-2015: Column spacing on Client look-up
 LIMS-1807: Validation for Start Date - End date relationship while creating invoices and price lists
 LIMS-1991: Sort Order for Analysis Categories and Services
