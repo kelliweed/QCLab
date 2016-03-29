@@ -25,6 +25,7 @@ from smtplib import SMTPServerDisconnected, SMTPRecipientsRefused
 from zope.component import getAdapters, getUtility
 
 import App
+import cgi
 import glob, os, sys, traceback
 import Globals
 import re
@@ -619,7 +620,16 @@ class AnalysisRequestPublishView(BrowserView):
 
         andict['specs'] = specs
         scinot = self.context.bika_setup.getScientificNotationReport()
-        andict['formatted_result'] = analysis.getFormattedResult(specs=specs, sciformat=int(scinot), decimalmark=decimalmark)
+        fresult =  analysis.getFormattedResult(specs=specs, sciformat=int(scinot), decimalmark=decimalmark)
+
+        # We don't use here cgi.encode because results fields must be rendered
+        # using the 'structure' wildcard. The reason is that the result can be
+        # expressed in sci notation, that may include <sup></sup> html tags.
+        # Please note the default value for the 'html' parameter from
+        # getFormattedResult signature is set to True, so the service will
+        # already take into account LDLs and UDLs symbols '<' and '>' and escape
+        # them if necessary.
+        andict['formatted_result'] = fresult;
 
         fs = ''
         if specs.get('min', None) and specs.get('max', None):
