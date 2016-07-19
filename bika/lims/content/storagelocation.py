@@ -14,12 +14,6 @@ schema = BikaSchema.copy() + Schema((
                     description=_("Code for the location"),
                 ),
                 ),
-    StringField('LocationType',
-                widget=StringWidget(
-                    label=_("Location Type"),
-                    description=_("Type of location"),
-                ),
-                ),
 ))
 schema['title'].widget.label = _('Address')
 schema['description'].widget.visible = True
@@ -38,5 +32,6 @@ class StorageLocation(BaseContent):
 
     def Title(self):
         return safe_unicode(self.getField('title').get(self)).encode('utf-8')
+
 
 registerType(StorageLocation, PROJECTNAME)
