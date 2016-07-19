@@ -78,6 +78,7 @@
  <object name="SampleMatrix" meta_type="Factory-based Type Information with dynamic views"/>
  <object name="SampleMatrices" meta_type="Factory-based Type Information with dynamic views"/>
  <object name="SamplePartition" meta_type="Factory-based Type Information with dynamic views"/>
+ <object name="StorageLocation" meta_type="Factory-based Type Information with dynamic views"/>
  <object name="StorageLevel" meta_type="Factory-based Type Information with dynamic views"/>
  <object name="StorageUnit" meta_type="Factory-based Type Information with dynamic views"/>
  <object name="StorageUnits" meta_type="Factory-based Type Information with dynamic views"/>
