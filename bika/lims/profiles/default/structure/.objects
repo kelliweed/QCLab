@@ -10,5 +10,6 @@ methods,Methods
 pricelists,PricelistFolder
 supplyorders,SupplyOrderFolder
 bika_setup,BikaSetup
+storage,StorageUnits
 reports,ReportFolder
 invoices,InvoiceFolder

@@ -292,8 +292,8 @@
    <bound-workflow workflow_id="bika_inactive_workflow"/>
   </type>
 
-  <type type_id="StorageLocations"/>
-  <type type_id="StorageLocation">
+  <type type_id="StorageUnits"/>
+  <type type_id="StorageUnit">
    <bound-workflow workflow_id="bika_one_state_workflow"/>
    <bound-workflow workflow_id="bika_inactive_workflow"/>
   </type>

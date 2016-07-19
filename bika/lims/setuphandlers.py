@@ -57,6 +57,7 @@ class BikaGenerator:
                        'worksheets',
                        'reports',
                        'arimports',
+                       'storage',
                        ):
             try:
                 obj = portal._getOb(obj_id)
@@ -90,7 +91,6 @@ class BikaGenerator:
                        'bika_samplepoints',
                        'bika_sampletypes',
                        'bika_srtemplates',
-                       'bika_storagelocations',
                        'bika_subgroups',
                        'bika_suppliers',
                        'bika_referencedefinitions',
@@ -210,6 +210,7 @@ class BikaGenerator:
         mp(AddSamplePartition, ['Manager', 'Owner', 'LabManager', 'LabClerk', 'Sampler', 'SamplingCoordinator'], 1)
         mp(AddSamplePoint, ['Manager', 'Owner', 'LabManager', 'LabClerk'], 1)
         mp(AddStorageLocation, ['Manager', 'Owner', 'LabManager', ], 1)
+        mp(AddStorageUnit, ['Manager', 'Owner', 'LabManager', ], 1)
         mp(AddSamplingDeviation, ['Manager', 'Owner', 'LabManager', 'LabClerk'], 1)
         mp(AddSRTemplate, ['Manager', 'Owner', 'LabManager'], 0)
         mp(AddSubGroup, ['Manager', 'LabManager', 'LabClerk'], 0)
@@ -702,7 +703,8 @@ class BikaGenerator:
         at.setCatalogsByType('SampleMatrix', ['bika_setup_catalog', ])
         at.setCatalogsByType('SampleType', ['bika_setup_catalog', 'portal_catalog'])
         at.setCatalogsByType('SamplePoint', ['bika_setup_catalog', 'portal_catalog'])
-        at.setCatalogsByType('StorageLocation', ['bika_setup_catalog', 'portal_catalog'])
+        at.setCatalogsByType('StorageLocation', ['bika_setup_catalog'])
+        at.setCatalogsByType('StorageUnit', ['bika_setup_catalog'])
         at.setCatalogsByType('SamplingDeviation', ['bika_setup_catalog', ])
         at.setCatalogsByType('Instrument', ['bika_setup_catalog', ])
         at.setCatalogsByType('InstrumentType', ['bika_setup_catalog', ])
