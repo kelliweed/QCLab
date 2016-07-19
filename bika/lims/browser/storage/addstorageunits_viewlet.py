@@ -18,6 +18,7 @@ class AddStorageUnitsSubmitHandler(BrowserView):
     def __call__(self):
 
         if "viewlet_submitted" in self.request.form:
+
             # Title and ID Templates
             titletemplate = self.request.form.get('titletemplate', None)
             idtemplate = self.request.form.get('idtemplate', None)
@@ -29,12 +30,16 @@ class AddStorageUnitsSubmitHandler(BrowserView):
                                 u'for ID sequence substitution')
                 return
 
+            # no validation on these
+            temperature = self.request.form.get('temperature', '')
+            department = self.request.form.get('department', None)
+            address = self.request.form.get('address', None)
+
+            # check for valid integer values
             try:
                 seq_start = int(self.request.form.get('seq_start', None))
                 storageunit_count = int(
                     self.request.form.get('storageunit_count', None))
-                storagelocation_count = int(
-                    self.request.form.get('storagelocation_count', None))
             except:
                 self.form_error(u'Sequence start and all counts must '
                                 u'be integers')
@@ -53,22 +58,6 @@ class AddStorageUnitsSubmitHandler(BrowserView):
                 self.request.response.redirect(self.context.absolute_url())
                 return
 
-            # verify StorageLocation count
-            if storagelocation_count < 0:
-                self.form_error(u'Storagelocation count may not be < 0')
-                self.request.response.redirect(self.context.absolute_url())
-                return
-
-            # verify storage_type interface selection
-            storage_types = self.request.form.get('storage_type', [])
-            if any([storage_types, storagelocation_count]) \
-                    and not all([storage_types, storagelocation_count]):
-                self.form_error(u'To create Storage locations in the new '
-                                u'units, at least one Storage Type must be '
-                                u'selected.')
-                self.request.response.redirect(self.context.absolute_url())
-                return
-
             # Check that none of the IDs conflict with existing items
             ids = [x.id for x in self.context.objectValues('StorageUnit')]
             for x in range(storageunit_count):
@@ -81,34 +70,25 @@ class AddStorageUnitsSubmitHandler(BrowserView):
 
             # Create the new storage unit items
             created_units = []
-            for x in range(seq_start, storageunit_count):
-                id = idtemplate.format(id=x+1)
-                title = titletemplate.format(id=x+1)
+            for x in range(seq_start, storageunit_count+s):
+                id = idtemplate.format(id=x)
+                title = titletemplate.format(id=x)
                 ob = api.content.create(
                     container=self.context, type="StorageUnit",
                     id=id, title=title)
+                schema = ob.Schema()
+                if temperature and 'Temperature' in schema:
+                    ob.Schema()['Temperature'].set(ob, temperature)
+                if department  and 'Department' in schema:
+                    ob.Schema()['Department'].set(ob, temperature)
+                if address  and 'Address' in schema:
+                    ob.Schema()['Address'].set(ob, temperature)
                 self.context.manage_renameObject(ob.id, id)
                 created_units.append(ob)
 
-            # If required, create the StorageLocations inside the new units.
-            created_locations = []
-            if storagelocation_count:
-                for unit in created_units:
-                    for x in range(storagelocation_count):
-                        id = "pos-%s"%x
-                        title = "Position %s"%x
-                        ob = api.content.create(
-                            container=unit, type="StorageLocation",
-                            id=id, title=title)
-                        created_locations.append(ob)
-                        import pdb;pdb.set_trace()
-                        # Assign any selected storage type interfaces
-
-            msg = u'%s Storage units and %s storage locations created.' % (
-                len(created_units), len(created_locations))
+            msg = u'%s Storage units created.' % len(created_units)
             self.context.plone_utils.addPortalMessage(msg)
             self.request.response.redirect(self.context.absolute_url())
-
 
     def form_error(self, msg):
         self.context.plone_utils.addPortalMessage(msg)
