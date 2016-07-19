@@ -278,10 +278,6 @@ class ISamplePoints(Interface):
     ""
 
 
-class IStorageLocation(Interface):
-    ""
-
-
 class IStorageLevel(Interface):
     ""
 
@@ -291,6 +287,44 @@ class IStorageUnit(Interface):
 
 
 class IStorageUnits(Interface):
+    ""
+
+
+class IStorageLocation(Interface):
+    "This is the marker interface applied StorageLocation items"
+
+
+class IItemStorageLocation(Interface):
+    """This is used as a base interface for 'types' of StorageLocations
+    """
+
+
+class ISampleItemStorageLocation(Interface):
+    "Provides storage for all different types of samples"
+
+
+class IBioSpecimenStorageLocation(Interface):  # XXX sanbi via adapter
+    ""
+
+
+# XXX sanbi(to lims with accessioning code!) via adapter
+class IAliquotStorageLocation(Interface):
+    ""
+
+
+class ISampleStorageLocation(Interface):
+    ""
+
+
+class IInventoryStorageLocation(Interface):
+    "Provides storage for all types of inventory items."
+
+
+class IStockItemStorageLocation(Interface):
+    ""
+
+
+class IKitStorageLocation(Interface):  # XXX sanbi via adapter
     ""
 
 
