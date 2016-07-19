@@ -5,54 +5,27 @@
 
     <browser:page
             for="bika.lims.interfaces.IStorageUnits"
-            name="storageunits"
-            class=".storageunitsview.StorageUnitsView"
+            name="view"
+            class=".storageunits.StorageUnitsView"
             permission="zope2.View"
             layer="bika.lims.interfaces.IBikaLIMS"
     />
 
     <browser:page
             for="bika.lims.interfaces.IStorageUnit"
-            name="storagelevels"
-            class=".storagelevelsview.StorageLevelsView"
+            name="view"
+            class=".storageunit.StorageUnitView"
             permission="zope2.View"
             layer="bika.lims.interfaces.IBikaLIMS"
     />
 
     <browser:page
             for="bika.lims.interfaces.IStorageLevel"
-            name="storagelevels"
-            class=".storagelevelsview.StorageLevelsView"
+            name="view"
+            class=".storagelevel.StorageLevelView"
             permission="zope2.View"
             layer="bika.lims.interfaces.IBikaLIMS"
     />
-
-    <browser:viewlet
-            for="bika.lims.interfaces.IStorageUnit"
-            name="addstoragelevels_viewlet"
-            class=".addstoragelevels_viewlet.AddStorageLevelsViewlet"
-            manager="plone.app.layout.viewlets.interfaces.IAboveContentTitle"
-            permission="zope2.View"
-            layer="bika.lims.interfaces.IBikaLIMS"
-    />
-
-    <browser:viewlet
-            for="bika.lims.interfaces.IStorageLevel"
-            name="addstoragelevels_viewlet"
-            class=".addstoragelevels_viewlet.AddStorageLevelsViewlet"
-            manager="plone.app.layout.viewlets.interfaces.IAboveContentTitle"
-            permission="zope2.View"
-            layer="bika.lims.interfaces.IBikaLIMS"
-    />
-
-    <browser:page
-            for="*"
-            name="addstoragelevels_submit"
-            class=".addstoragelevels_viewlet.AddStorageLevelsSubmitHandler"
-            permission="zope2.View"
-            layer="bika.lims.interfaces.IBikaLIMS"
-    />
-
 
     <browser:viewlet
             for="bika.lims.interfaces.IStorageUnits"
@@ -71,5 +44,30 @@
             layer="bika.lims.interfaces.IBikaLIMS"
     />
 
+    <browser:viewlet
+            for="bika.lims.interfaces.IStorageUnit"
+            name="addstorages_viewlet"
+            class=".addstorages_viewlet.AddStoragesViewlet"
+            manager="plone.app.layout.viewlets.interfaces.IAboveContentTitle"
+            permission="zope2.View"
+            layer="bika.lims.interfaces.IBikaLIMS"
+    />
+
+    <browser:viewlet
+            for="bika.lims.interfaces.IStorageLevel"
+            name="addstorages_viewlet"
+            class=".addstorages_viewlet.AddStoragesViewlet"
+            manager="plone.app.layout.viewlets.interfaces.IAboveContentTitle"
+            permission="zope2.View"
+            layer="bika.lims.interfaces.IBikaLIMS"
+    />
+
+    <browser:page
+            for="*"
+            name="addstorages_submit"
+            class=".addstorages_viewlet.AddStoragesSubmitHandler"
+            permission="zope2.View"
+            layer="bika.lims.interfaces.IBikaLIMS"
+    />
 
 </configure>
