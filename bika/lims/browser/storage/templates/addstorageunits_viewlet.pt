@@ -1,0 +1,96 @@
+<html>
+<body>
+<style type="text/css">
+    .add-storageunits .discreet{
+      font-size:50%;
+      color:#ddd;
+    }
+    .add-storageunits input{
+      margin-bottom:5px;
+    }
+
+    /*The collapse-header is positioned upwards, compensate here with margin.
+    extra compensation since we only use the one collapsible, and we want to
+    position it away from the green-bar.
+    */
+    .collapsible {
+      margin-top: 2em !important;
+    }
+
+    .discreet li {padding:0;margin:0;line-height:1em !important;}
+
+    td {padding:10px 10px 0 0;}
+
+
+
+
+</style>
+
+<dl class="collapsible collapsedOnLoad">
+    <dt class="collapsibleHeader">
+        &nbsp;<img src="++resource++bika.lims.images/add.png">&nbsp;
+        <span i18n:translate="">Add new storages</span>
+    </dt>
+    <dd class="collapsibleContent">
+        <div class="add-storageunits" style="padding: 10px 0px;">
+            <form name="add-storageunits" action="addstorageunits_submit" method="POST">
+                <table>
+                    <tr>
+                        <td>Template for new Titles:
+                            <div class="discreet">The display titles with {id}
+                                included
+                            </div>
+                        </td>
+                        <td><input name="titletemplate"
+                                   class="titletemplate"
+                                   placeholder="Title For {id}"
+                                   tabindex="1"
+                                   tal:attributes="value python: request.get('titletemplate', '')"/>
+                        </td>
+                        <td>ID Sequence Start:</td>
+                        <td>
+                            <input name="seq_start"
+                                   type="number"
+                                   class="seq_start"
+                                   tabindex="2"
+                                   tal:attributes="value python: request.get('seq_start', '1')"/>
+                        </td>
+                    <tr>
+                    <tr>
+                        <td>Template for new IDs:
+                            <div class="discreet">IDs should not include spaces
+                                or non-ascii characters.
+                            </div>
+                        </td>
+                        <td>
+                            <input name="idtemplate"
+                                   class="idtemplate"
+                                   placeholder="prefix-{id}"
+                                   tabindex="3"
+                                   tal:attributes="value python: request.get('idtemplate', '')"/>
+                        </td>
+                        <td>Number of Storage Levels
+                            <div class="discreet">e.g. Shelves in a freezer, or boxes on a shelf.
+                            </div>
+                        </td>
+                        <td>
+                            <input name="storageunit_count"
+                                   type="number"
+                                   class="storageunit_count"
+                                   tabindex="4"
+                                   tal:attributes="value python: request.get('storageunit_count', '1')"/>
+                        </td>
+                    </tr>
+                </table>
+                <input name="viewlet_submitted"
+                       type="submit"
+                       class="storageunits-add"
+                       value="Add Storage Units">
+            </form>
+        </div>
+    </dd>
+</dl>
+
+</body>
+</html>
+
