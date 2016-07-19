@@ -18,10 +18,11 @@ class StorageLevelsView(BikaListingView):
         path = '/'.join(self.context.getPhysicalPath())
         self.contentFilter = {'portal_type': 'StorageLevel',
                               'sort_on': 'sortable_title',
-                              'path': {'query': path, 'depth': 1}
+                              'path': {'query': path, 'depth': 1, 'level':0}
                               }
         self.context_actions = {}
-        self.title = context.translate(_('Storage levels'))
+        self.title = context.translate(_('Storage levels in ${level}',
+                                         mapping={'level': context.title}))
         self.description = _("List and summarise the storages at this level")
         self.icon = self.portal_url + \
                     '/++resource++bika.sanbi.images/storage_big.png'
@@ -73,5 +74,6 @@ class StorageLevelsView(BikaListingView):
             items[x]['replace']['Title'] = \
                 "<a href='%s'>%s</a>" % (items[x]['url'], items[x]['Title'])
             items[x]['StorageTypes'] = "I[XXX]Storage"
+
             items[x]['Hierarchy'] = obj.getHierarchy()
         return items

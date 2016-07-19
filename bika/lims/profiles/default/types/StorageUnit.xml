@@ -20,15 +20,21 @@
  <property name="allow_discussion">False</property>
  <property name="default_view_fallback">False</property>
 
- <alias from="(Default)" to="base_view"/>
- <alias from="view" to="base_view"/>
+ <property name="immediate_view">base_edit</property>
+ <property name="default_view">storagelevels</property>
+ <property name="view_methods">
+  <element value="storagelevels"/>
+ </property>
+
+ <alias from="(Default)" to="storagelevels"/>
+ <alias from="view" to="storagelevels"/>
  <alias from="edit" to="base_edit"/>
 
- <action title="View"
+ <action title="storagelevels"
          action_id="view"
          category="object"
          condition_expr=""
-         url_expr="string:${object_url}/base_view"
+         url_expr="string:${object_url}/storagelevels"
          i18n:attributes="title"
          i18n:domain="plone"
          visible="True">

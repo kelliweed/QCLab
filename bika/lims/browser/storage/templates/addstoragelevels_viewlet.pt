@@ -18,9 +18,15 @@
     }
 
     .discreet li {padding:0;margin:0;line-height:1em !important;}
+
+    td {padding:10px 10px 0 0;}
+
+
+
+
 </style>
 
-<dl class="collapsible">
+<dl class="collapsible collapsedOnLoad">
     <dt class="collapsibleHeader">
         &nbsp;<img src="++resource++bika.lims.images/add.png">&nbsp;
         <span i18n:translate="">Add new storages</span>
@@ -30,7 +36,11 @@
             <form name="add-storagelevels" action="addstoragelevels_submit" method="POST">
                 <table>
                     <tr>
-                        <td>Template for new Titles:</td>
+                        <td>Template for new Titles:
+                            <div class="discreet">The display titles with {id}
+                                included
+                            </div>
+                        </td>
                         <td><input name="titletemplate"
                                    class="titletemplate"
                                    placeholder="Title For {id}"
@@ -42,13 +52,16 @@
                             <input name="seq_start"
                                    type="number"
                                    class="seq_start"
-                                   placeholder="1"
                                    tabindex="2"
-                                   tal:attributes="value python: request.get('seq_start', '')"/>
+                                   tal:attributes="value python: request.get('seq_start', '1')"/>
                         </td>
                     <tr>
                     <tr>
-                        <td>Template for new IDs:</td>
+                        <td>Template for new IDs:
+                            <div class="discreet">IDs should not include spaces
+                                or non-ascii characters.
+                            </div>
+                        </td>
                         <td>
                             <input name="idtemplate"
                                    class="idtemplate"
@@ -56,19 +69,38 @@
                                    tabindex="3"
                                    tal:attributes="value python: request.get('idtemplate', '')"/>
                         </td>
-                        <td>ID Sequence End:</td>
+                        <td>Number of Storage Levels
+                            <div class="discreet">e.g. Shelves in a freezer, or boxes on a shelf.
+                            </div>
+                        </td>
                         <td>
-                            <input name="seq_end"
+                            <input name="storagelevel_count"
                                    type="number"
-                                   class="seq_end"
-                                   placeholder="1"
+                                   class="storagelevel_count"
                                    tabindex="4"
-                                   tal:attributes="value python: request.get('seq_end', '')"/>
+                                   tal:attributes="value python: request.get('storagelevel_count', '1')"/>
                         </td>
                     </tr>
                     <tr>
-                        <td>Storage types</td>
-                        <td>
+                        <td>Number of Storage Locations in each level:
+                            <div class="discreet">eg, tube positions in a box.
+                            </div>
+                        </td>
+                        <td colspan="3">
+                            <input name="storagelocation_count"
+                                   type="number"
+                                   class="storagelocation_count"
+                                   tabindex="3"
+                                   tal:attributes="value python: request.get('location_count', '0')"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Storage types
+                            <div class="discreet">If storage locations are created, select the<br/>
+                                types of items that can be stored there.
+                            </div>
+                        </td>
+                        <td colspan="3">
                             <select id="storage_types" name="storage_types" size="5"
                                     tabindex="1" multiple="multiple"
                                     tal:attributes="value python: request.get('storage_types', '')">
@@ -85,13 +117,6 @@
                                     Aliquots
                                 </option>
                             </select>
-                        </td>
-                        <td colspan="2">
-                            <!--<ul class="discreet">-->
-                                <!--<li>Creating {nr} storage levels inside {context}</li>-->
-                                <!--<li>First: "{firstname} ({firstid}), last: "{lastname}" ({lastid})</li>-->
-                                <!--<li>The new storage levels may contain : Bio Specimens, Aliquots</li>-->
-                            <!--</ul>-->
                         </td>
                     </tr>
                 </table>
