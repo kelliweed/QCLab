@@ -1,17 +1,15 @@
-from Products.ATContentTypes.content import schemata
-from Products.Archetypes import atapi
 from plone.app.content.browser.interfaces import IFolderContentsView
-from plone.app.folder.folder import ATFolder, ATFolderSchema
 from plone.app.layout.globals.interfaces import IViewView
 from zope.interface.declarations import implements
 
 from bika.lims import bikaMessageFactory as _
 from bika.lims.browser.bika_listing import BikaListingView
-from bika.lims.config import PROJECTNAME
-from bika.lims.interfaces import IStorageUnits
 
 
 class StorageUnitsView(BikaListingView):
+    """This view shows all this lab's storage units at /storage
+    """
+
     implements(IFolderContentsView, IViewView)
 
     def __init__(self, context, request):
@@ -19,16 +17,13 @@ class StorageUnitsView(BikaListingView):
         self.catalog = 'bika_setup_catalog'
         self.contentFilter = {'portal_type': 'StorageUnit',
                               'sort_on': 'sortable_title'}
-        self.context_actions = {_('Add'):
-                                    {
-                                        'url':
-                                            'createObject?type_name=StorageUnit',
-                                        'icon':
-                                            '++resource++bika.lims.images/add.png'}}
-        self.title = self.context.translate(_('Storage units'))
+        self.context_actions = {
+            _('Add'): {'url': 'createObject?type_name=StorageUnit',
+                       'icon': '++resource++bika.lims.images/add.png'}}
+        self.title = context.translate(_('Storage units'))
+        self.description = _("Displays a list of all the storage units in LIMS")
         self.icon = self.portal_url + \
-                    '/++resource++bika.sanbi.images/storageunit_big.png'
-        self.description = ''
+                    '/++resource++bika.sanbi.images/storage_big.png'
         self.show_sort_column = False
         self.show_select_row = False
         self.show_select_column = True
@@ -87,16 +82,3 @@ class StorageUnitsView(BikaListingView):
             items[x]['replace']['Title'] = "<a href='%s'>%s</a>" % \
                                            (items[x]['url'], items[x]['Title'])
         return items
-
-
-schema = ATFolderSchema.copy()
-
-
-class StorageUnits(ATFolder):
-    implements(IStorageUnits)
-    displayContentsTab = False
-    schema = schema
-
-
-schemata.finalizeATCTSchema(schema, folderish=True, moveDiscussion=False)
-atapi.registerType(StorageUnits, PROJECTNAME)

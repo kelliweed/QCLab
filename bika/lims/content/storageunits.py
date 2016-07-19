@@ -1,18 +1,24 @@
+from AccessControl import ClassSecurityInfo
+
+from Products.ATContentTypes.content import schemata
 from Products.Archetypes import atapi
-from plone.app.folder.folder import ATFolder
-from zope.interface.declarations import implements
+from plone.app.folder import folder
+from zope.interface import implements
 
 from bika.lims.config import PROJECTNAME
-from bika.lims.content.bikaschema import BikaSchema
+from bika.lims.interfaces import IHaveNoBreadCrumbs
 from bika.lims.interfaces import IStorageUnits
 
-schema = BikaSchema.copy()
+schema = folder.ATFolderSchema.copy()
 
 
-class StorageUnits(ATFolder):
-    implements(IStorageUnits)
+class StorageUnits(folder.ATFolder):
+    implements(IStorageUnits, IHaveNoBreadCrumbs)
     displayContentsTab = False
     schema = schema
+    security = ClassSecurityInfo()
 
+
+schemata.finalizeATCTSchema(schema, folderish=True, moveDiscussion=False)
 
 atapi.registerType(StorageUnits, PROJECTNAME)

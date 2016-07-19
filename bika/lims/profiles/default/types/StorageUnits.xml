@@ -20,7 +20,14 @@
  <property name="allow_discussion">False</property>
  <property name="default_view_fallback">False</property>
 
+ <property name="immediate_view">base_edit</property>
+ <property name="default_view">storageunits</property>
+ <property name="view_methods">
+  <element value="storageunits"/>
+ </property>
+
  <alias from="(Default)" to="storageunits"/>
  <alias from="view" to="storageunits"/>
+ <alias from="edit" to="base_edit"/>
 
 </object>

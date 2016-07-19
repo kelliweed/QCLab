@@ -1,5 +1,6 @@
 from AccessControl import ClassSecurityInfo
 
+from Products.ATContentTypes.content import schemata
 from Products.Archetypes.public import *
 from Products.Archetypes.references import HoldingReference
 from Products.CMFCore.utils import getToolByName
@@ -64,4 +65,5 @@ class StorageUnit(ATFolder):
         return self.getDepartment() and self.getDepartment().Title() or ''
 
 
+schemata.finalizeATCTSchema(schema, folderish=True, moveDiscussion=False)
 registerType(StorageUnit, config.PROJECTNAME)

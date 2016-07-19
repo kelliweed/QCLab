@@ -1,0 +1,109 @@
+<html>
+<body>
+<style type="text/css">
+    .add-storagelevels .discreet{
+      font-size:50%;
+      color:#ddd;
+    }
+    .add-storagelevels input{
+      margin-bottom:5px;
+    }
+
+    /*The collapse-header is positioned upwards, compensate here with margin.
+    extra compensation since we only use the one collapsible, and we want to
+    position it away from the green-bar.
+    */
+    .collapsible {
+      margin-top: 2em !important;
+    }
+
+    .discreet li {padding:0;margin:0;line-height:1em !important;}
+</style>
+
+<dl class="collapsible">
+    <dt class="collapsibleHeader">
+        &nbsp;<img src="++resource++bika.lims.images/add.png">&nbsp;
+        <span i18n:translate="">Add new storages</span>
+    </dt>
+    <dd class="collapsibleContent">
+        <div class="add-storagelevels" style="padding: 10px 0px;">
+            <form name="add-storagelevels" action="addstoragelevels_submit" method="POST">
+                <table>
+                    <tr>
+                        <td>Template for new Titles:</td>
+                        <td><input name="titletemplate"
+                                   class="titletemplate"
+                                   placeholder="Title For {id}"
+                                   tabindex="1"
+                                   tal:attributes="value python: request.get('titletemplate', '')"/>
+                        </td>
+                        <td>ID Sequence Start:</td>
+                        <td>
+                            <input name="seq_start"
+                                   type="number"
+                                   class="seq_start"
+                                   placeholder="1"
+                                   tabindex="2"
+                                   tal:attributes="value python: request.get('seq_start', '')"/>
+                        </td>
+                    <tr>
+                    <tr>
+                        <td>Template for new IDs:</td>
+                        <td>
+                            <input name="idtemplate"
+                                   class="idtemplate"
+                                   placeholder="prefix-{id}"
+                                   tabindex="3"
+                                   tal:attributes="value python: request.get('idtemplate', '')"/>
+                        </td>
+                        <td>ID Sequence End:</td>
+                        <td>
+                            <input name="seq_end"
+                                   type="number"
+                                   class="seq_end"
+                                   placeholder="1"
+                                   tabindex="4"
+                                   tal:attributes="value python: request.get('seq_end', '')"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Storage types</td>
+                        <td>
+                            <select id="storage_types" name="storage_types" size="5"
+                                    tabindex="1" multiple="multiple"
+                                    tal:attributes="value python: request.get('storage_types', '')">
+                                <option value="IStockItemStorageLocation">
+                                    Stock Items (Including Kits)
+                                </option>
+                                <option value="IStockItemStorageLocation">
+                                    Kits only
+                                </option>
+                                <option value="IBioSpecimenStorageLocation">
+                                    Bio Specimens
+                                </option>
+                                <option value="IAliquotStorageLocation">
+                                    Aliquots
+                                </option>
+                            </select>
+                        </td>
+                        <td colspan="2">
+                            <!--<ul class="discreet">-->
+                                <!--<li>Creating {nr} storage levels inside {context}</li>-->
+                                <!--<li>First: "{firstname} ({firstid}), last: "{lastname}" ({lastid})</li>-->
+                                <!--<li>The new storage levels may contain : Bio Specimens, Aliquots</li>-->
+                            <!--</ul>-->
+                        </td>
+                    </tr>
+                </table>
+                <input name="viewlet_submitted"
+                       type="submit"
+                       class="storagelevels-add"
+                       value="Add Storage Levels">
+            </form>
+        </div>
+    </dd>
+</dl>
+
+</body>
+</html>
+

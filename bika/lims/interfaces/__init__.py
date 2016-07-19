@@ -282,6 +282,10 @@ class IStorageLocation(Interface):
     ""
 
 
+class IStorageLevel(Interface):
+    ""
+
+
 class IStorageUnit(Interface):
     ""
 

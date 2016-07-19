@@ -33,7 +33,6 @@
   <include file="referencesample.zcml"/>
   <include file="pricelist.zcml"/>
   <include file="stickers.zcml"/>
-  <include file="storageunits.zcml"/>
   <include file="supplier.zcml"/>
   <include file="supplyorder.zcml"/>
   <include file="supplyorderfolder.zcml"/>
@@ -46,6 +45,7 @@
   <include package=".samplinground"/>
   <include package=".srtemplate"/>
   <include package=".sample"/>
+  <include package=".storage"/>
   <include package=".worksheet"/>
 
   <include package=".fields"/>
