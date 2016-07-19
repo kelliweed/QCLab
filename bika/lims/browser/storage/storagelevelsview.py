@@ -18,7 +18,7 @@ class StorageLevelsView(BikaListingView):
         path = '/'.join(self.context.getPhysicalPath())
         self.contentFilter = {'portal_type': 'StorageLevel',
                               'sort_on': 'sortable_title',
-                              'path': {'query': path, 'depth': 1, 'level':0}
+                              'path': {'query': path, 'depth': 1, 'level': 0}
                               }
         self.context_actions = {}
         self.title = context.translate(_('Storage levels in ${level}',
