@@ -81,8 +81,10 @@
                     </tr>
                     <tr>
                         <td>Storage types
-                            <div class="discreet">Select types of items that
-                                can be stored there.
+                            <div class="discreet">If storage locations are
+                                created, select the<br/>
+                                types of items that can be stored there.<br/>
+                                One item can be stored in each location.
                             </div>
                         </td>
                         <td colspan="3">

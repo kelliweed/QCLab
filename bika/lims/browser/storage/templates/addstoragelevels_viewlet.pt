@@ -19,7 +19,12 @@
 
     .discreet li {padding:0;margin:0;line-height:1em !important;}
 
-    td {padding:10px 10px 0 0;}
+    table {width:100%;}
+    td {padding:5px 10px 5px 0;}
+
+    td.bordertop {border-top: 1px solid #ddd;}
+
+    select.storage_types {margin-left:15px;}
 
 
 </style>
@@ -32,7 +37,7 @@
     <dd class="collapsibleContent">
         <div class="add-storagelevels" style="padding: 10px 0px;">
             <form name="add-storagelevels" action="addstoragelevels_submit" method="POST">
-                <table>
+                <table cellspacing="0" cellpadding="0">
                     <tr>
                         <td>Template for new Titles:
                             <div class="discreet">The display titles with {id}
@@ -81,11 +86,11 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>Number of Storage Locations in each level:
+                        <td class="bordertop">Number of Storage Locations in each level:
                             <div class="discreet">eg, tube positions in a box.
                             </div>
                         </td>
-                        <td colspan="3">
+                        <td colspan="3" class="bordertop">
                             <input name="storagelocation_count"
                                    type="number"
                                    class="storagelocation_count"
@@ -94,14 +99,8 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>Storage types
-                            <div class="discreet">If storage locations are
-                                created, select the<br/>
-                                types of items that can be stored there.
-                            </div>
-                        </td>
-                        <td colspan="3">
-                            <select id="storage_types" name="storage_types" size="8"
+                        <td colspan="2" class="bordertop">Storage types
+                            <select class="storage_types" name="storage_types" size="8"
                                     tabindex="1" multiple="multiple">
                                 <option value="bika.lims.interfaces.IItemStorageLocation">
                                     Any type of item in the system
@@ -125,6 +124,17 @@
                                     Kits
                                 </option>
                             </select>
+                        </td>
+                        <td colspan="2" class="bordertop">
+                            <div class="discreet">
+                                <p>If storage locations are created, select the types of
+                                items that can be stored there.<br/>
+                                Storage Locations can contain only one item each.
+                                </p>
+                                <p>If no storage locations are created, the storage levels<br/>
+                                will be able to store these items directly.
+                                Storage Levels can contain multiple items.</p>
+                            </div>
                         </td>
                     </tr>
                 </table>
