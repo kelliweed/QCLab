@@ -16,7 +16,6 @@ schema = BikaFolderSchema.copy() + Schema((
     StringField('Temperature',
                 widget=StringWidget(
                     label=_('Temperature'),
-                    input_class='numeric',
                 ),
                 ),
     ReferenceField('Department',
