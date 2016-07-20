@@ -22,19 +22,16 @@
     td {padding:10px 10px 0 0;}
 
 
-
-
-
 </style>
 
 <dl class="collapsible collapsedOnLoad">
     <dt class="collapsibleHeader">
         &nbsp;<img src="++resource++bika.lims.images/add.png">&nbsp;
-        <span i18n:translate="">Add new Storages</span>
+        <span i18n:translate="">Add new Storage Levels</span>
     </dt>
     <dd class="collapsibleContent">
         <div class="add-storagelevels" style="padding: 10px 0px;">
-            <form name="add-storagelevels" action="addstorages_submit" method="POST">
+            <form name="add-storagelevels" action="addstoragelevels_submit" method="POST">
                 <table>
                     <tr>
                         <td>Template for new Titles:
@@ -106,13 +103,27 @@
                         <td colspan="3">
                             <select id="storage_types" name="storage_types" size="8"
                                     tabindex="1" multiple="multiple">
-                                <option value="bika.lims.interfaces.IItemStorageLocation">Any type of item in the system</option>
-                                <option value="bika.lims.interfaces.ISampleItemStorageLocation">Any type of Sample item</option>
-                                <option value="bika.lims.interfaces.IBioSpecimenStorageLocation">Bio Specimens</option>
-                                <option value="bika.lims.interfaces.IAliquotStorageLocation">Aliquots</option>
-                                <option value="bika.lims.interfaces.IInventoryStorageLocation">Any type of Inventory item</option>
-                                <option value="bika.lims.interfaces.IStockItemStorageLocation">Stock Items (products)</option>
-                                <option value="bika.lims.interfaces.IKitStorageLocation">Kits</option>
+                                <option value="bika.lims.interfaces.IItemStorageLocation">
+                                    Any type of item in the system
+                                </option>
+                                <option value="bika.lims.interfaces.ISampleItemStorageLocation">
+                                    Any type of Sample item
+                                </option>
+                                <option value="bika.lims.interfaces.IBioSpecimenStorageLocation">
+                                    Bio Specimens
+                                </option>
+                                <option value="bika.lims.interfaces.IAliquotStorageLocation">
+                                    Aliquots
+                                </option>
+                                <option value="bika.lims.interfaces.IInventoryStorageLocation">
+                                    Any type of Inventory item
+                                </option>
+                                <option value="bika.lims.interfaces.IStockItemStorageLocation">
+                                    Stock Items (products)
+                                </option>
+                                <option value="bika.lims.interfaces.IKitStorageLocation">
+                                    Kits
+                                </option>
                             </select>
                         </td>
                     </tr>

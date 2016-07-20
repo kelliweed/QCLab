@@ -2,6 +2,7 @@ from Products.Five import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from plone import api
 from plone.app.layout.viewlets import ViewletBase
+from zope.schema import ValidationError
 
 
 class AddStorageUnitsViewlet(ViewletBase):
@@ -19,7 +20,10 @@ class AddStorageUnitsSubmitHandler(BrowserView):
 
         if "viewlet_submitted" in self.request.form:
 
-            self.validate_form_inputs()
+            try:
+                self.validate_form_inputs()
+            except ValidationError:
+                return
 
             titletemplate = self.request.form.get('titletemplate', None)
             idtemplate = self.request.form.get('idtemplate', None)
@@ -53,7 +57,7 @@ class AddStorageUnitsSubmitHandler(BrowserView):
                 title=titletemplate.format(id=x))
             self.set_inputs_into_schema(
                 address, department, ob, temperature)
-            self.context.manage_renameObject(ob.id, id)
+            self.context.manage_renameObject(ob.id, idtemplate.format(id=x), )
             created_units.append(ob)
         return created_units
 
@@ -63,11 +67,11 @@ class AddStorageUnitsSubmitHandler(BrowserView):
         idtemplate = self.request.form.get('idtemplate', None)
         if not (titletemplate and idtemplate):
             self.form_error(u'ID and Title template are both required.')
-            raise RuntimeError
+            raise ValidationError
         if not ('{id}' in titletemplate and '{id}' in idtemplate):
             self.form_error(u'ID and Title templates must contain {id} '
                             u'for ID sequence substitution')
-            raise RuntimeError
+            raise ValidationError
 
         # check for valid integer values
         try:
@@ -78,19 +82,19 @@ class AddStorageUnitsSubmitHandler(BrowserView):
             self.form_error(u'Sequence start and all counts must '
                             u'be integers')
             self.request.response.redirect(self.context.absolute_url())
-            raise RuntimeError
+            raise ValidationError
 
         # verify ID sequence start
         if seq_start < 1:
             self.form_error(u'Sequence Start may not be < 1')
             self.request.response.redirect(self.context.absolute_url())
-            raise RuntimeError
+            raise ValidationError
 
         # verify StorageUnit
         if storageunit_count < 1:
             self.form_error(u'Storage Unit count must not be < 1')
             self.request.response.redirect(self.context.absolute_url())
-            raise RuntimeError
+            raise ValidationError
 
         # Check that none of the IDs conflict with existing items
         ids = [x.id for x in self.context.objectValues('StorageUnit')]
@@ -100,7 +104,7 @@ class AddStorageUnitsSubmitHandler(BrowserView):
                 self.form_error(
                     u'The ID %s exists, cannot be created.' % check)
                 self.request.response.redirect(self.context.absolute_url())
-                raise RuntimeError
+                raise ValidationError
 
     def set_inputs_into_schema(self, address, department, ob, temperature):
         # Set field values across each object if possible
