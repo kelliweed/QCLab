@@ -9,7 +9,6 @@ from bika.lims.content.bikaschema import BikaSchema
 StorageTypes = LinesField(
     'StorageTypes',
     vocabulary="StorageTypesVocabulary",
-    accessor="getLabelNames",
     widget=MultiSelectionWidget(
         label=_("Storage Types"),
         format="checkbox",
@@ -61,6 +60,20 @@ class StorageLocation(BaseContent):
         if items:
             return items[0]
 
+    def getHierarchy(self, structure=False, separator=' > '):
+        ancestors = []
+        ancestor = self
+        while (1):
+            if structure:
+                ancestors.append("<a href='%s'>%s</a>"%(
+                    ancestor.absolute_url(), ancestor.Title()))
+            else:
+                ancestors.append(ancestor.Title())
+            if ancestor.portal_type == 'StorageUnit':
+                break
+            ancestor = ancestor.aq_parent
+        return separator.join(reversed(ancestors))
+
     def guard_occupy_transition(self):
         """Occupy transition cannot proceed until StoredItem is set.
 
@@ -92,19 +105,19 @@ class StorageLocation(BaseContent):
         """
         wftool = self.portal_workflow
         if self.guard_occupy_transition():
-            wftool.doActionFor(self, action='occupy',
-                               wf_id='bika_storageposition_workflow')
+            wftool.doActionFor(
+                self, action='occupy', wf_id='bika_storageposition_workflow')
 
     def at_post_edit_script(self):
         """Execute once the object is edited
         """
         wftool = self.portal_workflow
         if self.guard_free_transition():
-            wftool.doActionFor(self, action='free',
-                               wf_id='bika_storageposition_workflow')
+            wftool.doActionFor(
+                self, action='free', wf_id='bika_storageposition_workflow')
         if self.guard_occupy_transition():
-            wftool.doActionFor(self, action='occupy',
-                               wf_id='bika_storageposition_workflow')
+            wftool.doActionFor(
+                self, action='occupy', wf_id='bika_storageposition_workflow')
 
 
 registerType(StorageLocation, PROJECTNAME)

@@ -1,3 +1,4 @@
+from Products.CMFCore.utils import getToolByName
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from plone.app.content.browser.interfaces import IFolderContentsView
 from plone.app.layout.globals.interfaces import IViewView
@@ -30,14 +31,16 @@ class StorageLevelView(BikaListingView):
 
         # Should not have both levels and locations at one place
         if storage_levels:
-            self.levels_title = "Storage Levels in %s" % self.context.title
+            self.title = "Storage Levels in %s" % self.context.title
         elif storage_locations:
-            self.locations_title = "Storage Locations in %s" % self.context.title
+            self.title = "Storage Locations in %s" % self.context.title
 
         self.storagelevels_table = \
             self.get_storagelevels_table(storage_levels)
+
         self.storagelocations_table = \
             self.get_storagelocations_table(storage_locations)
+
         return self.template()
 
     def get_storagelocations_table(self, storage_locations):
@@ -50,14 +53,13 @@ class StorageLevelView(BikaListingView):
 
     def get_storagelevels_table(self, storage_levels):
         if storage_levels:
-            View = StorageLevelsView(self.context, self.request)
+            View = StorageLevelsListingView(self.context, self.request)
             table = View.contents_table(table_only=True)
         else:
             table = ""
         return table
 
-
-class StorageLevelsView(BikaListingView):
+class StorageLevelsListingView(BikaListingView):
     """This is the listing that shows StorageLevels at this location.
     It's activated if there are already any storagelevels located here.
     """
@@ -65,7 +67,7 @@ class StorageLevelsView(BikaListingView):
     implements(IFolderContentsView, IViewView)
 
     def __init__(self, context, request):
-        super(StorageLevelsView, self).__init__(context, request)
+        super(StorageLevelsListingView, self).__init__(context, request)
 
         self.context = context
 
@@ -80,11 +82,8 @@ class StorageLevelsView(BikaListingView):
                               }
 
         self.context_actions = {}
-
-        self.title = context.translate(_('Storage levels in ${level}',
-                                         mapping={'level': context.title}))
-
-        self.description = _("Storage levels at this location")
+        self.title = ''
+        self.description = ''
 
         self.icon = self.portal_url + \
                     '/++resource++bika.sanbi.images/storage_big.png'
@@ -102,7 +101,6 @@ class StorageLevelsView(BikaListingView):
             'Temperature': {'title': _('Temperature'), 'toggle': True},
             'Department': {'title': _('Department'), 'toggle': False},
             'Address': {'title': _('Address'), 'toggle': False},
-            'Hierarchy': {'title': _('Hierarchy'), 'toggle': True},
         }
 
         self.review_states = [
@@ -113,16 +111,14 @@ class StorageLevelsView(BikaListingView):
              'columns': ['Title',
                          'Temperature',
                          'Department',
-                         'Address',
-                         'Hierarchy']},
+                         'Address']},
             {'id': 'all',
              'title': _('All'),
              'contentFilter': {},
              'columns': ['Title',
                          'Temperature',
                          'Department',
-                         'Address',
-                         'Hierarchy']},
+                         'Address']},
         ]
 
     def folderitems(self, full_objects=False):
@@ -137,8 +133,6 @@ class StorageLevelsView(BikaListingView):
             items[x]['Address'] = obj.getAddress()
             items[x]['replace']['Title'] = \
                 "<a href='%s'>%s</a>" % (items[x]['url'], items[x]['Title'])
-
-            items[x]['Hierarchy'] = obj.getHierarchy()
         return items
 
 
@@ -151,53 +145,59 @@ class StorageLocationsView(BikaListingView):
 
     def __init__(self, context, request):
         super(StorageLocationsView, self).__init__(context, request)
+
         self.context = context
+
         self.request = request
+
         self.catalog = 'bika_setup_catalog'
+
         path = '/'.join(context.getPhysicalPath())
         self.contentFilter = {'portal_type': 'StorageLocation',
                               'sort_on': 'sortable_title',
                               'path': {'query': path, 'depth': 1, 'level': 0}
                               }
+
         self.context_actions = {}
-        self.title = context.translate(_('Storage Locations in ${level}',
-                                         mapping={'level': context.title}))
-        self.description = _("Storage locations in this level")
+
+        self.title = ''
+
+        self.description = ''
+
         self.icon = self.portal_url + \
                     '/++resource++bika.sanbi.images/storage_big.png'
+
         self.show_sort_column = False
+
         self.show_select_row = False
+
         self.show_select_column = True
+
         self.pagesize = 25
 
         self.columns = {
             'Title': {'title': _('Title'), 'index': 'sortable_title'},
-            'Temperature': {'title': _('Temperature'), 'toggle': True},
-            'Department': {'title': _('Department'), 'toggle': False},
-            'Address': {'title': _('Address'), 'toggle': False},
-            'Hierarchy': {'title': _('Hierarchy'), 'toggle': True},
-            'StorageTypes': {'title': _('Storage Types'), 'toggle': True}
+            'StorageTypes': {'title': _('Storage Types'), 'toggle': True},
+            'StoredItem': {'title': _('Stored Item'), 'toggle': True},
+            'review_state': {'title': _('State'), 'toggle': True},
         }
+
         self.review_states = [
             {'id': 'default',
              'title': _('Active'),
              'contentFilter': {'inactive_state': 'active'},
              'transitions': [{'id': 'deactivate'}, ],
              'columns': ['Title',
-                         'Temperature',
-                         'Department',
-                         'Address',
-                         'Hierarchy',
-                         'StorageTypes',]},
+                         'StorageTypes',
+                         'StoredItem',
+                         'review_state']},
             {'id': 'all',
              'title': _('All'),
              'contentFilter': {},
              'columns': ['Title',
-                         'Temperature',
-                         'Department',
-                         'Address',
-                         'Hierarchy',
-                         'StorageTypes',]},
+                         'StorageTypes',
+                         'StoredItem',
+                         'review_state']},
         ]
 
     def folderitems(self, full_objects=False):
@@ -207,12 +207,9 @@ class StorageLocationsView(BikaListingView):
                 continue
             obj = items[x]['obj']
 
-            items[x]['Temperature'] = obj.getTemperature()
-            items[x]['Department'] = obj.getDepartmentTitle()
-            items[x]['Address'] = obj.getAddress()
-            items[x]['replace']['Title'] = \
-                "<a href='%s'>%s</a>" % (items[x]['url'], items[x]['Title'])
-            items[x]['StorageTypes'] = "\n".join(obj.getStorageTypes())
-            items[x]['Hierarchy'] = obj.getHierarchy()
+            items[x]['Title'] = obj.Title()
+            items[x]['StorageTypes'] = '<br/>'.join(obj.getStorageTypes())
+            si = obj.getStoredItem()
+            items[x]['StoredItem'] = si.Title() if si else ''
 
         return items

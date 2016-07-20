@@ -45,16 +45,19 @@ class StorageLevel(ATFolder):
 
         renameAfterCreation(self)
 
-    def getHierarchy(self):
-        # use aq_chain here
+    def getHierarchy(self, structure=False, separator=' > '):
         ancestors = []
         ancestor = self
         while (1):
-            ancestors.append(ancestor.Title())
+            if structure:
+                ancestors.append("<a href='%s'>%s</a>"%(
+                    ancestor.absolute_url(), ancestor.Title()))
+            else:
+                ancestors.append(ancestor.Title())
             if ancestor.portal_type == 'StorageUnit':
                 break
             ancestor = ancestor.aq_parent
-        return ' > '.join(reversed(ancestors))
+        return separator.join(reversed(ancestors))
 
 
 registerType(StorageLevel, PROJECTNAME)
