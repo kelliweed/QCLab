@@ -77,21 +77,21 @@ class StorageLocation(BaseContent):
     def guard_occupy_transition(self):
         """Occupy transition cannot proceed until StoredItem is set.
 
-        If this position is free, but also has a StoredItem set,
+        If this position is available, but also has a StoredItem set,
         then we will prevent the occupy transition from becoming available.
         """
         wftool = self.portal_workflow
         review_state = wftool.getInfoFor(self, 'review_state')
-        if (review_state == 'free' or review_state == 'reserved') \
+        if (review_state == 'available' or review_state == 'reserved') \
                 and self.getStoredItem():
             return True
         return False
 
-    def guard_free_transition(self):
-        """Free transition cannot proceed unless StoredItem is cleared.
+    def guard_liberate_transition(self):
+        """Liberate transition cannot proceed unless StoredItem is cleared.
 
         If this position is occupied and StoredItem still has a value,
-        then we will prevent the free transition from becoming available.
+        then we will prevent the liberate transition from becoming available.
         """
         wftool = self.portal_workflow
         review_state = wftool.getInfoFor(self, 'review_state')
@@ -106,18 +106,18 @@ class StorageLocation(BaseContent):
         wftool = self.portal_workflow
         if self.guard_occupy_transition():
             wftool.doActionFor(
-                self, action='occupy', wf_id='bika_storageposition_workflow')
+                self, action='occupy', wf_id='bika_storagelocation_workflow')
 
     def at_post_edit_script(self):
         """Execute once the object is edited
         """
         wftool = self.portal_workflow
-        if self.guard_free_transition():
+        if self.guard_liberate_transition():
             wftool.doActionFor(
-                self, action='free', wf_id='bika_storageposition_workflow')
+                self, action='liberate', wf_id='bika_storagelocation_workflow')
         if self.guard_occupy_transition():
             wftool.doActionFor(
-                self, action='occupy', wf_id='bika_storageposition_workflow')
+                self, action='occupy', wf_id='bika_storagelocation_workflow')
 
 
 registerType(StorageLocation, PROJECTNAME)

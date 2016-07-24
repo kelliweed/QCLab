@@ -1,6 +1,6 @@
 [workflow],,,,,,,,,,
-Id:,bika_storageposition_workflow,,,,,,,,,
-Title:,Bika Storage Position Workflow,,,,,,,,,
+Id:,bika_storagelocation_workflow,,,,,,,,,
+Title:,Bika Storage Location Workflow,,,,,,,,,
 Description:,,,,,,,,,,,,
 Initial state:,available,,,,,,,,,
 Type:,Workflow,,,,,,,,,
@@ -8,7 +8,7 @@ State variable:,review_state,,,,,,,,,
 ,,,,,,,,,,
 [State],,,,,,,,,,
 Id:,available,,,,,,,,,
-Title:,Free,,,,,,,,,
+Title:,Available,,,,,,,,,
 Description:,,,,,,,,,,
 Transitions,"reserve, occupy",,,,,,,,,
 Permissions,Acquire,Anonymous,Manager,Owner,Reader,Editor,Contributor,Analyst,LabClerk,LabManager
@@ -19,7 +19,7 @@ Modify portal content,N,N,Y,N,N,N,N,N,N,Y
 Id:,reserved,,,,,,,,,
 Title:,Reserved,,,,,,,,,
 Description:,,,,,,,,,,
-Transitions,"free, occupy",,,,,,,,,
+Transitions,"liberate, occupy",,,,,,,,,
 Permissions,Acquire,Anonymous,Manager,Owner,Reader,Editor,Contributor,Analyst,LabClerk,LabManager
 View,N,N,Y,Y,N,N,N,Y,Y,Y
 Modify portal content,N,N,Y,N,N,N,N,N,N,Y
@@ -28,7 +28,7 @@ Modify portal content,N,N,Y,N,N,N,N,N,N,Y
 Id:,occupied,,,,,,,,,
 Title:,Occupied,,,,,,,,,
 Description:,,,,,,,,,,
-Transitions,"free, reserve",,,,,,,,,
+Transitions,"liberate, reserve",,,,,,,,,
 Permissions,Acquire,Anonymous,Manager,Owner,Reader,Editor,Contributor,Analyst,LabClerk,LabManager
 View,N,N,Y,Y,N,N,N,Y,Y,Y
 Modify portal content,N,N,Y,N,N,N,N,N,N,Y
@@ -50,7 +50,7 @@ Trigger:,User,,,,,,,,,
 Guard expression:,python:here.guard_occupy_transition()==True,,,,,,,,,
 ,,,,,,,,,,
 [Transition],,,,,,,,,,
-Id:,free,,,,,,,,,
+Id:,liberate,,,,,,,,,
 Title:,Liberate,,,,,,,,,
 Description:,Liberate,,,,,,,,,
 Target state:,available,,,,,,,,,
