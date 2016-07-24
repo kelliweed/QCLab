@@ -26,9 +26,19 @@ Containers = StringField(
     ),
 )
 
+StorageTypes = LinesField(
+    'StorageTypes',
+    vocabulary="StorageTypesVocabulary",
+    widget=MultiSelectionWidget(
+        label=_("Storage Types"),
+        format="checkbox",
+    )
+)
+
 schema = BikaFolderSchema.copy() + Schema((
     Temperature,
     Containers,
+    StorageTypes,
 ))
 
 
@@ -50,7 +60,7 @@ class StorageLevel(ATFolder):
         ancestor = self
         while (1):
             if structure:
-                ancestors.append("<a href='%s'>%s</a>"%(
+                ancestors.append("<a href='%s'>%s</a>" % (
                     ancestor.absolute_url(), ancestor.Title()))
             else:
                 ancestors.append(ancestor.Title())
