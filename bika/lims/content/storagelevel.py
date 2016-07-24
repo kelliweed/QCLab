@@ -17,6 +17,7 @@ Temperature = StringField(
                       'the parent object, it can be overridden here.'),
     ),
 )
+
 Containers = StringField(
     'Containers',
     widget=StringWidget(
@@ -62,8 +63,8 @@ class StorageLevel(ATFolder):
             accessor = getattr(ancestor, fieldname).getAccessor()
             val = accessor() if callable(accessor) else accessor
             if structure:
-                ancestors.append("<a href='%s'>%s</a>" % (
-                    ancestor.absolute_url(), val))
+                ancestors.append(
+                    "<a href='%s'>%s</a>" % (ancestor.absolute_url(), val))
             else:
                 ancestors.append(val)
             if ancestor.portal_type == 'StorageUnit':

@@ -67,8 +67,8 @@ class StorageLocation(BaseContent):
             acc = getattr(ancestor, fieldname).getAccessor()
             val = acc() if callable(acc) else acc
             if structure:
-                ancestors.append("<a href='%s'>%s</a>" % (
-                    ancestor.absolute_url(), val))
+                ancestors.append(
+                    "<a href='%s'>%s</a>" % (ancestor.absolute_url(), val))
             else:
                 ancestors.append(val)
             if ancestor.portal_type == 'StorageUnit':
