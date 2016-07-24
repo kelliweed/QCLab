@@ -38,18 +38,18 @@ class StorageLocation(BaseContent):
 
     def StorageTypesVocabulary(self):
         items = [
-            ("bika.lims.interfaces.IItemStorageLocation",
-             "Any type of item in the system"),
-            ("bika.lims.interfaces.ISampleItemStorageLocation",
-             "Any type of Sample item"),
+            # ("bika.lims.interfaces.IItemStorageLocation",
+            #  "Any type of item in the system"),
+            # ("bika.lims.interfaces.ISampleItemStorageLocation",
+            #  "Any type of Sample item"),
             ("bika.lims.interfaces.IBioSpecimenStorageLocation",
              "Bio Specimens"),
             ("bika.lims.interfaces.IAliquotStorageLocation",
              "Aliquots"),
-            ("bika.lims.interfaces.IInventoryStorageLocation",
-             "Any type of Inventory item"),
+            # ("bika.lims.interfaces.IInventoryStorageLocation",
+            #  "Any type of Inventory item"),
             ("bika.lims.interfaces.IStockItemStorageLocation",
-             "Stock Items (products"),
+             "Stock Items (products)"),
             ("bika.lims.interfaces.IKitStorageLocation",
              "Kits")
         ]

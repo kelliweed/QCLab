@@ -53,7 +53,7 @@
                             <input name="seq_start"
                                    type="number"
                                    class="seq_start"
-                                   tabindex="2"
+                                   tabindex="3"
                                    tal:attributes="value python: request.get('seq_start', '1')"/>
                         </td>
                     <tr>
@@ -67,7 +67,7 @@
                             <input name="idtemplate"
                                    class="idtemplate"
                                    placeholder="prefix-{id}"
-                                   tabindex="3"
+                                   tabindex="2"
                                    tal:attributes="value python: request.get('idtemplate', '')"/>
                         </td>
                         <td>Number of Storage Levels to create
@@ -92,42 +92,46 @@
                         <td colspan="3" class="bordertop">
                             <input name="storagelocation_count"
                                    type="number"
+                                   tabindex="5"
                                    class="storagelocation_count"
-                                   tabindex="3"
                                    tal:attributes="value python: request.get('location_count', '0')"/>
                         </td>
                     </tr>
                     <tr>
                         <td colspan="2" class="bordertop">Storage types
-                            <select class="storage_types" name="storage_types" size="8"
-                                    tabindex="1" multiple="multiple">
-                                <option value="bika.lims.interfaces.IItemStorageLocation">
-                                    Any type of item in the system
-                                </option>
-                                <option value="bika.lims.interfaces.ISampleItemStorageLocation">
-                                    Any type of Sample item
-                                </option>
-                                <option value="bika.lims.interfaces.IBioSpecimenStorageLocation">
-                                    Bio Specimens
-                                </option>
-                                <option value="bika.lims.interfaces.IAliquotStorageLocation">
-                                    Aliquots
-                                </option>
-                                <option value="bika.lims.interfaces.IInventoryStorageLocation">
-                                    Any type of Inventory item
-                                </option>
-                                <option value="bika.lims.interfaces.IStockItemStorageLocation">
-                                    Stock Items (products)
-                                </option>
-                                <option value="bika.lims.interfaces.IKitStorageLocation">
-                                    Kits
-                                </option>
-                            </select>
+                            <select class="storage_types"
+                                    name="storage_types"
+                                    size="8"
+                                    tabindex="6"
+                                    multiple="multiple">
+                                    <!--<option value="bika.lims.interfaces.IItemStorageLocation">-->
+                                    <!--Any type of item in the system-->
+                                    <!--</option>-->
+                                    <!--<option value="bika.lims.interfaces.ISampleItemStorageLocation">-->
+                                    <!--Any type of Sample item-->
+                                    <!--</option>-->
+                                    <option value="bika.lims.interfaces.IBioSpecimenStorageLocation">
+                                        Bio Specimens
+                                    </option>
+                                    <option value="bika.lims.interfaces.IAliquotStorageLocation">
+                                        Aliquots
+                                    </option>
+                                    <!--<option value="bika.lims.interfaces.IInventoryStorageLocation">-->
+                                    <!--Any type of Inventory item-->
+                                    <!--</option>-->
+                                    <option value="bika.lims.interfaces.IStockItemStorageLocation">
+                                        Stock Items (products)
+                                    </option>
+                                    <option value="bika.lims.interfaces.IKitStorageLocation">
+                                        Kits
+                                    </option>
+                                </select>
                         </td>
                         <td colspan="2" class="bordertop">
                             <div class="discreet">
                                 <p>If storage locations are created, select the
-                                    types of items that can be stored there.<br/>
+                                    types of items that can be stored
+                                    there.<br/>
                                     Storage Locations can contain only one item
                                     each.
                                 </p>

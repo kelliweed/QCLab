@@ -72,5 +72,24 @@ class StorageLevel(ATFolder):
             ancestor = ancestor.aq_parent
         return separator.join(reversed(ancestors))
 
+    def StorageTypesVocabulary(self):
+        items = [
+            # ("bika.lims.interfaces.IItemStorageLocation",
+            #  "Any type of item in the system"),
+            # ("bika.lims.interfaces.ISampleItemStorageLocation",
+            #  "Any type of Sample item"),
+            ("bika.lims.interfaces.IBioSpecimenStorageLocation",
+             "Bio Specimens"),
+            ("bika.lims.interfaces.IAliquotStorageLocation",
+             "Aliquots"),
+            # ("bika.lims.interfaces.IInventoryStorageLocation",
+            #  "Any type of Inventory item"),
+            ("bika.lims.interfaces.IStockItemStorageLocation",
+             "Stock Items (products)"),
+            ("bika.lims.interfaces.IKitStorageLocation",
+             "Kits")
+        ]
+        return DisplayList(zip(items[0], items[1]))
+
 
 registerType(StorageLevel, PROJECTNAME)

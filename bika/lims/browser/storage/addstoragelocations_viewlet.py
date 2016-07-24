@@ -33,6 +33,10 @@ class AddStorageLocationsSubmitHandler(BrowserView):
 
             locations = self.create_storage_locations()
 
+            storage_types = self.request.form.get('storage_types', [])
+            for location in locations:
+                self.set_storage_types(location, storage_types)
+
             msg = u'%s Storage locations created.' % len(locations)
             self.context.plone_utils.addPortalMessage(msg)
             self.request.response.redirect(self.context.absolute_url())
@@ -50,8 +54,6 @@ class AddStorageLocationsSubmitHandler(BrowserView):
             raise ValidationError
         try:
             seq_start = int(self.request.form.get('seq_start', None))
-            storagelocation_count = int(
-                self.request.form.get('storagelocation_count', None))
             storagelocation_count = int(
                 self.request.form.get('storagelocation_count', None))
         except:
@@ -109,31 +111,33 @@ class AddStorageLocationsSubmitHandler(BrowserView):
         seq_start = int(self.request.form.get('seq_start', None))
         storagelocation_count = int(
             self.request.form.get('storagelocation_count', None))
-        storage_types = self.request.form.get('storage_types', [])
-        if isinstance(storage_types, basestring):
-            storage_types = [storage_types]
 
         locations = []
         for x in range(seq_start, storagelocation_count + 1):
-            id = idtemplate.format(id=x)
-            title = titletemplate.format(id=x)
             ob = api.content.create(
                 container=self.context, type="StorageLocation",
-                id=id, title=title)
-            self.set_storage_types(ob, storage_types)
-            self.context.manage_renameObject(ob.id, idtemplate.format(id=x), )
+                id=idtemplate.format(id=x),
+                title=titletemplate.format(id=x))
+            self.context.manage_renameObject(ob.id, idtemplate.format(id=x))
             locations.append(ob)
 
         return locations
 
     def set_storage_types(self, ob, storage_types):
-        # Set field values across each object if possible
+        """Set field values across each object if possible
+        """
+        # If it's only one type, then the Plone form hands us a single string.
+        # If multiple types are selected, then Plone form hands us a list.
+        if isinstance(storage_types, basestring):
+            storage_types = [storage_types]
+
         schema = ob.Schema()
         if storage_types and 'StorageTypes' in schema:
             ob.Schema()['StorageTypes'].set(ob, storage_types)
         self.provide_storagetype_interfaces(ob, storage_types)
 
-    def provide_storagetype_interfaces(self, ob, storage_types):
+    @staticmethod
+    def provide_storagetype_interfaces(ob, storage_types):
         """Assign any selected storage type interfaces to this location.
         """
         for storage_type in storage_types:

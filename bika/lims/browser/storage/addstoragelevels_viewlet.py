@@ -31,7 +31,7 @@ class AddStorageLevelsSubmitHandler(BrowserView):
             try:
                 self.validate_form_inputs()
             except ValidationError as e:
-                self.form_error(e.msg)
+                self.form_error(e.message)
                 return
 
             # Validation is complete, now set local variables from form inputs.
@@ -42,24 +42,27 @@ class AddStorageLevelsSubmitHandler(BrowserView):
             storagelevel_count = int(form.get('storagelevel_count', None))
             storagelocation_count = int(form.get('storagelocation_count', None))
             storage_types = form.get('storage_types', [])
-            if isinstance(storage_types, basestring):
-                storage_types = [storage_types]
 
             # Create required storage levels
             levels = self.create_storage_levels(
                 idtemplate, seq_start, storagelevel_count, titletemplate)
 
-            # If storage types are selected, and no storage locations are
-            # created, then I will apply the storage types directly to the
-            # storage levels created above.
-            if storagelocation_count < 1:
-                for level in levels:
-                    for storage_type in storage_types:
-                        self.set_storage_types(level, storage_type)
-
             # Create required storage locations
             locations = self.create_storage_locations(
-                levels, storage_types, storagelocation_count)
+                levels, storagelocation_count)
+
+            if storagelocation_count:
+                # If storage types are selected, and storage locations have been
+                # created, then I will apply these storage types to the new
+                # locations.
+                for location in locations:
+                    self.set_storage_types(location, storage_types)
+            else:
+                # If storage types are selected, and no storage locations are
+                # created, then I will apply the storage types directly to the
+                # storage levels created above.
+                for level in levels:
+                    self.set_storage_types(level, storage_types)
 
             msg = u'%s Storage levels and %s storage locations created.' % (
                 len(levels), len(locations))
@@ -102,12 +105,10 @@ class AddStorageLevelsSubmitHandler(BrowserView):
 
         # verify storage_type interface selection
         storage_types = form.get('storage_types', [])
-        if any([storage_types, storagelocation_count]) \
-                and not all([storage_types, storagelocation_count]):
+        if storagelocation_count and not storage_types:
             raise ValidationError(
                 u'To create Storage locations in the new levels, at least one '
-                u'Storage Type must be selected and the number of storage '
-                u'locations must be > 0')
+                u'Storage Type must be selected.')
 
         # Check that none of the IDs conflict with existing items
         ids = [x.id for x in self.context.objectValues('StorageLevel')]
@@ -117,8 +118,8 @@ class AddStorageLevelsSubmitHandler(BrowserView):
                 raise ValidationError(
                     u'The ID %s exists, cannot be created.' % check)
 
-    def create_storage_locations(
-            self, levels, storage_types, storagelocation_count):
+    @staticmethod
+    def create_storage_locations(levels, storagelocation_count):
         """If required, create the StorageLocations inside the new levels.
         """
         locations = []
@@ -129,7 +130,6 @@ class AddStorageLevelsSubmitHandler(BrowserView):
                         container=level, type="StorageLocation",
                         id="pos-%s" % x,
                         title="Position %s" % x)
-                    self.set_storage_types(ob, storage_types)
                     locations.append(ob)
         return locations
 
@@ -139,12 +139,10 @@ class AddStorageLevelsSubmitHandler(BrowserView):
         """
         levels = []
         for x in range(seq_start, storagelevel_count + 1):
-            id = idtemplate.format(id=x)
-            title = titletemplate.format(id=x)
             ob = api.content.create(
                 container=self.context, type="StorageLevel",
-                id=id, title=title)
-            self.context.manage_renameObject(ob.id, idtemplate.format(id=x), )
+                id=idtemplate.format(id=x), title=titletemplate.format(id=x))
+            self.context.manage_renameObject(ob.id, idtemplate.format(id=x))
             levels.append(ob)
 
         return levels
@@ -152,13 +150,18 @@ class AddStorageLevelsSubmitHandler(BrowserView):
     def set_storage_types(self, ob, storage_types):
         """Set field values across each object if possible
         """
+        # If it's only one type, then the Plone form hands us a single string.
+        # If multiple types are selected, then Plone form hands us a list.
+        if isinstance(storage_types, basestring):
+            storage_types = [storage_types]
 
         schema = ob.Schema()
         if storage_types and 'StorageTypes' in schema:
             ob.Schema()['StorageTypes'].set(ob, storage_types)
         self.provide_storagetype_interfaces(ob, storage_types)
 
-    def provide_storagetype_interfaces(self, ob, storage_types):
+    @staticmethod
+    def provide_storagetype_interfaces(ob, storage_types):
         """Assign any selected storage type interfaces to this location.
         """
         for storage_type in storage_types:
