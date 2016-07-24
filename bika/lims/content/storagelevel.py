@@ -55,15 +55,17 @@ class StorageLevel(ATFolder):
 
         renameAfterCreation(self)
 
-    def getHierarchy(self, structure=False, separator=' > '):
+    def getHierarchy(self, structure=False, separator='.', fieldname='id'):
         ancestors = []
         ancestor = self
         while (1):
+            accessor = getattr(ancestor, fieldname).getAccessor()
+            val = accessor() if callable(accessor) else accessor
             if structure:
                 ancestors.append("<a href='%s'>%s</a>" % (
-                    ancestor.absolute_url(), ancestor.Title()))
+                    ancestor.absolute_url(), val))
             else:
-                ancestors.append(ancestor.Title())
+                ancestors.append(val)
             if ancestor.portal_type == 'StorageUnit':
                 break
             ancestor = ancestor.aq_parent

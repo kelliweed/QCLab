@@ -60,15 +60,17 @@ class StorageLocation(BaseContent):
         if items:
             return items[0]
 
-    def getHierarchy(self, structure=False, separator=' > '):
+    def getHierarchy(self, structure=False, separator='.', fieldname='id'):
         ancestors = []
         ancestor = self
         while (1):
+            acc = getattr(ancestor, fieldname).getAccessor()
+            val = acc() if callable(acc) else acc
             if structure:
-                ancestors.append("<a href='%s'>%s</a>"%(
-                    ancestor.absolute_url(), ancestor.Title()))
+                ancestors.append("<a href='%s'>%s</a>" % (
+                    ancestor.absolute_url(), val))
             else:
-                ancestors.append(ancestor.Title())
+                ancestors.append(val)
             if ancestor.portal_type == 'StorageUnit':
                 break
             ancestor = ancestor.aq_parent
