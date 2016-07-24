@@ -16,32 +16,21 @@ class StorageUnitsView(BikaListingView):
 
     def __init__(self, context, request):
         super(StorageUnitsView, self).__init__(context, request)
-
         self.catalog = 'bika_setup_catalog'
-
         self.contentFilter = {'portal_type': 'StorageUnit',
                               'sort_on': 'sortable_title'}
-
         self.context_actions = {
             _('Add one new storage unit'): {
                 'url': 'createObject?type_name=StorageUnit',
                 'icon': '++resource++bika.lims.images/add.png'}}
-
         self.title = context.translate(_('Storage units'))
-
         self.description = _("Displays a list of all the storage units in LIMS")
-
         self.icon = self.portal_url + \
-                    '/++resource++bika.sanbi.images/storage_big.png'
-
+                    '/++resource++bika.lims.images/storageunit_big.png'
         self.show_sort_column = False
-
         self.show_select_row = False
-
         self.show_select_column = True
-
         self.pagesize = 25
-
         self.columns = {
             'Title': {'title': _('Title'),
                       'index': 'sortable_title'},
@@ -54,7 +43,6 @@ class StorageUnitsView(BikaListingView):
             'Address': {'title': _('Address'),
                         'toggle': False},
         }
-
         self.review_states = [
             {'id': 'default',
              'title': _('Active'),

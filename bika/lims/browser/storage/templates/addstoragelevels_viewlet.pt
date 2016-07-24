@@ -11,8 +11,7 @@
 
     /*The collapse-header is positioned upwards, compensate here with margin.
     extra compensation since we only use the one collapsible, and we want to
-    position it away from the green-bar.
-    */
+    position it away from the green-bar. */
     .collapsible {
       margin-top: 2em !important;
     }
@@ -25,7 +24,6 @@
     td.bordertop {border-top: 1px solid #ddd;}
 
     select.storage_types {margin-left:15px;}
-
 
 </style>
 
@@ -86,7 +84,8 @@
                         </td>
                     </tr>
                     <tr>
-                        <td class="bordertop">Number of Storage Locations in each level:
+                        <td class="bordertop">Number of Storage Locations in
+                            each level:
                             <div class="discreet">eg, tube positions in a box.
                             </div>
                         </td>
@@ -127,13 +126,17 @@
                         </td>
                         <td colspan="2" class="bordertop">
                             <div class="discreet">
-                                <p>If storage locations are created, select the types of
-                                items that can be stored there.<br/>
-                                Storage Locations can contain only one item each.
+                                <p>If storage locations are created, select the
+                                    types of
+                                    items that can be stored there.<br/>
+                                    Storage Locations can contain only one item
+                                    each.
                                 </p>
-                                <p>If no storage locations are created, the storage levels<br/>
-                                will be able to store these items directly.
-                                Storage Levels can contain multiple items.</p>
+                                <p>If no storage locations are created, the
+                                    storage levels<br/>
+                                    will be able to store these items directly.
+                                    Storage Levels can contain multiple items.
+                                </p>
                             </div>
                         </td>
                     </tr>

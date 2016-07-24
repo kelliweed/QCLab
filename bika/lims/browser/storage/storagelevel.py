@@ -26,20 +26,22 @@ class StorageLevelView(BikaListingView):
         self.request = request
 
     def __call__(self):
-        storage_levels = self.context.objectValues('StorageLevel')
-        storage_locations = self.context.objectValues('StorageLocation')
+        self.has_levels = self.context.objectValues('StorageLevel')
+        self.has_locations = self.context.objectValues('StorageLocation')
 
         # Should not have both levels and locations at one place
-        if storage_levels:
+        if self.has_levels:
             self.title = "Storage Levels in %s" % self.context.title
-        elif storage_locations:
+            self.icon = self.portal_url + "/++resource++bika.lims.images/" \
+                        + "storagelevel_big.png"
+            self.content_table = \
+                self.get_storagelevels_table(storage_levels)
+        elif self.has_locations:
             self.title = "Storage Locations in %s" % self.context.title
-
-        self.storagelevels_table = \
-            self.get_storagelevels_table(storage_levels)
-
-        self.storagelocations_table = \
-            self.get_storagelocations_table(storage_locations)
+            self.icon = self.portal_url + "/++resource++bika.lims.images/" \
+                        + "storagelocation_big.png"
+            self.content_table = \
+                self.get_storagelocations_table(storage_locations)
 
         return self.template()
 
@@ -70,32 +72,21 @@ class StorageLevelsListingView(BikaListingView):
         super(StorageLevelsListingView, self).__init__(context, request)
 
         self.context = context
-
         self.request = request
-
         self.catalog = 'bika_setup_catalog'
-
         path = '/'.join(context.getPhysicalPath())
         self.contentFilter = {'portal_type': 'StorageLevel',
                               'sort_on': 'sortable_title',
                               'path': {'query': path, 'depth': 1, 'level': 0}
                               }
-
         self.context_actions = {}
         self.title = ''
         self.description = ''
-
-        self.icon = self.portal_url + \
-                    '/++resource++bika.sanbi.images/storage_big.png'
-
+        self.icon = ''
         self.show_sort_column = False
-
         self.show_select_row = False
-
         self.show_select_column = True
-
         self.pagesize = 25
-
         self.columns = {
             'Title': {'title': _('Title'), 'index': 'sortable_title'},
             'Temperature': {'title': _('Temperature'), 'toggle': True},
@@ -145,43 +136,28 @@ class StorageLocationsView(BikaListingView):
 
     def __init__(self, context, request):
         super(StorageLocationsView, self).__init__(context, request)
-
         self.context = context
-
         self.request = request
-
         self.catalog = 'bika_setup_catalog'
-
         path = '/'.join(context.getPhysicalPath())
         self.contentFilter = {'portal_type': 'StorageLocation',
                               'sort_on': 'sortable_title',
                               'path': {'query': path, 'depth': 1, 'level': 0}
                               }
-
         self.context_actions = {}
-
         self.title = ''
-
         self.description = ''
-
-        self.icon = self.portal_url + \
-                    '/++resource++bika.sanbi.images/storage_big.png'
-
+        self.icon = ''
         self.show_sort_column = False
-
         self.show_select_row = False
-
         self.show_select_column = True
-
         self.pagesize = 25
-
         self.columns = {
             'Title': {'title': _('Title'), 'index': 'sortable_title'},
             'StorageTypes': {'title': _('Storage Types'), 'toggle': True},
             'StoredItem': {'title': _('Stored Item'), 'toggle': True},
             'review_state': {'title': _('State'), 'toggle': True},
         }
-
         self.review_states = [
             {'id': 'default',
              'title': _('Active'),
