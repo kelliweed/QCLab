@@ -17,7 +17,7 @@ class StorageUnitView(BikaListingView):
     def __init__(self, context, request):
         super(StorageUnitView, self).__init__(context, request)
         self.catalog = 'bika_setup_catalog'
-        path  '/'.join(context.getPhysicalPath())
+        path = '/'.join(context.getPhysicalPath())
         self.contentFilter = {'portal_type': 'StorageLevel',
                               'sort_on': 'sortable_title',
                               'path': {'query': path, 'depth': 1, 'level': 0}
