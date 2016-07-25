@@ -35,13 +35,13 @@ class StorageLevelView(BikaListingView):
             self.icon = self.portal_url + "/++resource++bika.lims.images/" \
                         + "storagelevel_big.png"
             self.content_table = \
-                self.get_storagelevels_table(storage_levels)
+                self.get_storagelevels_table(self.has_levels)
         elif self.has_locations:
             self.title = "Storage Locations in %s" % self.context.title
             self.icon = self.portal_url + "/++resource++bika.lims.images/" \
                         + "storagelocation_big.png"
             self.content_table = \
-                self.get_storagelocations_table(storage_locations)
+                self.get_storagelocations_table(self.has_locations)
 
         return self.template()
 
