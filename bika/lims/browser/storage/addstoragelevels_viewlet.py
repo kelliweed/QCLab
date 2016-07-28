@@ -6,9 +6,16 @@ from zope.dottedname.resolve import resolve
 from zope.interface import alsoProvides
 from zope.schema import ValidationError
 
+from bika.lims.browser.storage import getStorageTypes
+
 
 class AddStorageLevelsViewlet(ViewletBase):
     index = ViewPageTemplateFile("templates/addstoragelevels_viewlet.pt")
+
+    def storage_types(self):
+        """Return UI-friendly formatted version of getStorageTypes() output
+        """
+        return getStorageTypes(dotted_names=True)
 
     def render(self):
         # If there are any storage_locations present in this folder,
@@ -163,6 +170,8 @@ class AddStorageLevelsSubmitHandler(BrowserView):
     @staticmethod
     def provide_storagetype_interfaces(ob, storage_types):
         """Assign any selected storage type interfaces to this location.
+        The storage type interfaces are passed here as dotted names, and
+        must be resolved.
         """
         for storage_type in storage_types:
             inter = resolve(storage_type)

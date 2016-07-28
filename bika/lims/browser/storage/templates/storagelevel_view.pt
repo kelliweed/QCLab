@@ -18,8 +18,7 @@
 </metal:content-title>
 
 <metal:core fill-slot="content-core">
-    <span tal:condition="python: view.has_levels" tal:replace="structure view/content_table"/>
-    <span tal:condition="python: view.has_locations" tal:replace="structure view/content_table"/>
+    <span tal:replace="structure view/contents_table"/>
 </metal:core>
 
 </body>

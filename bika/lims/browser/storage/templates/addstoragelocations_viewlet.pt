@@ -67,7 +67,7 @@
                                    tal:attributes="value python: request.get('idtemplate', '')"/>
                         </td>
                         <td>Number of Storage Locations to create
-                            <div class="discreet">e.g. positions in a box or on a shelf
+                            <div class="discreet">Restricts the number of items that can be stored inside each new storage.
                             </div>
                         </td>
                         <td>
@@ -88,28 +88,12 @@
                         </td>
                         <td colspan="3">
                             <select id="storage_types" name="storage_types" size="8"
-                                    tabindex="1" multiple="multiple">
-                                <!--<option value="bika.lims.interfaces.IItemStorageLocation">-->
-                                    <!--Any type of item in the system-->
-                                <!--</option>-->
-                                <!--<option value="bika.lims.interfaces.ISampleItemStorageLocation">-->
-                                    <!--Any type of Sample item-->
-                                <!--</option>-->
-                                <option value="bika.lims.interfaces.IBioSpecimenStorageLocation">
-                                    Bio Specimens
-                                </option>
-                                <option value="bika.lims.interfaces.IAliquotStorageLocation">
-                                    Aliquots
-                                </option>
-                                <!--<option value="bika.lims.interfaces.IInventoryStorageLocation">-->
-                                    <!--Any type of Inventory item-->
-                                <!--</option>-->
-                                <option value="bika.lims.interfaces.IStockItemStorageLocation">
-                                    Stock Items (products)
-                                </option>
-                                <option value="bika.lims.interfaces.IKitStorageLocation">
-                                    Kits
-                                </option>
+                                    tabindex="5" multiple="multiple">
+                                <tal:x tal:repeat="stype view/storage_types">
+                                    <option tal:attributes="value python:stype['interface']">
+                                        <tal:t tal:replace="python: stype['title']"/>
+                                    </option>
+                                </tal:x>
                             </select>
                         </td>
                     </tr>

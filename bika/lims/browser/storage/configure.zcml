@@ -14,7 +14,7 @@
     <browser:page
             for="bika.lims.interfaces.IStorageUnit"
             name="view"
-            class=".storageunit.StorageUnitView"
+            class=".storageunit.StorageLevelsListingView"
             permission="zope2.View"
             layer="bika.lims.interfaces.IBikaLIMS"
     />
@@ -85,6 +85,13 @@
             class=".addstoragelocations_viewlet.AddStorageLocationsSubmitHandler"
             permission="zope2.View"
             layer="bika.lims.interfaces.IBikaLIMS"
+    />
+
+    <adapter
+            for="*"
+            provides="bika.lims.interfaces.IStorageTypeRegistration"
+            name="bika.lims.storagetypes"
+            factory="bika.lims.browser.storage.defaultStorageTypes"
     />
 
 </configure>

@@ -1,3 +1,8 @@
+"""The default view for StorageUnit simply lists any available
+StorageLevels directly inside the StorageUnit.
+"""
+from Products.CMFCore.utils import getToolByName
+from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from plone.app.content.browser.interfaces import IFolderContentsView
 from plone.app.layout.globals.interfaces import IViewView
 from zope.interface.declarations import implements
@@ -6,31 +11,29 @@ from bika.lims import bikaMessageFactory as _
 from bika.lims.browser.bika_listing import BikaListingView
 
 
-class StorageUnitView(BikaListingView):
-    """This is the default view for each StorageUnit object.
-
-    Shows all the StorageLevels in the top-level of this StorageUnit.
+class StorageLevelsListingView(BikaListingView):
+    """This is the listing that shows StorageLevels at this location.
+    It's activated if there are already any storagelevels located here.
     """
 
     implements(IFolderContentsView, IViewView)
 
     def __init__(self, context, request):
-        super(StorageUnitView, self).__init__(context, request)
+        super(StorageLevelsListingView, self).__init__(context, request)
+
+        self.context = context
+        self.request = request
         self.catalog = 'bika_setup_catalog'
         path = '/'.join(context.getPhysicalPath())
         self.contentFilter = {'portal_type': 'StorageLevel',
                               'sort_on': 'sortable_title',
                               'path': {'query': path, 'depth': 1, 'level': 0}
                               }
-        self.context_actions = {
-            _('Add one new storage level'): {
-                'url': 'createObject?type_name=StorageLevel',
-                'icon': '++resource++bika.lims.images/add.png'}}
-        self.title = context.translate(_('Storage levels in ${unit}',
-                                         mapping={'unit': context.title}))
-        self.description = _("List and summarise the storages at this level")
-        self.icon = self.portal_url + \
-                    '/++resource++bika.lims.images/storageunit_big.png'
+        self.context_actions = {}
+        self.title = "Storages in %s" % self.context.title
+        self.icon = self.portal_url + "/++resource++bika.lims.images/" \
+                    + "storagelevel_big.png"
+        self.description = ''
         self.show_sort_column = False
         self.show_select_row = False
         self.show_select_column = True
@@ -40,9 +43,10 @@ class StorageUnitView(BikaListingView):
             'Temperature': {'title': _('Temperature'), 'toggle': True},
             'Department': {'title': _('Department'), 'toggle': False},
             'Address': {'title': _('Address'), 'toggle': False},
-            'Hierarchy': {'title': _('Hierarchy'), 'toggle': True},
-            'StorageTypes': {'title': _('Storage Types'), 'toggle': True}
+            'StorageTypes': {'title': _('Storage Types'), 'toggle': True},
+            'review_state': {'title': _('State'), 'toggle': True},
         }
+
         self.review_states = [
             {'id': 'default',
              'title': _('Active'),
@@ -53,16 +57,15 @@ class StorageUnitView(BikaListingView):
                          'Department',
                          'Address',
                          'StorageTypes',
-                         'Hierarchy']},
+                         'review_state']},
             {'id': 'all',
              'title': _('All'),
              'contentFilter': {},
              'columns': ['Title',
                          'Temperature',
                          'Department',
-                         'Address',
                          'StorageTypes',
-                         'Hierarchy']},
+                         'review_state']},
         ]
 
     def folderitems(self, full_objects=False):
@@ -77,7 +80,6 @@ class StorageUnitView(BikaListingView):
             items[x]['Address'] = obj.getAddress()
             items[x]['replace']['Title'] = \
                 "<a href='%s'>%s</a>" % (items[x]['url'], items[x]['Title'])
-            items[x]['StorageTypes'] = "I[XXX]Storage"
-
-            items[x]['Hierarchy'] = obj.getHierarchy()
+            stitles = [s['title'] for s in obj.getStorageTypes()]
+            items[x]['StorageTypes'] = ','.join(stitles)
         return items

@@ -26,40 +26,24 @@ class StorageLevelView(BikaListingView):
         self.request = request
 
     def __call__(self):
-        self.has_levels = self.context.objectValues('StorageLevel')
-        self.has_locations = self.context.objectValues('StorageLocation')
+        self.levels = self.context.objectValues('StorageLevel')
+        self.locations = self.context.objectValues('StorageLocation')
 
         # Should not have both levels and locations at one place
-        if self.has_levels:
-            self.title = "Storage Levels in %s" % self.context.title
+        if self.levels:
+            self.title = "Storages in %s" % self.context.title
             self.icon = self.portal_url + "/++resource++bika.lims.images/" \
                         + "storagelevel_big.png"
-            self.content_table = \
-                self.get_storagelevels_table(self.has_levels)
-        elif self.has_locations:
-            self.title = "Storage Locations in %s" % self.context.title
+            View = StorageLevelsListingView(self.context, self.request)
+            self.contents_table = View.contents_table(table_only=True)
+        elif self.locations:
+            self.title = "Storage positions in %s" % self.context.title
             self.icon = self.portal_url + "/++resource++bika.lims.images/" \
                         + "storagelocation_big.png"
-            self.content_table = \
-                self.get_storagelocations_table(self.has_locations)
+            View = StorageLocationsView(self.context, self.request)
+            self.contents_table = View.contents_table(table_only=True)
 
         return self.template()
-
-    def get_storagelocations_table(self, storage_locations):
-        if storage_locations:
-            View = StorageLocationsView(self.context, self.request)
-            table = View.contents_table(table_only=True)
-        else:
-            table = ""
-        return table
-
-    def get_storagelevels_table(self, storage_levels):
-        if storage_levels:
-            View = StorageLevelsListingView(self.context, self.request)
-            table = View.contents_table(table_only=True)
-        else:
-            table = ""
-        return table
 
 class StorageLevelsListingView(BikaListingView):
     """This is the listing that shows StorageLevels at this location.
@@ -92,6 +76,8 @@ class StorageLevelsListingView(BikaListingView):
             'Temperature': {'title': _('Temperature'), 'toggle': True},
             'Department': {'title': _('Department'), 'toggle': False},
             'Address': {'title': _('Address'), 'toggle': False},
+            'StorageTypes': {'title': _('Storage Types'), 'toggle': True},
+            'review_state': {'title': _('State'), 'toggle': True},
         }
 
         self.review_states = [
@@ -102,14 +88,17 @@ class StorageLevelsListingView(BikaListingView):
              'columns': ['Title',
                          'Temperature',
                          'Department',
-                         'Address']},
+                         'Address',
+                         'StorageTypes',
+                         'review_state']},
             {'id': 'all',
              'title': _('All'),
              'contentFilter': {},
              'columns': ['Title',
                          'Temperature',
                          'Department',
-                         'Address']},
+                         'StorageTypes',
+                         'review_state']},
         ]
 
     def folderitems(self, full_objects=False):
@@ -124,6 +113,8 @@ class StorageLevelsListingView(BikaListingView):
             items[x]['Address'] = obj.getAddress()
             items[x]['replace']['Title'] = \
                 "<a href='%s'>%s</a>" % (items[x]['url'], items[x]['Title'])
+            stitles = [s['title'] for s in obj.getStorageTypes()]
+            items[x]['StorageTypes'] = ','.join(stitles)
         return items
 
 
@@ -184,8 +175,9 @@ class StorageLocationsView(BikaListingView):
             obj = items[x]['obj']
 
             items[x]['Title'] = obj.Title()
-            items[x]['StorageTypes'] = '<br/>'.join(obj.getStorageTypes())
             si = obj.getStoredItem()
             items[x]['StoredItem'] = si.Title() if si else ''
+            stitles = [s['title'] for s in obj.getStorageTypes()]
+            items[x]['StorageTypes'] = ','.join(stitles)
 
         return items

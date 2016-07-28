@@ -1,22 +1,14 @@
 from AccessControl import ClassSecurityInfo
 
 from Products.Archetypes.public import *
+from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.utils import safe_unicode
 
 from bika.lims import bikaMessageFactory as _, PROJECTNAME
+from bika.lims.browser.storage import getStorageTypes
 from bika.lims.content.bikaschema import BikaSchema
 
-StorageTypes = LinesField(
-    'StorageTypes',
-    vocabulary="StorageTypesVocabulary",
-    widget=MultiSelectionWidget(
-        label=_("Storage Types"),
-        format="checkbox",
-    )
-)
-
 schema = BikaSchema.copy() + Schema((
-    StorageTypes,
 ))
 schema['title'].widget.label = _('Address')
 schema['description'].widget.visible = True
@@ -26,7 +18,6 @@ class StorageLocation(BaseContent):
     security = ClassSecurityInfo()
     displayContentsTab = False
     schema = schema
-
     _at_rename_after_creation = True
 
     def _renameAfterCreation(self, check_auto_id=False):
@@ -36,36 +27,15 @@ class StorageLocation(BaseContent):
     def Title(self):
         return safe_unicode(self.getField('title').get(self)).encode('utf-8')
 
-    def StorageTypesVocabulary(self):
-        items = [
-            # ("bika.lims.interfaces.IItemStorageLocation",
-            #  "Any type of item in the system"),
-            # ("bika.lims.interfaces.ISampleItemStorageLocation",
-            #  "Any type of Sample item"),
-            ("bika.lims.interfaces.IBioSpecimenStorageLocation",
-             "Bio Specimens"),
-            ("bika.lims.interfaces.IAliquotStorageLocation",
-             "Aliquots"),
-            # ("bika.lims.interfaces.IInventoryStorageLocation",
-            #  "Any type of Inventory item"),
-            ("bika.lims.interfaces.IStockItemStorageLocation",
-             "Stock Items (products)"),
-            ("bika.lims.interfaces.IKitStorageLocation",
-             "Kits")
-        ]
-        return DisplayList(zip(items[0], items[1]))
-
-    def getStoredItem(self):
-        items = self.getBackReferences('StoredItemStorageLocation')
-        if items:
-            return items[0]
-
     def getHierarchy(self, structure=False, separator='.', fieldname='id'):
         ancestors = []
         ancestor = self
         while (1):
-            acc = getattr(ancestor, fieldname).getAccessor()
-            val = acc() if callable(acc) else acc
+            try:
+                accessor = getattr(ancestor, fieldname).getAccessor()
+                val = accessor() if callable(accessor) else accessor
+            except AttributeError:
+                val = getattr(ancestor, fieldname)
             if structure:
                 ancestors.append(
                     "<a href='%s'>%s</a>" % (ancestor.absolute_url(), val))
@@ -75,6 +45,16 @@ class StorageLocation(BaseContent):
                 break
             ancestor = ancestor.aq_parent
         return separator.join(reversed(ancestors))
+
+    def getStorageTypes(self):
+        """Return a list of the storage type interfaces which are provided here.
+        """
+        return [x for x in getStorageTypes() if x['interface'].providedBy(self)]
+
+    def getStoredItem(self):
+        items = self.getBackReferences('StoredItemStorageLocation')
+        if items:
+            return items[0]
 
     def guard_occupy_transition(self):
         """Occupy transition cannot proceed until StoredItem is set.
@@ -89,6 +69,14 @@ class StorageLocation(BaseContent):
             return True
         return False
 
+    def workflow_script_occupy(self):
+        """If possible, occupy the parent storage level.
+        """
+        wf = getToolByName(self, 'portal_workflow')
+        tids = [t['id'] for t in wf.getTransitionsFor(self.aq_parent)]
+        if 'occupy' in tids:
+            wf.doActionFor(self.aq_parent, 'occupy')
+
     def guard_liberate_transition(self):
         """Liberate transition cannot proceed unless StoredItem is cleared.
 
@@ -101,6 +89,18 @@ class StorageLocation(BaseContent):
                 and not self.getStoredItem():
             return True
         return False
+
+    def workflow_script_liberate(self):
+        """If possible, liberate the parent storage level.
+        """
+        wf = getToolByName(self, 'portal_workflow')
+        tids = [t['id'] for t in wf.getTransitionsFor(self.aq_parent)]
+        if 'liberate' in tids:
+            wf.doActionFor(self.aq_parent, 'liberate')
+
+    def available(self):
+        wf = getToolByName(self, 'portal_workflow')
+        return wf.getInfoFor(self, 'review_state') == 'available'
 
     def at_post_create_script(self):
         """Execute once the object is created

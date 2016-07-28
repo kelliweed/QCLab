@@ -291,40 +291,17 @@ class IStorageUnits(Interface):
 
 
 class IStorageLocation(Interface):
-    "This is the marker interface applied StorageLocation items"
-
-
-class IItemStorageLocation(Interface):
-    """This is used as a base interface for 'types' of StorageLocations
+    """This is the marker interface applied StorageLocation items.  This is
+    only a marker for the StorageLocation type itself, it does not signify
+    a 'type' of storage.
     """
 
-
-class ISampleItemStorageLocation(Interface):
-    "Provides storage for all different types of samples"
-
-
-class IBioSpecimenStorageLocation(Interface):  # XXX sanbi via adapter
-    ""
-
-
-# XXX sanbi(to lims with accessioning code!) via adapter
-class IAliquotStorageLocation(Interface):
-    ""
-
+class IStorageTypeRegistration(Interface):
+    """An adapter to provide storage types.  Returns a dictionary:
+    {'interface': SampleStorageTypeInterface, 'title': 'ui title'}
+    """
 
 class ISampleStorageLocation(Interface):
-    ""
-
-
-class IInventoryStorageLocation(Interface):
-    "Provides storage for all types of inventory items."
-
-
-class IStockItemStorageLocation(Interface):
-    ""
-
-
-class IKitStorageLocation(Interface):  # XXX sanbi via adapter
     ""
 
 
