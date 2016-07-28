@@ -17,7 +17,7 @@ class StorageUnitsView(BikaListingView):
     def __init__(self, context, request):
         super(StorageUnitsView, self).__init__(context, request)
         self.catalog = 'bika_setup_catalog'
-        self.contentFilter = {'object_provides': 'StorageUnit',
+        self.contentFilter = {'portal_type': 'StorageUnit',
                               'sort_on': 'sortable_title'}
         self.context_actions = {}
         # self.context_actions = {
