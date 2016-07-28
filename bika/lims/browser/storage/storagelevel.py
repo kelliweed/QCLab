@@ -144,6 +144,7 @@ class StorageLocationsView(BikaListingView):
         self.show_select_column = True
         self.pagesize = 25
         self.columns = {
+            'id': {'title': _('ID'), 'index': 'id'},
             'Title': {'title': _('Title'), 'index': 'sortable_title'},
             'StorageTypes': {'title': _('Storage Types'), 'toggle': True},
             'StoredItem': {'title': _('Stored Item'), 'toggle': True},
@@ -154,14 +155,16 @@ class StorageLocationsView(BikaListingView):
              'title': _('Active'),
              'contentFilter': {'inactive_state': 'active'},
              'transitions': [{'id': 'deactivate'}, ],
-             'columns': ['Title',
+             'columns': ['id',
+                         'Title',
                          'StorageTypes',
                          'StoredItem',
                          'review_state']},
             {'id': 'all',
              'title': _('All'),
              'contentFilter': {},
-             'columns': ['Title',
+             'columns': ['id',
+                         'Title',
                          'StorageTypes',
                          'StoredItem',
                          'review_state']},
@@ -174,6 +177,7 @@ class StorageLocationsView(BikaListingView):
                 continue
             obj = items[x]['obj']
 
+            items[x]['id'] = obj.getId()
             items[x]['Title'] = obj.Title()
             si = obj.getStoredItem()
             items[x]['StoredItem'] = si.Title() if si else ''
