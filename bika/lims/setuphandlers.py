@@ -419,6 +419,15 @@ class BikaGenerator:
         except:
             pass
 
+        # /storage folder permissions (StorageUnits)
+        mp = portal.storage.manage_permission
+        mp(CancelAndReinstate, ['Manager', 'LabManager', 'LabClerk'], 0)
+        mp(permissions.ListFolderContents, ['Manager', 'LabManager', 'LabClerk', 'Analyst'], 1)
+        mp(permissions.AddPortalContent, ['Manager', 'LabManager', 'Owner'], 0)
+        mp(permissions.DeleteObjects, ['Manager', 'LabManager', 'Owner'], 0)
+        mp(permissions.View, ['Manager', 'LabManager', 'LabClerk'], 0)
+        portal.invoices.reindexObject()
+
         # Add Analysis Services View permission to Clients
         # (allow Clients to add attachments to Analysis Services from an AR)
         mp = portal.bika_setup.bika_analysisservices.manage_permission
