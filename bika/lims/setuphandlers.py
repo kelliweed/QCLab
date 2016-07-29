@@ -54,6 +54,7 @@ class BikaGenerator:
                        'referencesamples',
                        'samples',
                        'supplyorders',
+                       'inventoryorders',
                        'worksheets',
                        'reports',
                        'arimports',
@@ -83,7 +84,10 @@ class BikaGenerator:
                        'bika_artemplates',
                        'bika_labcontacts',
                        'bika_labproducts',
+                       'bika_stockitems',
                        'bika_manufacturers',
+                       'bika_productcategories',
+                       'bika_products',
                        'bika_sampleconditions',
                        'bika_samplematrices',
                        'bika_samplingdeviations',
@@ -226,6 +230,10 @@ class BikaGenerator:
         mp(AccessPreviousVersions, ['Manager', 'LabManager', 'LabClerk', 'Analyst', 'Owner', 'RegulatoryInspector'], 1)
 
         mp(DispatchOrder, ['Manager', 'LabManager', 'LabClerk'], 1)
+        mp(AddInventoryOrder, ['Manager', 'LabManager', 'LabClerk'], 1)
+        mp(DispatchInventoryOrder, ['Manager', 'LabManager', 'LabClerk'], 1)
+        mp(ReceiveInventoryOrder, ['Manager', 'LabManager', 'LabClerk'], 1)
+        mp(StoreInventoryOrder, ['Manager', 'LabManager', 'LabClerk'], 1)
         mp(ManageARImport, ['Manager', 'LabManager', 'LabClerk'], 1)
         mp(ManageARPriority, ['Manager', 'LabManager', 'LabClerk'], 1)
         mp(ManageAnalysisRequests, ['Manager', 'LabManager', 'LabClerk', 'Analyst', 'Sampler', 'Preserver', 'Owner', 'RegulatoryInspector', 'SamplingCoordinator'], 1)
@@ -416,6 +424,25 @@ class BikaGenerator:
             portal.supplyorders.reindexObject()
         except:
             pass
+
+        # /inventoryorders folder permissions
+        mp = portal.inventoryorders.manage_permission
+        mp(CancelAndReinstate, ['Manager', 'LabManager', 'LabClerk'], 0)
+        mp(AddInventoryOrder,
+            ['Manager', 'LabManager', 'Owner', 'LabClerk'], 1)
+        mp(DispatchInventoryOrder,
+            ['Manager', 'LabManager', 'Owner', 'LabClerk'], 1)
+        mp(ReceiveInventoryOrder,
+            ['Manager', 'LabManager', 'Owner', 'LabClerk'], 1)
+        mp(StoreInventoryOrder,
+            ['Manager', 'LabManager', 'LabClerk', 'Owner'], 1)
+        mp(permissions.ListFolderContents, ['Member'], 1)
+        mp(permissions.AddPortalContent,
+            ['Manager', 'LabManager', 'Owner', 'LabClerk'], 0)
+        mp(permissions.DeleteObjects,
+            ['Manager', 'LabManager', 'Owner', 'LabClerk'], 0)
+        mp(permissions.View, ['Manager', 'LabManager', 'LabClerk'], 0)
+        portal.inventoryorders.reindexObject()
 
         # Add Analysis Services View permission to Clients
         # (allow Clients to add attachments to Analysis Services from an AR)
@@ -715,7 +742,11 @@ class BikaGenerator:
         at.setCatalogsByType('LabProduct', ['bika_setup_catalog', 'portal_catalog'])
         at.setCatalogsByType('LabContact', ['bika_setup_catalog', 'portal_catalog'])
         at.setCatalogsByType('Manufacturer', ['bika_setup_catalog', 'portal_catalog'])
+        at.setCatalogsByType('InventoryOrder', ['bika_setup_catalog'])
         at.setCatalogsByType('Preservation', ['bika_setup_catalog', ])
+        at.setCatalogsByType('ProductCategory', ['bika_setup_catalog', ])
+        at.setCatalogsByType('StockItem', ['bika_setup_catalog', ])
+        at.setCatalogsByType('Product', ['bika_setup_catalog', ])
         at.setCatalogsByType('ReferenceDefinition', ['bika_setup_catalog', 'portal_catalog'])
         at.setCatalogsByType('SRTemplate', ['bika_setup_catalog', 'portal_catalog'])
         at.setCatalogsByType('SubGroup', ['bika_setup_catalog', ])
@@ -738,6 +769,7 @@ class BikaGenerator:
         addIndex(bsc, 'created', 'DateIndex')
         addIndex(bsc, 'Creator', 'FieldIndex')
         addIndex(bsc, 'getObjPositionInParent', 'GopipIndex')
+        addIndex(bsc, 'object_provides', 'KeywordIndex')
 
         addIndex(bsc, 'title', 'FieldIndex', 'Title')
         addIndex(bsc, 'sortable_title', 'FieldIndex')
