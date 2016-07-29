@@ -25,7 +25,7 @@ class StorageUnitsView(BikaListingView):
         #         'url': 'createObject?type_name=StorageUnit',
         #         'icon': '++resource++bika.lims.images/add.png'}}
         self.title = context.translate(_('Storage units'))
-        self.description = _("Displays a list of all the storage units in LIMS")
+        self.description = ""
         self.icon = self.portal_url + \
                     '/++resource++bika.lims.images/storageunit_big.png'
         self.show_sort_column = False

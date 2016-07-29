@@ -31,7 +31,7 @@
             for="bika.lims.interfaces.IStorageUnits"
             name="addstorageunits_viewlet"
             class=".addstorageunits_viewlet.AddStorageUnitsViewlet"
-            manager="plone.app.layout.viewlets.interfaces.IAboveContentTitle"
+            manager="plone.app.layout.viewlets.interfaces.IBelowContentTitle"
             permission="zope2.View"
             layer="bika.lims.interfaces.IBikaLIMS"
     />
@@ -48,7 +48,7 @@
             for="bika.lims.interfaces.IStorageUnit"
             name="addstoragelevels_viewlet"
             class=".addstoragelevels_viewlet.AddStorageLevelsViewlet"
-            manager="plone.app.layout.viewlets.interfaces.IAboveContentTitle"
+            manager="plone.app.layout.viewlets.interfaces.IBelowContentTitle"
             permission="zope2.View"
             layer="bika.lims.interfaces.IBikaLIMS"
     />
@@ -57,7 +57,7 @@
             for="bika.lims.interfaces.IStorageLevel"
             name="addstoragelevels_viewlet"
             class=".addstoragelevels_viewlet.AddStorageLevelsViewlet"
-            manager="plone.app.layout.viewlets.interfaces.IAboveContentTitle"
+            manager="plone.app.layout.viewlets.interfaces.IBelowContentTitle"
             permission="zope2.View"
             layer="bika.lims.interfaces.IBikaLIMS"
     />
@@ -66,23 +66,6 @@
             for="*"
             name="addstoragelevels_submit"
             class=".addstoragelevels_viewlet.AddStorageLevelsSubmitHandler"
-            permission="zope2.View"
-            layer="bika.lims.interfaces.IBikaLIMS"
-    />
-
-    <browser:viewlet
-            for="bika.lims.interfaces.IStorageLevel"
-            name="addstoragelocations_viewlet"
-            class=".addstoragelocations_viewlet.AddStorageLocationsViewlet"
-            manager="plone.app.layout.viewlets.interfaces.IAboveContentTitle"
-            permission="zope2.View"
-            layer="bika.lims.interfaces.IBikaLIMS"
-    />
-
-    <browser:page
-            for="bika.lims.interfaces.IStorageLevel"
-            name="addstoragelocations_submit"
-            class=".addstoragelocations_viewlet.AddStorageLocationsSubmitHandler"
             permission="zope2.View"
             layer="bika.lims.interfaces.IBikaLIMS"
     />
