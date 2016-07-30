@@ -46,6 +46,7 @@
   <include package=".samplinground"/>
   <include package=".srtemplate"/>
   <include package=".sample"/>
+  <include package=".storage"/>
   <include package=".worksheet"/>
 
   <include package=".fields"/>

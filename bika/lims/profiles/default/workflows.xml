@@ -20,6 +20,8 @@
  <object name="bika_reject_analysis_workflow" meta_type="Workflow"/>
  <object name="bika_sample_workflow" meta_type="Workflow"/>
  <object name="bika_samplinground_workflow" meta_type="Workflow"/>
+ <object name="bika_storagelocation_workflow" meta_type="Workflow"/>
+ <object name="bika_storagelevel_workflow" meta_type="Workflow"/>
  <object name="bika_worksheet_workflow" meta_type="Workflow"/>
  <object name="bika_worksheetanalysis_workflow" meta_type="Workflow"/>
  <object name="sampleprep_simple" meta_type="Workflow"/>
@@ -318,9 +320,19 @@
    <bound-workflow workflow_id="bika_inactive_workflow"/>
   </type>
 
-  <type type_id="StorageLocations"/>
-  <type type_id="StorageLocation">
+  <type type_id="StorageUnits"/>
+  <type type_id="StorageUnit">
    <bound-workflow workflow_id="bika_one_state_workflow"/>
+   <bound-workflow workflow_id="bika_inactive_workflow"/>
+  </type>
+
+  <type type_id="StorageLevel">
+   <bound-workflow workflow_id="bika_storagelevel_workflow"/>
+   <bound-workflow workflow_id="bika_inactive_workflow"/>
+  </type>
+
+  <type type_id="StorageLocation">
+   <bound-workflow workflow_id="bika_storagelocation_workflow"/>
    <bound-workflow workflow_id="bika_inactive_workflow"/>
   </type>
 

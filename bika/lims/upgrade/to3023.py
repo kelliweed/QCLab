@@ -35,8 +35,3 @@ def upgrade(tool):
 
     at = getToolByName(portal, 'archetype_tool')
     at.setCatalogsByType('StorageLocation', ['bika_setup_catalog', 'portal_catalog'])
-
-    bika_setup = portal._getOb('bika_setup')
-    obj = bika_setup._getOb('bika_storagelocations')
-    obj.unmarkCreationFlag()
-    obj.reindexObject()
