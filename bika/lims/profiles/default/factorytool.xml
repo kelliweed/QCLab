@@ -45,6 +45,9 @@
   <type portal_type="SampleCondition"/>
   <type portal_type="SamplePoint"/>
   <type portal_type="StorageUnit"/>
+  <type portal_type="ManagedStorage"/>
+  <type portal_type="UnmanagedStorage"/>
+  <type portal_type="StoragePosition"/>
   <type portal_type="SampleType"/>
   <type portal_type="SamplingDeviation"/>
   <type portal_type="SRTemplate"/>

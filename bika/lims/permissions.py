@@ -30,9 +30,10 @@ AddSample = 'BIKA: Add Sample'
 AddSampleMatrix = 'BIKA: Add SampleMatrix'
 AddSamplePartition = 'BIKA: Add SamplePartition'
 AddSamplePoint = 'BIKA: Add SamplePoint'
-AddStorageLocation = 'BIKA: Add Storage Location'
 AddStorageUnit = 'BIKA: Add Storage Unit'
-AddStorageLevel = 'BIKA: Add Storage Level'
+AddManagedStorage = 'BIKA: Add Managed Storage'
+AddUnmanagedStorage = 'BIKA: Add Unmanaged Storage'
+AddStoragePosition = 'BIKA: Add Storage Position'
 AddSamplingDeviation = 'BIKA: Add SamplingDeviation'
 AddSamplingRound = 'BIKA: Add SamplingRound'
 AddSRTemplate = 'BIKA: Add SRTemplate'
@@ -60,8 +61,9 @@ ADD_CONTENT_PERMISSIONS = {
     'SamplingDeviation': AddSamplingDeviation,
     'SamplingRound': AddSamplingRound,
     'StorageUnit': AddStorageUnit,
-    'StorageLevel': AddStorageLevel,
-    'StorageLocation': AddStorageLocation,
+    'ManagedStorage': AddManagedStorage,
+    'UnmanagedStorage': AddUnmanagedStorage,
+    'StoragePosition': AddStoragePosition,
 }
 
 # Very Old permissions:

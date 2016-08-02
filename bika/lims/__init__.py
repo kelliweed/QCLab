@@ -103,10 +103,11 @@ def initialize(context):
     from content.samplematrix import SampleMatrix
     from content.samplepartition import SamplePartition
     from content.samplepoint import SamplePoint
-    from content.storagelocation import StorageLocation
-    from content.storagelevel import StorageLevel
     from content.storageunit import StorageUnit
     from content.storageunits import StorageUnits
+    from content.managedstorage import ManagedStorage
+    from content.unmanagedstorage import UnmanagedStorage
+    from content.storageposition import StoragePosition
     from content.samplesfolder import SamplesFolder
     from content.sampletype import SampleType
     from content.samplingdeviation import SamplingDeviation

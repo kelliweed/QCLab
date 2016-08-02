@@ -278,10 +278,6 @@ class ISamplePoints(Interface):
     ""
 
 
-class IStorageLevel(Interface):
-    ""
-
-
 class IStorageUnit(Interface):
     ""
 
@@ -290,15 +286,25 @@ class IStorageUnits(Interface):
     ""
 
 
-class IStorageLocation(Interface):
+class IManagedStorage(Interface):
+    """Base for all storage types.
+    """
+
+
+class IUnmanagedStorage(Interface):
+    """Base for all storage types.
+    """
+
+
+class IStoragePosition(Interface):
     """This is the marker interface applied StorageLocation items.  This is
     only a marker for the StorageLocation type itself, it does not signify
     a 'type' of storage.
     """
 
+
 class IStorageTypeRegistration(Interface):
-    """An adapter to provide storage types.  Returns a dictionary:
-    {'interface': SampleStorageTypeInterface, 'title': 'ui title'}
+    """
     """
 
 class ISampleStorageLocation(Interface):
