@@ -91,7 +91,7 @@ class SupplierOrdersView(OrderFolderView):
     def __init__(self, context, request):
         super(SupplierOrdersView, self).__init__(context, request)
         self.contentFilter = {
-            'portal_type': 'Order',
+            'portal_type': 'InventoryOrder',
             'sort_on': 'sortable_title',
             'sort_order': 'reverse',
             'path': {

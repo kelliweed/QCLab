@@ -52,7 +52,7 @@ class OrderPublishView(BrowserView):
         if self.context.portal_type == 'Order':
             self._products = [self.context]
         elif self.context.portal_type == 'OrderFolder' \
-            and self.request.get('items',''):
+            and self.request.get('items', ''):
             uids = self.request.get('items').split(',')
             uc = getToolByName(self.context, 'uid_catalog')
             self._products = [obj.getObject() for obj in uc(UID=uids)]

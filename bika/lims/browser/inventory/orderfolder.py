@@ -13,7 +13,7 @@ class OrderFolderView(BikaListingView):
     def __init__(self, context, request):
         super(OrderFolderView, self).__init__(context, request)
         self.contentFilter = {
-            'portal_type': 'Order',
+            'portal_type': 'InventoryOrder',
             'sort_on': 'sortable_title',
             'sort_order': 'reverse',
         }
@@ -28,7 +28,7 @@ class OrderFolderView(BikaListingView):
         self.pagesize = 25
         self.form_id = 'orders'
         self.icon = self.portal_url + '/++resource++bika.lims.images/supplyorder_big.png'
-        self.title = self.context.translate(_('Orders'))
+        self.title = self.context.translate(_('Inventory Orders'))
         self.columns = {
             'OrderNumber': {'title': _('Order Number')},
             'OrderDate': {'title': _('Order Date')},

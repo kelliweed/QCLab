@@ -112,9 +112,9 @@ class AddStorageUnitsSubmitHandler(BrowserView):
         if temperature and 'Temperature' in schema:
             ob.Schema()['Temperature'].set(ob, temperature)
         if department and 'Department' in schema:
-            ob.Schema()['Department'].set(ob, temperature)
+            ob.Schema()['Department'].set(ob, department)
         if address and 'Address' in schema:
-            ob.Schema()['Address'].set(ob, temperature)
+            ob.Schema()['Address'].set(ob, address)
 
     def form_error(self, msg):
         self.context.plone_utils.addPortalMessage(msg)
