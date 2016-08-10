@@ -62,7 +62,6 @@ class StoragePositionsView(BikaListingView):
         self.pagesize = 25
         self.columns = {
             'id': {'title': _('ID'), 'index': 'id'},
-            'Title': {'title': _('Title'), 'index': 'sortable_title'},
             'StorageTypes': {'title': _('Storage Types'), 'toggle': True},
             'StoredItem': {'title': _('Stored Item'), 'toggle': True},
             'review_state': {'title': _('State'), 'toggle': True},
@@ -73,7 +72,6 @@ class StoragePositionsView(BikaListingView):
              'contentFilter': {'inactive_state': 'active'},
              'transitions': [{'id': 'deactivate'}, ],
              'columns': ['id',
-                         'Title',
                          'StorageTypes',
                          'StoredItem',
                          'review_state']},
@@ -81,7 +79,6 @@ class StoragePositionsView(BikaListingView):
              'title': _('All'),
              'contentFilter': {},
              'columns': ['id',
-                         'Title',
                          'StorageTypes',
                          'StoredItem',
                          'review_state']},

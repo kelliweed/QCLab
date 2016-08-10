@@ -42,7 +42,7 @@
         </td>
         <td><input name="managed_titletemplate"
                    class="titletemplate"
-                   placeholder=""
+                   placeholder="Box {id}"
                    autocomplete="false"
                    tal:attributes="value python: request.get('managed_titletemplate', '')"/>
         </td>
@@ -57,7 +57,7 @@
         <td>
             <input name="managed_idtemplate"
                    class="idtemplate"
-                   placeholder="prefix-{id}"
+                   placeholder="box-{id}"
                    autocomplete="false"
                    tal:attributes="value python: request.get('managed_idtemplate', '')"/>
         </td>
