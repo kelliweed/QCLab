@@ -27,7 +27,7 @@ class AddStorageViewlet(ViewletBase):
         are no storage objects at this location.
         """
         if self.context.objectValues():
-            return "collapsible collapseOnLoad"
+            return "collapsible collapsedOnLoad"
         else:
             return "collapsible"
 
