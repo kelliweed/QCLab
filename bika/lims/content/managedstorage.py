@@ -39,22 +39,14 @@ Dimension = StringField(
     )
 )
 
-Positions = ComputedField(
-    'Positions',
-    widget=StringWidget(
-        label=_("Positions"),
-        description=_(""),
-        visible=False,
-    )
-)
-
 FreePositions = ComputedField(
     'FreePositions',
-    widget=StringWidget(
-        label=_("FreePositions"),
-        description=_(""),
-        visible=False,
-    )
+    expression="len(here.getFreePositions())"
+)
+
+Hierarchy = ComputedField(
+    'Hierarchy',
+    expression="here.getHierarchy()"
 )
 
 # ____Shelves representation____ #
@@ -64,7 +56,8 @@ XAxis = IntegerField(
         label=_("Number of rows"),
         description=_("Specify the number of rows in a layer."),
         visible=False
-    ))
+    )
+)
 
 YAxis = IntegerField(
     'YAxis',
@@ -72,7 +65,8 @@ YAxis = IntegerField(
         label=_("Number of columns"),
         description=_("Specify the number of columns in a layer."),
         visible=False,
-    ))
+    )
+)
 
 ZAxis = IntegerField(
     'ZAxis',
@@ -80,14 +74,15 @@ ZAxis = IntegerField(
         label=_("Number of layers"),
         description=_("Use number interval to encode the the layers."),
         visible=False,
-    ))
+    )
+)
 
 schema = BikaFolderSchema.copy() + Schema((
     Temperature,
     Containers,
     Dimension,
-    Positions,
     FreePositions,
+    Hierarchy,
     XAxis,
     YAxis,
     ZAxis

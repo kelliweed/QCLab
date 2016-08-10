@@ -30,21 +30,21 @@ Containers = StringField(
     ),
 )
 
-Positions = ComputedField(
-    'Positions',
-    expression="string:N/A"
-)
-
 FreePositions = ComputedField(
     'FreePositions',
-    expression="string:N/A"
+    expression="string:Yes"
+)
+
+Hierarchy = ComputedField(
+    'Hierarchy',
+    expression="here.getHierarchy()"
 )
 
 schema = BikaFolderSchema.copy() + Schema((
     Temperature,
     Containers,
-    Positions,
     FreePositions,
+    Hierarchy,
 ))
 
 
