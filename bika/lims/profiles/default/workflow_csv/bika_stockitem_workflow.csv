@@ -11,12 +11,16 @@ Id:,available,,,,,,,,,
 Title:,Available,,,,,,,,,
 Description:,Stock Item is valid and ready for use,,,,,,,,,
 Transitions,use,,,,,,,,,
+Permissions,Acquire,Manager,Analyst,LabClerk,LabManager
+BIKA: Cancel and reinstate,N,N,N,N,N
 ,,,,,,,,,,
 [State],,,,,,,,,,
 Id:,used,,,,,,,,,
 Title:,Used,,,,,,,,,
 Description:,Stock item is used, and removed from inventory.,,,,,,,,,
 Transitions,,,,,,,,,,
+Permissions,Acquire,Manager,Analyst,LabClerk,LabManager
+BIKA: Cancel and reinstate,N,N,N,N,N
 ,,,,,,,,,,
 [Transition],,,,,,,,,,
 Id:,use,,,,,,,,,
