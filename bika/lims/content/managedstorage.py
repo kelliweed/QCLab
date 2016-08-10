@@ -3,11 +3,11 @@ from AccessControl import ClassSecurityInfo
 from Products.Archetypes.public import *
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.utils import safe_unicode
+from bika.lims import bikaMessageFactory as _
+from bika.lims.browser.storage import getStorageTypes
 from plone.app.folder.folder import ATFolder
 from zope.interface import implements
 
-from bika.lims import bikaMessageFactory as _
-from bika.lims.browser.storage import getStorageTypes
 from bika.lims.config import PROJECTNAME
 from bika.lims.content.bikaschema import BikaFolderSchema
 from bika.lims.interfaces import IManagedStorage
@@ -67,12 +67,11 @@ ZAxis = IntegerField(
 schema = BikaFolderSchema.copy() + Schema((
     Temperature,
     Containers,
+    Dimension,
     XAxis,
     YAxis,
     ZAxis
 ))
-
-permission = "zope2.View"
 
 
 class ManagedStorage(ATFolder):
