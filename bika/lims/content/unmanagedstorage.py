@@ -3,11 +3,11 @@ from AccessControl import ClassSecurityInfo
 from Products.Archetypes.public import *
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.utils import safe_unicode
+from bika.lims import bikaMessageFactory as _
+from bika.lims.browser.storage import getStorageTypes
 from plone.app.folder.folder import ATFolder
 from zope.interface import implements
 
-from bika.lims import bikaMessageFactory as _
-from bika.lims.browser.storage import getStorageTypes
 from bika.lims.config import PROJECTNAME
 from bika.lims.content.bikaschema import BikaFolderSchema
 from bika.lims.interfaces import IUnmanagedStorage
@@ -30,9 +30,21 @@ Containers = StringField(
     ),
 )
 
+Positions = ComputedField(
+    'Positions',
+    expression="string:N/A"
+)
+
+FreePositions = ComputedField(
+    'FreePositions',
+    expression="string:N/A"
+)
+
 schema = BikaFolderSchema.copy() + Schema((
     Temperature,
-    Containers
+    Containers,
+    Positions,
+    FreePositions,
 ))
 
 
