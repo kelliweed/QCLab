@@ -1,8 +1,9 @@
 from plone import api
 from zope.component import getAdapters
 
-from bika.lims.interfaces import IStorageTypeRegistration
+from bika.lims.interfaces import IStorageTypeRegistration, IStockItemStorage
 from bika.lims.interfaces import ISampleStorageLocation
+
 
 def getStorageTypes():
     """Return interfaces and titles for all registered storage types.
@@ -18,6 +19,10 @@ def getStorageTypes():
 def defaultStorageTypes(context):
     """Return the storage types provided directly by bika.lims
     """
-    return [{'interface': ISampleStorageLocation,
-             'identifier': ISampleStorageLocation.__identifier__,
-             'title': 'Samples'}]
+    return [
+        {'interface': IStockItemStorage,
+         'identifier': IStockItemStorage.__identifier__,
+         'title': 'Stock Item'},
+        {'interface': ISampleStorageLocation,
+         'identifier': ISampleStorageLocation.__identifier__,
+         'title': 'Samples'}]

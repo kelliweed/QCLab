@@ -312,6 +312,9 @@ class IStorageTypeRegistration(Interface):
 class ISampleStorageLocation(Interface):
     ""
 
+class IStockItemStorage(Interface):
+    """A StorageLocation or StorageLevel that can store StockItems must
+    provide this interface"""
 
 class ISampleType(Interface):
     ""
