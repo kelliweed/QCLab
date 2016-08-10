@@ -1,6 +1,6 @@
 [workflow],,,,,,,,,,
-Id:,bika_storagelevel_workflow,,,,,,,,,
-Title:,Bika Storage Level Workflow,,,,,,,,,
+Id:,bika_storageposition_workflow,,,,,,,,,
+Title:,Bika Storage Workflow,,,,,,,,,
 Description:,,,,,,,,,,,,
 Initial state:,available,,,,,,,,,
 Type:,Workflow,,,,,,,,,
@@ -10,7 +10,7 @@ State variable:,review_state,,,,,,,,,
 Id:,available,,,,,,,,,
 Title:,Available,,,,,,,,,
 Description:,,,,,,,,,,
-Transitions,"occupy",,,,,,,,,
+Transitions,occupy,,,,,,,,,
 Permissions,Acquire,Anonymous,Manager,Owner,Reader,Editor,Contributor,Analyst,LabClerk,LabManager
 View,N,N,Y,Y,N,N,N,Y,Y,Y
 Modify portal content,N,N,Y,N,N,N,N,N,N,Y
@@ -19,7 +19,7 @@ Modify portal content,N,N,Y,N,N,N,N,N,N,Y
 Id:,occupied,,,,,,,,,
 Title:,Occupied,,,,,,,,,
 Description:,,,,,,,,,,
-Transitions,"liberate",,,,,,,,,
+Transitions,liberate,,,,,,,,,
 Permissions,Acquire,Anonymous,Manager,Owner,Reader,Editor,Contributor,Analyst,LabClerk,LabManager
 View,N,N,Y,Y,N,N,N,Y,Y,Y
 Modify portal content,N,N,Y,N,N,N,N,N,N,Y

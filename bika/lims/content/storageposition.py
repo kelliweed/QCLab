@@ -14,45 +14,41 @@ schema['title'].widget.label = _('Address')
 schema['description'].widget.visible = True
 
 
-class StorageLocation(BaseContent):
+class StoragePosition(BaseContent):
     security = ClassSecurityInfo()
     displayContentsTab = False
     schema = schema
-    _at_rename_after_creation = True
-
-    def _renameAfterCreation(self, check_auto_id=False):
-        from bika.lims.idserver import renameAfterCreation
-        renameAfterCreation(self)
 
     def Title(self):
         return safe_unicode(self.getField('title').get(self)).encode('utf-8')
 
     def getHierarchy(self, structure=False, separator='.', fieldname='id'):
-        ancestors = []
-        ancestor = self
+        hierarchy = []
+        item = self
         while (1):
             try:
-                accessor = getattr(ancestor, fieldname).getAccessor()
+                accessor = getattr(item, fieldname).getAccessor()
                 val = accessor() if callable(accessor) else accessor
             except AttributeError:
-                val = getattr(ancestor, fieldname)
-            if structure:
-                ancestors.append(
-                    "<a href='%s'>%s</a>" % (ancestor.absolute_url(), val))
-            else:
-                ancestors.append(val)
-            if ancestor.portal_type == 'StorageUnit':
+                val = getattr(item, fieldname)
+            # Don't report on the /storage folder
+            if item.portal_type == 'StorageUnits':
                 break
-            ancestor = ancestor.aq_parent
-        return separator.join(reversed(ancestors))
+            url = "<a href='%s'>%s</a>" % (item.absolute_url(), val)
+            hierarchy.append(url if structure else val)
+            item = item.aq_parent
+        return separator.join(reversed(hierarchy))
 
-    def getStorageTypes(self):
-        """Return a list of the storage type interfaces which are provided here.
+    def getStorageTypes(self, show_all=False):
+        """Return a list of types of storage which are supported here.
         """
-        return [x for x in getStorageTypes() if x['interface'].providedBy(self)]
+        types = getStorageTypes()
+        if not show_all:
+            types = [x for x in types if x['interface'].providedBy(self)]
+        return types
 
     def getStoredItem(self):
-        items = self.getBackReferences('StoredItemStorageLocation')
+        items = self.getBackReferences('ItemStoragePosition')
         if items:
             return items[0]
 
@@ -70,7 +66,7 @@ class StorageLocation(BaseContent):
         return False
 
     def workflow_script_occupy(self):
-        """If possible, occupy the parent storage level.
+        """If possible, occupy the parent storage.
         """
         wf = getToolByName(self, 'portal_workflow')
         tids = [t['id'] for t in wf.getTransitionsFor(self.aq_parent)]
@@ -91,7 +87,7 @@ class StorageLocation(BaseContent):
         return False
 
     def workflow_script_liberate(self):
-        """If possible, liberate the parent storage level.
+        """If possible, liberate the parent storage.
         """
         wf = getToolByName(self, 'portal_workflow')
         tids = [t['id'] for t in wf.getTransitionsFor(self.aq_parent)]
@@ -108,7 +104,7 @@ class StorageLocation(BaseContent):
         wftool = self.portal_workflow
         if self.guard_occupy_transition():
             wftool.doActionFor(
-                self, action='occupy', wf_id='bika_storagelocation_workflow')
+                self, action='occupy', wf_id='bika_storage_workflow')
 
     def at_post_edit_script(self):
         """Execute once the object is edited
@@ -116,10 +112,10 @@ class StorageLocation(BaseContent):
         wftool = self.portal_workflow
         if self.guard_liberate_transition():
             wftool.doActionFor(
-                self, action='liberate', wf_id='bika_storagelocation_workflow')
+                self, action='liberate', wf_id='bika_storage_workflow')
         if self.guard_occupy_transition():
             wftool.doActionFor(
-                self, action='occupy', wf_id='bika_storagelocation_workflow')
+                self, action='occupy', wf_id='bika_storage_workflow')
 
 
-registerType(StorageLocation, PROJECTNAME)
+registerType(StoragePosition, PROJECTNAME)

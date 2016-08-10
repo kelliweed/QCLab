@@ -1,15 +1,15 @@
 <?xml version="1.0"?>
-<object name="StorageLocation"
+<object name="StoragePosition"
         meta_type="Factory-based Type Information with dynamic views"
         xmlns:i18n="http://xml.zope.org/namespaces/i18n"
         i18n:domain="plone"
         purge="True">
- <property name="title" i18n:translate="">Storage Location</property>
+ <property name="title" i18n:translate="">Storage Position</property>
  <property name="description"></property>
- <property name="content_icon">++resource++bika.lims.images/storagelocation.png</property>
- <property name="content_meta_type">StorageLocation</property>
+ <property name="content_icon">++resource++bika.lims.images/storageposition.png</property>
+ <property name="content_meta_type">StoragePosition</property>
  <property name="product">bika.lims</property>
- <property name="factory">addStorageLocation</property>
+ <property name="factory">addStoragePosition</property>
  <property name="add_view_expr"></property>
  <property name="link_target"></property>
  <property name="global_allow">False</property>
@@ -44,7 +44,7 @@
          url_expr="string:${object_url}/base_edit"
          i18n:attributes="title"
          i18n:domain="plone"
-         visible="True">
+         visible="False">
   <permission value="Modify portal content"/>
  </action>
 

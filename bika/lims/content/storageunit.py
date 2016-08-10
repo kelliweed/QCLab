@@ -9,6 +9,7 @@ from zope.interface import implements
 
 from bika.lims import bikaMessageFactory as _
 from bika.lims import config
+from bika.lims.browser.storage import getStorageTypes
 from bika.lims.content.bikaschema import BikaFolderSchema
 from bika.lims.interfaces import IStorageUnit
 
@@ -62,6 +63,14 @@ class StorageUnit(ATFolder):
 
     def getDepartmentTitle(self):
         return self.getDepartment() and self.getDepartment().Title() or ''
+
+    def getStorageTypes(self, show_all=False):
+        """Return a list of types of storage which are supported here.
+        """
+        types = getStorageTypes()
+        if not show_all:
+            types = [x for x in types if x['interface'].providedBy(self)]
+        return types
 
 
 schemata.finalizeATCTSchema(schema, folderish=True, moveDiscussion=False)

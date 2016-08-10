@@ -1,22 +1,21 @@
 <?xml version="1.0"?>
-<object name="StorageLevel"
+<object name="ManagedStorage"
         meta_type="Factory-based Type Information with dynamic views"
         xmlns:i18n="http://xml.zope.org/namespaces/i18n"
         i18n:domain="plone"
         purge="True">
- <property name="title" i18n:translate="">Storage level</property>
+ <property name="title" i18n:translate="">Managed storage</property>
  <property name="description"></property>
- <property name="content_icon">++resource++bika.sanbi.images/storagelevel.png</property>
- <property name="content_meta_type">StorageLevel</property>
+ <property name="content_icon">++resource++bika.sanbi.images/storage.png</property>
+ <property name="content_meta_type">ManagedStorage</property>
  <property name="product">bika.lims</property>
- <property name="factory">addStorageLevel</property>
+ <property name="factory">addManagedStorage</property>
  <property name="add_view_expr"></property>
  <property name="link_target"></property>
  <property name="global_allow">False</property>
  <property name="filter_content_types">True</property>
  <property name="allowed_content_types">
-  <element value="StorageLevel"/>
-  <element value="StorageLocation"/>
+  <element value="StoragePosition"/>
  </property>
  <property name="allow_discussion">False</property>
  <property name="default_view_fallback">False</property>

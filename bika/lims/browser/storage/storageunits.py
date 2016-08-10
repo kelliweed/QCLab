@@ -7,24 +7,30 @@ from bika.lims.browser.bika_listing import BikaListingView
 
 
 class StorageUnitsView(BikaListingView):
-    """The default listing view for /storage (StorageUnits)
+    """The default listing view for /storage (StorageUnits).
 
-    This will show all StorageUnit objects stored in this folder.
+    Shows all items located in /storage folder.  These can be StorageUnit,
+    ManagedStorage or UnmanagedStorage.
     """
 
     implements(IFolderContentsView, IViewView)
 
     def __init__(self, context, request):
         super(StorageUnitsView, self).__init__(context, request)
+        self.context = context
+        self.request = request
+
+    def __call__(self):
         self.catalog = 'bika_setup_catalog'
-        self.contentFilter = {'portal_type': 'StorageUnit',
-                              'sort_on': 'sortable_title'}
+        path = '/'.join(self.context.getPhysicalPath())
+        self.contentFilter = {
+            'portal_type': ['StorageUnit',
+                            'ManagedStorage',
+                            'UnmanagedStorage'],
+            'path': {'query': path, 'depth': 1, 'level': 0},
+            'sort_on': 'sortable_title'}
         self.context_actions = {}
-        # self.context_actions = {
-        #     _('Add one new storage unit'): {
-        #         'url': 'createObject?type_name=StorageUnit',
-        #         'icon': '++resource++bika.lims.images/add.png'}}
-        self.title = context.translate(_('Storage units'))
+        self.title = self.context.Title()
         self.description = ""
         self.icon = self.portal_url + \
                     '/++resource++bika.lims.images/storageunit_big.png'
@@ -37,6 +43,7 @@ class StorageUnitsView(BikaListingView):
                       'index': 'sortable_title'},
             'Description': {'title': _('Description'),
                             'toggle': False},
+            'Type': {'title': _('Type')},
             'Temperature': {'title': _('Temperature'),
                             'toggle': True},
             'Department': {'title': _('Department'),
@@ -50,15 +57,7 @@ class StorageUnitsView(BikaListingView):
              'contentFilter': {'inactive_state': 'active'},
              'transitions': [{'id': 'deactivate'}, ],
              'columns': ['Title',
-                         'Description',
-                         'Temperature',
-                         'Department',
-                         'Address']},
-            {'id': 'inactive',
-             'title': _('Dormant'),
-             'contentFilter': {'inactive_state': 'inactive'},
-             'transitions': [{'id': 'activate'}, ],
-             'columns': ['Title',
+                         'Type',
                          'Description',
                          'Temperature',
                          'Department',
@@ -67,21 +66,23 @@ class StorageUnitsView(BikaListingView):
              'title': _('All'),
              'contentFilter': {},
              'columns': ['Title',
+                         'Type',
                          'Description',
                          'Temperature',
                          'Department',
                          'Address']},
         ]
+        return super(StorageUnitsView, self).__call__()
 
-    def folderitems(self):
-        items = BikaListingView.folderitems(self)
-        for x in range(len(items)):
-            if not items[x].has_key('obj'):
-                continue
-            obj = items[x]['obj']
-            items[x]['Temperature'] = obj.getTemperature()
-            items[x]['Department'] = obj.getDepartmentTitle()
-            items[x]['Address'] = obj.getAddress()
-            items[x]['replace']['Title'] = "<a href='%s'>%s</a>" % \
-                                           (items[x]['url'], items[x]['Title'])
-        return items
+    def folderitem(self, obj, item, index):
+        if not item.has_key('obj'):
+            return item
+        obj = item['obj']
+        item['Temperature'] = obj.getTemperature()
+        item['Type'] = obj.Type()
+        item['Department'] = obj.getDepartmentTitle()
+        item['Address'] = obj.getAddress()
+        item['replace']['Title'] = \
+            "<a href='%s'>%s</a>" % (item['url'], item['Title'])
+
+        return item

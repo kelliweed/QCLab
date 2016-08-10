@@ -18,7 +18,8 @@
 </metal:content-title>
 
 <metal:core fill-slot="content-core">
-    <span tal:replace="structure view/contents_table"/>
+    <span tal:replace="structure view/positions_table"/>
+    <span tal:replace="structure view/graph"/>
 </metal:core>
 
 </body>
