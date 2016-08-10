@@ -452,7 +452,7 @@
 
 <div class="table-info" tal:define="portal context/@@plone_portal_state/portal;">
     <div id="stats">
-        <img tal:attributes='src python:portal.absolute_url()+"/++resource++bika.sanbi.images/graph_big.png"'/>
+        <img tal:attributes='src python:portal.absolute_url()+"/++resource++bika.lims.images/graph_big.png"'/>
         <span class="head-text">Occupancy</span>
     </div>
     <div id="graph-content-core">

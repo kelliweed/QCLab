@@ -6,7 +6,7 @@
         purge="True">
  <property name="title" i18n:translate="">Unmanaged storage</property>
  <property name="description"></property>
- <property name="content_icon">++resource++bika.sanbi.images/storage.png</property>
+ <property name="content_icon">++resource++bika.lims.images/storage.png</property>
  <property name="content_meta_type">UnmanagedStorage</property>
  <property name="product">bika.lims</property>
  <property name="factory">addUnmanagedStorage</property>
