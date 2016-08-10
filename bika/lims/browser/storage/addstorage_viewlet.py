@@ -317,13 +317,21 @@ class AddManagedStorage(Storage):
         if isinstance(storage_types, basestring):
             storage_types = [storage_types]
 
+        Dimension = form.get('managed_dimension', 'First')
+        XAxis = form.get('managed_x', nr_positions)
+        YAxis = form.get('managed_y', 0)
+        ZAxis = form.get('managed_z', 0)
+
         storages = []
         for x in self.get_sequence(start, nr_items):
             storage = api.content.create(
                 container=self.context,
                 type="ManagedStorage",
                 id=idtemplate.format(id=x),
-                title=titletemplate.format(id=x))
+                title=titletemplate.format(id=x),
+                XAxis=int(XAxis),
+                YAxis=int(YAxis)
+            )
             # schema
             self.set_inputs_into_schema(
                 storage, temperature, department, address)
