@@ -62,9 +62,9 @@
 
     <adapter
             for="*"
-            provides="bika.lims.interfaces.IStorageTypeProvider"
-            factory="bika.lims.browser.storage.defaultStorageTypes"
+            provides="bika.lims.interfaces.IStorageTypeRegistration"
             name="bika.lims.storagetypes"
+            factory="bika.lims.browser.storage.defaultStorageTypes"
     />
 
     <browser:page

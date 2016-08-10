@@ -1,14 +1,15 @@
 from plone import api
 from zope.component import getAdapters
 
-from bika.lims.interfaces import IStorageTypeProvider, \
-    ISampleStorageLocation
+from bika.lims.interfaces import IStorageTypeRegistration
+from bika.lims.interfaces import ISampleStorageLocation
 
 def getStorageTypes():
     """Return interfaces and titles for all registered storage types.
     """
+
     output_types = []
-    adapters = getAdapters((api.portal.get(),), IStorageTypeProvider)
+    adapters = getAdapters((api.portal.get(),), IStorageTypeRegistration)
     for name, storagetypes in adapters:
         output_types.extend(storagetypes)
     return output_types
