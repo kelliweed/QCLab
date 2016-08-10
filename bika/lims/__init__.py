@@ -91,6 +91,8 @@ def initialize(context):
     from content.preservation import Preservation
     from content.pricelist import Pricelist
     from content.pricelistfolder import PricelistFolder
+    from content.productcategory import ProductCategory
+    from content.product import Product
     from content.referenceanalysis import ReferenceAnalysis
     from content.referencedefinition import ReferenceDefinition
     from content.referencesample import ReferenceSample
@@ -117,6 +119,8 @@ def initialize(context):
     from content.suppliercontact import SupplierContact
     from content.supplyorderfolder import SupplyOrderFolder
     from content.supplyorder import SupplyOrder
+    from content.inventoryorderfolder import InventoryOrderFolder
+    from content.inventoryorder import InventoryOrder
     from content.worksheet import Worksheet
     from content.worksheetfolder import WorksheetFolder
     from content.worksheettemplate import WorksheetTemplate
@@ -137,6 +141,7 @@ def initialize(context):
     from controlpanel.bika_instrumenttypes import InstrumentTypes
     from controlpanel.bika_labcontacts import LabContacts
     from controlpanel.bika_labproducts import LabProducts
+    from controlpanel.bika_productcategories import ProductCategories
     from controlpanel.bika_manufacturers import Manufacturers
     from controlpanel.bika_preservations import Preservations
     from controlpanel.bika_referencedefinitions import ReferenceDefinitions

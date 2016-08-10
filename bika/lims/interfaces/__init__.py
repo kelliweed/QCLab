@@ -1,5 +1,7 @@
 from zope.interface import Interface
-
+from plone.portlets.interfaces import IPortletDataProvider
+from Products.CMFPlone import PloneMessageFactory as _
+from zope import schema
 
 class IBikaLIMS(Interface):
     """Marker interface that defines a Zope 3 browser layer.
@@ -342,6 +344,13 @@ class ISupplyOrder(Interface):
 class ISupplyOrderFolder(Interface):
     ""
 
+class IProductCategory(Interface):
+    """Product Category"""
+
+
+class IProductCategories(Interface):
+    """Product Categories"""
+
 
 class ISubGroups(Interface):
     """Sub-groups configuration folder"""
@@ -639,3 +648,34 @@ class ISamplePrepWorkflow(Interface):
 
 class ICustomPubPref(Interface):
     ""
+
+class IStockItem(Interface):
+    """
+    Interface for StockItem class.
+    """
+
+class IStockItems(Interface):
+    """
+    Interface for StockItems class.
+    """
+
+class IProduct(Interface):
+    """
+    Interface for Product.
+    """
+
+class IProducts(Interface):
+    """
+    Interface for Products.
+    """
+class IOrder(Interface):
+    "Interface for Orders for Inventory"
+
+class IOrderFolder(Interface):
+    "Interface for Order Folder for Inventory"
+
+class IExpiryPortlet(IPortletDataProvider):
+    count = schema.Int(title=_(u'Number of items to display'),
+                       description=_(u'How many items to list.'),
+                       required=True,
+                       default=5)
