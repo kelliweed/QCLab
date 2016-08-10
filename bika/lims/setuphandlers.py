@@ -795,6 +795,9 @@ class BikaGenerator:
         addIndex(bsc, 'inactive_state', 'FieldIndex')
         addIndex(bsc, 'cancellation_state', 'FieldIndex')
 
+        # used to discover StockItems of a certain type of product.
+        addIndex(bsc, 'getProductUID', 'FieldIndex')
+
         addIndex(bsc, 'getAccredited', 'FieldIndex')
         addIndex(bsc, 'getAnalyst', 'FieldIndex')
         addIndex(bsc, 'getInstrumentType', 'FieldIndex')

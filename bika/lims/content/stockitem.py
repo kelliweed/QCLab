@@ -1,3 +1,4 @@
+from plone.indexer import indexer
 from zope.interface import implements
 from Products.Archetypes import atapi
 from bika.lims import bikaMessageFactory as _
@@ -5,7 +6,7 @@ from Products.ATContentTypes.content import base
 from Products.ATContentTypes.content import schemata
 from bika.lims.browser.widgets import DateTimeWidget as bika_DateTimeWidget
 from bika.lims.browser.widgets import ReferenceWidget as bika_ReferenceWidget
-from bika.lims.interfaces import IStockItem
+from bika.lims.interfaces import IStockItem, IStockItemStorage
 from bika.lims import config
 from bika.lims.content.bikaschema import BikaSchema
 from DateTime.DateTime import DateTime
@@ -14,13 +15,16 @@ from Products.Archetypes.references import HoldingReference
 from Products.CMFCore.utils import getToolByName
 import sys
 
+@indexer(IStockItem)
+def getProductUID(instance):
+    return instance.getProduct().UID()
+
 schema = BikaSchema.copy() + Schema((
     ReferenceField('Product',
         required=1,
         vocabulary_display_path_bound=sys.maxint,
-        allowed_types=('Product', 'Kit'),
+        allowed_types=('Product'),
         relationship='StockItemProduct',
-        referenceClass=HoldingReference,
         widget=bika_ReferenceWidget(
             label=_("Product"),
             catalog_name='bika_setup_catalog',
@@ -36,6 +40,27 @@ schema = BikaSchema.copy() + Schema((
     #         visible={'edit':'hidden', }
     #     ),
     # ),
+
+    ReferenceField(
+        'StorageLocation',
+        allowed_types=('UnmanagedStorage','StoragePosition'),
+        relationship='ItemStorageLocation',
+        widget=bika_ReferenceWidget(
+            label=_("Storage Location"),
+            description=_("Location where item is kept"),
+            size=40,
+            visible={'edit': 'visible', 'view': 'visible'},
+            catalog_name='bika_setup_catalog',
+            showOn=True,
+            render_own_label=True,
+            base_query={'inactive_state': 'active',
+                        'review_state': 'available',
+                        'object_provides': IStockItemStorage.__identifier__},
+            colModel=[{'columnName': 'UID', 'hidden': True},
+                      {'columnName': 'id', 'width': '30', 'label': _('ID')},
+                      {'columnName': 'Title', 'width': '50', 'label': _('Title')},
+                      ],
+        )),
 
     ComputedField('ProductTitle',
         expression='context.getProduct().Title()',
