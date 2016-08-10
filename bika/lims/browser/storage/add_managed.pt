@@ -43,6 +43,7 @@
         <td><input name="managed_titletemplate"
                    class="titletemplate"
                    placeholder=""
+                   autocomplete="false"
                    tal:attributes="value python: request.get('managed_titletemplate', '')"/>
         </td>
     <tr>
@@ -57,6 +58,7 @@
             <input name="managed_idtemplate"
                    class="idtemplate"
                    placeholder="prefix-{id}"
+                   autocomplete="false"
                    tal:attributes="value python: request.get('managed_idtemplate', '')"/>
         </td>
     </tr>
@@ -70,6 +72,7 @@
         <td>
             <input name="managed_start"
                    class="start"
+                   autocomplete="false"
                    tal:attributes="value python: request.get('managed_start', '1')"/>
         </td>
     </tr>
@@ -84,6 +87,8 @@
         <td>
             <input name="managed_nr_items"
                    class="nr_items"
+                   type="number"
+                   autocomplete="false"
                    tal:attributes="value python: request.get('managed_nr_items', '1')"/>
         </td>
     </tr>
@@ -93,6 +98,7 @@
         <td>
             <input name="managed_temperature"
                    class="temperature"
+                   autocomplete="false"
                    tal:attributes="value python: request.get('managed_temperature', '')"/>
         </td>
     </tr>
@@ -138,7 +144,7 @@
         </td>
     </tr>
     <tr>
-        <td colspan="2">
+        <td colspan="2" class="bordertop">
             <div class="managed_positions">
                 <span style="font-weight: bold;">Number of positions</span>
                 <span class="fieldRequired" title="Required">"&nbsp;"</span><br/>
@@ -148,6 +154,7 @@
                 </span>
                 <input name="managed_positions"
                        class="managed_positions"
+                       type="number"
                        tal:attributes="value python: request.get('managed_positions', '')"/>
             </div>
         </td>
@@ -184,7 +191,6 @@
                                 </span>
                 </div>
                 <div data-fieldname="Dimension" id="dimension" style="display: inline-block;">
-                    <h1 tal:content="python:context.title + ' ' + context.id"/>
                     <select name="managed_dimension" style="width: 300px; height: 34px; overflow: hidden; border: 1px solid #eee;">
                         <option value="First">First Dimension</option>
                         <option value="Second">Second Dimension</option>

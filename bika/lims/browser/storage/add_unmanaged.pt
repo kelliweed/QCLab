@@ -85,6 +85,7 @@
         <td>
             <input name="unmanaged_nr_items"
                    class="nr_items"
+                   type="number"
                    tal:attributes="value python: request.get('unmanaged_nr_items', '1')"/>
         </td>
     </tr>
