@@ -2,14 +2,13 @@ import string
 
 from Products.Five import BrowserView
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
+from bika.lims.browser.storage import getStorageTypes
 from plone import api
 from plone.app.layout.viewlets import ViewletBase
 from zExceptions import BadRequest
 from zope.dottedname.resolve import resolve
 from zope.interface import alsoProvides
 from zope.schema import ValidationError
-
-from bika.lims.browser.storage import getStorageTypes
 
 
 class AddStorageViewlet(ViewletBase):
@@ -23,7 +22,7 @@ class AddStorageViewlet(ViewletBase):
         """
         return getStorageTypes()
 
-    def collapsed(self):
+    def dlclass(self):
         """We want to automatically flag the viewlet expanded if there
         are no storage objects at this location.
         """
@@ -93,7 +92,7 @@ class Storage(BrowserView):
             self.validate_sequence_format(start)
             sequence = [start]
             next = start
-            for x in range(nr_items-1):  # -1 because [start] is added above
+            for x in range(nr_items - 1):  # -1 because [start] is added above
                 next = self.inc_str(next)
                 sequence.append(next)
         return sequence
@@ -339,9 +338,8 @@ class AddManagedStorage(Storage):
                 pos = api.content.create(
                     container=storage,
                     type="StoragePosition",
-                    id="{id}".format(id=p),  # XsXX hardcoded pos title and id
+                    id="{id}".format(id=p),  # XXX hardcoded pos title and id
                     title="{id}".format(id=p))
-                self.context.manage_renameObject(pos.id, "{id}".format(id=x))
                 # storage types are set on each pos inside the storage too.
                 self.set_storage_types(pos, storage_types)
 
@@ -412,10 +410,10 @@ class AddManagedStorage(Storage):
                 u'selected, and the number of storage positions must be > 0.')
 
         # Verify
-        Dimension=form.get('managed_dimension', 'First')
-        XAxis=form.get('managed_x', nr_positions)
-        YAxis=form.get('managed_y', 0)
-        ZAxis=form.get('managed_z', 0)
+        Dimension = form.get('managed_dimension', 'First')
+        XAxis = form.get('managed_x', nr_positions)
+        YAxis = form.get('managed_y', 0)
+        ZAxis = form.get('managed_z', 0)
 
         # Check that none of the IDs conflict with existing items
         start = form['managed_start']
@@ -545,4 +543,3 @@ class AddUnmanagedStorage(Storage):
             instance.Schema()['Department'].set(instance, temperature)
         if address and 'Address' in schema:
             instance.Schema()['Address'].set(instance, temperature)
-

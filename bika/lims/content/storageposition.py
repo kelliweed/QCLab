@@ -18,10 +18,6 @@ class StoragePosition(BaseContent):
     security = ClassSecurityInfo()
     displayContentsTab = False
     schema = schema
-    _at_rename_after_creation = True
-
-    def _renameAfterCreation(self, check_auto_id=False):
-        import pdb;pdb.set_trace()
 
     def Title(self):
         return safe_unicode(self.getField('title').get(self)).encode('utf-8')

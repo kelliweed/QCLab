@@ -35,7 +35,7 @@
 
 </style>
 
-<dl tal:attributes="class python:view.collapsed()">
+<dl tal:attributes="class python:view.dlclass()">
 
     <dt class="collapsibleHeader">
         &nbsp;<img src="++resource++bika.lims.images/add.png">&nbsp;
