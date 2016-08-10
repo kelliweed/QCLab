@@ -112,6 +112,7 @@ class StorageGraphView(BrowserView):
         super(StorageGraphView, self).__init__(context, request)
         self.context = context
         self.request = request
+        self.request.set('disable_plone.rightcolumn', 1)
 
     def __call__(self):
         return self.template()
@@ -147,7 +148,7 @@ class PositionsInfo:
             positions.append({
                 'occupied': state == 'occupied',
                 'reserved': state == 'reserved',
-                'address': Position.Title(),
+                'address': Position.getId(),
                 'state': state,
                 'aid': aid,
                 'name': name,
