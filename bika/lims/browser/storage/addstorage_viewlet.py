@@ -496,8 +496,11 @@ class AddUnmanagedStorage(Storage):
             # schema
             self.set_inputs_into_schema(
                 instance, temperature, department, address)
-            self.context.manage_renameObject(
-                instance.id, idtemplate.format(id=x))
+
+            if instance.id != idtemplate.format(id=x):
+                self.context.manage_renameObject(
+                    instance.id, idtemplate.format(id=x))
+
             storages.append(instance)
         return storages
 
