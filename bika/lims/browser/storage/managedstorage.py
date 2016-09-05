@@ -125,12 +125,12 @@ class PositionsInfo:
         self.errors = {}
 
     def __call__(self):
-        response = {}
         workflow = getToolByName(self.context, 'portal_workflow')
         positions = []
-        response = {'x': self.context.getXAxis(),
-                    'y': self.context.getYAxis(),
-                    'n': self.context.getZAxis()}
+        response = {
+            'x': self.context.getXAxis(),
+            'y': self.context.getYAxis()
+        }
 
         children = self.context.getPositions()
         for Position in children:

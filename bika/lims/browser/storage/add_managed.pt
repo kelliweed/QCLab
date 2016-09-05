@@ -73,6 +73,7 @@
             <input name="managed_start"
                    class="start"
                    autocomplete="false"
+                   type="number"
                    tal:attributes="value python: request.get('managed_start', '1')"/>
         </td>
     </tr>
@@ -93,7 +94,7 @@
         </td>
     </tr>
     <tr>
-        <td>Temperature
+        <td>Temperature:
         </td>
         <td>
             <input name="managed_temperature"
@@ -103,7 +104,7 @@
         </td>
     </tr>
     <tr>
-        <td>Department
+        <td>Department:
         </td>
         <td>
             <div style="width:100%" class="field ArchetypesReferenceWidget">
@@ -137,14 +138,14 @@
         </td>
     </tr>
     <tr>
-        <td>Address
+        <td>Address:
         </td>
         <td>
             <textarea name="managed_address" id="managed_address" tal:attributes="value python: request.get('managed_address', '')"></textarea>
         </td>
     </tr>
     <tr>
-        <td class="bordertop">Number of positions
+        <td class="bordertop">Number of positions:
             <div class="discreet">
                     Enter the number of possible storage positions
                     located inside these storages.
@@ -158,7 +159,7 @@
         </td>
     </tr>
     <tr>
-        <td>Storage Types
+        <td>Storage Types:
             <div class="discreet">
                 Select the types of objects that can be stored here.
             </div>
@@ -174,19 +175,12 @@
         </td>
     </tr>
     <tr>
-        <td>Graphical representation
+        <td>Graphical representation:
             <div class="discreet">
                 Select a dimension and set number of columns and rows to represent positions in a grid.
             </div>
         </td>
         <td>
-            <div data-fieldname="Dimension" id="dimension" style="display: inline-block;">
-                <select name="managed_dimension" style="width: 100px; height: 34px; overflow: hidden; border: 1px solid #eee;">
-                    <option value="First">First Dimension</option>
-                    <option value="Second">Second Dimension</option>
-                    <option value="Third">Third Dimension</option>
-                </select>
-            </div>
 
             <div style="display: inline-block; padding-left:10px; border: 1px solid #bbb; padding: 5px; width: auto;">
                 <div data-fieldname="XAxis" id="XAxis" style="display: inline-block;">
@@ -201,12 +195,6 @@
                            style="background-color: #FDFDFD; border:1px solid #ddd; height: 20px; width: 50px;"
                            tal:attributes="value string:0"/>
                 </div>
-                <!--?<div data-fieldname="ZAxis" id="ZAxis" style="display: inline-block;">-->
-                    <!--?<span style="font-weight: bold; padding-right: 5px;">Z-Axis:</span>-->
-                    <!--?<input name="managed_z" id="managed_z" type="number"-->
-                           <!--?style="background-color: #FDFDFD; border:1px solid #ddd; height: 20px; width: 121px;"-->
-                           <!--?tal:attributes="value string:0"/>-->
-                <!--?</div>-->
             </div>
         </td>
     </tr>
