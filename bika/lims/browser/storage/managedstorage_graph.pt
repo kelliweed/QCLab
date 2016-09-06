@@ -164,14 +164,15 @@
                             .enter()
                             .append("text")
                             .text(function (d) {
-                                return letters[d - data["y"]];
+                                return letters[d - data["x"]];
                             })
                             .attr("x", function (d, i) {
                                 return marginLeft - 20;
                             })
                             .attr("y", function (d) {
                                 var i = d3.select(this.parentNode).attr("i");
-                                var y = (i - data["y"]) % data["y"] * Math.floor(heightPos / data["y"]) + marginTop;
+                                var y = (i - data['x']) % data["y"] * Math.floor(heightPos / data["y"]) + marginTop;
+                                console.log(y)
                                 var w = heightPos / data["y"] - padding;
                                 return y + w / 2;
                             });
