@@ -73,7 +73,6 @@
             <input name="managed_start"
                    class="start"
                    autocomplete="false"
-                   type="number"
                    tal:attributes="value python: request.get('managed_start', '1')"/>
         </td>
     </tr>
