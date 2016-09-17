@@ -27,7 +27,7 @@ class AddStorageViewlet(ViewletBase):
         are no storage objects at this location.
         """
         if self.context.objectValues():
-            return "collapsible collapseOnLoad"
+            return "collapsible collapsedOnLoad"
         else:
             return "collapsible"
 
@@ -350,9 +350,8 @@ class AddManagedStorage(Storage):
                 # storage types are set on each pos inside the storage too.
                 self.set_storage_types(pos, storage_types)
 
-            self.context.manage_renameObject(
-                storage.id, idtemplate.format(id=x))
             storages.append(storage)
+
         return storages
 
     def set_storage_types(self, instance, storage_types):
@@ -495,7 +494,6 @@ class AddUnmanagedStorage(Storage):
             # schema
             self.set_inputs_into_schema(
                 instance, temperature, department, address)
-
             if instance.id != idtemplate.format(id=x):
                 self.context.manage_renameObject(
                     instance.id, idtemplate.format(id=x))
