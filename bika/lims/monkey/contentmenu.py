@@ -31,6 +31,7 @@ def contentmenu_factories_available(self):
         'SampleType',
         'SamplePoint',
         'StorageLocation',
+        'StorageUnit',
         'WorksheetTemplate',
         'LabProduct',
         'ReferenceSample',
