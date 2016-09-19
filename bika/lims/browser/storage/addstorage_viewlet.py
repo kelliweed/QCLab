@@ -46,6 +46,17 @@ class AddStorageViewlet(ViewletBase):
     def add_unmanaged(self):
         return self.add_unmanaged_pt(storage_types=self.storage_types())
 
+    def show_managed(self):
+        if self.request.URL.endswith('/storage') \
+                or self.request.URL.endswith('/storage/view'):
+            return False
+        return True
+
+    def show_unmanaged(self):
+        if self.request.URL.endswith('/storage') \
+                or self.request.URL.endswith('/storage/view'):
+            return False
+        return True
 
 class AddStorageSubmit(BrowserView):
     """
