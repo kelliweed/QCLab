@@ -136,7 +136,6 @@ class PositionsInfo:
         for Position in children:
             aid, name, subject, volume, path, pos = '', '', 0, 0, '', ''
             if not Position.available():
-                import pdb;pdb.set_trace()
                 sample = Position.getSample()
                 aid = sample.getId()
                 name = sample.Title()

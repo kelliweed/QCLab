@@ -72,7 +72,7 @@
                        value="Create Storage units">
             </fieldset>
 
-            <fieldset id="fieldset-managed">
+            <fieldset id="fieldset-managed" tal:condition='python:view.show_managed()'>
                 <legend id="fieldsetlegend-managed">Managed storage</legend>
                 <p>
                     Managed storage contains a set number of positions for
@@ -97,7 +97,7 @@
 
             </fieldset>
 
-            <fieldset id="fieldset-unmanaged">
+            <fieldset id="fieldset-unmanaged" tal:condition='python:view.show_unmanaged()'>
                 <legend id="fieldsetlegend-unmanaged">Unmanaged storage</legend>
                 <p>
                     Unmanaged storage does not restrict the number of items
