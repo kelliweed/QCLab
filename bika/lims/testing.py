@@ -224,12 +224,14 @@ class RemoteKeywords(Keywords, RemoteLibrary):
                 field.set(obj, value)
         obj.reindexObject()
 
-    def create_object(self, path, portal_type, id, **kwargs):
+    def create_object(self, path, portal_type, obj_id, **kwargs):
         portal = api.portal.get()
         container = portal.restrictedTraverse(path.strip('/').split('/'))
         # create object
-        obj = _createObjectByType(portal_type, container, id)
-        obj.processForm(container.REQUEST, values=kwargs)
+        obj = _createObjectByType(portal_type, container, obj_id)
+        obj.unmarkCreationFlag()
+        # if obj.id != obj_id:
+        #     obj.aq_parent.manage_renameObject(obj.id, obj_id)
         self.write_at_field_values(obj, **kwargs)
         return obj.UID()
 
